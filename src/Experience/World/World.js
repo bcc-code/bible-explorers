@@ -10,9 +10,6 @@ export default class World {
         this.camera = this.experience.camera
         this.resources = this.experience.resources
 
-
-     
-
         // Wait for resources
         this.resources.on('ready', () => {
 

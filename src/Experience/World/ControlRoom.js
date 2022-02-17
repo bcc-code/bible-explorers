@@ -14,19 +14,28 @@ export default class ControlRoom {
         this.pointer = this.experience.pointer
         this.debug = this.experience.debug
 
-        this.currentIntersect = null
         this.modalIsOpen = false
 
-        // Setup
+        this.POI = []
+        this.clickableObjects = []
+        this.currentIntersect = null
+        this.originalMaterials = {}
+        this.highlightedObject = new THREE.MeshBasicMaterial({
+            // wireframe: true,
+            color: 0xffffff
+        })
 
+        // Setup
         this.resources = this.resources.items.controlRoom
         this.setModel()
-        this.setPoints()
+        this.setPOI()
+        this.storeClickableObjects()
 
         // Events
         this.mousemove()
         this.clickedObject()
         this.cameraMovement()
+
     }
 
     // Events
@@ -93,17 +102,89 @@ export default class ControlRoom {
         this.scene.add(this.model)
     }
 
-    setPoints() {
-        this.points = [
-            {
-                name: 'Panel_Screen',
-                position: new THREE.Vector3(1.6, 1.2, 0.01),
-                element: document.querySelector('.point-0')
-            },
-        ]
+    // Set points of interest (POI)
+    setPOI() {
+        const panelScreen = {
+            name: 'Panel_Screen',
+            position: new THREE.Vector3(1.6, 1.2, 0.01),
+            element: document.querySelector('.point-0')
+        }
 
-        this.scene.traverse((child) => {
-            // console.log(child);
+        this.POI.push(panelScreen)
+    }
+
+    updatePOI() {
+
+        for (const point of this.POI) {
+            const screenPosition = point.position.clone()
+            screenPosition.project(this.camera.instance)
+
+            const translateX = screenPosition.x * this.sizes.width * 0.5
+            const translateY = - screenPosition.y * this.sizes.height * 0.5
+
+            point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`
+            point.element.classList.add('visible')
+
+        }
+    }
+
+    // Clickable objects
+    storeClickableObjects() {
+        this.resources.scene.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+
+                switch (child.name) {
+                    case 'tv_4x4':
+                        this.clickableObjects.push(child)
+                        this.originalMaterials[child.name] = child.material
+                        break
+
+                    case 'tv_4x5':
+                        this.clickableObjects.push(child)
+                        this.originalMaterials[child.name] = child.material
+                        break
+
+                    case 'tv_16x10':
+                        this.clickableObjects.push(child)
+                        this.originalMaterials[child.name] = child.material
+                        break
+
+                    case 'tv_16x9_5':
+                        this.clickableObjects.push(child)
+                        this.originalMaterials[child.name] = child.material
+                        break
+
+                    case 'Panel_Screen':
+                        this.clickableObjects.push(child)
+                        this.originalMaterials[child.name] = child.material
+                        break
+                    default:
+                        break
+                }
+            }
+        })
+
+    }
+
+    highlightObject() {
+        this.raycaster.setFromCamera(this.pointer, this.camera.instance)
+        const intersects = this.raycaster.intersectObjects(this.clickableObjects, false)
+
+
+        // Check which object is hovered
+        if (intersects.length > 0) {
+            this.currentIntersect = intersects[0].object
+        } else {
+            this.currentIntersect = null
+        }
+
+        // Apply new material to hovered object
+        this.clickableObjects.forEach((object, index) => {
+            if (this.currentIntersect && this.currentIntersect.name === object.name) {
+                this.clickableObjects[index].material = this.highlightedObject
+            } else {
+                this.clickableObjects[index].material = this.originalMaterials[object.name]
+            }
         })
     }
 
@@ -136,27 +217,16 @@ export default class ControlRoom {
 
     }
 
-    updatePoints() {
-
-        for (const point of this.points) {
-            const screenPosition = point.position.clone()
-            screenPosition.project(this.camera.instance)
-
-            const translateX = screenPosition.x * this.sizes.width * 0.5
-            const translateY = - screenPosition.y * this.sizes.height * 0.5
-
-            point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`
-            point.element.classList.add('visible')
-
-        }
-    }
 
     update() {
 
         // Update points on screen
-        this.updatePoints()
+        this.updatePOI()
 
-        const playhead = this.settings.playhead
+        // Hightlight hovered object
+        this.highlightObject()
+
+        // const playhead = this.settings.playhead
 
         // Update target
         // this.target.position.x = Math.sqrt(playhead) * 2

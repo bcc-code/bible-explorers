@@ -35,7 +35,6 @@ export default class Environment {
         this.screensMap.texture.rotation = Math.PI * 0.5
         this.screensMap.texture.wrapS = THREE.RepeatWrapping
         this.screensMap.texture.wrapT = THREE.RepeatWrapping
-        this.screensMap.texture.magFilter = THREE.NearestFilter
 
         this.screensMap.screen16x10 = this.resources.items.screen_16x10
         this.screensMap.screen16x10.encoding = THREE.sRGBEncoding
@@ -43,7 +42,6 @@ export default class Environment {
         this.screensMap.screen16x10.rotation = 0
         this.screensMap.screen16x10.wrapS = THREE.RepeatWrapping
         this.screensMap.screen16x10.wrapT = THREE.RepeatWrapping
-        this.screensMap.screen16x10.magFilter = THREE.NearestFilter
 
         this.screensMap.screen_16x9_5 = this.resources.items.screen_16x9_5
         this.screensMap.screen_16x9_5.encoding = THREE.sRGBEncoding
@@ -51,7 +49,6 @@ export default class Environment {
         this.screensMap.screen_16x9_5.rotation = Math.PI * 0.5
         this.screensMap.screen_16x9_5.wrapS = THREE.RepeatWrapping
         this.screensMap.screen_16x9_5.wrapT = THREE.RepeatWrapping
-        this.screensMap.screen_16x9_5.magFilter = THREE.NearestFilter
 
         this.screensMap.video = new THREE.VideoTexture(this.video)
         this.screensMap.video.encoding = THREE.sRGBEncoding

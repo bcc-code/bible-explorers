@@ -2,7 +2,7 @@ export default [
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/controlroom.glb'
+        path: 'models/controlroom_low.glb'
     },
     {
         name: 'UVChecker',
