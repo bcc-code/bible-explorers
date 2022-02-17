@@ -1,0 +1,108 @@
+import * as THREE from 'three'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import EventEmitter from './EventEmitter.js'
+import Loader from '../World/Loader.js'
+import Experience from '../Experience.js'
+import { gsap } from 'gsap'
+
+const loadingBarElement = document.querySelector('.loading-bar')
+
+export default class Resources extends EventEmitter {
+
+    constructor(sources) {
+
+        super()
+
+        this.experience = new Experience()
+        this.pageLoader = new Loader()
+
+        // Options
+        this.sources = sources
+
+        // Setup
+        this.items = {}
+        this.toLoad = this.sources.length
+        this.loaded = 0
+
+        this.loadManager()
+        this.setLoaders()
+        this.startLoading()
+    }
+
+    loadManager() {
+        this.loadingManager = new THREE.LoadingManager(
+            // Loaded
+            () => {
+                window.setTimeout(() => {
+                    gsap.to(this.pageLoader.overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0, delay: 1 })
+                    loadingBarElement.classList.add('ended')
+                    loadingBarElement.style.transform = ''
+                }, 500)
+
+                window.setTimeout(() => {
+                    this.experience.loaded = true
+                }, 4000)
+            },
+
+            // Progress
+            (itemUrl, itemsLoaded, itemsTotal) => {
+                const progressRatio = itemsLoaded / itemsTotal
+                loadingBarElement.style.transform = `scaleX(${progressRatio})`
+            }
+        )
+    }
+
+    setLoaders() {
+        this.loaders = {}
+
+        this.loaders.dracoLoader = new DRACOLoader(this.loadingManager)
+        this.loaders.dracoLoader.setDecoderPath('draco/')
+
+        this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
+        this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
+        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
+
+    }
+
+    startLoading() {
+        // Load each source
+        for (const source of this.sources) {
+
+            if (source.type === 'gltfModel') {
+                this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
+                this.loaders.gltfLoader.load(
+                    source.path,
+                    (file) => {
+                        this.sourceLoaded(source, file);
+                    }
+                )
+            }
+            else if (source.type === 'texture') {
+                this.loaders.textureLoader.load(
+                    source.path,
+                    (file) => {
+                        this.sourceLoaded(source, file);
+                    }
+                )
+            }
+            else if (source.type === 'cubeTexture') {
+                this.loaders.cubeTextureLoader.load(
+                    source.path,
+                    (file) => {
+                        this.sourceLoaded(source, file);
+                    }
+                )
+            }
+        }
+    }
+
+    sourceLoaded(source, file) {
+        this.items[source.name] = file
+        this.loaded++
+
+        if (this.loaded === this.toLoad) {
+            this.trigger('ready')
+        }
+    }
+}

@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    overflow: hidden;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+p {
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+ul {
+    margin-top: 1rem;
+    list-style: none;
+}
+.video {
+    aspect-ratio: 16/9;
+}
+iframe {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    cursor: grab;
+}
+
+.overlay {
+    background: #39393990;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: none;
+}
+
+.overlay.visible {
+    display: block;
+}
+
+.screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 3rem;
+    z-index: 2;
+}
+
+.screen.visible {
+    display: grid;
+    grid-auto-rows: minmax(min-content, max-content);
+    justify-content: center;
+}
+
+.screen__content {
+    position: relative;
+    background: #fff;
+    width: 600px;
+    padding: 3rem;
+    display: grid;
+    gap: 2rem;
+    z-index: 2;
+}
+
+.close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.point {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    letter-spacing: 1px;
+    line-height: 1.5rem;
+    color: whitesmoke;
+}
+
+.point:hover .text {
+    opacity: 1;
+}
+
+.point .dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: help;
+}
+
+.point .dot::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: whitesmoke;
+}
+
+.point .label {
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: help;
+    text-shadow: 0 0 10px black;
+}
+
+.point .text {
+    position: absolute;
+    left: 2rem;
+    width: 200px;
+    top: 40px;
+    font-weight: lighter;
+    padding: 1rem;
+    background: #00000077;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: none;
+}
+
+.point .label,
+.point .dot {
+    transform: scale(0, 0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.point.visible .label,
+.point.visible .dot {
+    transform: scale(1, 1);
+}
+
+.loading-bar {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 4px;
+    background: whitesmoke;
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 0.4s ease-in-out;
+    will-change: transform;
+}
+
+.loading-bar.ended {
+    transform-origin: top right;
+    transition: transform 1.5s ease-in-out;
+}
+
