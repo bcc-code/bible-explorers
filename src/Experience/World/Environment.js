@@ -7,39 +7,22 @@ export default class Environment {
         this.scene = this.experience.scene
         this.resources = this.experience.resources
 
-        // Video
+        // helpers
+        const axesHelper = new THREE.AxesHelper(20)
+        const gridHelper = new THREE.GridHelper(20, 20);
+        this.scene.add(gridHelper, axesHelper);
+
         this.video = document.getElementById('video')
 
         // Setup
         this.setEnvironment()
         this.setScreens()
-        this.videoControls()
     }
 
     setEnvironment() {
         this.environmentMap = {}
         this.environmentMap.texture = this.resources.items.environmentMapTexture
         this.scene.background = this.environmentMap.texture
-    }
-
-    videoControls() {
-
-        document.onkeydown = (e) => {
-            if (e.key === 'p') {
-                this.video.play()
-            }
-            else if (e.key === ' ') {
-                this.video.pause()
-            }
-            else if (e.key === 's') {
-                this.video.pause()
-                this.video.currentTime = 0
-            }
-            else if (e.key === 'r') {
-                this.video.currentTime = 0
-            }
-
-        }
     }
 
     setScreens() {
@@ -79,6 +62,23 @@ export default class Environment {
         this.screensMap.video.wrapS = THREE.RepeatWrapping
         this.screensMap.video.wrapT = THREE.RepeatWrapping
 
+        document.onkeydown = (e) => {
+            if (e.key === 'p') {
+                this.video.play()
+            }
+            else if (e.key === ' ') {
+                this.video.pause()
+            }
+            else if (e.key === 's') {
+                this.video.pause()
+                this.video.currentTime = 0
+            }
+            else if (e.key === 'r') {
+                this.video.currentTime = 0
+            }
+
+        }
+
         this.screensMap.updateMaterials = () => {
 
             this.scene.traverse((child) => {
@@ -112,5 +112,5 @@ export default class Environment {
 
         this.screensMap.updateMaterials()
     }
-   
+
 }

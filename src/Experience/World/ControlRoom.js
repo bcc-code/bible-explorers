@@ -10,18 +10,20 @@ export default class ControlRoom {
         this.camera = this.experience.camera
         this.raycaster = this.experience.raycaster
         this.pointer = this.experience.pointer
+        this.debug = this.experience.debug
 
         this.currentIntersect = null
         this.modalIsOpen = false
 
         // Setup
+
         this.resources = this.resources.items.controlRoom
         this.setModel()
         this.setPoints()
 
         // Events
         this.mousemove()
-
+        this.cameraMovement()
     }
 
     // Events
@@ -98,7 +100,36 @@ export default class ControlRoom {
         })
     }
 
-    setPointsOnScreen() {
+    // Camera animation
+    cameraMovement() {
+        this.settings = {
+            playhead: 0.001,
+        }
+
+        if (this.debug.active) {
+            this.debugFolder = this.debug.ui.addFolder('Camera animation')
+            this.debugFolder
+                .add(this.settings, 'playhead', 0.001, 1, 0.001)
+        }
+
+        // create curve for camera to portal
+        this.bezier = new THREE.CubicBezierCurve3(
+            new THREE.Vector3(-2.5, 2.5, 5),
+            new THREE.Vector3(-1.54, 2.25, 3.09),
+            new THREE.Vector3(-0.95, 2, 1.9),
+            new THREE.Vector3(0, 1.5, 0)
+        )
+
+        // Create target
+        const mat = new THREE.MeshStandardMaterial({ color: 'red' })
+        const geo = new THREE.BoxGeometry(.1, .1, .1)
+        this.target = new THREE.Mesh(geo, mat)
+        this.target.position.y = 1.5
+        this.scene.add(this.target)
+
+    }
+
+    updatePoints() {
 
         for (const point of this.points) {
             const screenPosition = point.position.clone()
@@ -114,8 +145,20 @@ export default class ControlRoom {
     }
 
     update() {
-        this.setPointsOnScreen()
-    }
 
+        // Update points on screen
+        this.updatePoints()
+
+        const playhead = this.settings.playhead
+
+        // Update target
+        // this.target.position.x = Math.sqrt(playhead) * 2
+
+        // // Update camera
+        // this.instance.lookAt(this.target.position)
+        // const pos = this.bezier.getPoint(playhead)
+
+        // this.instance.position.set(pos.x, pos.y, pos.z)
+    }
 
 }
