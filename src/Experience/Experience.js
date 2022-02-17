@@ -13,7 +13,7 @@ let instance = null
 export default class Experience {
 
     constructor(canvas) {
-
+        // Singleton
         if (instance)
             return instance
 

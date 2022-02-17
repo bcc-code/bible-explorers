@@ -175,3 +175,135 @@ iframe {
     transition: transform 1.5s ease-in-out;
 }
 
+/* Timer */
+.timer {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+.timer__container {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+}
+
+.timer__part {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.timer__btn {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: opacity ease .25s;
+}
+
+.timer .material-icons {
+    font-size: 96px;
+}
+
+.timer__btn--start {
+    background: #00b84c;
+}
+.timer__btn--start:hover {
+    opacity: 0.9 !important;
+}
+
+.timer__btn--stop {
+    background: #ff0256;
+}
+.timer__btn--stop:hover {
+    opacity: 0.1 !important;
+}
+
+/* Code unlock */
+.code-unlock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 330px;
+    height: 268px;
+    font-size: 72px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    background: #0b140f;
+    padding: 12px;
+    border-radius: 20px;
+}
+
+.code-unlock__container {
+    border-radius: 7px;
+    padding: 5px 5px 0;
+    border: 1px solid gray;
+}
+
+.code-unlock__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.code-unlock__screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+    color: #fff;
+    margin-bottom: 5px;
+    letter-spacing: 5px;
+    position: relative;
+}
+.code-unlock__screen:before {
+    content: '0000';
+    color: #143520;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.code-unlock__input {
+    width: 193px;
+    text-align: left;
+    z-index: 1;
+    color: #369b59;
+}
+
+.code-unlock__btn {
+    padding: 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border: none;
+    color: #369b59;
+    background: #143520;
+    cursor: pointer;
+    transition: opacity ease .25s;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.code-unlock__btn:nth-child(6n+1) {
+    margin-left: 0;
+}
+.code-unlock__btn--backspace {
+    background: #a10035;
+    color: #fff;
+}
+.code-unlock__btn--confirm {
+    background: #298d51;
+    color: #0b140f;
+}

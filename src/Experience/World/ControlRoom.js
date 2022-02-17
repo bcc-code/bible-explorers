@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
+import Timer from '../Timer.js'
+import CodeUnlock from '../CodeUnlock.js'
 
 export default class ControlRoom {
     constructor() {
@@ -23,6 +25,7 @@ export default class ControlRoom {
 
         // Events
         this.mousemove()
+        this.clickedObject()
         this.cameraMovement()
     }
 
@@ -45,7 +48,11 @@ export default class ControlRoom {
 
             if (this.currentIntersect != null) {
                 if (this.currentIntersect.name === 'tv_4x4_screen') {
-                    this.openModal('.screen-0')
+                    new Timer()
+                }
+
+                if (this.currentIntersect.name === 'tv_4x5_screen') {
+                    new CodeUnlock()
                 }
 
                 if (this.currentIntersect.name === 'Panel_Screen') {
