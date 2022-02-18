@@ -23,24 +23,53 @@ export default class CodeUnlock {
         
         codeUnlock.el.numbers.forEach(function(number) {
             number.addEventListener("click", () => {
-                if (codeUnlock.el.code.textContent.length == codeUnlock.secretCode.length) return;
-                codeUnlock.el.code.textContent += number.textContent;
-            });
+                codeUnlock.add(number.textContent)
+            })
         });
         
-        codeUnlock.el.backspace.addEventListener("click", () => {
-            if (codeUnlock.el.code.textContent == "") return;
-            codeUnlock.el.code.textContent = codeUnlock.el.code.textContent.slice(0, -1);
-        });
-        
-        codeUnlock.el.confirm.addEventListener("click", () => {
-            if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
-                console.log("Correct code");
-                codeUnlock.destroy();
-            } else {
-                console.log("Incorrect code");
+        codeUnlock.el.backspace.addEventListener("click", codeUnlock.removeNumber);
+        codeUnlock.el.confirm.addEventListener("click", codeUnlock.checkCode);
+
+        document.onkeydown = (e) => {
+            if (e.key === '1' ||
+                e.key === '2' ||
+                e.key === '3' ||
+                e.key === '4' ||
+                e.key === '5' ||
+                e.key === '6' ||
+                e.key === '7' ||
+                e.key === '8' ||
+                e.key === '9' ||
+                e.key === '0'
+            ) {
+                codeUnlock.add(e.key)
             }
-        });
+            else if (e.key === 'Backspace') {
+                codeUnlock.remove()
+            }
+            else if (e.key === 'Enter') {
+                codeUnlock.checkCode()
+            }
+        }
+    }
+
+    add(number) {
+        if (codeUnlock.el.code.textContent.length == codeUnlock.secretCode.length) return;
+        codeUnlock.el.code.textContent += number;
+    }
+
+    remove() {
+        if (codeUnlock.el.code.textContent == "") return;
+        codeUnlock.el.code.textContent = codeUnlock.el.code.textContent.slice(0, -1);
+    }
+
+    checkCode() {
+        if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
+            console.log("Correct code");
+            codeUnlock.destroy();
+        } else {
+            console.log("Incorrect code");
+        }
     }
   
     static getHTML() {
