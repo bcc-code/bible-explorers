@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience.js";
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js'
 
 export default class Camera {
 
@@ -10,24 +10,31 @@ export default class Camera {
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
+        this.time = this.experience.time
         this.debug = this.experience.debug
+
+
+        this.clock = new THREE.Clock()
+
+        this.cameraDirection = new THREE.Vector3()
+        this.camPositionSpan = document.querySelector('#position')
+        this.camLookAtSpan = document.querySelector('#lookingAt')
+
 
         // Setup
         this.setInstance()
-        this.setOrbitControls()
+        this.setFlyControls()
     }
 
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(
-            60, //fov
+            75, //fov
             this.sizes.width / this.sizes.height, //aspect ratio
             0.1, //near plane
             1000 //far plane
         )
-        this.instance.position.set(-2.5, 2.5, 5)
+        this.instance.position.set(0, 1.7, 0)
         this.scene.add(this.instance)
-
-  
 
         if (this.debug.active) {
             this.debugFolder = this.debug.ui.addFolder('Camera')
@@ -55,10 +62,17 @@ export default class Camera {
         }
     }
 
-    setOrbitControls() {
-        this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.enableDamping = true
-        this.controls.dampingFactor = 0.25
+    setFlyControls() {
+        this.controls = new FlyControls(this.instance, this.canvas)
+        this.controls.movementSpeed = 1000
+        this.controls.rollSpeed = Math.PI / 32
+        this.controls.autoForward = false
+        this.controls.dragToLook = true
+
+        // this.controls.enableDamping = true
+        // this.controls.dampingFactor = 0.25
+        // this.controls.autoRotate = true
+        // this.controls.autoRotateSpeed = 0.5
 
         // this.controls.screenSpacePanning = true
         // this.controls.maxAzimuthAngle = - Math.PI * 0.05
@@ -96,7 +110,6 @@ export default class Camera {
 
     }
 
-
     resize() {
         this.instance.aspect = this.sizes.width / this.sizes.height
         this.instance.updateProjectionMatrix()
@@ -105,6 +118,23 @@ export default class Camera {
     update() {
 
         // Update controls
-        this.controls.update()
+        this.controls.update(0.1)
+
+        this.instance.getWorldDirection(this.cameraDirection)
+
+        this.cameraDirection.set(
+            this.cameraDirection.x * 100,
+            this.cameraDirection.y * 100,
+            this.cameraDirection.z * 100)
+
+        this.camPositionSpan.innerHTML =
+            `Position:(${this.instance.position.x.toFixed(1)}, 
+            ${this.instance.position.y.toFixed(1)}, 
+            ${this.instance.position.z.toFixed(1)})`
+
+        this.camLookAtSpan.innerHTML =
+            `LookAt: (${(this.instance.position.x + this.cameraDirection.x).toFixed(1)},
+            ${(this.instance.position.y + this.cameraDirection.y).toFixed(1)},
+            ${(this.instance.position.z + this.cameraDirection.z).toFixed(1)})`
     }
 }

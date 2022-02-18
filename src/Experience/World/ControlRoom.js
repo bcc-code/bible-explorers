@@ -18,7 +18,6 @@ export default class ControlRoom {
         this.time = this.experience.time
         this.debug = this.experience.debug
 
-        console.log(this.time);
 
         this.pointsOfInterests = []
         this.clickableObjects = []
