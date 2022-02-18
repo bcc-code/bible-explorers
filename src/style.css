@@ -43,49 +43,89 @@ iframe {
     right: 0;
     bottom: 0;
     z-index: 1;
-    display: none;
-}
-
-.overlay.visible {
-    display: block;
 }
 
 .screen {
-    display: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 3rem;
     z-index: 2;
-}
-
-.screen.visible {
+    width: 1024px;
+    height: 768px;
+    background: #fff;
     display: grid;
     grid-auto-rows: minmax(min-content, max-content);
-    justify-content: center;
+    margin: auto;
 }
 
 .screen__content {
-    position: relative;
-    background: #fff;
-    width: 600px;
     padding: 3rem;
-    display: grid;
-    gap: 2rem;
     z-index: 2;
+    position: relative;
+}
+
+.screen__content h2 {
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none;
 }
 
 .close {
     position: absolute;
     top: 1rem;
-    right: 1rem;
+    right: 1.5rem;
     font-size: 2rem;
     cursor: pointer;
     z-index: 2;
 }
 
+/* Archive */
+.archive {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: 50px;
+    bottom: 50px;
+    background-color: #ff0256;
+    cursor: pointer;
+}
+
+.archive__grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 2fr;
+}
+
+.archive__list {
+    margin: 0;
+}
+.archive__list li {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: .5;
+}
+.archive__list .visible,
+.archive__list li:hover {
+    background-color: beige;
+}
+
+.entry__content {
+    display: none;
+}
+.entry__content.visible {
+    display: block;
+}
+.entry__content h3 {
+    margin-bottom: 1rem;
+}
+
+
+/* POI */
 .point {
     position: absolute;
     top: 50%;

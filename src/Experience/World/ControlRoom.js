@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Experience from "../Experience.js"
 import Timer from '../Timer.js'
 import CodeUnlock from '../CodeUnlock.js'
+import Modal from '../Modal.js'
 
 export default class ControlRoom {
     constructor() {
@@ -13,8 +14,6 @@ export default class ControlRoom {
         this.raycaster = this.experience.raycaster
         this.pointer = this.experience.pointer
         this.debug = this.experience.debug
-
-        this.modalIsOpen = false
 
         this.POI = []
         this.clickableObjects = []
@@ -35,7 +34,6 @@ export default class ControlRoom {
         this.mousemove()
         this.clickedObject()
         this.cameraMovement()
-
     }
 
     // Events
@@ -65,34 +63,18 @@ export default class ControlRoom {
                 }
 
                 if (this.currentIntersect.name === 'Panel_Screen') {
-                    this.openModal('.screen-panel')
+                    new Modal('.screen-panel')
                 }
 
                 if (this.currentIntersect.name === 'Panel_Red_button') {
-                    this.openModal('.screen-1')
+                    new Modal('.screen-1')
                 }
 
                 if (this.currentIntersect.name === 'Panel_Green_button') {
-                    this.openModal('.screen-2')
+                    new Modal('.screen-2')
                 }
             }
-
-            this.closeModal(event)
         })
-    }
-
-    openModal(modal) {
-        document.querySelector(modal).classList.add('visible')
-        document.querySelector('.overlay').classList.add('visible')
-        this.modalIsOpen = true
-    }
-
-    closeModal(event) {
-        if (event.target.classList.contains('close') || event.target.classList.contains('overlay')) {
-            event.target.closest('article').classList.remove('visible')
-            document.querySelector('.overlay').classList.remove('visible')
-            this.modalIsOpen = false
-        }
     }
 
     // Set scene
@@ -114,7 +96,6 @@ export default class ControlRoom {
     }
 
     updatePOI() {
-
         for (const point of this.POI) {
             const screenPosition = point.position.clone()
             screenPosition.project(this.camera.instance)
@@ -124,7 +105,6 @@ export default class ControlRoom {
 
             point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`
             point.element.classList.add('visible')
-
         }
     }
 
@@ -132,7 +112,6 @@ export default class ControlRoom {
     storeClickableObjects() {
         this.resources.scene.traverse((child) => {
             if (child instanceof THREE.Mesh) {
-
                 switch (child.name) {
                     case 'tv_4x4':
                         this.clickableObjects.push(child)
@@ -158,18 +137,17 @@ export default class ControlRoom {
                         this.clickableObjects.push(child)
                         this.originalMaterials[child.name] = child.material
                         break
+
                     default:
                         break
                 }
             }
         })
-
     }
 
     highlightObject() {
         this.raycaster.setFromCamera(this.pointer, this.camera.instance)
         const intersects = this.raycaster.intersectObjects(this.clickableObjects, false)
-
 
         // Check which object is hovered
         if (intersects.length > 0) {
@@ -214,12 +192,10 @@ export default class ControlRoom {
         this.target = new THREE.Mesh(geo, mat)
         this.target.position.y = 1.5
         this.scene.add(this.target)
-
     }
 
 
     update() {
-
         // Update points on screen
         this.updatePOI()
 
@@ -237,5 +213,4 @@ export default class ControlRoom {
 
         // this.instance.position.set(pos.x, pos.y, pos.z)
     }
-
 }

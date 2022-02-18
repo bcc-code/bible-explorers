@@ -7,6 +7,7 @@ import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
+import Archive from './Archive.js'
 
 let instance = null
 
@@ -38,6 +39,7 @@ export default class Experience {
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
+        this.archive = new Archive()
 
         // Sizes resize event
         this.sizes.on('resize', () => {
