@@ -64,7 +64,7 @@ export default class Camera {
 
     setFlyControls() {
         this.controls = new FlyControls(this.instance, this.canvas)
-        this.controls.movementSpeed = 1000
+        this.controls.movementSpeed = 0.1
         this.controls.rollSpeed = Math.PI / 32
         this.controls.autoForward = false
         this.controls.dragToLook = true
