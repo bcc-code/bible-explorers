@@ -161,7 +161,7 @@ export default class ControlRoom {
 
             if (this.currentIntersect != null) {
                 if (this.currentIntersect.name === 'tv_4x4_screen') {
-                    new Timer()
+                    new Timer(10)
                 }
 
                 if (this.currentIntersect.name === 'tv_4x5_screen') {

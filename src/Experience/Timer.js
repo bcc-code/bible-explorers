@@ -1,7 +1,7 @@
 let timer = null
 
 export default class Timer {
-    constructor() {
+    constructor(minutes) {
         // Singleton
         if (timer)
             return timer
@@ -28,6 +28,8 @@ export default class Timer {
                 timer.stop();
             }
         });
+
+        timer.start(minutes);
     }
   
     updateInterfaceTime() {
@@ -52,9 +54,9 @@ export default class Timer {
         }
     }
   
-    start() {
+    start(minutes) {
         if (timer.remainingSeconds === 0) {
-            timer.init();
+            timer.remainingSeconds = minutes * 60;
         }
         
         timer.interval = setInterval(() => {
@@ -75,11 +77,6 @@ export default class Timer {
         timer.updateInterfaceControls();
     }
     
-    init() {
-        const inputMinutes = 10;
-        timer.remainingSeconds = inputMinutes * 60;
-    }
-  
     static getHTML() {
         return `
             <div class="timer">
