@@ -30,7 +30,7 @@ export default class CodeUnlock {
             })
         });
         
-        codeUnlock.el.backspace.addEventListener("click", codeUnlock.removeNumber);
+        codeUnlock.el.backspace.addEventListener("click", codeUnlock.remove);
         codeUnlock.el.confirm.addEventListener("click", codeUnlock.checkCode);
 
         document.onkeydown = (e) => {
