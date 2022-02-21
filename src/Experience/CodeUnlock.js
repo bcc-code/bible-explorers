@@ -1,3 +1,5 @@
+import Experience from "./Experience.js";
+
 let codeUnlock = null
 
 export default class CodeUnlock {
@@ -7,6 +9,7 @@ export default class CodeUnlock {
             return codeUnlock
 
         codeUnlock = this
+        codeUnlock.experience = new Experience()
 
         codeUnlock.htmlEl = document.createElement("div");
         codeUnlock.htmlEl.className = "overlay visible";
@@ -65,7 +68,7 @@ export default class CodeUnlock {
 
     checkCode() {
         if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
-            console.log("Correct code");
+            codeUnlock.experience.player.playCodeUnlockedSound()
             codeUnlock.destroy();
         } else {
             console.log("Incorrect code");

@@ -109,5 +109,4 @@ export default class Environment {
 
         this.screensMap.updateMaterials()
     }
-
 }
