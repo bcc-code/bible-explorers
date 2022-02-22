@@ -12,7 +12,6 @@ export default class World {
 
         // Wait for resources
         this.resources.on('ready', () => {
-
             // Setup
             this.controlRoom = new ControlRoom()
             this.environment = new Environment()

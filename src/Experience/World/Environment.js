@@ -6,13 +6,12 @@ export default class Environment {
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.video = this.experience.video
 
         // helpers
         const axesHelper = new THREE.AxesHelper(20)
         const gridHelper = new THREE.GridHelper(20, 20);
         this.scene.add(gridHelper, axesHelper);
-
-        this.video = document.getElementById('video')
 
         // Setup
         this.setEnvironment()

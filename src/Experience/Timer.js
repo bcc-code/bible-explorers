@@ -1,14 +1,17 @@
 let timer = null
 
 export default class Timer {
-    constructor(minutes) {
-        // Singleton
-        if (timer)
-            return timer
-
+    constructor() {
         timer = this
+        timer.interval = null;
+        timer.remainingSeconds = 0;
+    }
+
+    setMinutes(minutes) {
+        timer.minutes = minutes;
 
         timer.htmlEl = document.createElement("div");
+        timer.htmlEl.classList.add("timer");
         timer.htmlEl.innerHTML = Timer.getHTML();
         document.body.appendChild(timer.htmlEl);
     
@@ -17,9 +20,6 @@ export default class Timer {
             seconds: timer.htmlEl.querySelector(".timer__part--seconds"),
             control: timer.htmlEl.querySelector(".timer__btn--control")
         };
-    
-        timer.interval = null;
-        timer.remainingSeconds = 0;
     
         timer.el.control.addEventListener("mousedown", () => {
             if (timer.interval === null) {
@@ -76,18 +76,25 @@ export default class Timer {
         timer.interval = null;
         timer.updateInterfaceControls();
     }
+
+    destroy() {
+        timer.stop()
+
+        setTimeout(function() { 
+            timer.remainingSeconds = 0;
+            timer.htmlEl.remove();
+        }, 2500);
+    }
     
     static getHTML() {
         return `
-            <div class="timer">
-                <button type="button" class="timer__btn timer__btn--control timer__btn--start">
-                    <span class="material-icons">play_arrow</span>
-                </button>
-                <div class="timer__container">
-                    <span class="timer__part timer__part--minutes">10</span>
-                    <span class="timer__part">:</span>
-                    <span class="timer__part timer__part--seconds">00</span>
-                </div>
+            <button type="button" class="timer__btn timer__btn--control timer__btn--start">
+                <span class="material-icons">play_arrow</span>
+            </button>
+            <div class="timer__container">
+                <span class="timer__part timer__part--minutes">0${timer.minutes}</span>
+                <span class="timer__part">:</span>
+                <span class="timer__part timer__part--seconds">00</span>
             </div>
         `;
     }

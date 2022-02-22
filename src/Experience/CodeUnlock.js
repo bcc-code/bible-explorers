@@ -4,13 +4,12 @@ let codeUnlock = null
 
 export default class CodeUnlock {
     constructor() {
-        // Singleton
-        if (codeUnlock)
-            return codeUnlock
-
         codeUnlock = this
-        codeUnlock.experience = new Experience()
+        this.experience = new Experience()
+        this.timer = this.experience.timer
+    }
 
+    open() {
         codeUnlock.htmlEl = document.createElement("div");
         codeUnlock.htmlEl.className = "overlay visible";
         codeUnlock.htmlEl.innerHTML = CodeUnlock.getHTML();
@@ -68,7 +67,8 @@ export default class CodeUnlock {
 
     checkCode() {
         if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
-            codeUnlock.experience.player.playCodeUnlockedSound()
+            this.timer.destroy()
+            this.experience.player.playCodeUnlockedSound()
             codeUnlock.destroy();
         } else {
             console.log("Incorrect code");
@@ -107,6 +107,5 @@ export default class CodeUnlock {
 
     destroy() {
         codeUnlock.htmlEl.remove();
-        codeUnlock = null;
     }
 }
