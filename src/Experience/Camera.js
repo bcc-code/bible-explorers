@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "./Experience.js";
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export default class Camera {
 
@@ -23,7 +24,7 @@ export default class Camera {
 
         // Setup
         this.setInstance()
-        this.setFlyControls()
+        this.setOrbitControls()
     }
 
     setInstance() {
@@ -33,7 +34,7 @@ export default class Camera {
             0.1, //near plane
             1000 //far plane
         )
-        this.instance.position.set(0, 1.7, 0)
+        this.instance.position.set(-3, 1.7, 5)
         this.scene.add(this.instance)
 
         if (this.debug.active) {
@@ -62,12 +63,12 @@ export default class Camera {
         }
     }
 
-    setFlyControls() {
-        this.controls = new FlyControls(this.instance, this.canvas)
-        this.controls.movementSpeed = 1000
-        this.controls.rollSpeed = Math.PI / 32
-        this.controls.autoForward = false
-        this.controls.dragToLook = true
+    setOrbitControls() {
+        this.controls = new OrbitControls(this.instance, this.canvas)
+        // this.controls.movementSpeed = 1000
+        // this.controls.rollSpeed = Math.PI / 32
+        // this.controls.autoForward = false
+        // this.controls.dragToLook = true
 
         // this.controls.enableDamping = true
         // this.controls.dampingFactor = 0.25
