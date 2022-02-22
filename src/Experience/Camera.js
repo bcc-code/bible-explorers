@@ -1,12 +1,10 @@
 import * as THREE from 'three'
 import Experience from "./Experience.js";
-import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export default class Camera {
 
     constructor() {
-
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -14,15 +12,18 @@ export default class Camera {
         this.time = this.experience.time
         this.debug = this.experience.debug
 
-
         this.clock = new THREE.Clock()
 
         this.cameraDirection = new THREE.Vector3()
+        this.camVectors = document.querySelector('#camera-vectors')
         this.camPositionSpan = document.querySelector('#position')
         this.camLookAtSpan = document.querySelector('#lookingAt')
 
-
         // Setup
+        if (this.debug.active) {
+            this.camVectors.classList.remove('hidden')
+        }
+
         this.setInstance()
         this.setOrbitControls()
     }
@@ -106,9 +107,7 @@ export default class Camera {
                 .max(20)
                 .step(0.01)
                 .name('target z')
-
         }
-
     }
 
     resize() {
@@ -117,7 +116,6 @@ export default class Camera {
     }
 
     update() {
-
         // Update controls
         this.controls.update(0.1)
 
@@ -128,14 +126,16 @@ export default class Camera {
             this.cameraDirection.y * 100,
             this.cameraDirection.z * 100)
 
-        this.camPositionSpan.innerHTML =
-            `Position:(${this.instance.position.x.toFixed(1)}, 
-            ${this.instance.position.y.toFixed(1)}, 
-            ${this.instance.position.z.toFixed(1)})`
+        if (this.debug.active) {
+            this.camPositionSpan.innerHTML =
+                `Position:(${this.instance.position.x.toFixed(1)}, 
+                ${this.instance.position.y.toFixed(1)}, 
+                ${this.instance.position.z.toFixed(1)})`
 
-        this.camLookAtSpan.innerHTML =
-            `LookAt: (${(this.instance.position.x + this.cameraDirection.x).toFixed(1)},
-            ${(this.instance.position.y + this.cameraDirection.y).toFixed(1)},
-            ${(this.instance.position.z + this.cameraDirection.z).toFixed(1)})`
+            this.camLookAtSpan.innerHTML =
+                `LookAt: (${(this.instance.position.x + this.cameraDirection.x).toFixed(1)},
+                ${(this.instance.position.y + this.cameraDirection.y).toFixed(1)},
+                ${(this.instance.position.z + this.cameraDirection.z).toFixed(1)})`
+        }
     }
 }

@@ -53,7 +53,9 @@ export default class ControlRoom {
 
         // Events
         this.clickedObject()
-        this.cameraMovement()
+        if (this.debug.active) {
+            this.cameraMovement()
+        }
     }
 
     // Set scene
@@ -212,7 +214,6 @@ export default class ControlRoom {
     }
 
     update() {
-
         // Check intersection
         this.checkObjectIntersetion()
 

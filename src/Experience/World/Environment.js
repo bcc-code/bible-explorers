@@ -9,9 +9,12 @@ export default class Environment {
         this.video = this.experience.video
 
         // helpers
-        const axesHelper = new THREE.AxesHelper(20)
-        const gridHelper = new THREE.GridHelper(20, 20);
-        this.scene.add(gridHelper, axesHelper);
+
+        if (this.experience.debug.active) {
+            const axesHelper = new THREE.AxesHelper(20)
+            const gridHelper = new THREE.GridHelper(20, 20);
+            this.scene.add(gridHelper, axesHelper);
+        }
 
         // Setup
         this.setEnvironment()
@@ -72,13 +75,10 @@ export default class Environment {
             else if (e.key === 'r') {
                 this.video.currentTime = 0
             }
-
         }
 
         this.screensMap.updateMaterials = () => {
-
             this.scene.traverse((child) => {
-
                 if (child.name === 'tv_4x4_screen') {
                     child.material.map = this.screensMap.texture
                 }
