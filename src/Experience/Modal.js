@@ -1,7 +1,12 @@
+import Experience from "./Experience.js";
+
 let modal = null
 
 export default class Modal {
     constructor(html) {
+        this.experience = new Experience()
+        this.program = this.experience.program
+
         modal = this
 
         modal.htmlEl = document.createElement("div");
@@ -21,9 +26,12 @@ export default class Modal {
         modal.el.close.addEventListener("mousedown", () => {
             modal.destroy();
         });
+
+        this.program.canClick = false
     }
 
     destroy() {
+        this.program.canClick = true
         modal.htmlEl.remove()
         modal = null
     }

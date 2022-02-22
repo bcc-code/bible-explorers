@@ -7,10 +7,8 @@ import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
-import Archive from './Archive.js'
 import Player from './Player.js'
-import Timer from './Timer.js'
-import CodeUnlock from './CodeUnlock.js'
+import Program from './Program.js'
 
 let instance = null
 
@@ -42,11 +40,9 @@ export default class Experience {
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
-        this.archive = new Archive()
         this.player = new Player()
-        this.timer = new Timer()
-        this.codeUnlock = new CodeUnlock()
         this.video = document.getElementById('video')
+        this.program = new Program()
 
         // Sizes resize event
         this.sizes.on('resize', () => {

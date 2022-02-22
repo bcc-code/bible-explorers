@@ -1,0 +1,20 @@
+{
+    "0": {
+        "transitionIn": "zoomIn",
+        "transitionOut": "zoomOut",
+        "navigateTo": "Panel_Screen",
+        "clickableElements": ["Portal"]
+    },
+    "1": {
+        "transitionIn": "zoomIn",
+        "transitionOut": "zoomOut",
+        "navigateTo": "tv_4x4_screen",
+        "clickableElements": ["Panel_Screen"]
+    },
+    "2": {
+        "transitionIn": "",
+        "transitionOut": "",
+        "navigateTo": "",
+        "clickableElements": ["tv_4x4_screen", "tv_4x5_screen", "tv_16x9_5", "tv_16x9_5_screen"]
+    }
+}

@@ -1,7 +1,5 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
-import Timer from '../Timer.js'
-import CodeUnlock from '../CodeUnlock.js'
 import Modal from '../Modal.js'
 
 export default class ControlRoom {
@@ -17,7 +15,7 @@ export default class ControlRoom {
         this.pointer = this.experience.pointer
         this.time = this.experience.time
         this.debug = this.experience.debug
-
+        this.program = this.experience.program
 
         this.pointsOfInterests = []
         this.clickableObjects = []
@@ -82,7 +80,6 @@ export default class ControlRoom {
 
     // Set points of interest (POI)
     setPointsOfInterest() {
-
         const panelScreen = {
             name: 'Panel_Screen',
             position: new THREE.Vector3(1.6, 1.2, 0.01),
@@ -93,7 +90,6 @@ export default class ControlRoom {
     }
 
     updatePointsOfInterest() {
-
         for (const point of this.pointsOfInterests) {
             const screenPosition = point.position.clone()
             screenPosition.project(this.camera.instance)
@@ -116,6 +112,7 @@ export default class ControlRoom {
                     case 'tv_16x10':
                     case 'tv_16x9_5':
                     case 'Panel_Screen':
+                    case 'Portal':
                         this.clickableObjects.push(child)
                         this.originalMaterials[child.name] = child.material
                         break
@@ -124,6 +121,22 @@ export default class ControlRoom {
                         break
 
                 }
+            }
+        })
+    }
+
+    // Click events
+    clickedObject() {
+        window.addEventListener('mousedown', (event) => {
+            this.raycaster.setFromCamera(this.pointer, this.camera.instance)
+            const intersects = this.raycaster.intersectObjects(this.resources.scene.children)
+
+            if (intersects.length) {
+                this.currentIntersect = intersects[0].object
+            }
+
+            if (this.currentIntersect != null) {
+                this.program.control(this.currentIntersect)
             }
         })
     }
@@ -151,42 +164,8 @@ export default class ControlRoom {
         })
     }
 
-    // Click events
-    clickedObject() {
-        window.addEventListener('click', (event) => {
-            this.raycaster.setFromCamera(this.pointer, this.camera.instance)
-            const intersects = this.raycaster.intersectObjects(this.resources.scene.children)
-
-            if (intersects.length) {
-                this.currentIntersect = intersects[0].object
-            }
-
-            if (this.currentIntersect != null) {
-                if (this.currentIntersect.name === 'tv_4x4_screen') {
-                    new Timer(10)
-                }
-
-                if (this.currentIntersect.name === 'tv_4x5_screen') {
-                    new CodeUnlock()
-                }
-
-                if (this.currentIntersect.name === 'Panel_Screen') {
-                    new Modal('.screen-panel')
-                }
-
-                if (this.currentIntersect.name === 'Panel_Red_button') {
-                    new Modal('.screen-1')
-                }
-
-                if (this.currentIntersect.name === 'Panel_Green_button') {
-                    new Modal('.screen-2')
-                }
-            }
-        })
-    }
-
-     // Camera animation
-     cameraMovement() {
+    // Camera animation
+    cameraMovement() {
         this.settings = {
             playhead: 0.001,
         }

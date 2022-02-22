@@ -6,10 +6,11 @@ export default class CodeUnlock {
     constructor() {
         codeUnlock = this
         this.experience = new Experience()
-        this.timer = this.experience.timer
     }
 
     open() {
+        this.experience.program.canClick = false
+
         codeUnlock.htmlEl = document.createElement("div");
         codeUnlock.htmlEl.className = "overlay visible";
         codeUnlock.htmlEl.innerHTML = CodeUnlock.getHTML();
@@ -67,8 +68,9 @@ export default class CodeUnlock {
 
     checkCode() {
         if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
-            this.timer.destroy()
+            this.experience.program.timer.destroy()
             this.experience.player.playCodeUnlockedSound()
+            this.experience.program.canClick = true
             codeUnlock.destroy();
         } else {
             console.log("Incorrect code");
