@@ -14,11 +14,11 @@ export default class Modal {
             close: modal.htmlEl.querySelector(".close")
         };
 
-        modal.el.overlay.addEventListener("click", () => {
+        modal.el.overlay.addEventListener("mousedown", () => {
             modal.destroy();
         });
 
-        modal.el.close.addEventListener("click", () => {
+        modal.el.close.addEventListener("mousedown", () => {
             modal.destroy();
         });
     }

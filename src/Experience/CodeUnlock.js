@@ -25,13 +25,13 @@ export default class CodeUnlock {
         codeUnlock.secretCode = "1234"
         
         codeUnlock.el.numbers.forEach(function(number) {
-            number.addEventListener("click", () => {
+            number.addEventListener("mousedown", () => {
                 codeUnlock.add(number.textContent)
             })
         });
         
-        codeUnlock.el.backspace.addEventListener("click", codeUnlock.remove);
-        codeUnlock.el.confirm.addEventListener("click", codeUnlock.checkCode);
+        codeUnlock.el.backspace.addEventListener("mousedown", codeUnlock.remove);
+        codeUnlock.el.confirm.addEventListener("mousedown", codeUnlock.checkCode);
 
         document.onkeydown = (e) => {
             if (e.key === '1' ||

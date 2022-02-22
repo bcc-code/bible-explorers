@@ -50,7 +50,7 @@ export default class Archive {
         }
 
         archive.el.list.querySelectorAll("li").forEach(function(item) {
-            item.addEventListener("click", () => {
+            item.addEventListener("mousedown", () => {
                 archive.switchTab(item.dataset.id)
             });
         });

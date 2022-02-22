@@ -21,7 +21,7 @@ export default class Timer {
         timer.interval = null;
         timer.remainingSeconds = 0;
     
-        timer.el.control.addEventListener("click", () => {
+        timer.el.control.addEventListener("mousedown", () => {
             if (timer.interval === null) {
                 timer.start();
             } else {

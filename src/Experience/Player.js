@@ -10,7 +10,7 @@ export default class Player {
         player.audioLoader = new THREE.AudioLoader();
 
         player.el = document.querySelector(".sound");
-        player.el.addEventListener("click", player.toggleBgMusic);
+        player.el.addEventListener("mousedown", player.toggleBgMusic);
     }
 
     toggleBgMusic() {
