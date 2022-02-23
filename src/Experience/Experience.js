@@ -7,8 +7,8 @@ import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
-import Player from './Player.js'
-import Program from './Program.js'
+import Player from './Audio/Audio.js'
+import Program from './Progress/Program.js'
 
 let instance = null
 

@@ -1,5 +1,5 @@
 import data from "./archive.json";
-import Modal from './Modal.js'
+import Modal from '../Utils/Modal.js'
 
 let archive = null
 
