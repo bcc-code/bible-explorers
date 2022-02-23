@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
-import Modal from '../Utils/Modal.js'
 
 export default class ControlRoom {
     constructor() {
@@ -119,7 +118,6 @@ export default class ControlRoom {
 
                     default:
                         break
-
                 }
             }
         })

@@ -7,7 +7,7 @@ import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
-import Player from './Audio/Audio.js'
+import Audio from './Extras/Audio.js'
 import Program from './Progress/Program.js'
 
 let instance = null
@@ -40,7 +40,7 @@ export default class Experience {
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
-        this.player = new Player()
+        this.audio = new Audio()
         this.video = document.getElementById('video')
         this.program = new Program()
 

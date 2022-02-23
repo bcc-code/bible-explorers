@@ -2,7 +2,7 @@ import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
 import Timer from '../Extras/Timer.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
-import program from "./program.json";
+import data from "./program.json";
 
 export default class Program {
     constructor() {
@@ -14,6 +14,8 @@ export default class Program {
 
         this.progress = JSON.parse(localStorage.getItem('progress')) || []
         this.currentStep = this.progress.length
+        this.totalSteps = Object.keys(data).length
+
         this.clickedObject = null
         this.canClick = false
     }
@@ -60,8 +62,8 @@ export default class Program {
     }
 
     isCurrentStep() {
-        return this.currentStep in program &&
-            program[this.currentStep].clickableElements.includes(this.clickedObject.name) 
+        return this.currentStep in data &&
+            data[this.currentStep].clickableElements.includes(this.clickedObject.name) 
     }
 
     isPreviousStep() {

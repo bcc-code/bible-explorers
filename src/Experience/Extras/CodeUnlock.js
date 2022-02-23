@@ -69,7 +69,7 @@ export default class CodeUnlock {
     checkCode() {
         if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
             this.experience.program.timer.destroy()
-            this.experience.player.playCodeUnlockedSound()
+            this.experience.audio.playCodeUnlockedSound()
             this.experience.program.canClick = true
             codeUnlock.destroy();
         } else {
