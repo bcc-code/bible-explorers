@@ -1,7 +1,7 @@
-import Experience from "./Experience.js"
-import Archive from './Archive.js'
-import Timer from './Timer.js'
-import CodeUnlock from './CodeUnlock.js'
+import Experience from "../Experience.js"
+import Archive from '../Extras/Archive.js'
+import Timer from '../Extras/Timer.js'
+import CodeUnlock from '../Extras/CodeUnlock.js'
 import program from "./program.json";
 
 export default class Program {
@@ -15,7 +15,7 @@ export default class Program {
         this.progress = JSON.parse(localStorage.getItem('progress')) || []
         this.currentStep = this.progress.length
         this.clickedObject = null
-        this.canClick = true
+        this.canClick = false
     }
 
     // Click events
