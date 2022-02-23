@@ -23,17 +23,14 @@ export default class Program {
         if (!this.canClick) return
 
         this.clickedObject = currentIntersect
-        console.log(currentIntersect.name);
 
-        if (this.isCurrentStep(currentIntersect.name)) {
-            console.log('isCurrentStep')
+        if (this.isCurrentStep()) {
             this.currentStep++
             this.startAction()
             this.updateLocalStorage()
             this.updateProgressBar()
         }
         else if (this.isPreviousStep()) {
-            console.log('isPreviousStep')
             this.startAction()
         }
     }
@@ -63,7 +60,8 @@ export default class Program {
     }
 
     isCurrentStep() {
-        return program[this.currentStep].clickableElements.includes(this.clickedObject.name) 
+        return this.currentStep in program &&
+            program[this.currentStep].clickableElements.includes(this.clickedObject.name) 
     }
 
     isPreviousStep() {
