@@ -9,6 +9,7 @@ import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
 import Audio from './Extras/Audio.js'
 import Program from './Progress/Program.js'
+import ProgressBar from './Extras/ProgressBar.js'
 
 let instance = null
 
@@ -43,6 +44,7 @@ export default class Experience {
         this.audio = new Audio()
         this.video = document.getElementById('video')
         this.program = new Program()
+        this.progressBar = new ProgressBar()
 
         // Sizes resize event
         this.sizes.on('resize', () => {

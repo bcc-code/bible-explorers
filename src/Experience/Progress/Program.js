@@ -28,6 +28,7 @@ export default class Program {
 
         if (this.isCurrentStep()) {
             this.currentStep++
+            this.experience.progressBar.update()
             this.startAction()
             this.updateLocalStorage()
             this.updateProgressBar()
