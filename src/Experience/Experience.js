@@ -2,14 +2,12 @@ import * as THREE from 'three'
 import { Debug, StatsModule } from './Utils/Debug.js'
 import Sizes from "./Utils/Sizes.js"
 import Time from "./Utils/Time.js"
+import Resources from './Utils/Resources.js'
+import MouseMove from './Utils/MouseMove.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
-import World from './World/World.js'
-import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
-import Audio from './Extras/Audio.js'
-import Program from './Progress/Program.js'
-import ProgressBar from './Extras/ProgressBar.js'
+import World from './World/World.js'
 
 let instance = null
 
@@ -27,7 +25,6 @@ export default class Experience {
 
         // Options
         this.canvas = canvas
-        this.loaded = false
 
         // Setup
         this.debug = new Debug()
@@ -37,14 +34,10 @@ export default class Experience {
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
         this.raycaster = new THREE.Raycaster()
-        this.pointer = new THREE.Vector2()
+        this.pointer = new MouseMove()
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
-        this.audio = new Audio()
-        this.video = document.getElementById('video')
-        this.program = new Program()
-        this.progressBar = new ProgressBar()
 
         // Sizes resize event
         this.sizes.on('resize', () => {
@@ -68,30 +61,5 @@ export default class Experience {
         this.stats.update()
         this.renderer.update()
     }
-
-    destroy() {
-        this.sizes.off('resize')
-        this.time.off('animation')
-
-        // Treverse the whole scene
-        this.scene.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-                child.geometry.dispose()
-
-                for (const key in child.material) {
-                    const value = child.material[key]
-
-                    if (value && typeof value.dispose === 'function') {
-                        value.dispose()
-                    }
-                }
-            }
-        })
-
-        this.camera.controls.dispose()
-        this.renderer.instance.dispose()
-
-        if (this.debug.active)
-            this.debug.ui.destroy()
-    }
+   
 }

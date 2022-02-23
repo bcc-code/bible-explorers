@@ -6,9 +6,6 @@ export default class Environment {
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
-        this.video = this.experience.video
-
-        // helpers
 
         if (this.experience.debug.active) {
             const axesHelper = new THREE.AxesHelper(20)
@@ -52,30 +49,30 @@ export default class Environment {
         this.screensMap.screen_16x9_5.wrapS = THREE.RepeatWrapping
         this.screensMap.screen_16x9_5.wrapT = THREE.RepeatWrapping
 
-        this.screensMap.video = new THREE.VideoTexture(this.video)
-        this.screensMap.video.encoding = THREE.sRGBEncoding
-        this.screensMap.video.flipY = false
-        this.screensMap.video.minFilter = THREE.LinearFilter
-        this.screensMap.video.magFilter = THREE.LinearFilter
-        this.screensMap.video.rotation = Math.PI * 0.5
-        this.screensMap.video.wrapS = THREE.RepeatWrapping
-        this.screensMap.video.wrapT = THREE.RepeatWrapping
+        // this.screensMap.video = new THREE.VideoTexture(this.video)
+        // this.screensMap.video.encoding = THREE.sRGBEncoding
+        // this.screensMap.video.flipY = false
+        // this.screensMap.video.minFilter = THREE.LinearFilter
+        // this.screensMap.video.magFilter = THREE.LinearFilter
+        // this.screensMap.video.rotation = Math.PI * 0.5
+        // this.screensMap.video.wrapS = THREE.RepeatWrapping
+        // this.screensMap.video.wrapT = THREE.RepeatWrapping
 
-        document.onkeydown = (e) => {
-            if (e.key === 'p') {
-                this.video.play()
-            }
-            else if (e.key === ' ') {
-                this.video.pause()
-            }
-            else if (e.key === 's') {
-                this.video.pause()
-                this.video.currentTime = 0
-            }
-            else if (e.key === 'r') {
-                this.video.currentTime = 0
-            }
-        }
+        // document.onkeydown = (e) => {
+        //     if (e.key === 'p') {
+        //         this.video.play()
+        //     }
+        //     else if (e.key === ' ') {
+        //         this.video.pause()
+        //     }
+        //     else if (e.key === 's') {
+        //         this.video.pause()
+        //         this.video.currentTime = 0
+        //     }
+        //     else if (e.key === 'r') {
+        //         this.video.currentTime = 0
+        //     }
+        // }
 
         this.screensMap.updateMaterials = () => {
             this.scene.traverse((child) => {
@@ -93,11 +90,6 @@ export default class Environment {
 
                 if (child.name === 'tv_16x9_5_screen') {
                     child.material.map = this.screensMap.screen_16x9_5
-                }
-
-                if (child.name === 'Portal') {
-                    child.material.map = this.screensMap.video
-                    child.material.toneMapped = false
                 }
 
                 if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {

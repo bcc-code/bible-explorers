@@ -5,7 +5,7 @@ let progressBar = null
 export default class ProgressBar {
     constructor() {
         this.experience = new Experience()
-        this.program = this.experience.program
+        this.program = this.experience.world.program
         this.stepWidth = 100 / this.program.totalSteps;
         progressBar = this
 

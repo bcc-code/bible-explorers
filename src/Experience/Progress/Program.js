@@ -10,7 +10,6 @@ export default class Program {
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
-        this.video = this.experience.video
 
         this.progress = JSON.parse(localStorage.getItem('progress')) || []
         this.currentStep = this.progress.length
@@ -53,13 +52,13 @@ export default class Program {
             this.codeUnlock.open()
         }
 
-        if (this.clickedObject.name === 'Portal') {
-            if (this.video.paused) {
-                this.video.play()
-            } else {
-                this.video.pause()
-            }
-        }
+        // if (this.clickedObject.name === 'Portal') {
+        //     if (this.video.paused) {
+        //         this.video.play()
+        //     } else {
+        //         this.video.pause()
+        //     }
+        // }
     }
 
     isCurrentStep() {
