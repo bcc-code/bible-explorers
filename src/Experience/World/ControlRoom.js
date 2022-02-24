@@ -29,7 +29,6 @@ export default class ControlRoom {
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
-        this.setNewCamera()
         this.storeClickableObjects()
         this.setHightlight()
 
@@ -44,7 +43,12 @@ export default class ControlRoom {
     }
 
     setNewCamera() {
-        console.log(this.resources);
+        this.blenderCam = this.resources.cameras[0].parent
+
+        this.camera.instance.position.copy(this.blenderCam.position)
+        this.camera.instance.quaternion.copy(this.blenderCam.quaternion)
+        console.log(this.camera.instance);
+
     }
 
     checkObjectIntersetion() {

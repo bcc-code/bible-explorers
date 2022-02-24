@@ -6,21 +6,43 @@ export default class Video {
         this.experience = new Experience()
         this.scene = this.experience.scene
 
-        const video = document.getElementById('video')
-
+        this.video = document.getElementById('video')
         // Setup
         this.setInstance()
+        this.setControls()
     }
 
     setInstance() {
-        const geometry = new THREE.PlaneGeometry(1, 1)
-        const material = new THREE.MeshMatcapMaterial({
-            color: 0xff0000,
+        this.texture = new THREE.VideoTexture(this.video)
+        this.texture.minFilter = THREE.LinearFilter
+        this.texture.magFilter = THREE.LinearFilter
+
+        this.geometry = new THREE.PlaneGeometry(16, 9)
+        this.material = new THREE.MeshBasicMaterial({
+            map: this.texture,
             side: THREE.DoubleSide
         })
-
-        const plane = new THREE.Mesh(geometry, material)
-        plane.position.set(0, 2, 0)
+        const plane = new THREE.Mesh(this.geometry, this.material)
+        plane.position.set(20, 3, 0)
+        plane.rotation.y -=  Math.PI * 0.5
         this.scene.add(plane)
+    }
+
+    setControls() {
+        document.onkeydown = (e) => {
+            if (e.key === 'p') {
+                this.video.play()
+            }
+            else if (e.key === ' ') {
+                this.video.pause()
+            }
+            else if (e.key === 's') {
+                this.video.pause()
+                this.video.currentTime = 0
+            }
+            else if (e.key === 'r') {
+                this.video.currentTime = 0
+            }
+        }
     }
 }

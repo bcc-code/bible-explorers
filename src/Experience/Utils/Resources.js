@@ -62,9 +62,6 @@ export default class Resources extends EventEmitter {
         // Load each source
         for (const source of this.sources) {
 
-
-            console.log(source);
-
             if (source.type === 'gltfModel') {
                 this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
                 this.loaders.gltfLoader.load(

@@ -16,23 +16,23 @@ export default class Camera {
     }
 
     setInstance() {
-        this.instance = new THREE.PerspectiveCamera(75, this.sizes.width / this.sizes.height, 0.1, 1000)
-        this.instance.position.set(0, 1.7, 5)
+        this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 1000)
+        this.instance.position.set(0, 1.7, 2)
         this.scene.add(this.instance)
 
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
-        // this.controls.target.y = 1.7
-        // this.controls.enableDamping = true;
-        // this.controls.dampingFactor = 0.5;
+        this.controls.target.y = 1.7
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.5;
 
-        this.controls.addEventListener('end', () => {
-            this.updateCameraOrbit()
-        })
+        // this.controls.addEventListener('end', () => {
+        //     this.updateCameraOrbit()
+        // })
 
-        this.updateCameraOrbit()
+        // this.updateCameraOrbit()
     }
 
     updateCameraOrbit() {

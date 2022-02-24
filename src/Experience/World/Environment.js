@@ -8,8 +8,8 @@ export default class Environment {
         this.resources = this.experience.resources
 
         if (this.experience.debug.active) {
-            const axesHelper = new THREE.AxesHelper(20)
-            const gridHelper = new THREE.GridHelper(20, 20);
+            const axesHelper = new THREE.AxesHelper(40)
+            const gridHelper = new THREE.GridHelper(40, 40);
             this.scene.add(gridHelper, axesHelper);
         }
 
@@ -25,71 +25,47 @@ export default class Environment {
     }
 
     setScreens() {
-        this.screensMap = {}
+        this.images = {}
 
-        this.screensMap.intensity = 0.4
-        this.screensMap.texture = this.resources.items.UVChecker
-        this.screensMap.texture.encoding = THREE.sRGBEncoding
-        this.screensMap.texture.flipY = false
-        this.screensMap.texture.rotation = Math.PI * 0.5
-        this.screensMap.texture.wrapS = THREE.RepeatWrapping
-        this.screensMap.texture.wrapT = THREE.RepeatWrapping
+        this.images.intensity = 0.4
+        this.images.texture = this.resources.items.UVChecker
+        this.images.texture.encoding = THREE.sRGBEncoding
+        this.images.texture.flipY = false
+        this.images.texture.rotation = Math.PI * 0.5
+        this.images.texture.wrapS = THREE.RepeatWrapping
+        this.images.texture.wrapT = THREE.RepeatWrapping
 
-        this.screensMap.screen16x10 = this.resources.items.screen_16x10
-        this.screensMap.screen16x10.encoding = THREE.sRGBEncoding
-        this.screensMap.screen16x10.flipY = false
-        this.screensMap.screen16x10.rotation = 0
-        this.screensMap.screen16x10.wrapS = THREE.RepeatWrapping
-        this.screensMap.screen16x10.wrapT = THREE.RepeatWrapping
+        this.images.screen16x10 = this.resources.items.screen_16x10
+        this.images.screen16x10.encoding = THREE.sRGBEncoding
+        this.images.screen16x10.flipY = false
+        this.images.screen16x10.rotation = 0
+        this.images.screen16x10.wrapS = THREE.RepeatWrapping
+        this.images.screen16x10.wrapT = THREE.RepeatWrapping
 
-        this.screensMap.screen_16x9_5 = this.resources.items.screen_16x9_5
-        this.screensMap.screen_16x9_5.encoding = THREE.sRGBEncoding
-        this.screensMap.screen_16x9_5.flipY = false
-        this.screensMap.screen_16x9_5.rotation = Math.PI * 0.5
-        this.screensMap.screen_16x9_5.wrapS = THREE.RepeatWrapping
-        this.screensMap.screen_16x9_5.wrapT = THREE.RepeatWrapping
+        this.images.screen_16x9_5 = this.resources.items.screen_16x9_5
+        this.images.screen_16x9_5.encoding = THREE.sRGBEncoding
+        this.images.screen_16x9_5.flipY = false
+        this.images.screen_16x9_5.rotation = Math.PI * 0.5
+        this.images.screen_16x9_5.wrapS = THREE.RepeatWrapping
+        this.images.screen_16x9_5.wrapT = THREE.RepeatWrapping
 
-        // this.screensMap.video = new THREE.VideoTexture(this.video)
-        // this.screensMap.video.encoding = THREE.sRGBEncoding
-        // this.screensMap.video.flipY = false
-        // this.screensMap.video.minFilter = THREE.LinearFilter
-        // this.screensMap.video.magFilter = THREE.LinearFilter
-        // this.screensMap.video.rotation = Math.PI * 0.5
-        // this.screensMap.video.wrapS = THREE.RepeatWrapping
-        // this.screensMap.video.wrapT = THREE.RepeatWrapping
 
-        // document.onkeydown = (e) => {
-        //     if (e.key === 'p') {
-        //         this.video.play()
-        //     }
-        //     else if (e.key === ' ') {
-        //         this.video.pause()
-        //     }
-        //     else if (e.key === 's') {
-        //         this.video.pause()
-        //         this.video.currentTime = 0
-        //     }
-        //     else if (e.key === 'r') {
-        //         this.video.currentTime = 0
-        //     }
-        // }
-
-        this.screensMap.updateMaterials = () => {
+        this.images.updateMaterials = () => {
             this.scene.traverse((child) => {
                 if (child.name === 'tv_4x4_screen') {
-                    child.material.map = this.screensMap.texture
+                    child.material.map = this.images.texture
                 }
 
                 if (child.name === 'tv_4x5_screen') {
-                    child.material.map = this.screensMap.texture
+                    child.material.map = this.images.texture
                 }
 
                 if (child.name === 'tv_16x10_screen') {
-                    child.material.map = this.screensMap.screen16x10
+                    child.material.map = this.images.screen16x10
                 }
 
                 if (child.name === 'tv_16x9_5_screen') {
-                    child.material.map = this.screensMap.screen_16x9_5
+                    child.material.map = this.images.screen_16x9_5
                 }
 
                 if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
@@ -98,6 +74,6 @@ export default class Environment {
             })
         }
 
-        this.screensMap.updateMaterials()
+        this.images.updateMaterials()
     }
 }
