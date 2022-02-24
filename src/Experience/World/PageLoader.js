@@ -1,8 +1,10 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
+import { gsap } from 'gsap'
 
+const loadingBarElement = document.querySelector('.loading-bar')
 
-export default class Loader {
+export default class PageLoader {
     constructor() {
 
         this.experience = new Experience()
@@ -38,4 +40,14 @@ export default class Loader {
         this.scene.add(this.overlay)
     }
 
+    progress(itemsLoaded, itemsTotal) {
+        const progressRatio = itemsLoaded / itemsTotal
+        loadingBarElement.style.transform = `scaleX(${progressRatio})`
+    }
+
+    loaded() {
+        gsap.to(this.overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0, delay: 1 })
+        loadingBarElement.classList.add('ended')
+        loadingBarElement.style.transform = ''
+    }
 }

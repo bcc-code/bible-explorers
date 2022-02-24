@@ -1,10 +1,12 @@
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
+import PointsOfInterests from '../Extras/PointsOfInterests.js'
 import Video from '../Extras/Video.js'
 import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
+
 
 export default class World {
     constructor() {
@@ -20,7 +22,7 @@ export default class World {
             // Setup
             this.controlRoom = new ControlRoom()
             this.environment = new Environment()
-
+            this.pointsOfInterests = new PointsOfInterests()
             this.video = new Video()
             this.audio = new Audio()
             this.program = new Program()
@@ -31,6 +33,9 @@ export default class World {
     update() {
         if (this.controlRoom) {
             this.controlRoom.update()
+
+            if (this.experience.loaded)
+                this.pointsOfInterests.update()
         }
     }
 }

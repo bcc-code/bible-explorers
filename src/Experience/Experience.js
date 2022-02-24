@@ -8,6 +8,7 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import sources from './Sources.js'
 import World from './World/World.js'
+import PageLoader from './World/PageLoader.js'
 
 let instance = null
 
@@ -25,6 +26,7 @@ export default class Experience {
 
         // Options
         this.canvas = canvas
+        this.loaded = false
 
         // Setup
         this.debug = new Debug()
@@ -33,6 +35,7 @@ export default class Experience {
         this.time = new Time()
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
+        this.pageLoader = new PageLoader()
         this.raycaster = new THREE.Raycaster()
         this.pointer = new MouseMove()
         this.camera = new Camera()

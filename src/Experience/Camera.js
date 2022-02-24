@@ -19,6 +19,7 @@ export default class Camera {
         this.instance = new THREE.PerspectiveCamera(75, this.sizes.width / this.sizes.height, 0.1, 1000)
         this.instance.position.set(0, 1.7, 5)
         this.scene.add(this.instance)
+
     }
 
     setOrbitControls() {

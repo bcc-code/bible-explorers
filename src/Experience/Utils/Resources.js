@@ -2,11 +2,8 @@ import * as THREE from 'three'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
-import Loader from '../World/Loader.js'
 import Experience from '../Experience.js'
-import { gsap } from 'gsap'
 
-const loadingBarElement = document.querySelector('.loading-bar')
 
 export default class Resources extends EventEmitter {
 
@@ -15,7 +12,6 @@ export default class Resources extends EventEmitter {
         super()
 
         this.experience = new Experience()
-        this.pageLoader = new Loader()
 
         // Options
         this.sources = sources
@@ -35,9 +31,7 @@ export default class Resources extends EventEmitter {
             // Loaded
             () => {
                 window.setTimeout(() => {
-                    gsap.to(this.pageLoader.overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0, delay: 1 })
-                    loadingBarElement.classList.add('ended')
-                    loadingBarElement.style.transform = ''
+                this.experience.pageLoader.loaded()
                 }, 500)
 
                 window.setTimeout(() => {
@@ -47,8 +41,7 @@ export default class Resources extends EventEmitter {
 
             // Progress
             (itemUrl, itemsLoaded, itemsTotal) => {
-                const progressRatio = itemsLoaded / itemsTotal
-                loadingBarElement.style.transform = `scaleX(${progressRatio})`
+                this.experience.pageLoader.progress(itemsLoaded, itemsTotal)
             }
         )
     }
@@ -68,6 +61,9 @@ export default class Resources extends EventEmitter {
     startLoading() {
         // Load each source
         for (const source of this.sources) {
+
+
+            console.log(source);
 
             if (source.type === 'gltfModel') {
                 this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)

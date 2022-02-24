@@ -16,7 +16,6 @@ export default class ControlRoom {
         this.debug = this.experience.debug
         this.program = this.experience.program
 
-
         this.clickableObjects = []
         this.currentIntersect = null
         this.originalMaterials = {}
@@ -28,7 +27,9 @@ export default class ControlRoom {
 
         // Setup
         this.resources = this.resources.items.controlRoom
+
         this.setModel()
+        this.setNewCamera()
         this.storeClickableObjects()
         this.setHightlight()
 
@@ -40,6 +41,10 @@ export default class ControlRoom {
     setModel() {
         this.model = this.resources.scene
         this.scene.add(this.model)
+    }
+
+    setNewCamera() {
+        console.log(this.resources);
     }
 
     checkObjectIntersetion() {
