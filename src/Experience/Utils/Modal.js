@@ -5,7 +5,7 @@ let modal = null
 export default class Modal {
     constructor(html) {
         this.experience = new Experience()
-        this.program = this.experience.program
+        this.program = this.experience.world.program
 
         modal = this
 

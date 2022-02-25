@@ -56,7 +56,6 @@ export default class Resources extends EventEmitter {
 
         this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
         this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
-        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
     }
 
     startLoading() {
@@ -80,19 +79,11 @@ export default class Resources extends EventEmitter {
                     }
                 )
             }
-            else if (source.type === 'cubeTexture') {
-                this.loaders.cubeTextureLoader.load(
-                    source.path,
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
             else if (source.type === 'video') {
                 const video = document.createElement('video')
                 video.crossOrigin = 'anonymous'
                 video.muted = false
-                video.loop = true
+                video.loop = false
                 video.controls = true
                 video.playsInline = true
                 video.autoplay = false
@@ -100,7 +91,10 @@ export default class Resources extends EventEmitter {
 
                 video.oncanplay = () => {
                     const texture = new THREE.VideoTexture(video)
-
+                    texture.minFilter = THREE.LinearFilter
+                    texture.magFilter = THREE.LinearFilter
+                    texture.encoding = THREE.RGBADepthPacking
+                    
                     this.mediaItems.push(
                         {
                             item: texture,

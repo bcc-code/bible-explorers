@@ -16,9 +16,6 @@ export default class Video {
     setInstance() {
 
         this.texture = this.mediaItems[0].item
-        this.texture.minFilter = THREE.LinearFilter
-        this.texture.magFilter = THREE.LinearFilter
-
         this.geometry = new THREE.PlaneGeometry(16, 9)
         this.material = new THREE.MeshBasicMaterial({
             map: this.texture,

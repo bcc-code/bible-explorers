@@ -14,26 +14,21 @@ export default class ControlRoom {
         this.pointer = this.experience.pointer
         this.time = this.experience.time
         this.debug = this.experience.debug
-        this.program = this.experience.program
+        this.program = this.experience.world.program
 
         this.clickableObjects = []
         this.currentIntersect = null
-        this.originalMaterials = {}
-        this.highlightMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            visible: false
-        })
-        this.highlightedObjects = []
 
         // Setup
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
         this.storeClickableObjects()
-        this.setHightlight()
 
         // Events
-        this.clickedObject()
+        window.addEventListener('mousedown', () => {
+            // this.clickedObject()
+        })
     }
 
     // Set scene
@@ -44,7 +39,6 @@ export default class ControlRoom {
 
     checkObjectIntersetion() {
         this.raycaster.setFromCamera(this.pointer, this.camera.instance)
-
         const intersects = this.raycaster.intersectObjects(this.clickableObjects, false)
 
         if (intersects.length > 0) {
@@ -52,6 +46,7 @@ export default class ControlRoom {
         } else {
             this.currentIntersect = null
         }
+
     }
 
     // Store clickable objects
@@ -66,7 +61,6 @@ export default class ControlRoom {
                     case 'Panel_Screen':
                     case 'Portal':
                         this.clickableObjects.push(child)
-                        this.originalMaterials[child.name] = child.material
                         break
 
                     default:
@@ -78,18 +72,14 @@ export default class ControlRoom {
 
     // Click events
     clickedObject() {
-        window.addEventListener('mousedown', (event) => {
-            this.raycaster.setFromCamera(this.pointer, this.camera.instance)
-            const intersects = this.raycaster.intersectObjects(this.resources.scene.children)
 
-            if (intersects.length) {
-                this.currentIntersect = intersects[0].object
-            }
+        if (intersects.length) {
+            this.currentIntersect = intersects[0].object
+        }
 
-            if (this.currentIntersect != null) {
-                this.program.control(this.currentIntersect)
-            }
-        })
+        if (this.currentIntersect != null) {
+            this.program.control(this.currentIntersect)
+        }
     }
 
     // Highlight objects
@@ -119,8 +109,6 @@ export default class ControlRoom {
         // Check intersection
         this.checkObjectIntersetion()
 
-        // Hightlight hovered object
-        this.highlightObject()
 
     }
 }

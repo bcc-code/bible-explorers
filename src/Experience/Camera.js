@@ -19,13 +19,10 @@ export default class Camera {
 
         // Options
 
-        this.options = {
-            screensCamera: false,
-            panelCamera: false
-        }
-
         this.cameraSettings = {
-            ro: new THREE.Vector3(0, 1.7, 5),
+            screensCamera: false,
+            panelCamera: false,
+            ro: new THREE.Vector3(-3, 1.7, 5),
             lookAt: new THREE.Vector3(0, 1.7, 0),
             zoom: 1.15,
             isCameraFocused: false
@@ -39,40 +36,50 @@ export default class Camera {
         this.cameraPivotGroup = new THREE.Group()
 
         if (this.debug.active) {
-            const helper1 = new THREE.CameraHelper(this.screensCamera)
-            const helper2 = new THREE.CameraHelper(this.panelCamera)
-
-            this.scene.add(helper1, helper2)
-
-            const camera = this.debug.ui.addFolder('Camera')
-
-            camera
-                .add(this.options, 'screensCamera')
-                .onFinishChange((isFocused) => {
-                    if (isFocused) {
-                        this.switchCamera()
-                    } else {
-                        this.switchCameraBack()
-                    }
-                })
-                .name('Screens Camera')
-
-            camera
-                .add(this.options, 'panelCamera')
-                .onFinishChange((isFocused) => {
-                    if (isFocused) {
-                        this.switchCamera()
-                    } else {
-                        this.switchCameraBack()
-                    }
-                })
-                .name('Panel Camera')
-
-
-            const cameraPosition = camera.addFolder('Camera position')
-
-
+            this.addGUIControls()
         }
+
+    }
+
+    addGUIControls() {
+        const helper1 = new THREE.CameraHelper(this.screensCamera)
+        const helper2 = new THREE.CameraHelper(this.panelCamera)
+
+        this.scene.add(helper1, helper2)
+
+        const camera = this.debug.ui.addFolder('Camera')
+        camera.add(this.cameraSettings, 'zoom', 0.15, 5).name('Focal length')
+        camera
+            .add(this.cameraSettings, 'screensCamera')
+            .onFinishChange((isFocused) => {
+                if (isFocused) {
+                    this.switchCamera()
+                } else {
+                    this.switchCameraBack()
+                }
+            })
+            .name('Screens Camera')
+
+        camera
+            .add(this.cameraSettings, 'panelCamera')
+            .onFinishChange((isFocused) => {
+                if (isFocused) {
+                    this.switchCamera()
+                } else {
+                    this.switchCameraBack()
+                }
+            })
+            .name('Panel Camera')
+
+        const lookAtPosition = camera.addFolder('look at point position')
+        lookAtPosition.add(this.cameraSettings.lookAt, 'x', -20, 20).name('X')
+        lookAtPosition.add(this.cameraSettings.lookAt, 'y', -20, 20).name('Y')
+        lookAtPosition.add(this.cameraSettings.lookAt, 'z', -20, 20).name('Z')
+
+        const cameraPosition = camera.addFolder('Camera position')
+        cameraPosition.add(this.cameraSettings.ro, 'x', -20, 20).name('X')
+        cameraPosition.add(this.cameraSettings.ro, 'y', -20, 20).name('Y')
+        cameraPosition.add(this.cameraSettings.ro, 'z', -20, 20).name('Z')
 
     }
 
