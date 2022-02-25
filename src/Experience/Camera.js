@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "./Experience.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import gsap from 'gsap';
 
 export default class Camera {
 
@@ -11,29 +12,28 @@ export default class Camera {
         this.canvas = this.experience.canvas
         this.debug = this.experience.debug
 
-        // Setup
-        this.setInstance()
-        this.setOrbitControls()
-        this.setScreensCamera()
-        this.setPanelCamera()
-
         // Options
 
         this.cameraSettings = {
-            screensCamera: false,
-            panelCamera: false,
-            ro: new THREE.Vector3(-3, 1.7, 5),
+            position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),
             zoom: 1.15,
-            isCameraFocused: false
+            isCameraFocused: false,
         }
 
-        this.cameraTween = null
+        this.newCameraSettings = {
+            position: new THREE.Vector3(0, 1.7, 1.5),
+            lookAt: new THREE.Vector3(0.1, 1.7, 1.5),
+            isCameraFocused: false,
+        }
+
         this.lastCameraSettings = {
-            position: new THREE.Vector3(0, 0, 0)
+            position: new THREE.Vector3(0, 1.7, 10)
         }
 
-        this.cameraPivotGroup = new THREE.Group()
+        // Setup
+        this.setInstance()
+        this.setOrbitControls()
 
         if (this.debug.active) {
             this.addGUIControls()
@@ -42,82 +42,97 @@ export default class Camera {
     }
 
     addGUIControls() {
-        const helper1 = new THREE.CameraHelper(this.screensCamera)
-        const helper2 = new THREE.CameraHelper(this.panelCamera)
+        const helper1 = new THREE.CameraHelper(this.instance)
 
-        this.scene.add(helper1, helper2)
+        this.scene.add(helper1)
+
 
         const camera = this.debug.ui.addFolder('Camera')
         camera.add(this.cameraSettings, 'zoom', 0.15, 5).name('Focal length')
         camera
-            .add(this.cameraSettings, 'screensCamera')
+            .add(this.cameraSettings, 'isCameraFocused')
             .onFinishChange((isFocused) => {
                 if (isFocused) {
-                    this.switchCamera()
+                    this.focusCamera()
                 } else {
-                    this.switchCameraBack()
+                    this.defocusCamera()
                 }
             })
-            .name('Screens Camera')
+            .name('Action Camera')
 
-        camera
-            .add(this.cameraSettings, 'panelCamera')
-            .onFinishChange((isFocused) => {
-                if (isFocused) {
-                    this.switchCamera()
-                } else {
-                    this.switchCameraBack()
-                }
-            })
-            .name('Panel Camera')
+        const cameraPosition = camera.addFolder('Camera position')
+        cameraPosition.add(this.cameraSettings.position, 'x', -20, 20).name('X')
+        cameraPosition.add(this.cameraSettings.position, 'y', -20, 20).name('Y')
+        cameraPosition.add(this.cameraSettings.position, 'z', -20, 20).name('Z')
 
-        const lookAtPosition = camera.addFolder('look at point position')
+        const lookAtPosition = camera.addFolder('Look at point position')
         lookAtPosition.add(this.cameraSettings.lookAt, 'x', -20, 20).name('X')
         lookAtPosition.add(this.cameraSettings.lookAt, 'y', -20, 20).name('Y')
         lookAtPosition.add(this.cameraSettings.lookAt, 'z', -20, 20).name('Z')
-
-        const cameraPosition = camera.addFolder('Camera position')
-        cameraPosition.add(this.cameraSettings.ro, 'x', -20, 20).name('X')
-        cameraPosition.add(this.cameraSettings.ro, 'y', -20, 20).name('Y')
-        cameraPosition.add(this.cameraSettings.ro, 'z', -20, 20).name('Z')
 
     }
 
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 1000)
-        this.instance.position.set(0, 2.7, 10)
+        this.instance.position.copy(this.cameraSettings.position)
         this.scene.add(this.instance)
-    }
-
-    setScreensCamera() {
-        this.screensCamera = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 17)
-        this.screensCamera.position.set(0, 1.7, 1)
-        this.scene.add(this.screensCamera)
-    }
-
-    setPanelCamera() {
-        this.panelCamera = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 17)
-        this.panelCamera.position.set(0, 1.7, 0)
-        this.panelCamera.rotation.y -= Math.PI * 0.5
-        this.scene.add(this.panelCamera)
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
+        this.controls.target.copy(this.cameraSettings.lookAt)
+        this.updateOrbitControls()
     }
 
     updateOrbitControls() {
         this.controls.update()
     }
 
-    switchCamera() {
-        console.log('switch');
+    animateCamera({ position, lookAt }) {
+
+        const _controls = this.controls
+
+        const _to = {
+            cameraPosition: {
+                x: position.x,
+                y: position.y,
+                z: position.z,
+            },
+            cameraLookAt: {
+                x: lookAt.x,
+                y: lookAt.y,
+                z: lookAt.z,
+                onUpdate() {
+                    console.log(_controls.target);
+                    _controls.update()
+                }
+            }
+        }
+
+        gsap.to(this.instance.position, _to.cameraPosition)
+        gsap.to(this.controls.target, _to.cameraLookAt)
+
+
     }
 
-    switchCameraBack() {
-        console.log('switch back');
+    focusCamera() {
+        this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
+        this.animateCamera({
+            position: this.newCameraSettings.position,
+            lookAt: this.newCameraSettings.lookAt
+        })
     }
 
+    defocusCamera() {
+        this.animateCamera({
+            position: new THREE.Vector3(
+                this.lastCameraSettings.position.x,
+                this.lastCameraSettings.position.y,
+                this.lastCameraSettings.position.z,
+            ),
+            lookAt: this.cameraSettings.lookAt
+        })
+    }
 
     resize() {
         this.instance.aspect = this.sizes.width / this.sizes.height
