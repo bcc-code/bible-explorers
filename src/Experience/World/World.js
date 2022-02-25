@@ -25,14 +25,13 @@ export default class World {
         // Wait for resources
         this.resources.on('ready', () => {
             // Setup
-            this.controlRoom = new ControlRoom()
-            this.environment = new Environment()
-            this.pointsOfInterests = new PointsOfInterests()
-
             this.video = new Video()
             this.audio = new Audio()
             this.program = new Program()
             this.progressBar = new ProgressBar()
+            this.controlRoom = new ControlRoom()
+            this.environment = new Environment()
+            this.pointsOfInterests = new PointsOfInterests()
         })
     }
 

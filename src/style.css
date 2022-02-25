@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+:root {
+    color-scheme: only light !important;
+}
+
 html,
 body {
     overflow: hidden;

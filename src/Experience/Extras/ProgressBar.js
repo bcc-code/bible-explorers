@@ -17,17 +17,19 @@ export default class ProgressBar {
         };
     }
 
-    update() {
+    refresh() {
         progressBar.el.passed.style.width = progressBar.stepWidth * progressBar.program.currentStep;
     }
 
     static generateHtml() {
-        var leftAdjustment = 5;
+        var leftAdjustment = 21;
         let html = '<div class="progress-bar__steps">'
             for (let i = 0; i < progressBar.program.totalSteps; i++) {
                 var left = 'calc(' + i * progressBar.stepWidth + '% - ' + leftAdjustment + 'px)';
                 html += `<div class="progress-bar__step" style="left: ${ left }">${ i+1 }</div>`
             }
+            html += `<div class="progress-bar__step" style="left: calc(100% - ${ leftAdjustment }px)">#</div>`
+
         html += `</div>
             <div class="progress-bar__percentage">
                 <div class="passed" style="width: ${ progressBar.stepWidth * progressBar.program.currentStep }%"></div>

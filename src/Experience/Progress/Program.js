@@ -10,24 +10,25 @@ export default class Program {
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
+        this.world = this.experience.world
 
         this.progress = JSON.parse(localStorage.getItem('progress')) || []
         this.currentStep = this.progress.length
         this.totalSteps = Object.keys(data).length
 
         this.clickedObject = null
-        this.canClick = false
+        this.canClick = true
     }
 
     // Click events
     control(currentIntersect) {
         if (!this.canClick) return
 
-        this.clickedObject = currentIntersect
+        this.clickedObject = currentIntersect.name
 
         if (this.isCurrentStep()) {
             this.currentStep++
-            this.experience.progressBar.update()
+            this.world.progressBar.refresh()
             this.startAction()
             this.updateLocalStorage()
             this.updateProgressBar()
@@ -38,40 +39,42 @@ export default class Program {
     }
 
     startAction() {
-        if (this.clickedObject.name === 'tv_4x4_screen') {
+        if (this.clickedObject === 'tv_4x4') {
         }
 
-        if (this.clickedObject.name === 'tv_4x5_screen') {
+        if (this.clickedObject === 'tv_4x5') {
         }
 
-        if (this.clickedObject.name === 'tv_16x9_5') {
+        if (this.clickedObject === 'tv_16x10') {
         }
 
-        if (this.clickedObject.name === 'Panel_Screen') {
+        if (this.clickedObject === 'tv_16x9_5') {
+        }
+
+        if (this.clickedObject === 'Panel_Screen') {
             this.timer.setMinutes(5)
             this.codeUnlock.open()
         }
-
-        // if (this.clickedObject.name === 'Portal') {
-        //     if (this.video.paused) {
-        //         this.video.play()
-        //     } else {
-        //         this.video.pause()
-        //     }
-        // }
+        if (this.clickedObject === 'Portal') {
+            if (this.world.video.paused) {
+                this.world.video.play()
+            } else {
+                this.world.video.pause()
+            }
+        }
     }
 
     isCurrentStep() {
         return this.currentStep in data &&
-            data[this.currentStep].clickableElements.includes(this.clickedObject.name) 
+            data[this.currentStep].clickableElements.includes(this.clickedObject) 
     }
 
     isPreviousStep() {
-        return this.progress.includes(this.clickedObject.name)
+        return this.progress.includes(this.clickedObject)
     }
 
     updateLocalStorage() {
-        this.progress.push(this.clickedObject.name)
+        this.progress.push(this.clickedObject)
         localStorage.setItem('progress', JSON.stringify([...new Set(this.progress)]))
     }
 

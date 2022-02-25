@@ -27,7 +27,7 @@ export default class ControlRoom {
 
         // Events
         window.addEventListener('mousedown', () => {
-            // this.clickedObject()
+            this.clickedObject()
         })
     }
 
@@ -38,15 +38,14 @@ export default class ControlRoom {
     }
 
     checkObjectIntersetion() {
-        this.raycaster.setFromCamera(this.pointer, this.camera.instance)
-        const intersects = this.raycaster.intersectObjects(this.clickableObjects, false)
+        this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
+        const intersects = this.raycaster.intersectObjects(this.clickableObjects)
 
         if (intersects.length > 0) {
             this.currentIntersect = intersects[0].object
         } else {
             this.currentIntersect = null
         }
-
     }
 
     // Store clickable objects
@@ -72,11 +71,6 @@ export default class ControlRoom {
 
     // Click events
     clickedObject() {
-
-        if (intersects.length) {
-            this.currentIntersect = intersects[0].object
-        }
-
         if (this.currentIntersect != null) {
             this.program.control(this.currentIntersect)
         }
