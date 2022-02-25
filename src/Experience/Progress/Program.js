@@ -14,6 +14,7 @@ export default class Program {
 
         this.progress = JSON.parse(localStorage.getItem('progress')) || []
         this.currentStep = this.progress.length
+        this.currentVideo = this.currentStep in data ? data[this.currentStep].video : null
         this.totalSteps = Object.keys(data).length
 
         this.clickedObject = null
@@ -26,7 +27,7 @@ export default class Program {
 
         this.clickedObject = currentIntersect.name
 
-        if (this.isCurrentStep()) {
+        if (this.isNextStep()) {
             this.currentStep++
             this.world.progressBar.refresh()
             this.startAction()
@@ -36,6 +37,15 @@ export default class Program {
         else if (this.isPreviousStep()) {
             this.startAction()
         }
+    }
+
+    isNextStep() {
+        return this.currentStep in data &&
+            data[this.currentStep].clickableElements.includes(this.clickedObject) 
+    }
+
+    isPreviousStep() {
+        return this.progress.includes(this.clickedObject)
     }
 
     startAction() {
@@ -55,22 +65,35 @@ export default class Program {
             this.timer.setMinutes(5)
             this.codeUnlock.open()
         }
+
         if (this.clickedObject === 'Portal') {
-            if (this.world.video.paused) {
-                this.world.video.play()
-            } else {
-                this.world.video.pause()
-            }
+            this.toggleVideo()
+        }
+
+        if (this.clickedObject === 'Panel_Green_button') {
+            let video = this.getVideo()
+            if (video) video.play()
+        }
+
+        if (this.clickedObject === 'Panel_Red_button') {
+            let video = this.getVideo()
+            if (video) video.pause()
         }
     }
 
-    isCurrentStep() {
-        return this.currentStep in data &&
-            data[this.currentStep].clickableElements.includes(this.clickedObject) 
+    toggleVideo() {
+        let video = this.getVideo()
+        if (video && video.paused) {
+            video.play()
+        } else {
+            video.pause()
+        }
     }
 
-    isPreviousStep() {
-        return this.progress.includes(this.clickedObject)
+    getVideo() {
+        return this.currentVideo
+            ? this.world.video.mediaItems[0].item.image
+            : null
     }
 
     updateLocalStorage() {

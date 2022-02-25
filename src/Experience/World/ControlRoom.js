@@ -14,7 +14,6 @@ export default class ControlRoom {
         this.pointer = this.experience.pointer
         this.time = this.experience.time
         this.debug = this.experience.debug
-        this.program = this.experience.world.program
 
         this.clickableObjects = []
         this.currentIntersect = null
@@ -27,7 +26,8 @@ export default class ControlRoom {
 
         // Events
         window.addEventListener('mousedown', () => {
-            this.clickedObject()
+            if (this.experience.world.program)
+                this.clickedObject()
         })
     }
 
@@ -58,6 +58,8 @@ export default class ControlRoom {
                     case 'tv_16x10':
                     case 'tv_16x9_5':
                     case 'Panel_Screen':
+                    case 'Panel_Red_button':
+                    case 'Panel_Green_button':
                     case 'Portal':
                         this.clickableObjects.push(child)
                         break
@@ -72,7 +74,7 @@ export default class ControlRoom {
     // Click events
     clickedObject() {
         if (this.currentIntersect != null) {
-            this.program.control(this.currentIntersect)
+            this.experience.world.program.control(this.currentIntersect)
         }
     }
 
@@ -102,7 +104,5 @@ export default class ControlRoom {
     update() {
         // Check intersection
         this.checkObjectIntersetion()
-
-
     }
 }

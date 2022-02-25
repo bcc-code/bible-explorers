@@ -97,13 +97,14 @@ export default class Camera {
                 x: position.x,
                 y: position.y,
                 z: position.z,
+                duration: 2.5
             },
             cameraLookAt: {
                 x: lookAt.x,
                 y: lookAt.y,
                 z: lookAt.z,
+                duration: 2.5,
                 onUpdate() {
-                    console.log(_controls.target);
                     _controls.update()
                 }
             }

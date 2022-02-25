@@ -8,13 +8,17 @@ import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 
+let instance = null
 
 export default class World {
     constructor() {
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
+        this.camera = this.experience.camera
         this.resources = this.experience.resources
+
+        instance = this
 
         if (this.experience.debug.active) {
             const axesHelper = new THREE.AxesHelper(20)
@@ -27,19 +31,37 @@ export default class World {
             // Setup
             this.video = new Video()
             this.audio = new Audio()
-            this.program = new Program()
-            this.progressBar = new ProgressBar()
             this.controlRoom = new ControlRoom()
             this.environment = new Environment()
-            this.pointsOfInterests = new PointsOfInterests()
         })
+
+        // Start journey
+        this.welcome = {
+            landingScreen: document.querySelector("#landing-screen"),
+            startJourney: document.querySelector("#start-journey")
+        }
+        this.welcome.startJourney.addEventListener("mousedown", this.startJourney);
+    }
+
+    startJourney() {
+        instance.welcome.landingScreen.remove()
+
+        instance.program = new Program()
+        instance.progressBar = new ProgressBar()
+        instance.pointsOfInterests = new PointsOfInterests()
+        
+        instance.camera.focusCamera()
+
+        setTimeout(function() { 
+            instance.program.toggleVideo()
+        }, 1500);
     }
 
     update() {
         if (this.controlRoom) {
             this.controlRoom.update()
 
-            if (this.experience.loaded)
+            if (this.pointsOfInterests && this.experience.loaded)
                 this.pointsOfInterests.update()
         }
     }

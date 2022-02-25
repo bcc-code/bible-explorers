@@ -11,8 +11,10 @@ export default class Archive {
 
         archive = this
 
-        archive.htmlEl = document.querySelector(".archive");
-            archive.htmlEl.addEventListener("click", archive.getHtml);
+        archive.htmlEl = document.createElement("div");
+        archive.htmlEl.setAttribute("id", "archive");
+        archive.htmlEl.addEventListener("click", Archive.getHtml);
+        document.body.appendChild(archive.htmlEl);
     }
 
     switchTab(id) {
@@ -22,7 +24,7 @@ export default class Archive {
         archive.el.content.querySelector(`[data-id="${id}"]`).classList.add("visible")
     }
   
-    getHtml() {
+    static getHtml() {
         let html = `
             <h2>${data.title}</h2>
             <div class="archive__grid">

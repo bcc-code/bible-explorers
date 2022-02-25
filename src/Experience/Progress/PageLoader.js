@@ -49,5 +49,10 @@ export default class PageLoader {
         gsap.to(this.overlayMaterial.uniforms.uAlpha, { duration: 2, value: 0, delay: 1 })
         loadingBarElement.classList.add('ended')
         loadingBarElement.style.transform = ''
+
+        setTimeout(function() { 
+            document.querySelector('#start-journey').style.opacity = 1
+        }, 2000);
+        
     }
 }

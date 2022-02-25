@@ -3,18 +3,21 @@
         "transitionIn": "zoomIn",
         "transitionOut": "zoomOut",
         "navigateTo": "Panel_Screen",
-        "clickableElements": ["Portal"]
+        "clickableElements": ["Portal","Panel_Green_button","Panel_Red_button"],
+        "video": "0"
     },
     "1": {
         "transitionIn": "zoomIn",
         "transitionOut": "zoomOut",
         "navigateTo": "tv_4x4",
-        "clickableElements": ["Panel_Screen"]
+        "clickableElements": ["Panel_Screen"],
+        "video": "0"
     },
     "2": {
         "transitionIn": "",
         "transitionOut": "",
         "navigateTo": "",
-        "clickableElements": ["tv_4x4", "tv_4x5", "tv_16x9_5", "tv_16x10"]
+        "clickableElements": ["tv_4x4", "tv_4x5", "tv_16x9_5", "tv_16x10"],
+        "video": "0"
     }
 }

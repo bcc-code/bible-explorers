@@ -64,5 +64,4 @@ export default class Experience {
         this.stats.update()
         this.renderer.update()
     }
-   
 }

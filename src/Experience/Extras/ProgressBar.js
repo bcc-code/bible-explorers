@@ -18,7 +18,7 @@ export default class ProgressBar {
     }
 
     refresh() {
-        progressBar.el.passed.style.width = progressBar.stepWidth * progressBar.program.currentStep;
+        progressBar.el.passed.style.width = progressBar.stepWidth * progressBar.program.currentStep + '%';
     }
 
     static generateHtml() {
