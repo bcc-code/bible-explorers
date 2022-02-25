@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
@@ -13,9 +14,13 @@ export default class World {
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
-        this.camera = this.experience.camera
         this.resources = this.experience.resources
 
+        if (this.experience.debug.active) {
+            const axesHelper = new THREE.AxesHelper(20)
+            const gridHelper = new THREE.GridHelper(20, 20);
+            this.scene.add(gridHelper, axesHelper);
+        }
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -23,6 +28,7 @@ export default class World {
             this.controlRoom = new ControlRoom()
             this.environment = new Environment()
             this.pointsOfInterests = new PointsOfInterests()
+
             this.video = new Video()
             this.audio = new Audio()
             this.program = new Program()

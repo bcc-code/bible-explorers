@@ -7,21 +7,8 @@ export default class Environment {
         this.scene = this.experience.scene
         this.resources = this.experience.resources
 
-        if (this.experience.debug.active) {
-            const axesHelper = new THREE.AxesHelper(40)
-            const gridHelper = new THREE.GridHelper(40, 40);
-            this.scene.add(gridHelper, axesHelper);
-        }
-
         // Setup
-        this.setEnvironment()
         this.setScreens()
-    }
-
-    setEnvironment() {
-        this.environmentMap = {}
-        this.environmentMap.texture = this.resources.items.environmentMapTexture
-        this.scene.background = this.environmentMap.texture
     }
 
     setScreens() {

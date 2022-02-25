@@ -2,7 +2,7 @@ export default [
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/controlroom_low.glb'
+        path: 'models/controlroom.glb'
     },
     {
         name: 'UVChecker',
@@ -14,7 +14,6 @@ export default [
         type: 'texture',
         path: 'textures/screen-16x10.png'
     },
-
     {
         name: 'screen_16x9_5',
         type: 'texture',
@@ -31,5 +30,10 @@ export default [
             'textures/envMap/pz-min.png',
             'textures/envMap/nz-min.png'
         ]
+    },
+    {
+        name: 'firstVideo',
+        type: 'video',
+        path: 'videos/bibleX.mp4'
     }
 ]

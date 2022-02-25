@@ -18,8 +18,9 @@ export default class Resources extends EventEmitter {
 
         // Setup
         this.items = {}
-        this.toLoad = this.sources.length
+        this.toLoad = this.sources.length - 1
         this.loaded = 0
+        this.mediaItems = []
 
         this.loadManager()
         this.setLoaders()
@@ -31,7 +32,7 @@ export default class Resources extends EventEmitter {
             // Loaded
             () => {
                 window.setTimeout(() => {
-                this.experience.pageLoader.loaded()
+                    this.experience.pageLoader.loaded()
                 }, 500)
 
                 window.setTimeout(() => {
@@ -41,6 +42,7 @@ export default class Resources extends EventEmitter {
 
             // Progress
             (itemUrl, itemsLoaded, itemsTotal) => {
+                console.log(itemUrl);
                 this.experience.pageLoader.progress(itemsLoaded, itemsTotal)
             }
         )
@@ -55,7 +57,6 @@ export default class Resources extends EventEmitter {
         this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
         this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
-
     }
 
     startLoading() {
@@ -67,7 +68,7 @@ export default class Resources extends EventEmitter {
                 this.loaders.gltfLoader.load(
                     source.path,
                     (file) => {
-                        this.sourceLoaded(source, file);
+                        this.sourceLoaded(source, file)
                     }
                 )
             }
@@ -75,7 +76,7 @@ export default class Resources extends EventEmitter {
                 this.loaders.textureLoader.load(
                     source.path,
                     (file) => {
-                        this.sourceLoaded(source, file);
+                        this.sourceLoaded(source, file)
                     }
                 )
             }
@@ -83,9 +84,32 @@ export default class Resources extends EventEmitter {
                 this.loaders.cubeTextureLoader.load(
                     source.path,
                     (file) => {
-                        this.sourceLoaded(source, file);
+                        this.sourceLoaded(source, file)
                     }
                 )
+            }
+            else if (source.type === 'video') {
+                const video = document.createElement('video')
+                video.crossOrigin = 'anonymous'
+                video.muted = false
+                video.loop = true
+                video.controls = true
+                video.playsInline = true
+                video.autoplay = false
+                video.src = source.path
+
+                video.oncanplay = () => {
+                    const texture = new THREE.VideoTexture(video)
+
+                    this.mediaItems.push(
+                        {
+                            item: texture,
+                            path: source.path,
+                            naturalWidth: video.videoWidth || 1,
+                            naturalHeight: video.videoHeight || 1
+                        }
+                    )
+                }
             }
         }
     }

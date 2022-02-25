@@ -8,7 +8,7 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import sources from './Sources.js'
 import World from './World/World.js'
-import PageLoader from './World/PageLoader.js'
+import PageLoader from './Progress/PageLoader.js'
 
 let instance = null
 

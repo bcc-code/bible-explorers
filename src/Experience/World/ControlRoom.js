@@ -42,17 +42,9 @@ export default class ControlRoom {
         this.scene.add(this.model)
     }
 
-    setNewCamera() {
-        this.blenderCam = this.resources.cameras[0].parent
-
-        this.camera.instance.position.copy(this.blenderCam.position)
-        this.camera.instance.quaternion.copy(this.blenderCam.quaternion)
-        console.log(this.camera.instance);
-
-    }
-
     checkObjectIntersetion() {
         this.raycaster.setFromCamera(this.pointer, this.camera.instance)
+
         const intersects = this.raycaster.intersectObjects(this.clickableObjects, false)
 
         if (intersects.length > 0) {

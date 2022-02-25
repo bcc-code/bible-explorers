@@ -9,66 +9,108 @@ export default class Camera {
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
+        this.debug = this.experience.debug
 
         // Setup
         this.setInstance()
         this.setOrbitControls()
+        this.setScreensCamera()
+        this.setPanelCamera()
+
+        // Options
+
+        this.options = {
+            screensCamera: false,
+            panelCamera: false
+        }
+
+        this.cameraSettings = {
+            ro: new THREE.Vector3(0, 1.7, 5),
+            lookAt: new THREE.Vector3(0, 1.7, 0),
+            zoom: 1.15,
+            isCameraFocused: false
+        }
+
+        this.cameraTween = null
+        this.lastCameraSettings = {
+            position: new THREE.Vector3(0, 0, 0)
+        }
+
+        this.cameraPivotGroup = new THREE.Group()
+
+        if (this.debug.active) {
+            const helper1 = new THREE.CameraHelper(this.screensCamera)
+            const helper2 = new THREE.CameraHelper(this.panelCamera)
+
+            this.scene.add(helper1, helper2)
+
+            const camera = this.debug.ui.addFolder('Camera')
+
+            camera
+                .add(this.options, 'screensCamera')
+                .onFinishChange((isFocused) => {
+                    if (isFocused) {
+                        this.switchCamera()
+                    } else {
+                        this.switchCameraBack()
+                    }
+                })
+                .name('Screens Camera')
+
+            camera
+                .add(this.options, 'panelCamera')
+                .onFinishChange((isFocused) => {
+                    if (isFocused) {
+                        this.switchCamera()
+                    } else {
+                        this.switchCameraBack()
+                    }
+                })
+                .name('Panel Camera')
+
+
+            const cameraPosition = camera.addFolder('Camera position')
+
+
+        }
+
     }
 
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 1000)
-        this.instance.position.set(0, 1.7, 2)
+        this.instance.position.set(0, 2.7, 10)
         this.scene.add(this.instance)
+    }
 
+    setScreensCamera() {
+        this.screensCamera = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 17)
+        this.screensCamera.position.set(0, 1.7, 1)
+        this.scene.add(this.screensCamera)
+    }
+
+    setPanelCamera() {
+        this.panelCamera = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 17)
+        this.panelCamera.position.set(0, 1.7, 0)
+        this.panelCamera.rotation.y -= Math.PI * 0.5
+        this.scene.add(this.panelCamera)
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.target.y = 1.7
-        this.controls.enableDamping = true;
-        this.controls.dampingFactor = 0.5;
-
-        // this.controls.addEventListener('end', () => {
-        //     this.updateCameraOrbit()
-        // })
-
-        // this.updateCameraOrbit()
     }
 
-    updateCameraOrbit() {
-        // Update OrbitControls target to a point just in front of the camera
-        const forward = new THREE.Vector3();
-        this.instance.getWorldDirection(forward);
-
-        this.controls.target.copy(this.instance.position).add(forward);
+    updateOrbitControls() {
+        this.controls.update()
     }
 
-    cameraMovement() {
-        this.settings = {
-            playhead: 0.001,
-        }
-
-        if (this.debug.active) {
-            this.debugFolder = this.debug.ui.addFolder('Camera animation')
-            this.debugFolder
-                .add(this.settings, 'playhead', 0.001, 1, 0.001)
-        }
-
-        // create curve for camera to portal
-        this.bezier = new THREE.CubicBezierCurve3(
-            new THREE.Vector3(-2.5, 2.5, 5),
-            new THREE.Vector3(-1.54, 2.25, 3.09),
-            new THREE.Vector3(-0.95, 2, 1.9),
-            new THREE.Vector3(0, 1.5, 0)
-        )
-
-        // Create target
-        const mat = new THREE.MeshStandardMaterial({ color: 'red' })
-        const geo = new THREE.BoxGeometry(.1, .1, .1)
-        this.target = new THREE.Mesh(geo, mat)
-        this.target.position.y = 1.5
-        this.scene.add(this.target)
+    switchCamera() {
+        console.log('switch');
     }
+
+    switchCameraBack() {
+        console.log('switch back');
+    }
+
 
     resize() {
         this.instance.aspect = this.sizes.width / this.sizes.height
@@ -76,6 +118,6 @@ export default class Camera {
     }
 
     update() {
-        this.controls.update()
+
     }
 }
