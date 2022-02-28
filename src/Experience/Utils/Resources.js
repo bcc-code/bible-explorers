@@ -19,7 +19,7 @@ export default class Resources extends EventEmitter {
         // Setup
         this.items = {}
         this.toLoad = this.sources.length - 1
-        this.loaded = 0
+        this.loaded = 0 
         this.mediaItems = []
 
         this.loadManager()

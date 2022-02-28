@@ -22,8 +22,10 @@ export default class Video {
         })
         this.plane = new THREE.Mesh(this.geometry, this.material)
         this.plane.position.set(17, 3, 0)
+        this.plane.color = new THREE.Color({ color: '0xff0000' })
         this.plane.rotation.y -= Math.PI * 0.5
         this.scene.add(this.plane)
+  
     }
 
     setControls() {

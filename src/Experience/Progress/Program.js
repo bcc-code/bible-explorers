@@ -19,6 +19,10 @@ export default class Program {
 
         this.clickedObject = null
         this.canClick = true
+
+        console.log(this.currentStep);
+        console.log(this.currentStep in data);
+
     }
 
     // Click events
@@ -82,7 +86,9 @@ export default class Program {
     }
 
     toggleVideo() {
+        
         let video = this.getVideo()
+
         if (video && video.paused) {
             video.play()
         } else {

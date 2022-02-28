@@ -48,7 +48,6 @@ export default class World {
 
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        instance.pointsOfInterests = new PointsOfInterests()
         
         instance.camera.focusCamera()
 
@@ -61,8 +60,8 @@ export default class World {
         if (this.controlRoom) {
             this.controlRoom.update()
 
-            if (this.pointsOfInterests && this.experience.loaded)
-                this.pointsOfInterests.update()
+            // if (this.pointsOfInterests && this.experience.loaded)
+            //     this.pointsOfInterests.update()
         }
     }
 }
