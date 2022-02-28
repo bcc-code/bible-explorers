@@ -1,0 +1,18 @@
+{
+    "episode": 1,
+    "steps": {
+        "0": {
+            "clickableElements": ["Panel_Green_button","Panel_Red_button"],
+            "location": 2,
+            "video": "0"
+        },
+        "1": {
+            "clickableElements": ["Panel_Screen"],
+            "location": 1
+        },
+        "2": {
+            "clickableElements": ["tv_4x4", "tv_4x5", "tv_16x9_5", "tv_16x10"],
+            "video": "0"
+        }
+    }
+}

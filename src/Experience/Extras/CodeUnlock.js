@@ -72,6 +72,7 @@ export default class CodeUnlock {
             this.world.program.timer.destroy()
             this.world.audio.playCodeUnlockedSound()
             this.world.program.canClick = true
+            this.world.program.advance()
             codeUnlock.destroy();
         } else {
             console.log("Incorrect code");

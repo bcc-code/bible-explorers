@@ -39,6 +39,7 @@ export default class Video {
             else if (e.key === 's') {
                 this.texture.image.pause()
                 this.texture.image.currentTime = 0
+                this.experience.world.program.advance()
             }
             else if (e.key === 'r') {
                 this.texture.image.currentTime = 0

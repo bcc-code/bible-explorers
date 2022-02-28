@@ -51,7 +51,9 @@ export default class PageLoader {
         loadingBarElement.style.transform = ''
 
         setTimeout(function() { 
-            document.querySelector('#start-journey').style.opacity = 1
+            document.querySelectorAll('.button').forEach(function(button) {
+                button.style.opacity = 1
+            })
         }, 2000);
         
     }

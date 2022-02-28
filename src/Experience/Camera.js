@@ -4,7 +4,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN from '@tweenjs/tween.js'
 
 export default class Camera {
-
     constructor() {
         this.experience = new Experience()
         this.sizes = this.experience.sizes
@@ -12,8 +11,6 @@ export default class Camera {
         this.canvas = this.experience.canvas
         this.debug = this.experience.debug
 
-
-        console.log(TWEEN);
         // Options
 
         this.cameraSettings = {
@@ -24,14 +21,23 @@ export default class Camera {
 
             position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),
-            isCameraFocused: false,
+            location: 0
         }
 
-        this.newCameraSettings = {
-            position: new THREE.Vector3(0, 1.7, 0),
-            lookAt: new THREE.Vector3(10, 1.7, 0),
-            isCameraFocused: false,
-        }
+        this.cameraLocations = [
+            {
+                position: new THREE.Vector3(0, 1.7, 10),
+                lookAt: new THREE.Vector3(0, 1.7, 0)
+            },
+            {
+                position: new THREE.Vector3(-4.2, 2.4, 3.6),
+                lookAt: new THREE.Vector3(-0.28, 1.3, -0.8)
+            },
+            {
+                position: new THREE.Vector3(-0.7, 1.7, 0),
+                lookAt: new THREE.Vector3(10, 1.7, 0)
+            }
+        ]
 
         this.lastCameraSettings = {
             position: new THREE.Vector3(0, 0, 0)
@@ -46,23 +52,90 @@ export default class Camera {
         if (this.debug.active) {
             this.addGUIControls()
         }
+    }
 
+    setInstance() {
+        this.instance = new THREE.PerspectiveCamera(
+            this.cameraSettings.fov,
+            this.cameraSettings.aspect,
+            this.cameraSettings.near,
+            this.cameraSettings.far
+        )
+        this.instance.position.copy(this.cameraSettings.position)
+        this.scene.add(this.instance)
+    }
+
+    setOrbitControls() {
+        this.controls = new OrbitControls(this.instance, this.canvas)
+        this.controls.target.copy(this.cameraSettings.lookAt)
+        this.updateOrbitControls()
+    }
+
+    updateOrbitControls() {
+        this.controls.update()
+    }
+
+    animateCamera({ position, lookAt, duration = 1200 }) {
+        if (this.cameraTween)
+            this.cameraTween.stop()
+
+        const from = {
+            cameraPosition: new THREE.Vector3().copy(this.instance.position),
+            cameraLookAt: new THREE.Vector3().copy(this.controls.target)
+        }
+
+        const to = {
+            cameraPosition: position,
+            cameraLookAt: lookAt
+        }
+
+        this.cameraTween = new TWEEN.Tween(from)
+            .to(to, duration)
+            .easing(TWEEN.Easing.Linear.None)
+            .onUpdate((obj) => {
+                this.controls.target.set(
+                    obj.cameraLookAt.x,
+                    obj.cameraLookAt.y,
+                    obj.cameraLookAt.z
+                )
+                this.instance.position.set(
+                    obj.cameraPosition.x,
+                    obj.cameraPosition.y,
+                    obj.cameraPosition.z
+                )
+                this.controls.update()
+            })
+            .start()
+    }
+
+    moveCameraTo(location) {
+        if (!location) return
+        this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
+        this.animateCamera(this.cameraLocations[location])
+    }
+
+    resize() {
+        this.instance.aspect = this.sizes.width / this.sizes.height
+        this.instance.updateProjectionMatrix()
+    }
+
+    update() {
+        TWEEN.update()
     }
 
     addGUIControls() {
-
         const camera = this.debug.ui.addFolder('Camera')
 
+        // Location
         camera
-            .add(this.cameraSettings, 'isCameraFocused')
-            .onFinishChange((isFocused) => {
-                if (isFocused) {
-                    this.focusCamera()
-                } else {
-                    this.defocusCamera()
-                }
+            .add(this.cameraSettings, 'location')
+            .min(0)
+            .max(this.cameraLocations.length-1)
+            .step(1)
+            .onFinishChange((location) => {
+                this.moveCameraTo(location)
             })
-            .name('Action Camera')
+            .name('Location')
 
         // Position
         const cameraPosition = camera.addFolder('Camera position')
@@ -100,100 +173,5 @@ export default class Camera {
             .add(this.cameraSettings.lookAt, 'z', -20, 20)
             .name('Z')
             .onChange((value) => { this.instance.lookAt(new THREE.Vector3(0, 0, value)), this.cameraSettings.lookAt = new THREE.Vector3(0, 0, value) })
-    }
-
-    setInstance() {
-        this.instance = new THREE.PerspectiveCamera(
-            this.cameraSettings.fov,
-            this.cameraSettings.aspect,
-            this.cameraSettings.near,
-            this.cameraSettings.far
-        )
-        this.instance.position.copy(this.cameraSettings.position)
-        this.scene.add(this.instance)
-    }
-
-    setOrbitControls() {
-        this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.target.copy(this.cameraSettings.lookAt)
-        this.updateOrbitControls()
-    }
-
-    updateOrbitControls() {
-        this.controls.update()
-    }
-
-    animateCamera({ position, lookAt, duration = 1200 }) {
-
-        // const _controls = this.controls
-
-        if (this.cameraTween)
-            this.cameraTween.stop()
-
-        const from = {
-            cameraPosition: new THREE.Vector3(
-                this.instance.position.x,
-                this.instance.position.y,
-                this.instance.position.z,
-            ),
-
-            cameraLookAt: new THREE.Vector3(
-                this.controls.target.x,
-                this.controls.target.y,
-                this.controls.target.z,
-            )
-        }
-
-        const to = {
-            cameraPosition: position,
-            cameraLookAt: lookAt
-        }
-
-        this.cameraTween = new TWEEN.Tween(from)
-            .to(to, duration)
-            .easing(TWEEN.Easing.Linear.None)
-            .onUpdate((obj) => {
-                this.controls.target.set(
-                    obj.cameraLookAt.x,
-                    obj.cameraLookAt.y,
-                    obj.cameraLookAt.z
-                )
-                this.instance.position.set(
-                    obj.cameraPosition.x,
-                    obj.cameraPosition.y,
-                    obj.cameraPosition.z
-                )
-                this.controls.update()
-            })
-
-        this.cameraTween.start()
-    }
-
-    focusCamera() {
-        this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
-        this.animateCamera({
-            position: this.newCameraSettings.position,
-            lookAt: this.newCameraSettings.lookAt
-        })
-    }
-
-    defocusCamera() {
-        this.animateCamera({
-            position: new THREE.Vector3(
-                this.lastCameraSettings.position.x,
-                this.lastCameraSettings.position.y,
-                this.lastCameraSettings.position.z,
-            ),
-            lookAt: this.cameraSettings.lookAt
-        })
-    }
-
-    resize() {
-        this.instance.aspect = this.sizes.width / this.sizes.height
-        this.instance.updateProjectionMatrix()
-    }
-
-    update() {
-        TWEEN.update()
     }
 }

@@ -60,7 +60,6 @@ export default class ControlRoom {
                     case 'Panel_Screen':
                     case 'Panel_Red_button':
                     case 'Panel_Green_button':
-                    case 'Portal':
                         this.clickableObjects.push(child)
                         break
 

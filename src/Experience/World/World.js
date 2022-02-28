@@ -38,9 +38,13 @@ export default class World {
         // Start journey
         this.welcome = {
             landingScreen: document.querySelector("#landing-screen"),
-            startJourney: document.querySelector("#start-journey")
+            startJourney: document.querySelector("#start-journey"),
+            restartJourney: document.querySelector("#restart-journey"),
         }
-        this.welcome.startJourney.addEventListener("mousedown", this.startJourney);
+        this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
+        this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
+
+        this.selectedEpisode = 1
     }
 
     startJourney() {
@@ -48,20 +52,16 @@ export default class World {
 
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        
-        instance.camera.focusCamera()
+    }
 
-        setTimeout(function() { 
-            instance.program.toggleVideo()
-        }, 1500);
+    restartJourney() {
+        localStorage.removeItem("progress-episode-" + instance.selectedEpisode)
+        instance.startJourney()
     }
 
     update() {
         if (this.controlRoom) {
             this.controlRoom.update()
-
-            // if (this.pointsOfInterests && this.experience.loaded)
-            //     this.pointsOfInterests.update()
         }
     }
 }
