@@ -18,6 +18,12 @@ export default class ControlRoom {
         this.clickableObjects = []
         this.currentIntersect = null
 
+        this.rotation = {
+            max: Math.PI * 0.5,
+            min: - (Math.PI * 0.5),
+            speed: 0.005
+        }
+
         // Setup
         this.resources = this.resources.items.controlRoom
 
@@ -29,6 +35,7 @@ export default class ControlRoom {
             if (this.experience.world.program)
                 this.clickedObject()
         })
+
     }
 
     // Set scene
@@ -103,5 +110,6 @@ export default class ControlRoom {
     update() {
         // Check intersection
         this.checkObjectIntersetion()
+
     }
 }

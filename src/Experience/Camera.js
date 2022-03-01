@@ -35,7 +35,7 @@ export default class Camera {
             },
             {
                 position: new THREE.Vector3(-0.7, 1.7, 0),
-                lookAt: new THREE.Vector3(10, 1.7, 0)
+                lookAt: new THREE.Vector3(0.1, 1.7, 0)
             }
         ]
 
@@ -48,10 +48,13 @@ export default class Camera {
         // Setup
         this.setInstance()
         this.setOrbitControls()
+        this.autoRotateControls()
 
         if (this.debug.active) {
             this.addGUIControls()
         }
+
+
     }
 
     setInstance() {
@@ -73,6 +76,12 @@ export default class Camera {
 
     updateOrbitControls() {
         this.controls.update()
+    }
+
+    autoRotateControls() {
+        this.controls.enableDamping = true
+        this.controls.autoRotate = true
+        this.controls.autoRotateSpeed = 0.1
     }
 
     animateCamera({ position, lookAt, duration = 1200 }) {
@@ -106,6 +115,8 @@ export default class Camera {
                 this.controls.update()
             })
             .start()
+
+        this.controls.autoRotate = false
     }
 
     moveCameraTo(location) {
@@ -121,6 +132,9 @@ export default class Camera {
 
     update() {
         TWEEN.update()
+
+        if (this.controls.autoRotate)
+            this.controls.update()
     }
 
     addGUIControls() {
@@ -130,7 +144,7 @@ export default class Camera {
         camera
             .add(this.cameraSettings, 'location')
             .min(0)
-            .max(this.cameraLocations.length-1)
+            .max(this.cameraLocations.length - 1)
             .step(1)
             .onFinishChange((location) => {
                 this.moveCameraTo(location)
