@@ -16,8 +16,6 @@ export default class Program {
         this.codeUnlock = new CodeUnlock()
         this.world = this.experience.world
         this.camera = this.experience.camera
-
-
         this.highlight = this.world.highlight
 
         // Get instance variables

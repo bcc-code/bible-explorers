@@ -17,9 +17,9 @@ export default class Highlight {
         this.currentIntersect = null
 
         this.params = {
-            edgeStrength: 3.0,
-            edgeGlow: 0.0,
-            edgeThickness: 1.0,
+            edgeStrength: 4,
+            edgeGlow: 1,
+            edgeThickness: 2,
             pulsePeriod: 2
         }
 
@@ -33,16 +33,20 @@ export default class Highlight {
     }
 
     setHightlight(objects) {
-
-        console.log(objects);
         this.outlinePass.selectedObjects = this.selectedObjects.filter((obj) => {
             return objects.includes(obj.name)
         })
+        this.outlinePass.pulsePeriod =  this.params.pulsePeriod;
+        this.outlinePass.edgeGlow = this.params.edgeGlow;
+        this.outlinePass.edgeStrength = this.params.edgeStrength;
+        this.outlinePass.edgeThickness = this.params.edgeThickness;
     }
 
     addGUIControls() {
         const highlight = this.debug.ui.addFolder('Highlight')
 
+        highlight.close()
+        
         highlight
             .add(this.params, 'edgeStrength', 0.01, 10)
             .onChange((value) => {
@@ -56,7 +60,7 @@ export default class Highlight {
             })
 
         highlight
-            .add(this.params, 'edgeThickness', 1, 4)
+            .add(this.params, 'edgeThickness', 1, 10)
             .onChange((value) => {
                 this.outlinePass.edgeThickness = Number(value)
             })
