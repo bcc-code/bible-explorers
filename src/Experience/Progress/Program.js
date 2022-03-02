@@ -23,14 +23,13 @@ export default class Program {
         // Get instance variables
         this.currentStep = localStorage.getItem(this.getId()) || 0
         this.currentVideo = this.currentStep in data.steps && "video" in data.steps[this.currentStep] ? data.steps[this.currentStep].video : null
-        this.currentLocation = this.currentStep in data.steps ? data.steps[this.currentStep].location : null
-        this.currentLocationUpdated = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
+        this.currentLocation = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
         this.interactiveObjects = () => this.currentStep in data.steps ? data.steps[this.currentStep].clickableElements : []
         this.totalSteps = Object.keys(data.steps).length
         this.clickedObject = null
         this.canClick = true
 
-        this.camera.moveCameraTo(this.currentLocation)
+        this.startInteractivity()
     }
 
     control(currentIntersect) {
@@ -43,12 +42,15 @@ export default class Program {
         }
     }
 
-    advance() {
-        this.currentStep++
+    advance(step = ++this.currentStep) {
+        this.currentStep = step
         this.updateLocalStorage()
         this.world.progressBar.refresh()
-        this.camera.moveCameraTo(this.currentLocationUpdated())
+        this.startInteractivity()
+    }
 
+    startInteractivity() {
+        this.camera.moveCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
     }
 
@@ -68,6 +70,7 @@ export default class Program {
         }
 
         if (this.clickedObject === 'tv_16x9_5') {
+            this.advance()
         }
 
         if (this.clickedObject === 'Panel_Screen') {

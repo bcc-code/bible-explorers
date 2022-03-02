@@ -438,11 +438,15 @@ iframe {
     font-weight: bold;
     font-size: 1.25rem;
 }
+.progress-bar__step:not(:last-child) {
+    cursor: pointer;
+}
 .progress-bar__percentage {
     height: 18px;
     width: 100%;
     border: 2px solid #3f778d;
     position: relative;
+    z-index: 1;
 }
 .progress-bar__percentage .passed {
     float: left;

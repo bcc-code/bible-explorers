@@ -1,38 +1,45 @@
 import Experience from "../Experience.js"
 
-let progressBar = null
+let instance = null
 
 export default class ProgressBar {
     constructor() {
         this.experience = new Experience()
         this.program = this.experience.world.program
         this.stepWidth = 100 / this.program.totalSteps;
-        progressBar = this
+        instance = this
 
-        progressBar.htmlEl = document.querySelector("#progress-bar");
-        progressBar.htmlEl.innerHTML = ProgressBar.generateHtml();
+        instance.htmlEl = document.querySelector("#progress-bar");
+        instance.htmlEl.innerHTML = ProgressBar.generateHtml();
 
-        progressBar.el = {
-            passed: progressBar.htmlEl.querySelector(".progress-bar__percentage .passed")
+        instance.el = {
+            passed: instance.htmlEl.querySelector(".progress-bar__percentage .passed"),
+            steps: instance.htmlEl.querySelectorAll(".progress-bar__step:not(:last-child)")
         };
+
+        instance.el.steps.forEach(function(step) {
+            step.addEventListener("mousedown", (obj) => {
+                instance.program.advance(step.innerText-1)
+            })
+        });
     }
 
     refresh() {
-        progressBar.el.passed.style.width = progressBar.stepWidth * progressBar.program.currentStep + '%';
+        instance.el.passed.style.width = instance.stepWidth * instance.program.currentStep + '%';
     }
 
     static generateHtml() {
         var leftAdjustment = 21;
         let html = '<div class="progress-bar__steps">'
-            for (let i = 0; i < progressBar.program.totalSteps; i++) {
-                var left = 'calc(' + i * progressBar.stepWidth + '% - ' + leftAdjustment + 'px)';
+            for (let i = 0; i < instance.program.totalSteps; i++) {
+                var left = 'calc(' + i * instance.stepWidth + '% - ' + leftAdjustment + 'px)';
                 html += `<div class="progress-bar__step" style="left: ${ left }">${ i+1 }</div>`
             }
             html += `<div class="progress-bar__step" style="left: calc(100% - ${ leftAdjustment }px)">#</div>`
 
         html += `</div>
             <div class="progress-bar__percentage">
-                <div class="passed" style="width: ${ progressBar.stepWidth * progressBar.program.currentStep }%"></div>
+                <div class="passed" style="width: ${ instance.stepWidth * instance.program.currentStep }%"></div>
             </div>
         `;
 
