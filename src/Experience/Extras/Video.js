@@ -9,7 +9,7 @@ export default class Video {
         this.mediaItems = this.resources.mediaItems
 
         // Setup
-        // this.setInstance()
+        this.setInstance()
         this.setControls()
     }
 
