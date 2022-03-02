@@ -120,7 +120,7 @@ export default class Camera {
     }
 
     moveCameraTo(location) {
-        if (!location) return
+        if (location == null) return
         this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
         this.animateCamera(this.cameraLocations[location])
     }

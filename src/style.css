@@ -37,6 +37,7 @@ iframe {
     left: 0;
     outline: none;
     cursor: grab;
+    z-index: 1;
 }
 
 /* Landing screen */

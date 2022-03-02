@@ -1,49 +1,54 @@
 import * as THREE from 'three'
 
-let player = null
+let audio = null
 
-export default class Player {
+export default class Audio {
     constructor() {
-        player = this
+        audio = this
 
-        player.listener = new THREE.AudioListener();
-        player.audioLoader = new THREE.AudioLoader();
+        audio.listener = new THREE.AudioListener()
+        audio.audioLoader = new THREE.AudioLoader()
 
-        player.el = document.querySelector("#sound");
-        player.el.addEventListener("mousedown", player.toggleBgMusic);
+        audio.el = document.querySelector("#sound")
+        audio.el.addEventListener("mousedown", audio.toggleBgMusic)
     }
 
     toggleBgMusic() {
-        if (!player.bgMusic) {
-            player.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
-                player.bgMusic = new THREE.Audio( player.listener );
-                player.bgMusic.setBuffer( buffer );
-                player.bgMusic.setLoop( true );
-                player.bgMusic.setVolume( 0.5 );
-                player.bgMusic.play();
-            });
+        if (!audio.bgMusic) {
+            audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
+                audio.bgMusic = new THREE.Audio(audio.listener)
+                audio.bgMusic.setBuffer(buffer)
+                audio.bgMusic.setLoop(true)
+                audio.bgMusic.setVolume(0.5)
+                audio.bgMusic.play()
+            })
         }
-        else if (player.bgMusic.isPlaying) {
-            player.bgMusic.pause();
+        else if (audio.bgMusic.isPlaying) {
+            audio.bgMusic.pause()
         }
         else {
-            player.bgMusic.play();
+            audio.bgMusic.play()
         }
     }
 
+    removeBgMusicElement() {
+        if (audio.bgMusic) audio.bgMusic.pause()
+        audio.el.remove()
+    }
+
     playCodeUnlockedSound() {
-        if (!player.codeUnlockedSound) {
-            player.audioLoader.load('sounds/item-collected-sound.mp3', function(buffer) {
-                player.codeUnlockedSound = new THREE.Audio( player.listener );
-                player.codeUnlockedSound.setBuffer( buffer );
-                player.codeUnlockedSound.play();
+        if (!audio.codeUnlockedSound) {
+            audio.audioLoader.load('sounds/item-collected-sound.mp3', function(buffer) {
+                audio.codeUnlockedSound = new THREE.Audio(audio.listener)
+                audio.codeUnlockedSound.setBuffer(buffer)
+                audio.codeUnlockedSound.play()
             });
         }
-        else if (player.codeUnlockedSound.isPlaying) {
-            player.codeUnlockedSound.pause();
+        else if (audio.codeUnlockedSound.isPlaying) {
+            audio.codeUnlockedSound.pause()
         }
         else {
-            player.codeUnlockedSound.play();
+            audio.codeUnlockedSound.play()
         }
     }
 }

@@ -3,7 +3,6 @@ import EventEmitter from "./EventEmitter.js"
 export default class Time extends EventEmitter {
 
     constructor() {
-
         super()
 
         // Setup
@@ -15,7 +14,6 @@ export default class Time extends EventEmitter {
         window.requestAnimationFrame(() => {
             this.animate()
         })
-
     }
 
     animate() {

@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
-import PointsOfInterests from '../Extras/PointsOfInterests.js'
 import Video from '../Extras/Video.js'
 import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
@@ -49,6 +48,7 @@ export default class World {
 
     startJourney() {
         instance.welcome.landingScreen.remove()
+        instance.audio.removeBgMusicElement()
 
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
