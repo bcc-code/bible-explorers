@@ -1,10 +1,10 @@
 import Experience from "../Experience.js";
 
-let codeUnlock = null
+let instance = null
 
 export default class CodeUnlock {
     constructor() {
-        codeUnlock = this
+        instance = this
         this.experience = new Experience()
         this.world = this.experience.world
     }
@@ -12,27 +12,27 @@ export default class CodeUnlock {
     open() {
         this.world.program.canClick = false
 
-        codeUnlock.htmlEl = document.createElement("div");
-        codeUnlock.htmlEl.className = "overlay visible";
-        codeUnlock.htmlEl.innerHTML = CodeUnlock.getHTML();
-        document.body.appendChild(codeUnlock.htmlEl);
+        instance.htmlEl = document.createElement("div");
+        instance.htmlEl.className = "overlay visible";
+        instance.htmlEl.innerHTML = CodeUnlock.getHTML();
+        document.body.appendChild(instance.htmlEl);
         
-        codeUnlock.el = {
-            code: codeUnlock.htmlEl.querySelector(".code-unlock__input"),
-            numbers: codeUnlock.htmlEl.querySelectorAll(".code-unlock__btn--number"),
-            backspace: codeUnlock.htmlEl.querySelector(".code-unlock__btn--backspace"),
-            confirm: codeUnlock.htmlEl.querySelector(".code-unlock__btn--confirm")
+        instance.el = {
+            code: instance.htmlEl.querySelector(".code-unlock__input"),
+            numbers: instance.htmlEl.querySelectorAll(".code-unlock__btn--number"),
+            backspace: instance.htmlEl.querySelector(".code-unlock__btn--backspace"),
+            confirm: instance.htmlEl.querySelector(".code-unlock__btn--confirm")
         };
-        codeUnlock.secretCode = "1234"
+        instance.secretCode = "1234"
         
-        codeUnlock.el.numbers.forEach(function(number) {
+        instance.el.numbers.forEach(function(number) {
             number.addEventListener("mousedown", () => {
-                codeUnlock.add(number.textContent)
+                instance.add(number.textContent)
             })
         });
         
-        codeUnlock.el.backspace.addEventListener("mousedown", codeUnlock.remove);
-        codeUnlock.el.confirm.addEventListener("mousedown", codeUnlock.checkCode);
+        instance.el.backspace.addEventListener("mousedown", instance.remove);
+        instance.el.confirm.addEventListener("mousedown", instance.checkCode);
 
         document.onkeydown = (e) => {
             if (e.key === '1' ||
@@ -46,34 +46,34 @@ export default class CodeUnlock {
                 e.key === '9' ||
                 e.key === '0'
             ) {
-                codeUnlock.add(e.key)
+                instance.add(e.key)
             }
             else if (e.key === 'Backspace') {
-                codeUnlock.remove()
+                instance.remove()
             }
             else if (e.key === 'Enter') {
-                codeUnlock.checkCode()
+                instance.checkCode()
             }
         }
     }
 
     add(number) {
-        if (codeUnlock.el.code.textContent.length == codeUnlock.secretCode.length) return;
-        codeUnlock.el.code.textContent += number;
+        if (instance.el.code.textContent.length == instance.secretCode.length) return;
+        instance.el.code.textContent += number;
     }
 
     remove() {
-        if (codeUnlock.el.code.textContent == "") return;
-        codeUnlock.el.code.textContent = codeUnlock.el.code.textContent.slice(0, -1);
+        if (instance.el.code.textContent == "") return;
+        instance.el.code.textContent = instance.el.code.textContent.slice(0, -1);
     }
 
     checkCode() {
-        if (codeUnlock.el.code.textContent == codeUnlock.secretCode) {
-            this.world.program.timer.destroy()
-            this.world.audio.playCodeUnlockedSound()
-            this.world.program.canClick = true
-            this.world.program.advance()
-            codeUnlock.destroy();
+        if (instance.el.code.textContent == instance.secretCode) {
+            instance.world.program.timer.destroy()
+            instance.world.audio.playCodeUnlockedSound()
+            instance.world.program.canClick = true
+            instance.world.program.advance()
+            instance.destroy();
         } else {
             console.log("Incorrect code");
         }
@@ -110,6 +110,6 @@ export default class CodeUnlock {
     }
 
     destroy() {
-        codeUnlock.htmlEl.remove();
+        instance.htmlEl.remove();
     }
 }

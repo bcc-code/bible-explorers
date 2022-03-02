@@ -141,6 +141,7 @@ export default class Camera {
         const camera = this.debug.ui.addFolder('Camera')
 
         // Location
+        camera.close()
         camera
             .add(this.cameraSettings, 'location')
             .min(0)

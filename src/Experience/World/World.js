@@ -6,6 +6,7 @@ import Video from '../Extras/Video.js'
 import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
+import Highlight from './Highlight.js'
 
 let instance = null
 
@@ -32,6 +33,7 @@ export default class World {
             this.audio = new Audio()
             this.controlRoom = new ControlRoom()
             this.environment = new Environment()
+            this.highlight = new Highlight()
         })
 
         // Start journey

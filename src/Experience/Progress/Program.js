@@ -17,11 +17,15 @@ export default class Program {
         this.world = this.experience.world
         this.camera = this.experience.camera
 
+
+        this.highlight = this.world.highlight
+
         // Get instance variables
         this.currentStep = localStorage.getItem(this.getId()) || 0
         this.currentVideo = this.currentStep in data.steps && "video" in data.steps[this.currentStep] ? data.steps[this.currentStep].video : null
         this.currentLocation = this.currentStep in data.steps ? data.steps[this.currentStep].location : null
         this.currentLocationUpdated = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
+        this.interactiveObjects = () => this.currentStep in data.steps ? data.steps[this.currentStep].clickableElements : []
         this.totalSteps = Object.keys(data.steps).length
         this.clickedObject = null
         this.canClick = true
@@ -44,6 +48,8 @@ export default class Program {
         this.updateLocalStorage()
         this.world.progressBar.refresh()
         this.camera.moveCameraTo(this.currentLocationUpdated())
+
+        this.highlight.setHightlight(this.interactiveObjects())
     }
 
     isNextStep() {
