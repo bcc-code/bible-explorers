@@ -4,11 +4,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
 
-
 export default class Resources extends EventEmitter {
 
     constructor(sources) {
-
         super()
 
         this.experience = new Experience()
@@ -18,9 +16,9 @@ export default class Resources extends EventEmitter {
 
         // Setup
         this.items = {}
-        this.toLoad = this.sources.length - 1
+        this.toLoad = this.sources.length
         this.loaded = 0 
-        this.mediaItems = []
+        // this.mediaItems = []
 
         this.loadManager()
         this.setLoaders()
@@ -42,7 +40,6 @@ export default class Resources extends EventEmitter {
 
             // Progress
             (itemUrl, itemsLoaded, itemsTotal) => {
-                console.log(itemUrl);
                 this.experience.pageLoader.progress(itemsLoaded, itemsTotal)
             }
         )
@@ -61,7 +58,6 @@ export default class Resources extends EventEmitter {
     startLoading() {
         // Load each source
         for (const source of this.sources) {
-
             if (source.type === 'gltfModel') {
                 this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
                 this.loaders.gltfLoader.load(
@@ -79,32 +75,33 @@ export default class Resources extends EventEmitter {
                     }
                 )
             }
-            else if (source.type === 'video') {
-                const video = document.createElement('video')
-                video.crossOrigin = 'anonymous'
-                video.muted = false
-                video.loop = false
-                video.controls = true
-                video.playsInline = true
-                video.autoplay = false
-                video.src = source.path
+            // May be used for PWA
+            // else if (source.type === 'video') {
+            //     const video = document.createElement('video')
+            //     video.crossOrigin = 'anonymous'
+            //     video.muted = false
+            //     video.loop = false
+            //     video.controls = true
+            //     video.playsInline = true
+            //     video.autoplay = false
+            //     video.src = source.path
 
-                video.oncanplay = () => {
-                    const texture = new THREE.VideoTexture(video)
-                    texture.minFilter = THREE.LinearFilter
-                    texture.magFilter = THREE.LinearFilter
-                    texture.encoding = THREE.RGBADepthPacking
+            //     video.oncanplay = () => {
+            //         const texture = new THREE.VideoTexture(video)
+            //         texture.minFilter = THREE.LinearFilter
+            //         texture.magFilter = THREE.LinearFilter
+            //         texture.encoding = THREE.RGBADepthPacking
                     
-                    this.mediaItems.push(
-                        {
-                            item: texture,
-                            path: source.path,
-                            naturalWidth: video.videoWidth || 1,
-                            naturalHeight: video.videoHeight || 1
-                        }
-                    )
-                }
-            }
+            //         this.mediaItems.push(
+            //             {
+            //                 item: texture,
+            //                 path: source.path,
+            //                 naturalWidth: video.videoWidth || 1,
+            //                 naturalHeight: video.videoHeight || 1
+            //             }
+            //         )
+            //     }
+            // }
         }
     }
 

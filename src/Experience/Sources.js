@@ -18,10 +18,5 @@ export default [
         name: 'screen_16x9_5',
         type: 'texture',
         path: 'textures/screen-16x9_5.png'
-    },
-    {
-        name: 'firstVideo',
-        type: 'video',
-        path: 'videos/bibleX.mp4'
     }
 ]
