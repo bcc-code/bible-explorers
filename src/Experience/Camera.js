@@ -14,7 +14,7 @@ export default class Camera {
         // Options
 
         this.cameraSettings = {
-            fov: 45,
+            fov: 60,
             aspect: this.sizes.width / this.sizes.height,
             near: 0.1,
             far: 100,
@@ -30,7 +30,7 @@ export default class Camera {
                 lookAt: new THREE.Vector3(0, 1.7, 0)
             },
             {
-                position: new THREE.Vector3(-4.2, 2.4, 3.6),
+                position: new THREE.Vector3(-4.2, 1.7, 3.6),
                 lookAt: new THREE.Vector3(-0.28, 1.3, -0.8)
             },
             {
@@ -112,6 +112,7 @@ export default class Camera {
                     obj.cameraPosition.y,
                     obj.cameraPosition.z
                 )
+
                 this.controls.update()
             })
             .start()
@@ -141,7 +142,7 @@ export default class Camera {
         const camera = this.debug.ui.addFolder('Camera')
 
         // Location
-        camera.close()
+        // camera.close()
         camera
             .add(this.cameraSettings, 'location')
             .min(0)
@@ -160,6 +161,9 @@ export default class Camera {
             .name('X')
             .onChange(
                 (value) => { this.instance.position.x = value, this.cameraSettings.position.x = value })
+            .onFinishChange(
+                (value) => { console.log(value) }
+            )
 
         cameraPosition
             .add(this.cameraSettings.position, 'y', -20, 20)
