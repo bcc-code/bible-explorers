@@ -17,7 +17,7 @@
         "3": {
             "clickableElements": ["Panel_Green_button","Panel_Red_button"],
             "location": 2,
-            "video": "0"
+            "video": "1"
         },
         "4": {
             "clickableElements": ["Panel_Screen"],

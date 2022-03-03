@@ -2,7 +2,6 @@ import Experience from '../Experience.js'
 
 export default class Highlight {
     constructor() {
-
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -83,9 +82,5 @@ export default class Highlight {
             .onChange((value) => {
                 this.outlinePass.hiddenEdgeColor.set(value)
             })
-
-
     }
-
-
 }

@@ -18,7 +18,7 @@ export default class Resources extends EventEmitter {
 
         // Setup
         this.items = {}
-        this.toLoad = this.sources.length - 1
+        this.toLoad = this.sources.length - 2
         this.loaded = 0 
         this.mediaItems = []
 
@@ -42,7 +42,6 @@ export default class Resources extends EventEmitter {
 
             // Progress
             (itemUrl, itemsLoaded, itemsTotal) => {
-                console.log(itemUrl);
                 this.experience.pageLoader.progress(itemsLoaded, itemsTotal)
             }
         )

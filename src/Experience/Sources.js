@@ -20,7 +20,12 @@ export default [
         path: 'textures/screen-16x9_5.png'
     },
     {
-        name: 'firstVideo',
+        name: '0',
+        type: 'video',
+        path: 'videos/SISA_S01_EP04.mp4'
+    },
+    {
+        name: '1',
         type: 'video',
         path: 'videos/bibleX.mp4'
     }
