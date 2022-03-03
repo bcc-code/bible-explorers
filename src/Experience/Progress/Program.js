@@ -14,13 +14,14 @@ export default class Program {
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
+        this.resources = this.experience.resources
         this.world = this.experience.world
         this.camera = this.experience.camera
         this.highlight = this.world.highlight
+        this.video = this.world.video
 
         // Get instance variables
         this.currentStep = localStorage.getItem(this.getId()) || 0
-        this.currentVideo = this.currentStep in data.steps && "video" in data.steps[this.currentStep] ? data.steps[this.currentStep].video : null
         this.currentLocation = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
         this.interactiveObjects = () => this.currentStep in data.steps ? data.steps[this.currentStep].clickableElements : []
         this.totalSteps = Object.keys(data.steps).length
@@ -31,20 +32,24 @@ export default class Program {
     }
 
     control(currentIntersect) {
-        if (!this.canClick && !this.experience.debug.active) return
+        if (!this.canClick) return
 
         this.clickedObject = currentIntersect.name
 
-        if (this.isNextStep()) {
+        if (this.objectIsClickable()) {
             this.startAction()
         }
     }
 
     advance(step = ++this.currentStep) {
-        this.currentStep = step
-        this.updateLocalStorage()
+        this.updateCurrentStep(step)
         this.world.progressBar.refresh()
         this.startInteractivity()
+    }
+
+    updateCurrentStep(newStep) {
+        this.currentStep = newStep
+        this.updateLocalStorage()
     }
 
     startInteractivity() {
@@ -52,7 +57,7 @@ export default class Program {
         this.highlight.setHightlight(this.interactiveObjects())
     }
 
-    isNextStep() {
+    objectIsClickable() {
         return this.currentStep in data.steps &&
             data.steps[this.currentStep].clickableElements.includes(this.clickedObject)
     }
@@ -77,30 +82,25 @@ export default class Program {
         }
 
         if (this.clickedObject === 'Panel_Green_button') {
-            let video = this.getVideo()
-            if (video) {
-                if (video.paused) {
-                    video.play()
-                } else {
-                    video.pause()
-                }
-            }
+            this.video.play(this.currentVideo())
         }
 
         if (this.clickedObject === 'Panel_Red_button') {
-            let video = this.getVideo()
-            if (video) {
-                video.pause()
-                video.currentTime = 0
-                this.advance()
-            }
+            this.video.stop()
+            this.advance()
+        }
+
+        if (this.clickedObject === 'Video_Screen') {
+            this.video.togglePlay()
         }
     }
 
-    getVideo() {
-        return this.currentVideo
-            ? this.world.video.mediaItems[0].item.image
-            : null
+    currentVideo() {
+        let localCurrentStep = this.currentStep
+        while (!(localCurrentStep in data.steps) || !("video" in data.steps[localCurrentStep]))
+            localCurrentStep--
+
+        return data.steps[localCurrentStep].video
     }
 
     updateLocalStorage() {

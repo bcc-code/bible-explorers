@@ -150,6 +150,7 @@ iframe {
     background-color: beige;
     border-radius: 50%;
     cursor: pointer;
+    z-index: 1;
 }
 
 .archive__grid {

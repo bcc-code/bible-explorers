@@ -14,6 +14,7 @@ export default class ControlRoom {
         this.pointer = this.experience.pointer
         this.time = this.experience.time
         this.debug = this.experience.debug
+        this.program = this.experience.world.program
 
         this.clickableObjects = []
         this.currentIntersect = null
@@ -30,14 +31,13 @@ export default class ControlRoom {
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
-        this.meshes()
+        this.storeMeshes()
 
         // Events
         window.addEventListener('mousedown', () => {
             if (this.experience.world.program)
                 this.clickedObject()
         })
-
     }
 
     // Set scene
@@ -56,12 +56,10 @@ export default class ControlRoom {
         this.texture.encoding = THREE.sRGBEncoding
     }
 
-    // 
-    meshes() {
+    storeMeshes() {
         this.resources.scene.traverse((child) => {
             if (child instanceof THREE.Mesh) {
                 switch (child.name) {
-
                     // Store clickable objects
                     case 'tv_4x4':
                     case 'tv_4x5':
@@ -92,7 +90,6 @@ export default class ControlRoom {
         })
     }
 
-    // 
     checkObjectIntersetion() {
         this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
         const intersects = this.raycaster.intersectObjects(this.clickableObjects)
@@ -137,6 +134,5 @@ export default class ControlRoom {
     update() {
         // Check intersection
         this.checkObjectIntersetion()
-
     }
 }

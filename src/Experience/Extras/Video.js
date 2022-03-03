@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js";
 import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
+import { CompressedPixelFormat } from 'three';
 
 export default class Video {
     constructor() {
@@ -12,20 +13,19 @@ export default class Video {
         this.camera = this.experience.camera
         this.renderer = this.experience.renderer
         this.controls = this.experience.camera.controls
-
+        this.world = this.experience.world
+        this.controlRoom = this.world.controlRoom
 
         // Setup
-        this.cssRenderer()
+        // this.cssRenderer()
+        // const video = this.createElement('xBOqwRRj82A', 0, 0, 0, 0)
+        // this.scene.add(video);
 
-        const video = this.createElement('xBOqwRRj82A', 0, 0, 0, 0)
+        // this.blocker()
 
-        this.scene.add(video);
+        this.planeGeometry = 
 
-        this.blocker()
-
-        const light = new THREE.AmbientLight(0x404040); // soft white light
-        this.scene.add(light);
-
+        this.setPlane()
     }
 
     createElement(id, x, y, z, ry) {
@@ -49,13 +49,39 @@ export default class Video {
     }
 
     setPlane() {
-        const planeGeometry = new THREE.PlaneGeometry(16, 9)
-        const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
-        const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+        this.planeGeometry = new THREE.PlaneGeometry(16, 9)
+        this.planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+        this.planeMesh = new THREE.Mesh(this.planeGeometry, this.planeMaterial)
 
-        planeMesh.position.set(17, 3, 0)
-        planeMesh.rotation.y = Math.PI * 0.5
-        this.scene.add(planeMesh);
+        this.planeMesh.name = "Video_Screen"
+        this.planeMesh.position.set(17, 3, 0)
+        this.planeMesh.rotation.y = -Math.PI * 0.5
+        this.scene.add(this.planeMesh)
+
+    }
+
+    play(id) {
+        this.texture = this.resources.mediaItems[id].item
+        this.planeMesh.material.map = this.texture
+        this.planeMesh.material.needsUpdate = true
+        this.texture.image.play()
+        this.controlRoom.clickableObjects.push(this.planeMesh)
+    }
+
+    stop() {
+        this.texture.image.pause()
+        this.texture.image.currentTime = 0
+        this.planeMesh.material.map = null
+    }
+
+    togglePlay() {
+        if (!this.texture.image) return
+
+        if (this.texture.image.paused) {
+            this.texture.image.play()
+        } else {
+            this.texture.image.pause()
+        }
     }
 
     blocker() {
@@ -83,7 +109,7 @@ export default class Video {
     }
 
     update() {
-        this.rendererCSS.render(this.scene, this.camera.instance);
+        // this.rendererCSS.render(this.scene, this.camera.instance);
     }
 
     setControls() {
@@ -103,12 +129,5 @@ export default class Video {
                 this.texture.image.currentTime = 0
             }
         }
-    }
-
-    play(id) {
-        this.texture = this.mediaItems[id].item
-        this.material.map = this.texture
-        this.plane.material = this.material
-        this.scene.add(this.plane)
     }
 }

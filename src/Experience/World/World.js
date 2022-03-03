@@ -29,9 +29,9 @@ export default class World {
         // Wait for resources
         this.resources.on('ready', () => {
             // Setup
-            this.video = new Video()
-            this.audio = new Audio()
             this.controlRoom = new ControlRoom()
+            this.audio = new Audio()
+            this.video = new Video()
             this.environment = new Environment()
             this.highlight = new Highlight()
         })

@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import Experience from "./Experience.js"
 
 export default class Renderer {
-
     constructor() {
         this.experience = new Experience()
         this.canvas = this.experience.canvas
@@ -33,5 +32,4 @@ export default class Renderer {
     update() {
         this.instance.render(this.scene, this.camera.instance)
     }
-
 }
