@@ -17,14 +17,9 @@ export default class World {
         this.scene = this.experience.scene
         this.camera = this.experience.camera
         this.resources = this.experience.resources
+        this.debug = this.experience.debug
 
         instance = this
-
-        if (this.experience.debug.active) {
-            const axesHelper = new THREE.AxesHelper(20)
-            const gridHelper = new THREE.GridHelper(20, 20);
-            this.scene.add(gridHelper, axesHelper);
-        }
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -46,6 +41,11 @@ export default class World {
         this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
 
         this.selectedEpisode = 1
+
+        // Debug
+        if (this.debug.active) {
+            this.addGUIControls()
+        }
     }
 
     startJourney() {
@@ -65,5 +65,15 @@ export default class World {
         if (this.controlRoom) {
             this.controlRoom.update()
         }
+    }
+
+    addGUIControls() {
+        const axesHelper = new THREE.AxesHelper(20)
+        const gridHelper = new THREE.GridHelper(20, 20);
+        this.scene.add(gridHelper, axesHelper);
+
+        const helper = this.debug.ui.addFolder('Extras')
+        helper.add(axesHelper, 'visible').name('Axes helper')
+        helper.add(gridHelper, 'visible').name('Grid helper')
     }
 }

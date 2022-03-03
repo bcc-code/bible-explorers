@@ -8,7 +8,7 @@ export default class Video {
         this.canvas = this.experience.canvas
         this.scene = this.experience.scene
         this.resources = this.experience.resources
-        this.camera = this.experience.camera
+        this.camera = this.experience.camera 
         this.renderer = this.experience.renderer
         this.controls = this.experience.camera.controls
         this.world = this.experience.world

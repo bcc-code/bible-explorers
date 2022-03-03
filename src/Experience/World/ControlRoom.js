@@ -17,6 +17,7 @@ export default class ControlRoom {
         this.program = this.experience.world.program
 
         this.clickableObjects = []
+        this.lights = []
         this.currentIntersect = null
 
         this.rotation = {
