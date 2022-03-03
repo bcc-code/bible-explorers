@@ -22,11 +22,13 @@ export default class Program {
 
         // Get instance variables
         this.currentStep = localStorage.getItem(this.getId()) || 0
+        this.videoType = () => this.currentStep in data.steps ? "video" in data.steps[this.currentStep] : false
         this.currentLocation = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
         this.interactiveObjects = () => this.currentStep in data.steps ? data.steps[this.currentStep].clickableElements : []
         this.totalSteps = Object.keys(data.steps).length
         this.clickedObject = null
         this.canClick = true
+        this.autoplayVideo = true
 
         this.startInteractivity()
     }
@@ -55,6 +57,8 @@ export default class Program {
     startInteractivity() {
         this.camera.moveCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
+        if (this.autoplayVideo && this.videoType())
+            this.video.play(this.currentVideo())
     }
 
     objectIsClickable() {

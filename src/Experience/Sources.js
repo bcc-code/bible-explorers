@@ -20,16 +20,6 @@ export default [
         path: 'textures/screen-16x9_5.png'
     },
     {
-        name: 'sisa_s01_ep04',
-        type: 'video',
-        path: 'videos/SISA_S01_EP04.mp4'
-    },
-    {
-        name: 'biblex',
-        type: 'video',
-        path: 'videos/bibleX.mp4'
-    },
-    {
         name: 'environmentMap',
         type: 'cubeTexture',
         path: [
@@ -40,5 +30,15 @@ export default [
             'textures/envMap/pz-min.png',
             'textures/envMap/nz-min.png'
         ]
+    },
+    {
+        name: 'sisa_s01_ep04',
+        type: 'video',
+        path: 'videos/SISA_S01_EP04.mp4'
+    },
+    {
+        name: 'biblex',
+        type: 'video',
+        path: 'videos/bibleX.mp4'
     }
 ]

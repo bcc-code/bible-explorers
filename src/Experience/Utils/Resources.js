@@ -15,7 +15,7 @@ export default class Resources extends EventEmitter {
 
         // Setup
         this.items = {}
-        this.toLoad = this.sources.length - 2
+        this.toLoad = this.sources.length - this.sources.filter((source) => { return source.type == 'video' }).length
         this.loaded = 0 
         this.mediaItems = []
 
@@ -85,7 +85,6 @@ export default class Resources extends EventEmitter {
                 )
             }
 
-            // May be used for PWA
             else if (source.type === 'video') {
                 const video = document.createElement('video')
                 video.crossOrigin = 'anonymous'

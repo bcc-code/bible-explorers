@@ -70,8 +70,5 @@ export default class Experience {
         this.stats.update()
         this.renderer.update()
         this.composer.update()
-
-        if (this.world.video)
-            this.world.video.update()
     }
 }
