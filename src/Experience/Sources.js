@@ -18,5 +18,17 @@ export default [
         name: 'screen_16x9_5',
         type: 'texture',
         path: 'textures/screen-16x9_5.png'
+    },
+    {
+        name: 'environmentMap',
+        type: 'cubeTexture',
+        path: [
+            'textures/envMap/px-min.png',
+            'textures/envMap/nx-min.png',
+            'textures/envMap/py-min.png',
+            'textures/envMap/ny-min.png',
+            'textures/envMap/pz-min.png',
+            'textures/envMap/nz-min.png'
+        ]
     }
 ]

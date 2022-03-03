@@ -53,6 +53,7 @@ export default class Resources extends EventEmitter {
 
         this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
         this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
+        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
     }
 
     startLoading() {
@@ -75,6 +76,16 @@ export default class Resources extends EventEmitter {
                     }
                 )
             }
+
+            else if (source.type === 'cubeTexture') {
+                this.loaders.cubeTextureLoader.load(
+                    source.path,
+                    (file) => {
+                        this.sourceLoaded(source, file)
+                    }
+                )
+            }
+
             // May be used for PWA
             // else if (source.type === 'video') {
             //     const video = document.createElement('video')

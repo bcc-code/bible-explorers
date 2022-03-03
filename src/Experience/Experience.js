@@ -51,11 +51,16 @@ export default class Experience {
         this.time.on('animation', () => {
             this.update()
         })
+
+
+
     }
 
     resize() {
         this.camera.resize()
         this.renderer.resize()
+        if (this.world.video)
+            this.world.video.resize()
     }
 
     update() {
@@ -63,5 +68,8 @@ export default class Experience {
         this.world.update()
         this.stats.update()
         this.renderer.update()
+
+        if (this.world.video)
+            this.world.video.update()
     }
 }

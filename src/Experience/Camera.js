@@ -17,7 +17,7 @@ export default class Camera {
             fov: 45,
             aspect: this.sizes.width / this.sizes.height,
             near: 0.1,
-            far: 100,
+            far: 1000,
 
             position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),

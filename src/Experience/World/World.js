@@ -63,8 +63,5 @@ export default class World {
         if (this.controlRoom) {
             this.controlRoom.update()
         }
-        if (this.video) {
-            this.video.update()
-        }
     }
 }
