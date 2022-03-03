@@ -2,9 +2,9 @@
     "episode": 1,
     "steps": {
         "0": {
-            "clickableElements": ["Panel_Green_button","Panel_Red_button"],
+            "clickableElements": ["Panel_Green_button","Panel_Red_button","Video_Screen"],
             "location": 2,
-            "video": "0"
+            "video": "sisa_s01_ep04"
         },
         "1": {
             "clickableElements": ["Panel_Screen"],
@@ -17,7 +17,7 @@
         "3": {
             "clickableElements": ["Panel_Green_button","Panel_Red_button"],
             "location": 2,
-            "video": "1"
+            "video": "biblex"
         },
         "4": {
             "clickableElements": ["Panel_Screen"],

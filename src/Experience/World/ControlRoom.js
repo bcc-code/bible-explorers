@@ -25,10 +25,12 @@ export default class ControlRoom {
         }
 
         // Setup
+        this.sources = this.resources
+        this.texture = null
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
-        this.storeClickableObjects()
+        this.meshes()
 
         // Events
         window.addEventListener('mousedown', () => {
@@ -44,22 +46,23 @@ export default class ControlRoom {
         this.scene.add(this.model)
     }
 
-    checkObjectIntersetion() {
-        this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
-        const intersects = this.raycaster.intersectObjects(this.clickableObjects)
-
-        if (intersects.length > 0) {
-            this.currentIntersect = intersects[0].object
-        } else {
-            this.currentIntersect = null
-        }
+    // Set textures
+    setTexture(texture, rotation = 0) {
+        this.texture = texture
+        this.texture.rotation = THREE.Math.degToRad(rotation)
+        this.texture.flipY = false
+        this.texture.wrapS = THREE.RepeatWrapping
+        this.texture.wrapT = THREE.RepeatWrapping
+        this.texture.encoding = THREE.sRGBEncoding
     }
 
-    // Store clickable objects
-    storeClickableObjects() {
+    // 
+    meshes() {
         this.resources.scene.traverse((child) => {
             if (child instanceof THREE.Mesh) {
                 switch (child.name) {
+
+                    // Store clickable objects
                     case 'tv_4x4':
                     case 'tv_4x5':
                     case 'tv_16x10':
@@ -70,11 +73,35 @@ export default class ControlRoom {
                         this.clickableObjects.push(child)
                         break
 
+                    // Set new textures
+                    case 'tv_16x9_5_screen':
+                        this.setTexture(this.sources.items.screen_16x9_5, 90)
+                        child.material.map = this.texture
+                        break
+
+                    case 'tv_16x10_screen':
+                        this.setTexture(this.sources.items.screen_16x10, 0)
+                        child.material.map = this.texture
+                        break
+
                     default:
+                        child.receiveShadow = true
                         break
                 }
             }
         })
+    }
+
+    // 
+    checkObjectIntersetion() {
+        this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
+        const intersects = this.raycaster.intersectObjects(this.clickableObjects)
+
+        if (intersects.length > 0) {
+            this.currentIntersect = intersects[0].object
+        } else {
+            this.currentIntersect = null
+        }
     }
 
     // Click events

@@ -4,11 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
 
-
 export default class Resources extends EventEmitter {
-
     constructor(sources) {
-
         super()
 
         this.experience = new Experience()
@@ -55,12 +52,12 @@ export default class Resources extends EventEmitter {
 
         this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
         this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
+        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
     }
 
     startLoading() {
         // Load each source
         for (const source of this.sources) {
-
             if (source.type === 'gltfModel') {
                 this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
                 this.loaders.gltfLoader.load(
@@ -78,6 +75,17 @@ export default class Resources extends EventEmitter {
                     }
                 )
             }
+
+            else if (source.type === 'cubeTexture') {
+                this.loaders.cubeTextureLoader.load(
+                    source.path,
+                    (file) => {
+                        this.sourceLoaded(source, file)
+                    }
+                )
+            }
+
+            // May be used for PWA
             else if (source.type === 'video') {
                 const video = document.createElement('video')
                 video.crossOrigin = 'anonymous'
@@ -94,14 +102,13 @@ export default class Resources extends EventEmitter {
                     texture.magFilter = THREE.LinearFilter
                     texture.encoding = THREE.RGBADepthPacking
                     
-                    this.mediaItems.push(
+                    this.mediaItems[source.name] =
                         {
                             item: texture,
                             path: source.path,
                             naturalWidth: video.videoWidth || 1,
                             naturalHeight: video.videoHeight || 1
                         }
-                    )
                 }
             }
         }
