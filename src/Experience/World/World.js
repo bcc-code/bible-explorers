@@ -73,6 +73,7 @@ export default class World {
         this.scene.add(gridHelper, axesHelper);
 
         const helper = this.debug.ui.addFolder('Extras')
+        helper.close()
         helper.add(axesHelper, 'visible').name('Axes helper')
         helper.add(gridHelper, 'visible').name('Grid helper')
     }

@@ -8,8 +8,13 @@ export default class Renderer {
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+        this.debug = this.experience.debug
 
         this.setInstance()
+
+        if (this.debug.active) {
+            this.addGUIControls()
+        }
     }
 
     setInstance() {
@@ -20,7 +25,7 @@ export default class Renderer {
 
         this.instance.physicallyCorrectLights = true
         this.instance.outputEncoding = THREE.sRGBEncoding
-        this.instance.toneMapping = THREE.ReinhardToneMapping
+        this.instance.toneMapping = THREE.ACESFilmicToneMapping
         this.instance.shadowMap.enabled = true
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
@@ -33,5 +38,18 @@ export default class Renderer {
 
     update() {
         this.instance.render(this.scene, this.camera.instance)
+    }
+
+    addGUIControls() {
+
+        const render = this.debug.ui.addFolder('Render')
+        render.close()
+        render.add(this.instance, 'toneMapping', {
+            No: THREE.NoToneMapping,
+            Linear: THREE.LinearToneMapping,
+            Reinhard: THREE.ReinhardToneMapping,
+            Cineon: THREE.CineonToneMapping,
+            ACESFilmic: THREE.ACESFilmicToneMapping
+        })
     }
 }
