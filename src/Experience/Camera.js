@@ -53,8 +53,6 @@ export default class Camera {
         if (this.debug.active) {
             this.addGUIControls()
         }
-
-
     }
 
     setInstance() {
@@ -79,9 +77,19 @@ export default class Camera {
     }
 
     autoRotateControls() {
+        this.counter = 0
         this.controls.enableDamping = true
         this.controls.autoRotate = true
         this.controls.autoRotateSpeed = 0.1
+    }
+
+    changeRotateDirection() {
+        if (this.counter > 1000) {
+            this.controls.autoRotateSpeed *= -1
+            this.counter = 0
+        } else {
+            this.counter++
+        }
     }
 
     animateCamera({ position, lookAt, duration = 1200 }) {
@@ -134,8 +142,10 @@ export default class Camera {
     update() {
         TWEEN.update()
 
-        if (this.controls.autoRotate)
+        if (this.controls.autoRotate) {
             this.controls.update()
+            this.changeRotateDirection()
+        }
     }
 
     addGUIControls() {
