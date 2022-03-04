@@ -32,7 +32,6 @@ export default class Program {
         this.totalSteps = Object.keys(data.steps).length
         this.clickedObject = null
         this.canClick = true
-        this.autoplayVideo = true
 
         this.startInteractivity()
     }
@@ -62,10 +61,10 @@ export default class Program {
         this.camera.updateCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
         
-        if (this.autoplayVideo && this.videoType()) {
+        if (this.videoType()) {
             let video = this.currentVideo()
             setTimeout(function() {
-                instance.video.play(video)
+                instance.video.load(video)
             }, instance.camera.data.moveDuration, video)
         }
     }

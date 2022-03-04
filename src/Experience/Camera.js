@@ -43,8 +43,8 @@ export default class Camera {
             },
             {
                 name: 'screens',
-                position: new THREE.Vector3(-4.2, 1.7, 3.6),
-                lookAt: new THREE.Vector3(-0.28, 1.3, -0.8),
+                position: new THREE.Vector3(-1.27, 1.92, 2.99),
+                lookAt: new THREE.Vector3(0.31, 1.65, -0.58),
                 controls: {
                     minPolarAngle: 1.25,
                     maxPolarAngle: 1.5,
@@ -60,7 +60,7 @@ export default class Camera {
                     minPolarAngle: 1.5,
                     maxPolarAngle: 2.25,
                     minAzimuthAngle: -1.65,
-                    maxAzimuthAngle: 2.25
+                    maxAzimuthAngle: 0.25
                 }
             }
         ]
@@ -143,18 +143,13 @@ export default class Camera {
                     obj.cameraPosition.y,
                     obj.cameraPosition.z
                 )
+                this.controls.minPolarAngle = controls.minPolarAngle
+                this.controls.maxPolarAngle = controls.maxPolarAngle
+                this.controls.minAzimuthAngle = controls.minAzimuthAngle
+                this.controls.maxAzimuthAngle = controls.maxAzimuthAngle
             })
             .start()
-
-        if (controls && !this.debug.active) {
-            setTimeout(function () {
-                camera.controls.minPolarAngle = controls.minPolarAngle
-                camera.controls.maxPolarAngle = controls.maxPolarAngle
-                camera.controls.minAzimuthAngle = controls.minAzimuthAngle
-                camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
-            }, this.data.moveDuration, controls)
-        }
-
+        
         this.controls.autoRotate = false
     }
 
@@ -195,10 +190,18 @@ export default class Camera {
             .name('Location')
 
 
+        camera.add(this.data, 'debug').name('debug')
+            .onFinishChange((debug) => {
+                if (debug) {
+                    this.updateCameraTo(3)
+                } else {
+                    this.updateCameraTo(0)
+                }
+            })
+
         // Position
         const cameraPosition = camera.addFolder('Camera position')
         this.lookAtLabel3D.visible = false
         cameraPosition.add(this.lookAtLabel3D, 'visible').name('Look at label')
-
     }
 }

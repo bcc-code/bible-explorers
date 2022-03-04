@@ -43,7 +43,6 @@ export default class Renderer {
     }
 
     addGUIControls() {
-
         const renderer = this.debug.ui.addFolder('Renderer')
         renderer.close()
         renderer.add(this.instance, 'toneMapping', {

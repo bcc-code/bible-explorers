@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
-import Video from '../Extras/Video.js'
 import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
@@ -65,6 +64,10 @@ export default class World {
     update() {
         if (this.controlRoom) {
             this.controlRoom.update()
+        }
+
+        if (this.program) {
+            this.program.video.update()
         }
     }
 

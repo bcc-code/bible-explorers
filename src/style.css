@@ -46,7 +46,6 @@ iframe {
     left: 0;
     outline: none;
     cursor: grab;
-    z-index: 1;
 }
 
 /* Landing screen */
@@ -432,6 +431,7 @@ iframe {
     position: absolute;
     left: 0;
     width: 100%;
+    z-index: 3;
 }
 .progress-bar__step {
     width: 42px;
@@ -456,11 +456,166 @@ iframe {
     width: 100%;
     border: 2px solid #3f778d;
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 .progress-bar__percentage .passed {
     float: left;
     height: 100%;
     background-color: #3f778d;
     transition: width 0.4s ease-in-out;
+}
+
+/* Video controls */
+#videos-container {
+    position: absolute;
+}
+.css-container .css3dobject {
+    pointer-events: none;
+}
+.css-container .css3dobject.hide {
+    display: none;
+}
+.css-container .video-overlay {
+    bottom: -32px;
+    display: block;
+    pointer-events: none;
+    position: absolute;
+    transform: translateX(-50%);
+}
+.css-container .video-controlbar {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, rgba(0, 0, 0, 0) 100%);
+    padding: 30px 40px;
+}
+.css-container .video-controlbar {
+    transition: opacity ease 300ms;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.css-container .video-controls,
+.css-container .video-timeline {
+    display: flex;
+    width: 100%;
+}
+.css-container .video-controls > *:not(:last-child) {
+    margin-right: 20px;
+}
+.css-container .btn {
+    align-items: center;
+    background-color: transparent;
+    color: #F1EBE5;
+    cursor: pointer;
+    display: flex;
+    font-size: 80px;
+    justify-content: center;
+    pointer-events: all;
+    transition: background-color ease 200ms;
+
+    width: 40px;
+    height: 40px;
+    background: green;
+}
+.css-container .btn:hover, .css-container .btn:focus {
+    background-color: #FF003B;
+}
+.css-container .btn:active {
+    background-color: #b30029;
+}
+.css-container .btn[disabled] {
+    opacity: 0.2;
+    pointer-events: none !important;
+}
+.css-container .btn.hide {
+    display: none !important;
+}
+.css-container .video-overlay:not(.show-controls) {
+    cursor: pointer;
+    pointer-events: all;
+}
+.css-container .video-overlay:not(.show-controls) .video-controlbar {
+    opacity: 0;
+}
+.css-container .video-overlay:not(.show-controls) .video-controlbar * {
+    pointer-events: none !important;
+}
+.css-container .video-overlay:not(.in-frustum), .css-container .video-overlay:not(.in-frustum) *, .css-container .video-overlay.hide, .css-container .video-overlay.hide * {
+    pointer-events: none !important;
+}
+.css-container .video-overlay:not(.in-frustum) .video-controlbar,
+.css-container .video-overlay.hide .video-controlbar {
+    opacity: 0 !important;
+}
+.css-container .video-overlay.is-live .video-controls > .next,
+.css-container .video-overlay.is-live .video-controls > .prev,
+.css-container .video-overlay.is-live .video-controls > .timetracker {
+    display: none;
+}
+.css-container .video-overlay.is-playing .icon-play:before {
+    content: "";
+}
+.css-container .video-overlay.is-fullscreen .icon-fullscreen:before {
+    content: "";
+}
+.css-container .video-overlay.is-mute .icon-sound-on:before {
+    content: "";
+}
+.css-container .timetracker {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-family: "mono45-headline";
+    font-size: 48px;
+    line-height: 80px;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+    user-select: none;
+}
+.css-container .btn.fullscreen {
+    margin-left: auto;
+}
+.css-container .video-timeline {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 8px;
+    margin-bottom: 20px;
+    pointer-events: all;
+    position: relative;
+}
+.css-container .video-timeline .loadedbar,
+.css-container .video-timeline .seekbar,
+.css-container .video-timeline .progressbar {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: width ease-out 1s, left ease-out 1s;
+    width: 0%;
+}
+.css-container .video-timeline .loadedbar {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 0%;
+}
+.css-container .video-timeline .seekbar {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 0%;
+}
+.css-container .video-timeline .progressbar {
+    background-color: #FF003B;
+    width: 0%;
+}
+.css-container .video-timeline .progress-button {
+    background-color: #FF003B;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 32px;
+    left: 0%;
+    position: absolute;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+    top: -12px;
+    transform: translateX(-50%);
+    transform-origin: center;
+    width: 32px;
 }

@@ -87,13 +87,15 @@ export default class Resources extends EventEmitter {
 
             else if (source.type === 'video') {
                 const video = document.createElement('video')
+                video.setAttribute('id', source.name)
                 video.crossOrigin = 'anonymous'
                 video.muted = false
                 video.loop = false
                 video.controls = true
-                video.playsInline = true
                 video.autoplay = false
                 video.src = source.path
+
+                document.getElementById('videos-container').appendChild(video);
 
                 video.oncanplay = () => {
                     const texture = new THREE.VideoTexture(video)
