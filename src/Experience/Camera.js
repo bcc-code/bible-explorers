@@ -197,6 +197,8 @@ export default class Camera {
 
         // Position
         const cameraPosition = camera.addFolder('Camera position')
+        this.lookAtLabel3D.visible = false
+        cameraPosition.add(this.lookAtLabel3D, 'visible').name('Look at label')
 
     }
 }
