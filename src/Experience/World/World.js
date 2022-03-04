@@ -68,11 +68,13 @@ export default class World {
     }
 
     addGUIControls() {
-        const axesHelper = new THREE.AxesHelper(20)
-        const gridHelper = new THREE.GridHelper(20, 20);
+        const axesHelper = new THREE.AxesHelper(40)
+        const gridHelper = new THREE.GridHelper(36, 36);
+        axesHelper.visible = false
+        gridHelper.visible = false
         this.scene.add(gridHelper, axesHelper);
 
-        const helper = this.debug.ui.addFolder('Extras')
+        const helper = this.debug.ui.addFolder('Helpers')
         helper.close()
         helper.add(axesHelper, 'visible').name('Axes helper')
         helper.add(gridHelper, 'visible').name('Grid helper')
