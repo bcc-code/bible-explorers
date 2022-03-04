@@ -18,7 +18,10 @@ class StatsModule {
         this.stats = new Stats();
 
         if (this.experience.debug.active) {
+            document.body.classList.add('debug')
             document.body.appendChild(this.stats.dom)
+        } else {
+            document.body.classList.remove('debug')
         }
     }
 
