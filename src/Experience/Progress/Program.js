@@ -66,7 +66,7 @@ export default class Program {
             let video = this.currentVideo()
             setTimeout(function() {
                 instance.video.play(video)
-            }, instance.camera.cameraSettings.moveDuration, video)
+            }, instance.camera.data.moveDuration, video)
         }
     }
 
