@@ -14,9 +14,39 @@ export default class Camera {
         this.debug = this.experience.debug
         camera = this
 
-        // Options
+        this.views = [
+            {
+                name: 'default',
+                left: 0,
+                bottom: 0,
+                width: 0.5,
+                height: 1.0,
+                background: new THREE.Color(0xff0000),
+                eye: [0, 5, 20],
+                up: [0, 1, 0],
+                fov: 60,
+                updateCamera: (camera, scene) => {
+                    camera.lookAt(scene.position)
+                }
+            },
+            {
+                name: 'debug',
+                left: 0.5,
+                bottom: 0,
+                width: 0.5,
+                height: 1.0,
+                background: new THREE.Color(0x00ff00),
+                eye: [0, 5, 20],
+                up: [0, 1, 0],
+                fov: 75,
+                updateCamera: (camera, scene) => {
+                    camera.lookAt(scene.position)
+                }
+            }
+        ]
 
-        this.cameraSettings = {
+        // Options
+        this.data = {
             fov: 60,
             aspect: this.sizes.width / this.sizes.height,
             near: 0.1,
@@ -25,15 +55,18 @@ export default class Camera {
 
             position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),
-            location: 0
+            location: 0,
+            debug: false,
         }
 
         this.cameraLocations = [
             {
+                name: 'default',
                 position: new THREE.Vector3(0, 1.7, 10),
                 lookAt: new THREE.Vector3(0, 1.7, 0)
             },
             {
+                name: 'screens',
                 position: new THREE.Vector3(-4.2, 1.7, 3.6),
                 lookAt: new THREE.Vector3(-0.28, 1.3, -0.8),
                 controls: {
@@ -44,6 +77,7 @@ export default class Camera {
                 }
             },
             {
+                name: 'portal',
                 position: new THREE.Vector3(-0.7, 1.7, 0),
                 lookAt: new THREE.Vector3(0.1, 1.7, 0),
                 controls: {
@@ -62,29 +96,26 @@ export default class Camera {
         this.cameraTween = null
 
         // Setup
+
         this.setInstance()
         this.setOrbitControls()
         this.autoRotateControls()
-
-        if (this.debug.active) {
-            this.addGUIControls()
-        }
     }
 
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(
-            this.cameraSettings.fov,
-            this.cameraSettings.aspect,
-            this.cameraSettings.near,
-            this.cameraSettings.far
+            this.data.fov,
+            this.data.aspect,
+            this.data.near,
+            this.data.far
         )
-        this.instance.position.copy(this.cameraSettings.position)
+        this.instance.position.copy(this.data.position)
         this.scene.add(this.instance)
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.target.copy(this.cameraSettings.lookAt)
+        this.controls.target.copy(this.data.lookAt)
         this.updateOrbitControls()
     }
 
@@ -110,7 +141,7 @@ export default class Camera {
         }
     }
 
-    updateCamera({ position, lookAt, controls, duration = this.cameraSettings.moveDuration }) {
+    updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }) {
         if (this.cameraTween)
             this.cameraTween.stop()
 
@@ -147,7 +178,7 @@ export default class Camera {
                 camera.controls.maxPolarAngle = controls.maxPolarAngle
                 camera.controls.minAzimuthAngle = controls.minAzimuthAngle
                 camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
-            }, this.cameraSettings.moveDuration, controls)
+            }, this.data.moveDuration, controls)
         }
         
         this.controls.autoRotate = false
@@ -176,10 +207,20 @@ export default class Camera {
     addGUIControls() {
         const camera = this.debug.ui.addFolder('Camera')
 
+        this.debugCamera = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.01, 5)
+        this.debugCamera.position.set(0, 1.7, 3)
+        this.scene.add(this.debugCamera)
+
+        const cameraHelper = new THREE.CameraHelper(this.debugCamera)
+        this.scene.add(cameraHelper)
+
+
+        this.instance.position.copy(this.debugCamera.position)
+
         // Location
         camera.close()
         camera
-            .add(this.cameraSettings, 'location')
+            .add(this.data, 'location')
             .min(0)
             .max(this.cameraLocations.length - 1)
             .step(1)
@@ -188,44 +229,55 @@ export default class Camera {
             })
             .name('Location')
 
+
+        camera.add(this.data, 'debug').name('debug')
+            .onFinishChange((debug) => {
+                if (debug) {
+                    this.moveCameraTo(3)
+                } else {
+                    this.moveCameraTo(0)
+                }
+            })
+
+
         // Position
         const cameraPosition = camera.addFolder('Camera position')
 
         cameraPosition
-            .add(this.cameraSettings.position, 'x', -20, 20)
+            .add(this.data.position, 'x', -20, 20)
             .name('X')
             .onChange(
-                (value) => { this.instance.position.x = value, this.cameraSettings.position.x = value })
+                (value) => { this.instance.position.x = value, this.data.position.x = value })
             .onFinishChange(
                 (value) => { console.log(value) }
             )
 
         cameraPosition
-            .add(this.cameraSettings.position, 'y', -20, 20)
+            .add(this.data.position, 'y', -20, 20)
             .name('Y')
-            .onChange((value) => { this.instance.position.y = value, this.cameraSettings.position.y = value })
+            .onChange((value) => { this.instance.position.y = value, this.data.position.y = value })
 
         cameraPosition
-            .add(this.cameraSettings.position, 'z', -20, 20)
+            .add(this.data.position, 'z', -20, 20)
             .name('Z')
-            .onChange((value) => { this.instance.position.z = value, this.cameraSettings.position.z = value })
+            .onChange((value) => { this.instance.position.z = value, this.data.position.z = value })
 
         // Lookat
         const lookAtPosition = camera.addFolder('Look at point position')
 
         lookAtPosition
-            .add(this.cameraSettings.lookAt, 'x', -20, 20)
+            .add(this.data.lookAt, 'x', -20, 20)
             .name('X')
-            .onChange((value) => { this.instance.lookAt(new THREE.Vector3(value, 0, 0)), this.cameraSettings.lookAt = new THREE.Vector3(value, 0, 0) })
+            .onChange((value) => { this.instance.lookAt(new THREE.Vector3(value, 0, 0)), this.data.lookAt = new THREE.Vector3(value, 0, 0) })
 
         lookAtPosition
-            .add(this.cameraSettings.lookAt, 'y', -20, 20)
+            .add(this.data.lookAt, 'y', -20, 20)
             .name('Y')
-            .onChange((value) => { this.instance.lookAt(new THREE.Vector3(0, value, 0)), this.cameraSettings.lookAt = new THREE.Vector3(0, value, 0) })
+            .onChange((value) => { this.instance.lookAt(new THREE.Vector3(0, value, 0)), this.data.lookAt = new THREE.Vector3(0, value, 0) })
 
         lookAtPosition
-            .add(this.cameraSettings.lookAt, 'z', -20, 20)
+            .add(this.data.lookAt, 'z', -20, 20)
             .name('Z')
-            .onChange((value) => { this.instance.lookAt(new THREE.Vector3(0, 0, value)), this.cameraSettings.lookAt = new THREE.Vector3(0, 0, value) })
+            .onChange((value) => { this.instance.lookAt(new THREE.Vector3(0, 0, value)), this.data.lookAt = new THREE.Vector3(0, 0, value) })
     }
 }
