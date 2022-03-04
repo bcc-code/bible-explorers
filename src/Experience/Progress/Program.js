@@ -2,7 +2,10 @@ import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
 import Timer from '../Extras/Timer.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
+import Video from '../Extras/Video.js'
 import data from "./episode-1.json";
+
+let instance = null
 
 export default class Program {
     constructor() {
@@ -14,11 +17,12 @@ export default class Program {
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
+        this.video = new Video()
         this.resources = this.experience.resources
         this.world = this.experience.world
         this.camera = this.experience.camera
         this.highlight = this.world.highlight
-        this.video = this.world.video
+        instance = this
 
         // Get instance variables
         this.currentStep = localStorage.getItem(this.getId()) || 0
@@ -55,10 +59,15 @@ export default class Program {
     }
 
     startInteractivity() {
-        this.camera.moveCameraTo(this.currentLocation())
+        this.camera.updateCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
-        if (this.autoplayVideo && this.videoType())
-            this.video.play(this.currentVideo())
+        
+        if (this.autoplayVideo && this.videoType()) {
+            let video = this.currentVideo()
+            setTimeout(function() {
+                instance.video.play(video)
+            }, instance.camera.cameraSettings.moveDuration, video)
+        }
     }
 
     objectIsClickable() {
@@ -86,7 +95,7 @@ export default class Program {
         }
 
         if (this.clickedObject === 'Panel_Green_button') {
-            this.video.play(this.currentVideo())
+            this.video.togglePlay()
         }
 
         if (this.clickedObject === 'Panel_Red_button') {

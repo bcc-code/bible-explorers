@@ -14,7 +14,7 @@ export default class ControlRoom {
         this.pointer = this.experience.pointer
         this.time = this.experience.time
         this.debug = this.experience.debug
-        this.program = this.experience.world.program
+        this.world = this.experience.world
 
         this.clickableObjects = []
         this.lights = []
@@ -105,7 +105,7 @@ export default class ControlRoom {
     // Click events
     clickedObject() {
         if (this.currentIntersect != null) {
-            this.experience.world.program.control(this.currentIntersect)
+            this.world.program.control(this.currentIntersect)
         }
     }
 

@@ -2,7 +2,7 @@
     "episode": 1,
     "steps": {
         "0": {
-            "clickableElements": ["Panel_Green_button","Panel_Red_button","Video_Screen"],
+            "clickableElements": ["Panel_Green_button","Panel_Red_button"],
             "location": 2,
             "video": "sisa_s01_ep04"
         },

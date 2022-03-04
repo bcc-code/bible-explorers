@@ -59,9 +59,6 @@ export default class Experience {
         this.camera.resize()
         this.renderer.resize()
         this.composer.resize()
-
-        if (this.world.video)
-            this.world.video.resize()
     }
 
     update() {

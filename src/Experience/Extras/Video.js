@@ -11,8 +11,6 @@ export default class Video {
         this.camera = this.experience.camera 
         this.renderer = this.experience.renderer
         this.controls = this.experience.camera.controls
-        this.world = this.experience.world
-        this.controlRoom = this.world.controlRoom
 
         // Setup
         this.setPlane()
@@ -30,11 +28,19 @@ export default class Video {
     }
 
     play(id) {
-        this.texture = this.resources.mediaItems[id].item
-        this.planeMesh.material.map = this.texture
-        this.planeMesh.material.needsUpdate = true
+        // Pause initial video
+        if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
+            this.texture.image.pause()
+
+        // Update video on screen (set initial or replace if it's a new video)
+        if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
+            this.texture = this.resources.mediaItems[id].item
+            this.planeMesh.material.map = this.texture
+            this.planeMesh.material.needsUpdate = true
+        }
+       
+        // Play the new video
         this.texture.image.play()
-        this.controlRoom.clickableObjects.push(this.planeMesh)
     }
 
     stop() {

@@ -3,6 +3,8 @@ import Experience from "./Experience.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN from '@tweenjs/tween.js'
 
+let camera = null
+
 export default class Camera {
     constructor() {
         this.experience = new Experience()
@@ -10,6 +12,7 @@ export default class Camera {
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
         this.debug = this.experience.debug
+        camera = this
 
         // Options
 
@@ -18,6 +21,7 @@ export default class Camera {
             aspect: this.sizes.width / this.sizes.height,
             near: 0.1,
             far: 1000,
+            moveDuration: 1200,
 
             position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),
@@ -31,11 +35,23 @@ export default class Camera {
             },
             {
                 position: new THREE.Vector3(-4.2, 1.7, 3.6),
-                lookAt: new THREE.Vector3(-0.28, 1.3, -0.8)
+                lookAt: new THREE.Vector3(-0.28, 1.3, -0.8),
+                controls: {
+                    minPolarAngle: 1.25,
+                    maxPolarAngle: 1.5,
+                    minAzimuthAngle: -1.25,
+                    maxAzimuthAngle: 0
+                }
             },
             {
                 position: new THREE.Vector3(-0.7, 1.7, 0),
-                lookAt: new THREE.Vector3(0.1, 1.7, 0)
+                lookAt: new THREE.Vector3(0.1, 1.7, 0),
+                controls: {
+                    minPolarAngle: 1.5,
+                    maxPolarAngle: 2.25,
+                    minAzimuthAngle: -1.65,
+                    maxAzimuthAngle: 2.25
+                }
             }
         ]
 
@@ -79,6 +95,8 @@ export default class Camera {
     autoRotateControls() {
         this.counter = 0
         this.controls.enableDamping = true
+        this.controls.enablePan = this.debug.active
+        this.controls.enableZoom = this.debug.active
         this.controls.autoRotate = true
         this.controls.autoRotateSpeed = 0.1
     }
@@ -92,7 +110,7 @@ export default class Camera {
         }
     }
 
-    animateCamera({ position, lookAt, duration = 1200 }) {
+    updateCamera({ position, lookAt, controls, duration = this.cameraSettings.moveDuration }) {
         if (this.cameraTween)
             this.cameraTween.stop()
 
@@ -120,18 +138,25 @@ export default class Camera {
                     obj.cameraPosition.y,
                     obj.cameraPosition.z
                 )
-
-                this.controls.update()
             })
             .start()
-
+        
+        if (controls) {
+            setTimeout(function() {
+                camera.controls.minPolarAngle = controls.minPolarAngle
+                camera.controls.maxPolarAngle = controls.maxPolarAngle
+                camera.controls.minAzimuthAngle = controls.minAzimuthAngle
+                camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
+            }, this.cameraSettings.moveDuration, controls)
+        }
+        
         this.controls.autoRotate = false
     }
 
-    moveCameraTo(location) {
+    updateCameraTo(location) {
         if (location == null) return
         this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
-        this.animateCamera(this.cameraLocations[location])
+        this.updateCamera(this.cameraLocations[location])
     }
 
     resize() {
@@ -141,9 +166,9 @@ export default class Camera {
 
     update() {
         TWEEN.update()
+        this.controls.update()
 
         if (this.controls.autoRotate) {
-            this.controls.update()
             this.changeRotateDirection()
         }
     }
@@ -159,7 +184,7 @@ export default class Camera {
             .max(this.cameraLocations.length - 1)
             .step(1)
             .onFinishChange((location) => {
-                this.moveCameraTo(location)
+                this.updateCameraTo(location)
             })
             .name('Location')
 

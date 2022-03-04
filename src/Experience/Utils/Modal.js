@@ -31,8 +31,8 @@ export default class Modal {
     }
 
     destroy() {
-        this.program.canClick = true
         modal.htmlEl.remove()
+        this.program.canClick = true
         modal = null
     }
 

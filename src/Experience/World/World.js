@@ -26,9 +26,11 @@ export default class World {
             // Setup
             this.controlRoom = new ControlRoom()
             this.audio = new Audio()
-            this.video = new Video()
             this.environment = new Environment()
             this.highlight = new Highlight()
+
+            this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
+            this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
         })
 
         // Start journey
@@ -37,9 +39,8 @@ export default class World {
             startJourney: document.querySelector("#start-journey"),
             restartJourney: document.querySelector("#restart-journey"),
         }
-        this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
-        this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
 
+        // TODO: make this dynamic
         this.selectedEpisode = 1
 
         // Debug
