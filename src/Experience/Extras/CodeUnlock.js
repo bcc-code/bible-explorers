@@ -92,17 +92,13 @@ export default class CodeUnlock {
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--backspace">
-                            <span class="material-icons">arrow_back</span>
-                        </button>
+                        <button type="button" class="code-unlock__btn code-unlock__btn--backspace"></button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">7</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">8</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">9</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--confirm">
-                            <span class="material-icons">check</span>
-                        </button>
+                        <button type="button" class="code-unlock__btn code-unlock__btn--confirm"></button>
                     </div>
                 </div>
             </div>

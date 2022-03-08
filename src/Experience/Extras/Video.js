@@ -50,27 +50,45 @@ export default class Video {
         this.video().addEventListener('timeupdate', function() {
             instance.setProgress(this.video().currentTime);
         }.bind(instance));
+
+        this.focus()
+    }
+
+    focus() {
+        instance.play()
+        instance.el.videoOverlay.classList.add('in-frustum')
     }
 
     play() {
         instance.texture.image.play()
+        instance.el.videoControlBar.classList.remove('show-controls')
+    }
+
+    defocus() {
+        if (instance.texture) {
+            instance.pause()
+            instance.el.videoOverlay.classList.remove('in-frustum')
+        }
+    }
+
+    pause() {
+        instance.texture.image.pause()
+        instance.el.videoControlBar.classList.add('show-controls')
+
     }
 
     stop() {
         instance.texture.image.pause()
         instance.texture.image.currentTime = 0
         instance.videoMesh.material.map = null
-        instance.hideVideoControls()
     }
 
     togglePlay() {
         if (!instance.texture) return
 
-        if (instance.texture.image.paused) {
-            instance.texture.image.play()
-        } else {
-            instance.texture.image.pause()
-        }
+        instance.texture.image.paused
+            ? instance.play()
+            : instance.pause()
     }
 
     toggleSound() {
@@ -119,8 +137,7 @@ export default class Video {
         this.cssScene = new THREE.Scene()
 
         var videoOverlay = document.createElement('div')
-        videoOverlay.classList.add('video-overlay','show-controls','in-frustum')
-        videoOverlay.innerHTML = `<div class="video-overlay show-controls in-frustum" style="width: ${ videoOverlayWidth }px; height: ${ videoOverlayHeight }px">  
+        videoOverlay.innerHTML = `<div class="video-overlay" style="width: ${ videoOverlayWidth }px; height: ${ videoOverlayHeight }px">  
             <div class="video-controlbar">
                 <div class="video-timeline">
                     <div class="loadedbar"></div>
@@ -163,6 +180,7 @@ export default class Video {
 
     setVideoListeners() {
         instance.el = {
+            videoOverlay: document.querySelector(".video-overlay"),
             videoControlBar: document.querySelector(".video-controlbar"),
             playPause: document.querySelector(".play-pause"),
             prev: document.querySelector(".prev"),
@@ -175,11 +193,14 @@ export default class Video {
             fullscreen: document.querySelector(".fullscreen")
         }
 
+        instance.el.videoOverlay.addEventListener("mouseover", () => { instance.el.videoControlBar.style.opacity = 1 })
+        instance.el.videoOverlay.addEventListener("mouseout", () => { if (!instance.el.videoControlBar.classList.contains('show-controls')) instance.el.videoControlBar.style.opacity = 0 })
         instance.el.playPause.addEventListener("click", instance.togglePlay)
         instance.el.sound.addEventListener("click", instance.toggleSound)
         instance.el.fullscreen.addEventListener("click", instance.setFullscreenVideo)
-        instance.el.progressButton.addEventListener('mousedown', instance.onMouseDown, { passive: true })
-        instance.el.progressButton.addEventListener('touchstart', instance.onMouseDown, { passive: true })
+        instance.el.progressButton.addEventListener('mousedown', instance.onMouseDown)
+        instance.el.progressButton.addEventListener('touchstart', instance.onMouseDown)
+        instance.el.videoTimeline.addEventListener('mousedown', instance.onTap)
     }
 
     setProgress(currentTime) {
@@ -237,10 +258,10 @@ export default class Video {
     }
 
     addControlListeners() {
-        document.addEventListener('mousemove', instance.onVideoControlDrag, { passive: true });
-        document.addEventListener('mouseup', instance.onVideoControlStop, { passive: true });
-        document.addEventListener('touchmove', instance.onVideoControlDrag, { passive: true });
-        document.addEventListener('touchend', instance.onVideoControlStop, { passive: true });
+        document.addEventListener('mousemove', instance.onVideoControlDrag);
+        document.addEventListener('mouseup', instance.onVideoControlStop);
+        document.addEventListener('touchmove', instance.onVideoControlDrag);
+        document.addEventListener('touchend', instance.onVideoControlStop);
     }
 
     removeControlListeners() {
@@ -256,12 +277,16 @@ export default class Video {
         }
     }
 
-    hideVideoControls() {
-        instance.el.videoControlBar.style.opacity = '0'
-    }
+    onTap(event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-    showVideoControls() {
-        instance.el.videoControlBar.style.opacity = '1'
+        const percentage = ( event.changedTouches && event.changedTouches.length > 0 )
+            ? ( event.changedTouches[0].pageX - event.target.getBoundingClientRect().left ) / instance.el.videoTimeline.clientWidth
+            : event.offsetX / instance.el.videoTimeline.clientWidth;
+
+        instance.setVideoCurrentTime(percentage)
+        instance.setProgress(percentage)
     }
 
     resize() {
@@ -275,14 +300,13 @@ export default class Video {
     setControls() {
         document.onkeydown = (e) => {
             if (e.key === 'p') {
-                this.texture.image.play()
+                this.play()
             }
             else if (e.key === ' ') {
-                this.texture.image.pause()
+                this.pause()
             }
             else if (e.key === 's') {
-                this.texture.image.pause()
-                this.texture.image.currentTime = 0
+                this.stop()
                 this.experience.world.program.advance()
             }
             else if (e.key === 'r') {

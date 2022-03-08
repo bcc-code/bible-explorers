@@ -7,11 +7,11 @@
             "video": "sisa_s01_ep04"
         },
         "1": {
-            "clickableElements": ["Panel_Screen"],
+            "clickableElements": ["tv_16x9_5"],
             "location": 1
         },
         "2": {
-            "clickableElements": ["tv_16x9_5"],
+            "clickableElements": ["Panel_Screen"],
             "location": 1
         },
         "3": {

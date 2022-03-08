@@ -60,12 +60,20 @@ export default class Program {
     startInteractivity() {
         this.camera.updateCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
+        let video = this.currentVideo()
         
         if (this.videoType()) {
-            let video = this.currentVideo()
             setTimeout(function() {
                 instance.video.load(video)
+
+                setTimeout(function() {
+                    instance.video.setFullscreenVideo()
+                }, 1000, video)
+
             }, instance.camera.data.moveDuration, video)
+        }
+        else {
+            instance.video.defocus()
         }
     }
 

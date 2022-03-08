@@ -447,6 +447,7 @@ iframe {
     color: #fff;
     font-weight: bold;
     font-size: 1.25rem;
+    border: 1px solid #3f778d;
 }
 .progress-bar__step:not(:last-child) {
     cursor: pointer;
@@ -529,15 +530,17 @@ iframe {
 .css-container .btn.hide {
     display: none !important;
 }
-.css-container .video-overlay:not(.show-controls) {
+.css-container .video-overlay {
     cursor: pointer;
     pointer-events: all;
 }
-.css-container .video-overlay:not(.show-controls) .video-controlbar {
+.css-container .video-overlay .video-controlbar {
     opacity: 0;
+    pointer-events: none;
 }
-.css-container .video-overlay:not(.show-controls) .video-controlbar * {
-    pointer-events: none !important;
+.css-container .video-overlay .video-controlbar.show-controls {
+    opacity: 1;
+    pointer-events: all;
 }
 .css-container .video-overlay:not(.in-frustum), .css-container .video-overlay:not(.in-frustum) *, .css-container .video-overlay.hide, .css-container .video-overlay.hide * {
     pointer-events: none !important;
@@ -591,7 +594,6 @@ iframe {
     left: 0;
     position: absolute;
     top: 0;
-    transition: width ease-out 1s, left ease-out 1s;
     width: 0%;
 }
 .css-container .video-timeline .loadedbar {
