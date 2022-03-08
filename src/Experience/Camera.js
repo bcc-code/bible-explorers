@@ -25,15 +25,15 @@ export default class Camera {
             debug: false,
         }
 
-        this.lookAtLabel3D = new LabeledSphere3D({
-            labelText: '(Look at)',
-            size: 0.05,
-            color: new THREE.Color().setRGB(0.65, 0.792, 0.219)
-        })
-
-        this.scene.add(this.lookAtLabel3D)
-
-        console.log(this.lookAtLabel3D);
+        if (this.debug.active) {
+            this.lookAtLabel3D = new LabeledSphere3D({
+                labelText: '(Look at)',
+                size: 0.05,
+                color: new THREE.Color().setRGB(0.65, 0.792, 0.219)
+            })
+    
+            this.scene.add(this.lookAtLabel3D)
+        }
 
         this.cameraLocations = [
             {
@@ -168,7 +168,8 @@ export default class Camera {
         TWEEN.update()
         this.controls.update()
 
-        this.lookAtLabel3D.setPosition(new THREE.Vector3(this.data.lookAt.x, this.data.lookAt.y, this.data.lookAt.z))
+        if (this.debug.active)
+            this.lookAtLabel3D.setPosition(new THREE.Vector3(this.data.lookAt.x, this.data.lookAt.y, this.data.lookAt.z))
 
         if (this.controls.autoRotate) {
             this.changeRotateDirection()

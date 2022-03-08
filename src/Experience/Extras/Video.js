@@ -19,13 +19,24 @@ export default class Video {
         // Setup
         this.setVideoScreen()
         this.setVideoControls()
+
+        this.video = () => document.getElementById(instance.playingVideoId)
+        this.videoProgress = 0.0
+        this.playingVideoId = null
+        this.isDragging = false
+        this.mouseX = 0
+        this.percentageNow = 0
+        this.percentageNext = 0
     }
 
     load(id) {
         this.playingVideoId = id
 
-         // Pause initial video
-         if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
+        if (!this.texture)
+            this.setVideoListeners()
+
+        // Pause initial video
+        if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
             this.texture.image.pause()
 
         // Update video on screen (set initial or replace if it's a new video)
@@ -34,6 +45,11 @@ export default class Video {
             this.videoMesh.material.map = this.texture
             this.videoMesh.material.needsUpdate = true
         }
+
+        this.setProgress(this.video().currentTime);
+        this.video().addEventListener('timeupdate', function() {
+            instance.setProgress(this.video().currentTime);
+        }.bind(instance));
     }
 
     play() {
@@ -60,7 +76,6 @@ export default class Video {
     toggleSound() {
         let video = document.getElementById(instance.playingVideoId)
         video.muted = !video.muted;
-        console.log('toggleSound')
     }
 
     setFullscreenVideo() {
@@ -144,22 +159,101 @@ export default class Video {
 
         document.body.appendChild(this.rendererCSS.domElement)
         this.rendererCSS.domElement.prepend(this.renderer.instance.domElement)
+    }
 
-        setTimeout(function() {
-            instance.el = {
-                videoControlBar: document.querySelector(".video-controlbar"),
-                playPause: document.querySelector(".play-pause"),
-                prev: document.querySelector(".prev"),
-                next: document.querySelector(".next"),
-                sound: document.querySelector(".sound"),
-                timetracker: document.querySelector(".timetracker"),
-                fullscreen: document.querySelector(".fullscreen")
-            }
+    setVideoListeners() {
+        instance.el = {
+            videoControlBar: document.querySelector(".video-controlbar"),
+            playPause: document.querySelector(".play-pause"),
+            prev: document.querySelector(".prev"),
+            next: document.querySelector(".next"),
+            sound: document.querySelector(".sound"),
+            videoTimeline: document.querySelector(".video-timeline"),
+            progressBar: document.querySelector(".progressbar"),
+            progressButton: document.querySelector(".progress-button"),
+            timetracker: document.querySelector(".timetracker"),
+            fullscreen: document.querySelector(".fullscreen")
+        }
 
-            instance.el.playPause.addEventListener("click", instance.togglePlay)
-            instance.el.sound.addEventListener("click", instance.toggleSound)
-            instance.el.fullscreen.addEventListener("click", instance.setFullscreenVideo)
-        }, 2000)
+        instance.el.playPause.addEventListener("click", instance.togglePlay)
+        instance.el.sound.addEventListener("click", instance.toggleSound)
+        instance.el.fullscreen.addEventListener("click", instance.setFullscreenVideo)
+        instance.el.progressButton.addEventListener('mousedown', instance.onMouseDown, { passive: true })
+        instance.el.progressButton.addEventListener('touchstart', instance.onMouseDown, { passive: true })
+    }
+
+    setProgress(currentTime) {
+        const duration = this.video().duration
+        this.el.timetracker.innerHTML = this.formatToTimestamps(currentTime || 0, duration || 0)
+        var width = currentTime / duration
+        if (!!this.el.progressBar) this.el.progressBar.style.width = width * 100 + '%'
+        if (!!this.el.progressButton) this.el.progressButton.style.left = width * 100 + '%'
+    }
+
+    formatToTimestamps(currentTime, duration) {
+        var timeString = this.formatTimeObject(this.secondsToObject(currentTime))
+        var durationString = typeof duration === 'string' ? duration : this.formatTimeObject(this.secondsToObject(duration))
+        return timeString + ' / ' + durationString
+    }
+
+    formatTimeObject(timeObject) {
+        return timeObject.minutes.toString().padStart(2, '0') + ':' + timeObject.seconds.toString().padStart(2, '0')
+    }
+
+    secondsToObject(time) {
+        var hours = Math.floor(time / 3600)
+        var minutes = Math.floor((time - hours * 3600) / 60)
+        var seconds = Math.floor(time - minutes * 60)
+
+        return {
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds
+        }
+    }
+
+    onMouseDown(event) {
+        event.stopPropagation()
+        instance.isDragging = true
+        instance.mouseX = event.clientX || ( event.changedTouches && event.changedTouches[0].clientX )
+        instance.percentageNow = parseInt( instance.el.progressBar.style.width ) / 100
+        instance.addControlListeners()
+    }
+
+    onVideoControlStop(event) {
+        event.stopPropagation();
+        instance.isDragging = false;
+        instance.removeControlListeners();
+    }
+
+    onVideoControlDrag(event) {
+        if (instance.isDragging) {
+            const clientX = event.clientX || ( event.changedTouches && event.changedTouches[0].clientX )
+            instance.percentageNext = ( clientX - instance.mouseX ) / instance.el.videoTimeline.clientWidth
+            instance.percentageNext = instance.percentageNow + instance.percentageNext
+            instance.percentageNext = instance.percentageNext > 1 ? 1 : ( ( instance.percentageNext < 0 ) ? 0 : instance.percentageNext )
+            instance.setVideoCurrentTime(instance.percentageNext)
+        }
+    }
+
+    addControlListeners() {
+        document.addEventListener('mousemove', instance.onVideoControlDrag, { passive: true });
+        document.addEventListener('mouseup', instance.onVideoControlStop, { passive: true });
+        document.addEventListener('touchmove', instance.onVideoControlDrag, { passive: true });
+        document.addEventListener('touchend', instance.onVideoControlStop, { passive: true });
+    }
+
+    removeControlListeners() {
+        document.removeEventListener('mousemove', instance.onVideoControlDrag, false);
+        document.removeEventListener('mouseup', instance.onVideoControlStop, false);
+        document.removeEventListener('touchmove', instance.onVideoControlDrag, false);
+        document.removeEventListener('touchend', instance.onVideoControlStop, false);
+    }
+
+    setVideoCurrentTime(percentage) {
+        if ( this.video() && !Number.isNaN( percentage ) && percentage !== 1 ) {
+            instance.video().currentTime = instance.video().duration * percentage
+        }
     }
 
     hideVideoControls() {
