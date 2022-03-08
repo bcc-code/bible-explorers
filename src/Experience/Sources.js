@@ -4,6 +4,12 @@ export default [
         type: 'gltfModel',
         path: 'models/controlroom.glb'
     },
+
+    {
+        name: 'cameraModel',
+        type: 'gltfModel',
+        path: 'models/camera.glb'
+    },
     {
         name: 'UVChecker',
         type: 'texture',
@@ -18,6 +24,11 @@ export default [
         name: 'screen_16x9_5',
         type: 'texture',
         path: 'textures/screen-16x9_5.png'
+    },
+    {
+        name: 'matcap',
+        type: 'texture',
+        path: 'matcaps/matcap2.png'
     },
     {
         name: 'environmentMap',

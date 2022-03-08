@@ -70,6 +70,7 @@ export default class ControlRoom {
                     case 'Panel_Red_button':
                     case 'Panel_Green_button':
                         this.clickableObjects.push(child)
+                        console.log(child);
                         break
 
                     // Set new textures

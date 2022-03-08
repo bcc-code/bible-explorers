@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import Experience from "./Experience.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN from '@tweenjs/tween.js'
-import LabeledSphere3D from './Components/LabeledSphere3D.js'
 
 let camera = null
 
@@ -12,10 +11,14 @@ export default class Camera {
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
+        this.resources = this.experience.resources
+        this.canvasDebug = this.experience.canvasDebug
         this.debug = this.experience.debug
         camera = this
 
+
         // Options
+        this.cameraTween = null
         this.data = {
             position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),
@@ -23,16 +26,6 @@ export default class Camera {
             zoom: 1.15,
             location: 0,
             debug: false,
-        }
-
-        if (this.debug.active) {
-            this.lookAtLabel3D = new LabeledSphere3D({
-                labelText: '(Look at)',
-                size: 0.05,
-                color: new THREE.Color().setRGB(0.65, 0.792, 0.219)
-            })
-    
-            this.scene.add(this.lookAtLabel3D)
         }
 
         this.cameraLocations = [
@@ -62,14 +55,12 @@ export default class Camera {
                     minAzimuthAngle: -1.65,
                     maxAzimuthAngle: 0.25
                 }
-            }
+            },
         ]
 
         this.lastCameraSettings = {
             position: new THREE.Vector3(0, 0, 0)
         }
-
-        this.cameraTween = null
 
         // Setup
 
@@ -77,20 +68,40 @@ export default class Camera {
         this.setOrbitControls()
         this.autoRotateControls()
 
-        if (this.debug.active)
+
+        if (this.debug.active) {
+
+            this.resources.on('ready', () => {
+                this.resources = this.resources.items
+                this.model = this.resources.controlRoom.scene
+
+                this.model.traverse(child => {
+
+                    if (child instanceof THREE.Mesh) {
+
+                    }
+
+                })
+
+            })
+
+            this.setDebugCamera()
+            this.setDebugOrbitControls()
             this.addGUIControls()
+        }
+
     }
 
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(60, this.sizes.width / this.sizes.height, 0.01, 1000)
         this.instance.position.copy(this.data.position)
         this.scene.add(this.instance)
+
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
         this.controls.target.copy(this.data.lookAt)
-        this.controls.update()
     }
 
     updateOrbitControls() {
@@ -149,7 +160,7 @@ export default class Camera {
                 this.controls.maxAzimuthAngle = controls.maxAzimuthAngle
             })
             .start()
-        
+
         this.controls.autoRotate = false
     }
 
@@ -168,12 +179,24 @@ export default class Camera {
         TWEEN.update()
         this.controls.update()
 
-        if (this.debug.active)
-            this.lookAtLabel3D.setPosition(new THREE.Vector3(this.data.lookAt.x, this.data.lookAt.y, this.data.lookAt.z))
-
         if (this.controls.autoRotate) {
             this.changeRotateDirection()
         }
+
+        if (this.debug.active) {
+            this.controls2.update()
+        }
+    }
+
+    setDebugCamera() {
+        this.instanceDebug = new THREE.PerspectiveCamera(60, this.sizes.width / this.sizes.height, 0.01, 1000)
+        this.instanceDebug.position.set(5, 3, 15)
+        this.scene.add(this.instanceDebug)
+    }
+
+    setDebugOrbitControls() {
+        this.controls2 = new OrbitControls(this.instanceDebug, this.canvasDebug)
+        this.controls2.target.copy(this.data.lookAt)
     }
 
     addGUIControls() {
@@ -191,18 +214,7 @@ export default class Camera {
             .name('Location')
 
 
-        camera.add(this.data, 'debug').name('debug')
-            .onFinishChange((debug) => {
-                if (debug) {
-                    this.updateCameraTo(3)
-                } else {
-                    this.updateCameraTo(0)
-                }
-            })
-
         // Position
         const cameraPosition = camera.addFolder('Camera position')
-        this.lookAtLabel3D.visible = false
-        cameraPosition.add(this.lookAtLabel3D, 'visible').name('Look at label')
     }
 }
