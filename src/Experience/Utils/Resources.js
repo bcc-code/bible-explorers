@@ -90,7 +90,7 @@ export default class Resources extends EventEmitter {
                 const video = document.createElement('video')
                 video.setAttribute('id', source.name)
                 video.crossOrigin = 'anonymous'
-                video.muted = true
+                video.muted = false
                 video.loop = true
                 video.controls = false
                 video.autoplay = true
