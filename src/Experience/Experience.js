@@ -27,7 +27,9 @@ export default class Experience {
 
         // Options
         this.canvas = canvas
+        this.canvasDebug = document.querySelector('.debug-webgl')
         this.loaded = false
+
 
         // Setup
         this.debug = new Debug()

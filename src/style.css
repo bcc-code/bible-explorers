@@ -48,6 +48,14 @@ iframe {
     cursor: grab;
 }
 
+.debug-webgl {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    outline: none;
+    z-index: 99;
+}
+
 /* Landing screen */
 #landing-screen {
     position: fixed;
