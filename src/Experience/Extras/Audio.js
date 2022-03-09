@@ -1,9 +1,11 @@
 import * as THREE from 'three'
+import Experience from "../Experience.js"
 
 let audio = null
 
 export default class Audio {
     constructor() {
+        this.experience = new Experience()
         audio = this
 
         audio.listener = new THREE.AudioListener()
@@ -49,6 +51,29 @@ export default class Audio {
         }
         else {
             audio.codeUnlockedSound.play()
+        }
+    }
+
+    playIris(sound) {
+        if (!audio[sound]) {
+            audio.audioLoader.load('sounds/'+sound+'.mp3', function(buffer) {
+                audio[sound] = new THREE.Audio(audio.listener)
+                audio[sound].setBuffer(buffer)
+                audio[sound].play()
+
+                audio[sound].source.onended = function() {
+                    audio.experience.world.program.updateIrisTexture('READY')
+                    audio.experience.world.program.advance()
+                }
+            });
+        }
+        else if (audio[sound].isPlaying) {
+            audio[sound].pause()
+            audio.experience.world.program.updateIrisTexture('READY')
+        }
+        else {
+            audio[sound].play()
+            audio.experience.world.program.updateIrisTexture('SPEAK')
         }
     }
 }

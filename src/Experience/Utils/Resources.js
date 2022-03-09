@@ -15,9 +15,10 @@ export default class Resources extends EventEmitter {
 
         // Setup
         this.items = {}
-        this.toLoad = this.sources.length - this.sources.filter((source) => { return source.type == 'video' }).length
+        this.toLoad = this.sources.length - this.sources.filter((source) => { return ['video', 'videoTexture'].includes(source.type) }).length
         this.loaded = 0 
         this.mediaItems = []
+        this.textureItems = []
 
         this.loadManager()
         this.setLoaders()
@@ -83,6 +84,30 @@ export default class Resources extends EventEmitter {
                         this.sourceLoaded(source, file)
                     }
                 )
+            }
+
+            else if (source.type === 'videoTexture') {
+                const video = document.createElement('video')
+                video.setAttribute('id', source.name)
+                video.crossOrigin = 'anonymous'
+                video.muted = true
+                video.loop = true
+                video.controls = false
+                video.autoplay = true
+                video.src = source.path
+
+                const texture = new THREE.VideoTexture(video)
+                texture.minFilter = THREE.LinearFilter
+                texture.magFilter = THREE.LinearFilter
+                texture.encoding = THREE.RGBADepthPacking
+
+                this.textureItems[source.name] =
+                    {
+                        item: texture,
+                        path: source.path,
+                        naturalWidth: video.videoWidth || 1,
+                        naturalHeight: video.videoHeight || 1
+                    }
             }
 
             else if (source.type === 'video') {

@@ -17,6 +17,7 @@ export default class ControlRoom {
         this.world = this.experience.world
 
         this.clickableObjects = []
+        this.textureObjects = []
         this.lights = []
         this.currentIntersect = null
 
@@ -69,12 +70,14 @@ export default class ControlRoom {
                     case 'Panel_Screen':
                     case 'Panel_Red_button':
                     case 'Panel_Green_button':
+                    case 'Panel_Cabels':
                         this.clickableObjects.push(child)
                         break
 
                     // Set new textures
                     case 'tv_16x9_5_screen':
-                        this.setTexture(this.sources.items.screen_16x9_5, 90)
+                        this.textureObjects.push(child)
+                        this.setTexture(this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
                         child.material.map = this.texture
                         break
 

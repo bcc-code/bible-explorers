@@ -26,14 +26,14 @@ export default class Program {
 
         // Get instance variables
         this.currentStep = localStorage.getItem(this.getId()) || 0
-        this.videoType = () => this.currentStep in data.steps ? "video" in data.steps[this.currentStep] : false
+        this.stepType = () => this.currentStep in data.steps ? data.steps[this.currentStep].type : null
         this.currentLocation = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
         this.interactiveObjects = () => this.currentStep in data.steps ? data.steps[this.currentStep].clickableElements : []
         this.totalSteps = Object.keys(data.steps).length
         this.clickedObject = null
         this.canClick = true
 
-        this.startInteractivity()
+        this.startInteractivity(true)
     }
 
     control(currentIntersect) {
@@ -57,12 +57,13 @@ export default class Program {
         this.updateLocalStorage()
     }
 
-    startInteractivity() {
+    startInteractivity(initial = false) {
         this.camera.updateCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
+        
         let video = this.currentVideo()
         
-        if (this.videoType()) {
+        if (this.stepType() == 'video') {
             setTimeout(function() {
                 instance.video.load(video)
 
@@ -75,6 +76,18 @@ export default class Program {
         else {
             instance.video.defocus()
         }
+
+        if (initial)
+            setTimeout(() => {
+                instance.updateIrisTexture('READY')
+            }, instance.camera.data.moveDuration)
+
+        if (this.currentStep == this.totalSteps)
+            this.finish()
+    }
+
+    finish() {
+        this.camera.updateCameraTo(0)
     }
 
     objectIsClickable() {
@@ -93,7 +106,8 @@ export default class Program {
         }
 
         if (this.clickedObject === 'tv_16x9_5') {
-            this.advance()
+            instance.updateIrisTexture('SPEAK')
+            instance.world.audio.playIris('BIEX_S01_E01_IRIS_OP01')
         }
 
         if (this.clickedObject === 'Panel_Screen') {
@@ -110,17 +124,17 @@ export default class Program {
             this.advance()
         }
 
-        if (this.clickedObject === 'Video_Screen') {
-            this.video.togglePlay()
+        if (this.clickedObject === 'Panel_Cabels') {
+            this.advance()
         }
     }
 
     currentVideo() {
         let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in data.steps) || !("video" in data.steps[localCurrentStep]))
+        while (!(localCurrentStep in data.steps) || !(data.steps[localCurrentStep].type == 'video'))
             localCurrentStep--
 
-        return data.steps[localCurrentStep].video
+        return data.steps[localCurrentStep].videoId
     }
 
     updateLocalStorage() {
@@ -129,5 +143,11 @@ export default class Program {
 
     getId() {
         return "progress-episode-" + this.world.selectedEpisode
+    }
+
+    updateIrisTexture(mode) {
+        instance.world.controlRoom.setTexture(instance.resources.textureItems['BIEX_S01_E01_IRIS_'+mode].item, 90)
+        let mesh = instance.world.controlRoom.textureObjects.filter((mesh) => { return mesh.name == 'tv_16x9_5_screen' })[0]
+        mesh.material.map = instance.world.controlRoom.texture
     }
 }

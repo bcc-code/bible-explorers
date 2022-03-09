@@ -15,11 +15,6 @@ export default [
         path: 'textures/screen-16x10.png'
     },
     {
-        name: 'screen_16x9_5',
-        type: 'texture',
-        path: 'textures/screen-16x9_5.png'
-    },
-    {
         name: 'environmentMap',
         type: 'cubeTexture',
         path: [
@@ -32,13 +27,28 @@ export default [
         ]
     },
     {
-        name: 'sisa_s01_ep04',
+        name: 'BIEX_S01_E01_IRIS_SLEEP',
+        type: 'videoTexture',
+        path: 'textures/BIEX_S01_E01_IRIS_SLEEP.mp4'
+    },
+    {
+        name: 'BIEX_S01_E01_IRIS_READY',
+        type: 'videoTexture',
+        path: 'textures/BIEX_S01_E01_IRIS_READY.mp4'
+    },
+    {
+        name: 'BIEX_S01_E01_IRIS_SPEAK',
+        type: 'videoTexture',
+        path: 'textures/BIEX_S01_E01_IRIS_SPEAK.mp4'
+    },
+    {
+        name: 'SISA_S01_EP04',
         type: 'video',
         path: 'videos/SISA_S01_EP04.mp4'
     },
     {
-        name: 'biblex',
+        name: 'EternityBibleStories_Ep1',
         type: 'video',
-        path: 'videos/bibleX.mp4'
+        path: 'videos/EternityBibleStories_Ep1.mp4'
     }
 ]

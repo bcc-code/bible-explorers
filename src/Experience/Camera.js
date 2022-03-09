@@ -39,7 +39,13 @@ export default class Camera {
             {
                 name: 'default',
                 position: new THREE.Vector3(0, 1.7, 10),
-                lookAt: new THREE.Vector3(0, 1.7, 0)
+                lookAt: new THREE.Vector3(0, 1.7, 0),
+                controls: {
+                    minPolarAngle: -Math.PI,
+                    maxPolarAngle: Math.PI,
+                    minAzimuthAngle: -Math.PI,
+                    maxAzimuthAngle: Math.PI
+                }
             },
             {
                 name: 'screens',
