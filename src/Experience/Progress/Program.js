@@ -77,17 +77,19 @@ export default class Program {
             instance.video.defocus()
         }
 
-        if (initial)
+        if (this.currentStep == this.totalSteps) {
+            this.finish()
+        }
+        else if (initial) {
             setTimeout(() => {
                 instance.updateIrisTexture('READY')
             }, instance.camera.data.moveDuration)
-
-        if (this.currentStep == this.totalSteps)
-            this.finish()
+        }
     }
 
     finish() {
         this.camera.updateCameraTo(0)
+        instance.updateIrisTexture('SLEEP')
     }
 
     objectIsClickable() {
@@ -107,7 +109,7 @@ export default class Program {
 
         if (this.clickedObject === 'tv_16x9_5') {
             instance.updateIrisTexture('SPEAK')
-            instance.world.audio.playIris('BIEX_S01_E01_IRIS_OP01')
+            instance.world.audio.playIris('BIEX_S01_E01_IRIS_OPG_test')
         }
 
         if (this.clickedObject === 'Panel_Screen') {

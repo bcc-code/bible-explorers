@@ -46,11 +46,19 @@ export default class Video {
             this.videoMesh.material.needsUpdate = true
         }
 
-        this.setProgress(this.video().currentTime);
+        // Event listener on video update
         this.video().addEventListener('timeupdate', function() {
             instance.setProgress(this.video().currentTime);
         }.bind(instance));
 
+        // Event listener on video end
+        this.video().addEventListener('ended', function() {
+            instance.exitFullscreenVideo()
+            instance.stop()
+            instance.experience.world.program.advance()
+        }.bind(instance));
+
+        this.setProgress(this.video().currentTime);
         this.focus()
     }
 
@@ -104,6 +112,19 @@ export default class Video {
             video.webkitRequestFullscreen()
         } else if (video.msRequestFullscreen) { /* IE11 */
             video.msRequestFullscreen()
+        }
+    }
+
+    exitFullscreenVideo() {
+        let video = document.getElementById(instance.playingVideoId)
+        if (video.exitFullscreen) {
+            video.exitFullscreen()
+        } else if (video.webkitExitFullScreen) { /* Safari */
+            video.webkitExitFullScreen()
+        } else if (video.msExitFullscreen) { /* IE11 */
+            video.msExitFullscreen()
+        } else if (video.mozCancelFullScreen) {
+            video.mozCancelFullScreen()
         }
     }
     

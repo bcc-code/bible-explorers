@@ -6,6 +6,7 @@ import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 import Highlight from './Highlight.js'
+import Info from '../Extras/Info.js'
 
 let instance = null
 
@@ -54,6 +55,7 @@ export default class World {
 
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
+        instance.info = new Info()
     }
 
     restartJourney() {

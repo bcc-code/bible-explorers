@@ -60,11 +60,7 @@ export default class Audio {
                 audio[sound] = new THREE.Audio(audio.listener)
                 audio[sound].setBuffer(buffer)
                 audio[sound].play()
-
-                audio[sound].source.onended = function() {
-                    audio.experience.world.program.updateIrisTexture('READY')
-                    audio.experience.world.program.advance()
-                }
+                audio.onEndedEvent(sound)
             });
         }
         else if (audio[sound].isPlaying) {
@@ -74,6 +70,15 @@ export default class Audio {
         else {
             audio[sound].play()
             audio.experience.world.program.updateIrisTexture('SPEAK')
+            audio.onEndedEvent(sound)
+        }
+    }
+
+    onEndedEvent(sound) {
+        audio[sound].source.onended = function() {
+            audio[sound].stop()
+            audio.experience.world.program.updateIrisTexture('READY')
+            audio.experience.world.program.advance()
         }
     }
 }
