@@ -54,8 +54,15 @@ export default class Video {
         // Event listener on video end
         this.video().onended = function() {
             instance.exitFullscreenVideo()
+            instance.camera.revertZoom()
             instance.stop()
             instance.experience.world.program.advance()
+        }
+
+        // Event listener on fullscreen change
+        this.video().onfullscreenchange = function() {
+            if (!document.fullscreenElement)
+                instance.camera.revertZoom()
         }
 
         this.setProgress(this.video().currentTime);

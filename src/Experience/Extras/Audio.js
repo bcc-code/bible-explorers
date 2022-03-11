@@ -8,14 +8,20 @@ export default class Audio {
         this.experience = new Experience()
         audio = this
 
-        audio.listener = new THREE.AudioListener()
-        audio.audioLoader = new THREE.AudioLoader()
-
         audio.el = document.querySelector("#sound")
         audio.el.addEventListener("mousedown", audio.toggleBgMusic)
     }
 
+    initialize() {
+        if (!audio.listener) {
+            audio.listener = new THREE.AudioListener()
+            audio.audioLoader = new THREE.AudioLoader()
+        }
+    }
+
     toggleBgMusic() {
+        this.initialize()
+
         if (!audio.bgMusic) {
             audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
                 audio.bgMusic = new THREE.Audio(audio.listener)
@@ -39,6 +45,8 @@ export default class Audio {
     }
 
     playCodeUnlockedSound() {
+        this.initialize()
+
         if (!audio.codeUnlockedSound) {
             audio.audioLoader.load('sounds/item-collected-sound.mp3', function(buffer) {
                 audio.codeUnlockedSound = new THREE.Audio(audio.listener)
@@ -55,6 +63,8 @@ export default class Audio {
     }
 
     playIris(sound) {
+        this.initialize()
+
         if (!audio[sound]) {
             audio.audioLoader.load('sounds/'+sound+'.mp3', function(buffer) {
                 audio[sound] = new THREE.Audio(audio.listener)

@@ -16,16 +16,16 @@ export default class Camera {
         this.debug = this.experience.debug
         camera = this
 
-
         // Options
         this.cameraTween = null
         this.data = {
             position: new THREE.Vector3(0, 1.7, 10),
             lookAt: new THREE.Vector3(0, 1.7, 0),
-            moveDuration: 1200,
+            moveDuration: 2500,
             zoom: 1.15,
             location: 0,
             debug: false,
+            fov: 60
         }
 
         this.cameraLocations = [
@@ -74,44 +74,33 @@ export default class Camera {
         this.setOrbitControls()
         this.autoRotateControls()
 
-
         if (this.debug.active) {
-
             this.resources.on('ready', () => {
                 this.resources = this.resources.items
                 this.model = this.resources.controlRoom.scene
 
                 this.model.traverse(child => {
-
                     if (child instanceof THREE.Mesh) {
 
                     }
-
                 })
-
             })
 
             this.setDebugCamera()
             this.setDebugOrbitControls()
             this.addGUIControls()
         }
-
     }
 
     setInstance() {
-        this.instance = new THREE.PerspectiveCamera(60, this.sizes.width / this.sizes.height, 0.01, 1000)
+        this.instance = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
         this.instance.position.copy(this.data.position)
         this.scene.add(this.instance)
-
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
         this.controls.target.copy(this.data.lookAt)
-    }
-
-    updateOrbitControls() {
-        this.controls.update()
     }
 
     autoRotateControls() {
@@ -132,6 +121,12 @@ export default class Camera {
         }
     }
 
+    updateCameraTo(location) {
+        if (location == null) return
+        this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
+        this.updateCamera(this.cameraLocations[location])
+    }
+
     updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }) {
         if (this.cameraTween)
             this.cameraTween.stop()
@@ -148,7 +143,7 @@ export default class Camera {
 
         this.cameraTween = new TWEEN.Tween(from)
             .to(to, duration)
-            .easing(TWEEN.Easing.Linear.None)
+            .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate((obj) => {
                 this.controls.target.set(
                     obj.cameraLookAt.x,
@@ -160,20 +155,32 @@ export default class Camera {
                     obj.cameraPosition.y,
                     obj.cameraPosition.z
                 )
-                this.controls.minPolarAngle = controls.minPolarAngle
-                this.controls.maxPolarAngle = controls.maxPolarAngle
-                this.controls.minAzimuthAngle = controls.minAzimuthAngle
-                this.controls.maxAzimuthAngle = controls.maxAzimuthAngle
+
+                if (controls) {
+                    this.controls.minPolarAngle = controls.minPolarAngle
+                    this.controls.maxPolarAngle = controls.maxPolarAngle
+                    this.controls.minAzimuthAngle = controls.minAzimuthAngle
+                    this.controls.maxAzimuthAngle = controls.maxAzimuthAngle
+                }
             })
             .start()
 
         this.controls.autoRotate = false
     }
 
-    updateCameraTo(location) {
-        if (location == null) return
-        this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
-        this.updateCamera(this.cameraLocations[location])
+    zoomIn() {
+        new TWEEN.Tween( this.controls.object )
+            .to( { zoom: 1.5 }, 5000 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate(() => {
+                this.instance.updateProjectionMatrix()
+            })
+            .start()
+    }
+
+    revertZoom() {
+        this.controls.object.zoom = 1
+        this.instance.updateProjectionMatrix()
     }
 
     resize() {
@@ -195,7 +202,7 @@ export default class Camera {
     }
 
     setDebugCamera() {
-        this.instanceDebug = new THREE.PerspectiveCamera(60, this.sizes.width / this.sizes.height, 0.01, 1000)
+        this.instanceDebug = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
         this.instanceDebug.position.set(5, 3, 15)
         this.scene.add(this.instanceDebug)
     }
@@ -221,9 +228,12 @@ export default class Camera {
 
 
         // Position
-        const cameraPosition = camera.addFolder('Camera position')
-        cameraPosition.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('X')
-        cameraPosition.add(this.instance.position, 'y').min(-20).max(20).step(0.01).name('Y')
-        cameraPosition.add(this.instance.position, 'z').min(-20).max(20).step(0.01).name('Z')
+        const cameraSettings = camera.addFolder('Camera')
+        cameraSettings.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()
+        cameraSettings.add(this.instance.position, 'y').min(-20).max(20).step(0.01).name('position.y').listen()
+        cameraSettings.add(this.instance.position, 'z').min(-20).max(20).step(0.01).name('position.z').listen()
+        cameraSettings.add(this.controls.target, 'x').min(-20).max(20).step(0.01).name('lookAt.x').listen()
+        cameraSettings.add(this.controls.target, 'y').min(-20).max(20).step(0.01).name('lookAt.y').listen()
+        cameraSettings.add(this.controls.target, 'z').min(-20).max(20).step(0.01).name('lookAt.z').listen()
     }
 }

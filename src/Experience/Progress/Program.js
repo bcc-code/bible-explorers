@@ -67,10 +67,11 @@ export default class Program {
         if (this.stepType() == 'video') {
             setTimeout(function() {
                 instance.video.load(video)
+                instance.camera.zoomIn()
 
                 setTimeout(function() {
                     instance.video.setFullscreenVideo()
-                }, 1000, video)
+                }, 5000, video)
 
             }, instance.camera.data.moveDuration, video)
         }
