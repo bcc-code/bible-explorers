@@ -51,9 +51,7 @@ export default class PageLoader {
         loadingBarElement.style.transform = ''
 
         setTimeout(function() { 
-            document.querySelectorAll('.button').forEach(function(button) {
-                button.style.opacity = 1
-            })
+            document.querySelector('.menu').style.opacity = 1
         }, 2000);
         
     }

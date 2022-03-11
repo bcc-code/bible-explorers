@@ -25,23 +25,37 @@ export default class World {
         this.resources.on('ready', () => {
             // Setup
             this.controlRoom = new ControlRoom()
+            this.highlight = new Highlight()
             this.audio = new Audio()
             this.environment = new Environment()
-            this.highlight = new Highlight()
 
             this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
             this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
         })
 
-        // Start journey
+        // Welcome screen
         this.welcome = {
             landingScreen: document.querySelector("#landing-screen"),
+            congratulations: document.querySelector("#congratulations"),
             startJourney: document.querySelector("#start-journey"),
             restartJourney: document.querySelector("#restart-journey"),
         }
 
         // TODO: make this dynamic
         this.selectedEpisode = 1
+        this.currentStep = localStorage.getItem(this.getId()) || 0
+
+        if (this.currentStep == 0) {
+            instance.welcome.startJourney.innerText = "Start tidsreise"
+            instance.welcome.restartJourney.style.display = "none"
+        } else {
+            if (this.currentStep == 5) {
+                instance.welcome.congratulations.style.display = "block"
+                instance.welcome.startJourney.style.display = "none"
+            } else {
+                instance.welcome.startJourney.innerText = "Fortsett tidsreise"
+            }
+        }
 
         // Debug
         if (this.debug.active) {
@@ -50,7 +64,7 @@ export default class World {
     }
 
     startJourney() {
-        instance.welcome.landingScreen.remove()
+        instance.welcome.landingScreen.style.display = "none"
         instance.audio.removeBgMusicElement()
 
         instance.program = new Program()
@@ -61,6 +75,16 @@ export default class World {
     restartJourney() {
         localStorage.removeItem("progress-episode-" + instance.selectedEpisode)
         instance.startJourney()
+    }
+
+    finishJourney() {
+        instance.welcome.landingScreen.style.display = "flex"
+        instance.welcome.congratulations.style.display = "block"
+        instance.welcome.startJourney.style.display = "none"
+    }
+
+    getId() {
+        return "progress-episode-" + this.selectedEpisode
     }
 
     update() {

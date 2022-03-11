@@ -46,7 +46,7 @@ export default class Camera {
                 lookAt: new THREE.Vector3(0.31, 1.65, -0.58),
                 controls: {
                     minPolarAngle: 1.25,
-                    maxPolarAngle: 1.5,
+                    maxPolarAngle: 1.75,
                     minAzimuthAngle: -1.25,
                     maxAzimuthAngle: 0
                 }
@@ -222,5 +222,8 @@ export default class Camera {
 
         // Position
         const cameraPosition = camera.addFolder('Camera position')
+        cameraPosition.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('X')
+        cameraPosition.add(this.instance.position, 'y').min(-20).max(20).step(0.01).name('Y')
+        cameraPosition.add(this.instance.position, 'z').min(-20).max(20).step(0.01).name('Z')
     }
 }

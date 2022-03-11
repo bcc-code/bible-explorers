@@ -26,7 +26,6 @@ export default class Info {
     }
 
     getInfo() {
-        console.log(info.program.currentStep)
         info.htmlEl.innerHTML = `<div class="tooltip">
             <div class="tooltip__title">Info:</div>
             <div class="tooltip__content">${ data.steps[info.program.currentStep].info }</div>

@@ -63,10 +63,15 @@ iframe {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 3;
+}
+#landing-screen .menu {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
 }
 #landing-screen .button {
     border: 3px solid #fff;
@@ -76,7 +81,6 @@ iframe {
     font-size: 1.5rem;
     cursor: pointer;
     transition: 0.3s;
-    opacity: 0;
     min-width: 160px;
     text-align: center;
     margin: 10px 0;
@@ -84,6 +88,12 @@ iframe {
 #landing-screen .button:hover {
     background: #fff;
     color: #000;
+}
+#congratulations {
+    display: none;
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 40px;
 }
 
 /* Sound */

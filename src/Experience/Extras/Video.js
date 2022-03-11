@@ -52,11 +52,11 @@ export default class Video {
         }.bind(instance));
 
         // Event listener on video end
-        this.video().addEventListener('ended', function() {
+        this.video().onended = function() {
             instance.exitFullscreenVideo()
             instance.stop()
             instance.experience.world.program.advance()
-        }.bind(instance));
+        }
 
         this.setProgress(this.video().currentTime);
         this.focus()
@@ -168,8 +168,6 @@ export default class Video {
                 </div>
                 <div class="video-controls">
                     <span class="play-pause btn"><i class="icon icon-play"></i></span>
-                    <span class="prev btn" disabled=""><i class="icon icon-skip-back"></i></span>
-                    <span class="next btn" disabled=""><i class="icon icon-skip-forward"></i></span>
                     <span class="sound btn"><i class="icon icon-sound-on"></i></span>
                     <span class="timetracker"></span>
                     <span class="fullscreen btn"><i class="icon icon-fullscreen"></i></span>
@@ -204,8 +202,6 @@ export default class Video {
             videoOverlay: document.querySelector(".video-overlay"),
             videoControlBar: document.querySelector(".video-controlbar"),
             playPause: document.querySelector(".play-pause"),
-            prev: document.querySelector(".prev"),
-            next: document.querySelector(".next"),
             sound: document.querySelector(".sound"),
             videoTimeline: document.querySelector(".video-timeline"),
             progressBar: document.querySelector(".progressbar"),

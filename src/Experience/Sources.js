@@ -38,6 +38,11 @@ export default [
         ]
     },
     {
+        name: 'EternityBibleStories_Ep1_test',
+        type: 'videoTexture',
+        path: 'textures/EternityBibleStories_Ep1_test.mp4'
+    },
+    {
         name: 'BIEX_S01_E01_IRIS_SLEEP',
         type: 'videoTexture',
         path: 'textures/BIEX_S01_E01_IRIS_SLEEP.mp4'

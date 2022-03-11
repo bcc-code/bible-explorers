@@ -74,7 +74,17 @@ export default class ControlRoom {
                         this.clickableObjects.push(child)
                         break
 
-                    // Set new textures
+                    case 'tv_4x4_screen':
+                        this.textureObjects.push(child)
+                        this.setTexture(this.sources.textureItems['EternityBibleStories_Ep1_test'].item, 90)
+                        child.material.map = this.texture
+                        break
+                    
+                    case 'tv_4x5_screen':
+                        this.setTexture(this.sources.items.UVChecker)
+                        child.material.map = this.texture
+                        break
+
                     case 'tv_16x9_5_screen':
                         this.textureObjects.push(child)
                         this.setTexture(this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
@@ -82,7 +92,7 @@ export default class ControlRoom {
                         break
 
                     case 'tv_16x10_screen':
-                        this.setTexture(this.sources.items.screen_16x10, 0)
+                        this.setTexture(this.sources.items.screen_16x10)
                         child.material.map = this.texture
                         break
 
@@ -94,14 +104,22 @@ export default class ControlRoom {
         })
     }
 
-    checkObjectIntersetion() {
+    checkObjectIntersection() {
         this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
         const intersects = this.raycaster.intersectObjects(this.clickableObjects)
 
         if (intersects.length > 0) {
-            this.currentIntersect = intersects[0].object
+            this.setCurrentIntersect(intersects[0].object)
         } else {
-            this.currentIntersect = null
+            this.setCurrentIntersect(null)
+        }
+    }
+
+    setCurrentIntersect(newIntersect) {
+        if (this.currentIntersect != newIntersect) {
+            // Hover over a new object
+            this.world.highlight.hover(this.currentIntersect, newIntersect)
+            this.currentIntersect = newIntersect
         }
     }
 
@@ -112,31 +130,7 @@ export default class ControlRoom {
         }
     }
 
-    // Highlight objects
-    setHightlight() {
-        this.clickableObjects.forEach((object) => {
-            let highlight = object.clone()
-
-            highlight.material = this.highlightMaterial.clone()
-            highlight.scale.multiplyScalar(1.05)
-
-            this.highlightedObjects.push(highlight)
-            this.scene.add(highlight)
-        })
-    }
-
-    highlightObject() {
-        this.highlightedObjects.forEach((object) => {
-            if (this.currentIntersect && this.currentIntersect.name === object.name) {
-                object.material.visible = true
-            } else {
-                object.material.visible = false
-            }
-        })
-    }
-
     update() {
-        // Check intersection
-        this.checkObjectIntersetion()
+        this.checkObjectIntersection()
     }
 }

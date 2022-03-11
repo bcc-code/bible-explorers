@@ -25,10 +25,11 @@ export default class Program {
         instance = this
 
         // Get instance variables
-        this.currentStep = localStorage.getItem(this.getId()) || 0
-        this.stepType = () => this.currentStep in data.steps ? data.steps[this.currentStep].type : null
-        this.currentLocation = () => this.currentStep in data.steps ? data.steps[this.currentStep].location : null
-        this.interactiveObjects = () => this.currentStep in data.steps ? data.steps[this.currentStep].clickableElements : []
+        this.currentStep = localStorage.getItem(this.world.getId()) || 0
+        this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
+        this.currentLocation = () => this.getCurrentStepData() ? this.getCurrentStepData().location : null
+        this.interactiveObjects = () => this.getCurrentStepData() ? this.getCurrentStepData().clickableElements : []
+        this.getCurrentStepData = () => this.currentStep in data.steps ? data.steps[this.currentStep] : null
         this.totalSteps = Object.keys(data.steps).length
         this.clickedObject = null
         this.canClick = true
@@ -88,8 +89,9 @@ export default class Program {
     }
 
     finish() {
-        this.camera.updateCameraTo(0)
+        instance.camera.updateCameraTo(0)
         instance.updateIrisTexture('SLEEP')
+        instance.world.finishJourney()
     }
 
     objectIsClickable() {
@@ -140,11 +142,7 @@ export default class Program {
     }
 
     updateLocalStorage() {
-        localStorage.setItem(this.getId(), this.currentStep)
-    }
-
-    getId() {
-        return "progress-episode-" + this.world.selectedEpisode
+        localStorage.setItem(this.world.getId(), this.currentStep)
     }
 
     updateIrisTexture(mode) {

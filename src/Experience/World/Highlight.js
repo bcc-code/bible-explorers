@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+import TWEEN from '@tweenjs/tween.js'
 import Experience from '../Experience.js'
 
 export default class Highlight {
@@ -11,9 +13,7 @@ export default class Highlight {
         this.pointer = this.experience.pointer
 
         this.outlinePass = this.experience.composer.instance.passes[1]
-
         this.selectedObjects = this.experience.world.controlRoom.clickableObjects
-        this.currentIntersect = null
 
         this.params = {
             edgeStrength: 4,
@@ -39,6 +39,77 @@ export default class Highlight {
         this.outlinePass.edgeGlow = this.params.edgeGlow;
         this.outlinePass.edgeStrength = this.params.edgeStrength;
         this.outlinePass.edgeThickness = this.params.edgeThickness;
+
+        this.deactivateObjectsExcept(objects)
+    }
+
+    deactivateObjectsExcept(objects) {
+        let screenObjects = []
+        objects.forEach((obj) => { screenObjects.push(obj += '_screen') })
+
+        this.experience.resources.items.controlRoom.scene.children.forEach((mesh) => {
+            if (mesh.name.includes('_screen')) {
+
+                if (!screenObjects.includes(mesh.name)) {
+                    mesh.material.color.set(new THREE.Color().setRGB(0.211,0.211,0.211))
+                } else {
+                    mesh.material.color.set(new THREE.Color().setRGB(1,1,1))
+                }
+            }
+        })
+    }
+
+    hover(currentIntersect, newIntersect) {
+        // Trigger only highlighted object
+        if (!this.isHighlighted(currentIntersect) && !this.isHighlighted(newIntersect))
+            return
+
+        if (newIntersect != null) {
+            // Moved away from a clickable object to another one
+            this.scaleDown(currentIntersect)
+
+            if (this.isHighlighted(newIntersect))
+                this.scaleUp(newIntersect)
+        }
+        else {
+            // Moved away from a clickable object
+            this.scaleDown(currentIntersect)
+        }
+    }
+ 
+    isHighlighted(intersect) {
+        return this.outlinePass.selectedObjects.filter((obj) => { 
+            return (intersect && obj.name == intersect.name)
+        }).length
+    }
+
+    scaleUp(obj) {
+        this.setupObjectScaleAnimation(obj, { x: 1.005, y: 1.005, z: 1 });
+
+        let screen = this.experience.resources.items.controlRoom.scene.children.filter((mesh) => {
+            return mesh.name == obj.name + '_screen'
+        })
+        if (screen.length)
+            this.setupObjectScaleAnimation(screen[0], { x: 1.005, y: 1.005, z: 1 })
+    }
+
+    scaleDown(obj) {
+        if (obj != null) {
+            this.setupObjectScaleAnimation(obj, { x: 1, y: 1, z: 1 })
+
+            let screen = this.experience.resources.items.controlRoom.scene.children.filter((mesh) => {
+                return mesh.name == obj.name + '_screen'
+            })
+            if (screen.length)
+                this.setupObjectScaleAnimation(screen[0], { x: 1, y: 1, z: 1 })
+        }
+    }
+
+    setupObjectScaleAnimation(object, scale) {
+        new TWEEN.Tween( object.scale )
+            .to({ x: scale.x, y: scale.y, z: scale.z }, 300 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .start();
     }
 
     addGUIControls() {

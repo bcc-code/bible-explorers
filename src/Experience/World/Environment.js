@@ -101,7 +101,7 @@ export default class Environment {
             this.platformPointLight.add(platformBulb)
             this.elevatorPointLight.add(elevatorBulb)
 
-            const environment = this.debug.ui.addFolder('Envitornment')
+            const environment = this.debug.ui.addFolder('Environment')
             environment.close()
             environment.add(this.environmentMap, 'intensity').min(0).max(20).step(0.01).name('intensity').onChange(() => { this.environmentMap.updateMaterials() })
 
