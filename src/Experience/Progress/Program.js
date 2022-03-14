@@ -13,6 +13,12 @@ export default class Program {
     }
 
     initialize() {
+        // Singleton
+        if (instance)
+            return instance
+
+        instance = this
+
         this.experience = new Experience()
         this.archive = new Archive()
         this.timer = new Timer()
@@ -22,7 +28,6 @@ export default class Program {
         this.world = this.experience.world
         this.camera = this.experience.camera
         this.highlight = this.world.highlight
-        instance = this
 
         // Get instance variables
         this.currentStep = localStorage.getItem(this.world.getId()) || 0
@@ -50,6 +55,7 @@ export default class Program {
     advance(step = ++this.currentStep) {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
+        this.world.audio.playWhoosh()
         this.startInteractivity()
     }
 
@@ -68,11 +74,6 @@ export default class Program {
             setTimeout(function() {
                 instance.video.load(video)
                 instance.camera.zoomIn()
-
-                setTimeout(function() {
-                    instance.video.setFullscreenVideo()
-                }, 5000, video)
-
             }, instance.camera.data.moveDuration, video)
         }
         else {
@@ -92,7 +93,9 @@ export default class Program {
     finish() {
         instance.camera.updateCameraTo(0)
         instance.updateIrisTexture('SLEEP')
-        instance.world.finishJourney()
+        setTimeout(() => {
+            instance.world.finishJourney()
+        }, instance.camera.data.moveDuration)
     }
 
     objectIsClickable() {

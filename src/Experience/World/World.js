@@ -35,11 +35,14 @@ export default class World {
 
         // Welcome screen
         this.welcome = {
-            landingScreen: document.querySelector("#landing-screen"),
-            congratulations: document.querySelector("#congratulations"),
-            startJourney: document.querySelector("#start-journey"),
-            restartJourney: document.querySelector("#restart-journey"),
+            landingScreen: document.getElementById("landing-screen"),
+            congratulations: document.getElementById("congratulations"),
+            startJourney: document.getElementById("start-journey"),
+            restartJourney: document.getElementById("restart-journey"),
         }
+
+        this.goHome = document.getElementById('go-home')
+        this.goHome.addEventListener("mousedown", this.showMenu)
 
         // TODO: make this dynamic
         this.selectedEpisode = 1
@@ -64,9 +67,8 @@ export default class World {
     }
 
     startJourney() {
-        instance.welcome.landingScreen.style.display = "none"
-        instance.audio.removeBgMusicElement()
-
+        instance.hideMenu()
+        instance.controlRoom.setUpTextures()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
         instance.info = new Info()
@@ -78,9 +80,24 @@ export default class World {
     }
 
     finishJourney() {
-        instance.welcome.landingScreen.style.display = "flex"
+        instance.showMenu()
         instance.welcome.congratulations.style.display = "block"
         instance.welcome.startJourney.style.display = "none"
+        instance.welcome.restartJourney.style.display = "block"
+    }
+
+    showMenu() {
+        document.body.classList.add('freeze')
+        instance.welcome.landingScreen.style.display = "block"
+        instance.audio.addBgMusicElement()
+        instance.goHome.style.display = "none"
+    }
+
+    hideMenu() {
+        document.body.classList.remove('freeze')
+        instance.welcome.landingScreen.style.display = "none"
+        instance.audio.removeBgMusicElement()
+        instance.goHome.style.display = "block"
     }
 
     getId() {
@@ -92,7 +109,7 @@ export default class World {
             this.controlRoom.update()
         }
 
-        if (this.program) {
+        if (this.program && this.program.video) {
             this.program.video.update()
         }
     }

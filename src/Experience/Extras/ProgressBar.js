@@ -4,10 +4,15 @@ let instance = null
 
 export default class ProgressBar {
     constructor() {
+        // Singleton
+        if (instance)
+            return instance
+
+        instance = this
+
         this.experience = new Experience()
         this.program = this.experience.world.program
         this.stepWidth = 100 / this.program.totalSteps;
-        instance = this
 
         instance.htmlEl = document.querySelector("#progress-bar");
         instance.htmlEl.innerHTML = ProgressBar.generateHtml();

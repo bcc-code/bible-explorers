@@ -5,6 +5,12 @@ let info = null
 
 export default class Info {
     constructor() {
+        // Singleton
+        if (info)
+            return info
+
+        info = this
+
         this.experience = new Experience()
         this.world = this.experience.world
         this.program = this.world.program
@@ -14,7 +20,6 @@ export default class Info {
         this.htmlEl.addEventListener("click", this.toggleInfo);
         this.htmlEl.addEventListener("mouseenter", this.getInfo);
         this.htmlEl.addEventListener("mouseout", this.removeInfo);
-        info = this
 
         document.body.appendChild(this.htmlEl);
     }

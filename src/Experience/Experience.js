@@ -30,7 +30,6 @@ export default class Experience {
         this.canvasDebug = document.querySelector('.debug-webgl')
         this.loaded = false
 
-
         // Setup
         this.debug = new Debug()
         this.stats = new StatsModule()
@@ -55,6 +54,9 @@ export default class Experience {
         this.time.on('animation', () => {
             this.update()
         })
+
+        if (!this.debug.active)
+            this.canvasDebug.remove()
     }
 
     resize() {

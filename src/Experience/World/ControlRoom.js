@@ -34,6 +34,7 @@ export default class ControlRoom {
 
         this.setModel()
         this.storeMeshes()
+        this.setDefaultTextureToScreens()
 
         // Events
         window.addEventListener('mousedown', () => {
@@ -58,6 +59,12 @@ export default class ControlRoom {
         this.texture.encoding = THREE.sRGBEncoding
     }
 
+    setDefaultTextureToScreens() {
+        this.textureObjects.forEach((obj) => {
+            obj.material.color.set(new THREE.Color().setRGB(0,0,0))
+        })
+    }
+
     storeMeshes() {
         this.resources.scene.traverse((child) => {
             if (child instanceof THREE.Mesh) {
@@ -75,31 +82,42 @@ export default class ControlRoom {
                         break
 
                     case 'tv_4x4_screen':
-                        this.textureObjects.push(child)
-                        this.setTexture(this.sources.textureItems['EternityBibleStories_Ep1_test'].item, 90)
-                        child.material.map = this.texture
-                        break
-                    
                     case 'tv_4x5_screen':
-                        this.setTexture(this.sources.items.UVChecker)
-                        child.material.map = this.texture
-                        break
-
                     case 'tv_16x9_5_screen':
-                        this.textureObjects.push(child)
-                        this.setTexture(this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
-                        child.material.map = this.texture
-                        break
-
                     case 'tv_16x10_screen':
-                        this.setTexture(this.sources.items.screen_16x10)
-                        child.material.map = this.texture
+                        this.textureObjects.push(child)
                         break
 
                     default:
                         child.receiveShadow = true
                         break
                 }
+            }
+        })
+    }
+
+    setUpTextures() {
+        this.textureObjects.forEach((obj) => {
+            switch (obj.name) {
+                case 'tv_4x4_screen':
+                    this.setTexture(this.sources.textureItems['EternityBibleStories_Ep1_test'].item, 90)
+                    obj.material.map = this.texture
+                    break
+                
+                case 'tv_4x5_screen':
+                    this.setTexture(this.sources.items.UVChecker)
+                    obj.material.map = this.texture
+                    break
+
+                case 'tv_16x9_5_screen':
+                    this.setTexture(this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
+                    obj.material.map = this.texture
+                    break
+
+                case 'tv_16x10_screen':
+                    this.setTexture(this.sources.items.screen_16x10)
+                    obj.material.map = this.texture
+                    break
             }
         })
     }

@@ -101,13 +101,12 @@ export default class Resources extends EventEmitter {
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.RGBADepthPacking
 
-                this.textureItems[source.name] =
-                    {
-                        item: texture,
-                        path: source.path,
-                        naturalWidth: video.videoWidth || 1,
-                        naturalHeight: video.videoHeight || 1
-                    }
+                this.textureItems[source.name] = {
+                    item: texture,
+                    path: source.path,
+                    naturalWidth: video.videoWidth || 1,
+                    naturalHeight: video.videoHeight || 1
+                }
             }
 
             else if (source.type === 'video') {
@@ -128,13 +127,12 @@ export default class Resources extends EventEmitter {
                     texture.magFilter = THREE.LinearFilter
                     texture.encoding = THREE.RGBADepthPacking
                     
-                    this.mediaItems[source.name] =
-                        {
-                            item: texture,
-                            path: source.path,
-                            naturalWidth: video.videoWidth || 1,
-                            naturalHeight: video.videoHeight || 1
-                        }
+                    this.mediaItems[source.name] = {
+                        item: texture,
+                        path: source.path,
+                        naturalWidth: video.videoWidth || 1,
+                        naturalHeight: video.videoHeight || 1
+                    }
                 }
             }
         }

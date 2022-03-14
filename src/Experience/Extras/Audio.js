@@ -20,7 +20,7 @@ export default class Audio {
     }
 
     toggleBgMusic() {
-        this.initialize()
+        audio.initialize()
 
         if (!audio.bgMusic) {
             audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
@@ -39,9 +39,13 @@ export default class Audio {
         }
     }
 
+    addBgMusicElement() {
+        audio.el.style.display = 'block'
+    }
+
     removeBgMusicElement() {
         if (audio.bgMusic) audio.bgMusic.pause()
-        audio.el.remove()
+        audio.el.style.display = 'none'
     }
 
     playCodeUnlockedSound() {
@@ -62,6 +66,24 @@ export default class Audio {
         }
     }
 
+    playWhoosh() {
+        this.initialize()
+
+        if (!audio.whoosh) {
+            audio.audioLoader.load('sounds/whoosh-between-screens.mp3', function(buffer) {
+                audio.whoosh = new THREE.Audio(audio.listener)
+                audio.whoosh.setBuffer(buffer)
+                audio.whoosh.play()
+            });
+        }
+        else if (audio.whoosh.isPlaying) {
+            audio.whoosh.pause()
+        }
+        else {
+            audio.whoosh.play()
+        }
+    }
+
     playIris(sound) {
         this.initialize()
 
@@ -70,7 +92,7 @@ export default class Audio {
                 audio[sound] = new THREE.Audio(audio.listener)
                 audio[sound].setBuffer(buffer)
                 audio[sound].play()
-                audio.onEndedEvent(sound)
+                audio.onEndedIris(sound)
             });
         }
         else if (audio[sound].isPlaying) {
@@ -80,11 +102,11 @@ export default class Audio {
         else {
             audio[sound].play()
             audio.experience.world.program.updateIrisTexture('SPEAK')
-            audio.onEndedEvent(sound)
+            audio.onEndedIris(sound)
         }
     }
 
-    onEndedEvent(sound) {
+    onEndedIris(sound) {
         audio[sound].source.onended = function() {
             audio[sound].stop()
             audio.experience.world.program.updateIrisTexture('READY')
