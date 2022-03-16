@@ -11,7 +11,7 @@ export default class Video {
         this.canvas = this.experience.canvas
         this.scene = this.experience.scene
         this.resources = this.experience.resources
-        this.camera = this.experience.camera 
+        this.camera = this.experience.camera
         this.renderer = this.experience.renderer
         this.controls = this.experience.camera.controls
         instance = this
@@ -47,12 +47,12 @@ export default class Video {
         }
 
         // Event listener on video update
-        this.video().addEventListener('timeupdate', function() {
+        this.video().addEventListener('timeupdate', function () {
             instance.setProgress(this.video().currentTime);
         }.bind(instance));
 
         // Event listener on video end
-        this.video().onended = function() {
+        this.video().onended = function () {
             instance.exitFullscreenVideo()
             instance.camera.revertZoom()
             instance.stop()
@@ -60,7 +60,7 @@ export default class Video {
         }
 
         // Event listener on fullscreen change
-        this.video().onfullscreenchange = function() {
+        this.video().onfullscreenchange = function () {
             if (!document.fullscreenElement)
                 instance.camera.revertZoom()
         }
@@ -77,6 +77,8 @@ export default class Video {
     play() {
         instance.texture.image.play()
         instance.el.videoControlBar.classList.remove('show-controls')
+        instance.el.videoOverlay.classList.remove('is-paused')
+        instance.el.videoOverlay.classList.add('is-playing')
     }
 
     defocus() {
@@ -89,7 +91,8 @@ export default class Video {
     pause() {
         instance.texture.image.pause()
         instance.el.videoControlBar.classList.add('show-controls')
-
+        instance.el.videoOverlay.classList.remove('is-playing')
+        instance.el.videoOverlay.classList.add('is-paused')
     }
 
     stop() {
@@ -109,6 +112,8 @@ export default class Video {
     toggleSound() {
         let video = document.getElementById(instance.playingVideoId)
         video.muted = !video.muted;
+
+        instance.el.videoOverlay.classList.toggle('is-muted')
     }
 
     setFullscreenVideo() {
@@ -134,7 +139,7 @@ export default class Video {
             video.mozCancelFullScreen()
         }
     }
-    
+
     setVideoScreen() {
         this.planeGeometry = new THREE.PlaneGeometry(16, 9)
         this.planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
@@ -160,12 +165,12 @@ export default class Video {
         videoControlsMesh.position.x = 16.9
         videoControlsMesh.position.y = -1
         this.scene.add(videoControlsMesh)
-        
+
         // Create a new scene to hold CSS
         this.cssScene = new THREE.Scene()
 
         var videoOverlay = document.createElement('div')
-        videoOverlay.innerHTML = `<div class="video-overlay" style="width: ${ videoOverlayWidth }px; height: ${ videoOverlayHeight }px">  
+        videoOverlay.innerHTML = `<div class="video-overlay" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">  
             <div class="video-controlbar">
                 <div class="video-timeline">
                     <div class="loadedbar"></div>
@@ -174,25 +179,25 @@ export default class Video {
                     <div class="progress-button"></div>
                 </div>
                 <div class="video-controls">
-                    <span class="play-pause btn"><i class="icon icon-play"></i></span>
-                    <span class="sound btn"><i class="icon icon-sound-on"></i></span>
+                    <span class="play-pause btn"><i class="fak fa-play-solid"></i><i class="fak fa-pause-solid"></i></span>
+                    <span class="sound btn"><i class="fak fa-volume-solid"></i><i class="fak fa-volume-slash-solid"></i></span>
                     <span class="timetracker"></span>
-                    <span class="fullscreen btn"><i class="icon icon-fullscreen"></i></span>
+                    <span class="fullscreen btn"><i class="fak fa-expand-solid"></i></span>
                 </div>
             </div>
         </div>`
 
-        var css3element	= document.createElement('div')
+        var css3element = document.createElement('div')
         css3element.classList.add('css3dobject')
         css3element.innerHTML = videoOverlay.innerHTML
-        
+
         var cssObject = new CSS3DObject(css3element)
         cssObject.position.copy(videoControlsMesh.position)
         cssObject.rotation.copy(videoControlsMesh.rotation)
         cssObject.scale.x /= videoOverlayWidth / planeWidth
         cssObject.scale.y /= videoOverlayWidth / planeWidth
         this.cssScene.add(cssObject);
-        
+
         // Create a renderer for CSS
         this.rendererCSS = new CSS3DRenderer()
         this.rendererCSS.setSize(this.sizes.width, this.sizes.height)
@@ -260,8 +265,8 @@ export default class Video {
     onMouseDown(event) {
         event.stopPropagation()
         instance.isDragging = true
-        instance.mouseX = event.clientX || ( event.changedTouches && event.changedTouches[0].clientX )
-        instance.percentageNow = parseInt( instance.el.progressBar.style.width ) / 100
+        instance.mouseX = event.clientX || (event.changedTouches && event.changedTouches[0].clientX)
+        instance.percentageNow = parseInt(instance.el.progressBar.style.width) / 100
         instance.addControlListeners()
     }
 
@@ -273,10 +278,10 @@ export default class Video {
 
     onVideoControlDrag(event) {
         if (instance.isDragging) {
-            const clientX = event.clientX || ( event.changedTouches && event.changedTouches[0].clientX )
-            instance.percentageNext = ( clientX - instance.mouseX ) / instance.el.videoTimeline.clientWidth
+            const clientX = event.clientX || (event.changedTouches && event.changedTouches[0].clientX)
+            instance.percentageNext = (clientX - instance.mouseX) / instance.el.videoTimeline.clientWidth
             instance.percentageNext = instance.percentageNow + instance.percentageNext
-            instance.percentageNext = instance.percentageNext > 1 ? 1 : ( ( instance.percentageNext < 0 ) ? 0 : instance.percentageNext )
+            instance.percentageNext = instance.percentageNext > 1 ? 1 : ((instance.percentageNext < 0) ? 0 : instance.percentageNext)
             instance.setVideoCurrentTime(instance.percentageNext)
         }
     }
@@ -296,7 +301,7 @@ export default class Video {
     }
 
     setVideoCurrentTime(percentage) {
-        if ( this.video() && !Number.isNaN( percentage ) && percentage !== 1 ) {
+        if (this.video() && !Number.isNaN(percentage) && percentage !== 1) {
             instance.video().currentTime = instance.video().duration * percentage
         }
     }
@@ -305,8 +310,8 @@ export default class Video {
         event.preventDefault();
         event.stopPropagation();
 
-        const percentage = ( event.changedTouches && event.changedTouches.length > 0 )
-            ? ( event.changedTouches[0].pageX - event.target.getBoundingClientRect().left ) / instance.el.videoTimeline.clientWidth
+        const percentage = (event.changedTouches && event.changedTouches.length > 0)
+            ? (event.changedTouches[0].pageX - event.target.getBoundingClientRect().left) / instance.el.videoTimeline.clientWidth
             : event.offsetX / instance.el.videoTimeline.clientWidth;
 
         instance.setVideoCurrentTime(percentage)

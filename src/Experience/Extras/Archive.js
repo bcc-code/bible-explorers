@@ -11,9 +11,15 @@ export default class Archive {
 
         archive = this
 
-        archive.htmlEl = document.createElement("div");
-        archive.htmlEl.setAttribute("id", "archive");
-        archive.htmlEl.addEventListener("click", Archive.getHtml);
+        archive.htmlEl = document.createElement("div")
+        archive.htmlEl.classList.add('archive')
+        archive.htmlEl.setAttribute("id", "archive")
+        archive.htmlEl.addEventListener("click", Archive.getHtml)
+
+        archive.icon = document.createElement('i')
+        archive.icon.classList.add("archive__icon")
+
+        archive.htmlEl.appendChild(archive.icon)
         document.body.appendChild(archive.htmlEl);
     }
 
