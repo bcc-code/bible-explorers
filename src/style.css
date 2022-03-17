@@ -621,7 +621,7 @@ body.freeze > *:not(#landing-screen):not(#sound) {
     display: none !important;
 }
 .css-container .video-overlay {
-    cursor: pointer;
+    /* cursor: pointer; */
     pointer-events: all;
 }
 .css-container .video-overlay .video-controlbar {
@@ -655,11 +655,11 @@ body.freeze > *:not(#landing-screen):not(#sound) {
     display: inline-block;
 }
 
-.css-container .video-overlay:not(div.is-muted) .fa-volume-slash-solid {
+.css-container .video-overlay:not(.is-muted) .fa-volume-solid {
     display: inline-block;
 }
 
-.css-container .video-overlay.is-muted .fa-volume-solid {
+.css-container .video-overlay.is-muted .fa-volume-slash-solid {
     display: inline-block;
 }
 
