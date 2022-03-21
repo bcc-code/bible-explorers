@@ -1,0 +1,20 @@
+{
+    "episodeId": 47457,
+    "steps": [
+        {
+            "type": "video",
+            "videoId": "episode-1361",
+            "location": "portal"
+        },
+        {
+            "type": "iris",
+            "audioId": "",
+            "location": "screens"
+        },
+        {
+            "type": "task",
+            "clickableElements": ["Panel_Screen"],
+            "location": "controlBoard"
+        }
+    ]
+}

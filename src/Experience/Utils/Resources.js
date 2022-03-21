@@ -18,6 +18,7 @@ export default class Resources extends EventEmitter {
         this.toLoad = this.sources.length - this.sources.filter((source) => { return ['video', 'videoTexture'].includes(source.type) }).length
         this.loaded = 0 
         this.mediaItems = []
+        this.mediaItemsScreens = []
         this.textureItems = []
 
         this.loadManager()
@@ -108,33 +109,6 @@ export default class Resources extends EventEmitter {
                     naturalHeight: video.videoHeight || 1
                 }
             }
-
-            else if (source.type === 'video') {
-                const video = document.createElement('video')
-                video.setAttribute('id', source.name)
-                video.crossOrigin = 'anonymous'
-                video.muted = false
-                video.loop = false
-                video.controls = true
-                video.autoplay = false
-                video.src = source.path
-
-                document.getElementById('videos-container').appendChild(video);
-
-                video.oncanplay = () => {
-                    const texture = new THREE.VideoTexture(video)
-                    texture.minFilter = THREE.LinearFilter
-                    texture.magFilter = THREE.LinearFilter
-                    texture.encoding = THREE.RGBADepthPacking
-                    
-                    this.mediaItems[source.name] = {
-                        item: texture,
-                        path: source.path,
-                        naturalWidth: video.videoWidth || 1,
-                        naturalHeight: video.videoHeight || 1
-                    }
-                }
-            }
         }
     }
 
@@ -144,6 +118,44 @@ export default class Resources extends EventEmitter {
 
         if (this.loaded === this.toLoad) {
             this.trigger('ready')
+        }
+    }
+
+    loadVideosThumbnail(fileName, thumbnail) {
+        this.loaders.textureLoader.load(
+            thumbnail,
+            (texture) => {
+                this.textureItems[fileName] = texture
+            }
+        )
+    }
+
+    loadThemeVideos(videoName) {
+        const path = 'videos/' + videoName + '.mp4'
+
+        const video = document.createElement('video')
+        video.setAttribute('id', videoName)
+        video.crossOrigin = 'anonymous'
+        video.muted = false
+        video.loop = false
+        video.controls = true
+        video.autoplay = false
+        video.src = path
+
+        document.getElementById('videos-container').appendChild(video);
+
+        video.oncanplay = () => {
+            const texture = new THREE.VideoTexture(video)
+            texture.minFilter = THREE.LinearFilter
+            texture.magFilter = THREE.LinearFilter
+            texture.encoding = THREE.RGBADepthPacking
+            
+            this.mediaItems[videoName] = {
+                item: texture,
+                path: path,
+                naturalWidth: video.videoWidth || 1,
+                naturalHeight: video.videoHeight || 1
+            }
         }
     }
 }

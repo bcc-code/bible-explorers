@@ -3,7 +3,6 @@ import Archive from '../Extras/Archive.js'
 import Timer from '../Extras/Timer.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
 import Video from '../Extras/Video.js'
-import data from "./episode-1.json";
 
 let instance = null
 
@@ -28,14 +27,16 @@ export default class Program {
         this.world = this.experience.world
         this.camera = this.experience.camera
         this.highlight = this.world.highlight
+        this.programData = this.world.selectedEpisode.program
 
         // Get instance variables
-        this.currentStep = localStorage.getItem(this.world.getId()) || 0
+        this.episodeProgress = () => localStorage.getItem(this.world.getId())
+        this.currentStep = this.episodeProgress() || 0
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
         this.currentLocation = () => this.getCurrentStepData() ? this.getCurrentStepData().location : null
-        this.interactiveObjects = () => this.getCurrentStepData() ? this.getCurrentStepData().clickableElements : []
-        this.getCurrentStepData = () => this.currentStep in data.steps ? data.steps[this.currentStep] : null
-        this.totalSteps = Object.keys(data.steps).length
+        this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
+        this.getCurrentStepData = () => this.currentStep in this.programData.steps ? this.programData.steps[this.currentStep] : null
+        this.totalSteps = Object.keys(this.programData.steps).length
         this.clickedObject = null
         this.canClick = true
 
@@ -61,23 +62,31 @@ export default class Program {
 
     updateCurrentStep(newStep) {
         this.currentStep = newStep
-        this.updateLocalStorage()
+
+        if (newStep > this.episodeProgress())
+            this.updateLocalStorage()
     }
 
     startInteractivity(initial = false) {
+        let currentVideo = this.currentVideo()
+        let nextVideo = this.nextVideo()
+
         this.camera.updateCameraTo(this.currentLocation())
         this.highlight.setHightlight(this.interactiveObjects())
-        
-        let video = this.currentVideo()
-        
+     
         if (this.stepType() == 'video') {
             setTimeout(function() {
-                instance.video.load(video)
-                instance.camera.zoomIn()
-            }, instance.camera.data.moveDuration, video)
+                instance.video.load(currentVideo)
+            }, instance.camera.data.moveDuration, currentVideo)
         }
         else {
             instance.video.defocus()
+
+            if (currentVideo != nextVideo) {
+                setTimeout(function() {
+                    instance.video.setTexture(nextVideo)
+                }, instance.camera.data.moveDuration, nextVideo)
+            }
         }
 
         if (this.currentStep == this.totalSteps) {
@@ -91,7 +100,7 @@ export default class Program {
     }
 
     finish() {
-        instance.camera.updateCameraTo(0)
+        instance.camera.updateCameraTo()
         instance.updateIrisTexture('SLEEP')
         setTimeout(() => {
             instance.world.finishJourney()
@@ -99,8 +108,21 @@ export default class Program {
     }
 
     objectIsClickable() {
-        return this.currentStep in data.steps &&
-            data.steps[this.currentStep].clickableElements.includes(this.clickedObject)
+        return this.currentStep in this.programData.steps &&
+            this.interactiveObjects().includes(this.clickedObject)
+    }
+
+    getAllInteractiveObjects() {
+        let interactiveObjects = this.getCurrentStepData().clickableElements || [];
+
+        if (this.stepType() == 'video') {
+            interactiveObjects = interactiveObjects.concat("Panel_Green_button","Panel_Red_button");
+        }
+        else if (this.stepType() == 'iris') {
+            interactiveObjects.push("tv_16x9_5");
+        }
+
+        return interactiveObjects
     }
 
     startAction() {
@@ -128,7 +150,7 @@ export default class Program {
         }
 
         if (this.clickedObject === 'Panel_Red_button') {
-            this.video.stop()
+            this.video.defocus()
             this.advance()
         }
 
@@ -139,10 +161,20 @@ export default class Program {
 
     currentVideo() {
         let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in data.steps) || !(data.steps[localCurrentStep].type == 'video'))
+        while (!(localCurrentStep in this.programData.steps) || !(this.programData.steps[localCurrentStep].type == 'video'))
             localCurrentStep--
 
-        return data.steps[localCurrentStep].videoId
+        return this.programData.steps[localCurrentStep].videoId
+    }
+
+    nextVideo() {
+        let localCurrentStep = this.currentStep
+        while (!(localCurrentStep in this.programData.steps) || !(this.programData.steps[localCurrentStep].type == 'video')) {
+            if (localCurrentStep >= this.totalSteps) return null
+            else localCurrentStep++
+        }
+
+        return this.programData.steps[localCurrentStep].videoId
     }
 
     updateLocalStorage() {

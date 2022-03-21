@@ -9,6 +9,7 @@ import Highlight from './Highlight.js'
 import Info from '../Extras/Info.js'
 
 let instance = null
+const wpApi = "https://staging-bcckids.kinsta.cloud/wp-json/biex-episodes/get"
 
 export default class World {
     constructor() {
@@ -20,6 +21,22 @@ export default class World {
         this.debug = this.experience.debug
 
         instance = this
+
+        this.selectedEpisode = {
+            id: 0,
+            program: null,
+            data: null
+        }
+        this.episodeProgress = () => localStorage.getItem(this.getId()) || 0
+        this.totalSteps = 5 // ToDo: dynamic
+
+        // Episodes
+        this.episodes = {
+            container: document.getElementById("episodes"),
+            list: document.querySelector("#episodes .list"),
+            data: []
+        }
+        this.httpGetAsync(wpApi, this.setEpisodes)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -44,38 +61,112 @@ export default class World {
         this.goHome = document.getElementById('go-home')
         this.goHome.addEventListener("mousedown", this.showMenu)
 
-        // TODO: make this dynamic
-        this.selectedEpisode = 1
-        this.currentStep = localStorage.getItem(this.getId()) || 0
-
-        if (this.currentStep == 0) {
-            instance.welcome.startJourney.innerText = "Start tidsreise"
-            instance.welcome.restartJourney.style.display = "none"
-        } else {
-            if (this.currentStep == 5) {
-                instance.welcome.congratulations.style.display = "block"
-                instance.welcome.startJourney.style.display = "none"
-            } else {
-                instance.welcome.startJourney.innerText = "Fortsett tidsreise"
-            }
-        }
-
         // Debug
         if (this.debug.active) {
             this.addGUIControls()
         }
     }
 
+    setEpisodes(data) {
+        instance.episodes.data = JSON.parse(data)
+        instance.episodes.data.forEach((episode) => {
+            instance.setEpisodeHtml(episode)
+        })
+
+        instance.selectEpisodeListeners()
+        instance.selectLatestEpisode()
+        instance.episodes.container.style.display = 'flex'
+    }
+
+    showMenuButtons() {
+        if (this.episodeProgress() == 0) {
+            instance.welcome.startJourney.innerText = "Start tidsreise"
+            instance.welcome.restartJourney.style.display = "none"
+        }
+        else {
+            instance.welcome.restartJourney.style.display = "block"
+        }
+
+        if (this.episodeProgress() == this.totalSteps) {
+            instance.welcome.congratulations.style.display = "block"
+            instance.welcome.startJourney.style.display = "none"
+        }
+        else {
+            instance.welcome.congratulations.style.display = "none"
+        }
+
+        if (this.episodeProgress() > 0 && this.episodeProgress() < this.totalSteps) {
+            instance.welcome.startJourney.innerText = "Fortsett tidsreise"
+        }
+    }
+
+    setEpisodeHtml(episode) {
+        let episodeHtml = document.createElement("div");
+        episodeHtml.className = 'episode'
+        episodeHtml.setAttribute("data-id", episode.id)
+        episodeHtml.innerHTML = `
+            <div class="thumbnail"><img src="${ episode.thumbnail }" /></div>
+            <h3 class="title">${ episode.title }</h3>
+        `
+        this.episodes.list.appendChild(episodeHtml)
+    }
+
+    selectLatestEpisode() {
+        instance.episodes.list.firstChild.dispatchEvent(new Event('mousedown'))
+    }
+
+    selectEpisodeListeners() {
+        document.querySelectorAll(".episode").forEach(function(episode) {
+            episode.addEventListener("mousedown", () => {
+                instance.addClassToSelectedEpisode(episode)
+                instance.updateSelectedEpisodeData(episode)
+                instance.loadEpisodeTextures()
+                instance.showMenuButtons()
+            });
+        });
+    }
+
+    addClassToSelectedEpisode(episode) {
+        document.querySelectorAll(".episode").forEach(function(thisEpisode) {
+            thisEpisode.classList.remove('selected')
+        })
+        episode.classList.add('selected')
+    }
+
+    updateSelectedEpisodeData(episode) {
+        let episodeId = episode.getAttribute('data-id')
+        instance.httpGetAsync("/program/theme-" + episode.getAttribute('data-id') + ".json", (program) => {
+            instance.selectedEpisode = {
+                id: instance.episodes.data.filter((episode) => { return episode.id == episodeId })[0].id,
+                program: JSON.parse(program),
+                data: instance.episodes.data.filter((episode) => { return episode.id == episodeId })[0].data
+            }
+        }, false)
+    }
+
+    loadEpisodeTextures() {
+        instance.selectedEpisode.data.forEach((animationFilm) => {
+            const episodeId = animationFilm.type + '/' + animationFilm.id
+            const fileName = animationFilm.type + '-' + animationFilm.id
+
+            if (instance.resources.textureItems.hasOwnProperty(fileName))
+                return
+
+            instance.resources.loadVideosThumbnail(fileName, animationFilm.thumbnail)
+            instance.resources.loadThemeVideos(fileName)
+        })
+    }
+
     startJourney() {
         instance.hideMenu()
-        instance.controlRoom.setUpTextures()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
         instance.info = new Info()
+        instance.controlRoom.setUpTextures()
     }
 
     restartJourney() {
-        localStorage.removeItem("progress-episode-" + instance.selectedEpisode)
+        localStorage.removeItem("progress-theme-" + instance.selectedEpisode.id)
         instance.startJourney()
     }
 
@@ -88,7 +179,7 @@ export default class World {
 
     showMenu() {
         document.body.classList.add('freeze')
-        instance.welcome.landingScreen.style.display = "block"
+        instance.welcome.landingScreen.style.display = "flex"
         instance.audio.addBgMusicElement()
         instance.goHome.style.display = "none"
     }
@@ -101,7 +192,7 @@ export default class World {
     }
 
     getId() {
-        return "progress-episode-" + this.selectedEpisode
+        return "progress-theme-" + this.selectedEpisode.id
     }
 
     update() {
@@ -125,5 +216,15 @@ export default class World {
         helper.close()
         helper.add(axesHelper, 'visible').name('Axes helper')
         helper.add(gridHelper, 'visible').name('Grid helper')
+    }
+
+    httpGetAsync(theUrl, callback, async = true) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, async);
+        xmlHttp.send(null);
     }
 }

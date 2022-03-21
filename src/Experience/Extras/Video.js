@@ -43,6 +43,7 @@ export default class Video {
         if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
             this.texture = this.resources.mediaItems[id].item
             this.videoMesh.material.map = this.texture
+            this.videoMesh.material.color.set(new THREE.Color().setRGB(1,1,1))
             this.videoMesh.material.needsUpdate = true
         }
 
@@ -54,8 +55,7 @@ export default class Video {
         // Event listener on video end
         this.video().onended = function () {
             instance.exitFullscreenVideo()
-            instance.camera.revertZoom()
-            instance.stop()
+            instance.defocus()
             instance.experience.world.program.advance()
         }
 
@@ -69,8 +69,14 @@ export default class Video {
         this.focus()
     }
 
+    setTexture(id) {
+        this.videoMesh.material.map = this.resources.textureItems[id]
+        this.videoMesh.material.color.set(new THREE.Color().setRGB(0.211,0.211,0.211))
+    }
+
     focus() {
         instance.play()
+        instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
     }
 
@@ -84,6 +90,7 @@ export default class Video {
     defocus() {
         if (instance.texture) {
             instance.pause()
+            instance.camera.revertZoom()
             instance.el.videoOverlay.classList.remove('in-frustum')
         }
     }
@@ -93,12 +100,6 @@ export default class Video {
         instance.el.videoControlBar.classList.add('show-controls')
         instance.el.videoOverlay.classList.remove('is-playing')
         instance.el.videoOverlay.classList.add('is-paused')
-    }
-
-    stop() {
-        instance.texture.image.pause()
-        instance.texture.image.currentTime = 0
-        instance.videoMesh.material.map = null
     }
 
     togglePlay() {
@@ -335,7 +336,7 @@ export default class Video {
                 this.pause()
             }
             else if (e.key === 's') {
-                this.stop()
+                this.defocus()
                 this.experience.world.program.advance()
             }
             else if (e.key === 'r') {

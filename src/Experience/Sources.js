@@ -4,7 +4,6 @@ export default [
         type: 'gltfModel',
         path: 'models/controlroom.glb'
     },
-
     {
         name: 'cameraModel',
         type: 'gltfModel',
@@ -38,11 +37,6 @@ export default [
         ]
     },
     {
-        name: 'EternityBibleStories_Ep1_test',
-        type: 'videoTexture',
-        path: 'textures/EternityBibleStories_Ep1_test.mp4'
-    },
-    {
         name: 'BIEX_S01_E01_IRIS_SLEEP',
         type: 'videoTexture',
         path: 'textures/BIEX_S01_E01_IRIS_SLEEP.mp4'
@@ -56,15 +50,5 @@ export default [
         name: 'BIEX_S01_E01_IRIS_SPEAK',
         type: 'videoTexture',
         path: 'textures/BIEX_S01_E01_IRIS_SPEAK.mp4'
-    },
-    {
-        name: 'SISA_S01_EP04',
-        type: 'video',
-        path: 'videos/SISA_S01_EP04.mp4'
-    },
-    {
-        name: 'EternityBibleStories_Ep1',
-        type: 'video',
-        path: 'videos/EternityBibleStories_Ep1.mp4'
     }
 ]

@@ -23,14 +23,18 @@ export default class ProgressBar {
         };
 
         instance.el.steps.forEach(function(step) {
-            step.addEventListener("mousedown", (obj) => {
-                instance.program.advance(step.innerText-1)
+            step.addEventListener("mousedown", () => {
+                let clickedStep = step.innerText - 1
+                if (clickedStep <= instance.program.episodeProgress())
+                    instance.program.advance(clickedStep)
             })
         });
     }
 
     refresh() {
         instance.el.passed.style.width = instance.stepWidth * instance.program.currentStep + '%';
+        if (instance.program.currentStep < instance.el.steps.length)
+            instance.el.steps[instance.program.currentStep].classList.remove('locked')
     }
 
     static generateHtml() {
@@ -38,7 +42,7 @@ export default class ProgressBar {
         let html = '<div class="progress-bar__steps">'
             for (let i = 0; i < instance.program.totalSteps; i++) {
                 var left = 'calc(' + i * instance.stepWidth + '% - ' + leftAdjustment + 'px)';
-                html += `<div class="progress-bar__step" style="left: ${ left }">${ i+1 }</div>`
+                html += `<div class="progress-bar__step ${ i > instance.program.episodeProgress() ? 'locked' : '' }" style="left: ${ left }">${ i+1 }</div>`
             }
             html += `<div class="progress-bar__step" style="left: calc(100% - ${ leftAdjustment }px)">#</div>`
 

@@ -24,7 +24,7 @@
     "portfinder-sync": "0.0.2",
     "raw-loader": "^4.0.2",
     "style-loader": "^3.3.1",
-    "three": "^0.137.5",
+    "three": "^0.138.3",
     "troika-three-text": "^0.45.1",
     "url": "^0.11.0",
     "util": "^0.12.4",

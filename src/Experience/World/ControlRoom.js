@@ -59,6 +59,12 @@ export default class ControlRoom {
         this.texture.encoding = THREE.sRGBEncoding
     }
 
+    changeMeshTexture(name, texture) {
+        let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
+        if (mesh)
+            mesh.material.map = texture
+    }
+
     setDefaultTextureToScreens() {
         this.textureObjects.forEach((obj) => {
             obj.material.color.set(new THREE.Color().setRGB(0,0,0))
@@ -100,7 +106,7 @@ export default class ControlRoom {
         this.textureObjects.forEach((obj) => {
             switch (obj.name) {
                 case 'tv_4x4_screen':
-                    this.setTexture(this.sources.textureItems['EternityBibleStories_Ep1_test'].item, 90)
+                    this.setTexture(this.sources.textureItems[this.world.program.currentVideo()], 90)
                     obj.material.map = this.texture
                     break
                 
