@@ -35,6 +35,8 @@
     "webpack-merge": "^5.8.0"
   },
   "devDependencies": {
-    "gsap": "^3.9.1"
+    "gsap": "^3.9.1",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.6.0"
   }
 }
