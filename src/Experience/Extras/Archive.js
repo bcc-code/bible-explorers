@@ -33,17 +33,19 @@ export default class Archive {
     static getHtml() {
         let html = `
             <h2>${data.title}</h2>
-            <div class="archive__grid">
-                <ul class="archive__list">`;
+            <div class="archive__container">
+                <ul class="archive__sidebar">`;
                     Object.entries(data.entries).forEach(entry => {
                         html += `<li class="${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">${ entry[1].title }</li>`
                     })
                 html += `</ul>
                 <div class="archive__content">`;
                     Object.entries(data.entries).forEach(entry => {
-                        html += `<div class="entry__content ${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">
+                        html += `<div class="entry ${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">
+                            <div class="entry__content">
                             <h3>${entry[1].title}</h3>
                             <div class="text">${ entry[1].text }</div>
+                            </div>
                         </div>`
                     })
                 html += `</div>

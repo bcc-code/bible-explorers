@@ -170,19 +170,19 @@ export default class Video {
         this.cssScene = new THREE.Scene()
 
         var videoOverlay = document.createElement('div')
-        videoOverlay.innerHTML = `<div class="video-overlay" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">  
-            <div class="video-controlbar">
-                <div class="video-timeline">
-                    <div class="loadedbar"></div>
-                    <div class="seekbar"></div>
-                    <div class="progressbar"></div>
-                    <div class="progress-button"></div>
+        videoOverlay.innerHTML = `<div class="video__overlay" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">  
+            <div class="video__controlbar">
+                <div class="video__timeline">
+                    <div class="video__loadedbar"></div>
+                    <div class="video__seekbar"></div>
+                    <div class="video__progressbar"></div>
+                    <div class="video__progress-button"></div>
                 </div>
-                <div class="video-controls">
-                    <span class="play-pause btn"><i class="fak fa-play-solid"></i><i class="fak fa-pause-solid"></i></span>
-                    <span class="sound btn"><i class="fak fa-volume-solid"></i><i class="fak fa-volume-slash-solid"></i></span>
-                    <span class="timetracker"></span>
-                    <span class="fullscreen btn"><i class="fak fa-expand-solid"></i></span>
+                <div class="video__controls">
+                    <span class="video__play-pause video__controlsBtn"><i class="fak fa-play-solid"></i><i class="fak fa-pause-solid"></i></span>
+                    <span class="video__sound video__controlsBtn"><i class="fak fa-volume-solid"></i><i class="fak fa-volume-slash-solid"></i></span>
+                    <span class="video__timetracker"></span>
+                    <span class="video__fullscreen video__controlsBtn"><i class="fak fa-expand-solid"></i></span>
                 </div>
             </div>
         </div>`
@@ -201,7 +201,7 @@ export default class Video {
         // Create a renderer for CSS
         this.rendererCSS = new CSS3DRenderer()
         this.rendererCSS.setSize(this.sizes.width, this.sizes.height)
-        this.rendererCSS.domElement.classList.add('css-container')
+        this.rendererCSS.domElement.classList.add('video')
         this.rendererCSS.domElement.style.position = 'absolute'
         this.rendererCSS.domElement.style.top = 0
 
@@ -211,15 +211,15 @@ export default class Video {
 
     setVideoListeners() {
         instance.el = {
-            videoOverlay: document.querySelector(".video-overlay"),
-            videoControlBar: document.querySelector(".video-controlbar"),
-            playPause: document.querySelector(".play-pause"),
-            sound: document.querySelector(".sound"),
-            videoTimeline: document.querySelector(".video-timeline"),
-            progressBar: document.querySelector(".progressbar"),
-            progressButton: document.querySelector(".progress-button"),
-            timetracker: document.querySelector(".timetracker"),
-            fullscreen: document.querySelector(".fullscreen")
+            videoOverlay: document.querySelector(".video__overlay"),
+            videoControlBar: document.querySelector(".video__controlbar"),
+            playPause: document.querySelector(".video__play-pause"),
+            sound: document.querySelector(".video__sound"),
+            videoTimeline: document.querySelector(".video__timeline"),
+            progressBar: document.querySelector(".video__progressbar"),
+            progressButton: document.querySelector(".video__progress-button"),
+            timetracker: document.querySelector(".video__timetracker"),
+            fullscreen: document.querySelector(".video__fullscreen")
         }
 
         instance.el.videoOverlay.addEventListener("mouseover", () => { instance.el.videoControlBar.style.opacity = 1 })
