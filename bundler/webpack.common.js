@@ -2,6 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
+const svgToMiniDataURI = require('mini-svg-data-uri');
 
 module.exports = {
     entry: path.resolve(__dirname, '../src/script.js'),
@@ -52,7 +53,6 @@ module.exports = {
                     test: /\.scss$/,
                     use: [
                         'style-loader',
-                        // MiniCSSExtractPlugin.loader,
                         'css-loader',
                         'sass-loader',
                     ]
@@ -69,12 +69,11 @@ module.exports = {
 
                 // Images
                 {
-                    test: /\.(jpg|png|gif|svg)$/,
+                    test: /\.(jpg|png|gif)$/,
                     type: 'asset/resource',
-                    generator:
-                    {
+                    generator: {
                         filename: 'assets/images/[hash][ext]'
-                    }
+                    },
                 },
 
                 // Fonts

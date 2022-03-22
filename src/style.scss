@@ -2,6 +2,18 @@
     color-scheme: only light !important;
 }
 
+// #region Colors
+$primary: #23307a;
+$secondary: #f75b99;
+$accent: #fcb04e;
+$dark: #151718;
+$gradient: linear-gradient($primary, $secondary);
+$gradient45: linear-gradient(45deg, $primary, $secondary);
+$gradient90: linear-gradient(90deg, $primary, $secondary);
+
+$radius: 12px;
+// #endregion
+
 // #region General
 * {
     margin: 0;
@@ -11,11 +23,14 @@
 html,
 body {
     overflow: hidden;
-    font-family: Helvetica, Arial, sans-serif;
 }
 
 body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
     line-height: 1.5;
+    color: $dark;
+
     &.freeze > *:not(#landing-screen):not(#sound) {
         pointer-events: none;
     }
@@ -28,6 +43,23 @@ ul {
 .hidden {
     display: none;
 }
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.125rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
 // #endregion
 
 // #region Canvas
@@ -49,7 +81,7 @@ ul {
 // #endregion
 
 // #region Interface
-#sound {
+.sound {
     position: absolute;
     width: 50px;
     height: 50px;
@@ -61,7 +93,7 @@ ul {
     z-index: 4;
 }
 
-#go-home {
+.home {
     position: absolute;
     width: 50px;
     height: 50px;
@@ -138,22 +170,21 @@ ul {
     }
 }
 
-#progress-bar {
+.progress-bar {
     width: calc(100% - 50px - 50px - 200px);
     position: absolute;
     bottom: 86px;
     left: 75px;
 
-    .progress-bar__steps {
+    &__steps {
         position: absolute;
         left: 0;
         width: 100%;
         z-index: 3;
     }
-    .progress-bar__step {
+    &__step {
         width: 42px;
         height: 42px;
-        background: #ff0256;
         position: absolute;
         z-index: 2;
         top: -10px;
@@ -170,21 +201,43 @@ ul {
             filter: grayscale(1);
         }
     }
-    .progress-bar__step:not(:last-child) {
+    &__step:not(:last-child) {
         cursor: pointer;
     }
-    .progress-bar__percentage {
+    &__percentage {
         height: 18px;
         width: 100%;
         border: 2px solid #3f778d;
         position: relative;
         z-index: 2;
+
+        .passed {
+            float: left;
+            height: 100%;
+            background-color: #3f778d;
+            transition: width 0.4s ease-in-out;
+        }
     }
-    .progress-bar__percentage .passed {
-        float: left;
-        height: 100%;
-        background-color: #3f778d;
-        transition: width 0.4s ease-in-out;
+}
+
+.archive__btn {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: 50px;
+    bottom: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+
+    display: grid;
+    gap: 2rem;
+
+    &__icon {
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 50%;
+        height: 50%;
     }
 }
 
@@ -197,11 +250,23 @@ ul {
 
 #landing-screen {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 4;
     display: flex;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $gradient90;
+        opacity: 0.4;
+        z-index: -1;
+    }
 
     .menu {
         width: 100%;
@@ -264,7 +329,7 @@ ul {
             align-items: center;
             border: 5px solid rgba(255, 255, 255, 0);
             cursor: pointer;
-            transition: .3s;
+            transition: 0.3s;
 
             &:first-child {
                 margin-left: 0;
@@ -284,33 +349,34 @@ ul {
 }
 
 .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
     &__overlay {
-        background: #39393990;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         z-index: 1;
+        background: $gradient90;
+        opacity: 0.8;
     }
 
     &__container {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        position: relative;
+        max-width: 1440px;
         z-index: 2;
-        width: 1024px;
-        height: 768px;
-        background: #fff;
-        display: grid;
-        grid-auto-rows: minmax(min-content, max-content);
-        margin: auto;
     }
 
     &__content {
-        padding: 3rem;
         z-index: 2;
         position: relative;
 
@@ -331,48 +397,56 @@ ul {
 }
 
 .archive {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    right: 50px;
-    bottom: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    &__content {
+        background-color: #fff;
+        border-radius: $radius;
+        margin-left: 2rem;
+        padding: 2rem;
 
-    &__icon {
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 50%;
-        height: 50%;
+        h2 {
+            color: $primary;
+        }
     }
 
-    &__container {
-        display: grid;
-        gap: 2rem;
-        grid-template-columns: 1fr 2fr;
+    &__header {
+        background-color: #fff;
+        grid-column: span 1/2;
+        margin-bottom: 1rem;
+
+        padding: 1rem;
+        text-align: center;
+        border-radius: $radius;
+
+        h1 {
+            color: $primary;
+        }
     }
 
     &__sidebar {
-        margin: 0;
+        overflow: hidden;
+        background-color: #fff;
+        grid-column: span 1/2;
+        border-radius: $radius;
 
         li {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
+            color: $primary;
+            font-size: 1.125rem;
+            padding: 0.75rem 2rem;
             cursor: pointer;
-            transition: 0.5;
+            box-shadow: 0 0 0 $accent;
+            transition: color 0.3s ease, box-shadow 0.3s ease;
         }
 
         li:hover {
-            background-color: beige;
+            box-shadow: 0 0 2px $accent, 0 0 6px $accent, 0 0 10px $accent;
         }
 
-        &.visible {
-            background-color: beige;
+        li.visible {
+            background-color: $accent;
+            color: #fff;
         }
     }
 }
@@ -380,12 +454,49 @@ ul {
 .entry {
     display: none;
 
-    h3 {
-        margin-bottom: 1rem;
-    }
-
     &.visible {
         display: block;
+    }
+
+    &__content {
+        display: grid;
+    }
+
+    &__head {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        padding-bottom: 1rem;
+    }
+
+    &__text {
+        height: 30vh;
+        overflow-y: auto;
+
+        --scrollbar-width: 0.5rem;
+        --mask-height: 1rem;
+
+        padding-top: var(--mask-height);
+        padding-bottom: var(--mask-height);
+        padding-right: 1rem;
+
+        --mask-image-content: linear-gradient(
+            to bottom,
+            transparent,
+            white var(--mask-height),
+            white calc(100% - var(--mask-height)),
+            transparent
+        );
+
+        --mask-size-content: calc(100% - var(--scrollbar-width)) 100%;
+        --mask-image-scrollbar: linear-gradient(white, white);
+        --mask-size-scrollbar: var(--scrollbar-width) 100%;
+
+        mask-image: var(--mask-image-content), var(--mask-image-scrollbar);
+        mask-size: var(--mask-size-content), var(--mask-size-scrollbar);
+
+        mask-position: 0 0, 100% 0;
+        mask-repeat: no-repeat, no-repeat;
     }
 }
 
@@ -706,4 +817,3 @@ ul {
     }
 }
 // #endregion
-

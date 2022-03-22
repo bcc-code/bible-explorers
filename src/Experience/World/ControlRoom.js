@@ -77,7 +77,9 @@ export default class ControlRoom {
 
     storeMeshes() {
         this.resources.scene.traverse((child) => {
+
             if (child instanceof THREE.Mesh) {
+
                 switch (child.name) {
                     // Store clickable objects
                     case 'tv_4x4':

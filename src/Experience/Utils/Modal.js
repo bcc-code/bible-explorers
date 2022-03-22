@@ -41,7 +41,7 @@ export default class Modal {
             <div class="modal__overlay"></div>
             <div class="modal__close"></div>
             <div class="modal__container">
-                <div class="modal__content">
+                <div class="archive">
                     ${html}
                 </div>
             </div>

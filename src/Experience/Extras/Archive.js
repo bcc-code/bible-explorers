@@ -12,8 +12,8 @@ export default class Archive {
         archive = this
 
         archive.htmlEl = document.createElement("div")
-        archive.htmlEl.classList.add('archive')
-        archive.htmlEl.setAttribute("id", "archive")
+        archive.htmlEl.classList.add('archive__btn')
+        archive.htmlEl.setAttribute("id", "archive__btn")
         archive.htmlEl.addEventListener("click", Archive.getHtml)
 
         archive.icon = document.createElement('i')
@@ -32,8 +32,7 @@ export default class Archive {
   
     static getHtml() {
         let html = `
-            <h2>${data.title}</h2>
-            <div class="archive__container">
+            <div class="archive__header"><h1>${data.title}</h1></div>
                 <ul class="archive__sidebar">`;
                     Object.entries(data.entries).forEach(entry => {
                         html += `<li class="${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">${ entry[1].title }</li>`
@@ -43,19 +42,18 @@ export default class Archive {
                     Object.entries(data.entries).forEach(entry => {
                         html += `<div class="entry ${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">
                             <div class="entry__content">
-                            <h3>${entry[1].title}</h3>
-                            <div class="text">${ entry[1].text }</div>
+                            <h2 class="entry__head">${entry[1].title}</h2>
+                            <div class="entry__text"><p>${ entry[1].text }</p></div>
                             </div>
                         </div>`
                     })
                 html += `</div>
-            </div>
         `;
 
         new Modal(html)
 
         archive.el = {
-            list: document.querySelector(".archive__list"),
+            list: document.querySelector(".archive__sidebar"),
             content: document.querySelector(".archive__content")
         }
 
