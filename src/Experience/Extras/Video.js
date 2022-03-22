@@ -6,6 +6,9 @@ let instance = null
 
 export default class Video {
     constructor() {
+        if (instance)
+            return instance
+
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.canvas = this.experience.canvas
@@ -78,6 +81,9 @@ export default class Video {
         instance.play()
         instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
+
+        if (!instance.texture.image.muted)
+            instance.el.videoOverlay.classList.remove('is-muted')
     }
 
     play() {

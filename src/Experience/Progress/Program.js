@@ -12,10 +12,6 @@ export default class Program {
     }
 
     initialize() {
-        // Singleton
-        if (instance)
-            return instance
-
         instance = this
 
         this.experience = new Experience()
@@ -32,11 +28,11 @@ export default class Program {
         // Get instance variables
         this.episodeProgress = () => localStorage.getItem(this.world.getId())
         this.currentStep = this.episodeProgress() || 0
+        this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
         this.currentLocation = () => this.getCurrentStepData() ? this.getCurrentStepData().location : null
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
-        this.getCurrentStepData = () => this.currentStep in this.programData.steps ? this.programData.steps[this.currentStep] : null
-        this.totalSteps = Object.keys(this.programData.steps).length
+        this.totalSteps = Object.keys(this.programData).length
         this.clickedObject = null
         this.canClick = true
 
@@ -108,7 +104,7 @@ export default class Program {
     }
 
     objectIsClickable() {
-        return this.currentStep in this.programData.steps &&
+        return this.currentStep in this.programData &&
             this.interactiveObjects().includes(this.clickedObject)
     }
 
@@ -116,10 +112,10 @@ export default class Program {
         let interactiveObjects = this.getCurrentStepData().clickableElements || [];
 
         if (this.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat("Panel_Green_button","Panel_Red_button");
+            interactiveObjects = interactiveObjects.concat("Panel_Green_button","Panel_Red_button")
         }
         else if (this.stepType() == 'iris') {
-            interactiveObjects.push("tv_16x9_5");
+            interactiveObjects.push("tv_16x9_5")
         }
 
         return interactiveObjects
@@ -161,20 +157,20 @@ export default class Program {
 
     currentVideo() {
         let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in this.programData.steps) || !(this.programData.steps[localCurrentStep].type == 'video'))
+        while (!(localCurrentStep in this.programData) || !(this.programData[localCurrentStep].type == 'video'))
             localCurrentStep--
 
-        return this.programData.steps[localCurrentStep].videoId
+        return this.programData[localCurrentStep].videoId
     }
 
     nextVideo() {
         let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in this.programData.steps) || !(this.programData.steps[localCurrentStep].type == 'video')) {
+        while (!(localCurrentStep in this.programData) || !(this.programData[localCurrentStep].type == 'video')) {
             if (localCurrentStep >= this.totalSteps) return null
             else localCurrentStep++
         }
 
-        return this.programData.steps[localCurrentStep].videoId
+        return this.programData[localCurrentStep].videoId
     }
 
     updateLocalStorage() {
@@ -182,8 +178,6 @@ export default class Program {
     }
 
     updateIrisTexture(mode) {
-        instance.world.controlRoom.setTexture(instance.resources.textureItems['BIEX_S01_E01_IRIS_'+mode].item, 90)
-        let mesh = instance.world.controlRoom.textureObjects.filter((mesh) => { return mesh.name == 'tv_16x9_5_screen' })[0]
-        mesh.material.map = instance.world.controlRoom.texture
+        instance.world.controlRoom.setTexture('tv_16x9_5_screen', instance.resources.textureItems['BIEX_S01_E01_IRIS_'+mode].item, 90)
     }
 }

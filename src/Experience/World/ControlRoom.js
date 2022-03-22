@@ -50,19 +50,23 @@ export default class ControlRoom {
     }
 
     // Set textures
-    setTexture(texture, rotation = 0) {
+    setTexture(meshName, texture, rotation = 0) {
+        if (!texture) return
+
         this.texture = texture
         this.texture.rotation = THREE.Math.degToRad(rotation)
         this.texture.flipY = false
         this.texture.wrapS = THREE.RepeatWrapping
         this.texture.wrapT = THREE.RepeatWrapping
         this.texture.encoding = THREE.sRGBEncoding
+
+        this.changeMeshTexture(meshName, this.texture)
     }
 
     changeMeshTexture(name, texture) {
         let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
         if (mesh)
-            mesh.material.map = texture
+            mesh[0].material.map = texture
     }
 
     setDefaultTextureToScreens() {
@@ -106,23 +110,19 @@ export default class ControlRoom {
         this.textureObjects.forEach((obj) => {
             switch (obj.name) {
                 case 'tv_4x4_screen':
-                    this.setTexture(this.sources.textureItems[this.world.program.currentVideo()], 90)
-                    obj.material.map = this.texture
+                    this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
                     break
                 
                 case 'tv_4x5_screen':
-                    this.setTexture(this.sources.items.UVChecker)
-                    obj.material.map = this.texture
+                    this.setTexture(obj.name, this.sources.items.UVChecker)
                     break
 
                 case 'tv_16x9_5_screen':
-                    this.setTexture(this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
-                    obj.material.map = this.texture
+                    this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
                     break
 
                 case 'tv_16x10_screen':
-                    this.setTexture(this.sources.items.screen_16x10)
-                    obj.material.map = this.texture
+                    this.setTexture(obj.name, this.sources.items.screen_16x10)
                     break
             }
         })

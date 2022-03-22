@@ -28,7 +28,6 @@ export default class World {
             data: null
         }
         this.episodeProgress = () => localStorage.getItem(this.getId()) || 0
-        this.totalSteps = 5 // ToDo: dynamic
 
         // Episodes
         this.episodes = {
@@ -58,13 +57,18 @@ export default class World {
             restartJourney: document.getElementById("restart-journey"),
         }
 
-        this.goHome = document.getElementById('go-home')
-        this.goHome.addEventListener("mousedown", this.showMenu)
+        this.homeButton = document.getElementById('go-home')
+        this.homeButton.addEventListener("mousedown", this.goHome)
 
         // Debug
         if (this.debug.active) {
             this.addGUIControls()
         }
+    }
+
+    goHome() {
+        instance.showMenuButtons()
+        instance.showMenu()
     }
 
     setEpisodes(data) {
@@ -87,7 +91,7 @@ export default class World {
             instance.welcome.restartJourney.style.display = "block"
         }
 
-        if (this.episodeProgress() == this.totalSteps) {
+        if (this.episodeProgress() == this.selectedEpisode.program.length) {
             instance.welcome.congratulations.style.display = "block"
             instance.welcome.startJourney.style.display = "none"
         }
@@ -95,7 +99,7 @@ export default class World {
             instance.welcome.congratulations.style.display = "none"
         }
 
-        if (this.episodeProgress() > 0 && this.episodeProgress() < this.totalSteps) {
+        if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
             instance.welcome.startJourney.innerText = "Fortsett tidsreise"
         }
     }
@@ -135,13 +139,7 @@ export default class World {
 
     updateSelectedEpisodeData(episode) {
         let episodeId = episode.getAttribute('data-id')
-        instance.httpGetAsync("/program/theme-" + episode.getAttribute('data-id') + ".json", (program) => {
-            instance.selectedEpisode = {
-                id: instance.episodes.data.filter((episode) => { return episode.id == episodeId })[0].id,
-                program: JSON.parse(program),
-                data: instance.episodes.data.filter((episode) => { return episode.id == episodeId })[0].data
-            }
-        }, false)
+        instance.selectedEpisode = instance.episodes.data.filter((episode) => { return episode.id == episodeId })[0]
     }
 
     loadEpisodeTextures() {
@@ -181,14 +179,14 @@ export default class World {
         document.body.classList.add('freeze')
         instance.welcome.landingScreen.style.display = "flex"
         instance.audio.addBgMusicElement()
-        instance.goHome.style.display = "none"
+        instance.homeButton.style.display = "none"
     }
 
     hideMenu() {
         document.body.classList.remove('freeze')
         instance.welcome.landingScreen.style.display = "none"
         instance.audio.removeBgMusicElement()
-        instance.goHome.style.display = "block"
+        instance.homeButton.style.display = "block"
     }
 
     getId() {

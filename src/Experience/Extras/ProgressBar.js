@@ -4,10 +4,6 @@ let instance = null
 
 export default class ProgressBar {
     constructor() {
-        // Singleton
-        if (instance)
-            return instance
-
         instance = this
 
         this.experience = new Experience()

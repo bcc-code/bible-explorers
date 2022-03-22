@@ -4,12 +4,6 @@ let info = null
 
 export default class Info {
     constructor() {
-        // Singleton
-        if (info)
-            return info
-
-        info = this
-
         this.tooltips = {
             "video": "Se på video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
@@ -19,6 +13,8 @@ export default class Info {
         this.experience = new Experience()
         this.world = this.experience.world
         this.program = this.world.program
+
+        info = this
 
         this.htmlEl = document.createElement("div");
         this.htmlEl.setAttribute("id", "info");
@@ -38,7 +34,7 @@ export default class Info {
     getInfo() {
         info.htmlEl.innerHTML = `<div class="tooltip">
             <div class="tooltip__title">Info:</div>
-            <div class="tooltip__content">${ this.tooltips[info.program.stepType()] }</div>
+            <div class="tooltip__content">${ info.tooltips[info.program.stepType()] }</div>
         </div>`;
     }
 

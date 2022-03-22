@@ -17,10 +17,9 @@ export default class Camera {
         camera = this
 
         // Options
-        this.cameraTween = null
+        this.updateCameraTween = null
+        this.zoomInTween = null
         this.data = {
-            position: new THREE.Vector3(0, 1.7, 10),
-            lookAt: new THREE.Vector3(0, 1.7, 0),
             moveDuration: 2500,
             zoom: 1.15,
             location: 0,
@@ -30,8 +29,8 @@ export default class Camera {
 
         this.cameraLocations = {
             'default': {
-                position: new THREE.Vector3(0, 1.7, 10),
-                lookAt: new THREE.Vector3(0, 1.7, 0),
+                position: new THREE.Vector3(-2.423, 2.435, 7.019),
+                lookAt: new THREE.Vector3(-2.238, 1.469, -0.265),
                 controls: {
                     minPolarAngle: -Math.PI,
                     maxPolarAngle: Math.PI,
@@ -101,13 +100,13 @@ export default class Camera {
 
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
-        this.instance.position.copy(this.data.position)
+        this.instance.position.copy(this.cameraLocations.default.position)
         this.scene.add(this.instance)
     }
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.target.copy(this.data.lookAt)
+        this.controls.target.copy(this.cameraLocations.default.lookAt)
     }
 
     autoRotateControls() {
@@ -135,8 +134,11 @@ export default class Camera {
     }
 
     updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }) {
-        if (this.cameraTween)
-            this.cameraTween.stop()
+        if (this.updateCameraTween)
+            this.updateCameraTween.stop()
+        
+        if (this.zoomInTween)
+            this.revertZoom()
 
         const from = {
             cameraPosition: new THREE.Vector3().copy(this.instance.position),
@@ -150,7 +152,7 @@ export default class Camera {
 
         this.setDefaultAngleControls()
 
-        this.cameraTween = new TWEEN.Tween(from)
+        this.updateCameraTween = new TWEEN.Tween(from)
             .to(to, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate((obj) => {
@@ -179,7 +181,7 @@ export default class Camera {
     }
 
     zoomIn() {
-        new TWEEN.Tween( this.controls.object )
+        this.zoomInTween = new TWEEN.Tween( this.controls.object )
             .to( { zoom: 1.5 }, 5000 )
             .easing( TWEEN.Easing.Quadratic.InOut )
             .onUpdate(() => {
@@ -189,6 +191,7 @@ export default class Camera {
     }
 
     revertZoom() {
+        this.zoomInTween.stop()
         this.controls.object.zoom = 1
         this.instance.updateProjectionMatrix()
     }
@@ -201,7 +204,7 @@ export default class Camera {
 
     setDebugOrbitControls() {
         this.controls2 = new OrbitControls(this.instanceDebug, this.canvasDebug)
-        this.controls2.target.copy(this.data.lookAt)
+        this.controls2.target.copy(this.cameraLocations.default.lookAt)
     }
 
     setDefaultAngleControls() {
