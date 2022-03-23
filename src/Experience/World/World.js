@@ -81,7 +81,7 @@ export default class World {
 
         instance.selectEpisodeListeners()
         instance.selectLatestEpisode()
-        instance.episodes.container.style.display = 'flex'
+        instance.episodes.container.style.display = 'grid'
     }
 
     showMenuButtons() {
@@ -111,7 +111,7 @@ export default class World {
         episodeHtml.className = 'episode'
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.innerHTML = `
-            <div class="thumbnail"><img src="${ episode.thumbnail }" /></div>
+            <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon"></i> </div>
             <h3 class="title">${ episode.title }</h3>
         `
         this.episodes.list.appendChild(episodeHtml)

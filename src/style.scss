@@ -1,3 +1,5 @@
+@import "./icons.scss";
+
 :root {
     color-scheme: only light !important;
 }
@@ -58,6 +60,11 @@ h4 {
 
 p {
     margin-bottom: 1rem;
+}
+
+img {
+    display: block;
+    max-width: 100%;
 }
 
 // #endregion
@@ -150,38 +157,50 @@ p {
         z-index: 3;
     }
     &__step {
-        width: 42px;
-        height: 42px;
-        position: absolute;
-        z-index: 2;
-        top: -10px;
+        width: 4rem;
+        height: 4rem;
+        top: -1.25rem;
         border-radius: 50%;
+        position: absolute;
+        background-image: get-icon("empty");
+        background-repeat: no-repeat;
+        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
         font-weight: bold;
-        font-size: 1.25rem;
-        border: 1px solid #3f778d;
+        font-size: 2rem;
 
         &.locked {
+            background-image: get-icon("lock");
             filter: grayscale(1);
+            font-size: 0;
+        }
+
+        &:last-child {
+            font-size: 0;
+            background-image: get-icon("star");
         }
     }
+
     &__step:not(:last-child) {
         cursor: pointer;
     }
+
     &__percentage {
-        height: 18px;
+        height: 1.25rem;
         width: 100%;
-        border: 2px solid #3f778d;
+        background-color: #fff;
+        border: 2px solid #fff;
         position: relative;
         z-index: 2;
 
         .passed {
             float: left;
             height: 100%;
-            background-color: #3f778d;
+            top: -10px;
+            background-image: $gradient45;
             transition: width 0.4s ease-in-out;
         }
     }
@@ -210,7 +229,7 @@ p {
     }
 
     #go-home {
-        background-image: url('/static/icons/home.svg');
+        background-image: get-icon("home");
         margin-right: auto;
 
         .modal-on &,
@@ -220,7 +239,7 @@ p {
     }
 
     #sound {
-        background-image: url('/static/icons/sound-on.svg');
+        background-image: get-icon("sound-on");
         z-index: 5;
 
         .modal-on & {
@@ -229,7 +248,7 @@ p {
     }
 
     #info {
-        background-image: url('/static/icons/question.svg');
+        background-image: get-icon("question");
         border-radius: 50%;
         cursor: pointer;
 
@@ -240,9 +259,9 @@ p {
     }
 
     #archive {
-        background-image: url('/static/icons/archive.svg');
+        background-image: get-icon("archive");
         gap: 2rem;
-    
+
         &__icon {
             background-size: contain;
             background-repeat: no-repeat;
@@ -251,7 +270,7 @@ p {
         }
 
         .modal-on & {
-            background-image: url('/static/icons/close.svg');
+            background-image: get-icon("close");
         }
 
         .freeze & {
@@ -260,7 +279,7 @@ p {
     }
 
     #settings {
-        background-image: url('/static/icons/settings.svg');
+        background-image: get-icon("settings");
         margin-right: 0;
         z-index: 5;
 
@@ -274,10 +293,14 @@ p {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
+    right: 0;
+    bottom: 0;
+    padding: 4rem;
     z-index: 4;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
 
     body:not(.freeze) & {
         display: none;
@@ -302,12 +325,15 @@ p {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 2rem;
         opacity: 0;
     }
 
     .button {
-        border: 3px solid #fff;
-        padding: 10px 30px;
+        padding: 1rem 3rem;
+        background-image: get-icon("button");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
         color: #fff;
         width: auto;
         font-size: 1.5rem;
@@ -315,12 +341,6 @@ p {
         transition: 0.3s;
         min-width: 160px;
         text-align: center;
-        margin: 10px 0;
-
-        &:hover {
-            background: #fff;
-            color: #000;
-        }
     }
 
     #congratulations {
@@ -329,49 +349,63 @@ p {
         font-size: 30px;
         margin-bottom: 40px;
     }
+}
 
-    #episodes {
-        flex-direction: column;
-        justify-content: center;
-        margin: 100px 0 100px 100px;
-        display: none;
+#episodes {
+    display: none;
+    align-items: center;
+    grid-auto-rows: minmax(min-content, max-content);
+    gap: 3rem;
 
-        h1.title {
-            color: #fff;
-            margin-bottom: 80px;
-        }
-        .list {
-            display: flex;
-        }
-        .episode {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            width: 250px;
-            height: 220px;
-            margin-left: 40px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 5px 20px 20px;
-            border-radius: 10px;
-            align-items: center;
-            border: 5px solid rgba(255, 255, 255, 0);
-            cursor: pointer;
-            transition: 0.3s;
+    h1 {
+        color: #fff;
+    }
 
-            &:first-child {
-                margin-left: 0;
-            }
-            &.selected {
-                border-color: #3f778d;
-            }
-            .thumbnail img {
-                width: 100%;
-                height: auto;
-            }
-            .title {
-                margin-top: 10px;
-            }
+    .list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+}
+
+.episode {
+    align-items: center;
+    cursor: pointer;
+
+    .thumbnail {
+        position: relative;
+        border-radius: $radius;
+        background-color: #fff;
+        border: 4px solid #fff;
+        aspect-ratio: 16/9;
+        padding: 1rem;
+        transition: border 0.3s ease-in-out;
+
+        img {
+            object-fit: contain;
+            object-position: center;
+            width: 100%;
+            height: 100%;
         }
+    }
+
+    .icon {
+        position: absolute;
+        width: 6rem;
+        height: 6rem;
+        bottom: -2rem;
+        right: -2rem;
+        background-image: get-icon("play");
+        background-repeat: no-repeat;
+    }
+
+    .title {
+        color: #fff;
+        margin-top: 1.5rem;
+    }
+
+    &.selected .thumbnail {
+        border: 4px solid $accent;
     }
 }
 
@@ -513,19 +547,19 @@ p {
 
             mask-position: 0 0, 100% 0;
             mask-repeat: no-repeat, no-repeat;
-    
+
             scrollbar-width: thin;
             scrollbar-color: $primary transparent;
-    
+
             &::-webkit-scrollbar-thumb {
                 background-color: $primary;
                 border-radius: 9999px; /* always round */
             }
-    
+
             &::-webkit-scrollbar-track {
                 background-color: transparent;
             }
-    
+
             // https://pqina.nl/blog/fade-out-overflow-using-css-mask-image/
         }
     }

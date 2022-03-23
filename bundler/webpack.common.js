@@ -57,6 +57,12 @@ module.exports = {
                         'sass-loader',
                     ]
                 },
+
+                {
+                    test: /\.svg$/,
+                    type: 'asset/inline',
+                   
+                },
                 // // CSS
 
                 // Images
