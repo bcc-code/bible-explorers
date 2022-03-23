@@ -107,8 +107,10 @@ export default class World {
     }
 
     setEpisodeHtml(episode) {
-        let episodeHtml = document.createElement("div");
-        episodeHtml.className = 'episode'
+        let episodeHtml = document.createElement("div")
+        let episodeClasses = "episode"
+        episodeClasses += episode.status == "future" ? " locked" : ""
+        episodeHtml.className = episodeClasses
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.innerHTML = `
             <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon"></i> </div>
