@@ -6,12 +6,13 @@
 
 // #region Colors
 $primary: #23307a;
+$tertiary: #9f4096;
 $secondary: #f75b99;
 $accent: #fcb04e;
 $dark: #151718;
 $gradient: linear-gradient($primary, $secondary);
 $gradient45: linear-gradient(45deg, $primary, $secondary);
-$gradient90: linear-gradient(90deg, $primary, $secondary);
+$gradient90: linear-gradient(90deg, $primary, $tertiary);
 
 $radius: 12px;
 // #endregion
@@ -206,6 +207,17 @@ img {
     }
 }
 
+.iconModal {
+    position: absolute;
+    left: -2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5rem;
+    height: 5rem;
+    background-image: get-icon("archive");
+    background-repeat: no-repeat;
+}
+
 // #endregion
 
 // #region Components
@@ -214,12 +226,19 @@ img {
 }
 
 .topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    margin: 50px;
+    padding-left: 3rem;
+    padding-top: 3rem;
+    padding-right: 3rem;
 
     .btn {
-        width: 81px;
-        height: 78px;
+        position: relative;
+        width: 4rem;
+        height: 4rem;
         border-radius: 50%;
         cursor: pointer;
         z-index: 1;
@@ -248,13 +267,24 @@ img {
     }
 
     #info {
-        background-image: get-icon("question");
+        position: relative;
         border-radius: 50%;
         cursor: pointer;
 
         .modal-on &,
         .freeze & {
             display: none;
+        }
+
+        &::after {
+            content: "";
+            position: relative;
+            display: block;
+            width: 4rem;
+            height: 4rem;
+            z-index: 1;
+            background-image: get-icon("question");
+            background-repeat: no-repeat;
         }
     }
 
@@ -280,7 +310,6 @@ img {
 
     #settings {
         background-image: get-icon("settings");
-        margin-right: 0;
         z-index: 5;
 
         .modal-on & {
@@ -295,7 +324,7 @@ img {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 4rem;
+    padding: 3rem;
     z-index: 4;
 
     display: grid;
@@ -314,7 +343,7 @@ img {
         right: 0;
         bottom: 0;
         background: $gradient90;
-        opacity: 0.4;
+        opacity: 0.8;
         z-index: -1;
     }
 
@@ -391,11 +420,11 @@ img {
 
     .icon {
         position: absolute;
-        width: 6rem;
-        height: 6rem;
-        bottom: -2rem;
-        right: -2rem;
-        background-image: get-icon("play");
+        width: 5rem;
+        height: 5rem;
+        bottom: -1.5rem;
+        right: -1.5rem;
+        background-image: get-icon("lock");
         background-repeat: no-repeat;
     }
 
@@ -463,11 +492,12 @@ img {
     }
 
     .archive__header {
+        position: relative;
         background-color: #fff;
         grid-column: span 1/2;
         margin-bottom: 1rem;
 
-        padding: 1rem;
+        padding: 1rem 3rem;
         text-align: center;
         border-radius: $radius;
 
@@ -500,93 +530,85 @@ img {
             color: #fff;
         }
     }
+}
 
-    .fact {
-        display: none;
+.fact {
+    display: none;
 
-        &.visible {
-            display: block;
+    &.visible {
+        display: block;
+    }
+
+    &__content {
+        display: grid;
+    }
+
+    &__title {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        padding-bottom: 1rem;
+    }
+
+    &__description {
+        height: 30vh;
+        overflow-y: auto;
+
+        --scrollbar-width: 0.5rem;
+        --mask-height: 2rem;
+
+        padding-top: var(--mask-height);
+        padding-bottom: var(--mask-height);
+        padding-right: 1rem;
+
+        --mask-image-content: linear-gradient(
+            to bottom,
+            transparent,
+            white var(--mask-height),
+            white calc(100% - var(--mask-height)),
+            transparent
+        );
+
+        --mask-size-content: calc(100% - var(--scrollbar-width)) 100%;
+        --mask-image-scrollbar: linear-gradient(white, white);
+        --mask-size-scrollbar: var(--scrollbar-width) 100%;
+
+        mask-image: var(--mask-image-content), var(--mask-image-scrollbar);
+        mask-size: var(--mask-size-content), var(--mask-size-scrollbar);
+
+        mask-position: 0 0, 100% 0;
+        mask-repeat: no-repeat, no-repeat;
+
+        scrollbar-width: thin;
+        scrollbar-color: $primary transparent;
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $primary;
+            border-radius: 9999px; /* always round */
         }
 
-        &__content {
-            display: grid;
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
         }
 
-        &__title {
-            position: sticky;
-            top: 0;
-            background-color: #fff;
-            padding-bottom: 1rem;
-        }
-
-        &__description {
-            height: 30vh;
-            overflow-y: auto;
-
-            --scrollbar-width: 0.5rem;
-            --mask-height: 2rem;
-
-            padding-top: var(--mask-height);
-            padding-bottom: var(--mask-height);
-            padding-right: 1rem;
-
-            --mask-image-content: linear-gradient(
-                to bottom,
-                transparent,
-                white var(--mask-height),
-                white calc(100% - var(--mask-height)),
-                transparent
-            );
-
-            --mask-size-content: calc(100% - var(--scrollbar-width)) 100%;
-            --mask-image-scrollbar: linear-gradient(white, white);
-            --mask-size-scrollbar: var(--scrollbar-width) 100%;
-
-            mask-image: var(--mask-image-content), var(--mask-image-scrollbar);
-            mask-size: var(--mask-size-content), var(--mask-size-scrollbar);
-
-            mask-position: 0 0, 100% 0;
-            mask-repeat: no-repeat, no-repeat;
-
-            scrollbar-width: thin;
-            scrollbar-color: $primary transparent;
-
-            &::-webkit-scrollbar-thumb {
-                background-color: $primary;
-                border-radius: 9999px; /* always round */
-            }
-
-            &::-webkit-scrollbar-track {
-                background-color: transparent;
-            }
-
-            // https://pqina.nl/blog/fade-out-overflow-using-css-mask-image/
-        }
+        // https://pqina.nl/blog/fade-out-overflow-using-css-mask-image/
     }
 }
 
 .tooltip {
-    position: relative;
+    min-height: 0;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
     background: #fff;
     width: 250px;
-    right: 300px;
     padding: 15px;
     display: flex;
+    border-radius: $radius;
+    border: 2px solid $accent;
+    box-shadow: 0 0 4px $accent, 0 0 10px $accent, 0 0 20px $accent;
 
-    &::after {
-        content: "";
-        position: absolute;
-        right: -10px;
-        top: 15px;
-        width: 0;
-        height: 0;
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-left: 12px solid #fff;
-        clear: both;
-    }
-
-    .tooltip__title {
+    &__title {
         font-weight: bold;
         margin-right: 7.5px;
     }

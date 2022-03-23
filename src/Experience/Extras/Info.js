@@ -16,8 +16,8 @@ export default class Info {
 
         this.htmlEl = document.getElementById("info");
         this.htmlEl.addEventListener("click", this.toggleInfo);
-        this.htmlEl.addEventListener("mouseenter", this.getInfo);
-        this.htmlEl.addEventListener("mouseout", this.removeInfo);
+        // this.htmlEl.addEventListener("mouseenter", this.getInfo);
+        // this.htmlEl.addEventListener("mouseout", this.removeInfo);
     }
 
     toggleInfo() {
