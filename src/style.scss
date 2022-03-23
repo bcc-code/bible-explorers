@@ -441,7 +441,7 @@ h4 {
         }
 
         li:hover {
-            box-shadow: 0 0 2px $accent, 0 0 6px $accent, 0 0 10px $accent;
+            box-shadow: 0 0 4px $accent, 0 0 10px rgba($accent, 0.6), 0 0 20px rgba($accent, 0.2);
         }
 
         li.visible {
@@ -474,7 +474,7 @@ h4 {
         overflow-y: auto;
 
         --scrollbar-width: 0.5rem;
-        --mask-height: 1rem;
+        --mask-height: 2rem;
 
         padding-top: var(--mask-height);
         padding-bottom: var(--mask-height);
@@ -497,6 +497,20 @@ h4 {
 
         mask-position: 0 0, 100% 0;
         mask-repeat: no-repeat, no-repeat;
+
+        scrollbar-width: thin;
+        scrollbar-color: $primary transparent;
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $primary;
+            border-radius: 9999px; /* always round */
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        // https://pqina.nl/blog/fade-out-overflow-using-css-mask-image/
     }
 }
 
@@ -530,7 +544,7 @@ h4 {
 .loading-bar {
     position: absolute;
     top: 50%;
-    width: 100%;
+    width: 0%;
     height: 4px;
     background: whitesmoke;
     transform: scaleX(0);

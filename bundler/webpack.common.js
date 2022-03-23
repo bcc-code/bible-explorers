@@ -52,20 +52,12 @@ module.exports = {
                 {
                     test: /\.scss$/,
                     use: [
-                        'style-loader',
+                        MiniCSSExtractPlugin.loader,
                         'css-loader',
                         'sass-loader',
                     ]
                 },
                 // // CSS
-                // {
-                //     test: /\.css$/,
-                //     use:
-                //         [
-                //             MiniCSSExtractPlugin.loader,
-                //             'css-loader'
-                //         ]
-                // },
 
                 // Images
                 {
