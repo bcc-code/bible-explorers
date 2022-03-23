@@ -34,13 +34,16 @@ export default class Program {
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
         this.totalSteps = Object.keys(this.programData).length
         this.clickedObject = null
-        this.canClick = true
+        this.canClick = () =>
+            !document.body.classList.contains('freeze') &&
+            !document.body.classList.contains('modal-on') &&
+            !document.body.classList.contains('code-unlock-on')
 
         this.startInteractivity(true)
     }
 
     control(currentIntersect) {
-        if (!this.canClick) return
+        if (!this.canClick()) return
 
         this.clickedObject = currentIntersect.name
 

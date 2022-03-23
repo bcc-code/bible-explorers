@@ -23,13 +23,11 @@ export default class Modal {
         });
 
         document.body.classList.add('modal-on')
-        this.program.canClick = false
     }
 
     destroy() {
         modal.htmlEl.remove()
         document.body.classList.remove('modal-on')
-        this.program.canClick = true
         modal = null
     }
 
@@ -37,7 +35,7 @@ export default class Modal {
         return `
             <div class="modal__overlay"></div>
             <div class="modal__container">
-                <div class="archive">
+                <div class="modal__content">
                     ${html}
                 </div>
             </div>

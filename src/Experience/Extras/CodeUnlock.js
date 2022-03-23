@@ -10,12 +10,12 @@ export default class CodeUnlock {
     }
 
     open() {
-        this.world.program.canClick = false
+        document.body.classList.add('code-unlock-on')
 
-        instance.htmlEl = document.createElement("div");
-        instance.htmlEl.className = "overlay visible";
-        instance.htmlEl.innerHTML = CodeUnlock.getHTML();
-        document.body.appendChild(instance.htmlEl);
+        instance.htmlEl = document.createElement("div")
+        instance.htmlEl.className = "overlay visible"
+        instance.htmlEl.innerHTML = CodeUnlock.getHTML()
+        document.body.appendChild(instance.htmlEl)
         
         instance.el = {
             code: instance.htmlEl.querySelector(".code-unlock__input"),
@@ -58,24 +58,24 @@ export default class CodeUnlock {
     }
 
     add(number) {
-        if (instance.el.code.textContent.length == instance.secretCode.length) return;
-        instance.el.code.textContent += number;
+        if (instance.el.code.textContent.length == instance.secretCode.length) return
+        instance.el.code.textContent += number
     }
 
     remove() {
-        if (instance.el.code.textContent == "") return;
-        instance.el.code.textContent = instance.el.code.textContent.slice(0, -1);
+        if (instance.el.code.textContent == "") return
+        instance.el.code.textContent = instance.el.code.textContent.slice(0, -1)
     }
 
     checkCode() {
         if (instance.el.code.textContent == instance.secretCode) {
             instance.world.program.timer.destroy()
             instance.world.audio.playCodeUnlockedSound()
-            instance.world.program.canClick = true
+            document.body.classList.remove('code-unlock-on')
             instance.world.program.advance()
-            instance.destroy();
+            instance.destroy()
         } else {
-            console.log("Incorrect code");
+            console.log("Incorrect code")
         }
     }
   
@@ -106,6 +106,7 @@ export default class CodeUnlock {
     }
 
     destroy() {
-        instance.htmlEl.remove();
+        instance.htmlEl.remove()
+        document.onkeydown = null
     }
 }

@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
+import _s from '../Utils/Lang.js'
 
 let archive = null
 
@@ -31,7 +32,7 @@ export default class Archive {
         }
         else {
             let html = `
-                <div class="archive__header"><h1>Arkiv</h1></div>
+                <div class="archive__header"><h1>${ _s.archive }</h1></div>
                     <ul class="archive__sidebar">`;
                         archive.facts.forEach((fact, index) => {
                             html += `<li class="${ index == 0 ? 'visible' : '' }" data-id="${ index }">${ fact.title }</li>`

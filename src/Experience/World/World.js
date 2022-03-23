@@ -8,6 +8,7 @@ import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 import Highlight from './Highlight.js'
 import Info from '../Extras/Info.js'
+import _s from '../Utils/Lang.js'
 
 let instance = null
 const wpApi = "https://staging-bcckids.kinsta.cloud/wp-json/biex-episodes/get"
@@ -59,6 +60,9 @@ export default class World {
             restartJourney: document.getElementById("restart-journey"),
         }
 
+        this.welcome.restartJourney.innerText = _s.journey.restart
+        this.welcome.congratulations.innerText = _s.journey.congratulations
+
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("mousedown", this.goHome)
 
@@ -86,7 +90,7 @@ export default class World {
 
     showMenuButtons() {
         if (this.episodeProgress() == 0) {
-            instance.welcome.startJourney.innerText = "Start tidsreise"
+            instance.welcome.startJourney.innerText = _s.journey.start
             instance.welcome.restartJourney.style.display = "none"
         }
         else {
@@ -102,7 +106,7 @@ export default class World {
         }
 
         if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
-            instance.welcome.startJourney.innerText = "Fortsett tidsreise"
+            instance.welcome.startJourney.innerText = _s.journey.continue
         }
     }
 

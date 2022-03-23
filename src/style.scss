@@ -447,11 +447,11 @@ img {
     }
 }
 
-.archive {
+.modal__content {
     display: grid;
     grid-template-columns: 1fr 2fr;
 
-    &__content {
+    .archive__content {
         background-color: #fff;
         border-radius: $radius;
         margin-left: 2rem;
@@ -462,7 +462,7 @@ img {
         }
     }
 
-    &__header {
+    .archive__header {
         background-color: #fff;
         grid-column: span 1/2;
         margin-bottom: 1rem;
@@ -476,7 +476,7 @@ img {
         }
     }
 
-    &__sidebar {
+    .archive__sidebar {
         overflow: hidden;
         background-color: #fff;
         grid-column: span 1/2;

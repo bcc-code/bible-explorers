@@ -1,15 +1,10 @@
 import Experience from "../Experience.js"
+import _s from '../Utils/Lang.js'
 
 let info = null
 
 export default class Info {
     constructor() {
-        this.tooltips = {
-            "video": "Se på video",
-            "iris": "Hør på oppgavebeskrivelse fra Iris",
-            "task": "Fulfør oppgaven",
-        }
-
         if (info)
             return info
 
@@ -33,8 +28,8 @@ export default class Info {
 
     getInfo() {
         info.htmlEl.innerHTML = `<div class="tooltip">
-            <div class="tooltip__title">Info:</div>
-            <div class="tooltip__content">${ info.tooltips[info.program.stepType()] }</div>
+            <div class="tooltip__title">${ _s.info }:</div>
+            <div class="tooltip__content">${ _s.tooltips[info.program.stepType()] }</div>
         </div>`;
     }
 
