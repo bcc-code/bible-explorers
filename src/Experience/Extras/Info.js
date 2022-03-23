@@ -10,19 +10,19 @@ export default class Info {
             "task": "Fulfør oppgaven",
         }
 
+        if (info)
+            return info
+
         this.experience = new Experience()
         this.world = this.experience.world
         this.program = this.world.program
 
         info = this
 
-        this.htmlEl = document.createElement("div");
-        this.htmlEl.setAttribute("id", "info");
+        this.htmlEl = document.getElementById("info");
         this.htmlEl.addEventListener("click", this.toggleInfo);
         this.htmlEl.addEventListener("mouseenter", this.getInfo);
         this.htmlEl.addEventListener("mouseout", this.removeInfo);
-
-        document.body.appendChild(this.htmlEl);
     }
 
     toggleInfo() {

@@ -8,10 +8,9 @@
     <title>Bible Explorers</title>
 </head>
 
-<body>
-
+<body class="freeze">
     <!--  Gradient -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position: absolute">
         <defs>
             <linearGradient id="gradient" gradientTransform="rotate(45)" gradientUnits="userSpaceOnUse">
                 <stop stop-color="#23307A" />
@@ -22,8 +21,17 @@
     <!-- End Gradient -->
 
     <div id="videos-container"></div>
+
     <canvas class="webgl"></canvas>
     <canvas class="debug-webgl"></canvas>
+
+    <div class="topbar">
+        <div id="go-home" class="btn"></div>
+        <div id="sound" class="btn"></div>
+        <div id="info" class="btn"></div>
+        <div id="archive" class="btn"></div>
+        <div id="settings" class="btn"></div>
+    </div>
 
     <div id="landing-screen">
         <div id="episodes">
@@ -37,8 +45,6 @@
         </div>
     </div>
 
-    <div id="go-home" class="home"></div>
-    <div id="sound" class="sound"></div>
     <div id="progress-bar" class="progress-bar"></div>
 
     <div class="loading-bar"></div>

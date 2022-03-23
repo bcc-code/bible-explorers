@@ -3,6 +3,7 @@ import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
+import Settings from '../Extras/Settings.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 import Highlight from './Highlight.js'
@@ -43,6 +44,7 @@ export default class World {
             this.controlRoom = new ControlRoom()
             this.highlight = new Highlight()
             this.audio = new Audio()
+            this.settings = new Settings()
             this.environment = new Environment()
 
             this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
@@ -177,16 +179,12 @@ export default class World {
 
     showMenu() {
         document.body.classList.add('freeze')
-        instance.welcome.landingScreen.style.display = "flex"
         instance.audio.addBgMusicElement()
-        instance.homeButton.style.display = "none"
     }
 
     hideMenu() {
         document.body.classList.remove('freeze')
-        instance.welcome.landingScreen.style.display = "none"
         instance.audio.removeBgMusicElement()
-        instance.homeButton.style.display = "block"
     }
 
     getId() {

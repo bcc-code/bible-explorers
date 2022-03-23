@@ -1,4 +1,4 @@
-import data from "./archive.json";
+import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 
 let archive = null
@@ -9,18 +9,13 @@ export default class Archive {
         if (archive)
             return archive
 
+        this.experience = new Experience()
         archive = this
 
-        archive.htmlEl = document.createElement("div")
-        archive.htmlEl.classList.add('archive__btn')
-        archive.htmlEl.setAttribute("id", "archive__btn")
-        archive.htmlEl.addEventListener("click", Archive.getHtml)
+        archive.facts = this.experience.world.selectedEpisode.archive
 
-        archive.icon = document.createElement('i')
-        archive.icon.classList.add("archive__icon")
-
-        archive.htmlEl.appendChild(archive.icon)
-        document.body.appendChild(archive.htmlEl);
+        archive.htmlEl = document.getElementById("archive")
+        archive.htmlEl.addEventListener("click", this.toggleArchive)
     }
 
     switchTab(id) {
@@ -30,37 +25,42 @@ export default class Archive {
         archive.el.content.querySelector(`[data-id="${id}"]`).classList.add("visible")
     }
   
-    static getHtml() {
-        let html = `
-            <div class="archive__header"><h1>${data.title}</h1></div>
-                <ul class="archive__sidebar">`;
-                    Object.entries(data.entries).forEach(entry => {
-                        html += `<li class="${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">${ entry[1].title }</li>`
-                    })
-                html += `</ul>
-                <div class="archive__content">`;
-                    Object.entries(data.entries).forEach(entry => {
-                        html += `<div class="entry ${ entry[0] == 1 ? 'visible' : '' }" data-id="${ entry[0] }">
-                            <div class="entry__content">
-                            <h2 class="entry__head">${entry[1].title}</h2>
-                            <div class="entry__text"><p>${ entry[1].text }</p></div>
-                            </div>
-                        </div>`
-                    })
-                html += `</div>
-        `;
-
-        new Modal(html)
-
-        archive.el = {
-            list: document.querySelector(".archive__sidebar"),
-            content: document.querySelector(".archive__content")
+    toggleArchive() {
+        if (document.querySelector('.modal')) {
+            archive.modal.destroy()
         }
+        else {
+            let html = `
+                <div class="archive__header"><h1>Arkiv</h1></div>
+                    <ul class="archive__sidebar">`;
+                        archive.facts.forEach((fact, index) => {
+                            html += `<li class="${ index == 0 ? 'visible' : '' }" data-id="${ index }">${ fact.title }</li>`
+                        })
+                    html += `</ul>
+                    <div class="archive__content">`;
+                        archive.facts.forEach((fact, index) => {
+                            html += `<div class="fact ${ index == 0 ? 'visible' : '' }" data-id="${ index }">
+                                <div class="fact__content">
+                                <h2 class="fact__title">${fact.title}</h2>
+                                <div class="fact__description">${ fact.description }</div>
+                                </div>
+                            </div>`
+                        })
+                    html += `</div>
+            `;
 
-        archive.el.list.querySelectorAll("li").forEach(function(item) {
-            item.addEventListener("mousedown", () => {
-                archive.switchTab(item.dataset.id)
+            archive.modal = new Modal(html)
+
+            archive.el = {
+                list: document.querySelector(".archive__sidebar"),
+                content: document.querySelector(".archive__content")
+            }
+
+            archive.el.list.querySelectorAll("li").forEach(function(item) {
+                item.addEventListener("mousedown", () => {
+                    archive.switchTab(item.dataset.id)
+                });
             });
-        });
+        }
     }
 }

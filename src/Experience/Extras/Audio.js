@@ -8,7 +8,7 @@ export default class Audio {
         this.experience = new Experience()
         audio = this
 
-        audio.el = document.querySelector("#sound")
+        audio.el = document.getElementById("sound")
         audio.el.addEventListener("mousedown", audio.toggleBgMusic)
     }
 
