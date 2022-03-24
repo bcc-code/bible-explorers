@@ -29,7 +29,7 @@ export default class CodeUnlock {
             number.addEventListener("mousedown", () => {
                 instance.add(number.textContent)
             })
-        });
+        })
         
         instance.el.backspace.addEventListener("mousedown", instance.remove);
         instance.el.confirm.addEventListener("mousedown", instance.checkCode);

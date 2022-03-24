@@ -8,10 +8,11 @@ import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 import Highlight from './Highlight.js'
 import Info from '../Extras/Info.js'
-import _s from '../Utils/Lang.js'
+import _s from '../Utils/Strings.js'
+import _lang from '../Utils/Lang.js'
 
 let instance = null
-const wpApi = "https://staging-bcckids.kinsta.cloud/wp-json/biex-episodes/get"
+const wpApi = () => "https://staging-bcckids.kinsta.cloud/wp-json/biex-episodes/get?lang=" + _lang.getLanguageCode()
 
 export default class World {
     constructor() {
@@ -37,7 +38,7 @@ export default class World {
             list: document.querySelector("#episodes .list"),
             data: []
         }
-        this.httpGetAsync(wpApi, this.setEpisodes)
+        this.httpGetAsync(wpApi(), this.setEpisodes)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -75,6 +76,7 @@ export default class World {
     goHome() {
         instance.showMenuButtons()
         instance.showMenu()
+        instance.program.video.defocus()
     }
 
     setEpisodes(data) {
@@ -124,11 +126,12 @@ export default class World {
     }
 
     selectLatestEpisode() {
-        instance.episodes.list.firstChild.dispatchEvent(new Event('mousedown'))
+        const allAvailableEpisodes = instance.episodes.list.querySelectorAll('.episode:not(.locked)')
+        allAvailableEpisodes[allAvailableEpisodes.length - 1].dispatchEvent(new Event('mousedown'))
     }
 
     selectEpisodeListeners() {
-        document.querySelectorAll(".episode").forEach(function(episode) {
+        document.querySelectorAll(".episode:not(.locked)").forEach(function(episode) {
             episode.addEventListener("mousedown", () => {
                 instance.addClassToSelectedEpisode(episode)
                 instance.updateSelectedEpisodeData(episode)

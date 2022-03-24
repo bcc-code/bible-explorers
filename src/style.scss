@@ -207,17 +207,6 @@ img {
     }
 }
 
-.iconModal {
-    position: absolute;
-    left: -2.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5rem;
-    height: 5rem;
-    background-image: get-icon("archive");
-    background-repeat: no-repeat;
-}
-
 // #endregion
 
 // #region Components
@@ -299,10 +288,7 @@ img {
             height: 50%;
         }
 
-        .modal-on & {
-            background-image: get-icon("close");
-        }
-
+        .modal-on &,
         .freeze & {
             display: none;
         }
@@ -424,8 +410,12 @@ img {
         height: 5rem;
         bottom: -1.5rem;
         right: -1.5rem;
-        background-image: get-icon("lock");
+        background-image: get-icon("play");
         background-repeat: no-repeat;
+
+        @at-root .locked#{&} {
+            background-image: get-icon("lock");
+        }
     }
 
     .title {
@@ -444,6 +434,7 @@ img {
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 6;
     padding: 2rem;
     display: grid;
     align-items: center;
@@ -458,6 +449,21 @@ img {
         z-index: 1;
         background: $gradient90;
         opacity: 0.8;
+    }
+
+    &__close {
+        position: absolute;
+        top: 3rem;
+        right: 3rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1;
+        margin-right: 15px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: get-icon("close");
     }
 
     &__container {
@@ -478,7 +484,22 @@ img {
 
 .modal__content {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+
+    &.archive {
+        grid-template-columns: 1fr 2fr;
+
+        i {
+            background-image: get-icon("archive");
+        }
+    }
+
+    &.settings {
+        grid-template-columns: 1fr;
+
+        i {
+            background-image: get-icon("settings");
+        }
+    }
 
     .archive__content {
         background-color: #fff;
@@ -503,6 +524,15 @@ img {
 
         h1 {
             color: $primary;
+        }
+        i {
+            position: absolute;
+            left: -2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5rem;
+            height: 5rem;
+            background-repeat: no-repeat;
         }
     }
 
@@ -529,6 +559,10 @@ img {
             background-color: $accent;
             color: #fff;
         }
+    }
+
+    .language__list.hide {
+        display: none;
     }
 }
 

@@ -1,5 +1,5 @@
 import Experience from "../Experience.js"
-import _s from '../Utils/Lang.js'
+import _s from '../Utils/Strings.js'
 
 let info = null
 

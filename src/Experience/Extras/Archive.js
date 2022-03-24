@@ -1,15 +1,11 @@
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
-import _s from '../Utils/Lang.js'
+import _s from '../Utils/Strings.js'
 
 let archive = null
 
 export default class Archive {
     constructor() {
-        // Singleton
-        if (archive)
-            return archive
-
         this.experience = new Experience()
         archive = this
 
@@ -32,7 +28,8 @@ export default class Archive {
         }
         else {
             let html = `
-                <div class="archive__header"><i class="iconModal"></i><h1>${ _s.archive }</h1></div>
+                <div class="modal__content archive">
+                    <div class="archive__header"><i></i><h1>${ _s.archive }</h1></div>
                     <ul class="archive__sidebar">`;
                         archive.facts.forEach((fact, index) => {
                             html += `<li class="${ index == 0 ? 'visible' : '' }" data-id="${ index }">${ fact.title }</li>`
@@ -42,12 +39,13 @@ export default class Archive {
                         archive.facts.forEach((fact, index) => {
                             html += `<div class="fact ${ index == 0 ? 'visible' : '' }" data-id="${ index }">
                                 <div class="fact__content">
-                                <h2 class="fact__title">${fact.title}</h2>
-                                <div class="fact__description">${ fact.description }</div>
+                                    <h2 class="fact__title">${fact.title}</h2>
+                                    <div class="fact__description">${ fact.description }</div>
                                 </div>
                             </div>`
                         })
                     html += `</div>
+                </div>
             `;
 
             archive.modal = new Modal(html)

@@ -9,18 +9,18 @@ export default class Modal {
 
         modal = this
 
-        modal.htmlEl = document.createElement("div");
-        modal.htmlEl.className = "modal";
-        modal.htmlEl.innerHTML = Modal.generateHtml(html);
-        document.body.appendChild(modal.htmlEl);
+        modal.htmlEl = document.createElement("div")
+        modal.htmlEl.className = "modal"
+        modal.htmlEl.innerHTML = Modal.generateHtml(html)
+        document.body.appendChild(modal.htmlEl)
 
         modal.el = {
-            overlay: modal.htmlEl.querySelector(".modal__overlay")
-        };
+            overlay: modal.htmlEl.querySelector(".modal__overlay"),
+            close: modal.htmlEl.querySelector(".modal__close")
+        }
 
-        modal.el.overlay.addEventListener("mousedown", () => {
-            modal.destroy()
-        });
+        modal.el.overlay.addEventListener("mousedown", modal.destroy)
+        modal.el.close.addEventListener("mousedown", modal.destroy)
 
         document.body.classList.add('modal-on')
     }
@@ -34,10 +34,9 @@ export default class Modal {
     static generateHtml(html) {
         return `
             <div class="modal__overlay"></div>
+            <div class="modal__close"></div>
             <div class="modal__container">
-                <div class="modal__content">
-                    ${html}
-                </div>
+                ${ html }
             </div>
         `
     }
