@@ -3,6 +3,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
+import _lang from '../Utils/Lang.js'
 
 export default class Resources extends EventEmitter {
     constructor(sources) {
@@ -132,30 +133,48 @@ export default class Resources extends EventEmitter {
 
     loadThemeVideos(videoName) {
         const path = 'videos/' + videoName + '.mp4'
+        let video = null
 
-        const video = document.createElement('video')
-        video.setAttribute('id', videoName)
-        video.crossOrigin = 'anonymous'
-        video.muted = false
-        video.loop = false
-        video.controls = true
-        video.autoplay = false
-        video.src = path
+        if (this.checkFileExist(path) == true) {
+            video = document.createElement('video')
+            video.setAttribute('id', videoName)
+            video.crossOrigin = 'anonymous'
+            video.muted = false
+            video.loop = false
+            video.controls = true
+            video.autoplay = false
+            video.src = path
+
+            video.oncanplay = () => {
+                const texture = new THREE.VideoTexture(video)
+                texture.minFilter = THREE.LinearFilter
+                texture.magFilter = THREE.LinearFilter
+                texture.encoding = THREE.RGBADepthPacking
+                
+                this.mediaItems[videoName] = {
+                    item: texture,
+                    path: path,
+                    naturalWidth: video.videoWidth || 1,
+                    naturalHeight: video.videoHeight || 1
+                }
+            }
+        } else {
+            const btvEpisodeId = videoName.replace('episode-','')
+            video = document.createElement('iframe')
+            video.setAttribute('id', videoName)
+            video.src = `https://brunstad.tv/embed/series/${ btvEpisodeId }?locale=${ _lang.getLanguageCode() }`
+            video.width = 1024
+            video.height = 576
+        }
 
         document.getElementById('videos-container').appendChild(video);
+    }
 
-        video.oncanplay = () => {
-            const texture = new THREE.VideoTexture(video)
-            texture.minFilter = THREE.LinearFilter
-            texture.magFilter = THREE.LinearFilter
-            texture.encoding = THREE.RGBADepthPacking
-            
-            this.mediaItems[videoName] = {
-                item: texture,
-                path: path,
-                naturalWidth: video.videoWidth || 1,
-                naturalHeight: video.videoHeight || 1
-            }
-        }
+    checkFileExist(urlToFile) {
+        var xhr = new XMLHttpRequest()
+        xhr.open('HEAD', urlToFile, false)
+        xhr.send()
+        
+        return xhr.status != "404"
     }
 }

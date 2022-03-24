@@ -730,6 +730,10 @@ img {
             opacity: 1;
             pointer-events: all;
         }
+
+        &.hide {
+            display: none;
+        }
     }
 
     &__overlay {
@@ -773,6 +777,15 @@ img {
 
         .video__controlbar {
             opacity: 0 !important;
+        }
+    }
+
+    &__iframe {
+        &.hide {
+            display: none;
+        }
+        iframe {
+            border: none;
         }
     }
 

@@ -38,37 +38,50 @@ export default class Video {
         if (!this.texture)
             this.setVideoListeners()
 
-        // Pause initial video
-        if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
-            this.texture.image.pause()
+        if (this.video().nodeName == 'VIDEO') {
+            instance.el.videoControlBar.classList.remove('hide')
+            instance.el.videoIframe.classList.add('hide')
 
-        // Update video on screen (set initial or replace if it's a new video)
-        if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
-            this.texture = this.resources.mediaItems[id].item
-            this.videoMesh.material.map = this.texture
-            this.videoMesh.material.color.set(new THREE.Color().setRGB(1,1,1))
-            this.videoMesh.material.needsUpdate = true
-        }
+            // Pause initial video
+            if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
+                this.texture.image.pause()
 
-        // Event listener on video update
-        this.video().addEventListener('timeupdate', function () {
-            instance.setProgress(this.video().currentTime);
-        }.bind(instance));
+            // Update video on screen (set initial or replace if it's a new video)
+            if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
+                this.texture = this.resources.mediaItems[id].item
+                this.videoMesh.material.map = this.texture
+                this.videoMesh.material.color.set(new THREE.Color().setRGB(1,1,1))
+                this.videoMesh.material.needsUpdate = true
+            }
 
-        // Event listener on video end
-        this.video().onended = function () {
-            instance.exitFullscreenVideo()
-            instance.defocus()
-            instance.experience.world.program.advance()
-        }
+            // Event listener on video update
+            this.video().addEventListener('timeupdate', function () {
+                instance.setProgress(this.video().currentTime);
+            }.bind(instance));
 
-        // Event listener on fullscreen change
-        this.video().onfullscreenchange = function () {
+            // Event listener on video end
+            this.video().onended = function () {
+                instance.exitFullscreenVideo()
+                instance.defocus()
+                instance.experience.world.program.advance()
+            }
+
+            // Event listener on fullscreen change
+            this.video().onfullscreenchange = function () {
             if (!document.fullscreenElement)
                 instance.camera.revertZoom()
+            }
+
+            this.setProgress(this.video().currentTime)
+        }
+        else if (this.video().nodeName == 'IFRAME') {
+            instance.texture = null
+            instance.el.videoControlBar.classList.add('hide')
+
+            instance.el.videoIframe.classList.remove('hide')
+            instance.el.videoIframe.innerHTML = this.video().outerHTML
         }
 
-        this.setProgress(this.video().currentTime);
         this.focus()
     }
 
@@ -82,11 +95,13 @@ export default class Video {
         instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
 
-        if (!instance.texture.image.muted)
+        if (instance.texture && !instance.texture.image.muted)
             instance.el.videoOverlay.classList.remove('is-muted')
     }
 
     play() {
+        if (!instance.texture) return
+
         instance.texture.image.play()
         instance.el.videoControlBar.classList.remove('show-controls')
         instance.el.videoOverlay.classList.remove('is-paused')
@@ -98,6 +113,11 @@ export default class Video {
             instance.pause()
             instance.camera.revertZoom()
             instance.el.videoOverlay.classList.remove('in-frustum')
+        }
+        else {
+            if (instance.el) {
+                instance.el.videoIframe.classList.add('hide')
+            }
         }
     }
 
@@ -177,8 +197,9 @@ export default class Video {
         this.cssScene = new THREE.Scene()
 
         var videoOverlay = document.createElement('div')
-        videoOverlay.innerHTML = `<div class="video__overlay" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">  
-            <div class="video__controlbar">
+        videoOverlay.innerHTML = `<div class="video__overlay" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">
+            <div class="video__iframe hide"></div>
+            <div class="video__controlbar hide">
                 <div class="video__timeline">
                     <div class="video__loadedbar"></div>
                     <div class="video__seekbar"></div>
@@ -219,6 +240,7 @@ export default class Video {
     setVideoListeners() {
         instance.el = {
             videoOverlay: document.querySelector(".video__overlay"),
+            videoIframe: document.querySelector(".video__iframe"),
             videoControlBar: document.querySelector(".video__controlbar"),
             playPause: document.querySelector(".video__play-pause"),
             sound: document.querySelector(".video__sound"),
