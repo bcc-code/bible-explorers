@@ -18,6 +18,7 @@ export default class ControlRoom {
 
         this.clickableObjects = []
         this.textureObjects = []
+        this.videoObject = null
         this.lights = []
         this.currentIntersect = null
 
@@ -71,15 +72,15 @@ export default class ControlRoom {
 
     setDefaultTextureToScreens() {
         this.textureObjects.forEach((obj) => {
-            obj.material.color.set(new THREE.Color().setRGB(0,0,0))
+            obj.material.color.set(new THREE.Color().setRGB(0, 0, 0))
         })
     }
 
     storeMeshes() {
+
         this.resources.scene.traverse((child) => {
 
             if (child instanceof THREE.Mesh) {
-
                 switch (child.name) {
                     // Store clickable objects
                     case 'tv_4x4':
@@ -87,10 +88,14 @@ export default class ControlRoom {
                     case 'tv_16x10':
                     case 'tv_16x9_5':
                     case 'Panel_Screen':
-                    case 'Panel_Red_button':
-                    case 'Panel_Green_button':
+                    case 'Panel_time_switch_2_1':
+                    case 'Panel_time_switch_1_1':
                     case 'Panel_Cabels':
                         this.clickableObjects.push(child)
+                        break
+
+                    case 'Portal':
+                        this.videoObject = child
                         break
 
                     case 'tv_4x4_screen':
@@ -114,7 +119,7 @@ export default class ControlRoom {
                 case 'tv_4x4_screen':
                     this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
                     break
-                
+
                 case 'tv_4x5_screen':
                     this.setTexture(obj.name, this.sources.items.UVChecker)
                     break

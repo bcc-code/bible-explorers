@@ -20,7 +20,13 @@ export default class Video {
         instance = this
 
         // Setup
-        this.setVideoScreen()
+        this.videoMesh = this.experience.world.controlRoom.videoObject
+
+        const color = 0xFFFFFF;
+        const intensity = 1;
+        const light = new THREE.AmbientLight(color, intensity);
+        this.scene.add(light);
+
         this.setVideoControls()
 
         this.video = () => document.getElementById(instance.playingVideoId)
@@ -46,12 +52,13 @@ export default class Video {
             if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
                 this.texture.image.pause()
 
+
             // Update video on screen (set initial or replace if it's a new video)
             if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
                 this.texture = this.resources.mediaItems[id].item
                 this.videoMesh.material.map = this.texture
-                this.videoMesh.material.color.set(new THREE.Color().setRGB(1,1,1))
-                this.videoMesh.material.needsUpdate = true
+                // this.videoMesh.material.color.set(new THREE.Color().setRGB(0,1,1))
+                // this.videoMesh.material.needsUpdate = true
             }
 
             // Event listener on video update
@@ -68,8 +75,8 @@ export default class Video {
 
             // Event listener on fullscreen change
             this.video().onfullscreenchange = function () {
-            if (!document.fullscreenElement)
-                instance.camera.revertZoom()
+                if (!document.fullscreenElement)
+                    instance.camera.revertZoom()
             }
 
             this.setProgress(this.video().currentTime)
@@ -87,7 +94,7 @@ export default class Video {
 
     setTexture(id) {
         this.videoMesh.material.map = this.resources.textureItems[id]
-        this.videoMesh.material.color.set(new THREE.Color().setRGB(0.211,0.211,0.211))
+        this.videoMesh.material.color.set(new THREE.Color().setRGB(0.211, 0.211, 0.211))
     }
 
     focus() {
@@ -165,17 +172,6 @@ export default class Video {
         } else if (video.mozCancelFullScreen) {
             video.mozCancelFullScreen()
         }
-    }
-
-    setVideoScreen() {
-        this.planeGeometry = new THREE.PlaneGeometry(16, 9)
-        this.planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
-        this.videoMesh = new THREE.Mesh(this.planeGeometry, this.planeMaterial)
-
-        this.videoMesh.name = "Video_Screen"
-        this.videoMesh.position.set(17, 3, 0)
-        this.videoMesh.rotation.y = -THREE.MathUtils.degToRad(90)
-        this.scene.add(this.videoMesh)
     }
 
     setVideoControls() {

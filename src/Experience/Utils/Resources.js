@@ -150,6 +150,7 @@ export default class Resources extends EventEmitter {
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.RGBADepthPacking
+                texture.flipY = false
                 
                 this.mediaItems[videoName] = {
                     item: texture,
