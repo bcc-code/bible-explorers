@@ -148,7 +148,8 @@ img {
     bottom: 86px;
     left: 75px;
 
-    .modal-on & {
+    .modal-on &,
+    .freeze & {
         display: none;
     }
 
@@ -248,8 +249,12 @@ img {
     }
 
     #sound {
-        background-image: get-icon("sound-on");
+        background-image: get-icon("sound-off");
         z-index: 5;
+
+        &.sound-on {
+            background-image: get-icon("sound-on");
+        }
 
         .modal-on & {
             display: none;
@@ -476,10 +481,6 @@ img {
     &__content {
         z-index: 2;
         position: relative;
-
-        h2 {
-            margin-bottom: 1rem;
-        }
     }
 }
 
@@ -582,7 +583,6 @@ img {
         position: sticky;
         top: 0;
         background-color: #fff;
-        padding-bottom: 1rem;
     }
 
     &__description {
@@ -738,12 +738,14 @@ img {
     }
 
     &__overlay {
-        bottom: -32px;
+        bottom: 5px;
         display: block;
         pointer-events: none;
         position: absolute;
         transform: translateX(-50%);
         pointer-events: all;
+        border-radius: 15px;
+        overflow: hidden;
 
         &.is-playing .fa-pause-solid {
             display: inline-block;
