@@ -171,45 +171,22 @@ export default class Video {
         }
     }
 
-    getObjetSizeInViewSpace(object) {
-        const size = new THREE.Vector3()
-        const box = new THREE.Box3().setFromObject(object)
-
-        return box.getSize(size)
-
-        // return new THREE.Vector2(size.x, size.y)
-    }
-
-    setVideoScreen() {
-        this.planeGeometry = new THREE.PlaneGeometry(16, 9)
-        this.planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
-        this.videoMesh1 = new THREE.Mesh(this.planeGeometry, this.planeMaterial)
-
-        this.videoMesh1.name = "Video_Screen"
-        this.videoMesh1.position.set(17, 3, 0)
-        this.videoMesh1.rotation.y = -THREE.MathUtils.degToRad(90)
-        this.scene.add(this.videoMesh1)
-    }
-
     setVideoControls() {
-
         const size = new THREE.Vector3()
         const box = new THREE.Box3().setFromObject(this.videoMesh)
-
-        const marginBottomVideoControls = 0.25
 
         // Video controls
         var planeWidth = box.getSize(size).z
         var planeHeight = 2
         var videoOverlayWidth = 1920
-        var videoOverlayHeight = videoOverlayWidth * 9 / 16
+        var videoOverlayHeight = 1111 // videoOverlayWidth * 9 / 16
 
         var videoControls = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, opacity: 0, transparent: true })
         var videoPlaneGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight)
         var videoControlsMesh = new THREE.Mesh(videoPlaneGeometry, videoControls)
         videoControlsMesh.rotation.y = -THREE.MathUtils.degToRad(90)
         videoControlsMesh.position.x = this.videoMesh.position.x - 0.01
-        videoControlsMesh.position.y = - (box.getSize(size).y / 2 - this.videoMesh.position.y - marginBottomVideoControls)
+        videoControlsMesh.position.y = - (box.getSize(size).y / 2 - this.videoMesh.position.y)
         this.scene.add(videoControlsMesh)
 
         // Create a new scene to hold CSS

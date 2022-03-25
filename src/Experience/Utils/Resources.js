@@ -165,17 +165,17 @@ export default class Resources extends EventEmitter {
             video.setAttribute('id', videoName)
             video.src = `https://brunstad.tv/embed/series/${ btvEpisodeId }?autoplay=false&locale=${ _lang.getLanguageCode() }`
             video.width = 1920
-            video.height = 1080
+            video.height = 1111
         }
 
-        document.getElementById('videos-container').appendChild(video);
+        document.getElementById('videos-container').appendChild(video)
     }
 
     checkFileExist(urlToFile) {
         var xhr = new XMLHttpRequest()
         xhr.open('HEAD', urlToFile, false)
         xhr.send()
-        
+
         return xhr.status != "404"
     }
 }

@@ -104,6 +104,7 @@ export default class World {
             instance.welcome.startJourney.style.display = "none"
         }
         else {
+            instance.welcome.startJourney.style.display = "block"
             instance.welcome.congratulations.style.display = "none"
         }
 
@@ -155,7 +156,6 @@ export default class World {
 
     loadEpisodeTextures() {
         instance.selectedEpisode.data.forEach((animationFilm) => {
-            const episodeId = animationFilm.type + '/' + animationFilm.id
             const fileName = animationFilm.type + '-' + animationFilm.id
 
             if (instance.resources.textureItems.hasOwnProperty(fileName))

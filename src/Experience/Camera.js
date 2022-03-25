@@ -182,7 +182,7 @@ export default class Camera {
 
     zoomIn() {
         this.zoomInTween = new TWEEN.Tween(this.controls.object)
-            .to({ zoom: 1.5 }, 5000)
+            .to({ zoom: 1.3 }, 5000)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 this.instance.updateProjectionMatrix()

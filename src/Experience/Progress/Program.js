@@ -81,11 +81,9 @@ export default class Program {
         else {
             instance.video.defocus()
 
-            if (currentVideo != nextVideo) {
-                setTimeout(function() {
-                    instance.video.setTexture(nextVideo)
-                }, instance.camera.data.moveDuration, nextVideo)
-            }
+            setTimeout(function() {
+                instance.video.setTexture(nextVideo)
+            }, instance.camera.data.moveDuration, nextVideo)
         }
 
         if (this.currentStep == this.totalSteps) {

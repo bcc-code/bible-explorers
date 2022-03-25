@@ -29,13 +29,16 @@ export default class Audio {
                 audio.bgMusic.setLoop(true)
                 audio.bgMusic.setVolume(0.5)
                 audio.bgMusic.play()
+                audio.el.classList.add('sound-on')
             })
         }
         else if (audio.bgMusic.isPlaying) {
             audio.bgMusic.pause()
+            audio.el.classList.remove('sound-on')
         }
         else {
             audio.bgMusic.play()
+            audio.el.classList.add('sound-on')
         }
     }
 
