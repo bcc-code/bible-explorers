@@ -115,7 +115,7 @@ export default class Program {
         let interactiveObjects = this.getCurrentStepData().clickableElements || [];
 
         if (this.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat("Panel_Green_button","Panel_Red_button")
+            interactiveObjects = interactiveObjects.concat("Panel_time_switch_2_1","Panel_time_switch_1_1")
         }
         else if (this.stepType() == 'iris') {
             interactiveObjects.push("tv_16x9_5")
@@ -144,11 +144,11 @@ export default class Program {
             this.codeUnlock.open()
         }
 
-        if (this.clickedObject === 'Panel_Green_button') {
+        if (this.clickedObject === 'Panel_time_switch_2_1') {
             this.video.togglePlay()
         }
 
-        if (this.clickedObject === 'Panel_Red_button') {
+        if (this.clickedObject === 'Panel_time_switch_1_1') {
             this.video.defocus()
             this.advance()
         }
@@ -181,6 +181,6 @@ export default class Program {
     }
 
     updateIrisTexture(mode) {
-        instance.world.controlRoom.setTexture('tv_16x9_5_screen', instance.resources.textureItems['BIEX_S01_E01_IRIS_'+mode].item, 90)
+        instance.world.controlRoom.setTexture('tv_16x9_5_screen', instance.resources.textureItems['BIEX_S01_E01_IRIS_'+mode].item)
     }
 }

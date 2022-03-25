@@ -59,11 +59,11 @@ export default class Camera {
                 }
             },
             'portal': {
-                position: new THREE.Vector3(-0.7, 1.7, 0),
-                lookAt: new THREE.Vector3(0.1, 1.7, 0),
+                position: new THREE.Vector3(-0.5229542045858941, 1.9564578241710562, 0),
+                lookAt: new THREE.Vector3(0.07325508477360648, 1.9210837988913445, 0),
                 controls: {
-                    minPolarAngle: 1.5,
-                    maxPolarAngle: 2.25,
+                    minPolarAngle: 1.17,
+                    maxPolarAngle: 1.58,
                     minAzimuthAngle: -1.65,
                     maxAzimuthAngle: 0.25
                 }

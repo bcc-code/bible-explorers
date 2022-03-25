@@ -39,16 +39,26 @@ export default [
     {
         name: 'BIEX_S01_E01_IRIS_SLEEP',
         type: 'videoTexture',
-        path: 'textures/BIEX_S01_E01_IRIS_SLEEP.mp4'
+        path: 'textures/BIEX_S01_E01_IRIS_SLEEP.webm'
     },
     {
         name: 'BIEX_S01_E01_IRIS_READY',
         type: 'videoTexture',
-        path: 'textures/BIEX_S01_E01_IRIS_READY.mp4'
+        path: 'textures/BIEX_S01_E01_IRIS_READY.webm'
     },
     {
         name: 'BIEX_S01_E01_IRIS_SPEAK',
         type: 'videoTexture',
-        path: 'textures/BIEX_S01_E01_IRIS_SPEAK.mp4'
+        path: 'textures/BIEX_S01_E01_IRIS_SPEAK.webm'
+    },
+    {
+        name: 'map',
+        type: 'videoTexture',
+        path: 'textures/map.webm'
+    },
+    {
+        name: 'codes',
+        type: 'videoTexture',
+        path: 'textures/codes.webm'
     }
 ]

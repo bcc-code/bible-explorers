@@ -35,7 +35,7 @@ export default class Highlight {
         this.outlinePass.selectedObjects = this.selectedObjects.filter((obj) => {
             return objects.includes(obj.name)
         })
-        this.outlinePass.pulsePeriod =  this.params.pulsePeriod;
+        this.outlinePass.pulsePeriod = this.params.pulsePeriod;
         this.outlinePass.edgeGlow = this.params.edgeGlow;
         this.outlinePass.edgeStrength = this.params.edgeStrength;
         this.outlinePass.edgeThickness = this.params.edgeThickness;
@@ -48,12 +48,13 @@ export default class Highlight {
         objects.forEach((obj) => { screenObjects.push(obj += '_screen') })
 
         this.experience.resources.items.controlRoom.scene.children.forEach((mesh) => {
+
             if (mesh.name.includes('_screen')) {
 
                 if (!screenObjects.includes(mesh.name)) {
-                    mesh.material.color.set(new THREE.Color().setRGB(0.211,0.211,0.211))
+                    mesh.material.color.set(new THREE.Color().setRGB(0.211, 0.211, 0.211))
                 } else {
-                    mesh.material.color.set(new THREE.Color().setRGB(1,1,1))
+                    mesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
                 }
             }
         })
@@ -76,21 +77,23 @@ export default class Highlight {
             this.scaleDown(currentIntersect)
         }
     }
- 
+
     isHighlighted(intersect) {
-        return this.outlinePass.selectedObjects.filter((obj) => { 
+        return this.outlinePass.selectedObjects.filter((obj) => {
             return (intersect && obj.name == intersect.name)
         }).length
     }
 
     scaleUp(obj) {
-        this.setupObjectScaleAnimation(obj, { x: 1.005, y: 1.005, z: 1 });
+        const scaleSize = 1.05
+
+        this.setupObjectScaleAnimation(obj, { x: scaleSize, y: scaleSize, z: 1 });
 
         let screen = this.experience.resources.items.controlRoom.scene.children.filter((mesh) => {
             return mesh.name == obj.name + '_screen'
         })
         if (screen.length)
-            this.setupObjectScaleAnimation(screen[0], { x: 1.005, y: 1.005, z: 1 })
+            this.setupObjectScaleAnimation(screen[0], { x: scaleSize, y: scaleSize, z: 1 })
     }
 
     scaleDown(obj) {
@@ -106,9 +109,9 @@ export default class Highlight {
     }
 
     setupObjectScaleAnimation(object, scale) {
-        new TWEEN.Tween( object.scale )
-            .to({ x: scale.x, y: scale.y, z: scale.z }, 300 )
-            .easing( TWEEN.Easing.Quadratic.InOut )
+        new TWEEN.Tween(object.scale)
+            .to({ x: scale.x, y: scale.y, z: scale.z }, 300)
+            .easing(TWEEN.Easing.Quadratic.InOut)
             .start();
     }
 
@@ -116,7 +119,7 @@ export default class Highlight {
         const highlight = this.debug.ui.addFolder('Highlight')
 
         highlight.close()
-        
+
         highlight
             .add(this.params, 'edgeStrength', 0.01, 10)
             .onChange((value) => {

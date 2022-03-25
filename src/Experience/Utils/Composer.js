@@ -4,6 +4,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
 export default class Composer {
@@ -13,6 +14,8 @@ export default class Composer {
         this.camera = this.experience.camera
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
+
+        console.log(UnrealBloomPass);
 
         this.setInstance()
         this.setRenderPass()

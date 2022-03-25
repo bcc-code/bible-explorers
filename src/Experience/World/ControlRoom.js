@@ -121,15 +121,16 @@ export default class ControlRoom {
                     break
 
                 case 'tv_4x5_screen':
-                    this.setTexture(obj.name, this.sources.items.UVChecker)
+                    this.setTexture(obj.name, this.sources.textureItems['codes'].item)
                     break
 
                 case 'tv_16x9_5_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item, 90)
+                    this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
+                    console.log(obj.material.map);
                     break
 
                 case 'tv_16x10_screen':
-                    this.setTexture(obj.name, this.sources.items.screen_16x10)
+                    this.setTexture(obj.name, this.sources.textureItems['map'].item)
                     break
             }
         })
