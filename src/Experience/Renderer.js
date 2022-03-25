@@ -29,7 +29,7 @@ export default class Renderer {
         this.instance.physicallyCorrectLights = true
         this.instance.outputEncoding = THREE.sRGBEncoding
         this.instance.toneMapping = THREE.ReinhardToneMapping
-        this.instance.toneMappingExposure = 3
+        this.instance.toneMappingExposure = 1.2908204847146965
         this.instance.shadowMap.enabled = true
         this.instance.shadowMap.type = THREE.PCFSoftShadowMap
         this.instance.setSize(this.sizes.width, this.sizes.height)
@@ -45,7 +45,7 @@ export default class Renderer {
         this.instanceDebug.physicallyCorrectLights = true
         this.instanceDebug.outputEncoding = THREE.sRGBEncoding
         this.instanceDebug.toneMapping = THREE.ReinhardToneMapping
-        this.instanceDebug.toneMappingExposure = 3
+        this.instanceDebug.toneMappingExposure = 1.2908204847146965
         this.instanceDebug.shadowMap.enabled = true
         this.instanceDebug.shadowMap.type = THREE.PCFSoftShadowMap
         this.instanceDebug.setSize(480, 320)
@@ -72,7 +72,7 @@ export default class Renderer {
 
     addGUIControls() {
         const renderer = this.debug.ui.addFolder('Renderer')
-        renderer.close()
+        // renderer.close()
         renderer.add(this.instance, 'toneMapping', {
             No: THREE.NoToneMapping,
             Linear: THREE.LinearToneMapping,
@@ -81,6 +81,6 @@ export default class Renderer {
             ACESFilmic: THREE.ACESFilmicToneMapping
         })
 
-        renderer.add(this.instance, 'toneMappingExposure').min(0).max(20).step(0.001).name('Exposure')
+        renderer.add(this.instance, 'toneMappingExposure', 0.1, 2).name('Exposure').onChange((value) => { this.instance.toneMappingExposure = Math.pow(value, 4.0) })
     }
 }

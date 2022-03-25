@@ -42,12 +42,12 @@ export default class Timer {
   
     updateInterfaceControls() {
         if (timer.interval === null) {
-            timer.el.control.innerHTML = `<span class="material-icons">play_arrow</span>`;
+            timer.el.control.innerHTML = `<i class="fak fa-play-solid"></i>`;
             timer.el.control.classList.add("timer__btn--start");
             timer.el.control.classList.remove("timer__btn--stop");
             timer.el.control.style.opacity = 1;
         } else {
-            timer.el.control.innerHTML = `<span class="material-icons">pause</span>`;
+            timer.el.control.innerHTML = `<i class="fak fa-pause-solid"></i>`;
             timer.el.control.classList.add("timer__btn--stop");
             timer.el.control.classList.remove("timer__btn--start");
             timer.el.control.style.opacity = 0;

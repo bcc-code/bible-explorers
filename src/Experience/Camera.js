@@ -136,7 +136,7 @@ export default class Camera {
     updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }) {
         if (this.updateCameraTween)
             this.updateCameraTween.stop()
-        
+
         if (this.zoomInTween)
             this.revertZoom()
 
@@ -167,7 +167,7 @@ export default class Camera {
                     obj.cameraPosition.z
                 )
             })
-            .onComplete(function() {
+            .onComplete(function () {
                 if (controls) {
                     camera.controls.minPolarAngle = controls.minPolarAngle
                     camera.controls.maxPolarAngle = controls.maxPolarAngle
@@ -181,9 +181,9 @@ export default class Camera {
     }
 
     zoomIn() {
-        this.zoomInTween = new TWEEN.Tween( this.controls.object )
-            .to( { zoom: 1.5 }, 5000 )
-            .easing( TWEEN.Easing.Quadratic.InOut )
+        this.zoomInTween = new TWEEN.Tween(this.controls.object)
+            .to({ zoom: 1.5 }, 5000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 this.instance.updateProjectionMatrix()
             })
@@ -200,6 +200,7 @@ export default class Camera {
         this.instanceDebug = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
         this.instanceDebug.position.set(5, 3, 15)
         this.scene.add(this.instanceDebug)
+
     }
 
     setDebugOrbitControls() {
@@ -249,6 +250,7 @@ export default class Camera {
             })
             .name('Location')
             .listen()
+
 
         const cameraPosition = camera.addFolder('Position')
         cameraPosition.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()

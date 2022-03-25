@@ -126,7 +126,6 @@ export default class ControlRoom {
 
                 case 'tv_16x9_5_screen':
                     this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
-                    console.log(obj.material.map);
                     break
 
                 case 'tv_16x10_screen':

@@ -21,12 +21,6 @@ export default class Video {
 
         // Setup
         this.videoMesh = this.experience.world.controlRoom.videoObject
-
-        const color = 0xFFFFFF;
-        const intensity = 5;
-        const light = new THREE.AmbientLight(color, intensity);
-        this.scene.add(light);
-
         this.setVideoControls()
 
         this.video = () => document.getElementById(instance.playingVideoId)

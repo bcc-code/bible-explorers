@@ -14,7 +14,9 @@ export default class Environment {
         // Setup
         this.setPlatformLight()
         this.setElevatorLight()
+        this.setAmbientLight()
         this.setEnvironmentMap()
+
 
         if (this.debug.active) {
 
@@ -22,6 +24,7 @@ export default class Environment {
             this.data = {
                 colorPlatform: this.platformPointLight.color.getHex(),
                 colorElevator: this.elevatorPointLight.color.getHex(),
+                colorAmbient: this.ambientLight.color.getHex(),
                 mapsEnabled: true,
             }
 
@@ -30,17 +33,16 @@ export default class Environment {
     }
 
     setPlatformLight() {
-        this.platformPointLight = new THREE.PointLight(0xFFCE96, 50, 10);
+        this.platformPointLight = new THREE.PointLight(0xffaf8c, 50, 10);
         this.platformPointLight.position.set(0, 3.75, 0);
         this.platformPointLight.name = 'Platform_light'
         this.platformPointLight.castShadow = true
         this.platformPointLight.shadow.camera.far = 5
         this.platformPointLight.shadow.camera.fov = 60
-
         this.scene.add(this.platformPointLight);
     }
     setElevatorLight() {
-        this.elevatorPointLight = new THREE.PointLight(0xFFCB80, 50, 10);
+        this.elevatorPointLight = new THREE.PointLight(0xffaf8c, 50, 10);
         this.elevatorPointLight.position.set(-11.3, 3.6, 0);
         this.elevatorPointLight.name = 'Elevator_light'
         this.elevatorPointLight.castShadow = true
@@ -48,8 +50,11 @@ export default class Environment {
         this.elevatorPointLight.shadow.camera.fov = 60
 
         this.scene.add(this.elevatorPointLight);
+    }
 
-
+    setAmbientLight() {
+        this.ambientLight = new THREE.AmbientLight(0xfcafff, 1);
+        this.scene.add(this.ambientLight);
     }
 
     setVideoLight() {
@@ -91,15 +96,15 @@ export default class Environment {
 
             const bulbGeometry = new THREE.SphereGeometry(0.2, 16, 8)
             const bulbMaterial = new THREE.MeshStandardMaterial({
-                emissive: 0xFFCE96,
+                emissive: 0xffaf8c,
                 emissiveIntensity: this.platformPointLight.intensity,
                 color: 0x000000
             })
             const platformBulb = new THREE.Mesh(bulbGeometry, bulbMaterial)
             const elevatorBulb = new THREE.Mesh(bulbGeometry, bulbMaterial)
 
-            this.platformPointLight.add(platformBulb)
-            this.elevatorPointLight.add(elevatorBulb)
+            // this.platformPointLight.add(platformBulb)
+            // this.elevatorPointLight.add(elevatorBulb)
 
             const environment = this.debug.ui.addFolder('Environment')
             environment.close()
@@ -108,11 +113,19 @@ export default class Environment {
             const light = this.debug.ui.addFolder('Light')
             light.close()
 
+            const ambientLight = light.addFolder('Ambient light')
+            ambientLight.close()
+            ambientLight.addColor(this.data, 'colorAmbient').onChange(() => {
+                this.ambientLight.color.setHex(Number(this.data.colorAmbient.toString().replace('#', '0x')))
+            })
+            ambientLight.add(this.ambientLight, 'intensity').min(0).max(100).step(0.01).name('intensity')
+
+
             const platformLight = light.addFolder('Platform light')
             platformLight.close()
 
             platformLight.addColor(this.data, 'colorPlatform').onChange(() => {
-                this.platformPointLight.colorPlatform.setHex(Number(this.data.colorPlatform.toString().replace('#', '0x')))
+                this.platformPointLight.color.setHex(Number(this.data.colorPlatform.toString().replace('#', '0x')))
             })
             platformLight.add(this.platformPointLight, 'distance').min(0).max(20).step(0.01).name('distance')
             platformLight.add(this.platformPointLight, 'decay').min(0).max(4).step(0.1).name('decay')
@@ -131,7 +144,7 @@ export default class Environment {
             elevatorLight.close()
 
             elevatorLight.addColor(this.data, 'colorElevator').onChange(() => {
-                this.elevatorPointLight.colorElevator.setHex(Number(this.data.colorElevator.toString().replace('#', '0x')))
+                this.elevatorPointLight.color.setHex(Number(this.data.colorElevator.toString().replace('#', '0x')))
             })
             elevatorLight.add(this.elevatorPointLight, 'distance').min(0).max(20).step(0.01).name('distance')
             elevatorLight.add(this.elevatorPointLight, 'decay').min(0).max(4).step(0.1).name('decay')
