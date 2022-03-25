@@ -15,11 +15,6 @@ export default [
         path: 'textures/UV_checker_Map_byValle.jpg'
     },
     {
-        name: 'screen_16x10',
-        type: 'texture',
-        path: 'textures/screen-16x10.png'
-    },
-    {
         name: 'matcap',
         type: 'texture',
         path: 'matcaps/matcap2.png'

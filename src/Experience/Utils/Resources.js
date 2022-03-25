@@ -163,9 +163,9 @@ export default class Resources extends EventEmitter {
             const btvEpisodeId = videoName.replace('episode-','')
             video = document.createElement('iframe')
             video.setAttribute('id', videoName)
-            video.src = `https://brunstad.tv/embed/series/${ btvEpisodeId }?locale=${ _lang.getLanguageCode() }`
-            video.width = 1024
-            video.height = 576
+            video.src = `https://brunstad.tv/embed/series/${ btvEpisodeId }?autoplay=false&locale=${ _lang.getLanguageCode() }`
+            video.width = 1920
+            video.height = 1080
         }
 
         document.getElementById('videos-container').appendChild(video);
