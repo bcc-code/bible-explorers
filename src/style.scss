@@ -214,6 +214,10 @@ img {
 // #region Components
 #videos-container {
     position: absolute;
+
+    .vjs-control-bar {
+        display: none;
+    }
 }
 
 .topbar {
@@ -780,15 +784,6 @@ img {
 
         .video__controlbar {
             opacity: 0 !important;
-        }
-    }
-
-    &__iframe {
-        &.hide {
-            display: none;
-        }
-        iframe {
-            border: none;
         }
     }
 

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js";
 import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js'
+import _lang from '../Utils/Lang.js'
 
 let instance = null
 
@@ -23,7 +24,13 @@ export default class Video {
         this.videoMesh = this.experience.world.controlRoom.videoObject
         this.setVideoControls()
 
-        this.video = () => document.getElementById(instance.playingVideoId)
+        this.video = () => {
+            let id = instance.playingVideoId
+            if (this.resources.mediaItems.hasOwnProperty(id) && this.resources.mediaItems[id].path.includes('brunstad.tv'))
+                id = 'videojs-' + id + '_html5_api'
+
+            return document.getElementById(id)
+        }
         this.videoProgress = 0.0
         this.playingVideoId = null
         this.isDragging = false
@@ -45,7 +52,6 @@ export default class Video {
             // Pause initial video
             if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
                 this.texture.image.pause()
-
 
             // Update video on screen (set initial or replace if it's a new video)
             if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {

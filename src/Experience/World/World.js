@@ -120,7 +120,7 @@ export default class World {
         episodeHtml.className = episodeClasses
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.innerHTML = `
-            <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon"></i> </div>
+            <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon download"></i></div>
             <h3 class="title">${ episode.title }</h3>
         `
         this.episodes.list.appendChild(episodeHtml)
@@ -138,8 +138,14 @@ export default class World {
                 instance.updateSelectedEpisodeData(episode)
                 instance.loadEpisodeTextures()
                 instance.showMenuButtons()
-            });
-        });
+            })
+        })
+        
+        document.querySelectorAll(".episode:not(.locked) .download").forEach(function(episode) {
+            episode.addEventListener("mousedown", () => {
+                instance.downloadEpisode(episode)
+            })
+        })
     }
 
     addClassToSelectedEpisode(episode) {
@@ -164,6 +170,23 @@ export default class World {
             instance.resources.loadVideosThumbnail(fileName, animationFilm.thumbnail)
             instance.resources.loadThemeVideos(fileName)
         })
+    }
+
+    downloadEpisode() {
+        console.log('downloadEpisode')
+    }
+
+    async getEpisodeDownloadUrl(videoName) {
+        const episodeId = videoName.replace('episode-','')
+        const locale = _lang.getLanguageCode()
+
+        var btvplayer = BTVPlayer({
+            type: 'episode',
+            id: episodeId,
+            locale: locale
+        })
+
+        return await btvplayer.api.getDownloadable('episode', episodeId, locale)
     }
 
     startJourney() {

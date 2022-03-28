@@ -44,7 +44,6 @@ export default class Composer {
         //     this.bokehPass.uniforms['aperture'].value = this.params.aperture * 0.00001;
         //     this.bokehPass.uniforms['maxblur'].value = this.params.maxblur;
         // }
-        console.log(this.renderer.instance);
 
         if (this.debug.active) {
             this.addGUIControls()

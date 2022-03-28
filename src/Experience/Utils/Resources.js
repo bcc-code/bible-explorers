@@ -131,44 +131,81 @@ export default class Resources extends EventEmitter {
         )
     }
 
-    loadThemeVideos(videoName) {
-        const path = 'videos/' + videoName + '.mp4'
-        let video = null
+    async loadThemeVideos(videoName) {
+        let video, path = 'videos/' + videoName + '.mp4'
 
-        if (this.checkFileExist(path) == true) {
-            video = document.createElement('video')
-            video.setAttribute('id', videoName)
-            video.crossOrigin = 'anonymous'
-            video.muted = false
-            video.loop = false
-            video.controls = true
-            video.autoplay = false
-            video.src = path
+        // Check if video file is downloaded
+        if (this.checkFileExist(path) == true) { 
+            // Video was found locally
+            video = this.createVideoElement(videoName, path)
+            video.oncanplay = () => this.generateTextureForVideo(video, videoName, path)
+            document.getElementById('videos-container').appendChild(video)
+        }
+        else {
+            // Video stream from BTV
+            await this.loadEpisodeFromBtv(videoName)
+            video = this.getGeneratedVideoElement(videoName)
+            video.oncanplay = () => this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/'+videoName)
+        }
+    }
 
-            video.oncanplay = () => {
-                const texture = new THREE.VideoTexture(video)
-                texture.minFilter = THREE.LinearFilter
-                texture.magFilter = THREE.LinearFilter
-                texture.encoding = THREE.RGBADepthPacking
-                texture.flipY = false
-                
-                this.mediaItems[videoName] = {
-                    item: texture,
-                    path: path,
-                    naturalWidth: video.videoWidth || 1,
-                    naturalHeight: video.videoHeight || 1
+    async loadEpisodeFromBtv(videoName) {
+        const episodeId = videoName.replace('episode-','')
+        const locale = _lang.getLanguageCode()
+
+        var btvplayer = BTVPlayer({
+            type: 'episode',
+            id: episodeId,
+            locale: locale
+        })
+
+        let btvContainer = document.createElement('div')
+        btvContainer.setAttribute('id', videoName)
+        document.getElementById('videos-container').appendChild(btvContainer)
+
+        await btvplayer.load({
+            el: videoName,
+            player_options: {
+                videojs: {
+                    autoplay: false
                 }
             }
-        } else {
-            const btvEpisodeId = videoName.replace('episode-','')
-            video = document.createElement('iframe')
-            video.setAttribute('id', videoName)
-            video.src = `https://brunstad.tv/embed/series/${ btvEpisodeId }?autoplay=false&locale=${ _lang.getLanguageCode() }`
-            video.width = 1920
-            video.height = 1111
-        }
+        })
+    }
 
-        document.getElementById('videos-container').appendChild(video)
+    generateTextureForVideo(video, id, path) {
+        const texture = new THREE.VideoTexture(video)
+        texture.minFilter = THREE.LinearFilter
+        texture.magFilter = THREE.LinearFilter
+        texture.encoding = THREE.RGBADepthPacking
+        texture.flipY = false
+        
+        this.mediaItems[id] = {
+            item: texture,
+            path: path,
+            naturalWidth: video.videoWidth || 1,
+            naturalHeight: video.videoHeight || 1
+        }
+    }
+
+    createVideoElement(videoName, path) {
+        let video = document.createElement('video')
+        video.setAttribute('id', videoName)
+        video.crossOrigin = 'anonymous'
+        video.muted = false
+        video.loop = false
+        video.controls = true
+        video.autoplay = false
+        video.src = path
+
+        return video
+    }
+
+    getGeneratedVideoElement(videoName) {
+        let video = document.getElementById('videojs-' + videoName + '_html5_api')
+        video.autoplay = false // make sure the video won't start autoplay
+
+        return video
     }
 
     checkFileExist(urlToFile) {

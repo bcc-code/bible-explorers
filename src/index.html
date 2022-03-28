@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="only light">
+        <title>Bible Explorers</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="only light">
-    <title>Bible Explorers</title>
-</head>
+    <body class="freeze">
+        <div id="videos-container"></div>
 
-<body class="freeze">
+        <canvas class="webgl"></canvas>
+        <canvas class="debug-webgl"></canvas>
 
-    <div id="videos-container"></div>
-
-    <canvas class="webgl"></canvas>
-    <canvas class="debug-webgl"></canvas>
-
-    <div class="topbar">
-        <div id="go-home" class="btn"></div>
-        <div id="sound" class="btn"></div>
-        <div id="info" class="btn"></div>
-        <div id="archive" class="btn"></div>
-        <div id="settings" class="btn"></div>
-    </div>
-
-    <div id="landing-screen">
-        <div id="episodes">
-            <h1 class="title">Bible Explorers</h1>
-            <div class="list"></div>
+        <div class="topbar">
+            <div id="go-home" class="btn"></div>
+            <div id="sound" class="btn"></div>
+            <div id="info" class="btn"></div>
+            <div id="archive" class="btn"></div>
+            <div id="settings" class="btn"></div>
         </div>
-        <div class="menu">
-            <div id="congratulations"></div>
-            <div id="start-journey" class="button"></div>
-            <div id="restart-journey" class="button"></div>
+
+        <div id="landing-screen">
+            <div id="episodes">
+                <h1 class="title">Bible Explorers</h1>
+                <div class="list"></div>
+            </div>
+            <div class="menu">
+                <div id="congratulations"></div>
+                <div id="start-journey" class="button"></div>
+                <div id="restart-journey" class="button"></div>
+            </div>
         </div>
-    </div>
 
-    <div id="progress-bar" class="progress-bar"></div>
+        <div id="progress-bar" class="progress-bar"></div>
 
-    <div class="loading-bar"></div>
-</body>
+        <div class="loading-bar"></div>
 
-<script src="https://kit.fontawesome.com/0b099aea50.js" crossorigin="anonymous"></script>
-
+        <script src="https://kit.fontawesome.com/0b099aea50.js" crossorigin="anonymous"></script>
+        <script src="https://brunstad.tv/Content/js/btvplayer.js"></script>
+    </body>
 </html>
