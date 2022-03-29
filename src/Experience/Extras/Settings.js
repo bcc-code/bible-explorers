@@ -36,7 +36,7 @@ export default class Settings {
                         </div>
                         <div class="feedback">
                             <h3>${ _s.feedback }</h3>
-                            <i></i>
+                            <i class="icon"></i>
                         </div>
                     </div>
                 </div>

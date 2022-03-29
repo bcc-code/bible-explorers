@@ -77,6 +77,8 @@ export default class World {
         instance.showMenuButtons()
         instance.showMenu()
         instance.program.video.defocus()
+        instance.camera.updateCameraTo()
+        instance.program.updateIrisTexture('SLEEP')
     }
 
     setEpisodes(data) {

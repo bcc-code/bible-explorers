@@ -143,10 +143,10 @@ img {
 }
 
 .progress-bar {
-    width: calc(100% - 50px - 50px - 200px);
+    width: calc(100% - 400px);
     position: absolute;
     bottom: 86px;
-    left: 75px;
+    left: 200px;
 
     .modal-on &,
     .freeze & {
@@ -307,6 +307,7 @@ img {
     #settings {
         background-image: get-icon("settings");
         z-index: 5;
+        margin-right: 0;
 
         .modal-on & {
             display: none;

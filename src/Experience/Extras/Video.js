@@ -26,6 +26,8 @@ export default class Video {
 
         this.video = () => {
             let id = instance.playingVideoId
+
+            // If video is streamed from BTV
             if (this.resources.mediaItems.hasOwnProperty(id) && this.resources.mediaItems[id].path.includes('brunstad.tv'))
                 id = 'videojs-' + id + '_html5_api'
 
@@ -45,55 +47,57 @@ export default class Video {
         if (!this.texture)
             this.setVideoListeners()
 
-        if (this.video().nodeName == 'VIDEO') {
-            instance.el.videoControlBar.classList.remove('hide')
-            instance.el.videoIframe.classList.add('hide')
+        instance.el.videoControlBar.classList.remove('hide')
+        instance.el.videoIframe.classList.add('hide')
 
-            // Pause initial video
-            if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
-                this.texture.image.pause()
+        // Pause initial video
+        if (this.texture && !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path))
+            this.texture.image.pause()
 
-            // Update video on screen (set initial or replace if it's a new video)
-            if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
-                this.texture = this.resources.mediaItems[id].item
-                this.videoMesh.material.map = this.texture
-                // this.videoMesh.material.color.set(new THREE.Color().setRGB(0,1,1))
-                // this.videoMesh.material.needsUpdate = true
-            }
-
-            // Event listener on video update
-            this.video().addEventListener('timeupdate', function () {
-                instance.setProgress(this.video().currentTime);
-            }.bind(instance));
-
-            // Event listener on video end
-            this.video().onended = function () {
-                instance.exitFullscreenVideo()
-                instance.defocus()
-                instance.experience.world.program.advance()
-            }
-
-            // Event listener on fullscreen change
-            this.video().onfullscreenchange = function () {
-                if (!document.fullscreenElement)
-                    instance.camera.revertZoom()
-            }
-
-            this.setProgress(this.video().currentTime)
-        }
-        else if (this.video().nodeName == 'IFRAME') {
-            instance.texture = null
-            instance.el.videoControlBar.classList.add('hide')
-
-            instance.el.videoIframe.classList.remove('hide')
-            instance.el.videoIframe.innerHTML = this.video().outerHTML
+        // Update video on screen (set initial or replace if it's a new video)
+        if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
+            this.texture = this.resources.mediaItems[id].item
+            this.videoMesh.material.map = this.texture
+            // this.videoMesh.material.color.set(new THREE.Color().setRGB(0,1,1))
+            // this.videoMesh.material.needsUpdate = true
         }
 
+        // Event listener on video update
+        this.video().addEventListener('timeupdate', function() {
+            instance.setProgress(this.video().currentTime);
+        }.bind(instance));
+
+        // Event listener on volume changer while on fullscreen
+        this.video().onvolumechange = function() {
+            if (document.fullscreenElement) {
+                if (instance.video().muted || instance.video().volume == 0) {
+                    instance.el.videoOverlay.classList.add('is-muted')
+                } else {
+                    instance.el.videoOverlay.classList.remove('is-muted')
+                }
+            }
+        }
+
+        // Event listener on video end
+        this.video().onended = function() {
+            instance.exitFullscreenVideo()
+            instance.defocus()
+            instance.experience.world.program.advance()
+        }
+
+        // Event listener on fullscreen change
+        this.video().onfullscreenchange = function() {
+            if (!document.fullscreenElement)
+                instance.camera.revertZoom()
+        }
+
+        this.setProgress(this.video().currentTime)
         this.focus()
     }
 
     setTexture(id) {
         if (!this.videoMesh.material.map) return
+        if (!this.resources.textureItems.hasOwnProperty(id)) return
 
         this.videoMesh.material.map = this.resources.textureItems[id]
         this.videoMesh.material.map.flipY = false
@@ -104,6 +108,7 @@ export default class Video {
         instance.play()
         instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
+        instance.videoMesh.material.color.set(new THREE.Color().setRGB(1,1,1))
 
         if (instance.texture && !instance.texture.image.muted)
             instance.el.videoOverlay.classList.remove('is-muted')
@@ -147,14 +152,14 @@ export default class Video {
     }
 
     toggleSound() {
-        let video = document.getElementById(instance.playingVideoId)
+        let video = instance.video()
         video.muted = !video.muted;
 
         instance.el.videoOverlay.classList.toggle('is-muted')
     }
 
     setFullscreenVideo() {
-        let video = document.getElementById(instance.playingVideoId)
+        let video = instance.video()
         if (video.requestFullscreen) {
             video.requestFullscreen()
         } else if (video.webkitRequestFullscreen) { /* Safari */
@@ -165,7 +170,7 @@ export default class Video {
     }
 
     exitFullscreenVideo() {
-        let video = document.getElementById(instance.playingVideoId)
+        let video = instance.video()
         if (video.exitFullscreen) {
             video.exitFullscreen()
         } else if (video.webkitExitFullScreen) { /* Safari */

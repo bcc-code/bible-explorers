@@ -84,12 +84,6 @@ export default class Camera {
             this.resources.on('ready', () => {
                 this.resources = this.resources.items
                 this.model = this.resources.controlRoom.scene
-
-                this.model.traverse(child => {
-                    if (child instanceof THREE.Mesh) {
-
-                    }
-                })
             })
 
             this.setDebugCamera()

@@ -77,9 +77,7 @@ export default class ControlRoom {
     }
 
     storeMeshes() {
-
         this.resources.scene.traverse((child) => {
-
             if (child instanceof THREE.Mesh) {
                 switch (child.name) {
                     // Store clickable objects
@@ -122,14 +120,17 @@ export default class ControlRoom {
 
                 case 'tv_4x5_screen':
                     this.setTexture(obj.name, this.sources.textureItems['codes'].item)
+                    this.texture.image.play()
                     break
 
                 case 'tv_16x9_5_screen':
                     this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
+                    this.texture.image.play()
                     break
 
                 case 'tv_16x10_screen':
                     this.setTexture(obj.name, this.sources.textureItems['map'].item)
+                    this.texture.image.play()
                     break
             }
         })
