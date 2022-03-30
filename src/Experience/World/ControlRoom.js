@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { VideoTexture } from 'three'
 import Experience from "../Experience.js"
 
 export default class ControlRoom {
@@ -62,12 +63,19 @@ export default class ControlRoom {
         this.texture.encoding = THREE.sRGBEncoding
 
         this.changeMeshTexture(meshName, this.texture)
+        this.playIfVideoTexture()
     }
 
     changeMeshTexture(name, texture) {
         let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
-        if (mesh)
+        if (mesh) {
             mesh[0].material.map = texture
+        }
+    }
+
+    playIfVideoTexture() {
+        if (this.texture instanceof VideoTexture)
+            this.texture.image.play()
     }
 
     setDefaultTextureToScreens() {
@@ -120,17 +128,14 @@ export default class ControlRoom {
 
                 case 'tv_4x5_screen':
                     this.setTexture(obj.name, this.sources.textureItems['codes'].item)
-                    this.texture.image.play()
                     break
 
                 case 'tv_16x9_5_screen':
                     this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
-                    this.texture.image.play()
                     break
 
                 case 'tv_16x10_screen':
                     this.setTexture(obj.name, this.sources.textureItems['map'].item)
-                    this.texture.image.play()
                     break
             }
         })

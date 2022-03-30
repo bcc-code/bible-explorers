@@ -21,8 +21,8 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="archive__header"><i></i><h1>${ _s.settings }</h1></div>
-                    <div class="archive__sidebar">
+                    <div class="settings__header"><i></i><h1>${ _s.settings }</h1></div>
+                    <div class="settings__sidebar">
                         <div class="sound">
                             <h3>${ _s.sound }</h3>
                             <div class="toggle"></div>

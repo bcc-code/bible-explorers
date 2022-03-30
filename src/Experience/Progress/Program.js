@@ -2,6 +2,7 @@ import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
 import Timer from '../Extras/Timer.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
+import TaskDescription from '../Extras/TaskDescription.js'
 import Video from '../Extras/Video.js'
 
 let instance = null
@@ -18,6 +19,7 @@ export default class Program {
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
+        this.taskDescription = new TaskDescription()
         this.video = new Video()
         this.resources = this.experience.resources
         this.world = this.experience.world
@@ -30,14 +32,18 @@ export default class Program {
         this.currentStep = this.episodeProgress() || 0
         this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
-        this.currentLocation = () => this.getCurrentStepData() ? this.getCurrentStepData().location : null
+        this.currentLocation = () => {
+            if (this.stepType() == 'video') { return 'portal' }
+            else if (this.stepType() == 'iris') { return 'screens' }
+            else if (this.stepType() == 'task') { return 'controlBoard' }
+            else { return 'default' }
+        }
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
         this.totalSteps = Object.keys(this.programData).length
         this.clickedObject = null
         this.canClick = () =>
             !document.body.classList.contains('freeze') &&
-            !document.body.classList.contains('modal-on') &&
-            !document.body.classList.contains('code-unlock-on')
+            !document.body.classList.contains('modal-on')
 
         this.startInteractivity(true)
     }
@@ -134,19 +140,16 @@ export default class Program {
 
         if (this.clickedObject === 'tv_16x9_5') {
             instance.updateIrisTexture('SPEAK')
-            instance.world.audio.playIris('BIEX_S01_E01_IRIS_OPG_test')
+            instance.taskDescription.toggleTaskDescription()
+            // instance.world.audio.playIris('BIEX_S01_E01_IRIS_OPG_test')
         }
 
         if (this.clickedObject === 'Panel_Screen') {
             this.timer.setMinutes(5)
-            this.codeUnlock.open()
+            this.codeUnlock.toggleCodeUnlock()
         }
 
-        if (this.clickedObject === 'Panel_time_switch_2_1') {
-            this.video.togglePlay()
-        }
-
-        if (this.clickedObject === 'Panel_time_switch_1_1') {
+        if (this.clickedObject === 'Panel_time_switch_2_1' || this.clickedObject === 'Panel_time_switch_1_1') {
             this.video.defocus()
             this.advance()
         }

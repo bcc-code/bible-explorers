@@ -8,6 +8,8 @@ export default class Timer {
     }
 
     setMinutes(minutes) {
+        if (document.querySelector('.timer')) return
+
         timer.minutes = minutes;
 
         timer.htmlEl = document.createElement("div");

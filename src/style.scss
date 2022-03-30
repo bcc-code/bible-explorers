@@ -94,7 +94,7 @@ img {
     position: absolute;
     left: 50px;
     top: 50px;
-    z-index: 2;
+    z-index: 7;
 
     .material-icons {
         font-size: 96px;
@@ -108,11 +108,14 @@ img {
         width: 150px;
         height: 150px;
         border-radius: 50%;
-        background: white;
+        background-image: get-icon("empty");
+        background-repeat: no-repeat;
+        background-position: center;
+        color: #fff;
     }
 
     &__part {
-        font-size: 36px;
+        font-size: 30px;
         font-weight: bold;
     }
 
@@ -508,18 +511,23 @@ img {
         }
     }
 
-    .archive__content {
-        background-color: #fff;
-        border-radius: $radius;
-        margin-left: 2rem;
-        padding: 2rem;
+    &.code-unlock {
+        grid-template-columns: 1fr;
 
-        h2 {
-            color: $primary;
+        i {
+            background-image: get-icon("star");
         }
     }
 
-    .archive__header {
+    &.task-description {
+        grid-template-columns: 1fr;
+
+        i {
+            background-image: get-icon("info");
+        }
+    }
+
+    .archive__header, .settings__header, .code-unlock__header, .task-description__header {
         position: relative;
         background-color: #fff;
         grid-column: span 1/2;
@@ -543,7 +551,7 @@ img {
         }
     }
 
-    .archive__sidebar {
+    .archive__sidebar, .settings__sidebar, .code-unlock__sidebar {
         overflow: hidden;
         background-color: #fff;
         grid-column: span 1/2;
@@ -567,10 +575,39 @@ img {
             color: #fff;
         }
     }
+    
+    .archive__content, .task-description__content {
+        background-color: #fff;
+        border-radius: $radius;
+        margin-left: 2rem;
+        padding: 2rem;
+
+        h2 {
+            color: $primary;
+        }
+    }
+
+    .task-description__content {
+        max-width: 500px;
+        margin-left: 0;
+        white-space: pre-wrap;
+    }
 
     .language__list.hide {
         display: none;
     }
+}
+
+#get-task {
+    cursor: pointer;
+    margin-top: 15px;
+    background-image: get-icon("button");
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #fff;
+    padding: 10px 40px;
+    font-size: 1.5rem;
+    float: left;
 }
 
 .fact {
@@ -871,21 +908,6 @@ img {
 
 // #region MiniGames
 .code-unlock {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 330px;
-    height: 268px;
-    font-size: 72px;
-    font-weight: bold;
-    font-family: "Courier New", monospace;
-    background: #0b140f;
-    padding: 12px;
-    border-radius: 20px;
-
     &__container {
         border-radius: 7px;
         padding: 5px 5px 0;
@@ -903,6 +925,9 @@ img {
         align-items: center;
         width: 100%;
         height: 150px;
+        font-size: 72px;
+        font-weight: bold;
+        font-family: "Courier New", monospace;
         color: #fff;
         margin-bottom: 5px;
         letter-spacing: 5px;
@@ -910,7 +935,7 @@ img {
     }
     &__screen:before {
         content: "0000";
-        color: #143520;
+        color: #d1d1d1;
         position: absolute;
         left: 0;
         right: 0;
@@ -920,7 +945,7 @@ img {
         width: 193px;
         text-align: left;
         z-index: 1;
-        color: #369b59;
+        color: #23307a;
     }
 
     &__btn {
@@ -928,8 +953,8 @@ img {
         margin-left: 5px;
         margin-bottom: 5px;
         border: none;
-        color: #369b59;
-        background: #143520;
+        color: #fff;
+        background: #23307A;
         cursor: pointer;
         transition: opacity ease 0.25s;
         font-size: 24px;
@@ -941,12 +966,12 @@ img {
         margin-left: 0;
     }
     &__btn--backspace {
-        background: #a10035;
+        background: #9F4096;
         color: #fff;
     }
     &__btn--confirm {
-        background: #298d51;
-        color: #0b140f;
+        background: #FCB04E;
+        color: #fff;
     }
 }
 // #endregion

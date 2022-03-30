@@ -145,7 +145,7 @@ export default class Resources extends EventEmitter {
             // Video stream from BTV
             await this.loadEpisodeFromBtv(videoName)
             video = this.getGeneratedVideoElement(videoName)
-            video.oncanplay = () => this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/'+videoName)
+            this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/'+videoName)
         }
     }
 
