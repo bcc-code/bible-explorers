@@ -86,34 +86,4 @@ export default class Audio {
             audio.whoosh.play()
         }
     }
-
-    playIris(sound) {
-        this.initialize()
-
-        if (!audio[sound]) {
-            audio.audioLoader.load('sounds/'+sound+'.mp3', function(buffer) {
-                audio[sound] = new THREE.Audio(audio.listener)
-                audio[sound].setBuffer(buffer)
-                audio[sound].play()
-                audio.onEndedIris(sound)
-            });
-        }
-        else if (audio[sound].isPlaying) {
-            audio[sound].pause()
-            audio.experience.world.program.updateIrisTexture('READY')
-        }
-        else {
-            audio[sound].play()
-            audio.experience.world.program.updateIrisTexture('SPEAK')
-            audio.onEndedIris(sound)
-        }
-    }
-
-    onEndedIris(sound) {
-        audio[sound].source.onended = function() {
-            audio[sound].stop()
-            audio.experience.world.program.updateIrisTexture('READY')
-            audio.experience.world.program.advance()
-        }
-    }
 }

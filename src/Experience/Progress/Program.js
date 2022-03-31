@@ -149,7 +149,6 @@ export default class Program {
         if (this.clickedObject === 'tv_16x9_5') {
             instance.updateIrisTexture('SPEAK')
             instance.taskDescription.toggleTaskDescription()
-            // instance.world.audio.playIris('BIEX_S01_E01_IRIS_OPG_test')
         }
 
         if (this.clickedObject === 'Panel_Screen') {
