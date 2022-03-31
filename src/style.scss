@@ -92,13 +92,9 @@ img {
 // #region Interface
 .timer {
     position: absolute;
-    left: 50px;
-    top: 50px;
+    left: 3rem;
+    top: 3rem;
     z-index: 7;
-
-    .material-icons {
-        font-size: 96px;
-    }
 
     &__container {
         font-family: sans-serif;
@@ -118,38 +114,13 @@ img {
         font-size: 30px;
         font-weight: bold;
     }
-
-    &__btn {
-        position: absolute;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        border: none;
-        color: white;
-        cursor: pointer;
-        transition: opacity ease 0.25s;
-    }
-
-    &__btn--start {
-        background: #00b84c;
-        &:hover {
-            opacity: 0.9 !important;
-        }
-    }
-
-    &__btn--stop {
-        background: #ff0256;
-        &:hover {
-            opacity: 0.1 !important;
-        }
-    }
 }
 
 .progress-bar {
-    width: calc(100% - 400px);
+    width: calc(100% - 6rem - 96px);
     position: absolute;
-    bottom: 86px;
-    left: 200px;
+    bottom: calc(3rem + 20px);
+    left: calc(3rem + 32px);
 
     .modal-on &,
     .freeze & {
@@ -474,7 +445,6 @@ img {
         border-radius: 50%;
         cursor: pointer;
         z-index: 1;
-        margin-right: 15px;
         background-repeat: no-repeat;
         background-position: center;
         background-image: get-icon("close");

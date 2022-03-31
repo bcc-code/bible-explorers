@@ -50,17 +50,17 @@ export default class CodeUnlock {
                 numbers: document.querySelectorAll(".code-unlock__btn--number"),
                 backspace: document.querySelector(".code-unlock__btn--backspace"),
                 confirm: document.querySelector(".code-unlock__btn--confirm")
-            };
-            instance.secretCode = "1234"
-            
+            }
+            instance.secretCode = instance.world.selectedEpisode.program[instance.world.program.currentStep].codeToUnlock
+
             instance.el.numbers.forEach(function(number) {
                 number.addEventListener("mousedown", () => {
                     instance.add(number.textContent)
                 })
             })
             
-            instance.el.backspace.addEventListener("mousedown", instance.remove);
-            instance.el.confirm.addEventListener("mousedown", instance.checkCode);
+            instance.el.backspace.addEventListener("mousedown", instance.remove)
+            instance.el.confirm.addEventListener("mousedown", instance.checkCode)
 
             document.onkeydown = (e) => {
                 if (e.key === '1' ||

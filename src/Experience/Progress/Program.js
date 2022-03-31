@@ -116,13 +116,21 @@ export default class Program {
     }
 
     getAllInteractiveObjects() {
-        let interactiveObjects = this.getCurrentStepData().clickableElements || [];
+        let interactiveObjects = []
 
         if (this.stepType() == 'video') {
             interactiveObjects = interactiveObjects.concat("Panel_time_switch_2_1","Panel_time_switch_1_1")
         }
         else if (this.stepType() == 'iris') {
             interactiveObjects.push("tv_16x9_5")
+        }
+        else if (this.stepType() == 'task') {
+            if (this.getCurrentStepData().taskType == 'code') {
+                interactiveObjects.push("Panel_Screen")
+            }
+            else if (this.getCurrentStepData().taskType == 'cables') {
+                interactiveObjects.push("Panel_Cabels")
+            }
         }
 
         return interactiveObjects
@@ -145,8 +153,10 @@ export default class Program {
         }
 
         if (this.clickedObject === 'Panel_Screen') {
-            this.timer.setMinutes(5)
-            this.codeUnlock.toggleCodeUnlock()
+            if (this.getCurrentStepData().taskType == 'code') {
+                this.timer.setMinutes(5)
+                this.codeUnlock.toggleCodeUnlock()
+            }
         }
 
         if (this.clickedObject === 'Panel_time_switch_2_1' || this.clickedObject === 'Panel_time_switch_1_1') {

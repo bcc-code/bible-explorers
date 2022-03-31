@@ -22,7 +22,7 @@ export default class TaskDescription {
                     <div class="task-description__header"><i></i><h1>${ _s.taskDescription }</h1></div>
                     <div class="task-description__content">${ taskDescription.text }</div>
                 </div>
-                <div id="get-task" class="btn">${ _s.solveTask }</div>
+                <div id="get-task" class="btn">${ _s.goToTheTask }</div>
             `;
 
             taskDescription.modal = new Modal(html)
