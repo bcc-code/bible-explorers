@@ -2,6 +2,7 @@ import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
 import Timer from '../Extras/Timer.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
+import Questions from '../Extras/Questions.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import Video from '../Extras/Video.js'
 
@@ -19,6 +20,7 @@ export default class Program {
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
+        this.questions = new Questions()
         this.taskDescription = new TaskDescription()
         this.video = new Video()
         this.resources = this.experience.resources
@@ -34,10 +36,10 @@ export default class Program {
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
         this.currentLocation = () => {
             if (this.stepType() == 'video') { return 'portal' }
-            else if (this.stepType() == 'iris') { return 'screens' }
-            else if (this.stepType() == 'task') { return 'controlBoard' }
+            else if (this.stepType() == 'iris' || this.stepType() == 'task') { return 'screens' }
             else { return 'default' }
         }
+        this.customInteractiveObjs = []
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
         this.totalSteps = Object.keys(this.programData).length
         this.clickedObject = null
@@ -62,6 +64,7 @@ export default class Program {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
         this.world.audio.playWhoosh()
+        this.resetCustomInteractiveObjs()
         this.startInteractivity()
     }
 
@@ -121,49 +124,40 @@ export default class Program {
         if (this.stepType() == 'video') {
             interactiveObjects = interactiveObjects.concat("Panel_time_switch_2_1","Panel_time_switch_1_1")
         }
-        else if (this.stepType() == 'iris') {
+        else if (this.stepType() == 'iris' || this.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_5")
         }
-        else if (this.stepType() == 'task') {
-            if (this.getCurrentStepData().taskType == 'code') {
-                interactiveObjects.push("Panel_Screen")
-            }
-            else if (this.getCurrentStepData().taskType == 'cables') {
-                interactiveObjects.push("Panel_Cabels")
-            }
-        }
+
+        if (this.customInteractiveObjs.length)
+            return this.customInteractiveObjs
 
         return interactiveObjects
     }
 
+    addCustomInteractiveObj(objectName) {
+        this.customInteractiveObjs.push(objectName)
+    }
+    resetCustomInteractiveObjs() {
+        this.customInteractiveObjs = []
+    }
+
     startAction() {
-        if (this.clickedObject === 'tv_4x4') {
-        }
-
-        if (this.clickedObject === 'tv_4x5') {
-        }
-
         if (this.clickedObject === 'tv_16x10') {
+            this.questions.toggleQuestions()
+        }
+        
+        else if (this.clickedObject === 'tv_16x9_5') {
+            this.updateIrisTexture('SPEAK')
+            this.taskDescription.toggleTaskDescription()
         }
 
-        if (this.clickedObject === 'tv_16x9_5') {
-            instance.updateIrisTexture('SPEAK')
-            instance.taskDescription.toggleTaskDescription()
+        else if (this.clickedObject === 'Panel_Screen') {
+            this.timer.setMinutes(5)
+            this.codeUnlock.toggleCodeUnlock()
         }
 
-        if (this.clickedObject === 'Panel_Screen') {
-            if (this.getCurrentStepData().taskType == 'code') {
-                this.timer.setMinutes(5)
-                this.codeUnlock.toggleCodeUnlock()
-            }
-        }
-
-        if (this.clickedObject === 'Panel_time_switch_2_1' || this.clickedObject === 'Panel_time_switch_1_1') {
+        else if (this.clickedObject === 'Panel_time_switch_2_1' || this.clickedObject === 'Panel_time_switch_1_1') {
             this.video.defocus()
-            this.advance()
-        }
-
-        if (this.clickedObject === 'Panel_Cabels') {
             this.advance()
         }
     }

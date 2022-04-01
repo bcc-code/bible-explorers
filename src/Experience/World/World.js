@@ -201,6 +201,7 @@ export default class World {
 
     restartJourney() {
         localStorage.removeItem("progress-theme-" + instance.selectedEpisode.id)
+        localStorage.removeItem("answers-theme-" + instance.selectedEpisode.id)
         instance.startJourney()
     }
 

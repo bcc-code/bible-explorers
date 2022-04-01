@@ -473,31 +473,20 @@ img {
         }
     }
 
-    &.settings {
-        grid-template-columns: 1fr;
-
-        i {
-            background-image: get-icon("settings");
-        }
+    &.settings i {
+        background-image: get-icon("settings");
+    }
+    &.code-unlock i {
+        background-image: get-icon("star");
+    }
+    &.task-description i {
+        background-image: get-icon("info");
+    }
+    &.questions i {
+        background-image: get-icon("question");
     }
 
-    &.code-unlock {
-        grid-template-columns: 1fr;
-
-        i {
-            background-image: get-icon("star");
-        }
-    }
-
-    &.task-description {
-        grid-template-columns: 1fr;
-
-        i {
-            background-image: get-icon("info");
-        }
-    }
-
-    .archive__header, .settings__header, .code-unlock__header, .task-description__header {
+    .archive__header, .settings__header, .code-unlock__header, .task-description__header, .questions__header {
         position: relative;
         background-color: #fff;
         grid-column: span 1/2;
@@ -546,7 +535,7 @@ img {
         }
     }
     
-    .archive__content, .task-description__content {
+    .archive__content, .task-description__content, .questions__content {
         background-color: #fff;
         border-radius: $radius;
         margin-left: 2rem;
@@ -563,20 +552,41 @@ img {
         white-space: pre-wrap;
     }
 
+    .questions__content {
+        max-width: 500px;
+        margin-left: 0;
+
+        .question {
+            margin-bottom: 20px;
+        }
+        .title {
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+    }
+
     .language__list.hide {
         display: none;
     }
 }
 
-#get-task {
-    cursor: pointer;
-    margin-top: 15px;
+#get-task, #submit-task {
     background-image: get-icon("button");
     background-repeat: no-repeat;
-    background-position: center;
+    background-size: 100% 100%;
+    margin-top: 7px;
+    padding: 1rem 3rem;
     color: #fff;
-    padding: 10px 40px;
+    width: auto;
+    min-width: 110px;
     font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
     float: left;
 }
 

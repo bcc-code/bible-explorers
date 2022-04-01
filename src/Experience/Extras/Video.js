@@ -23,6 +23,7 @@ export default class Video {
         // Setup
         this.videoMesh = this.experience.world.controlRoom.videoObject
         this.setVideoControls()
+        this.setControls()
 
         this.video = () => {
             let id = instance.playingVideoId
@@ -38,7 +39,7 @@ export default class Video {
         this.isDragging = false
         this.mouseX = 0
         this.percentageNow = 0
-        this.percentageNext = 0
+        this.percentageNow = 0
     }
 
     load(id) {
@@ -315,10 +316,10 @@ export default class Video {
     onVideoControlDrag(event) {
         if (instance.isDragging) {
             const clientX = event.clientX || (event.changedTouches && event.changedTouches[0].clientX)
-            instance.percentageNext = (clientX - instance.mouseX) / instance.el.videoTimeline.clientWidth
-            instance.percentageNext = instance.percentageNow + instance.percentageNext
-            instance.percentageNext = instance.percentageNext > 1 ? 1 : ((instance.percentageNext < 0) ? 0 : instance.percentageNext)
-            instance.setVideoCurrentTime(instance.percentageNext)
+            instance.percentageNow = (clientX - instance.mouseX) / instance.el.videoTimeline.clientWidth
+            instance.percentageNow = instance.percentageNow + instance.percentageNow
+            instance.percentageNow = instance.percentageNow > 1 ? 1 : ((instance.percentageNow < 0) ? 0 : instance.percentageNow)
+            instance.setVideoCurrentTime(instance.percentageNow)
         }
     }
 
@@ -364,18 +365,20 @@ export default class Video {
 
     setControls() {
         document.onkeydown = (e) => {
-            if (e.key === 'p') {
-                this.play()
+            if (e.key === ' ') {
+                this.togglePlay()
             }
-            else if (e.key === ' ') {
-                this.pause()
+            else if (e.key === 'ArrowLeft') {
+                instance.video().currentTime -= 10
             }
-            else if (e.key === 's') {
-                this.defocus()
-                this.experience.world.program.advance()
+            else if (e.key === 'ArrowRight') {
+                instance.video().currentTime += 10
             }
-            else if (e.key === 'r') {
-                this.texture.image.currentTime = 0
+            else if (e.key === 'ArrowUp') {
+                instance.video().volume = Math.min(instance.video().volume + 0.1, 1)
+            }
+            else if (e.key === 'ArrowDown') {
+                instance.video().volume = Math.max(instance.video().volume - 0.1, 0)
             }
         }
     }

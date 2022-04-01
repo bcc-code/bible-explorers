@@ -28,6 +28,7 @@ export default class Modal {
     destroy() {
         modal.htmlEl.remove()
         document.body.classList.remove('modal-on')
+        modal.program.updateIrisTexture('READY')
         modal = null
     }
 

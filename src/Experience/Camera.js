@@ -48,6 +48,16 @@ export default class Camera {
                     maxAzimuthAngle: 0
                 }
             },
+            'screensCloseLook': {
+                position: new THREE.Vector3(0.10311109275205538, 2.019544378730217, 0.8109164952023816),
+                lookAt: new THREE.Vector3(-0.3666665812472672, 1.807908067952745, -0.6556377861261685),
+                controls: {
+                    minPolarAngle: 1.41,
+                    maxPolarAngle: 1.63,
+                    minAzimuthAngle: -0.09,
+                    maxAzimuthAngle: 0.31
+                }
+            },
             'controlBoard': {
                 position: new THREE.Vector3(-0.109, 2.224, 0.022),
                 lookAt: new THREE.Vector3(0.312, 1.975, 0.019),
