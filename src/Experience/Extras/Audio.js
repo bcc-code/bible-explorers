@@ -43,7 +43,7 @@ export default class Audio {
     }
 
     addBgMusicElement() {
-        audio.el.style.display = 'block'
+        audio.el.style.display = 'flex'
     }
 
     removeBgMusicElement() {

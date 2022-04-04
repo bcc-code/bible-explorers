@@ -2,7 +2,7 @@ export default [
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/controlroom-test.glb'
+        path: 'models/controlroom_low_v04.glb'
     },
     {
         name: 'cameraModel',

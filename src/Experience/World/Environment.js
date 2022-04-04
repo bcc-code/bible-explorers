@@ -12,13 +12,13 @@ export default class Environment {
         this.debug = this.experience.debug
 
         // Setup
-        this.setPlatformLight()
-        this.setElevatorLight()
-        this.setAmbientLight()
-        this.setEnvironmentMap()
         this.setSpotlight()
+        this.setEnvironmentMap()
 
         if (this.debug.active) {
+            this.setAmbientLight()
+            this.setPlatformLight()
+            this.setElevatorLight()
 
             // Options
             this.data = {
@@ -93,7 +93,7 @@ export default class Environment {
 
     setSpotlight() {
         const spotLight = new THREE.SpotLight(0xffaf8c);
-        spotLight.power = 400
+        spotLight.power = 800
         spotLight.angle = Math.PI
         spotLight.decay = 2
         spotLight.penumbra = 1
