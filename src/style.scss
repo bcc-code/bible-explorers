@@ -17,6 +17,33 @@ $gradient90: linear-gradient(90deg, $primary, $tertiary);
 $radius: 12px;
 // #endregion
 
+@mixin background($button: true) {
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @if $button {
+        background-image: url("../static/icons/button.svg");
+        background-size: 100% 100%;
+    } @else {
+        background-image: url("../static/icons/empty.svg");
+        background-size: contain;
+    }
+}
+
+@mixin icon($name) {
+    @extend [class^="icon-"];
+    @extend [class*=" icon-"];
+    font-size: 0;
+
+    @extend #{"." + $name};
+
+    &::before {
+        font-size: 1.5rem;
+    }
+}
+
 // #region General
 * {
     margin: 0;
@@ -104,9 +131,7 @@ img {
         width: 150px;
         height: 150px;
         border-radius: 50%;
-        background-image: get-icon("empty");
-        background-repeat: no-repeat;
-        background-position: center;
+        @include background($button: false);
         color: #fff;
     }
 
@@ -139,8 +164,6 @@ img {
         top: -1.25rem;
         border-radius: 50%;
         position: absolute;
-        background-image: get-icon("empty");
-        background-repeat: no-repeat;
         z-index: 2;
         display: flex;
         align-items: center;
@@ -148,16 +171,15 @@ img {
         color: #fff;
         font-weight: bold;
         font-size: 2rem;
+        @include background($button: false);
 
         &.locked {
-            background-image: get-icon("lock");
+            @include icon(icon-lock);
             filter: grayscale(1);
-            font-size: 0;
         }
 
         &:last-child {
-            font-size: 0;
-            background-image: get-icon("star");
+            @include icon(icon-star);
         }
     }
 
@@ -214,10 +236,11 @@ img {
         margin-right: 15px;
         background-repeat: no-repeat;
         background-position: center;
+        @include background($button: false);
     }
 
     #go-home {
-        background-image: get-icon("home");
+        @include icon(icon-home);
         margin-right: auto;
 
         .modal-on &,
@@ -227,11 +250,11 @@ img {
     }
 
     #sound {
-        background-image: get-icon("sound-off");
+        @include icon(icon-mute);
         z-index: 5;
 
         &.sound-on {
-            background-image: get-icon("sound-on");
+            @include icon(icon-sound);
         }
 
         .modal-on & {
@@ -243,26 +266,26 @@ img {
         position: relative;
         border-radius: 50%;
         cursor: pointer;
+        @include icon(icon-question-mark);
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            @include background($button: false);
+            z-index: 1;
+        }
 
         .modal-on &,
         .freeze & {
             display: none;
         }
-
-        &::after {
-            content: "";
-            position: relative;
-            display: block;
-            width: 4rem;
-            height: 4rem;
-            z-index: 1;
-            background-image: get-icon("question");
-            background-repeat: no-repeat;
-        }
     }
 
     #archive {
-        background-image: get-icon("archive");
+        @include icon(icon-menu);
         gap: 2rem;
 
         &__icon {
@@ -279,7 +302,7 @@ img {
     }
 
     #settings {
-        background-image: get-icon("settings");
+        @include icon(icon-gear);
         z-index: 5;
         margin-right: 0;
 
@@ -331,9 +354,7 @@ img {
 
     .button {
         padding: 1rem 3rem;
-        background-image: get-icon("button");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
+        @include background($button: true);
         color: #fff;
         width: auto;
         font-size: 1.5rem;
@@ -395,11 +416,11 @@ img {
         height: 5rem;
         bottom: -1.5rem;
         right: -1.5rem;
-        background-image: get-icon("play");
-        background-repeat: no-repeat;
+        @include background($button: false);
+        @include icon(icon-play);
 
         @at-root .locked#{&} {
-            background-image: get-icon("lock");
+            @include icon(icon-lock);
         }
     }
 
@@ -445,9 +466,8 @@ img {
         border-radius: 50%;
         cursor: pointer;
         z-index: 1;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: get-icon("close");
+        @include background($button: false);
+        @include icon(icon-close);
     }
 
     &__container {
@@ -465,28 +485,36 @@ img {
 .modal__content {
     display: grid;
 
+    i {
+        @include background($button: false);
+    }
+
     &.archive {
         grid-template-columns: 1fr 2fr;
 
         i {
-            background-image: get-icon("archive");
+            @include icon(icon-menu);
         }
     }
 
     &.settings i {
-        background-image: get-icon("settings");
+        @include icon(icon-gear);
     }
     &.code-unlock i {
-        background-image: get-icon("star");
+        @include icon(icon-star);
     }
     &.task-description i {
-        background-image: get-icon("info");
+        @include icon(icon-exclamation-mark);
     }
     &.questions i {
-        background-image: get-icon("question");
+        @include icon(icon-question-mark);
     }
 
-    .archive__header, .settings__header, .code-unlock__header, .task-description__header, .questions__header {
+    .archive__header,
+    .settings__header,
+    .code-unlock__header,
+    .task-description__header,
+    .questions__header {
         position: relative;
         background-color: #fff;
         grid-column: span 1/2;
@@ -510,7 +538,9 @@ img {
         }
     }
 
-    .archive__sidebar, .settings__sidebar, .code-unlock__sidebar {
+    .archive__sidebar,
+    .settings__sidebar,
+    .code-unlock__sidebar {
         overflow: hidden;
         background-color: #fff;
         grid-column: span 1/2;
@@ -534,8 +564,10 @@ img {
             color: #fff;
         }
     }
-    
-    .archive__content, .task-description__content, .questions__content {
+
+    .archive__content,
+    .task-description__content,
+    .questions__content {
         background-color: #fff;
         border-radius: $radius;
         margin-left: 2rem;
@@ -574,10 +606,9 @@ img {
     }
 }
 
-#get-task, #submit-task {
-    background-image: get-icon("button");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+#get-task,
+#submit-task {
+    @include background($button: true);
     margin-top: 7px;
     padding: 1rem 3rem;
     color: #fff;
@@ -934,7 +965,7 @@ img {
         margin-bottom: 5px;
         border: none;
         color: #fff;
-        background: #23307A;
+        background: #23307a;
         cursor: pointer;
         transition: opacity ease 0.25s;
         font-size: 24px;
@@ -946,11 +977,11 @@ img {
         margin-left: 0;
     }
     &__btn--backspace {
-        background: #9F4096;
+        background: #9f4096;
         color: #fff;
     }
     &__btn--confirm {
-        background: #FCB04E;
+        background: #fcb04e;
         color: #fff;
     }
 }
