@@ -36,6 +36,7 @@ $radius: 12px;
     @extend [class^="icon-"];
     @extend [class*=" icon-"];
     font-size: 0;
+    color: #fff;
 
     @extend #{"." + $name};
 
@@ -742,14 +743,14 @@ img {
         justify-content: center;
         align-items: center;
 
-        width: 40px;
-        height: 40px;
+        width: 3rem;
+        height: 3rem;
         font-size: 1.5rem;
 
         opacity: 0.9;
         transition: opacity ease 200ms;
 
-        svg {
+        i {
             display: none;
         }
 
@@ -800,25 +801,25 @@ img {
         border-radius: 15px;
         overflow: hidden;
 
-        &.is-playing .fa-pause-solid {
+        &.is-playing .icon-pause {
             display: inline-block;
         }
-        &.is-paused .fa-play-solid {
+        &.is-paused .icon-play {
             display: inline-block;
         }
-        &.is-muted .fa-volume-slash-solid {
+        &.is-muted .icon-mute{
             display: inline-block;
         }
     }
 
     &__overlay:not(.is-fullscreen) {
-        .fa-expand-solid {
+        .icon-expand {
             display: inline-block;
         }
     }
 
     &__overlay:not(.is-muted) {
-        .fa-volume-solid {
+        .icon-sound {
             display: inline-block;
         }
     }

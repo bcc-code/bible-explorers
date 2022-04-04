@@ -215,10 +215,10 @@ export default class Video {
                     <div class="video__progress-button"></div>
                 </div>
                 <div class="video__controls">
-                    <span class="video__play-pause video__controlsBtn"><i class="fak fa-play-solid"></i><i class="fak fa-pause-solid"></i></span>
-                    <span class="video__sound video__controlsBtn"><i class="fak fa-volume-solid"></i><i class="fak fa-volume-slash-solid"></i></span>
+                    <span class="video__play-pause video__controlsBtn"><i class="icon-play"></i><i class="icon-pause"></i></span>
+                    <span class="video__sound video__controlsBtn"><i class="icon-sound"></i><i class="icon-mute"></i></span>
                     <span class="video__timetracker"></span>
-                    <span class="video__fullscreen video__controlsBtn"><i class="fak fa-expand-solid"></i></span>
+                    <span class="video__fullscreen video__controlsBtn"><i class="icon-expand"></i></span>
                 </div>
             </div>
         </div>`
