@@ -12,6 +12,8 @@ import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 
 let instance = null
+
+const apiJsonLocalPath = () => "api/biex-episodes-" + _lang.getLanguageCode() + ".json"
 const wpApi = () => "https://staging-bcckids.kinsta.cloud/wp-json/biex-episodes/get?lang=" + _lang.getLanguageCode()
 
 export default class World {
@@ -38,7 +40,13 @@ export default class World {
             list: document.querySelector("#episodes .list"),
             data: []
         }
-        this.httpGetAsync(wpApi(), this.setEpisodes)
+
+        if (instance.resources.checkFileExist(apiJsonLocalPath())) {
+            this.httpGetAsync(apiJsonLocalPath(), this.setLocalEpisodes)
+        }
+        else {
+            this.httpGetAsync(wpApi(), this.setEpisodes)
+        }
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -81,7 +89,25 @@ export default class World {
         instance.program.updateIrisTexture('SLEEP')
     }
 
+    setLocalEpisodes(data) {
+        let episodes = JSON.parse(data)
+
+        episodes.forEach((episode) => {
+            let link = episode.thumbnail.split('/')
+            episode.thumbnail = 'api/images/' + link[link.length-1]
+
+            episode.data.forEach((film) => {
+                let link = film.thumbnail.split('/')
+                film.thumbnail = 'api/images/' + link[link.length-1]
+            })
+        })
+
+        instance.setEpisodes(JSON.stringify(episodes))
+    }
+
     setEpisodes(data) {
+        if (!data) return
+
         instance.episodes.data = JSON.parse(data)
         instance.episodes.data.forEach((episode) => {
             instance.setEpisodeHtml(episode)
