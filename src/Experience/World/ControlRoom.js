@@ -86,6 +86,9 @@ export default class ControlRoom {
 
     storeMeshes() {
         this.resources.scene.traverse((child) => {
+
+            console.log(child);
+            
             if (child instanceof THREE.Mesh) {
                 switch (child.name) {
                     // Store clickable objects
