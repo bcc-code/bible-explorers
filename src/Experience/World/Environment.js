@@ -16,7 +16,7 @@ export default class Environment {
         this.setElevatorLight()
         this.setAmbientLight()
         this.setEnvironmentMap()
-
+        this.setSpotlight()
 
         if (this.debug.active) {
 
@@ -89,6 +89,19 @@ export default class Environment {
         }
 
         this.environmentMap.updateMaterials()
+    }
+
+    setSpotlight() {
+        const spotLight = new THREE.SpotLight(0xffaf8c);
+        spotLight.power = 400
+        spotLight.angle = Math.PI
+        spotLight.decay = 2
+        spotLight.penumbra = 1
+        spotLight.position.set(0, 3.5, 0);
+        this.scene.add(spotLight);
+
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+        this.scene.add(spotLightHelper);
     }
 
     addGUIControls() {
