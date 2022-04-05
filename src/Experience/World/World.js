@@ -148,8 +148,11 @@ export default class World {
         episodeHtml.className = episodeClasses
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.innerHTML = `
-            <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon download"></i></div>
-            <h3 class="title">${ episode.title }</h3>
+            <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon icon-big"></i></div>
+            <div class="heading">
+                <span class="icon icon-small download"></span>
+                <h3 class="title">${ episode.title }</h3>
+            </div>
         `
         this.episodes.list.appendChild(episodeHtml)
     }
