@@ -22,7 +22,7 @@ export default class Video {
 
         // Setup
         this.videoMesh = this.experience.world.controlRoom.videoObject
-        this.videoMesh.material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide })
+        this.videoMesh.material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.FrontSide })
         this.videoMesh.material.needsUpdate = true
 
         this.setVideoControls()
@@ -62,6 +62,7 @@ export default class Video {
             this.texture = this.resources.mediaItems[id].item
 
             this.videoMesh.material.map = this.texture
+            this.videoMesh.material.tonnedMap = false
 
         }
 

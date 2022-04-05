@@ -1,8 +1,9 @@
 @import "./icons.scss";
+@import "./fonts.scss";
 
 :root {
     color-scheme: only light !important;
-}  
+}
 
 // #region Colors
 $primary: #23307a;
@@ -15,6 +16,9 @@ $gradient45: linear-gradient(45deg, $primary, $secondary);
 $gradient90: linear-gradient(90deg, $primary, $tertiary);
 
 $radius: 12px;
+
+$archivo-regular: "Archivo", sans-serif;
+
 // #endregion
 
 @mixin background($button: true) {
@@ -57,7 +61,7 @@ body {
 }
 
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: $archivo-regular;
     font-size: 16px;
     line-height: 1.5;
     color: $dark;
@@ -807,7 +811,7 @@ img {
         &.is-paused .icon-play {
             display: inline-block;
         }
-        &.is-muted .icon-mute{
+        &.is-muted .icon-mute {
             display: inline-block;
         }
     }
