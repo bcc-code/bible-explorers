@@ -23,7 +23,7 @@ export default class Environment {
         }
 
         this.data = {
-            bulbPower: Object.keys(this.bulbLuminousPowers)[3],
+            bulbPower: Object.keys(this.bulbLuminousPowers)[2],
         }
 
         // Setup
