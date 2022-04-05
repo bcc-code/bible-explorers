@@ -44,6 +44,7 @@ export default class Experience {
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
         this.composer = new Composer()
+        this.auth0 = null
 
         // Sizes resize event
         this.sizes.on('resize', () => {

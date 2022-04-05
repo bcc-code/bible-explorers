@@ -134,9 +134,7 @@ export default class Resources extends EventEmitter {
     async loadThemeVideos(videoName) {
         let video, path = 'videos/' + videoName + '.mp4'
 
-        // Check if video file is downloaded
-        if (this.checkFileExist(path) == true) { 
-            // Video was found locally
+        if (this.isRunningLocally() == true) { 
             video = this.createVideoElement(videoName, path)
             video.oncanplay = () => this.generateTextureForVideo(video, videoName, path)
             document.getElementById('videos-container').appendChild(video)
@@ -208,11 +206,7 @@ export default class Resources extends EventEmitter {
         return video
     }
 
-    checkFileExist(urlToFile) {
-        var xhr = new XMLHttpRequest()
-        xhr.open('HEAD', urlToFile, false)
-        xhr.send()
-
-        return xhr.status != "404"
+    isRunningLocally() {
+        return location.protocol.includes('file')
     }
 }

@@ -41,7 +41,7 @@ export default class World {
             data: []
         }
 
-        if (instance.resources.checkFileExist(apiJsonLocalPath())) {
+        if (instance.resources.isRunningLocally()) {
             this.httpGetAsync(apiJsonLocalPath(), this.setLocalEpisodes)
         }
         else {

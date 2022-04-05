@@ -23,7 +23,6 @@ export default class Video {
         // Setup
         this.videoMesh = this.experience.world.controlRoom.videoObject
         this.setVideoControls()
-        this.setControls()
 
         this.video = () => {
             let id = instance.playingVideoId
@@ -97,6 +96,7 @@ export default class Video {
 
         this.setProgress(this.video().currentTime)
         this.focus()
+        this.setControls()
     }
 
     setTexture(id) {
@@ -369,7 +369,7 @@ export default class Video {
     setControls() {
         document.onkeydown = (e) => {
             if (e.key === ' ') {
-                this.togglePlay()
+                instance.togglePlay()
             }
             else if (e.key === 'ArrowLeft') {
                 instance.video().currentTime -= 10

@@ -19,6 +19,8 @@ const strings = {
         "sound": "Lyd",
         "language": "Språk",
         "feedback": "Tilbakemelding",
+        "logIn": "Logg inn",
+        "logOut": "Logg ut",
         "tooltips": {
             "video": "Se på video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
@@ -43,6 +45,8 @@ const strings = {
         "sound": "Sound",
         "language": "Language",
         "feedback": "Feedback",
+        "logIn": "Log in",
+        "logOut": "Log out",
         "tooltips": {
             "video": "Watch video",
             "iris": "Listen task description from Iris",
