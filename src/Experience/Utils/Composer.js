@@ -21,13 +21,13 @@ export default class Composer {
 
         this.params = {
             // UnrealBloom
-            bloomStrength: 0.528,
+            bloomStrength: 0.19,
             bloomThreshold: 0,
             bloomRadius: 1,
 
             // Bokeh
-            focus: 500.0,
-            aperture: 5,
+            focus: 40.0,
+            aperture: 0.7,
             maxblur: 0.01
         }
 
@@ -36,14 +36,15 @@ export default class Composer {
         this.setOutlinePass()
         this.setEffectFXAA()
         this.setUnrealBloomPass()
-        // this.setBokehPass()
+        this.setBokehPass()
 
-        // const matChanger = function () {
-
-        //     this.bokehPass.uniforms['focus'].value = this.params.focus;
-        //     this.bokehPass.uniforms['aperture'].value = this.params.aperture * 0.00001;
-        //     this.bokehPass.uniforms['maxblur'].value = this.params.maxblur;
-        // }
+        this.matChanger = () => {
+            this.bokehPass.materialBokeh.uniforms['focus'].value = this.params.focus
+            this.bokehPass.materialBokeh.uniforms['aperture'].value = this.params.aperture * 0.00001;
+            this.bokehPass.materialBokeh.uniforms['maxblur'].value = this.params.maxblur
+        }
+        
+        this.matChanger()
 
         if (this.debug.active) {
             this.addGUIControls()
@@ -99,11 +100,19 @@ export default class Composer {
         unrealBloomPass.add(this.params, 'bloomStrength', 0.0, 3.0).onChange((value) => { this.unrealBloomPass.strength = Number(value) })
         unrealBloomPass.add(this.params, 'bloomRadius', 0.0, 1.0).onChange((value) => { this.unrealBloomPass.radius = Number(value) })
 
-        // const bokehPass = this.debug.ui.addFolder('Depth of field')
+        const bokehPass = this.debug.ui.addFolder('Depth of field')
 
-        // bokehPass.add(this.params, 'focus', 10.0, 3000.0, 10).onChange(matChanger)
-        // bokehPass.add(this.params, 'aperture', 0, 10, 0.1).onChange(matChanger)
-        // bokehPass.add(this.params, 'maxblur',  0.0, 0.01, 0.001 ).onChange(matChanger)
+        bokehPass.add(this.params, 'focus', 10.0, 100.0, 10).onChange((val) => {
+            this.bokehPass.materialBokeh.uniforms['focus'].value = val
+        })
+        bokehPass.add(this.params, 'aperture', 0, 10, 0.1).onChange((val) => {
+            this.bokehPass.materialBokeh.uniforms['aperture'].value = val * 0.00001
+        })
+        bokehPass.add(this.params, 'maxblur', 0.0, 0.01, 0.001).onChange((val) => {
+            this.bokehPass.materialBokeh.uniforms['maxblur'].value = val
+        })
+
+        console.log(this.bokehPass);
 
     }
 

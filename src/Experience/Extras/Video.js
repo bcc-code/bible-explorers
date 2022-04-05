@@ -22,6 +22,9 @@ export default class Video {
 
         // Setup
         this.videoMesh = this.experience.world.controlRoom.videoObject
+        this.videoMesh.material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide })
+        this.videoMesh.material.needsUpdate = true
+
         this.setVideoControls()
 
         this.video = () => {
@@ -57,21 +60,18 @@ export default class Video {
         // Update video on screen (set initial or replace if it's a new video)
         if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
             this.texture = this.resources.mediaItems[id].item
+
             this.videoMesh.material.map = this.texture
 
-            this.videoMesh.material.toneMapped = false
-            console.log(this.videoMesh.material.map);
-            // this.videoMesh.material.color.set(new THREE.Color().setRGB(0,1,1))
-            // this.videoMesh.material.needsUpdate = true
         }
 
         // Event listener on video update
-        this.video().addEventListener('timeupdate', function() {
+        this.video().addEventListener('timeupdate', function () {
             instance.setProgress(this.video().currentTime);
         }.bind(instance));
 
         // Event listener on volume changer while on fullscreen
-        this.video().onvolumechange = function() {
+        this.video().onvolumechange = function () {
             if (document.fullscreenElement) {
                 if (instance.video().muted || instance.video().volume == 0) {
                     instance.el.videoOverlay.classList.add('is-muted')
@@ -82,14 +82,14 @@ export default class Video {
         }
 
         // Event listener on video end
-        this.video().onended = function() {
+        this.video().onended = function () {
             instance.exitFullscreenVideo()
             instance.defocus()
             instance.experience.world.program.advance()
         }
 
         // Event listener on fullscreen change
-        this.video().onfullscreenchange = function() {
+        this.video().onfullscreenchange = function () {
             if (!document.fullscreenElement)
                 instance.camera.revertZoom()
         }
@@ -112,7 +112,7 @@ export default class Video {
         instance.play()
         instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
-        instance.videoMesh.material.color.set(new THREE.Color().setRGB(1,1,1))
+        instance.videoMesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
 
         if (instance.texture && !instance.texture.image.muted)
             instance.el.videoOverlay.classList.remove('is-muted')

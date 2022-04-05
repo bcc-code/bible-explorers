@@ -76,6 +76,7 @@ export default class Environment {
         this.environmentMap.texture = this.resources.items.environmentMap
         this.environmentMap.texture.encoding = THREE.sRGBEncoding
 
+
         this.scene.background = this.environmentMap.texture
         this.scene.environment = this.environmentMap.texture
 
@@ -84,17 +85,8 @@ export default class Environment {
 
                 if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
 
-                    switch (child.name) {
-                        case "Portal":
-                            child.material.needsUpdate = true
-                            break
-
-                        default:
-                            child.material.envMapIntensity = this.environmentMap.intensity
-                            child.material.needsUpdate = true
-                            break
-                    }
-
+                    child.material.envMapIntensity = this.environmentMap.intensity
+                    child.material.needsUpdate = true
 
                 }
 
@@ -123,21 +115,12 @@ export default class Environment {
             const bulb = new THREE.Mesh(bulbGeometry, bulbMaterial)
             this.bulbLight.add(bulb)
 
-            console.log(this.bulbLight);
-
             light.add(this.data, 'bulbPower', Object.keys(this.bulbLuminousPowers))
                 .onChange((val) => {
                     this.bulbLight.power = this.bulbLuminousPowers[val]
                     bulbMaterial.emissiveIntensity = this.bulbLight.intensity / Math.pow(0.02, 2.0)
                 })
 
-            // const sphereSize = 1;
-            // const pointLightHelper = new THREE.PointLightHelper(this.pointLight, sphereSize);
-            // this.scene.add(pointLightHelper);
-
-            // const pointLight = light.addFolder('Platform')
-            // pointLight.addColor(this.data, 'lightColor').onChange((val) => { this.pointLight.color.setHex(val) })
-            // pointLight.add(this.pointLight, 'power', 0, 1800).step(1).onChange((val) => { this.pointLight.power = val })
 
             if (!this.ambientLight) return
 
