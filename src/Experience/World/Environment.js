@@ -10,30 +10,36 @@ export default class Environment {
         this.debug = this.experience.debug
         this.renderer = this.experience.renderer
 
+        // ref for lumens: http://www.power-sure.com/lumens.htm
+        this.bulbLuminousPowers = {
+            "110000 lm (1000W)": 110000,
+            "3500 lm (300W)": 3500,
+            "1700 lm (100W)": 1700,
+            "800 lm (60W)": 800,
+            "400 lm (40W)": 400,
+            "180 lm (25W)": 180,
+            "20 lm (4W)": 20,
+            "Off": 0
+        }
+
+        this.data = {
+            bulbPower: Object.keys(this.bulbLuminousPowers)[3],
+        }
+
         // Setup
-        this.setPointLight()
-        this.setAmbientLight()
         this.setEnvironmentMap()
+        this.setSceneLights()
 
         if (this.debug.active) {
-
-            // Options
-            this.data = {
-                colorAmbient: this.ambientLight.color.getHex(),
-                // colorSpot: this.spotLight.color.getHex(),
-                mapsEnabled: true,
-            }
-
             this.addGUIControls()
         }
     }
 
-    setPointLight() {
-        this.platformLight = new THREE.PointLight(0xffffff, 1, 100);
-        this.platformLight.position.set(0, 3.5, 0);
-        this.platformLight.decay = 2
-        this.platformLight.power = 800
-        this.scene.add(this.platformLight);
+    setSceneLights() {
+        this.bulbLight = new THREE.PointLight(0xffffee, 1, 100, 2);
+        this.bulbLight.position.set(0, 3.5, 0);
+        this.bulbLight.power = this.bulbLuminousPowers[this.data.bulbPower]
+        this.scene.add(this.bulbLight)
     }
 
     setSpotlight() {
@@ -49,7 +55,7 @@ export default class Environment {
 
         this.spotLight.target = targetObject
 
-        this.spotLight.power = 200
+        this.spotLight.power = 1800
         this.spotLight.distance = 10
         this.spotLight.angle = Math.PI / 4
         this.spotLight.decay = 2
@@ -60,13 +66,13 @@ export default class Environment {
     }
 
     setAmbientLight() {
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        this.ambientLight = new THREE.AmbientLight(0xffffee, 1);
         this.scene.add(this.ambientLight);
     }
 
     setEnvironmentMap() {
         this.environmentMap = {}
-        this.environmentMap.intensity = 0
+        this.environmentMap.intensity = 3
         this.environmentMap.texture = this.resources.items.environmentMap
         this.environmentMap.texture.encoding = THREE.sRGBEncoding
 
@@ -77,8 +83,19 @@ export default class Environment {
             this.scene.traverse((child) => {
 
                 if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
-                    child.material.envMapIntensity = this.environmentMap.intensity
-                    child.material.needsUpdate = true
+
+                    switch (child.name) {
+                        case "Portal":
+                            child.material.needsUpdate = true
+                            break
+
+                        default:
+                            child.material.envMapIntensity = this.environmentMap.intensity
+                            child.material.needsUpdate = true
+                            break
+                    }
+
+
                 }
 
             })
@@ -87,16 +104,42 @@ export default class Environment {
         this.environmentMap.updateMaterials()
     }
 
-
     addGUIControls() {
         if (this.debug.active) {
 
             const environment = this.debug.ui.addFolder('Environment')
-            environment.close()
+            // environment.close()
             environment.add(this.environmentMap, 'intensity').min(0).max(20).step(0.01).name('intensity').onChange(() => { this.environmentMap.updateMaterials() })
 
             const light = this.debug.ui.addFolder('Light')
             // light.close()
+
+            const bulbGeometry = new THREE.SphereGeometry(0.1, 16, 8)
+            const bulbMaterial = new THREE.MeshStandardMaterial({
+                emissive: 0xffffee,
+                emissiveIntensity: 1,
+                color: 0x000000
+            })
+            const bulb = new THREE.Mesh(bulbGeometry, bulbMaterial)
+            this.bulbLight.add(bulb)
+
+            console.log(this.bulbLight);
+
+            light.add(this.data, 'bulbPower', Object.keys(this.bulbLuminousPowers))
+                .onChange((val) => {
+                    this.bulbLight.power = this.bulbLuminousPowers[val]
+                    bulbMaterial.emissiveIntensity = this.bulbLight.intensity / Math.pow(0.02, 2.0)
+                })
+
+            // const sphereSize = 1;
+            // const pointLightHelper = new THREE.PointLightHelper(this.pointLight, sphereSize);
+            // this.scene.add(pointLightHelper);
+
+            // const pointLight = light.addFolder('Platform')
+            // pointLight.addColor(this.data, 'lightColor').onChange((val) => { this.pointLight.color.setHex(val) })
+            // pointLight.add(this.pointLight, 'power', 0, 1800).step(1).onChange((val) => { this.pointLight.power = val })
+
+            if (!this.ambientLight) return
 
             const ambientLight = light.addFolder('Ambient light')
             // ambientLight.close()
@@ -105,9 +148,6 @@ export default class Environment {
             })
             ambientLight.add(this.ambientLight, 'intensity').min(0).max(100).step(0.01).name('intensity')
 
-            const sphereSize = 1;
-            const pointLightHelper = new THREE.PointLightHelper(this.platformLight, sphereSize);
-            this.scene.add(pointLightHelper);
 
             if (!this.spotLight) return
 

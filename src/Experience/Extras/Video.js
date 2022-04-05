@@ -59,6 +59,9 @@ export default class Video {
         if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
             this.texture = this.resources.mediaItems[id].item
             this.videoMesh.material.map = this.texture
+
+            this.videoMesh.material.toneMapped = false
+            console.log(this.videoMesh.material.map);
             // this.videoMesh.material.color.set(new THREE.Color().setRGB(0,1,1))
             // this.videoMesh.material.needsUpdate = true
         }

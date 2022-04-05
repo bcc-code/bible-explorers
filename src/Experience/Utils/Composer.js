@@ -21,7 +21,7 @@ export default class Composer {
 
         this.params = {
             // UnrealBloom
-            bloomStrength: 0.27,
+            bloomStrength: 0.528,
             bloomThreshold: 0,
             bloomRadius: 1,
 
