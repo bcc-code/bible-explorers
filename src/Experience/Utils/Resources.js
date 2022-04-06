@@ -176,9 +176,10 @@ export default class Resources extends EventEmitter {
 
     generateTextureForVideo(video, id, path) {
         const texture = new THREE.VideoTexture(video)
+        texture.generateMipmaps = false;
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
-        // texture.encoding = THREE.RGBADepthPacking
+        texture.encoding = THREE.sRGBEncoding
         texture.flipY = false
         
         this.mediaItems[id] = {
@@ -210,7 +211,7 @@ export default class Resources extends EventEmitter {
     }
 
     isRunningLocally() {
-        return location.protocol.includes('file')
+        return  location.protocol.includes('file')
     }
 
     httpGetAsync(theUrl, callback, async = true) {

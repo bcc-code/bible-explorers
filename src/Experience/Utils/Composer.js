@@ -112,8 +112,6 @@ export default class Composer {
             this.bokehPass.materialBokeh.uniforms['maxblur'].value = val
         })
 
-        console.log(this.bokehPass);
-
     }
 
     resize() {

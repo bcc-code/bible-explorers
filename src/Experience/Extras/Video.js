@@ -50,6 +50,8 @@ export default class Video {
         if (!this.texture)
             this.setVideoListeners()
 
+        console.log(this.resources.mediaItems[id].item);
+
         instance.el.videoControlBar.classList.remove('hide')
         instance.el.videoIframe.classList.add('hide')
 
@@ -61,8 +63,10 @@ export default class Video {
         if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
             this.texture = this.resources.mediaItems[id].item
 
+
             this.videoMesh.material.map = this.texture
             this.videoMesh.material.tonnedMap = false
+            this.videoMesh.material.needsUpdate = true
 
         }
 
