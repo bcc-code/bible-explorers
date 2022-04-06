@@ -3,18 +3,15 @@ import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
-import Settings from '../Extras/Settings.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 import Highlight from './Highlight.js'
 import Info from '../Extras/Info.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
+import _api from '../Utils/Api.js'
 
 let instance = null
-
-const apiJsonLocalPath = () => "api/biex-episodes-" + _lang.getLanguageCode() + ".json"
-const wpApi = () => "https://staging-bcckids.kinsta.cloud/wp-json/biex-episodes/get?lang=" + _lang.getLanguageCode()
 
 export default class World {
     constructor() {
@@ -42,10 +39,10 @@ export default class World {
         }
 
         if (instance.resources.isRunningLocally()) {
-            this.httpGetAsync(apiJsonLocalPath(), this.setLocalEpisodes)
+            this.resources.httpGetAsync(_api.apiJsonLocalPath(), this.setLocalEpisodes)
         }
         else {
-            this.httpGetAsync(wpApi(), this.setEpisodes)
+            this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setEpisodes)
         }
 
         // Wait for resources
@@ -54,7 +51,6 @@ export default class World {
             this.controlRoom = new ControlRoom()
             this.highlight = new Highlight()
             this.audio = new Audio()
-            this.settings = new Settings()
             this.environment = new Environment()
 
             this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
@@ -203,8 +199,9 @@ export default class World {
         })
     }
 
-    downloadEpisode() {
-        console.log('downloadEpisode')
+    downloadEpisode(episode) {
+        const episodeId = episode.closest(".episode").getAttribute('data-id')
+        console.log('downloadEpisode from ' + _api.localEpisodePath(episodeId))
     }
 
     async getEpisodeDownloadUrl(videoName) {
@@ -267,24 +264,14 @@ export default class World {
 
     addGUIControls() {
         const axesHelper = new THREE.AxesHelper(40)
-        const gridHelper = new THREE.GridHelper(36, 36);
+        const gridHelper = new THREE.GridHelper(36, 36)
         axesHelper.visible = false
         gridHelper.visible = false
-        this.scene.add(gridHelper, axesHelper);
+        this.scene.add(gridHelper, axesHelper)
 
         const helper = this.debug.ui.addFolder('Helpers')
         helper.close()
         helper.add(axesHelper, 'visible').name('Axes helper')
         helper.add(gridHelper, 'visible').name('Grid helper')
-    }
-
-    httpGetAsync(theUrl, callback, async = true) {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() { 
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", theUrl, async);
-        xmlHttp.send(null);
     }
 }

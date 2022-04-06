@@ -10,6 +10,7 @@ let getLanguageName = () => list[getLanguageCode()]
 let getLanguagesList = () => {
     let html = ''
     Object.entries(list).forEach(([code, language]) => {
+        if (code == getLanguageCode()) return // Skip current language
         html += `<li data-id="${ code }">${ language }</li>`
     })
     return html

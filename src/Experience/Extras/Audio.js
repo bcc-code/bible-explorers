@@ -20,6 +20,7 @@ export default class Audio {
     }
 
     toggleBgMusic() {
+        if (!audio.experience.settings.soundOn) return
         audio.initialize()
 
         if (!audio.bgMusic) {
@@ -52,6 +53,7 @@ export default class Audio {
     }
 
     playCodeUnlockedSound() {
+        if (!audio.experience.settings.soundOn) return
         this.initialize()
 
         if (!audio.codeUnlockedSound) {
@@ -70,6 +72,7 @@ export default class Audio {
     }
 
     playWhoosh() {
+        if (!audio.experience.settings.soundOn) return
         this.initialize()
 
         if (!audio.whoosh) {

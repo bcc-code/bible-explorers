@@ -10,6 +10,7 @@ export default class Settings {
         this.experience = new Experience()
         settings = this
 
+        settings.soundOn = true
         settings.el = document.getElementById("settings")
         settings.el.addEventListener("mousedown", settings.toggleSettings)
     }
@@ -24,7 +25,7 @@ export default class Settings {
                     <div class="settings__header"><i></i><h1>${ _s.settings }</h1></div>
                     <div class="settings__sidebar">
                         <div class="sound">
-                            <h3>${ _s.sound }</h3>
+                            <h3>${ _s.soundEffects }</h3>
                             <div class="toggle"></div>
                         </div>
                         <div class="language">
@@ -74,14 +75,8 @@ export default class Settings {
     }
 
     updateUI = async () => {
-        const isAuthenticated = await this.experience.auth0.isAuthenticated()
-        settings.el.logout.disabled = !isAuthenticated
-        settings.el.login.disabled = isAuthenticated
-
-        if (isAuthenticated) {
-            let userData = await this.experience.auth0.getUser()
-            console.log(userData.email)
-        }
+        settings.el.logout.disabled = !this.experience.auth0.isAuthenticated
+        settings.el.login.disabled = this.experience.auth0.isAuthenticated
     }
 
     login = async () => {

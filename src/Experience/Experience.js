@@ -8,6 +8,7 @@ import Composer from './Utils/Composer.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import sources from './Sources.js'
+import Settings from './Extras/Settings.js'
 import World from './World/World.js'
 import PageLoader from './Progress/PageLoader.js'
 
@@ -40,11 +41,12 @@ export default class Experience {
         this.pageLoader = new PageLoader()
         this.pointer = new MouseMove()
         this.camera = new Camera()
+        this.settings = new Settings()
         this.world = new World()
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
         this.composer = new Composer()
-        this.auth0 = null
+        this.auth0 = {}
 
         // Sizes resize event
         this.sizes.on('resize', () => {

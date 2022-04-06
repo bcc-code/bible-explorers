@@ -25,6 +25,9 @@ export default class Resources extends EventEmitter {
         this.loadManager()
         this.setLoaders()
         this.startLoading()
+
+        if (this.isRunningLocally())
+            document.body.classList.add('local')
     }
 
     loadManager() {
@@ -201,12 +204,22 @@ export default class Resources extends EventEmitter {
 
     getGeneratedVideoElement(videoName) {
         let video = document.getElementById('videojs-' + videoName + '_html5_api')
-        video.autoplay = false // make sure the video won't start autoplay
+        video.autoplay = false // Make sure the video won't start autoplay
 
         return video
     }
 
     isRunningLocally() {
         return location.protocol.includes('file')
+    }
+
+    httpGetAsync(theUrl, callback, async = true) {
+        var xmlHttp = new XMLHttpRequest()
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, async);
+        xmlHttp.send(null);
     }
 }

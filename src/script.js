@@ -1,12 +1,12 @@
 import './style.scss'
 import Experience from './Experience/Experience.js'
 import createAuth0Client from '@auth0/auth0-spa-js';
+import _api from './Experience/Utils/Api.js'
 
 const experience = new Experience(document.querySelector('.webgl'))
 
 // Auth0
 const fetchAuthConfig = () => fetch("/auth_config.json")
-
 const configureClient = async () => {
     const response = await fetchAuthConfig()
     const config = await response.json()
@@ -18,10 +18,22 @@ const configureClient = async () => {
 }
 
 window.onload = async () => {
-    await configureClient()
+    if (experience.resources.isRunningLocally()) return
 
-    const isAuthenticated = await experience.auth0.isAuthenticated();
-    if (isAuthenticated) return
+    await configureClient()
+    experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+
+    if (experience.auth0.isAuthenticated) {
+        let userData = await experience.auth0.getUser()
+        let personId = userData['https://login.bcc.no/claims/personId']
+
+        experience.resources.httpGetAsync(_api.isAkLeder(personId), function(hasAccess) {
+            if (JSON.parse(hasAccess) === true)
+                document.body.classList.add('admin')
+        })
+
+        return
+    }
 
     const query = window.location.search
     if (query.includes("code=") && query.includes("state=")) {
