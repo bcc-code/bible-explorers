@@ -107,44 +107,5 @@ export default class Questions {
 
     toggleVisibleQuestion() {
 
-
-
-
-        // for (let i = 0; i < items.length; i++) {
-        //     nextButton.addEventListener('click', () => {
-        //         console.log(i);
-        //     })
-        // }
-
-        // // prevButton.addEventListener('click', () => {
-        // //     if (!currentItem.matches(':first-child')) {
-        // //         currentItem.classList.remove('visible')
-        // //         currentItem.previousElementSibling.classList.add('visible')
-        // //         currentItem = document.querySelector('.question.visible')
-        // //         prevItem = currentItem.previousElementSibling
-        // //     }
-
-        // //     if (!currentItem.previousElementSibling) {
-        // //         prevButton.classList.add('disabled')
-        // //     } else {
-        // //         prevButton.classList.remove('disabled')
-        // //     }
-        // // })
-
-
-        // nextButton.addEventListener('click', () => {
-
-        //     prevButton.classList.remove('disabled')
-
-        //     // if (!currentItem.nextElementSibling) {
-        //     //     submitButton.classList.remove('disabled')
-        //     //     currentItem.classList.remove('visible')
-        //     //     currentItem.nextElementSibling.classList.add('visible')
-        //     //     currentItem = document.querySelector('.question.visible')
-        //     //     prevItem = currentItem.previousElementSibling
-
-        //     //     nextButton.classList.add('disabled')
-        //     // }
-        // })
     }
 }

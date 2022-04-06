@@ -101,6 +101,36 @@ img {
     max-width: 100%;
 }
 
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    line-height: 1.15; /* 1 */
+    margin: 0; /* 2 */
+}
+
+button,
+input {
+    /* 1 */
+    overflow: visible;
+}
+
+button,
+select {
+    /* 1 */
+    text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+}
+
 // #endregion
 
 // #region Canvas
@@ -573,8 +603,8 @@ img {
     }
 
     .archive__sidebar,
-    .settings__sidebar,
-    .code-unlock__sidebar {
+    .code-unlock__sidebar,
+    .settings__content {
         overflow: hidden;
         background-color: #fff;
         grid-column: span 1/2;
@@ -999,6 +1029,117 @@ img {
         z-index: 2;
     }
 }
+
+.settings {
+    .settings__content {
+        padding: 2rem;
+        display: grid;
+        gap: 2rem;
+    }
+
+    .settings__item {
+        display: flex;
+        align-items: center;
+
+        *:not(h3) {
+            margin-left: auto;
+        }
+    }
+
+    .settings__footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        button {
+            border: none;
+            border-radius: 4px;
+            padding: 1rem;
+            font-size: 1rem;
+            background: $primary;
+            color: #fff;
+        }
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196f3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196f3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    }
+}
+
+.language {
+    .language__picker {
+        position: relative;
+    }
+    .language__current {
+        height: 2rem;
+        padding: 0 1rem;
+        line-height: 2rem;
+        border: 1px solid rgba($dark, 0.2);
+        border-radius: 4px;
+    }
+
+    .language__list {
+        position: absolute;
+        top: 3rem;
+        right: 0;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
 // #endregion
 
 // #region MiniGames

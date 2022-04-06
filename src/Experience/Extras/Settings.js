@@ -23,24 +23,28 @@ export default class Settings {
             let html = `
                 <div class="modal__content settings">
                     <div class="settings__header"><i></i><h1>${ _s.settings }</h1></div>
-                    <div class="settings__sidebar">
-                        <div class="sound">
+                    <div class="settings__content">
+                        <div class="sound settings__item">
                             <h3>${ _s.soundEffects }</h3>
-                            <div class="toggle"></div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
                         </div>
-                        <div class="language">
+                        <div class="language settings__item">
                             <h3>${ _s.language }</h3>
                             <div class="language__picker">
                                 <div class="language__current">${ _lang.getLanguageName() }</div>
                                 <ul class="language__list hide">${ _lang.getLanguagesList() }</ul>
                             </div>
                         </div>
-                        <div class="feedback">
+                        <div class="feedback settings__item">
                             <h3>${ _s.feedback }</h3>
-                            <i class="icon"></i>
                         </div>
-                        <button id="btn-login" disabled="true">${ _s.logIn }</button>
-                        <button id="btn-logout" disabled="true">${ _s.logOut }</button>
+                        <div class="login settings__footer">
+                            <button id="btn-login" disabled="true">${ _s.logIn }</button>
+                            <button id="btn-logout" disabled="true">${ _s.logOut }</button>
+                        </div>
                     </div>
                 </div>
             `;
