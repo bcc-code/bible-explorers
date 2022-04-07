@@ -15,6 +15,7 @@ export default class Highlight {
         this.outlinePass = this.experience.composer.instance.passes[1]
         this.selectedObjects = this.experience.world.controlRoom.clickableObjects
 
+
         this.params = {
             edgeStrength: 4,
             edgeGlow: 1,
@@ -35,12 +36,19 @@ export default class Highlight {
         this.outlinePass.selectedObjects = this.selectedObjects.filter((obj) => {
             return objects.includes(obj.name)
         })
+
         this.outlinePass.pulsePeriod = this.params.pulsePeriod;
         this.outlinePass.edgeGlow = this.params.edgeGlow;
         this.outlinePass.edgeStrength = this.params.edgeStrength;
         this.outlinePass.edgeThickness = this.params.edgeThickness;
 
         this.deactivateObjectsExcept(objects)
+    }
+
+    isHighlighted(intersect) {
+        return this.outlinePass.selectedObjects.filter((obj) => {
+            return (intersect && obj.name == intersect.name)
+        }).length
     }
 
     deactivateObjectsExcept(objects) {
@@ -76,11 +84,6 @@ export default class Highlight {
         }
     }
 
-    isHighlighted(intersect) {
-        return this.outlinePass.selectedObjects.filter((obj) => {
-            return (intersect && obj.name == intersect.name)
-        }).length
-    }
 
     scaleUp(obj) {
         const scaleSize = 1.05

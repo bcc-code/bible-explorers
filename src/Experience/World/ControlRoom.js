@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { VideoTexture } from 'three'
+import { DoubleSide, VideoTexture } from 'three'
 import Experience from "../Experience.js"
 
 export default class ControlRoom {
@@ -66,9 +66,32 @@ export default class ControlRoom {
         this.playIfVideoTexture()
     }
 
+    setUpTextures() {
+        this.textureObjects.forEach((obj) => {
+            switch (obj.name) {
+                case 'tv_4x4_screen':
+                    this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
+                    break
+
+                case 'tv_4x5_screen':
+                    this.setTexture(obj.name, this.sources.textureItems['codes'].item)
+                    break
+
+                case 'tv_16x9_5_screen':
+                    this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
+                    break
+
+                case 'tv_16x10_screen':
+                    this.setTexture(obj.name, this.sources.textureItems['map'].item)
+                    break
+            }
+        })
+    }
+
     changeMeshTexture(name, texture) {
         let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
         if (mesh) {
+            mesh[0].material = new THREE.MeshBasicMaterial()
             mesh[0].material.map = texture
         }
     }
@@ -115,28 +138,6 @@ export default class ControlRoom {
                         child.receiveShadow = true
                         break
                 }
-            }
-        })
-    }
-
-    setUpTextures() {
-        this.textureObjects.forEach((obj) => {
-            switch (obj.name) {
-                case 'tv_4x4_screen':
-                    this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
-                    break
-
-                case 'tv_4x5_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['codes'].item)
-                    break
-
-                case 'tv_16x9_5_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
-                    break
-
-                case 'tv_16x10_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['map'].item)
-                    break
             }
         })
     }
