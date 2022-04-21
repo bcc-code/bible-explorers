@@ -166,11 +166,11 @@ export default class Resources extends EventEmitter {
 
         await btvplayer.load({
             el: videoName,
-            player_options: {
+            options: {
                 videojs: {
                     autoplay: false
                 }
-            }
+            },
         })
     }
 

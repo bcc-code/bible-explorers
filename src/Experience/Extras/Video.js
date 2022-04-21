@@ -63,11 +63,9 @@ export default class Video {
         if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
             this.texture = this.resources.mediaItems[id].item
 
-
             this.videoMesh.material.map = this.texture
             this.videoMesh.material.tonnedMap = false
             this.videoMesh.material.needsUpdate = true
-
         }
 
         // Event listener on video update

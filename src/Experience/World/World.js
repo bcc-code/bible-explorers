@@ -155,7 +155,8 @@ export default class World {
 
     selectLatestEpisode() {
         const allAvailableEpisodes = instance.episodes.list.querySelectorAll('.episode:not(.locked)')
-        allAvailableEpisodes[allAvailableEpisodes.length - 1].dispatchEvent(new Event('mousedown'))
+        if (allAvailableEpisodes)
+            allAvailableEpisodes[allAvailableEpisodes.length - 1].dispatchEvent(new Event('mousedown'))
     }
 
     selectEpisodeListeners() {
@@ -199,22 +200,38 @@ export default class World {
         })
     }
 
-    downloadEpisode(episode) {
+    async downloadEpisode(episode) {
         const episodeId = episode.closest(".episode").getAttribute('data-id')
-        console.log('downloadEpisode from ' + _api.localEpisodePath(episodeId))
+        const claims = await experience.auth0.getIdTokenClaims();
+        const idToken = claims.__raw;
+
+        let videoUrls = []
+        instance.episodes.data.filter(episode => { 
+                return episode.id == episodeId
+            })[0].data.forEach(async (animationFilm) => {
+                const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
+                console.log('downloadEpisode from ' + url)
+
+                videoUrls.push(url)
+            })
     }
 
-    async getEpisodeDownloadUrl(videoName) {
+    async getEpisodeDownloadUrl(videoName, token) {
         const episodeId = videoName.replace('episode-','')
         const locale = _lang.getLanguageCode()
 
         var btvplayer = BTVPlayer({
             type: 'episode',
             id: episodeId,
-            locale: locale
+            locale: locale,
+            access_token: token
         })
 
-        return await btvplayer.api.getDownloadable('episode', episodeId, locale)
+        const allLanguagesVideos = await btvplayer.api.getDownloadables('episode', episodeId)
+        const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
+        const bestQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+
+        return await btvplayer.api.getDownloadable('episode', episodeId, bestQualityVideo.id)
     }
 
     startJourney() {
