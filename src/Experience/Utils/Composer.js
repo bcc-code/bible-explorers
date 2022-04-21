@@ -18,39 +18,12 @@ export default class Composer {
         this.scene = this.experience.scene
         this.debug = this.experience.debug
 
-        this.postprocessing = {}
-
-        this.params = {
-            // UnrealBloom
-            bloomStrength: 0.309,
-            bloomThreshold: 0.348,
-            bloomRadius: 1,
-
-            // Bokeh
-            focus: 30.0,
-            aperture: 0.25,
-            maxblur: 0.01
-        }
-
         this.setInstance()
         this.setRenderPass()
         this.setOutlinePass()
         this.setEffectFXAA()
         this.setGammaCorrection()
-        this.setUnrealBloomPass()
-        this.setBokehPass()
 
-        this.matChanger = () => {
-            this.bokehPass.materialBokeh.uniforms['focus'].value = this.params.focus
-            this.bokehPass.materialBokeh.uniforms['aperture'].value = this.params.aperture * 0.00001;
-            this.bokehPass.materialBokeh.uniforms['maxblur'].value = this.params.maxblur
-        }
-
-        this.matChanger()
-
-        if (this.debug.active) {
-            this.addGUIControls()
-        }
     }
 
     setInstance() {
@@ -65,8 +38,6 @@ export default class Composer {
 
     setEffectFXAA() {
         this.effectFXAA = new ShaderPass(FXAAShader)
-
-        console.log(this.effectFXAA);
         this.effectFXAA.uniforms.resolution.value.set(1 / this.sizes.width, 1 / this.sizes.height)
         this.instance.addPass(this.effectFXAA)
     }
@@ -79,43 +50,6 @@ export default class Composer {
     setOutlinePass() {
         this.outlinePass = new OutlinePass(new THREE.Vector2(this.sizes.width, this.sizes.height), this.scene, this.camera.instance)
         this.instance.addPass(this.outlinePass)
-    }
-
-    setUnrealBloomPass() {
-        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(this.sizes.width, this.sizes.height), 0.19, 0.1, 0)
-        this.unrealBloomPass.threshold = this.params.bloomThreshold
-        this.unrealBloomPass.strength = this.params.bloomStrength
-        this.unrealBloomPass.radius = this.params.bloomRadius
-        this.instance.addPass(this.unrealBloomPass)
-
-    }
-
-    setBokehPass() {
-        this.bokehPass = new BokehPass(this.scene, this.camera.instance, {
-            focus: 1.0,
-            aperture: 0.025,
-            maxblur: 0.01,
-
-            width: this.sizes.width,
-            height: this.sizes.height
-        })
-
-        this.instance.addPass(this.bokehPass)
-    }
-
-    addGUIControls() {
-        const unrealBloomPass = this.debug.ui.addFolder('unrealBloomPass')
-        // unrealBloomPass.close()
-        unrealBloomPass.add(this.params, 'bloomThreshold', 0.0, 1.0).onChange((value) => { this.unrealBloomPass.threshold = Number(value) })
-        unrealBloomPass.add(this.params, 'bloomStrength', 0.0, 3.0).onChange((value) => { this.unrealBloomPass.strength = Number(value) })
-        unrealBloomPass.add(this.params, 'bloomRadius', 0.0, 1.0).onChange((value) => { this.unrealBloomPass.radius = Number(value) })
-
-        const bokehPass = this.debug.ui.addFolder('Depth of field')
-        // bokehPass.close()
-        bokehPass.add(this.params, 'focus', 10.0, 100.0, 10).onChange((val) => { this.bokehPass.materialBokeh.uniforms['focus'].value = val })
-        bokehPass.add(this.params, 'aperture', 0, 10, 0.1).onChange((val) => { this.bokehPass.materialBokeh.uniforms['aperture'].value = val * 0.00001 })
-        bokehPass.add(this.params, 'maxblur', 0.0, 0.01, 0.001).onChange((val) => { this.bokehPass.materialBokeh.uniforms['maxblur'].value = val })
-
     }
 
     resize() {

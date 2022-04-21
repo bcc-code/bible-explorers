@@ -45,6 +45,8 @@ export default class World {
             this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setEpisodes)
         }
 
+        // console.log(this.resources.length);
+
         // Wait for resources
         this.resources.on('ready', () => {
             // Setup
@@ -52,6 +54,7 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
             this.environment = new Environment()
+
 
             this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
             this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
@@ -90,11 +93,11 @@ export default class World {
 
         episodes.forEach((episode) => {
             let link = episode.thumbnail.split('/')
-            episode.thumbnail = 'api/images/' + link[link.length-1]
+            episode.thumbnail = 'api/images/' + link[link.length - 1]
 
             episode.data.forEach((film) => {
                 let link = film.thumbnail.split('/')
-                film.thumbnail = 'api/images/' + link[link.length-1]
+                film.thumbnail = 'api/images/' + link[link.length - 1]
             })
         })
 
@@ -144,10 +147,10 @@ export default class World {
         episodeHtml.className = episodeClasses
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.innerHTML = `
-            <div class="thumbnail"><img src="${ episode.thumbnail }" /> <i class="icon icon-big"></i></div>
+            <div class="thumbnail"><img src="${episode.thumbnail}" /> <i class="icon icon-big"></i></div>
             <div class="heading">
                 <span class="icon icon-small download"></span>
-                <h3 class="title">${ episode.title }</h3>
+                <h3 class="title">${episode.title}</h3>
             </div>
         `
         this.episodes.list.appendChild(episodeHtml)
@@ -160,7 +163,7 @@ export default class World {
     }
 
     selectEpisodeListeners() {
-        document.querySelectorAll(".episode:not(.locked)").forEach(function(episode) {
+        document.querySelectorAll(".episode:not(.locked)").forEach(function (episode) {
             episode.addEventListener("mousedown", () => {
                 instance.addClassToSelectedEpisode(episode)
                 instance.updateSelectedEpisodeData(episode)
@@ -168,8 +171,8 @@ export default class World {
                 instance.showMenuButtons()
             })
         })
-        
-        document.querySelectorAll(".episode:not(.locked) .download").forEach(function(episode) {
+
+        document.querySelectorAll(".episode:not(.locked) .download").forEach(function (episode) {
             episode.addEventListener("mousedown", () => {
                 instance.downloadEpisode(episode)
             })
@@ -177,7 +180,7 @@ export default class World {
     }
 
     addClassToSelectedEpisode(episode) {
-        document.querySelectorAll(".episode").forEach(function(thisEpisode) {
+        document.querySelectorAll(".episode").forEach(function (thisEpisode) {
             thisEpisode.classList.remove('selected')
         })
         episode.classList.add('selected')

@@ -12,7 +12,6 @@ export default class Camera {
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
         this.resources = this.experience.resources
-        this.canvasDebug = this.experience.canvasDebug
         this.debug = this.experience.debug
         camera = this
 
@@ -96,8 +95,6 @@ export default class Camera {
                 this.model = this.resources.controlRoom.scene
             })
 
-            this.setDebugCamera()
-            this.setDebugOrbitControls()
             this.addGUIControls()
         }
     }
@@ -207,11 +204,6 @@ export default class Camera {
 
     }
 
-    setDebugOrbitControls() {
-        this.controls2 = new OrbitControls(this.instanceDebug, this.canvasDebug)
-        this.controls2.target.copy(this.cameraLocations.default.lookAt)
-    }
-
     setDefaultAngleControls() {
         camera.controls.minPolarAngle = -Math.PI
         camera.controls.maxPolarAngle = Math.PI
@@ -232,9 +224,6 @@ export default class Camera {
             this.changeRotateDirection()
         }
 
-        if (this.debug.active) {
-            this.controls2.update()
-        }
     }
 
     addGUIControls() {

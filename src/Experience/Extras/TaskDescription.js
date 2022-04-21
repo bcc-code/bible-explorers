@@ -49,8 +49,8 @@ export default class TaskDescription {
                     camera.updateCameraTo('controlBoard')
 
                     setTimeout(function() {
-                        highlight.setHightlight(["Panel_Screen"])
-                        program.addCustomInteractiveObj("Panel_Screen")
+                        highlight.setHightlight(["Screen"])
+                        program.addCustomInteractiveObj("Screen")
                     }, camera.data.moveDuration)
                 }
                 

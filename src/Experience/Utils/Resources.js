@@ -10,14 +10,15 @@ export default class Resources extends EventEmitter {
         super()
 
         this.experience = new Experience()
+        this.loadingManager = new THREE.LoadingManager()
 
         // Options
         this.sources = sources
 
         // Setup
         this.items = {}
-        this.toLoad = this.sources.length - this.sources.filter((source) => { return ['video', 'videoTexture'].includes(source.type) }).length
-        this.loaded = 0 
+        this.toLoad = this.sources.length
+        this.loaded = 0
         this.mediaItems = []
         this.mediaItemsScreens = []
         this.textureItems = []
@@ -31,23 +32,22 @@ export default class Resources extends EventEmitter {
     }
 
     loadManager() {
-        this.loadingManager = new THREE.LoadingManager(
-            // Loaded
-            () => {
-                window.setTimeout(() => {
-                    this.experience.pageLoader.loaded()
-                }, 500)
+        this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+            // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+        }
 
-                window.setTimeout(() => {
-                    this.experience.loaded = true
-                }, 4000)
-            },
+        this.loadingManager.onLoad = () => {
+            // console.log('Loading complete!')
+        }
 
-            // Progress
-            (itemUrl, itemsLoaded, itemsTotal) => {
-                this.experience.pageLoader.progress(itemsLoaded, itemsTotal)
-            }
-        )
+        this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+        }
+
+        this.loadingManager.onError = function (url) {
+            // console.log('There was an error loading ' + url);
+        };
+
     }
 
     setLoaders() {
@@ -58,7 +58,7 @@ export default class Resources extends EventEmitter {
 
         this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
         this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
-        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
+        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.loadingManager)
     }
 
     startLoading() {
@@ -93,15 +93,19 @@ export default class Resources extends EventEmitter {
 
             else if (source.type === 'videoTexture') {
                 const video = document.createElement('video')
+
+                video.addEventListener('canplay', this.onVideoLoad(video, source.path), false)
+                this.loadingManager.itemStart(source.path)
+
                 video.setAttribute('id', source.name)
                 video.crossOrigin = 'anonymous'
                 video.muted = false
                 video.loop = true
                 video.controls = false
                 video.autoplay = true
-                video.src = source.path
 
                 const texture = new THREE.VideoTexture(video)
+                texture.flipY = false
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.sRGBEncoding
@@ -112,8 +116,15 @@ export default class Resources extends EventEmitter {
                     naturalWidth: video.videoWidth || 1,
                     naturalHeight: video.videoHeight || 1
                 }
+
             }
         }
+    }
+
+    onVideoLoad(video, url) {
+        video.removeEventListener('canplay', this.onVideoLoad, false)
+        this.loadingManager.itemEnd(url)
+        this.loaded++
     }
 
     sourceLoaded(source, file) {
@@ -137,7 +148,7 @@ export default class Resources extends EventEmitter {
     async loadThemeVideos(videoName) {
         let video, path = 'videos/' + videoName + '.mp4'
 
-        if (this.isRunningLocally() == true) { 
+        if (this.isRunningLocally() == true) {
             video = this.createVideoElement(videoName, path)
             video.oncanplay = () => this.generateTextureForVideo(video, videoName, path)
             document.getElementById('videos-container').appendChild(video)
@@ -146,12 +157,12 @@ export default class Resources extends EventEmitter {
             // Video stream from BTV
             await this.loadEpisodeFromBtv(videoName)
             video = this.getGeneratedVideoElement(videoName)
-            this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/'+videoName)
+            this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
         }
     }
 
     async loadEpisodeFromBtv(videoName) {
-        const episodeId = videoName.replace('episode-','')
+        const episodeId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
 
         var btvplayer = BTVPlayer({
@@ -176,12 +187,11 @@ export default class Resources extends EventEmitter {
 
     generateTextureForVideo(video, id, path) {
         const texture = new THREE.VideoTexture(video)
-        texture.generateMipmaps = false;
+        texture.flipY = false
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
         texture.encoding = THREE.sRGBEncoding
-        texture.flipY = false
-        
+
         this.mediaItems[id] = {
             item: texture,
             path: path,
@@ -211,12 +221,12 @@ export default class Resources extends EventEmitter {
     }
 
     isRunningLocally() {
-        return  location.protocol.includes('file')
+        return location.protocol.includes('file')
     }
 
     httpGetAsync(theUrl, callback, async = true) {
         var xmlHttp = new XMLHttpRequest()
-        xmlHttp.onreadystatechange = function() { 
+        xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                 callback(xmlHttp.responseText);
         }

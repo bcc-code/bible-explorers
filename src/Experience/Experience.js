@@ -10,7 +10,6 @@ import Renderer from './Renderer.js'
 import sources from './Sources.js'
 import Settings from './Extras/Settings.js'
 import World from './World/World.js'
-import PageLoader from './Progress/PageLoader.js'
 
 let instance = null
 
@@ -28,8 +27,6 @@ export default class Experience {
 
         // Options
         this.canvas = canvas
-        this.canvasDebug = document.querySelector('.debug-webgl')
-        this.loaded = false
 
         // Setup
         this.debug = new Debug()
@@ -38,7 +35,6 @@ export default class Experience {
         this.time = new Time()
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
-        this.pageLoader = new PageLoader()
         this.pointer = new MouseMove()
         this.camera = new Camera()
         this.settings = new Settings()
@@ -58,14 +54,13 @@ export default class Experience {
             this.update()
         })
 
-        if (!this.debug.active)
-            this.canvasDebug.remove()
+
     }
 
     resize() {
         this.camera.resize()
         this.renderer.resize()
-        this.composer.resize()
+        // this.composer.resize()
         
         if (this.world.program)
             this.world.program.video.resize()
@@ -76,6 +71,6 @@ export default class Experience {
         this.world.update()
         this.stats.update()
         this.renderer.update()
-        this.composer.update()
+        // this.composer.update()
     }
 }

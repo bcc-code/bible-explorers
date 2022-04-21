@@ -11,43 +11,52 @@ export default class Environment {
         this.renderer = this.experience.renderer
 
         // Setup
-        this.setEnvironmentMap()
-        this.setSceneLights()
+        // this.setEnvironmentMap()
+        // this.setCube()
 
-        this.params = {
-            color: this.bulbLight.color.getHex()
-        }
-
-        if (this.debug.active) {
-            this.addGUIControls()
-        }
     }
 
-    setSceneLights() {
-        this.bulbLight = new THREE.PointLight(0xd4af89, 1, 20, 2);
-        this.bulbLight.position.set(0, 3.5, 0);
-        this.bulbLight.power = 1700
-        this.scene.add(this.bulbLight)
+    setCube() {
+        let materialArray = []
+        let texture_ft = new THREE.TextureLoader().load(this.resources.items.environmentMap.source.data[0].src)
+        let texture_bk = new THREE.TextureLoader().load(this.resources.items.environmentMap.source.data[1].src)
+        let texture_up = new THREE.TextureLoader().load(this.resources.items.environmentMap.source.data[2].src)
+        let texture_dn = new THREE.TextureLoader().load(this.resources.items.environmentMap.source.data[3].src)
+        let texture_rt = new THREE.TextureLoader().load(this.resources.items.environmentMap.source.data[4].src)
+        let texture_lt = new THREE.TextureLoader().load(this.resources.items.environmentMap.source.data[5].src)
+
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_bk }))
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_ft }))
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_up }))
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_dn }))
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_lt }))
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_rt }))
+
+        for (let i = 0; i < 6; i++) {
+            materialArray[i].side = THREE.BackSide
+        }
+
+        const cubeGeometry = new THREE.BoxGeometry(36, 40, 36)
+        const cube = new THREE.Mesh(cubeGeometry, materialArray)
+
+        this.scene.add(cube)
     }
 
     setEnvironmentMap() {
         this.environmentMap = {}
-        this.environmentMap.intensity = 3
+        this.environmentMap.intensity = 1
         this.environmentMap.texture = this.resources.items.environmentMap
         this.environmentMap.texture.encoding = THREE.sRGBEncoding
 
-
         this.scene.background = this.environmentMap.texture
-        this.scene.environment = this.environmentMap.texture
+        // this.scene.environment = this.environmentMap.texture
 
         this.environmentMap.updateMaterials = () => {
             this.scene.traverse((child) => {
 
                 if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
-
                     child.material.envMapIntensity = this.environmentMap.intensity
                     child.material.needsUpdate = true
-
                 }
 
             })
@@ -56,31 +65,5 @@ export default class Environment {
         this.environmentMap.updateMaterials()
     }
 
-    addGUIControls() {
-        if (this.debug.active) {
-
-            const environment = this.debug.ui.addFolder('Environment')
-            // environment.close()
-            environment.add(this.environmentMap, 'intensity').min(0).max(20).step(0.01).name('intensity').onChange(() => { this.environmentMap.updateMaterials() })
-
-            const light = this.debug.ui.addFolder('Light')
-            // light.close()
-
-            const bulbGeometry = new THREE.SphereGeometry(0.1, 16, 8)
-            const bulbMaterial = new THREE.MeshStandardMaterial({
-                emissive: 0xffffee,
-                emissiveIntensity: 1,
-                color: 0x000000
-            })
-            const bulb = new THREE.Mesh(bulbGeometry, bulbMaterial)
-            this.bulbLight.add(bulb)
-
-            light.addColor(this.params, 'color').onChange(() => { this.bulbLight.color.setHex(this.params.color) })
-            // bulbMaterial.emissiveIntensity = this.bulbLight.intensity / Math.pow(0.02, 2.0)
-            light.add(this.bulbLight, 'power', 0, 3000).step(1)
-
-
-        }
-    }
 
 }

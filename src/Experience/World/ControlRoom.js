@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { DoubleSide, VideoTexture } from 'three'
+import { VideoTexture } from 'three'
 import Experience from "../Experience.js"
 
 export default class ControlRoom {
@@ -18,9 +18,9 @@ export default class ControlRoom {
         this.world = this.experience.world
 
         this.clickableObjects = []
-        this.textureObjects = []
+        this.interactiveObjects = []
+        this.animatedObjects = []
         this.videoObject = null
-        this.lights = []
         this.currentIntersect = null
 
         this.rotation = {
@@ -29,14 +29,16 @@ export default class ControlRoom {
             speed: 0.005
         }
 
+        // Baked material
+        this.bakedTexture = this.resources.items.baked
+
         // Setup
         this.sources = this.resources
         this.texture = null
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
-        this.storeMeshes()
-        this.setDefaultTextureToScreens()
+        this.getObjects()
 
         // Events
         window.addEventListener('mousedown', () => {
@@ -51,23 +53,84 @@ export default class ControlRoom {
         this.scene.add(this.model)
     }
 
+    getObjects() {
+
+        this.resources.scene.traverse((child) => {
+
+            if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
+
+                child.material = new THREE.MeshBasicMaterial({ color: 0xffffff })
+
+                if (child.name !== 'tv_4x4_screen' && child.name !== 'tv_4x5_screen' && child.name !== 'tv_16x10_screen' && child.name !== 'tv_16x9_screen' && child.name !== 'tv_portal_screen') {
+                    child.material.map = this.bakedTexture
+                }
+
+                switch (child.name) {
+                    case 'tv_4x5':
+                    case 'tv_16x10':
+                    case 'tv_16x9':
+                    case 'Screen':
+                    case 'Panel_time_switchers_holder':
+                        this.clickableObjects.push(child)
+                        break
+
+                    case 'tv_4x4_screen':
+                    case 'tv_4x5_screen':
+                    case 'tv_16x10_screen':
+                    case 'tv_16x9_screen':
+                        this.interactiveObjects.push(child)
+
+                        if (child.name === 'tv_4x5_screen') {
+                            child.material.map = this.sources.items.code_default
+                        }
+
+                        if (child.name === 'tv_16x10_screen') {
+                            child.material.map = this.sources.items.map_default
+                        }
+
+                        if (child.name === 'tv_16x9_screen') {
+                            child.material.map = this.sources.items.iris_default
+                        }
+
+                        break
+
+
+                    case 'arrow_H':
+                    case 'arrow_M':
+                        this.animatedObjects.push(child)
+                        break
+
+                    case 'tv_portal_screen':
+                        this.videoObject = child
+                        break
+
+                    default:
+                        break
+                }
+
+                if (child.material.map) {
+                    child.material.map.flipY = false
+                    child.material.map.encoding = THREE.sRGBEncoding
+                }
+
+            }
+        })
+
+    }
+
     // Set textures
     setTexture(meshName, texture, rotation = 0) {
         if (!texture) return
 
         this.texture = texture
-        this.texture.rotation = THREE.Math.degToRad(rotation)
-        this.texture.flipY = false
-        this.texture.wrapS = THREE.RepeatWrapping
-        this.texture.wrapT = THREE.RepeatWrapping
-        this.texture.encoding = THREE.sRGBEncoding
 
+        console.log(texture);
         this.changeMeshTexture(meshName, this.texture)
         this.playIfVideoTexture()
     }
 
     setUpTextures() {
-        this.textureObjects.forEach((obj) => {
+        this.interactiveObjects.forEach((obj) => {
             switch (obj.name) {
                 case 'tv_4x4_screen':
                     this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
@@ -77,69 +140,30 @@ export default class ControlRoom {
                     this.setTexture(obj.name, this.sources.textureItems['codes'].item)
                     break
 
-                case 'tv_16x9_5_screen':
+                case 'tv_16x9_screen':
                     this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
                     break
 
                 case 'tv_16x10_screen':
                     this.setTexture(obj.name, this.sources.textureItems['map'].item)
                     break
+
             }
         })
     }
 
     changeMeshTexture(name, texture) {
-        let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
+        let mesh = this.interactiveObjects.filter((obj) => { return obj.name == name })
         if (mesh) {
-            mesh[0].material = new THREE.MeshBasicMaterial()
             mesh[0].material.map = texture
         }
     }
 
     playIfVideoTexture() {
-        if (this.texture instanceof VideoTexture)
+        if (this.texture instanceof VideoTexture) {
             this.texture.image.play()
-    }
+        }
 
-    setDefaultTextureToScreens() {
-        this.textureObjects.forEach((obj) => {
-            obj.material.color.set(new THREE.Color().setRGB(0, 0, 0))
-        })
-    }
-
-    storeMeshes() {
-        this.resources.scene.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-                switch (child.name) {
-                    // Store clickable objects
-                    case 'tv_4x4':
-                    case 'tv_4x5':
-                    case 'tv_16x10':
-                    case 'tv_16x9_5':
-                    case 'Panel_Screen':
-                    case 'Panel_time_switch_2_1':
-                    case 'Panel_time_switch_1_1':
-                    case 'Panel_Cabels':
-                        this.clickableObjects.push(child)
-                        break
-
-                    case 'Portal':
-                        this.videoObject = child
-                        break
-
-                    case 'tv_4x4_screen':
-                    case 'tv_4x5_screen':
-                    case 'tv_16x9_5_screen':
-                    case 'tv_16x10_screen':
-                        this.textureObjects.push(child)
-                        break
-
-                    default:
-                        child.receiveShadow = true
-                        break
-                }
-            }
-        })
     }
 
     checkObjectIntersection() {
