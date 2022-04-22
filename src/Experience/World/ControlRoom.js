@@ -52,11 +52,11 @@ export default class ControlRoom {
         this.model = this.resources.scene
         this.scene.add(this.model)
 
-        // const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
-        // const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
+    //     const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
+    //     const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
 
-        // this.box = new THREE.Mesh(boxGeometry, boxMaterial)
-        // this.scene.add(this.box)
+    //     this.box = new THREE.Mesh(boxGeometry, boxMaterial)
+    //     this.scene.add(this.box)
     }
 
     getObjects() {
@@ -75,8 +75,8 @@ export default class ControlRoom {
                     case 'tv_4x5':
                     case 'tv_16x10':
                     case 'tv_16x9':
-                    case 'Screen':
-                    case 'Panel_time_switchers_holder':
+                    case 'panel_screen':
+                    case 'panel_time_switchers_holder':
                         this.clickableObjects.push(child)
                         break
 
@@ -156,7 +156,7 @@ export default class ControlRoom {
             }
         })
 
-        // this.box.material.map = this.sources.textureItems['codes'].item
+        // this.box.material.map = this.sources.textureItems['map'].item
         // this.box.material.needsUpdate = true
     }
 

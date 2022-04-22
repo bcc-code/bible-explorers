@@ -14,12 +14,12 @@ export default [
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/Controlroom_low_v09.glb'
+        path: 'models/Controlroom_low_v11.glb'
     },
     {
         name: 'baked',
         type: 'texture',
-        path: 'textures/baked.jpg'
+        path: 'textures/baked_v4.jpg'
     },
 
     {

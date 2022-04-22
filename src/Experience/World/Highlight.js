@@ -58,7 +58,7 @@ export default class Highlight {
         this.experience.resources.items.controlRoom.scene.children.forEach((mesh) => {
             if (mesh.name.includes('_screen')) {
                 if (!screenObjects.includes(mesh.name)) {
-                    mesh.material.color.set(new THREE.Color().setRGB(0.211, 0.211, 0.211))
+                    // mesh.material.color.set(new THREE.Color().setRGB(0.211, 0.211, 0.211))
                 } else {
                     mesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
                 }

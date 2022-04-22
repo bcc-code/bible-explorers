@@ -19,9 +19,13 @@ $gradient: linear-gradient($primary, $secondary);
 $gradient45: linear-gradient(45deg, $primary, $secondary);
 $gradient90: linear-gradient(90deg, $primary, $tertiary);
 
+
+$gradient-new: linear-gradient(90deg, #131A43, #412251);
+
 $radius: 12px;
 
-$archivo-regular: "Archivo", sans-serif;
+$archivo-regular: "Archivo",
+sans-serif;
 
 // #endregion
 
@@ -31,7 +35,9 @@ $archivo-regular: "Archivo", sans-serif;
     @if $button {
         background-image: url("../static/icons/button.svg");
         background-size: 100% 100%;
-    } @else {
+    }
+
+    @else {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -52,6 +58,12 @@ $archivo-regular: "Archivo", sans-serif;
         font-size: 1.5rem;
     }
 }
+
+
+// #region SVGs
+@mixin popupHeader {}
+
+// #endregion
 
 // #region General
 * {
@@ -110,10 +122,14 @@ input,
 optgroup,
 select,
 textarea {
-    font-family: inherit; /* 1 */
-    font-size: 100%; /* 1 */
-    line-height: 1.15; /* 1 */
-    margin: 0; /* 2 */
+    font-family: inherit;
+    /* 1 */
+    font-size: 100%;
+    /* 1 */
+    line-height: 1.15;
+    /* 1 */
+    margin: 0;
+    /* 2 */
 }
 
 button,
@@ -154,6 +170,7 @@ button,
     outline: none;
     z-index: 99;
 }
+
 // #endregion
 
 // #region Interface
@@ -198,6 +215,7 @@ button,
         width: 100%;
         z-index: 3;
     }
+
     &__step {
         width: 4rem;
         height: 4rem;
@@ -436,7 +454,7 @@ button,
     align-items: center;
     cursor: pointer;
 
-    .thumbnail {
+    &__thumbnail {
         position: relative;
         border-radius: $radius;
         background-color: #fff;
@@ -490,17 +508,17 @@ button,
         font-size: 1rem;
     }
 
-    .heading {
+    &__heading {
         margin-top: 1.5rem;
         display: flex;
     }
 
-    .title {
+    &__title {
         color: #fff;
         margin-left: 1rem;
     }
 
-    &.selected .thumbnail {
+    &.selected .episode__thumbnail {
         border: 4px solid $accent;
     }
 }
@@ -556,12 +574,8 @@ button,
 .modal__content {
     display: grid;
 
-    i {
-        @include background($button: false);
-    }
-
     &.archive {
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: 368px 2fr;
 
         i {
             @include icon(icon-menu);
@@ -571,42 +585,17 @@ button,
     &.settings i {
         @include icon(icon-gear);
     }
+
     &.code-unlock i {
         @include icon(icon-star);
     }
+
     &.task-description i {
         @include icon(icon-exclamation-mark);
     }
+
     &.questions i {
         @include icon(icon-question-mark);
-    }
-
-    .archive__header,
-    .settings__header,
-    .code-unlock__header,
-    .task-description__header,
-    .questions__header {
-        position: relative;
-        background-color: #fff;
-        grid-column: span 1/2;
-        margin-bottom: 1rem;
-
-        padding: 1rem 3rem;
-        text-align: center;
-        border-radius: $radius;
-
-        h1 {
-            color: $primary;
-        }
-        i {
-            position: absolute;
-            left: -2.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 5rem;
-            height: 5rem;
-            background-repeat: no-repeat;
-        }
     }
 
     .archive__sidebar,
@@ -665,6 +654,84 @@ button,
     }
 }
 
+.heading {
+    position: relative;
+    height: 159px;
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+    padding-top: 1.2rem;
+    background-color: #0396E3;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 1/2;
+    clip-path: url('#heading');
+
+
+    &__bg {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+        background: $gradient-new;
+        clip-path: url('#heading');
+    }
+
+    h1 {
+        position: relative;
+        color: #fff;
+    }
+
+
+    .icon {
+        position: absolute;
+        left: 1.6rem;
+        top: 1.6rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            right: -10px;
+            top: -10px;
+            bottom: -10px;
+            background: linear-gradient(#EB9159, #C5516E);
+            border-radius: 50%;
+            border: 4px solid #0396E3;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #332359;
+            border-radius: 50%;
+            border: 4px solid #fff;
+        }
+
+        i {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            z-index: 1;
+        }
+    }
+}
+
 .modal__footer {
     margin-top: 1rem;
     display: flex;
@@ -702,6 +769,7 @@ button,
     }
 
     &.hide-nav {
+
         .btn__prev,
         .btn__next {
             display: none;
@@ -719,6 +787,7 @@ button,
     &__title {
         margin-bottom: 10px;
     }
+
     &__textarea {
         width: 100%;
         padding: 10px;
@@ -770,13 +839,11 @@ button,
         padding-bottom: var(--mask-height);
         padding-right: 1rem;
 
-        --mask-image-content: linear-gradient(
-            to bottom,
-            transparent,
-            white var(--mask-height),
-            white calc(100% - var(--mask-height)),
-            transparent
-        );
+        --mask-image-content: linear-gradient(to bottom,
+                transparent,
+                white var(--mask-height),
+                white calc(100% - var(--mask-height)),
+                transparent);
 
         --mask-size-content: calc(100% - var(--scrollbar-width)) 100%;
         --mask-image-scrollbar: linear-gradient(white, white);
@@ -793,7 +860,8 @@ button,
 
         &::-webkit-scrollbar-thumb {
             background-color: $primary;
-            border-radius: 9999px; /* always round */
+            border-radius: 9999px;
+            /* always round */
         }
 
         &::-webkit-scrollbar-track {
@@ -834,6 +902,7 @@ button,
     transition: transform 0.4s ease-in-out;
     will-change: transform;
     z-index: 4;
+
     &.ended {
         transform-origin: top right;
         transition: transform 1.5s ease-in-out;
@@ -843,6 +912,7 @@ button,
 .video {
     .css3dobject {
         pointer-events: none;
+
         &.hide {
             display: none;
         }
@@ -924,9 +994,11 @@ button,
         &.is-playing .icon-pause {
             display: inline-block;
         }
+
         &.is-paused .icon-play {
             display: inline-block;
         }
+
         &.is-muted .icon-mute {
             display: inline-block;
         }
@@ -957,7 +1029,7 @@ button,
         }
     }
 
-    &__controls > *:not(:last-child) {
+    &__controls>*:not(:last-child) {
         margin-right: 20px;
     }
 
@@ -985,6 +1057,7 @@ button,
         margin-bottom: 20px;
         pointer-events: all;
         position: relative;
+
         &::after {
             content: "";
             position: absolute;
@@ -1018,6 +1091,7 @@ button,
         background-color: rgba(255, 255, 255, 0.7);
         width: 0%;
     }
+
     &__progressbar {
         background-color: #ff003b;
         width: 0%;
@@ -1057,6 +1131,7 @@ button,
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
+
         button {
             border: none;
             border-radius: 4px;
@@ -1103,15 +1178,15 @@ button,
             transition: 0.4s;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: #2196f3;
         }
 
-        input:focus + .slider {
+        input:focus+.slider {
             box-shadow: 0 0 1px #2196f3;
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             -webkit-transform: translateX(26px);
             -ms-transform: translateX(26px);
             transform: translateX(26px);
@@ -1131,6 +1206,7 @@ button,
     .language__picker {
         position: relative;
     }
+
     .language__current {
         height: 2rem;
         padding: 0 1rem;
@@ -1176,6 +1252,7 @@ button,
         letter-spacing: 5px;
         position: relative;
     }
+
     &__screen:before {
         content: "0000";
         color: #d1d1d1;
@@ -1184,6 +1261,7 @@ button,
         right: 0;
         text-align: center;
     }
+
     &__input {
         width: 193px;
         text-align: left;
@@ -1205,16 +1283,20 @@ button,
         justify-content: center;
         align-items: center;
     }
+
     &__btn:nth-child(6n + 1) {
         margin-left: 0;
     }
+
     &__btn--backspace {
         background: #9f4096;
         color: #fff;
     }
+
     &__btn--confirm {
         background: #fcb04e;
         color: #fff;
     }
 }
+
 // #endregion
