@@ -50,8 +50,6 @@ export default class Video {
         if (!this.texture)
             this.setVideoListeners()
 
-        console.log(this.resources.mediaItems[id].item);
-
         instance.el.videoControlBar.classList.remove('hide')
         instance.el.videoIframe.classList.add('hide')
 

@@ -23,7 +23,6 @@ export default class Renderer {
             antialias: true,
         })
 
-        // this.instance.physicallyCorrectLights = true
         this.instance.outputEncoding = THREE.sRGBEncoding
         this.instance.toneMapping = THREE.ReinhardToneMapping
         this.instance.setSize(this.sizes.width, this.sizes.height)

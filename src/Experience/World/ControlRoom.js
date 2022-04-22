@@ -18,7 +18,7 @@ export default class ControlRoom {
         this.world = this.experience.world
 
         this.clickableObjects = []
-        this.interactiveObjects = []
+        this.textureObjects = []
         this.animatedObjects = []
         this.videoObject = null
         this.currentIntersect = null
@@ -51,6 +51,12 @@ export default class ControlRoom {
     setModel() {
         this.model = this.resources.scene
         this.scene.add(this.model)
+
+        // const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
+        // const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
+
+        // this.box = new THREE.Mesh(boxGeometry, boxMaterial)
+        // this.scene.add(this.box)
     }
 
     getObjects() {
@@ -78,7 +84,7 @@ export default class ControlRoom {
                     case 'tv_4x5_screen':
                     case 'tv_16x10_screen':
                     case 'tv_16x9_screen':
-                        this.interactiveObjects.push(child)
+                        this.textureObjects.push(child)
 
                         if (child.name === 'tv_4x5_screen') {
                             child.material.map = this.sources.items.code_default
@@ -123,14 +129,13 @@ export default class ControlRoom {
         if (!texture) return
 
         this.texture = texture
-
-        console.log(texture);
+        texture.flipY = false
         this.changeMeshTexture(meshName, this.texture)
         this.playIfVideoTexture()
     }
 
     setUpTextures() {
-        this.interactiveObjects.forEach((obj) => {
+        this.textureObjects.forEach((obj) => {
             switch (obj.name) {
                 case 'tv_4x4_screen':
                     this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
@@ -150,10 +155,13 @@ export default class ControlRoom {
 
             }
         })
+
+        // this.box.material.map = this.sources.textureItems['codes'].item
+        // this.box.material.needsUpdate = true
     }
 
     changeMeshTexture(name, texture) {
-        let mesh = this.interactiveObjects.filter((obj) => { return obj.name == name })
+        let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
         if (mesh) {
             mesh[0].material.map = texture
         }

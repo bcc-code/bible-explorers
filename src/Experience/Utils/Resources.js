@@ -93,16 +93,18 @@ export default class Resources extends EventEmitter {
 
             else if (source.type === 'videoTexture') {
                 const video = document.createElement('video')
-
-                video.addEventListener('canplay', this.onVideoLoad(video, source.path), false)
-                this.loadingManager.itemStart(source.path)
+                video.addEventListener('loadedmetadata', this.onVideoLoad(video, source.path), false)
 
                 video.setAttribute('id', source.name)
+                video.setAttribute('webkit-playsinline', 'webkit-playsinline')
+                video.setAttribute('playsinline', '')
                 video.crossOrigin = 'anonymous'
                 video.muted = false
                 video.loop = true
                 video.controls = false
                 video.autoplay = true
+                video.preload = 'auto'
+                video.src = source.path
 
                 const texture = new THREE.VideoTexture(video)
                 texture.flipY = false
@@ -117,12 +119,16 @@ export default class Resources extends EventEmitter {
                     naturalHeight: video.videoHeight || 1
                 }
 
+                this.loadingManager.itemStart(source.path)
+
             }
+
+
         }
     }
 
     onVideoLoad(video, url) {
-        video.removeEventListener('canplay', this.onVideoLoad, false)
+        video.removeEventListener('loadedmetadata', this.onVideoLoad, false)
         this.loadingManager.itemEnd(url)
         this.loaded++
     }
