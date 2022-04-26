@@ -393,15 +393,19 @@ button,
         z-index: -1;
     }
 
-    .menu {
+    #menu {
         width: 100%;
         height: 100%;
-        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 2rem;
-        // opacity: 0;
+        display: none;
+    }
+
+    #introduction {
+        color: #fff;
+        font-size: 1.25rem;
     }
 
     .button {
@@ -423,7 +427,7 @@ button,
     }
 }
 
-#episodes {
+#chapters {
     display: none;
     align-items: center;
     grid-auto-rows: minmax(min-content, max-content);
@@ -437,6 +441,27 @@ button,
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 3rem;
+    }
+
+    .categories.list {
+    }
+    .category {
+        margin-right: 1rem;
+        padding: 2rem 1rem;
+        border-radius: $radius;
+        background-color: #fff;
+        cursor: pointer;
+        text-align: center;
+        font-size: 5rem;
+        border: 2px solid #fff;
+
+        &.selected {
+            border: 2px solid $accent;
+        }
+    }
+
+    .back.button {
+        display: none;
     }
 }
 
@@ -452,11 +477,9 @@ button,
         right: -1.5rem;
         @include icon(icon-play-solid);
 
-
         @at-root .locked#{&} {
             @include icon(icon-lock-solid);
         }
-
     }
 
     body:not(.admin) & .icon.download,
@@ -490,7 +513,6 @@ button,
         color: #fff;
         margin-left: 1rem;
     }
-
 }
 
 .modal {

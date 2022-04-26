@@ -32,9 +32,11 @@ export default class World {
         this.episodeProgress = () => localStorage.getItem(this.getId()) || 0
 
         // Episodes
-        this.episodes = {
-            container: document.getElementById("episodes"),
-            list: document.querySelector("#episodes .list"),
+        this.chapters = {
+            container: document.getElementById("chapters"),
+            categories: document.querySelector(".categories.list"),
+            episodes: document.querySelector(".episodes.list"),
+            backBtn: document.querySelector(".back.button"),
             data: []
         }
 
@@ -42,10 +44,8 @@ export default class World {
             this.resources.httpGetAsync(_api.apiJsonLocalPath(), this.setLocalEpisodes)
         }
         else {
-            this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setEpisodes)
+            this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setCategories)
         }
-
-        // console.log(this.resources.length);
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -55,7 +55,6 @@ export default class World {
             this.audio = new Audio()
             this.environment = new Environment()
 
-
             this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
             this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
         })
@@ -63,16 +62,22 @@ export default class World {
         // Welcome screen
         this.welcome = {
             landingScreen: document.getElementById("landing-screen"),
+            introduction: document.getElementById("introduction"),
+            menu: document.getElementById("menu"),
             congratulations: document.getElementById("congratulations"),
             startJourney: document.getElementById("start-journey"),
-            restartJourney: document.getElementById("restart-journey"),
+            restartJourney: document.getElementById("restart-journey")
         }
 
+        this.welcome.introduction.innerText = _s.introduction
         this.welcome.restartJourney.innerText = _s.journey.restart
         this.welcome.congratulations.innerText = _s.journey.congratulations
 
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("mousedown", this.goHome)
+
+        instance.chapters.backBtn.innerText = _s.journey.back
+        this.chapters.backBtn.addEventListener("click", this.backToCategories)
 
         // Debug
         if (this.debug.active) {
@@ -86,35 +91,6 @@ export default class World {
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
         instance.program.updateIrisTexture('SLEEP')
-    }
-
-    setLocalEpisodes(data) {
-        let episodes = JSON.parse(data)
-
-        episodes.forEach((episode) => {
-            let link = episode.thumbnail.split('/')
-            episode.thumbnail = 'api/images/' + link[link.length - 1]
-
-            episode.data.forEach((film) => {
-                let link = film.thumbnail.split('/')
-                film.thumbnail = 'api/images/' + link[link.length - 1]
-            })
-        })
-
-        instance.setEpisodes(JSON.stringify(episodes))
-    }
-
-    setEpisodes(data) {
-        if (!data) return
-
-        instance.episodes.data = JSON.parse(data)
-        instance.episodes.data.forEach((episode) => {
-            instance.setEpisodeHtml(episode)
-        })
-
-        instance.selectEpisodeListeners()
-        instance.selectLatestEpisode()
-        instance.episodes.container.style.display = 'grid'
     }
 
     showMenuButtons() {
@@ -140,12 +116,81 @@ export default class World {
         }
     }
 
+    setLocalEpisodes(data) {
+        let episodes = JSON.parse(data)
+
+        episodes.forEach((episode) => {
+            let link = episode.thumbnail.split('/')
+            episode.thumbnail = 'api/images/' + link[link.length - 1]
+
+            episode.data.forEach((film) => {
+                let link = film.thumbnail.split('/')
+                film.thumbnail = 'api/images/' + link[link.length - 1]
+            })
+        })
+
+        instance.setEpisodes(JSON.stringify(episodes))
+    }
+
+    setCategories(data) {
+        if (!data) return
+
+        instance.chapters.data = JSON.parse(data)
+    
+        for (const [category, data] of Object.entries(instance.chapters.data)) {
+            instance.setCategoryHtml({ name: data.name, slug: data.slug })
+        }
+
+        instance.selectCategoryListeners()
+
+        instance.chapters.container.style.display = 'grid'
+        instance.welcome.menu.style.display = 'flex'
+    }
+
+    setCategoryHtml(category) {
+        let categoryHtml = document.createElement("div")
+        categoryHtml.className = "category"
+        categoryHtml.setAttribute("data-slug", category.slug)
+        categoryHtml.innerHTML = `<h3 class="category__title">${category.name}</h3>`
+        instance.chapters.categories.appendChild(categoryHtml)
+    }
+
+    selectCategoryListeners() {
+        document.querySelectorAll(".category").forEach(function (category) {
+            category.addEventListener("mousedown", () => {
+                instance.chapters.categories.style.display = 'none'
+
+                const categorySlug = category.getAttribute('data-slug')
+                instance.setEpisodes(instance.chapters.data[categorySlug]['episodes'])
+            })
+        })
+    }
+
+    backToCategories() {
+        instance.chapters.categories.style.display = 'grid'
+        instance.chapters.episodes.style.display = 'none'
+        instance.chapters.episodes.innerHTML = ''
+        instance.chapters.backBtn.style.display = 'none'
+    }
+
+    setEpisodes(data) {
+        data.forEach((episode) => {
+            instance.setEpisodeHtml(episode)
+        })
+
+        instance.selectEpisodeListeners()
+
+        instance.chapters.backBtn.style.display = 'block'
+        instance.chapters.episodes.style.display = 'grid'
+    }
+
     setEpisodeHtml(episode) {
         let episodeHtml = document.createElement("div")
         let episodeClasses = "episode"
         episodeClasses += episode.status == "future" ? " locked" : ""
         episodeHtml.className = episodeClasses
         episodeHtml.setAttribute("data-id", episode.id)
+        episodeHtml.setAttribute("data-slug", episode.category)
         episodeHtml.innerHTML = `
             <div class="episode__thumbnail"><img src="${episode.thumbnail}" /> <i class="icon icon-big"></i></div>
             <div class="episode__heading">
@@ -153,13 +198,7 @@ export default class World {
                 <h3 class="episode__title">${episode.title}</h3>
             </div>
         `
-        this.episodes.list.appendChild(episodeHtml)
-    }
-
-    selectLatestEpisode() {
-        const allAvailableEpisodes = instance.episodes.list.querySelectorAll('.episode:not(.locked)')
-        if (allAvailableEpisodes)
-            allAvailableEpisodes[allAvailableEpisodes.length - 1].dispatchEvent(new Event('mousedown'))
+        this.chapters.episodes.appendChild(episodeHtml)
     }
 
     selectEpisodeListeners() {
@@ -187,8 +226,9 @@ export default class World {
     }
 
     updateSelectedEpisodeData(episode) {
-        let episodeId = episode.getAttribute('data-id')
-        instance.selectedEpisode = instance.episodes.data.filter((episode) => { return episode.id == episodeId })[0]
+        const episodeId = episode.getAttribute('data-id')
+        const categorySlug = episode.getAttribute('data-slug')
+        instance.selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == episodeId })[0]
     }
 
     loadEpisodeTextures() {
@@ -209,7 +249,7 @@ export default class World {
         const idToken = claims.__raw;
 
         let videoUrls = []
-        instance.episodes.data.filter(episode => { 
+        instance.chapters.categories.filter(episode => { 
                 return episode.id == episodeId
             })[0].data.forEach(async (animationFilm) => {
                 const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)

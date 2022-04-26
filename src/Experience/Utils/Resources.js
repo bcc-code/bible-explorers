@@ -120,10 +120,7 @@ export default class Resources extends EventEmitter {
                 }
 
                 this.loadingManager.itemStart(source.path)
-
             }
-
-
         }
     }
 

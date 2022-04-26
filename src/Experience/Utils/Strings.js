@@ -2,11 +2,14 @@ import _lang from '../Utils/Lang.js'
 
 const strings = {
     "no": {
+        "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
         "journey": {
+            "seeAllEpisodes": "Gå til tidsreisene",
             "start": "Start tidsreise",
             "continue": "Fortsett tidsreise", 
             "restart": "Start reise på nytt",
             "congratulations": "Du har fullført tidsreisen for dette temaet!",
+            "back": "Tilbake"
         },
         "codeUnlock": "Code unlock",
         "taskDescription": "Oppgavebeskrivelse",
@@ -28,11 +31,14 @@ const strings = {
         }
     },
     "en": {
+        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
         "journey": {
+            "seeAllEpisodes": "Go to all journeys",
             "start": "Start journey",
             "continue": "Continue journey", 
             "restart": "Restart journey",
             "congratulations": "You have completed this theme's journey!",
+            "back": "Back"
         },
         "codeUnlock": "Code unlock",
         "taskDescription": "Task description",
