@@ -40,12 +40,7 @@ export default class World {
             data: []
         }
 
-        if (instance.resources.isRunningLocally()) {
-            this.resources.httpGetAsync(_api.apiJsonLocalPath(), this.setLocalEpisodes)
-        }
-        else {
-            this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setCategories)
-        }
+        this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setCategories)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -101,7 +96,6 @@ export default class World {
         else {
             instance.welcome.restartJourney.style.display = "block"
         }
-
         if (this.episodeProgress() == this.selectedEpisode.program.length) {
             instance.welcome.congratulations.style.display = "block"
             instance.welcome.startJourney.style.display = "none"
@@ -110,29 +104,12 @@ export default class World {
             instance.welcome.startJourney.style.display = "block"
             instance.welcome.congratulations.style.display = "none"
         }
-
         if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
             instance.welcome.startJourney.innerText = _s.journey.continue
         }
     }
 
-    setLocalEpisodes(data) {
-        let episodes = JSON.parse(data)
-
-        episodes.forEach((episode) => {
-            let link = episode.thumbnail.split('/')
-            episode.thumbnail = 'api/images/' + link[link.length - 1]
-
-            episode.data.forEach((film) => {
-                let link = film.thumbnail.split('/')
-                film.thumbnail = 'api/images/' + link[link.length - 1]
-            })
-        })
-
-        instance.setEpisodes(JSON.stringify(episodes))
-    }
-
-    setCategories(data) {
+    setEpisodes(data) {
         if (!data) return
 
         instance.chapters.data = JSON.parse(data)

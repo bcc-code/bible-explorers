@@ -26,9 +26,6 @@ export default class Resources extends EventEmitter {
         this.loadManager()
         this.setLoaders()
         this.startLoading()
-
-        if (this.isRunningLocally())
-            document.body.classList.add('local')
     }
 
     loadManager() {
@@ -151,17 +148,10 @@ export default class Resources extends EventEmitter {
     async loadThemeVideos(videoName) {
         let video, path = 'videos/' + videoName + '.mp4'
 
-        if (this.isRunningLocally() == true) {
-            video = this.createVideoElement(videoName, path)
-            video.oncanplay = () => this.generateTextureForVideo(video, videoName, path)
-            document.getElementById('videos-container').appendChild(video)
-        }
-        else {
-            // Video stream from BTV
-            await this.loadEpisodeFromBtv(videoName)
-            video = this.getGeneratedVideoElement(videoName)
-            this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
-        }
+        // Video stream from BTV
+        await this.loadEpisodeFromBtv(videoName)
+        video = this.getGeneratedVideoElement(videoName)
+        this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
     }
 
     async loadEpisodeFromBtv(videoName) {
@@ -176,6 +166,7 @@ export default class Resources extends EventEmitter {
 
         let btvContainer = document.createElement('div')
         btvContainer.setAttribute('id', videoName)
+        // btvContainer.setAttribute('data-url', await btvplayer.api.getDownloadable('episode', episodeId, locale))
         document.getElementById('videos-container').appendChild(btvContainer)
 
         await btvplayer.load({
@@ -221,10 +212,6 @@ export default class Resources extends EventEmitter {
         video.autoplay = false // Make sure the video won't start autoplay
 
         return video
-    }
-
-    isRunningLocally() {
-        return location.protocol.includes('file')
     }
 
     httpGetAsync(theUrl, callback, async = true) {

@@ -482,8 +482,7 @@ button,
         }
     }
 
-    body:not(.admin) & .icon.download,
-    body.local & .icon.icon.download {
+    body:not(.admin) & .icon.download {
         display: none;
     }
 
