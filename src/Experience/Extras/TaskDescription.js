@@ -10,7 +10,7 @@ export default class TaskDescription {
         this.world = this.experience.world
         instance = this
     }
-  
+
     toggleTaskDescription() {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
@@ -25,12 +25,12 @@ export default class TaskDescription {
             instance.text = selectedEpisode.program[currentStep].description
 
             let html = `
-                <div class="modal__content task-description">
-                    <div class="task-description__header"><i></i><h1>${ _s.taskDescription }</h1></div>
-                    <div class="task-description__content">${ instance.text }</div>
+                <div class="modal__content task">
+                <div class="task__header heading"><div class="icon"><i></i></div><h3>${_s.taskDescription}</h3></div>
+                    <div class="task__content">${instance.text}</div>
                 </div>
 
-                <div id="get-task" class="btn">${ _s.getTask }</div>
+                <div id="get-task" class="btn">${_s.getTask}</div>
             `;
 
             instance.modal = new Modal(html)
@@ -39,7 +39,7 @@ export default class TaskDescription {
                 if (selectedEpisode.program[currentStep].taskType == 'questions') {
                     camera.updateCameraTo('screensCloseLook')
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         highlight.setHightlight(["tv_16x10"])
                         program.addCustomInteractiveObj("tv_16x10")
                     }, camera.data.moveDuration)
@@ -48,12 +48,12 @@ export default class TaskDescription {
                 else if (selectedEpisode.program[currentStep].taskType == 'code') {
                     camera.updateCameraTo('controlBoard')
 
-                    setTimeout(function() {
-                        highlight.setHightlight(["Screen"])
-                        program.addCustomInteractiveObj("Screen")
+                    setTimeout(function () {
+                        highlight.setHightlight(["panel_screen"])
+                        program.addCustomInteractiveObj("panel_screen")
                     }, camera.data.moveDuration)
                 }
-                
+
                 else if (program.stepType() == 'iris') {
                     program.advance()
                 }

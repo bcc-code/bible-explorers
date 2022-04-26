@@ -22,24 +22,21 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header"><i></i><h1>${ _s.settings }</h1></div>
+                    <div class="settings__header heading"><div class="icon"><i></i></div><h2>${ _s.settings }</h2></div>
                     <div class="settings__content">
                         <div class="sound settings__item">
-                            <h3>${ _s.soundEffects }</h3>
+                            <p>${ _s.soundEffects }</p>
                             <label class="switch">
                                 <input type="checkbox">
                                 <span class="slider round"></span>
                             </label>
                         </div>
                         <div class="language settings__item">
-                            <h3>${ _s.language }</h3>
+                            <p>${ _s.language }</p>
                             <div class="language__picker">
                                 <div class="language__current">${ _lang.getLanguageName() }</div>
                                 <ul class="language__list hide">${ _lang.getLanguagesList() }</ul>
                             </div>
-                        </div>
-                        <div class="feedback settings__item">
-                            <h3>${ _s.feedback }</h3>
                         </div>
                         <div class="login settings__footer">
                             <button id="btn-login" disabled="true">${ _s.logIn }</button>

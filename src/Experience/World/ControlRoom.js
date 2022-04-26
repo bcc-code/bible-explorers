@@ -52,11 +52,11 @@ export default class ControlRoom {
         this.model = this.resources.scene
         this.scene.add(this.model)
 
-    //     const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
-    //     const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
+        //     const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
+        //     const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
 
-    //     this.box = new THREE.Mesh(boxGeometry, boxMaterial)
-    //     this.scene.add(this.box)
+        //     this.box = new THREE.Mesh(boxGeometry, boxMaterial)
+        //     this.scene.add(this.box)
     }
 
     getObjects() {
@@ -92,10 +92,12 @@ export default class ControlRoom {
 
                         if (child.name === 'tv_16x10_screen') {
                             child.material.map = this.sources.items.map_default
+                            this.clickableObjects.push(child)
                         }
 
                         if (child.name === 'tv_16x9_screen') {
                             child.material.map = this.sources.items.iris_default
+                            this.clickableObjects.push(child)
                         }
 
                         break

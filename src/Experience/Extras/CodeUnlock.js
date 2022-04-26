@@ -18,7 +18,7 @@ export default class CodeUnlock {
         else {
             let html = `
                 <div class="modal__content code-unlock">
-                    <div class="code-unlock__header"><i></i><h1>${ _s.codeUnlock }</h1></div>
+                    <div class="code-unlock__header heading"><div class="icon"><i></i></div><h3>${_s.codeUnlock}</h3></div>
                     <div class="code-unlock__sidebar">
                         <div class="code-unlock__container">
                             <div class="code-unlock__screen">
@@ -53,12 +53,12 @@ export default class CodeUnlock {
             }
             instance.secretCode = instance.world.selectedEpisode.program[instance.world.program.currentStep].codeToUnlock
 
-            instance.el.numbers.forEach(function(number) {
+            instance.el.numbers.forEach(function (number) {
                 number.addEventListener("mousedown", () => {
                     instance.add(number.textContent)
                 })
             })
-            
+
             instance.el.backspace.addEventListener("mousedown", instance.remove)
             instance.el.confirm.addEventListener("mousedown", instance.checkCode)
 

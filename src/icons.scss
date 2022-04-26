@@ -24,72 +24,58 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-expand:before {
-    content: "\e916";
-}
-.icon-arrow-down:before {
-    content: "\e900";
-}
-.icon-arrow-left:before {
-    content: "\e901";
-}
-.icon-arrow-right:before {
-    content: "\e902";
-}
-.icon-arrow-up:before {
-    content: "\e903";
-}
-.icon-backward:before {
-    content: "\e904";
-}
-.icon-close:before {
-    content: "\e905";
-}
-.icon-exclamation-mark:before {
-    content: "\e906";
-}
-.icon-forward:before {
-    content: "\e907";
-}
-.icon-gear:before {
-    content: "\e908";
-}
-.icon-home:before {
-    content: "\e909";
-}
-.icon-lock:before {
-    content: "\e90a";
-}
-.icon-menu:before {
-    content: "\e90b";
-}
-.icon-mute:before {
+.icon-arrow-right-long-solid:before {
     content: "\e90c";
 }
-.icon-pause:before {
+
+.icon-arrow-left-long-solid:before {
     content: "\e90d";
 }
-.icon-play:before {
-    content: "\e90e";
+
+.icon-gear-solid:before {
+    content: "\e900";
 }
-.icon-plus:before {
-    content: "\e90f";
+
+.icon-volume-slash-solid:before {
+    content: "\e901";
 }
-.icon-question-mark:before {
-    content: "\e910";
+
+.icon-volume-solid:before {
+    content: "\e902";
 }
-.icon-remote-play:before {
-    content: "\e911";
+
+.icon-expand-solid:before {
+    content: "\e903";
 }
-.icon-rotate:before {
-    content: "\e912";
+
+.icon-pause-solid:before {
+    content: "\e904";
 }
-.icon-search:before {
-    content: "\e913";
+
+.icon-play-solid:before {
+    content: "\e905";
 }
-.icon-sound:before {
-    content: "\e914";
+
+.icon-lock-solid:before {
+    content: "\e906";
 }
-.icon-star:before {
-    content: "\e915";
+
+.icon-star-solid:before {
+    content: "\e907";
+}
+
+.icon-question-solid:before {
+    content: "\e908";
+}
+
+.icon-house-solid:before {
+    content: "\e909";
+}
+
+.icon-xmark-solid:before {
+    content: "\e90a";
+}
+
+.icon-list-solid:before {
+    content: "\e90b";
 }

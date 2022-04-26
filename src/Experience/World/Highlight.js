@@ -28,6 +28,10 @@ export default class Highlight {
             hiddenEdgeColor: '#ff0000'
         }
 
+        this.objPos = (item) => {
+            return item.position.clone()
+        }
+
         if (this.debug.active)
             this.addGUIControls()
     }
@@ -57,11 +61,7 @@ export default class Highlight {
 
         this.experience.resources.items.controlRoom.scene.children.forEach((mesh) => {
             if (mesh.name.includes('_screen')) {
-                if (!screenObjects.includes(mesh.name)) {
-                    // mesh.material.color.set(new THREE.Color().setRGB(0.211, 0.211, 0.211))
-                } else {
-                    mesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
-                }
+                mesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
             }
         })
     }
@@ -87,14 +87,13 @@ export default class Highlight {
 
     scaleUp(obj) {
         const scaleSize = 1.05
-
         this.setupObjectScaleAnimation(obj, { x: scaleSize, y: scaleSize, z: 1 });
 
         let screen = this.experience.resources.items.controlRoom.scene.children.filter((mesh) => {
             return mesh.name == obj.name + '_screen'
         })
         if (screen.length)
-            this.setupObjectScaleAnimation(screen[0], { x: scaleSize, y: scaleSize, z: 1 })
+            this.setupObjectScaleAnimation(screen[0], { x: 1.01, y: 1.01, z: 1 })
     }
 
     scaleDown(obj) {
@@ -114,6 +113,7 @@ export default class Highlight {
             .to({ x: scale.x, y: scale.y, z: scale.z }, 300)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .start();
+
     }
 
     addGUIControls() {

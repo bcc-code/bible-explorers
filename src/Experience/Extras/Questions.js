@@ -26,11 +26,11 @@ export default class Questions {
 
             let html = `
                 <div class="modal__content questions ">
-                    <div class="questions__header"><i></i><h1>${_s.questions}</h1></div>
+                    <div class="questions__header heading"><div class="icon"><i></i></div><h3>${_s.questions}</h3></div>
                     <div class="questions__content">`
 
             questions.forEach((question, index) => {
-                html += `<div class="question >
+                html += `<div class="question">
                                 <span class="question__label"> Question ${index + 1} / ${questions.length}</span>
                                 <div class="question__title">${question.title}</div>
                                 <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}">${allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep][index] : ''}</textarea>
