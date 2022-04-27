@@ -414,6 +414,12 @@ button,
         text-align: center;
     }
 
+    .logo {
+        width: 500px;
+        height: 140px;
+        @include setBackground('../static/svgs/bible-kids-logo.svg');
+    }
+
 }
 
 #chapters {

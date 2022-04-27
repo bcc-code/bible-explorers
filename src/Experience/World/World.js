@@ -160,7 +160,6 @@ export default class World {
         instance.chapters.episodes.style.display = 'none'
         instance.chapters.episodes.innerHTML = ''
         instance.chapters.backBtn.style.display = 'none'
-        instance.welcome.menu.style.display = 'none'
         instance.welcome.introduction.style.display = 'block'
         instance.unselectAllEpisode()
         instance.placeholderEpisodeData()
