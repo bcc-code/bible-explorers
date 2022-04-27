@@ -10,7 +10,7 @@
 }
 
 // #region Colors
-$primary: #23307a;
+$primary: #3E306D;
 $accent: #0396e3;
 $dark: #131A43;
 $gradient: linear-gradient(90deg, $dark, #412251);
@@ -46,11 +46,6 @@ sans-serif;
     align-items: center;
     justify-content: center;
 }
-
-// #region SVGs
-@mixin popupHeader {}
-
-// #endregion
 
 // #region General
 * {
@@ -437,85 +432,172 @@ button,
         color: #fff;
     }
 
-    .list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-    }
-
-    .categories.list {
-    }
-    .category {
-        margin-right: 1rem;
-        padding: 2rem 1rem;
-        border-radius: $radius;
-        background-color: #fff;
-        cursor: pointer;
-        text-align: center;
-        font-size: 5rem;
-        border: 2px solid #fff;
-
-        &.selected {
-            border: 4px solid $accent;
-        }
-    }
-
     .back.button {
         display: none;
     }
 }
 
+.categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.category {
+    margin-right: 1rem;
+    padding: 2rem 1rem;
+    border-radius: $radius;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 5rem;
+    border: 2px solid #fff;
+
+    &.selected {
+        border: 4px solid $accent;
+    }
+}
+
+.episodes {
+    gap: 2rem;
+}
+
 .episode {
-    align-items: center;
+    display: flex;
+    align-items: flex-end;
+    height: 172px;
     cursor: pointer;
 
-    .icon-big {
-        position: absolute;
-        width: 5rem;
-        height: 5rem;
-        bottom: -1.5rem;
-        right: -1.5rem;
-        @include icon(icon-play-solid);
 
-        @at-root .locked#{&} {
-            @include icon(icon-lock-solid);
-        }
-    }
+    &__number {
+        @include setBackground('../static/svgs/episode_number.svg');
+        width: 110px;
+        height: 100%;
 
-    body:not(.admin) & .icon.download {
-        display: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 2rem;
+
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: bold;
     }
 
     &__thumbnail {
         position: relative;
-        border-radius: $radius;
-        background-color: #fff;
-        border: 4px solid #fff;
-        aspect-ratio: 16/9;
-        padding: 1rem;
-        transition: border 0.3s ease-in-out;
+        margin-left: -1px;
+        @include setBackground('../static/svgs/episode_image.svg');
+        width: 873px;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        padding-bottom: 2rem;
+        padding-left: 4rem;
 
         img {
-            object-fit: contain;
-            object-position: center;
-            width: 100%;
-            height: 100%;
+            display: none;
         }
     }
 
-    &.selected &__thumbnail {
-        border: 4px solid $accent;
-    }
+    &__icon {
+        position: absolute;
+        right: 4rem;
+        bottom: 1.5rem;
 
-    &__heading {
-        margin-top: 1.5rem;
-        display: flex;
+        width: 6rem;
+        height: 6rem;
+        @include setBackground('../static/svgs/button_round.svg');
+        @include alignCenterVH();
+
+        i {
+            color: #fff;
+            font-size: 2rem;
+        }
+
+        .icon-play-solid {
+            margin-left: 2px;
+        }
     }
 
     &__title {
         color: #fff;
-        margin-left: 1rem;
+        font-size: 2.5rem;
+        font-weight: bold;
     }
+
+    &__actions {
+        @include setBackground('../static/svgs/episode_actions.svg');
+        width: 295px;
+        height: 146px;
+        margin-left: 0.5rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1.35rem 2rem;
+
+        >div {
+            background-color: $primary;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            border-radius: 1rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            line-height: 3rem;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    // .icon-big {
+    //     position: absolute;
+    //     width: 5rem;
+    //     height: 5rem;
+    //     bottom: -1.5rem;
+    //     right: -1.5rem;
+    //     @include icon(icon-play-solid);
+
+    //     @at-root .locked#{&} {
+    //         @include icon(icon-lock-solid);
+    //     }
+    // }
+
+    // body:not(.admin) & .icon.download {
+    //     display: none;
+    // }
+
+    // &__thumbnail {
+    //     position: relative;
+    //     border-radius: $radius;
+    //     background-color: #fff;
+    //     border: 4px solid #fff;
+    //     aspect-ratio: 16/9;
+    //     padding: 1rem;
+    //     transition: border 0.3s ease-in-out;
+
+    //     img {
+    //         object-fit: contain;
+    //         object-position: center;
+    //         width: 100%;
+    //         height: 100%;
+    //     }
+    // }
+
+    // &.selected &__thumbnail {
+    //     border: 4px solid $accent;
+    // }
+
+    // &__heading {
+    //     margin-top: 1.5rem;
+    //     display: flex;
+    // }
+
+    // &__title {
+    //     color: #fff;
+    //     margin-left: 1rem;
+    // }
 }
 
 .modal {

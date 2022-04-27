@@ -121,7 +121,7 @@ export default class World {
         if (!data) return
 
         instance.chapters.data = JSON.parse(data)
-    
+
         for (const [category, data] of Object.entries(instance.chapters.data)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
         }
@@ -162,8 +162,8 @@ export default class World {
     }
 
     setEpisodes(data) {
-        data.forEach((episode) => {
-            instance.setEpisodeHtml(episode)
+        data.forEach((episode, index) => {
+            instance.setEpisodeHtml(episode, index)
         })
 
         instance.selectEpisodeListeners()
@@ -173,7 +173,7 @@ export default class World {
         instance.welcome.introduction.style.display = 'none'
     }
 
-    setEpisodeHtml(episode) {
+    setEpisodeHtml(episode, index) {
         let episodeHtml = document.createElement("div")
         let episodeClasses = "episode"
         episodeClasses += episode.status == "future" ? " locked" : ""
@@ -181,10 +181,15 @@ export default class World {
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.setAttribute("data-slug", episode.category)
         episodeHtml.innerHTML = `
-            <div class="episode__thumbnail"><img src="${episode.thumbnail}" /> <i class="icon icon-big"></i></div>
-            <div class="episode__heading">
-                <span class="icon icon-small download"></span>
-                <h3 class="episode__title">${episode.title}</h3>
+            <div class="episode__number">${index + 1}</div>
+            <div class="episode__thumbnail">
+                <img src="${episode.thumbnail}" /> 
+                <div class="episode__icon"><i class="icon icon-play-solid"></i></div>
+                <span class="episode__title">${episode.title}</span>
+            </div>
+            <div class="episode__actions">
+                <div class="button__continue-game">continue</div>
+                <div class="button__start-new-game" id="start-journey">new game</div>
             </div>
         `
         this.chapters.episodes.appendChild(episodeHtml)
@@ -242,18 +247,18 @@ export default class World {
         const idToken = claims.__raw;
 
         let videoUrls = []
-        instance.chapters.categories.filter(episode => { 
-                return episode.id == episodeId
-            })[0].data.forEach(async (animationFilm) => {
-                const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
-                console.log('downloadEpisode from ' + url)
+        instance.chapters.categories.filter(episode => {
+            return episode.id == episodeId
+        })[0].data.forEach(async (animationFilm) => {
+            const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
+            console.log('downloadEpisode from ' + url)
 
-                videoUrls.push(url)
-            })
+            videoUrls.push(url)
+        })
     }
 
     async getEpisodeDownloadUrl(videoName, token) {
-        const episodeId = videoName.replace('episode-','')
+        const episodeId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
 
         var btvplayer = BTVPlayer({
