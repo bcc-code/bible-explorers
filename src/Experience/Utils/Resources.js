@@ -90,7 +90,7 @@ export default class Resources extends EventEmitter {
 
             else if (source.type === 'videoTexture') {
                 const video = document.createElement('video')
-                video.addEventListener('loadedmetadata', this.onVideoLoad(video, source.path), false)
+                video.addEventListener('canplay', this.onVideoLoad(video, source.path), false)
 
                 video.setAttribute('id', source.name)
                 video.setAttribute('webkit-playsinline', 'webkit-playsinline')
@@ -122,7 +122,7 @@ export default class Resources extends EventEmitter {
     }
 
     onVideoLoad(video, url) {
-        video.removeEventListener('loadedmetadata', this.onVideoLoad, false)
+        video.removeEventListener('canplay', this.onVideoLoad, false)
         this.loadingManager.itemEnd(url)
         this.loaded++
     }
