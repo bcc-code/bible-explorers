@@ -109,7 +109,7 @@ export default class World {
         }
     }
 
-    setEpisodes(data) {
+    setCategories(data) {
         if (!data) return
 
         instance.chapters.data = JSON.parse(data)

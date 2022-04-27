@@ -18,8 +18,6 @@ const configureClient = async () => {
 }
 
 window.onload = async () => {
-    if (experience.resources.isRunningLocally()) return
-
     await configureClient()
     experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
 
