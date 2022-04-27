@@ -98,9 +98,6 @@ export default class World {
         this.welcome.restartJourney = document.getElementById("restart-journey")
         this.welcome.completed = document.getElementById("completed")
 
-
-        // console.log(this.episodeProgress() == 0);
-
         if (this.episodeProgress() == 0) {
             instance.welcome.restartJourney.style.display = "none"
         }

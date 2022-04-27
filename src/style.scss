@@ -595,6 +595,7 @@ button,
             font-weight: bold;
             letter-spacing: 0.5px;
             padding: 0.75rem 1rem;
+            display: none;
             opacity: 0;
             transition: opacity .2s ease-in;
             transition-delay: .4s;
@@ -615,53 +616,6 @@ button,
         }
     }
 
-    // .icon-big {
-    //     position: absolute;
-    //     width: 5rem;
-    //     height: 5rem;
-    //     bottom: -1.5rem;
-    //     right: -1.5rem;
-    //     @include icon(icon-play-solid);
-
-    //     @at-root .locked#{&} {
-    //         @include icon(icon-lock-solid);
-    //     }
-    // }
-
-    // body:not(.admin) & .icon.download {
-    //     display: none;
-    // }
-
-    // &__thumbnail {
-    //     position: relative;
-    //     border-radius: $radius;
-    //     background-color: #fff;
-    //     border: 4px solid #fff;
-    //     aspect-ratio: 16/9;
-    //     padding: 1rem;
-    //     transition: border 0.3s ease-in-out;
-
-    //     img {
-    //         object-fit: contain;
-    //         object-position: center;
-    //         width: 100%;
-    //         height: 100%;
-    //     }
-    // }
-
-    // &.selected &__thumbnail {
-    //     border: 4px solid $accent;
-    // }
-
-    // &__heading {
-    //     margin-top: 1.5rem;
-    //     display: flex;
-    // }
-
-    // &__title {
-    //     color: #fff;
-    //     margin-left: 1rem;
-    // }
 }
 
 .modal {
@@ -908,6 +862,24 @@ button,
         }
     }
 
+    &__play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 7rem;
+        height: 7rem;
+        @include setBackground('../static/svgs/button_round.svg');
+        @include alignCenterVH();
+        cursor: pointer;
+
+        i {
+            margin-left: 2px;
+            color: #fff;
+            font-size: 2rem;
+        }
+    }
+
     &__controls,
     &__timeline {
         display: flex;
@@ -981,6 +953,7 @@ button,
         border-radius: 15px;
         overflow: hidden;
 
+
         &.is-playing .icon-pause-solid {
             display: inline-block;
         }
@@ -1016,6 +989,12 @@ button,
 
         .video__controlbar {
             opacity: 0 !important;
+        }
+    }
+
+    &__overlay.is-playing {
+        .video__play {
+            display: none;
         }
     }
 

@@ -211,6 +211,7 @@ export default class Video {
         var videoOverlay = document.createElement('div')
         videoOverlay.innerHTML = `<div class="video__overlay is-paused" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">
             <div class="video__iframe hide"></div>
+            <div class="video__play"><i class="icon icon-play-solid"></i></div>
             <div class="video__controlbar hide">
                 <div class="video__timeline">
                     <div class="video__loadedbar"></div>
@@ -260,12 +261,14 @@ export default class Video {
             progressBar: document.querySelector(".video__progressbar"),
             progressButton: document.querySelector(".video__progress-button"),
             timetracker: document.querySelector(".video__timetracker"),
-            fullscreen: document.querySelector(".video__fullscreen")
+            fullscreen: document.querySelector(".video__fullscreen"),
+            playButton: document.querySelector(".video__play")
         }
 
         instance.el.videoOverlay.addEventListener("mouseover", () => { instance.el.videoControlBar.style.opacity = 1 })
         instance.el.videoOverlay.addEventListener("mouseout", () => { if (!instance.el.videoControlBar.classList.contains('show-controls')) instance.el.videoControlBar.style.opacity = 0 })
         instance.el.playPause.addEventListener("click", instance.togglePlay)
+        instance.el.playButton.addEventListener("click", instance.togglePlay)
         instance.el.sound.addEventListener("click", instance.toggleSound)
         instance.el.fullscreen.addEventListener("click", instance.setFullscreenVideo)
         instance.el.progressButton.addEventListener('mousedown', instance.onMouseDown)
