@@ -414,12 +414,6 @@ button,
         text-align: center;
     }
 
-    #congratulations {
-        display: none;
-        color: #fff;
-        font-size: 30px;
-        margin-bottom: 40px;
-    }
 }
 
 #chapters {
@@ -516,15 +510,54 @@ button,
             font-size: 2rem;
         }
 
+        .icon {
+            display: none;
+        }
+
         .icon-play-solid {
+            display: inline-block;
             margin-left: 2px;
         }
+
+        .episode.locked & {
+            .icon-lock-solid {
+                display: inline-block;
+            }
+
+            .icon-play-solid {
+                display: none;
+            }
+        }
+
+        .episode.download & {
+            .icon-download-solid {
+                display: inline-block;
+            }
+
+            .icon-play-solid {
+                display: none;
+            }
+        }
+
+    }
+
+    &__heading {
+        display: flex;
+        flex-direction: column;
     }
 
     &__title {
         color: #fff;
         font-size: 2.5rem;
         font-weight: bold;
+    }
+
+    &__completed {
+        display: none;
+        text-transform: none;
+        color: #fff;
+        font-size: 1rem;
+        opacity: 0.6;
     }
 
     &__actions {
@@ -535,8 +568,16 @@ button,
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
         gap: 0.5rem;
-        padding: 1.35rem 2rem;
+        padding: 0 2rem;
+
+        opacity: 0;
+        visibility: hidden;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: opacity .4s linear, transform .4s linear;
+        transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 
         >div {
             background-color: $primary;
@@ -544,10 +585,27 @@ button,
             text-align: center;
             text-transform: uppercase;
             border-radius: 1rem;
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: bold;
-            line-height: 3rem;
             letter-spacing: 0.5px;
+            padding: 0.75rem 1rem;
+            opacity: 0;
+            transition: opacity .2s ease-in;
+            transition-delay: .4s;
+
+            &:hover {
+                background-color: $accent;
+            }
+        }
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scaleX(1);
+
+            >div {
+                opacity: 1;
+            }
         }
     }
 

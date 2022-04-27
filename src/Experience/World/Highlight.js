@@ -15,7 +15,6 @@ export default class Highlight {
         this.outlinePass = this.experience.composer.instance.passes[1]
         this.selectedObjects = this.experience.world.controlRoom.clickableObjects
 
-
         this.params = {
             edgeStrength: 4,
             edgeGlow: 1,

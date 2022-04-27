@@ -5,7 +5,6 @@ import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
-import Highlight from './Highlight.js'
 import Info from '../Extras/Info.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
@@ -36,33 +35,35 @@ export default class World {
             data: []
         }
 
+        // Welcome screen
+        this.welcome = {
+            landingScreen: document.getElementById("landing-screen"),
+            introduction: document.getElementById("introduction"),
+        }
+
         this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setCategories)
 
         // Wait for resources
         this.resources.on('ready', () => {
             // Setup
             this.controlRoom = new ControlRoom()
-            this.highlight = new Highlight()
-            this.audio = new Audio()
             this.environment = new Environment()
+            this.audio = new Audio()
 
-            this.welcome.startJourney.addEventListener("mousedown", this.startJourney)
-            this.welcome.restartJourney.addEventListener("mousedown", this.restartJourney)
+            document.addEventListener('click', (el) => {
+                const id = el.target.getAttribute('id')
+
+                if (id == 'start-journey') {
+                    this.startJourney()
+                }
+
+                if (id == 'restart-journey') {
+                    this.restartJourney()
+                }
+            })
         })
 
-        // Welcome screen
-        this.welcome = {
-            landingScreen: document.getElementById("landing-screen"),
-            introduction: document.getElementById("introduction"),
-            menu: document.getElementById("menu"),
-            congratulations: document.getElementById("congratulations"),
-            startJourney: document.getElementById("start-journey"),
-            restartJourney: document.getElementById("restart-journey")
-        }
-
         this.welcome.introduction.innerText = _s.introduction
-        this.welcome.restartJourney.innerText = _s.journey.restart
-        this.welcome.congratulations.innerText = _s.journey.congratulations
 
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("mousedown", this.goHome)
@@ -70,10 +71,6 @@ export default class World {
         instance.chapters.backBtn.innerText = _s.journey.back
         this.chapters.backBtn.addEventListener("click", this.backToCategories)
 
-        // Debug
-        if (this.debug.active) {
-            this.addGUIControls()
-        }
     }
 
     placeholderEpisodeData() {
@@ -93,10 +90,18 @@ export default class World {
     }
 
     showMenuButtons() {
-        instance.welcome.menu.style.display = 'flex'
+
+        const episodeActions = document.querySelector('.episode__actions')
+        episodeActions.classList.add('visible')
+
+        this.welcome.startJourney = document.getElementById("start-journey")
+        this.welcome.restartJourney = document.getElementById("restart-journey")
+        this.welcome.completed = document.getElementById("completed")
+
+
+        // console.log(this.episodeProgress() == 0);
 
         if (this.episodeProgress() == 0) {
-            instance.welcome.startJourney.innerText = _s.journey.start
             instance.welcome.restartJourney.style.display = "none"
         }
         else {
@@ -104,12 +109,12 @@ export default class World {
         }
 
         if (this.episodeProgress() == this.selectedEpisode.program.length) {
-            instance.welcome.congratulations.style.display = "block"
+            instance.welcome.completed.style.display = "block"
             instance.welcome.startJourney.style.display = "none"
         }
         else {
             instance.welcome.startJourney.style.display = "block"
-            instance.welcome.congratulations.style.display = "none"
+            instance.welcome.completed.style.display = "none"
         }
 
         if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
@@ -184,15 +189,18 @@ export default class World {
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
                 <img src="${episode.thumbnail}" /> 
-                <div class="episode__icon"><i class="icon icon-play-solid"></i></div>
-                <span class="episode__title">${episode.title}</span>
+                <div class="episode__icon"><i class="icon icon-play-solid"></i> <i class="icon icon-lock-solid"></i> <i class="icon icon-download-solid"></i></div>
+                <div class="episode__heading">
+                    <span class="episode__title">${episode.title}</span>
+                    <span class="episode__completed" id="completed">${_s.journey.congratulations}</span>
+                </div>
             </div>
             <div class="episode__actions">
-                <div class="button__continue-game">continue</div>
-                <div class="button__start-new-game" id="start-journey">new game</div>
+                <div class="button__restart-journey" id="restart-journey">${_s.journey.restart}</div>
+                <div class="button__start-new-journey" id="start-journey">${_s.journey.start}</div>
             </div>
         `
-        this.chapters.episodes.appendChild(episodeHtml)
+        instance.chapters.episodes.appendChild(episodeHtml)
     }
 
     selectEpisodeListeners() {
@@ -294,6 +302,8 @@ export default class World {
         instance.welcome.congratulations.style.display = "block"
         instance.welcome.startJourney.style.display = "none"
         instance.welcome.restartJourney.style.display = "block"
+
+        instance.welcome.congratulations.innerText = _s.journey.congratulations
     }
 
     showMenu() {
@@ -320,16 +330,4 @@ export default class World {
         }
     }
 
-    addGUIControls() {
-        const axesHelper = new THREE.AxesHelper(40)
-        const gridHelper = new THREE.GridHelper(36, 36)
-        axesHelper.visible = false
-        gridHelper.visible = false
-        this.scene.add(gridHelper, axesHelper)
-
-        const helper = this.debug.ui.addFolder('Helpers')
-        helper.close()
-        helper.add(axesHelper, 'visible').name('Axes helper')
-        helper.add(gridHelper, 'visible').name('Grid helper')
-    }
 }

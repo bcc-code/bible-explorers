@@ -24,6 +24,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-download-solid:before {
+    content: "\e90e";
+}
+
 .icon-arrow-right-long-solid:before {
     content: "\e90c";
 }

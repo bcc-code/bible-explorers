@@ -80,7 +80,7 @@ export default class Program {
         let nextVideo = this.nextVideo()
 
         this.camera.updateCameraTo(this.currentLocation())
-        this.highlight.setHightlight(this.interactiveObjects())
+        // this.highlight.setHightlight(this.interactiveObjects())
      
         if (this.stepType() == 'video') {
             setTimeout(function() {
