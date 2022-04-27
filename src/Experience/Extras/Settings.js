@@ -11,6 +11,10 @@ export default class Settings {
         settings = this
 
         settings.soundOn = true
+        settings.logInLogOut = {
+            login: false,
+            logout: false
+        }
         settings.el = document.getElementById("settings")
         settings.el.addEventListener("mousedown", settings.toggleSettings)
     }
@@ -27,7 +31,7 @@ export default class Settings {
                         <div class="sound settings__item">
                             <p>${ _s.soundEffects }</p>
                             <label class="switch">
-                                <input type="checkbox">
+                                <input type="checkbox" ${ settings.soundOn ? 'checked' : '' }>
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -39,8 +43,8 @@ export default class Settings {
                             </div>
                         </div>
                         <div class="login settings__footer">
-                            <button id="btn-login" disabled="true">${ _s.logIn }</button>
-                            <button id="btn-logout" disabled="true">${ _s.logOut }</button>
+                            <button id="btn-login" disabled="${ !settings.logInLogOut.login }">${ _s.logIn }</button>
+                            <button id="btn-logout" disabled="${ !settings.logInLogOut.logout }">${ _s.logOut }</button>
                         </div>
                     </div>
                 </div>
@@ -49,7 +53,7 @@ export default class Settings {
             settings.modal = new Modal(html)
 
             settings.el = {
-                soundToggle: document.querySelector(".sound .toggle"),
+                soundToggle: document.querySelector(".sound input[type=checkbox]"),
                 currentLang: document.querySelector(".language .language__current"),
                 languageList: document.querySelector(".language .language__list"),
                 languages: document.querySelectorAll(".language .language__list li"),
@@ -57,6 +61,7 @@ export default class Settings {
                 logout: document.getElementById("btn-logout")
             }
 
+            settings.el.soundToggle.addEventListener("change", settings.toggleSound)
             settings.el.currentLang.addEventListener("mousedown", settings.toggleLanguageList)
             settings.el.login.addEventListener("mousedown", settings.login)
             settings.el.logout.addEventListener("mousedown", settings.logout)
@@ -71,13 +76,22 @@ export default class Settings {
         }
     }
 
+    toggleSound() {
+        settings.soundOn = this.checked
+    }
+
     toggleLanguageList() {
         settings.el.languageList.classList.toggle("hide")
     }
 
     updateUI = async () => {
-        settings.el.logout.disabled = !this.experience.auth0.isAuthenticated
-        settings.el.login.disabled = this.experience.auth0.isAuthenticated
+        settings.logInLogOut.login = this.experience.auth0.isAuthenticated
+        settings.logInLogOut.logout = !this.experience.auth0.isAuthenticated
+
+        if (settings.el.login) {
+            settings.el.login.disabled = settings.logInLogOut.login
+            settings.el.logout.disabled = settings.logInLogOut.logout
+        }
     }
 
     login = async () => {

@@ -24,11 +24,7 @@ export default class World {
 
         instance = this
 
-        this.selectedEpisode = {
-            id: 0,
-            program: null,
-            data: null
-        }
+        this.placeholderEpisodeData()
         this.episodeProgress = () => localStorage.getItem(this.getId()) || 0
 
         // Episodes
@@ -80,6 +76,14 @@ export default class World {
         }
     }
 
+    placeholderEpisodeData() {
+        instance.selectedEpisode = {
+            id: 0,
+            program: null,
+            data: null
+        }
+    }
+
     goHome() {
         instance.showMenuButtons()
         instance.showMenu()
@@ -89,6 +93,8 @@ export default class World {
     }
 
     showMenuButtons() {
+        instance.welcome.menu.style.display = 'flex'
+
         if (this.episodeProgress() == 0) {
             instance.welcome.startJourney.innerText = _s.journey.start
             instance.welcome.restartJourney.style.display = "none"
@@ -96,6 +102,7 @@ export default class World {
         else {
             instance.welcome.restartJourney.style.display = "block"
         }
+
         if (this.episodeProgress() == this.selectedEpisode.program.length) {
             instance.welcome.congratulations.style.display = "block"
             instance.welcome.startJourney.style.display = "none"
@@ -104,6 +111,7 @@ export default class World {
             instance.welcome.startJourney.style.display = "block"
             instance.welcome.congratulations.style.display = "none"
         }
+
         if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
             instance.welcome.startJourney.innerText = _s.journey.continue
         }
@@ -121,7 +129,6 @@ export default class World {
         instance.selectCategoryListeners()
 
         instance.chapters.container.style.display = 'grid'
-        instance.welcome.menu.style.display = 'flex'
     }
 
     setCategoryHtml(category) {
@@ -148,6 +155,10 @@ export default class World {
         instance.chapters.episodes.style.display = 'none'
         instance.chapters.episodes.innerHTML = ''
         instance.chapters.backBtn.style.display = 'none'
+        instance.welcome.menu.style.display = 'none'
+        instance.welcome.introduction.style.display = 'block'
+        instance.unselectAllEpisode()
+        instance.placeholderEpisodeData()
     }
 
     setEpisodes(data) {
@@ -159,6 +170,7 @@ export default class World {
 
         instance.chapters.backBtn.style.display = 'block'
         instance.chapters.episodes.style.display = 'grid'
+        instance.welcome.introduction.style.display = 'none'
     }
 
     setEpisodeHtml(episode) {
@@ -196,10 +208,14 @@ export default class World {
     }
 
     addClassToSelectedEpisode(episode) {
+        instance.unselectAllEpisode()
+        episode.classList.add('selected')
+    }
+
+    unselectAllEpisode() {
         document.querySelectorAll(".episode").forEach(function (thisEpisode) {
             thisEpisode.classList.remove('selected')
         })
-        episode.classList.add('selected')
     }
 
     updateSelectedEpisodeData(episode) {

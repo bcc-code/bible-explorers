@@ -456,7 +456,7 @@ button,
         border: 2px solid #fff;
 
         &.selected {
-            border: 2px solid $accent;
+            border: 4px solid $accent;
         }
     }
 
@@ -501,6 +501,10 @@ button,
             width: 100%;
             height: 100%;
         }
+    }
+
+    &.selected &__thumbnail {
+        border: 4px solid $accent;
     }
 
     &__heading {
@@ -989,7 +993,7 @@ button,
 
     &__footer {
         position: absolute;
-        top: calc(100% + 1rem);
+        top: calc(100% + 1.25rem);
         left: 0;
         right: 0;
 
@@ -1002,7 +1006,13 @@ button,
             line-height: 3rem;
             font-size: 1.2rem;
             color: #fff;
+            cursor: pointer;
             @include setBackground('../static/svgs/button_long.svg');
+
+            &:disabled {
+                cursor: default;
+                opacity: 0.2;
+            }
         }
     }
 

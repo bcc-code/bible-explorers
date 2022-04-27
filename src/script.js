@@ -22,6 +22,8 @@ window.onload = async () => {
     experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
 
     if (experience.auth0.isAuthenticated) {
+        experience.settings.updateUI()
+
         let userData = await experience.auth0.getUser()
         let personId = userData['https://login.bcc.no/claims/personId']
 

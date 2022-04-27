@@ -110,7 +110,6 @@ export default class Video {
     }
 
     focus() {
-        instance.play()
         instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
         instance.videoMesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
@@ -123,6 +122,7 @@ export default class Video {
         if (!instance.texture) return
 
         instance.texture.image.play()
+        instance.setFullscreenVideo()
         instance.el.videoControlBar.classList.remove('show-controls')
         instance.el.videoOverlay.classList.remove('is-paused')
         instance.el.videoOverlay.classList.add('is-playing')
@@ -209,7 +209,7 @@ export default class Video {
         this.cssScene = new THREE.Scene()
 
         var videoOverlay = document.createElement('div')
-        videoOverlay.innerHTML = `<div class="video__overlay" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">
+        videoOverlay.innerHTML = `<div class="video__overlay is-paused" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">
             <div class="video__iframe hide"></div>
             <div class="video__controlbar hide">
                 <div class="video__timeline">
