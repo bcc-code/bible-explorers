@@ -190,7 +190,6 @@ export default class ControlRoom {
     setCurrentIntersect(newIntersect) {
         if (this.currentIntersect != newIntersect) {
             // Hover over a new object
-            // this.world.highlight.hover(this.currentIntersect, newIntersect)
             this.currentIntersect = newIntersect
         }
     }

@@ -13,7 +13,7 @@
 $primary: #3E306D;
 $accent: #0396e3;
 $dark: #131A43;
-$gradient: linear-gradient(90deg, $dark, #412251);
+$gradient: linear-gradient(90deg, $dark, $primary);
 
 $radius: 12px;
 
@@ -987,6 +987,10 @@ button,
             pointer-events: none !important;
         }
 
+        .video__play {
+            opacity: 0;
+        }
+
         .video__controlbar {
             opacity: 0 !important;
         }
@@ -1362,6 +1366,25 @@ button,
         @include setBackground('../static/svgs/settings_background.svg');
         color: #fff;
         margin-bottom: 1rem;
+    }
+}
+
+.label {
+    color: #fff;
+    background: $gradient;
+    padding: 0.5rem 1rem;
+    border: 2px solid $accent;
+    border-radius: 8px 16px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 2px;
+        top: -12px;
+        background: $accent;
+        width: 40%;
+        height: 8px;
+        border-radius: 2px 6px;
     }
 }
 

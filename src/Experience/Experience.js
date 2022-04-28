@@ -54,14 +54,12 @@ export default class Experience {
             this.update()
         })
 
-
     }
 
     resize() {
         this.camera.resize()
         this.renderer.resize()
-        // this.composer.resize()
-        
+
         if (this.world.program)
             this.world.program.video.resize()
     }
@@ -71,6 +69,6 @@ export default class Experience {
         this.world.update()
         this.stats.update()
         this.renderer.update()
-        // this.composer.update()
+   
     }
 }

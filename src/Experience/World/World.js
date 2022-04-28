@@ -9,6 +9,7 @@ import Info from '../Extras/Info.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
+import Points from '../Extras/Points.js'
 
 let instance = null
 
@@ -47,6 +48,7 @@ export default class World {
         this.resources.on('ready', () => {
             // Setup
             this.controlRoom = new ControlRoom()
+            this.points = new Points()
             this.environment = new Environment()
             this.audio = new Audio()
 
@@ -323,6 +325,10 @@ export default class World {
 
         if (this.program && this.program.video) {
             this.program.video.update()
+        }
+
+        if (this.points) {
+            this.points.update()
         }
     }
 
