@@ -812,6 +812,8 @@ button,
     color: #fff;
     text-align: center;
     @include setBackground('../static/svgs/button_long.svg');
+
+    margin-left: auto;
 }
 
 .tooltip {
@@ -1370,6 +1372,8 @@ button,
 }
 
 .label {
+    position: absolute;
+    top: 0;
     color: #fff;
     background: $gradient;
     padding: 0.5rem 1rem;

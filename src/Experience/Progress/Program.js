@@ -28,6 +28,7 @@ export default class Program {
         this.camera = this.experience.camera
         this.highlight = this.world.highlight
         this.programData = this.world.selectedEpisode.program
+        this.points = this.experience.world.points
 
         // Get instance variables
         this.episodeProgress = () => localStorage.getItem(this.world.getId())
@@ -80,17 +81,20 @@ export default class Program {
         let nextVideo = this.nextVideo()
 
         this.camera.updateCameraTo(this.currentLocation())
-        // this.highlight.setHightlight(this.interactiveObjects())
-     
+
+        this.interactiveObjects().forEach(function(object) {
+            instance.points.addLabel(object, instance.stepType())
+        })
+
         if (this.stepType() == 'video') {
-            setTimeout(function() {
+            setTimeout(function () {
                 instance.video.load(currentVideo)
             }, instance.camera.data.moveDuration, currentVideo)
         }
         else {
             instance.video.defocus()
 
-            setTimeout(function() {
+            setTimeout(function () {
                 instance.video.setTexture(nextVideo)
             }, instance.camera.data.moveDuration, nextVideo)
         }
@@ -125,7 +129,7 @@ export default class Program {
             interactiveObjects = interactiveObjects.concat("panel_time_switchers_holder")
         }
         else if (this.stepType() == 'iris' || this.stepType() == 'task') {
-            interactiveObjects.push("tv_16x9")
+            interactiveObjects.push("tv_16x9_screen")
         }
 
         if (this.customInteractiveObjs.length)
@@ -142,11 +146,11 @@ export default class Program {
     }
 
     startAction() {
-        if (this.clickedObject === 'tv_16x10' || this.clickedObject === 'tv_16x10__screen') {
+        if (this.clickedObject === 'tv_16x10_screen') {
             this.questions.toggleQuestions()
         }
-        
-        else if (this.clickedObject === 'tv_16x9' || this.clickedObject === 'tv_16x9_screen') {
+
+        else if (this.clickedObject === 'tv_16x9_screen') {
             this.updateIrisTexture('SPEAK')
             this.taskDescription.toggleTaskDescription()
         }
@@ -185,6 +189,6 @@ export default class Program {
     }
 
     updateIrisTexture(mode) {
-        instance.world.controlRoom.setTexture('tv_16x9_screen', instance.resources.textureItems['BIEX_S01_E01_IRIS_'+mode].item)
+        instance.world.controlRoom.setTexture('tv_16x9_screen', instance.resources.textureItems['BIEX_S01_E01_IRIS_' + mode].item)
     }
 }

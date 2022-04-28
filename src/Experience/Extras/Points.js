@@ -1,4 +1,5 @@
 import Experience from "../Experience.js";
+import _s from '../Utils/Strings.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 
 
@@ -11,34 +12,43 @@ export default class Points {
         this.camera = this.experience.camera
 
         this.objects = this.experience.world.controlRoom.clickableObjects
-
-
-        this.objects.forEach(child => {
-            console.log(child);
-            if (child.name === 'panel_screen') {
-                this.createLabel(child)
-            }
-        })
-
+        this.currentLabel = null
+        this.currentObject = null
         this.render()
     }
 
-    createLabel(object) {
-        const panelDiv = document.createElement('div')
-        panelDiv.className = 'label'
-        panelDiv.textContent = 'Panel'
-        
-        const panelLabel = new CSS2DObject(panelDiv)
-        panelLabel.position.set(0, 0.1, 0)
+    addLabel(name, type) {
+        if (this.currentLabel)
+            this.deleteLabel()
 
-        object.add(panelLabel)
+        this.objects.filter(child => {
+            if (child.name === name) {
+                this.createLabel(child, _s.tooltips[type])
+            }
+        })
+    }
+
+    createLabel(object, labelText) {
+        const div = document.createElement('div')
+        div.className = 'label'
+        div.textContent = labelText
+
+        this.currentLabel = new CSS2DObject(div)
+        this.currentLabel.position.set(0, 0.2, 0)
+
+        this.currentObject = object
+        this.currentObject.add(this.currentLabel)
+    }
+
+    deleteLabel() {
+        this.currentObject.remove(this.currentLabel)
+        this.currentObject = null
+        this.currentLabel = null
     }
 
     render() {
         this.labelRenderer = new CSS2DRenderer()
         this.labelRenderer.setSize(this.sizes.width, this.sizes.height)
-        this.labelRenderer.domElement.style.position = 'absolute'
-        this.labelRenderer.domElement.style.top = '0px'
         document.body.appendChild(this.labelRenderer.domElement)
     }
 

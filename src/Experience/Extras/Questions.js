@@ -103,9 +103,4 @@ export default class Questions {
 
         }
     }
-
-
-    toggleVisibleQuestion() {
-
-    }
 }

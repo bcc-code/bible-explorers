@@ -39,6 +39,7 @@ export default class ControlRoom {
 
         this.setModel()
         this.getObjects()
+        this.setAnimation()
 
         // Events
         window.addEventListener('mousedown', () => {
@@ -51,12 +52,6 @@ export default class ControlRoom {
     setModel() {
         this.model = this.resources.scene
         this.scene.add(this.model)
-
-        //     const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
-        //     const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
-
-        //     this.box = new THREE.Mesh(boxGeometry, boxMaterial)
-        //     this.scene.add(this.box)
     }
 
     getObjects() {
@@ -72,9 +67,6 @@ export default class ControlRoom {
                 }
 
                 switch (child.name) {
-                    case 'tv_4x5':
-                    case 'tv_16x10':
-                    case 'tv_16x9':
                     case 'panel_screen':
                     case 'panel_time_switchers_holder':
                         this.clickableObjects.push(child)
@@ -85,6 +77,7 @@ export default class ControlRoom {
                     case 'tv_16x10_screen':
                     case 'tv_16x9_screen':
                         this.textureObjects.push(child)
+                        this.clickableObjects.push(child)
 
                         if (child.name === 'tv_4x5_screen') {
                             child.material.map = this.sources.items.code_default
@@ -92,12 +85,10 @@ export default class ControlRoom {
 
                         if (child.name === 'tv_16x10_screen') {
                             child.material.map = this.sources.items.map_default
-                            this.clickableObjects.push(child)
                         }
 
                         if (child.name === 'tv_16x9_screen') {
                             child.material.map = this.sources.items.iris_default
-                            this.clickableObjects.push(child)
                         }
 
                         break
@@ -127,7 +118,7 @@ export default class ControlRoom {
     }
 
     // Set textures
-    setTexture(meshName, texture, rotation = 0) {
+    setTexture(meshName, texture) {
         if (!texture) return
 
         this.texture = texture
@@ -157,9 +148,6 @@ export default class ControlRoom {
 
             }
         })
-
-        // this.box.material.map = this.sources.textureItems['map'].item
-        // this.box.material.needsUpdate = true
     }
 
     changeMeshTexture(name, texture) {
@@ -194,6 +182,22 @@ export default class ControlRoom {
         }
     }
 
+    // Set animations
+
+    setAnimation() {
+        this.animation = {}
+        this.animation.mixer = new THREE.AnimationMixer(this.model)
+
+        this.animation.actions = {}
+
+        this.animation.actions.arrow_m = this.animation.mixer.clipAction(this.resources.animations[0])
+        this.animation.actions.arrow_m.play()
+
+        this.animation.actions.arrow_h = this.animation.mixer.clipAction(this.resources.animations[1])
+        this.animation.actions.arrow_h.play()
+
+    }
+
     // Click events
     clickedObject() {
         if (this.currentIntersect != null) {
@@ -203,5 +207,6 @@ export default class ControlRoom {
 
     update() {
         this.checkObjectIntersection()
+        this.animation.mixer.update(this.time.delta * 0.001)
     }
 }

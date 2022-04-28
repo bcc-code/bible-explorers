@@ -17,8 +17,8 @@ export default class TaskDescription {
         }
         else {
             let program = instance.world.program
-            // let highlight = program.highlight
             let camera = program.camera
+            let points = instance.world.points
             let currentStep = program.currentStep
             let selectedEpisode = instance.world.selectedEpisode
 
@@ -40,8 +40,8 @@ export default class TaskDescription {
                     camera.updateCameraTo('screensCloseLook')
 
                     setTimeout(function () {
-                        // highlight.setHightlight(["tv_16x10"])
-                        program.addCustomInteractiveObj("tv_16x10")
+                        program.addCustomInteractiveObj("tv_16x10_screen")
+                        points.addLabel("tv_16x10_screen", selectedEpisode.program[currentStep].taskType)
                     }, camera.data.moveDuration)
                 }
 
@@ -49,8 +49,8 @@ export default class TaskDescription {
                     camera.updateCameraTo('controlBoard')
 
                     setTimeout(function () {
-                        // highlight.setHightlight(["panel_screen"])
                         program.addCustomInteractiveObj("panel_screen")
+                        points.addLabel("panel_screen", selectedEpisode.program[currentStep].taskType)
                     }, camera.data.moveDuration)
                 }
 
