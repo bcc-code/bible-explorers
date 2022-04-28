@@ -520,7 +520,7 @@ button,
             display: none;
         }
 
-        .icon-play-solid {
+        .admin & .icon-download-solid {
             display: inline-block;
             margin-left: 2px;
         }
@@ -535,12 +535,12 @@ button,
             }
         }
 
-        .episode.download & {
-            .icon-download-solid {
+        .episode.downloaded & {
+            .icon-downloaded-solid {
                 display: inline-block;
             }
 
-            .icon-play-solid {
+            .icon-download-solid {
                 display: none;
             }
         }

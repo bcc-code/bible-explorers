@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
@@ -187,7 +186,11 @@ export default class World {
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
                 <img src="${episode.thumbnail}" /> 
-                <div class="episode__icon"><i class="icon icon-play-solid"></i> <i class="icon icon-lock-solid"></i> <i class="icon icon-download-solid"></i></div>
+                <div class="episode__icon">
+                    <i class="icon icon-lock-solid"></i>
+                    <i class="icon icon-download-solid"></i>
+                    <i class="icon icon-downloaded-solid"></i>
+                </div>
                 <div class="episode__heading">
                     <span class="episode__title">${episode.title}</span>
                     <span class="episode__completed" id="completed">${_s.journey.congratulations}</span>
@@ -211,7 +214,7 @@ export default class World {
             })
         })
 
-        document.querySelectorAll(".episode:not(.locked) .download").forEach(function (episode) {
+        document.querySelectorAll(".episode:not(.locked) .icon-download-solid").forEach(function (episode) {
             episode.addEventListener("mousedown", () => {
                 instance.downloadEpisode(episode)
             })
@@ -248,17 +251,17 @@ export default class World {
     }
 
     async downloadEpisode(episode) {
-        const episodeId = episode.closest(".episode").getAttribute('data-id')
         const claims = await experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
 
+        const episodeId = episode.closest(".episode").getAttribute('data-id')
+        const categorySlug = episode.closest(".episode").getAttribute('data-slug')
+        const selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == episodeId })[0]
+
         let videoUrls = []
-        instance.chapters.categories.filter(episode => {
-            return episode.id == episodeId
-        })[0].data.forEach(async (animationFilm) => {
+        selectedEpisode['data'].forEach(async (animationFilm) => {
             const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
             console.log('downloadEpisode from ' + url)
-
             videoUrls.push(url)
         })
     }
