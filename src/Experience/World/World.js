@@ -285,8 +285,7 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        // instance.info = new Info()
-        instance.controlRoom.setUpTextures()
+        // instance.controlRoom.updateTextureScreen4x4()
     }
 
     restartJourney() {
