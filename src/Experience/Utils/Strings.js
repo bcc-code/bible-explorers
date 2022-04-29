@@ -25,9 +25,11 @@ const strings = {
         "logIn": "Logg inn",
         "logOut": "Logg ut",
         "tooltips": {
-            "video": "Se på video",
+            "video": "Skip video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
             "task": "Fullfør oppgaven",
+            "questions": "Svar paa sporsmalene",
+            "code": "Los koden"
         }
     },
     "en": {

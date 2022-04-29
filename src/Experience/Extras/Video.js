@@ -21,11 +21,13 @@ export default class Video {
         instance = this
 
         // Setup
-        this.videoMesh = this.experience.world.controlRoom.videoObject
-        this.videoMesh.material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.FrontSide })
-        this.videoMesh.material.needsUpdate = true
+        this.videoWidth = 1920
+        this.videoHeight = 1111 // videoOverlayWidth * 9 / 16
+        this.portalScreen = this.experience.world.controlRoom.tv_portal
+        this.portalScreen.material = new THREE.MeshBasicMaterial({ color: 0xffffff })
 
-        this.setVideoControls()
+        this.setVideo(this.portalScreen)
+        this.render()
 
         this.video = () => {
             let id = instance.playingVideoId
@@ -36,12 +38,68 @@ export default class Video {
 
             return document.getElementById(id)
         }
+
         this.videoProgress = 0.0
         this.playingVideoId = null
         this.isDragging = false
         this.mouseX = 0
         this.percentageNow = 0
         this.percentageNow = 0
+
+    }
+
+    setVideo(obj) {
+        const size = new THREE.Vector3()
+        const box = new THREE.Box3().setFromObject(obj)
+        const planeWidth = box.getSize(size).z
+        const planeHeight = 2
+
+        const videoGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight)
+        const videoControlsMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 })
+
+        this.videoControls = new THREE.Mesh(videoGeometry, videoControlsMaterial)
+        this.videoControls.name = "video_controls"
+        this.videoControls.position.z += 0.01
+        this.videoControls.position.y -= (box.getSize(size).y * 0.5) - (planeHeight / 2)
+
+        // Add Plane
+        obj.add(this.videoControls)
+
+        // Create html
+        this.createHTML()
+
+        // Add controls
+        const cssObject = new CSS3DObject(this.videoOverlay)
+        cssObject.position.y -= this.videoControls.geometry.parameters.height * 0.5
+        cssObject.scale.x /= this.videoWidth / planeWidth
+        cssObject.scale.y /= this.videoWidth / planeWidth
+
+        this.videoControls.add(cssObject);
+
+
+    }
+
+    createHTML() {
+        this.videoOverlay = document.createElement('div')
+        this.videoOverlay.classList.add('css3dobject')
+        this.videoOverlay.innerHTML = `<div class="video__overlay is-paused" style="width: ${this.videoWidth}px; height: ${this.videoHeight}px">
+            <div class="video__iframe hide"></div>
+            <div class="video__play"><i class="icon icon-play-solid"></i></div>
+            <div class="video__controlbar hide">
+                <div class="video__timeline">
+                    <div class="video__loadedbar"></div>
+                    <div class="video__seekbar"></div>
+                    <div class="video__progressbar"></div>
+                    <div class="video__progress-button"></div>
+                </div>
+                <div class="video__controls">
+                    <span class="video__play-pause video__controlsBtn"><i class="icon-play-solid"></i><i class="icon-pause-solid"></i></span>
+                    <span class="video__sound video__controlsBtn"><i class="icon-volume-solid"></i><i class="icon-volume-slash-solid"></i></span>
+                    <span class="video__timetracker"></span>
+                    <span class="video__fullscreen video__controlsBtn"><i class="icon-expand-solid"></i></span>
+                </div>
+            </div>
+        </div>`
     }
 
     load(id) {
@@ -61,9 +119,9 @@ export default class Video {
         if (!this.texture || !this.texture.image.currentSrc.includes(this.resources.mediaItems[id].item.path)) {
             this.texture = this.resources.mediaItems[id].item
 
-            this.videoMesh.material.map = this.texture
-            this.videoMesh.material.tonnedMap = false
-            this.videoMesh.material.needsUpdate = true
+            this.portalScreen.material.map = this.texture
+            this.portalScreen.material.tonnedMap = false
+            this.portalScreen.material.needsUpdate = true
         }
 
         // Event listener on video update
@@ -101,18 +159,58 @@ export default class Video {
     }
 
     setTexture(id) {
-        if (!this.videoMesh.material.map) return
+        if (!this.portalScreen.material.map) return
         if (!this.resources.textureItems.hasOwnProperty(id)) return
 
-        this.videoMesh.material.map = this.resources.textureItems[id]
-        this.videoMesh.material.map.flipY = false
-        this.videoMesh.material.color.set(new THREE.Color().setRGB(0.211, 0.211, 0.211))
+        this.portalScreen.material.map = this.resources.textureItems[id]
+        this.portalScreen.material.map.flipY = false
     }
+
+    setProgress(currentTime) {
+        const duration = this.video().duration
+        this.el.timetracker.innerHTML = this.formatToTimestamps(currentTime || 0, duration || 0)
+        var width = currentTime / duration
+        if (!!this.el.progressBar) this.el.progressBar.style.width = width * 100 + '%'
+        if (!!this.el.progressButton) this.el.progressButton.style.left = width * 100 + '%'
+    }
+
+    //#region Time Format
+
+    formatToTimestamps(currentTime, duration) {
+        var timeString = this.formatTimeObject(this.secondsToObject(currentTime))
+        var durationString = typeof duration === 'string' ? duration : this.formatTimeObject(this.secondsToObject(duration))
+        return timeString + ' / ' + durationString
+    }
+
+    formatTimeObject(timeObject) {
+        return timeObject.minutes.toString().padStart(2, '0') + ':' + timeObject.seconds.toString().padStart(2, '0')
+    }
+
+    secondsToObject(time) {
+        var hours = Math.floor(time / 3600)
+        var minutes = Math.floor((time - hours * 3600) / 60)
+        var seconds = Math.floor(time - minutes * 60)
+
+        return {
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds
+        }
+    }
+
+    setVideoCurrentTime(percentage) {
+        if (this.video() && !Number.isNaN(percentage) && percentage !== 1) {
+            instance.video().currentTime = instance.video().duration * percentage
+        }
+    }
+    //#endregion
+
+    //#region Actions
 
     focus() {
         instance.camera.zoomIn()
         instance.el.videoOverlay.classList.add('in-frustum')
-        instance.videoMesh.material.color.set(new THREE.Color().setRGB(1, 1, 1))
+        instance.portalScreen.material.color.set(new THREE.Color().setRGB(1, 1, 1))
 
         if (instance.texture && !instance.texture.image.muted)
             instance.el.videoOverlay.classList.remove('is-muted')
@@ -186,69 +284,9 @@ export default class Video {
             video.mozCancelFullScreen()
         }
     }
+    //#endregion
 
-    setVideoControls() {
-        const size = new THREE.Vector3()
-        const box = new THREE.Box3().setFromObject(this.videoMesh)
-
-        // Video controls
-        var planeWidth = box.getSize(size).z
-        var planeHeight = 2
-        var videoOverlayWidth = 1920
-        var videoOverlayHeight = 1111 // videoOverlayWidth * 9 / 16
-
-        var videoControls = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, opacity: 0, transparent: true })
-        var videoPlaneGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight)
-        var videoControlsMesh = new THREE.Mesh(videoPlaneGeometry, videoControls)
-        videoControlsMesh.rotation.y = -THREE.MathUtils.degToRad(90)
-        videoControlsMesh.position.x = this.videoMesh.position.x - 0.01
-        videoControlsMesh.position.y = - (box.getSize(size).y / 2 - this.videoMesh.position.y)
-        this.scene.add(videoControlsMesh)
-
-        // Create a new scene to hold CSS
-        this.cssScene = new THREE.Scene()
-
-        var videoOverlay = document.createElement('div')
-        videoOverlay.innerHTML = `<div class="video__overlay is-paused" style="width: ${videoOverlayWidth}px; height: ${videoOverlayHeight}px">
-            <div class="video__iframe hide"></div>
-            <div class="video__play"><i class="icon icon-play-solid"></i></div>
-            <div class="video__controlbar hide">
-                <div class="video__timeline">
-                    <div class="video__loadedbar"></div>
-                    <div class="video__seekbar"></div>
-                    <div class="video__progressbar"></div>
-                    <div class="video__progress-button"></div>
-                </div>
-                <div class="video__controls">
-                    <span class="video__play-pause video__controlsBtn"><i class="icon-play-solid"></i><i class="icon-pause-solid"></i></span>
-                    <span class="video__sound video__controlsBtn"><i class="icon-volume-solid"></i><i class="icon-volume-slash-solid"></i></span>
-                    <span class="video__timetracker"></span>
-                    <span class="video__fullscreen video__controlsBtn"><i class="icon-expand-solid"></i></span>
-                </div>
-            </div>
-        </div>`
-
-        var css3element = document.createElement('div')
-        css3element.classList.add('css3dobject')
-        css3element.innerHTML = videoOverlay.innerHTML
-
-        var cssObject = new CSS3DObject(css3element)
-        cssObject.position.copy(videoControlsMesh.position)
-        cssObject.rotation.copy(videoControlsMesh.rotation)
-        cssObject.scale.x /= videoOverlayWidth / planeWidth
-        cssObject.scale.y /= videoOverlayWidth / planeWidth
-        this.cssScene.add(cssObject);
-
-        // Create a renderer for CSS
-        this.rendererCSS = new CSS3DRenderer()
-        this.rendererCSS.setSize(this.sizes.width, this.sizes.height)
-        this.rendererCSS.domElement.classList.add('video')
-        this.rendererCSS.domElement.style.position = 'absolute'
-        this.rendererCSS.domElement.style.top = 0
-
-        document.body.appendChild(this.rendererCSS.domElement)
-        this.rendererCSS.domElement.prepend(this.renderer.instance.domElement)
-    }
+    //#region Events
 
     setVideoListeners() {
         instance.el = {
@@ -275,37 +313,6 @@ export default class Video {
         instance.el.progressButton.addEventListener('touchstart', instance.onMouseDown)
         instance.el.videoTimeline.addEventListener('mousedown', instance.onTap)
     }
-
-    setProgress(currentTime) {
-        const duration = this.video().duration
-        this.el.timetracker.innerHTML = this.formatToTimestamps(currentTime || 0, duration || 0)
-        var width = currentTime / duration
-        if (!!this.el.progressBar) this.el.progressBar.style.width = width * 100 + '%'
-        if (!!this.el.progressButton) this.el.progressButton.style.left = width * 100 + '%'
-    }
-
-    formatToTimestamps(currentTime, duration) {
-        var timeString = this.formatTimeObject(this.secondsToObject(currentTime))
-        var durationString = typeof duration === 'string' ? duration : this.formatTimeObject(this.secondsToObject(duration))
-        return timeString + ' / ' + durationString
-    }
-
-    formatTimeObject(timeObject) {
-        return timeObject.minutes.toString().padStart(2, '0') + ':' + timeObject.seconds.toString().padStart(2, '0')
-    }
-
-    secondsToObject(time) {
-        var hours = Math.floor(time / 3600)
-        var minutes = Math.floor((time - hours * 3600) / 60)
-        var seconds = Math.floor(time - minutes * 60)
-
-        return {
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
-        }
-    }
-
     onMouseDown(event) {
         event.stopPropagation()
         instance.isDragging = true
@@ -313,6 +320,20 @@ export default class Video {
         instance.percentageNow = parseInt(instance.el.progressBar.style.width) / 100
         instance.addControlListeners()
     }
+    onTap(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const percentage = (event.changedTouches && event.changedTouches.length > 0)
+            ? (event.changedTouches[0].pageX - event.target.getBoundingClientRect().left) / instance.el.videoTimeline.clientWidth
+            : event.offsetX / instance.el.videoTimeline.clientWidth;
+
+        instance.setVideoCurrentTime(percentage)
+        instance.setProgress(percentage)
+    }
+    //#endregion
+
+    //#region Controls
 
     onVideoControlStop(event) {
         event.stopPropagation();
@@ -344,32 +365,6 @@ export default class Video {
         document.removeEventListener('touchend', instance.onVideoControlStop, false);
     }
 
-    setVideoCurrentTime(percentage) {
-        if (this.video() && !Number.isNaN(percentage) && percentage !== 1) {
-            instance.video().currentTime = instance.video().duration * percentage
-        }
-    }
-
-    onTap(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const percentage = (event.changedTouches && event.changedTouches.length > 0)
-            ? (event.changedTouches[0].pageX - event.target.getBoundingClientRect().left) / instance.el.videoTimeline.clientWidth
-            : event.offsetX / instance.el.videoTimeline.clientWidth;
-
-        instance.setVideoCurrentTime(percentage)
-        instance.setProgress(percentage)
-    }
-
-    resize() {
-        this.rendererCSS.setSize(this.sizes.width, this.sizes.height)
-    }
-
-    update() {
-        this.rendererCSS.render(this.cssScene, this.camera.instance)
-    }
-
     setControls() {
         document.onkeydown = (e) => {
             if (e.key === ' ') {
@@ -389,4 +384,22 @@ export default class Video {
             }
         }
     }
+
+    // #endregion
+
+    render() {
+        this.rendererCSS = new CSS3DRenderer()
+        this.rendererCSS.setSize(this.sizes.width, this.sizes.height)
+        this.rendererCSS.domElement.classList.add('video')
+        document.body.appendChild(this.rendererCSS.domElement)
+    }
+
+    resize() {
+        this.rendererCSS.setSize(this.sizes.width, this.sizes.height)
+    }
+
+    update() {
+        this.rendererCSS.render(this.scene, this.camera.instance)
+    }
+
 }

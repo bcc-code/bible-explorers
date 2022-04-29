@@ -812,6 +812,8 @@ button,
     color: #fff;
     text-align: center;
     @include setBackground('../static/svgs/button_long.svg');
+
+    margin-left: auto;
 }
 
 .tooltip {
@@ -854,7 +856,12 @@ button,
 }
 
 .video {
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+
     .css3dobject {
+        background-color: white;
         pointer-events: none;
 
         &.hide {
@@ -1370,18 +1377,32 @@ button,
 }
 
 .label {
+    position: absolute;
+    top: 0;
     color: #fff;
     background: $gradient;
     padding: 0.5rem 1rem;
     border: 2px solid $accent;
     border-radius: 8px 16px;
 
-    &::after {
+    &::after,
+    &::before {
         content: '';
         position: absolute;
-        left: 2px;
-        top: -12px;
         background: $accent;
+    }
+
+    &::before {
+        left: -12px;
+        bottom: 8px;
+        width: 8px;
+        height: 60%;
+        border-radius: 2px 6px;
+    }
+
+    &::after {
+        right: 8px;
+        top: -12px;
         width: 40%;
         height: 8px;
         border-radius: 2px 6px;

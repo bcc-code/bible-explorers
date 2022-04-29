@@ -4,7 +4,6 @@ import Sizes from "./Utils/Sizes.js"
 import Time from "./Utils/Time.js"
 import Resources from './Utils/Resources.js'
 import MouseMove from './Utils/MouseMove.js'
-import Composer from './Utils/Composer.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import sources from './Sources.js'
@@ -41,7 +40,6 @@ export default class Experience {
         this.world = new World()
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
-        this.composer = new Composer()
         this.auth0 = {}
 
         // Sizes resize event

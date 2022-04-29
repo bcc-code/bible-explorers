@@ -4,11 +4,11 @@ import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
 import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
-import Info from '../Extras/Info.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
-import Points from '../Extras/Points.js'
+import Points from './Points.js'
+import Highlight from './Highlight.js'
 
 let instance = null
 
@@ -47,8 +47,9 @@ export default class World {
         this.resources.on('ready', () => {
             // Setup
             this.controlRoom = new ControlRoom()
-            this.points = new Points()
             this.environment = new Environment()
+            this.points = new Points()
+            this.highlight = new Highlight()
             this.audio = new Audio()
 
             document.addEventListener('click', (el) => {
@@ -288,8 +289,7 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        instance.info = new Info()
-        instance.controlRoom.setUpTextures()
+        // instance.controlRoom.updateTextureScreen4x4()
     }
 
     restartJourney() {

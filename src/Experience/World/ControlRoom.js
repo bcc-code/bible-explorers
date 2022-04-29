@@ -1,6 +1,8 @@
+import { Tween } from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { VideoTexture } from 'three'
+import { Color, VideoTexture } from 'three'
 import Experience from "../Experience.js"
+import TWEEN from '@tweenjs/tween.js'
 
 export default class ControlRoom {
     constructor() {
@@ -14,31 +16,24 @@ export default class ControlRoom {
         this.raycaster = this.experience.raycaster
         this.pointer = this.experience.pointer
         this.time = this.experience.time
-        this.debug = this.experience.debug
         this.world = this.experience.world
 
         this.clickableObjects = []
-        this.textureObjects = []
-        this.animatedObjects = []
-        this.videoObject = null
+        this.screenObjects = []
+        this.roomTexture = []
+
         this.currentIntersect = null
-
-        this.rotation = {
-            max: Math.PI * 0.5,
-            min: - (Math.PI * 0.5),
-            speed: 0.005
-        }
-
-        // Baked material
-        this.bakedTexture = this.resources.items.baked
+        this.texture = null
 
         // Setup
         this.sources = this.resources
-        this.texture = null
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
         this.getObjects()
+        this.getTextures()
+        this.setMaterials()
+        this.setAnimation()
 
         // Events
         window.addEventListener('mousedown', () => {
@@ -51,122 +46,95 @@ export default class ControlRoom {
     setModel() {
         this.model = this.resources.scene
         this.scene.add(this.model)
-
-        //     const boxGeometry = new THREE.BoxGeometry(1, 2, 1)
-        //     const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
-
-        //     this.box = new THREE.Mesh(boxGeometry, boxMaterial)
-        //     this.scene.add(this.box)
     }
 
     getObjects() {
 
-        this.resources.scene.traverse((child) => {
+        this.controlRoom = this.resources.scene.children.find(child => child.name === 'control_room')
+        this.tv_4x4_frame = this.resources.scene.children.find(child => child.name === 'tv_4x4')
+        this.tv_4x5_frame = this.resources.scene.children.find(child => child.name === 'tv_4x5')
+        this.tv_16x10_frame = this.resources.scene.children.find(child => child.name === 'tv_16x10')
+        this.tv_16x9_frame = this.resources.scene.children.find(child => child.name === 'tv_16x9')
 
-            if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
+        this.tv_4x4 = this.resources.scene.children.find(child => child.name === 'tv_4x4_screen')
+        this.tv_4x5 = this.resources.scene.children.find(child => child.name === 'tv_4x5_screen')
+        this.tv_16x10 = this.resources.scene.children.find(child => child.name === 'tv_16x10_screen')
+        this.tv_16x9 = this.resources.scene.children.find(child => child.name === 'tv_16x9_screen')
+        this.tv_portal = this.resources.scene.children.find(child => child.name === 'tv_portal_screen')
 
-                child.material = new THREE.MeshBasicMaterial({ color: 0xffffff })
+        this.tablet = this.resources.scene.children.find(child => child.name === 'panel_screen')
+        this.switcher = this.resources.scene.children.find(child => child.name === 'panel_time_switchers_holder')
 
-                if (child.name !== 'tv_4x4_screen' && child.name !== 'tv_4x5_screen' && child.name !== 'tv_16x10_screen' && child.name !== 'tv_16x9_screen' && child.name !== 'tv_portal_screen') {
-                    child.material.map = this.bakedTexture
-                }
+        this.arrow_h = this.resources.scene.children.find(child => child.name === 'arrow_H')
+        this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
 
-                switch (child.name) {
-                    case 'tv_4x5':
-                    case 'tv_16x10':
-                    case 'tv_16x9':
-                    case 'panel_screen':
-                    case 'panel_time_switchers_holder':
-                        this.clickableObjects.push(child)
-                        break
+        this.roomTexture.push(this.controlRoom, this.tablet, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
+        this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
+        this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9)
 
-                    case 'tv_4x4_screen':
-                    case 'tv_4x5_screen':
-                    case 'tv_16x10_screen':
-                    case 'tv_16x9_screen':
-                        this.textureObjects.push(child)
+    }
 
-                        if (child.name === 'tv_4x5_screen') {
-                            child.material.map = this.sources.items.code_default
-                        }
+    getTextures() {
+        this.bakedTexture = this.sources.items.baked
+    }
 
-                        if (child.name === 'tv_16x10_screen') {
-                            child.material.map = this.sources.items.map_default
-                            this.clickableObjects.push(child)
-                        }
+    setMaterials() {
 
-                        if (child.name === 'tv_16x9_screen') {
-                            child.material.map = this.sources.items.iris_default
-                            this.clickableObjects.push(child)
-                        }
+        this.roomTexture.forEach(child => {
+            child.material = new THREE.MeshBasicMaterial({ map: this.bakedTexture })
+            child.material.map.flipY = false
+            child.material.map.encoding = THREE.sRGBEncoding
+        })
 
-                        break
+        this.screenObjects.forEach(child => {
 
-
-                    case 'arrow_H':
-                    case 'arrow_M':
-                        this.animatedObjects.push(child)
-                        break
-
-                    case 'tv_portal_screen':
-                        this.videoObject = child
-                        break
-
-                    default:
-                        break
-                }
-
-                if (child.material.map) {
-                    child.material.map.flipY = false
-                    child.material.map.encoding = THREE.sRGBEncoding
-                }
-
+            if (child.name === 'tv_4x4_screen') {
+                child.material = new THREE.MeshBasicMaterial({ map: this.sources.items.screen_default })
             }
+
+            if (child.name === 'tv_4x5_screen') {
+                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['codes'].item })
+            }
+
+            if (child.name === 'tv_16x10_screen') {
+                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['map'].item })
+            }
+
+            if (child.name === 'tv_16x9_screen') {
+                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item })
+            }
+
+
+            if (child.material.map) {
+                child.material.map.flipY = false
+                child.material.map.encoding = THREE.sRGBEncoding
+            }
+
         })
 
     }
 
     // Set textures
-    setTexture(meshName, texture, rotation = 0) {
+    setTexture(meshName, texture) {
         if (!texture) return
 
         this.texture = texture
-        texture.flipY = false
+        this.texture.flipY = false
         this.changeMeshTexture(meshName, this.texture)
         this.playIfVideoTexture()
     }
 
-    setUpTextures() {
-        this.textureObjects.forEach((obj) => {
-            switch (obj.name) {
-                case 'tv_4x4_screen':
-                    this.setTexture(obj.name, this.sources.textureItems[this.world.program.currentVideo()])
-                    break
-
-                case 'tv_4x5_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['codes'].item)
-                    break
-
-                case 'tv_16x9_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item)
-                    break
-
-                case 'tv_16x10_screen':
-                    this.setTexture(obj.name, this.sources.textureItems['map'].item)
-                    break
-
-            }
-        })
-
-        // this.box.material.map = this.sources.textureItems['map'].item
-        // this.box.material.needsUpdate = true
-    }
-
     changeMeshTexture(name, texture) {
-        let mesh = this.textureObjects.filter((obj) => { return obj.name == name })
+        let mesh = this.screenObjects.filter((obj) => { return obj.name == name })
         if (mesh) {
             mesh[0].material.map = texture
         }
+    }
+
+    updateTextureScreen4x4() {
+        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems[this.world.program.currentVideo()] })
+        this.tv_4x4.material.map.flipY = false
+        this.tv_4x4.material.map.encoding = THREE.sRGBEncoding
     }
 
     playIfVideoTexture() {
@@ -175,6 +143,8 @@ export default class ControlRoom {
         }
 
     }
+
+    // On click
 
     checkObjectIntersection() {
         this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
@@ -194,14 +164,31 @@ export default class ControlRoom {
         }
     }
 
-    // Click events
     clickedObject() {
         if (this.currentIntersect != null) {
             this.world.program.control(this.currentIntersect)
         }
     }
 
+    // Set animations
+
+    setAnimation() {
+        this.animation = {}
+        this.animation.mixer = new THREE.AnimationMixer(this.model)
+
+        this.animation.actions = {}
+
+        this.animation.actions.arrow_m = this.animation.mixer.clipAction(this.resources.animations[0])
+        this.animation.actions.arrow_m.play()
+
+        this.animation.actions.arrow_h = this.animation.mixer.clipAction(this.resources.animations[1])
+        this.animation.actions.arrow_h.play()
+
+    }
+
+
     update() {
         this.checkObjectIntersection()
+        this.animation.mixer.update(this.time.delta * 0.001)
     }
 }

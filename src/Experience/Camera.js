@@ -16,6 +16,7 @@ export default class Camera {
         camera = this
 
         // Options
+        this.cameraUpdated = false
         this.updateCameraTween = null
         this.zoomInTween = null
         this.data = {
@@ -128,13 +129,13 @@ export default class Camera {
         }
     }
 
-    updateCameraTo(location = 'default') {
+    updateCameraTo(location = 'default', callback = function(){}) {
         if (location == null) return
         this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
-        this.updateCamera(this.cameraLocations[location])
+        this.updateCamera(this.cameraLocations[location], callback)
     }
 
-    updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }) {
+    updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }, callback) {
         if (this.updateCameraTween)
             this.updateCameraTween.stop()
 
@@ -168,13 +169,14 @@ export default class Camera {
                     obj.cameraPosition.z
                 )
             })
-            .onComplete(function () {
+            .onComplete(() => {
                 if (controls) {
                     camera.controls.minPolarAngle = controls.minPolarAngle
                     camera.controls.maxPolarAngle = controls.maxPolarAngle
                     camera.controls.minAzimuthAngle = controls.minAzimuthAngle
                     camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
                 }
+                callback()
             })
             .start()
 

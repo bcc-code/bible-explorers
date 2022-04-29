@@ -23,6 +23,12 @@ export default [
     },
 
     {
+        name: 'screen_default',
+        type: 'texture',
+        path: 'textures/screen_default.jpg'
+    },
+
+    {
         name: 'map_default',
         type: 'texture',
         path: 'textures/map_default.jpg'
