@@ -1,6 +1,8 @@
+import { Tween } from '@tweenjs/tween.js'
 import * as THREE from 'three'
 import { VideoTexture } from 'three'
 import Experience from "../Experience.js"
+import TWEEN from '@tweenjs/tween.js'
 
 export default class ControlRoom {
     constructor() {
@@ -22,6 +24,10 @@ export default class ControlRoom {
         this.roomTexture = []
         this.videoObject = null
         this.currentIntersect = null
+
+        // Highlight
+        this.currentHighlight = null
+        this.pulse = null
 
         this.rotation = {
             max: Math.PI * 0.5,
@@ -58,6 +64,11 @@ export default class ControlRoom {
     getObjects() {
 
         this.controlRoom = this.resources.scene.children.find(child => child.name === 'control_room')
+        this.tv_4x4_frame = this.resources.scene.children.find(child => child.name === 'tv_4x4')
+        this.tv_4x5_frame = this.resources.scene.children.find(child => child.name === 'tv_4x5')
+        this.tv_16x10_frame = this.resources.scene.children.find(child => child.name === 'tv_16x10')
+        this.tv_16x9_frame = this.resources.scene.children.find(child => child.name === 'tv_16x9')
+
         this.tv_4x4 = this.resources.scene.children.find(child => child.name === 'tv_4x4_screen')
         this.tv_4x5 = this.resources.scene.children.find(child => child.name === 'tv_4x5_screen')
         this.tv_16x10 = this.resources.scene.children.find(child => child.name === 'tv_16x10_screen')
@@ -70,7 +81,7 @@ export default class ControlRoom {
         this.arrow_h = this.resources.scene.children.find(child => child.name === 'arrow_H')
         this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
 
-        this.roomTexture.push(this.controlRoom, this.tablet, this.switcher, this.arrow_h, this.arrow_m)
+        this.roomTexture.push(this.controlRoom, this.tablet, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
         this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9)
         this.videoObject = this.tv_portal
@@ -111,6 +122,50 @@ export default class ControlRoom {
 
         })
 
+    }
+
+    addHighlight(name) {
+        if (this.currentHighlight)
+            this.removeHighlight()
+
+        if (name == 'tv_16x9_screen') {
+            this.setHighlight(this.tv_16x9_frame)
+            this.pulseHightlight()
+        } else if (name == 'tv_16x10_screen') {
+            this.setHighlight(this.tv_16x10_frame)
+            this.pulseHightlight()
+        } else {
+            this.clickableObjects.filter(child => {
+                if (child.name === name) {
+                    this.setHighlight(child)
+                    this.pulseHightlight()
+                }
+            })
+        }
+    }
+
+    setHighlight(object) {
+        this.currentHighlight = object
+
+        const outlineGeometry = object.geometry
+        const outlineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
+        this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
+        this.outline.name = object.name + "_outline"
+        object.add(this.outline)
+    }
+
+    removeHighlight() {
+        this.currentHighlight.remove(this.outline)
+        this.currentHighlight = null
+    }
+
+    pulseHightlight() {
+        this.pulse = new TWEEN.Tween(this.outline.material)
+            .to({ opacity: 1 }, 1500)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .repeat(Infinity)
+            .yoyo(true)
+            .start()
     }
 
     // Set textures

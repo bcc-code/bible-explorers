@@ -40,7 +40,7 @@ module.exports = merge(
             onAfterSetupMiddleware: function (devServer) {
                 const port = devServer.options.port
                 const https = devServer.options.https ? 's' : ''
-                const localIp = '0.0.0.0' // ip.address()
+                const localIp = ip.address()
                 const domain1 = `http${https}://${localIp}:${port}`
                 const domain2 = `http${https}://localhost:${port}`
 

@@ -42,6 +42,8 @@ export default class TaskDescription {
                     setTimeout(function () {
                         program.addCustomInteractiveObj("tv_16x10_screen")
                         points.addLabel("tv_16x10_screen", selectedEpisode.program[currentStep].taskType)
+                        instance.world.controlRoom.addHighlight("tv_16x10_screen")
+
                     }, camera.data.moveDuration)
                 }
 
@@ -51,6 +53,7 @@ export default class TaskDescription {
                     setTimeout(function () {
                         program.addCustomInteractiveObj("panel_screen")
                         points.addLabel("panel_screen", selectedEpisode.program[currentStep].taskType)
+                        instance.world.controlRoom.addHighlight("panel_screen")
                     }, camera.data.moveDuration)
                 }
 

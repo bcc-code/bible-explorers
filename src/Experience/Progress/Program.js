@@ -80,11 +80,8 @@ export default class Program {
         let currentVideo = this.currentVideo()
         let nextVideo = this.nextVideo()
 
-        this.camera.updateCameraTo(this.currentLocation())
-
-        this.interactiveObjects().forEach(function(object) {
-            instance.points.addLabel(object, instance.stepType())
-        })
+        this.camera.updateCameraTo(this.currentLocation(), instance.points.addLabel(this.interactiveObjects()[0], instance.stepType()))
+        this.world.controlRoom.addHighlight(this.interactiveObjects()[0])
 
         if (this.stepType() == 'video') {
             setTimeout(function () {
