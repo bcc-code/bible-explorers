@@ -1,6 +1,6 @@
 import { Tween } from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { VideoTexture } from 'three'
+import { Color, VideoTexture } from 'three'
 import Experience from "../Experience.js"
 import TWEEN from '@tweenjs/tween.js'
 
@@ -148,7 +148,11 @@ export default class ControlRoom {
         this.currentHighlight = object
 
         const outlineGeometry = object.geometry
-        const outlineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
+        const outlineMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.1,
+        })
         this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
         this.outline.name = object.name + "_outline"
         object.add(this.outline)
@@ -161,7 +165,7 @@ export default class ControlRoom {
 
     pulseHightlight() {
         this.pulse = new TWEEN.Tween(this.outline.material)
-            .to({ opacity: 1 }, 1500)
+            .to({ opacity: 0.6 }, 1500)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .repeat(Infinity)
             .yoyo(true)
