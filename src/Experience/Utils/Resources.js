@@ -214,13 +214,30 @@ export default class Resources extends EventEmitter {
         return video
     }
 
-    httpGetAsync(theUrl, callback, async = true) {
-        var xmlHttp = new XMLHttpRequest()
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", theUrl, async);
-        xmlHttp.send(null);
+    fetchApiThenCache(theUrl, callback) {
+        fetch(theUrl)
+            .then(function(response) {
+                // console.log('network ok - save also to cache', theUrl)
+                var responseClone = response.clone()
+
+                response.json().then(function(apiData) {
+                    callback(apiData)
+                })
+
+                // Save to cache for offline use
+                caches.open('apiResponses').then(function(cache) {
+                    cache.put(theUrl, responseClone)
+                })
+            })
+            .catch(function() {
+                // console.log('network down - fetch from cache', theUrl)
+                caches.open('apiResponses').then(function(cache) {
+                    cache.match(theUrl).then(response => {
+                        response.json().then(function(cachedData) {
+                            callback(cachedData)
+                        })
+                    })
+                })
+            })
     }
 }

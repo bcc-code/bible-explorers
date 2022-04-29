@@ -41,7 +41,7 @@ export default class World {
             introduction: document.getElementById("introduction"),
         }
 
-        this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setCategories)
+        this.resources.fetchApiThenCache(_api.getBiexEpisodes(), this.setCategories)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -123,7 +123,7 @@ export default class World {
     setCategories(data) {
         if (!data) return
 
-        instance.chapters.data = JSON.parse(data)
+        instance.chapters.data = data
 
         for (const [category, data] of Object.entries(instance.chapters.data)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
