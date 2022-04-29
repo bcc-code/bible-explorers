@@ -80,7 +80,7 @@ export default class Program {
         let currentVideo = this.currentVideo()
         let nextVideo = this.nextVideo()
 
-        this.camera.updateCameraTo(this.currentLocation(), instance.points.addLabel(this.interactiveObjects()[0], instance.stepType()))
+        this.camera.updateCameraTo(this.currentLocation(), instance.points.add(this.interactiveObjects()[0], instance.stepType()))
         this.highlight.add(this.interactiveObjects()[0])
 
         if (this.stepType() == 'video') {

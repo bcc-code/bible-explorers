@@ -22,7 +22,6 @@ export default class ControlRoom {
         this.screenObjects = []
         this.roomTexture = []
 
-        this.videoObject = null
         this.currentIntersect = null
         this.texture = null
 
@@ -72,7 +71,6 @@ export default class ControlRoom {
         this.roomTexture.push(this.controlRoom, this.tablet, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
         this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9)
-        this.videoObject = this.tv_portal
 
     }
 

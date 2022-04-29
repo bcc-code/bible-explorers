@@ -856,7 +856,12 @@ button,
 }
 
 .video {
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+
     .css3dobject {
+        background-color: white;
         pointer-events: none;
 
         &.hide {

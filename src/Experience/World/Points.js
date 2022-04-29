@@ -17,18 +17,18 @@ export default class Points {
         this.render()
     }
 
-    addLabel(name, type) {
+    add(name, type) {
         if (this.currentLabel)
-            this.deleteLabel()
+            this.delete()
 
         this.objects.filter(child => {
             if (child.name === name) {
-                this.createLabel(child, _s.tooltips[type])
+                this.create(child, _s.tooltips[type])
             }
         })
     }
 
-    createLabel(object, labelText) {
+    create(object, labelText) {
         const div = document.createElement('div')
         div.className = 'label'
         div.textContent = labelText
@@ -40,7 +40,7 @@ export default class Points {
         this.currentObject.add(this.currentLabel)
     }
 
-    deleteLabel() {
+    delete() {
         this.currentObject.remove(this.currentLabel)
         this.currentObject = null
         this.currentLabel = null
