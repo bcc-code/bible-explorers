@@ -1380,12 +1380,24 @@ button,
     border: 2px solid $accent;
     border-radius: 8px 16px;
 
-    &::after {
+    &::after,
+    &::before {
         content: '';
         position: absolute;
-        left: 2px;
-        top: -12px;
         background: $accent;
+    }
+
+    &::before {
+        left: -12px;
+        bottom: 8px;
+        width: 8px;
+        height: 60%;
+        border-radius: 2px 6px;
+    }
+
+    &::after {
+        right: 8px;
+        top: -12px;
         width: 40%;
         height: 8px;
         border-radius: 2px 6px;

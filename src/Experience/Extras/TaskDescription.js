@@ -18,6 +18,7 @@ export default class TaskDescription {
         else {
             let program = instance.world.program
             let camera = program.camera
+            let highlight = instance.world.highlight
             let points = instance.world.points
             let currentStep = program.currentStep
             let selectedEpisode = instance.world.selectedEpisode
@@ -42,7 +43,7 @@ export default class TaskDescription {
                     setTimeout(function () {
                         program.addCustomInteractiveObj("tv_16x10_screen")
                         points.addLabel("tv_16x10_screen", selectedEpisode.program[currentStep].taskType)
-                        instance.world.controlRoom.addHighlight("tv_16x10_screen")
+                        highlight.add("tv_16x10_screen")
 
                     }, camera.data.moveDuration)
                 }
@@ -53,7 +54,7 @@ export default class TaskDescription {
                     setTimeout(function () {
                         program.addCustomInteractiveObj("panel_screen")
                         points.addLabel("panel_screen", selectedEpisode.program[currentStep].taskType)
-                        instance.world.controlRoom.addHighlight("panel_screen")
+                        highlight.add("panel_screen")
                     }, camera.data.moveDuration)
                 }
 

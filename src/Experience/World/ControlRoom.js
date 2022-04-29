@@ -16,36 +16,24 @@ export default class ControlRoom {
         this.raycaster = this.experience.raycaster
         this.pointer = this.experience.pointer
         this.time = this.experience.time
-        this.debug = this.experience.debug
         this.world = this.experience.world
 
         this.clickableObjects = []
         this.screenObjects = []
         this.roomTexture = []
+
         this.videoObject = null
         this.currentIntersect = null
-
-        // Highlight
-        this.currentHighlight = null
-        this.pulse = null
-
-        this.rotation = {
-            max: Math.PI * 0.5,
-            min: - (Math.PI * 0.5),
-            speed: 0.005
-        }
-
-        // Baked material
-        this.bakedTexture = this.resources.items.baked
+        this.texture = null
 
         // Setup
         this.sources = this.resources
-        this.texture = null
         this.resources = this.resources.items.controlRoom
 
         this.setModel()
         this.getObjects()
-        this.setDefaultMaterials()
+        this.getTextures()
+        this.setMaterials()
         this.setAnimation()
 
         // Events
@@ -88,7 +76,11 @@ export default class ControlRoom {
 
     }
 
-    setDefaultMaterials() {
+    getTextures() {
+        this.bakedTexture = this.sources.items.baked
+    }
+
+    setMaterials() {
 
         this.roomTexture.forEach(child => {
             child.material = new THREE.MeshBasicMaterial({ map: this.bakedTexture })
@@ -124,68 +116,14 @@ export default class ControlRoom {
 
     }
 
-    addHighlight(name) {
-        if (this.currentHighlight)
-            this.removeHighlight()
-
-        if (name == 'tv_16x9_screen') {
-            this.setHighlight(this.tv_16x9_frame)
-            this.pulseHightlight()
-        } else if (name == 'tv_16x10_screen') {
-            this.setHighlight(this.tv_16x10_frame)
-            this.pulseHightlight()
-        } else {
-            this.clickableObjects.filter(child => {
-                if (child.name === name) {
-                    this.setHighlight(child)
-                    this.pulseHightlight()
-                }
-            })
-        }
-    }
-
-    setHighlight(object) {
-        this.currentHighlight = object
-
-        const outlineGeometry = object.geometry
-        const outlineMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.1,
-        })
-        this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
-        this.outline.name = object.name + "_outline"
-        object.add(this.outline)
-    }
-
-    removeHighlight() {
-        this.currentHighlight.remove(this.outline)
-        this.currentHighlight = null
-    }
-
-    pulseHightlight() {
-        this.pulse = new TWEEN.Tween(this.outline.material)
-            .to({ opacity: 0.6 }, 1500)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .repeat(Infinity)
-            .yoyo(true)
-            .start()
-    }
-
     // Set textures
     setTexture(meshName, texture) {
         if (!texture) return
 
         this.texture = texture
-        texture.flipY = false
+        this.texture.flipY = false
         this.changeMeshTexture(meshName, this.texture)
         this.playIfVideoTexture()
-    }
-
-    updateTextureScreen4x4() {
-        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems[this.world.program.currentVideo()] })
-        this.tv_4x4.material.map.flipY = false
-        this.tv_4x4.material.map.encoding = THREE.sRGBEncoding
     }
 
     changeMeshTexture(name, texture) {
@@ -195,12 +133,20 @@ export default class ControlRoom {
         }
     }
 
+    updateTextureScreen4x4() {
+        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems[this.world.program.currentVideo()] })
+        this.tv_4x4.material.map.flipY = false
+        this.tv_4x4.material.map.encoding = THREE.sRGBEncoding
+    }
+
     playIfVideoTexture() {
         if (this.texture instanceof VideoTexture) {
             this.texture.image.play()
         }
 
     }
+
+    // On click
 
     checkObjectIntersection() {
         this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
@@ -220,6 +166,12 @@ export default class ControlRoom {
         }
     }
 
+    clickedObject() {
+        if (this.currentIntersect != null) {
+            this.world.program.control(this.currentIntersect)
+        }
+    }
+
     // Set animations
 
     setAnimation() {
@@ -236,12 +188,6 @@ export default class ControlRoom {
 
     }
 
-    // Click events
-    clickedObject() {
-        if (this.currentIntersect != null) {
-            this.world.program.control(this.currentIntersect)
-        }
-    }
 
     update() {
         this.checkObjectIntersection()

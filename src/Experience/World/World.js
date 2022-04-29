@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
@@ -8,7 +7,8 @@ import Program from '../Progress/Program.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
-import Points from '../Extras/Points.js'
+import Points from './Points.js'
+import Highlight from './Highlight.js'
 
 let instance = null
 
@@ -47,8 +47,9 @@ export default class World {
         this.resources.on('ready', () => {
             // Setup
             this.controlRoom = new ControlRoom()
-            this.points = new Points()
             this.environment = new Environment()
+            this.points = new Points()
+            this.highlight = new Highlight()
             this.audio = new Audio()
 
             document.addEventListener('click', (el) => {
