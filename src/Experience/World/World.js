@@ -9,11 +9,13 @@ import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
+import Offline from '../Utils/Offline.js'
 
 let instance = null
 
 export default class World {
     constructor() {
+        this.offline = new Offline()
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -41,7 +43,7 @@ export default class World {
             introduction: document.getElementById("introduction"),
         }
 
-        this.resources.httpGetAsync(_api.getBiexEpisodes(), this.setCategories)
+        this.resources.fetchApiThenCache(_api.getBiexEpisodes(), this.setCategories)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -92,8 +94,10 @@ export default class World {
     }
 
     showMenuButtons() {
-
-        const episodeActions = document.querySelector('.episode__actions')
+        document.querySelectorAll('.episode__actions.visible').forEach(episode => {
+            episode.classList.remove('visible')
+        })
+        const episodeActions = document.querySelector('.episode.selected .episode__actions')
         episodeActions.classList.add('visible')
 
         this.welcome.startJourney = document.getElementById("start-journey")
@@ -124,7 +128,7 @@ export default class World {
     setCategories(data) {
         if (!data) return
 
-        instance.chapters.data = JSON.parse(data)
+        instance.chapters.data = data
 
         for (const [category, data] of Object.entries(instance.chapters.data)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
@@ -178,11 +182,14 @@ export default class World {
 
     setEpisodeHtml(episode, index) {
         let episodeHtml = document.createElement("div")
-        let episodeClasses = "episode"
+
+        let episodeClasses = "episode download"
         episodeClasses += episode.status == "future" ? " locked" : ""
         episodeHtml.className = episodeClasses
+
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.setAttribute("data-slug", episode.category)
+
         episodeHtml.innerHTML = `
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
@@ -203,7 +210,7 @@ export default class World {
 
     selectEpisodeListeners() {
         document.querySelectorAll(".episode:not(.locked)").forEach(function (episode) {
-            episode.addEventListener("mousedown", () => {
+            episode.addEventListener("click", () => {
                 instance.addClassToSelectedEpisode(episode)
                 instance.updateSelectedEpisodeData(episode)
                 instance.loadEpisodeTextures()
@@ -211,9 +218,10 @@ export default class World {
             })
         })
 
-        document.querySelectorAll(".episode:not(.locked) .download").forEach(function (episode) {
-            episode.addEventListener("mousedown", () => {
+        document.querySelectorAll(".episode:not(.locked) .icon-download-solid").forEach(function (episode) {
+            episode.addEventListener("click", (event) => {
                 instance.downloadEpisode(episode)
+                event.stopPropagation()
             })
         })
     }
@@ -243,23 +251,27 @@ export default class World {
                 return
 
             instance.resources.loadVideosThumbnail(fileName, animationFilm.thumbnail)
-            instance.resources.loadThemeVideos(fileName)
+            instance.resources.loadThemeVideos(instance.selectedEpisode.id, fileName)
         })
     }
 
     async downloadEpisode(episode) {
-        const episodeId = episode.closest(".episode").getAttribute('data-id')
-        const claims = await experience.auth0.getIdTokenClaims();
+        if (!this.experience.auth0.isAuthenticated) return
+
+        const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
 
-        let videoUrls = []
-        instance.chapters.categories.filter(episode => {
-            return episode.id == episodeId
-        })[0].data.forEach(async (animationFilm) => {
-            const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
-            console.log('downloadEpisode from ' + url)
+        const episodeId = episode.closest(".episode").getAttribute('data-id')
+        const categorySlug = episode.closest(".episode").getAttribute('data-slug')
+        const selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == episodeId })[0]
 
-            videoUrls.push(url)
+        episode.closest(".episode").classList.remove('download')
+        episode.closest(".episode").classList.add('downloading')
+
+        selectedEpisode['data'].forEach(async (animationFilm) => {
+            const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
+            console.log('downloadEpisode ' + animationFilm.id + ' from ' + url)
+            this.offline.downloadFromWeb(url, { name: animationFilm.id + '_video', episodeId: episodeId } )
         })
     }
 
