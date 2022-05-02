@@ -9,11 +9,13 @@ import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
+import Offline from '../Utils/Offline.js'
 
 let instance = null
 
 export default class World {
     constructor() {
+        this.offline = new Offline()
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -178,11 +180,14 @@ export default class World {
 
     setEpisodeHtml(episode, index) {
         let episodeHtml = document.createElement("div")
-        let episodeClasses = "episode"
+
+        let episodeClasses = "episode download"
         episodeClasses += episode.status == "future" ? " locked" : ""
         episodeHtml.className = episodeClasses
+
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.setAttribute("data-slug", episode.category)
+
         episodeHtml.innerHTML = `
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
@@ -207,7 +212,7 @@ export default class World {
 
     selectEpisodeListeners() {
         document.querySelectorAll(".episode:not(.locked)").forEach(function (episode) {
-            episode.addEventListener("mousedown", () => {
+            episode.addEventListener("click", () => {
                 instance.addClassToSelectedEpisode(episode)
                 instance.updateSelectedEpisodeData(episode)
                 instance.loadEpisodeTextures()
@@ -216,8 +221,9 @@ export default class World {
         })
 
         document.querySelectorAll(".episode:not(.locked) .icon-download-solid").forEach(function (episode) {
-            episode.addEventListener("mousedown", () => {
+            episode.addEventListener("click", (event) => {
                 instance.downloadEpisode(episode)
+                event.stopPropagation()
             })
         })
     }
@@ -259,11 +265,13 @@ export default class World {
         const categorySlug = episode.closest(".episode").getAttribute('data-slug')
         const selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == episodeId })[0]
 
-        let videoUrls = []
+        episode.closest(".episode").classList.remove('download')
+        episode.closest(".episode").classList.add('downloading')
+
         selectedEpisode['data'].forEach(async (animationFilm) => {
             const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
-            console.log('downloadEpisode from ' + url)
-            videoUrls.push(url)
+            console.log('downloadEpisode ' + animationFilm.id + ' from ' + url)
+            this.offline.downloadFromWeb(url, episodeId, animationFilm.id + '_video')
         })
     }
 
