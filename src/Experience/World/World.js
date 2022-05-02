@@ -194,7 +194,7 @@ export default class World {
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
                 <div class="episode__image"><img src="${episode.thumbnail}" /> </div>
-                <div class="episode__icon"><i class="icon icon-play-solid"></i> <i class="icon icon-lock-solid"></i> <i class="icon icon-download-solid"></i></div>
+                <div class="episode__icon"><i class="icon icon-play-solid"></i> <i class="icon icon-lock-solid"></i> <i class="icon icon-download-solid"></i><i class="downloading"></i></div>
                 <div class="episode__heading">
                     <span class="episode__title">${episode.title}</span>
                     <span class="episode__completed" id="completed">${_s.journey.congratulations}</span>

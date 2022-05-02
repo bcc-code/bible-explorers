@@ -541,7 +541,7 @@ button,
         align-items: center;
         padding-bottom: 2rem;
         padding-left: 4rem;
-        
+
 
         &::after,
         &::before {
@@ -614,6 +614,14 @@ button,
             display: none;
         }
 
+        .icon-play-solid {
+            margin-left: 2px;
+        }
+
+        .icon-download-solid {
+            margin-bottom: 5px;
+        }
+
         .episode.locked & {
             .icon-lock-solid {
                 display: inline-block;
@@ -628,19 +636,33 @@ button,
         .episode.download & {
             .icon-download-solid {
                 display: inline-block;
-                margin-left: 2px;
+            }
+        }
+
+        .episode.downloading & {
+            .icon-download-solid {
+                display: none;
+            }
+
+            i.downloading {
+                width: 4rem;
+                height: 4rem;
+                border-radius: 50%;
+                @include setBackground('../static//textures/download.gif');
             }
         }
 
         .episode.downloaded & {
-            .icon-downloaded-solid {
+            .icon-play-solid {
                 display: inline-block;
             }
 
-            .icon-download-solid {
+            .downloading {
                 display: none;
             }
+
         }
+
 
     }
 
@@ -753,12 +775,12 @@ button,
 
         .episode__thumbnail::before {
             top: -0.15rem;
-            transform: scaleY(1);
+            opacity: 1;
         }
 
         .episode__thumbnail::after {
             right: -1.5rem;
-            transform: scaleX(1);
+            opacity: 1;
         }
 
     }
@@ -770,6 +792,7 @@ button,
             background: $dark;
         }
     }
+
 
 }
 
