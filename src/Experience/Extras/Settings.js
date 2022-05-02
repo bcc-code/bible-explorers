@@ -10,7 +10,7 @@ export default class Settings {
         this.experience = new Experience()
         settings = this
 
-        settings.soundOn = true
+        settings.soundOn = false
         settings.logInLogOut = {
             login: false,
             logout: false
@@ -78,6 +78,7 @@ export default class Settings {
 
     toggleSound() {
         settings.soundOn = this.checked
+
     }
 
     toggleLanguageList() {

@@ -59,12 +59,15 @@ export default class Questions {
 
             if (questions.length > 1) {
                 submitButton.classList.add('disabled')
-            } 
+            }
 
             nextButton.addEventListener("mousedown", () => {
                 const current = document.querySelector('.question.visible')
                 current.classList.remove('visible')
                 current.nextElementSibling?.classList.add('visible')
+
+
+
 
                 if (current.nextElementSibling.matches(':last-child')) {
                     nextButton.classList.add('disabled')
@@ -88,14 +91,16 @@ export default class Questions {
 
             submitButton.addEventListener("mousedown", () => {
                 // Save answers to Local Storage
+
                 let thisThemeAnswers = []
+
                 document.querySelectorAll('.questions textarea').forEach((answer) => {
                     thisThemeAnswers.push(answer.value)
                 })
 
+
                 allAnswersFromTheme[currentStep] = thisThemeAnswers
                 localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
-
                 questions.modal.destroy()
                 program.advance()
             })

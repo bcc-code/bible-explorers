@@ -296,11 +296,9 @@ export default class World {
 
     finishJourney() {
         instance.showMenu()
-        instance.welcome.congratulations.style.display = "block"
         instance.welcome.startJourney.style.display = "none"
         instance.welcome.restartJourney.style.display = "block"
 
-        instance.welcome.congratulations.innerText = _s.journey.congratulations
     }
 
     showMenu() {
