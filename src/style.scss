@@ -134,6 +134,13 @@ button,
     background-color: transparent;
 }
 
+
+.svg__masks {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
 // #endregion
 
 // #region Canvas
@@ -463,17 +470,47 @@ button,
 }
 
 .episode {
+    position: relative;
     display: flex;
-    align-items: flex-end;
-    height: 172px;
+    width: 960px;
+    height: 160px;
     cursor: pointer;
+    @include setBackground('../static/svgs/episode_image.svg');
+
+    &::after,
+    &::before {
+        pointer-events: none;
+        transition: .3s ease;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.4;
+        @include setBackground('../static/svgs/episode_border.svg');
+        z-index: 2;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 352px;
+        height: 32px;
+        @include setBackground('../static/svgs/episode_corner.svg');
+        z-index: 2;
+        opacity: 0;
+    }
 
 
     &__number {
-        @include setBackground('../static/svgs/episode_number.svg');
-        width: 110px;
-        height: 100%;
-
+        position: relative;
+        width: 8rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -482,23 +519,79 @@ button,
         color: #fff;
         font-size: 2.5rem;
         font-weight: bold;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 5px;
+            background: $accent;
+            opacity: 0.4;
+            transition: .3s ease;
+        }
+
     }
 
     &__thumbnail {
         position: relative;
-        margin-left: -1px;
-        @include setBackground('../static/svgs/episode_image.svg');
-        width: 873px;
-        height: 100%;
-
+        width: calc(100% - 8rem);
         display: flex;
         align-items: center;
         padding-bottom: 2rem;
         padding-left: 4rem;
 
-        img {
-            display: none;
+        &::after,
+        &::before {
+            content: '';
+            opacity: 0.4;
+            position: absolute;
+            transition: .3s ease-in-out;
         }
+
+        &::before {
+            width: 200px;
+            height: 16px;
+            right: 3.5rem;
+            top: 0;
+            @include setBackground('../static/svgs/episode_artefact_top.svg');
+        }
+
+        &::after {
+            width: 16px;
+            height: 92px;
+            top: 3rem;
+            right: -1.25rem;
+            @include setBackground('../static/svgs/episode_artefact_right.svg');
+        }
+    }
+
+    &__image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 65%;
+        display: flex;
+        align-items: center;
+        clip-path: url("#episode__thumbnail--mask");
+        overflow: hidden;
+
+        img {
+            opacity: 0.3;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, $dark);
+        }
+
     }
 
     &__icon {
@@ -548,6 +641,7 @@ button,
     }
 
     &__heading {
+        position: relative;
         display: flex;
         flex-direction: column;
     }
@@ -563,10 +657,13 @@ button,
         text-transform: none;
         color: #fff;
         font-size: 1rem;
-        opacity: 0.6;
+        opacity: 0.8;
     }
 
     &__actions {
+        position: absolute;
+        top: 20px;
+        left: calc(100% + 1.5rem);
         @include setBackground('../static/svgs/episode_actions.svg');
         width: 295px;
         height: 146px;
@@ -606,6 +703,29 @@ button,
 
     }
 
+
+    &:hover {
+
+        &::after,
+        &::before {
+            opacity: 1;
+        }
+
+        .episode__number::after {
+            opacity: 1;
+        }
+
+        .episode__thumbnail::before {
+            opacity: 1;
+            top: -0.15rem;
+        }
+
+        .episode__thumbnail::after {
+            right: -1.5rem;
+            opacity: 1;
+        }
+    }
+
     &.selected {
         .episode__actions {
             opacity: 1;
@@ -615,6 +735,34 @@ button,
             >div {
                 opacity: 1;
             }
+        }
+
+        &::after,
+        &::before {
+            opacity: 1;
+        }
+
+        .episode__number::after {
+            opacity: 1;
+        }
+
+        .episode__thumbnail::before {
+            top: -0.15rem;
+            transform: scaleY(1);
+        }
+
+        .episode__thumbnail::after {
+            right: -1.5rem;
+            transform: scaleX(1);
+        }
+
+    }
+
+    &.locked {
+        pointer-events: none;
+
+        .episode__icon {
+            background: $dark;
         }
     }
 
