@@ -6,13 +6,21 @@ export default class Offline {
             return offline
 
         offline = this
-        this.initialize()
+
+        if ("indexedDB" in window) {
+            this.initialize()
+        }
+        else {
+            console.log("This browser doesn't support IndexedDB");
+            return;
+        }
     }
 
     initialize = function () {
         offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
         offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
         offline.dbVersion = 1.0
+        offline.store = "episodesData"
         offline.db = null
         offline.transaction = null
         offline.objStore = null
@@ -21,11 +29,17 @@ export default class Offline {
         offline.request = null
     }
 
-    accessDb = function (store, callback = function(){}) {
+    createObjectStore = function (database) {
+        console.log("Creating objectStore")
+        offline.objStore = database.createObjectStore(offline.store)
+        offline.objStore.createIndex('', 'episodeId')
+    }
+
+    accessDb = function (callback = function(){}) {
         let args = arguments
 
         if (!offline.request)
-            offline.request = offline.indexedDB.open("bibleExplorersEpisodes", offline.dbVersion)
+            offline.request = offline.indexedDB.open("Bible Kids Explorers", offline.dbVersion)
 
         offline.request.onerror = function () {
             console.log("Error creating/accessing IndexedDB database")
@@ -44,58 +58,22 @@ export default class Offline {
                 if (offline.db.version != offline.dbVersion) {
                     var setVersion = offline.db.setVersion(offline.dbVersion)
                     setVersion.onsuccess = function () {
-                        offline.createObjectStore(store, offline.db)
+                        offline.createObjectStore(offline.db)
                     }
                 }
             }
     
-            callback(Array.prototype.slice.call(args, 2))
+            callback(Array.prototype.slice.call(args, 1))
         }
         
         // For future use. Currently only in latest Firefox versions
         offline.request.onupgradeneeded = function (event) {
-            offline.createObjectStore(store, event.target.result)
+            offline.createObjectStore(event.target.result)
         }
     }
 
-    createObjectStore = function (store, database) {
-        // console.log("Creating objectStore")
-        database.createObjectStore(store)
-    }
-
-    getFromIndexedDb = function (store, name) {
-        offline.accessDb(
-            store, offline.retrieveStoredFile, store, name
-        )
-    }
-
-    retrieveStoredFile = function (args) {
-        let store = args[0], name = args[1]
-
-        offline.transaction = offline.db.transaction([store], "readonly")
-        offline.objStore = offline.transaction.objectStore(store)
-        offline.getItem = offline.objStore.get(name)
-        
-        offline.getItem.onsuccess = function () {
-            const file = offline.getItem.result
-            console.log("Got element!", file)
-
-            var URL = window.URL || window.webkitURL
-            var fileUrl = URL.createObjectURL(file)
-            var domElem = document.getElementById(name)
-            
-            var domElem = document.createElement("img")
-            domElem.setAttribute("id", name)
-            domElem.setAttribute("src", fileUrl)
-            document.getElementById('chapters').appendChild(domElem)
-
-            URL.revokeObjectURL(fileUrl)
-        }
-    }
-
-    downloadFromWeb = function (url, store, name) {
-        var xhr = new XMLHttpRequest(),
-        blob;
+    downloadFromWeb = function (url, data) {
+        var xhr = new XMLHttpRequest(), blob
              
         xhr.open("GET", url, true);
         xhr.responseType = "blob";
@@ -104,13 +82,13 @@ export default class Offline {
             if (xhr.status === 200) {
                 console.log("File Downloaded")
 
-                document.querySelector('.episode[data-id="'+store+'"]').classList.remove('downloading')
-                document.querySelector('.episode[data-id="'+store+'"]').classList.remove('downloaded')
+                document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.remove('downloading')
+                document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.add('downloaded')
                  
-                blob = xhr.response
+                data.blob = xhr.response
 
                 offline.accessDb(
-                    store, offline.putFileInDb, store, name, blob
+                    offline.putFileInDb, data
                 )
             }
         }, false)
@@ -118,13 +96,53 @@ export default class Offline {
         xhr.send()
     }
 
-    putFileInDb = function (args) {
-        let store = args[0], name = args[1], blob = args[2]
-        console.log("putFileInDb", store, name, blob)
-        console.log("Putting " + name + " in IndexedDB")
+    putFileInDb = function ([data]) {
+        console.log(data)
 
-        offline.transaction = offline.db.transaction([store], "readwrite")
-        offline.objStore = offline.transaction.objectStore(store)
-        offline.putItem = offline.objStore.put(blob, name)
+        console.log("Putting " + data.name + " in " + offline.store)
+
+        offline.transaction = offline.db.transaction([offline.store], "readwrite")
+        offline.objStore = offline.transaction.objectStore(offline.store)
+        offline.putItem = offline.objStore.put(data, data.name)
+
+        offline.putItem.onsuccess = function () {
+            offline.db.close()
+        }
+    }
+
+    loadFromIndexedDb = function (data, fallback = function(){}) {
+        offline.accessDb(
+            offline.retrieveStoredFile, data, fallback
+        )
+    }
+
+    retrieveStoredFile = function ([data, fallback]) {
+        offline.transaction = offline.db.transaction([offline.store], "readonly")
+        offline.objStore = offline.transaction.objectStore(offline.store)
+        offline.getItem = offline.objStore.get(data.name)
+        
+        offline.getItem.onsuccess = function () {
+            if (offline.getItem.result) {
+                const item = offline.getItem.result
+                const video = item.blob
+                console.log("Got element!", item)
+
+                var URL = window.URL || window.webkitURL
+                const fileUrl = URL.createObjectURL(video)
+
+                var domElem = document.createElement("video")
+                domElem.setAttribute("id", data.name)
+                domElem.setAttribute("src", fileUrl)
+                document.getElementById('videos-container').appendChild(domElem)
+
+                URL.revokeObjectURL(fileUrl)
+            }
+            else {
+                console.log('Load from BTV')
+                fallback
+            }
+
+            offline.db.close()
+        }
     }
 }

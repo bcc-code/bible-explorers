@@ -4,11 +4,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
 import _lang from '../Utils/Lang.js'
+import Offline from '../Utils/Offline.js'
 
 export default class Resources extends EventEmitter {
     constructor(sources) {
         super()
 
+        this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
 
@@ -145,28 +147,34 @@ export default class Resources extends EventEmitter {
         )
     }
 
-    async loadThemeVideos(videoName) {
-        let video, path = 'videos/' + videoName + '.mp4'
+    async loadThemeVideos(episodeId, videoName) {
+        let animationId = videoName.replace('episode-', '')
+        this.offline.loadFromIndexedDb(
+            { name: animationId+'_video', episodeId: episodeId },
+            this.streamFromBtv(videoName)
+        )
+    }
 
+    async streamFromBtv(videoName) {
         // Video stream from BTV
         await this.loadEpisodeFromBtv(videoName)
-        video = this.getGeneratedVideoElement(videoName)
+        const video = this.getGeneratedVideoElement(videoName)
         this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
     }
 
     async loadEpisodeFromBtv(videoName) {
-        const episodeId = videoName.replace('episode-', '')
+        const filmId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
 
         var btvplayer = BTVPlayer({
             type: 'episode',
-            id: episodeId,
+            id: filmId,
             locale: locale
         })
 
         let btvContainer = document.createElement('div')
         btvContainer.setAttribute('id', videoName)
-        // btvContainer.setAttribute('data-url', await btvplayer.api.getDownloadable('episode', episodeId, locale))
+
         document.getElementById('videos-container').appendChild(btvContainer)
 
         await btvplayer.load({

@@ -94,8 +94,10 @@ export default class World {
     }
 
     showMenuButtons() {
-
-        const episodeActions = document.querySelector('.episode__actions')
+        document.querySelectorAll('.episode__actions.visible').forEach(episode => {
+            episode.classList.remove('visible')
+        })
+        const episodeActions = document.querySelector('.episode.selected .episode__actions')
         episodeActions.classList.add('visible')
 
         this.welcome.startJourney = document.getElementById("start-journey")
@@ -253,12 +255,14 @@ export default class World {
                 return
 
             instance.resources.loadVideosThumbnail(fileName, animationFilm.thumbnail)
-            instance.resources.loadThemeVideos(fileName)
+            instance.resources.loadThemeVideos(instance.selectedEpisode.id, fileName)
         })
     }
 
     async downloadEpisode(episode) {
-        const claims = await experience.auth0.getIdTokenClaims();
+        if (!this.experience.auth0.isAuthenticated) return
+
+        const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
 
         const episodeId = episode.closest(".episode").getAttribute('data-id')
@@ -271,7 +275,7 @@ export default class World {
         selectedEpisode['data'].forEach(async (animationFilm) => {
             const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
             console.log('downloadEpisode ' + animationFilm.id + ' from ' + url)
-            this.offline.downloadFromWeb(url, episodeId, animationFilm.id + '_video')
+            this.offline.downloadFromWeb(url, { name: animationFilm.id + '_video', episodeId: episodeId } )
         })
     }
 
