@@ -3,8 +3,7 @@
   "license": "GNU AGPLv3",
   "scripts": {
     "build": "webpack --config ./bundler/webpack.prod.js",
-    "dev": "webpack serve --config ./bundler/webpack.dev.js",
-    "deploy": "vercel --prod"
+    "dev": "webpack serve --config ./bundler/webpack.dev.js"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.21.0",
@@ -32,7 +31,8 @@
     "vercel": "^24.0.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.3",
-    "webpack-merge": "^5.8.0"
+    "webpack-merge": "^5.8.0",
+    "workbox-precaching": "^6.5.3"
   },
   "devDependencies": {
     "gsap": "^3.9.1",
@@ -40,6 +40,7 @@
     "node-sass": "^7.0.1",
     "sass-loader": "^12.6.0",
     "svgo-loader": "^3.0.0",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "workbox-webpack-plugin": "^6.5.2"
   }
 }

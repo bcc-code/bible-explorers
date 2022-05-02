@@ -490,14 +490,18 @@ button,
         @include setBackground('../static/svgs/episode_image.svg');
         width: 873px;
         height: 100%;
+        overflow: hidden;
 
         display: flex;
         align-items: center;
         padding-bottom: 2rem;
         padding-left: 4rem;
+        
 
         img {
-            display: none;
+            position: absolute;
+            left: 0;
+            opacity: 0.7;
         }
     }
 
@@ -520,17 +524,13 @@ button,
             display: none;
         }
 
-        .icon-play-solid {
-            display: inline-block;
-            margin-left: 2px;
-        }
-
         .episode.locked & {
             .icon-lock-solid {
                 display: inline-block;
             }
 
-            .icon-play-solid {
+            .icon-play-solid,
+            .icon-download-solid {
                 display: none;
             }
         }
@@ -538,9 +538,16 @@ button,
         .episode.download & {
             .icon-download-solid {
                 display: inline-block;
+                margin-left: 2px;
+            }
+        }
+
+        .episode.downloaded & {
+            .icon-downloaded-solid {
+                display: inline-block;
             }
 
-            .icon-play-solid {
+            .icon-download-solid {
                 display: none;
             }
         }
@@ -550,6 +557,7 @@ button,
     &__heading {
         display: flex;
         flex-direction: column;
+        z-index: 1;
     }
 
     &__title {
