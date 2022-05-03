@@ -20,7 +20,7 @@ export default class Offline {
     initialize = function () {
         offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
         offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
-        offline.dbVersion = 1.0
+        offline.dbVersion = 1.1
         offline.store = "episodesData"
         offline.db = null
         offline.transaction = null
