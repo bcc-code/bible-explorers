@@ -15,4 +15,19 @@
  */
 
 import { precacheAndRoute } from 'workbox-precaching'
+import { Route, registerRoute } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+
+const btvPlayer = new Route(({url}) => {
+  return url === 'https://brunstad.tv/Content/js/btvplayer.js';
+}, new CacheFirst({
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200]
+    })
+  ]
+}))
+
+registerRoute(btvPlayer);
 precacheAndRoute(self.__WB_MANIFEST)

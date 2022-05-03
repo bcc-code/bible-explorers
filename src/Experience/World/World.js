@@ -183,9 +183,11 @@ export default class World {
     setEpisodeHtml(episode, index) {
         let episodeHtml = document.createElement("div")
 
-        let episodeClasses = "episode download"
+        let episodeClasses = "episode"
         episodeClasses += episode.status == "future" ? " locked" : ""
         episodeHtml.className = episodeClasses
+
+        this.offline.markEpisodeIfAvailableOffline(episode)
 
         episodeHtml.setAttribute("data-id", episode.id)
         episodeHtml.setAttribute("data-slug", episode.category)
@@ -193,8 +195,16 @@ export default class World {
         episodeHtml.innerHTML = `
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
-                <div class="episode__image"><img src="${episode.thumbnail}" /> </div>
-                <div class="episode__icon"><i class="icon icon-play-solid"></i> <i class="icon icon-lock-solid"></i> <i class="icon icon-download-solid"></i><i class="downloading"></i></div>
+                <div class="episode__image"><img src="${episode.thumbnail}" /></div>
+                <div class="episode__icon episode__status">
+                    <i class="icon icon-play-solid"></i>
+                    <i class="icon icon-lock-solid"></i>
+                </div>
+                <div class="episode__icon episode__offline">
+                    <i class="icon icon-download-solid"></i>
+                    <span class="downloading"></span>
+                    <i class="icon icon-downloaded-solid"></i>
+                </div>
                 <div class="episode__heading">
                     <span class="episode__title">${episode.title}</span>
                     <span class="episode__completed" id="completed">${_s.journey.congratulations}</span>

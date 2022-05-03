@@ -9,6 +9,7 @@ export default class Offline {
 
         if ("indexedDB" in window) {
             this.initialize()
+            this.setUpDbConnection()
         }
         else {
             console.log("This browser doesn't support IndexedDB");
@@ -32,12 +33,10 @@ export default class Offline {
     createObjectStore = function (database) {
         console.log("Creating objectStore")
         offline.objStore = database.createObjectStore(offline.store)
-        offline.objStore.createIndex('', 'episodeId')
+        offline.objStore.createIndex('episodeIndex', 'episodeId')
     }
 
-    accessDb = function (callback = function(){}) {
-        let args = arguments
-
+    setUpDbConnection = function () {
         if (!offline.request)
             offline.request = offline.indexedDB.open("Bible Kids Explorers", offline.dbVersion)
 
@@ -62,8 +61,6 @@ export default class Offline {
                     }
                 }
             }
-    
-            callback(Array.prototype.slice.call(args, 1))
         }
         
         // For future use. Currently only in latest Firefox versions
@@ -73,50 +70,41 @@ export default class Offline {
     }
 
     downloadFromWeb = function (url, data) {
-        var xhr = new XMLHttpRequest(), blob
+        var xhr = new XMLHttpRequest()
              
         xhr.open("GET", url, true);
         xhr.responseType = "blob";
 
+        xhr.addEventListener("progress", function (e) {
+            if (e.lengthComputable) {
+              var percentage = (e.loaded / e.total) * 100
+              document.querySelector('.episode[data-id="' + data.episodeId + '"] span.downloading').innerText = parseFloat(percentage).toFixed()+"%"
+            }
+        })
+
         xhr.addEventListener("load", function () {
             if (xhr.status === 200) {
-                console.log("File Downloaded")
-
                 document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.remove('downloading')
                 document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.add('downloaded')
                  
                 data.blob = xhr.response
 
-                offline.accessDb(
-                    offline.putFileInDb, data
-                )
+                offline.putFileInDb(data)
             }
         }, false)
 
         xhr.send()
     }
 
-    putFileInDb = function ([data]) {
-        console.log(data)
-
+    putFileInDb = function (data) {
         console.log("Putting " + data.name + " in " + offline.store)
 
         offline.transaction = offline.db.transaction([offline.store], "readwrite")
         offline.objStore = offline.transaction.objectStore(offline.store)
         offline.putItem = offline.objStore.put(data, data.name)
-
-        offline.putItem.onsuccess = function () {
-            offline.db.close()
-        }
     }
 
     loadFromIndexedDb = function (data, fallback = function(){}) {
-        offline.accessDb(
-            offline.retrieveStoredFile, data, fallback
-        )
-    }
-
-    retrieveStoredFile = function ([data, fallback]) {
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
         offline.getItem = offline.objStore.get(data.name)
@@ -141,8 +129,20 @@ export default class Offline {
                 console.log('Load from BTV')
                 fallback
             }
+        }
+    }
 
-            offline.db.close()
+    markEpisodeIfAvailableOffline = function (episode) {
+        offline.transaction = offline.db.transaction([offline.store], "readonly")
+        offline.objStore = offline.transaction.objectStore(offline.store)
+
+        var episodeIndex = offline.objStore.index('episodeIndex')
+        var getIndex = episodeIndex.getAll(episode.id.toString())
+
+        getIndex.onsuccess = function() {
+            if (getIndex.result.length == episode.data.length) {
+                document.querySelector('.episode[data-id="' + episode.id + '"]').classList.add('downloaded')
+            }
         }
     }
 }

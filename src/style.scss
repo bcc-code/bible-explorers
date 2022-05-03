@@ -605,30 +605,38 @@ button,
         @include setBackground('../static/svgs/button_round.svg');
         @include alignCenterVH();
 
+        &.episode__offline {
+            right: 11rem;
+
+            body:not(.admin) &,
+            .episode.locked & {
+                display: none;
+            }
+        }
+
         i {
             color: #fff;
             font-size: 2rem;
         }
 
-        .icon {
-            display: none;
-        }
-
         .icon-play-solid {
             margin-left: 2px;
         }
-
         .icon-download-solid {
             margin-bottom: 5px;
+        }
+        .icon-lock-solid {
+            display: none;
+        }
+        .downloading {
+            color: #fff;
         }
 
         .episode.locked & {
             .icon-lock-solid {
                 display: inline-block;
             }
-
-            .icon-play-solid,
-            .icon-download-solid {
+            .icon-play-solid {
                 display: none;
             }
         }
@@ -640,7 +648,8 @@ button,
         }
 
         .episode.downloading & {
-            .icon-download-solid {
+            .icon-download-solid,
+            .icon-downloaded-solid {
                 display: none;
             }
 
@@ -653,17 +662,11 @@ button,
         }
 
         .episode.downloaded & {
-            .icon-play-solid {
-                display: inline-block;
-            }
-
+            .icon-download-solid,
             .downloading {
                 display: none;
             }
-
         }
-
-
     }
 
     &__heading {
