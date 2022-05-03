@@ -135,7 +135,6 @@ export default class World {
         }
 
         instance.selectCategoryListeners()
-
         instance.chapters.container.style.display = 'grid'
     }
 

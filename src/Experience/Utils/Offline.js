@@ -69,9 +69,9 @@ export default class Offline {
 
     downloadFromWeb = function (url, data) {
         var xhr = new XMLHttpRequest()
-             
-        xhr.open("GET", url, true);
-        xhr.responseType = "blob";
+
+        xhr.open("GET", url, true)
+        xhr.responseType = "blob"
 
         xhr.addEventListener("progress", function (e) {
             if (e.lengthComputable) {
@@ -86,7 +86,6 @@ export default class Offline {
                 document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.add('downloaded')
                  
                 data.blob = xhr.response
-
                 offline.putFileInDb(data)
             }
         }, false)
@@ -95,7 +94,7 @@ export default class Offline {
     }
 
     putFileInDb = function (data) {
-        console.log("Putting " + data.name + " in " + offline.store)
+        // console.log("Putting " + data.name + " in " + offline.store)
 
         offline.transaction = offline.db.transaction([offline.store], "readwrite")
         offline.objStore = offline.transaction.objectStore(offline.store)
@@ -110,16 +109,25 @@ export default class Offline {
         getItem.onsuccess = function () {
             if (getItem.result) {
                 const item = getItem.result
-                console.log("Got element!", item)
+                // console.log("Got element!", item)
 
-                var URL = window.URL || window.webkitURL
-                const fileUrl = URL.createObjectURL(item.blob)
+                var r = new FileReader()
+                
+                r.onload = function(e) { 
+                    const contents = e.target.result
+                    const uint8Array = new Uint8Array(contents)
+            
+                    const arrayBuffer = uint8Array.buffer
+                    const blob = new Blob([arrayBuffer])
+                    const fileUrl = URL.createObjectURL(blob)
+                
+                    const video = offline.createVideoElement(videoName, fileUrl)
+                    document.getElementById('videos-container').appendChild(video)
+    
+                    callback(video, videoName, fileUrl)
+                }
 
-                const video = offline.createVideoElement(videoName, fileUrl)
-                document.getElementById('videos-container').appendChild(video)
-
-                callback(video, videoName, fileUrl)
-                URL.revokeObjectURL(fileUrl)
+                r.readAsArrayBuffer(item.blob)
             }
             else {
                 console.log('Load from BTV')
