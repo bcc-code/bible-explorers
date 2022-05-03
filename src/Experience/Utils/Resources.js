@@ -6,6 +6,8 @@ import Experience from '../Experience.js'
 import _lang from '../Utils/Lang.js'
 import Offline from '../Utils/Offline.js'
 
+let resources = null
+
 export default class Resources extends EventEmitter {
     constructor(sources) {
         super()
@@ -13,6 +15,8 @@ export default class Resources extends EventEmitter {
         this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
+
+        resources = this
 
         // Options
         this.sources = sources
@@ -151,15 +155,16 @@ export default class Resources extends EventEmitter {
         let animationId = videoName.replace('episode-', '')
         this.offline.loadFromIndexedDb(
             { name: animationId+'_video', episodeId: episodeId },
-            this.streamFromBtv(videoName)
+            this.generateTextureForVideo,
+            this.streamFromBtv,
+            videoName
         )
     }
 
     async streamFromBtv(videoName) {
-        // Video stream from BTV
-        await this.loadEpisodeFromBtv(videoName)
-        const video = this.getGeneratedVideoElement(videoName)
-        this.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
+        await resources.loadEpisodeFromBtv(videoName)
+        const video = resources.getGeneratedVideoElement(videoName)
+        resources.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
     }
 
     async loadEpisodeFromBtv(videoName) {
@@ -187,34 +192,6 @@ export default class Resources extends EventEmitter {
         })
     }
 
-    generateTextureForVideo(video, id, path) {
-        const texture = new THREE.VideoTexture(video)
-        texture.flipY = false
-        texture.minFilter = THREE.LinearFilter
-        texture.magFilter = THREE.LinearFilter
-        texture.encoding = THREE.sRGBEncoding
-
-        this.mediaItems[id] = {
-            item: texture,
-            path: path,
-            naturalWidth: video.videoWidth || 1,
-            naturalHeight: video.videoHeight || 1
-        }
-    }
-
-    createVideoElement(videoName, path) {
-        let video = document.createElement('video')
-        video.setAttribute('id', videoName)
-        video.crossOrigin = 'anonymous'
-        video.muted = false
-        video.loop = false
-        video.controls = true
-        video.autoplay = false
-        video.src = path
-
-        return video
-    }
-
     getGeneratedVideoElement(videoName) {
         let video = document.getElementById('videojs-' + videoName + '_html5_api')
         video.autoplay = false // Make sure the video won't start autoplay
@@ -222,10 +199,26 @@ export default class Resources extends EventEmitter {
         return video
     }
 
+    generateTextureForVideo(video, id, path) {
+        const texture = new THREE.VideoTexture(video)
+        texture.flipY = false
+        texture.minFilter = THREE.LinearFilter
+        texture.magFilter = THREE.LinearFilter
+        texture.encoding = THREE.sRGBEncoding
+
+        resources.mediaItems[id] = {
+            item: texture,
+            path: path,
+            naturalWidth: video.videoWidth || 1,
+            naturalHeight: video.videoHeight || 1
+        }
+
+    }
+
     fetchApiThenCache(theUrl, callback) {
         fetch(theUrl)
             .then(function(response) {
-                // console.log('network ok - save also to cache', theUrl)
+                // console.log('Network ok - save also to cache', theUrl)
                 var responseClone = response.clone()
 
                 response.json().then(function(apiData) {
@@ -238,7 +231,7 @@ export default class Resources extends EventEmitter {
                 })
             })
             .catch(function() {
-                // console.log('network down - fetch from cache', theUrl)
+                // console.log('Network down - fetch from cache', theUrl)
                 caches.open('apiResponses').then(function(cache) {
                     cache.match(theUrl).then(response => {
                         response.json().then(function(cachedData) {

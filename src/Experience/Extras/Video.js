@@ -75,8 +75,6 @@ export default class Video {
         cssObject.scale.y /= this.videoWidth / planeWidth
 
         this.videoControls.add(cssObject);
-
-
     }
 
     createHTML() {

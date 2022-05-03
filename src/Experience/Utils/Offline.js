@@ -25,8 +25,6 @@ export default class Offline {
         offline.db = null
         offline.transaction = null
         offline.objStore = null
-        offline.getItem = null
-        offline.putItem = null
         offline.request = null
     }
 
@@ -101,35 +99,46 @@ export default class Offline {
 
         offline.transaction = offline.db.transaction([offline.store], "readwrite")
         offline.objStore = offline.transaction.objectStore(offline.store)
-        offline.putItem = offline.objStore.put(data, data.name)
+        offline.objStore.put(data, data.name)
     }
 
-    loadFromIndexedDb = function (data, fallback = function(){}) {
+    loadFromIndexedDb = function (data, callback = function(){}, fallback = function(){}, videoName) {
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
-        offline.getItem = offline.objStore.get(data.name)
+        const getItem = offline.objStore.get(data.name)
         
-        offline.getItem.onsuccess = function () {
-            if (offline.getItem.result) {
-                const item = offline.getItem.result
-                const video = item.blob
+        getItem.onsuccess = function () {
+            if (getItem.result) {
+                const item = getItem.result
                 console.log("Got element!", item)
 
                 var URL = window.URL || window.webkitURL
-                const fileUrl = URL.createObjectURL(video)
+                const fileUrl = URL.createObjectURL(item.blob)
 
-                var domElem = document.createElement("video")
-                domElem.setAttribute("id", data.name)
-                domElem.setAttribute("src", fileUrl)
-                document.getElementById('videos-container').appendChild(domElem)
+                const video = offline.createVideoElement(videoName, fileUrl)
+                document.getElementById('videos-container').appendChild(video)
 
+                callback(video, videoName, fileUrl)
                 URL.revokeObjectURL(fileUrl)
             }
             else {
                 console.log('Load from BTV')
-                fallback
+                fallback(videoName)
             }
         }
+    }
+
+    createVideoElement = function (videoName, path) {
+        let video = document.createElement('video')
+        video.setAttribute('id', videoName)
+        video.crossOrigin = 'anonymous'
+        video.muted = false
+        video.loop = false
+        video.controls = true
+        video.autoplay = false
+        video.src = path
+
+        return video
     }
 
     markEpisodeIfAvailableOffline = function (episode) {
