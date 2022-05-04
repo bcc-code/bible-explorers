@@ -10,13 +10,13 @@ export default class Settings {
         this.experience = new Experience()
         settings = this
 
-        settings.soundOn = false
+        settings.soundOn = true
         settings.logInLogOut = {
             login: false,
             logout: false
         }
         settings.el = document.getElementById("settings")
-        settings.el.addEventListener("mousedown", settings.toggleSettings)
+        settings.el.addEventListener("click", settings.toggleSettings)
     }
 
     toggleSettings() {
@@ -26,25 +26,25 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><div class="icon"><i></i></div><h2>${ _s.settings }</h2></div>
+                    <div class="settings__header heading"><div class="icon"><i></i></div><span>${_s.settings}</span></div>
                     <div class="settings__content">
                         <div class="sound settings__item">
-                            <p>${ _s.soundEffects }</p>
+                            <p>${_s.soundEffects}</p>
                             <label class="switch">
-                                <input type="checkbox" ${ settings.soundOn ? 'checked' : '' }>
+                                <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
                                 <span class="slider round"></span>
                             </label>
                         </div>
                         <div class="language settings__item">
-                            <p>${ _s.language }</p>
+                            <p>${_s.language}</p>
                             <div class="language__picker">
-                                <div class="language__current">${ _lang.getLanguageName() }</div>
-                                <ul class="language__list hide">${ _lang.getLanguagesList() }</ul>
+                                <div class="language__current">${_lang.getLanguageName()}</div>
+                                <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
                             </div>
                         </div>
                         <div class="login settings__footer">
-                            <button id="btn-login" disabled="${ !settings.logInLogOut.login }">${ _s.logIn }</button>
-                            <button id="btn-logout" disabled="${ !settings.logInLogOut.logout }">${ _s.logOut }</button>
+                            <button id="button__login" class="button button__default" disabled="${!settings.logInLogOut.login}"><span>${_s.logIn}</span></button>
+                            <button id="button__logout" class="button button__default" disabled="${!settings.logInLogOut.logout}"><span>${_s.logOut}</span></button>
                         </div>
                     </div>
                 </div>
@@ -57,17 +57,17 @@ export default class Settings {
                 currentLang: document.querySelector(".language .language__current"),
                 languageList: document.querySelector(".language .language__list"),
                 languages: document.querySelectorAll(".language .language__list li"),
-                login: document.getElementById("btn-login"),
-                logout: document.getElementById("btn-logout")
+                login: document.getElementById("button__login"),
+                logout: document.getElementById("button__logout")
             }
 
             settings.el.soundToggle.addEventListener("change", settings.toggleSound)
-            settings.el.currentLang.addEventListener("mousedown", settings.toggleLanguageList)
-            settings.el.login.addEventListener("mousedown", settings.login)
-            settings.el.logout.addEventListener("mousedown", settings.logout)
+            settings.el.currentLang.addEventListener("click", settings.toggleLanguageList)
+            settings.el.login.addEventListener("click", settings.login)
+            settings.el.logout.addEventListener("click", settings.logout)
 
-            settings.el.languages.forEach(function(language) {
-                language.addEventListener("mousedown", () => {
+            settings.el.languages.forEach(function (language) {
+                language.addEventListener("click", () => {
                     _lang.updateLanguage(language.getAttribute('data-id'))
                 })
             })

@@ -26,7 +26,7 @@ export default class Questions {
 
             let html = `
                 <div class="modal__content questions ">
-                    <div class="questions__header heading"><div class="icon"><i></i></div><h3>${_s.questions}</h3></div>
+                    <div class="questions__header heading"><div class="icon"><i></i></div><span>${_s.questions}</span></div>
                     <div class="questions__content">`
 
             questions.forEach((question, index) => {
@@ -41,17 +41,17 @@ export default class Questions {
                 </div>
 
                 <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">
-                    <div class="btn btn__prev"></div>
-                    <div id="submit-task" class="btn btn__submit">${_s.submit}</div>
-                    <div class="btn btn__next"></div>
+                    <div class="button button__prev button__round"><i class="icon icon-arrow-left-long-solid"></i></div>
+                    <div id="submit-task" class="button button__submit button__default"><span>${_s.submit}</span></div>
+                    <div class="button button__next button__round"><i class="icon icon-arrow-right-long-solid"></i></div>
                 </div>
             `;
 
             questions.modal = new Modal(html)
 
-            const nextButton = document.querySelector('.btn__next')
-            const prevButton = document.querySelector('.btn__prev')
-            const submitButton = document.querySelector('.btn__submit')
+            const nextButton = document.querySelector('.button__next')
+            const prevButton = document.querySelector('.button__prev')
+            const submitButton = document.querySelector('.button__submit')
 
             document.querySelectorAll('.question')[0].classList.add('visible')
 
@@ -61,7 +61,7 @@ export default class Questions {
                 submitButton.classList.add('disabled')
             }
 
-            nextButton.addEventListener("mousedown", () => {
+            nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
                 current.classList.remove('visible')
                 current.nextElementSibling?.classList.add('visible')
@@ -77,7 +77,7 @@ export default class Questions {
                 }
             })
 
-            prevButton.addEventListener("mousedown", () => {
+            prevButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
                 current.classList.remove('visible')
                 current.previousElementSibling?.classList.add('visible')
@@ -89,7 +89,7 @@ export default class Questions {
                 }
             })
 
-            submitButton.addEventListener("mousedown", () => {
+            submitButton.addEventListener("click", () => {
                 // Save answers to Local Storage
 
                 let thisThemeAnswers = []

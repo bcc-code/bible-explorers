@@ -19,8 +19,8 @@ export default class Modal {
             close: modal.htmlEl.querySelector(".modal__close")
         }
 
-        modal.el.overlay.addEventListener("mousedown", modal.destroy)
-        modal.el.close.addEventListener("mousedown", modal.destroy)
+        modal.el.overlay.addEventListener("click", modal.destroy)
+        modal.el.close.addEventListener("click", modal.destroy)
 
         document.body.classList.add('modal-on')
     }
@@ -35,7 +35,7 @@ export default class Modal {
     static generateHtml(html) {
         return `
             <div class="modal__overlay"></div>
-            <div class="modal__close"></div>
+            <div class="modal__close button button__round"><i class="icon icon-xmark-solid"></i></div>
             <div class="modal__container">
                 ${ html }
             </div>

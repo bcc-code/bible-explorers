@@ -307,9 +307,9 @@ export default class Video {
         instance.el.playButton.addEventListener("click", instance.togglePlay)
         instance.el.sound.addEventListener("click", instance.toggleSound)
         instance.el.fullscreen.addEventListener("click", instance.setFullscreenVideo)
-        instance.el.progressButton.addEventListener('mousedown', instance.onMouseDown)
+        instance.el.progressButton.addEventListener('click', instance.onMouseDown)
         instance.el.progressButton.addEventListener('touchstart', instance.onMouseDown)
-        instance.el.videoTimeline.addEventListener('mousedown', instance.onTap)
+        instance.el.videoTimeline.addEventListener('click', instance.onTap)
     }
     onMouseDown(event) {
         event.stopPropagation()

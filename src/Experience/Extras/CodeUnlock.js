@@ -54,13 +54,13 @@ export default class CodeUnlock {
             instance.secretCode = instance.world.selectedEpisode.program[instance.world.program.currentStep].codeToUnlock
 
             instance.el.numbers.forEach(function (number) {
-                number.addEventListener("mousedown", () => {
+                number.addEventListener("click", () => {
                     instance.add(number.textContent)
                 })
             })
 
-            instance.el.backspace.addEventListener("mousedown", instance.remove)
-            instance.el.confirm.addEventListener("mousedown", instance.checkCode)
+            instance.el.backspace.addEventListener("click", instance.remove)
+            instance.el.confirm.addEventListener("click", instance.checkCode)
 
             document.onkeydown = (e) => {
                 if (e.key === '1' ||

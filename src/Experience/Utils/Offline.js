@@ -41,15 +41,15 @@ export default class Offline {
         offline.request.onerror = function () {
             console.log("Error creating/accessing IndexedDB database")
         }
-    
+
         offline.request.onsuccess = function () {
             console.log("Success creating/accessing IndexedDB database")
             offline.db = offline.request.result
-    
+
             offline.db.onerror = function () {
                 console.log("Error creating/accessing IndexedDB database")
             }
-            
+
             // Interim solution for Google Chrome to create an objectStore. Will be deprecated
             if (offline.db.setVersion) {
                 if (offline.db.version != offline.dbVersion) {
@@ -60,7 +60,7 @@ export default class Offline {
                 }
             }
         }
-        
+
         // For future use. Currently only in latest Firefox versions
         offline.request.onupgradeneeded = function (event) {
             offline.createObjectStore(event.target.result)
@@ -75,8 +75,9 @@ export default class Offline {
 
         xhr.addEventListener("progress", function (e) {
             if (e.lengthComputable) {
-              var percentage = (e.loaded / e.total) * 100
-              document.querySelector('.episode[data-id="' + data.episodeId + '"] span.downloading').innerText = parseFloat(percentage).toFixed()+"%"
+                var percentage = (e.loaded / e.total) * 100
+                document.querySelector('.episode[data-id="' + data.episodeId + '"] span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
+                document.querySelector('.episode .progress-line').style.transform = `scaleX(${percentage / 100})`
             }
         })
 
@@ -84,7 +85,7 @@ export default class Offline {
             if (xhr.status === 200) {
                 document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.remove('downloading')
                 document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.add('downloaded')
-                 
+
                 data.blob = xhr.response
                 offline.putFileInDb(data)
             }
@@ -101,29 +102,29 @@ export default class Offline {
         offline.objStore.put(data, data.name)
     }
 
-    loadFromIndexedDb = function (data, callback = function(){}, fallback = function(){}, videoName) {
+    loadFromIndexedDb = function (data, callback = function () { }, fallback = function () { }, videoName) {
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
         const getItem = offline.objStore.get(data.name)
-        
+
         getItem.onsuccess = function () {
             if (getItem.result) {
                 const item = getItem.result
                 // console.log("Got element!", item)
 
                 var r = new FileReader()
-                
-                r.onload = function(e) { 
+
+                r.onload = function (e) {
                     const contents = e.target.result
                     const uint8Array = new Uint8Array(contents)
-            
+
                     const arrayBuffer = uint8Array.buffer
                     const blob = new Blob([arrayBuffer])
                     const fileUrl = URL.createObjectURL(blob)
-                
+
                     const video = offline.createVideoElement(videoName, fileUrl)
                     document.getElementById('videos-container').appendChild(video)
-    
+
                     callback(video, videoName, fileUrl)
                 }
 
@@ -156,7 +157,7 @@ export default class Offline {
         var episodeIndex = offline.objStore.index('episodeIndex')
         var getIndex = episodeIndex.getAll(episode.id.toString())
 
-        getIndex.onsuccess = function() {
+        getIndex.onsuccess = function () {
             if (getIndex.result.length == episode.data.length) {
                 document.querySelector('.episode[data-id="' + episode.id + '"]').classList.add('downloaded')
             }

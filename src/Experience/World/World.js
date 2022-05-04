@@ -30,17 +30,23 @@ export default class World {
 
         // Episodes
         this.chapters = {
-            container: document.getElementById("chapters"),
             categories: document.querySelector(".categories.list"),
             episodes: document.querySelector(".episodes.list"),
-            backBtn: document.querySelector(".back.button"),
+            backBtn: document.querySelector(".back_to"),
             data: []
         }
 
         // Welcome screen
         this.welcome = {
+            loadingScreen: document.getElementById("loading-screen"),
             landingScreen: document.getElementById("landing-screen"),
+            episodeScreen: document.getElementById("episodes-screen"),
             introduction: document.getElementById("introduction"),
+        }
+
+        this.buttons = {
+            start: document.getElementById("start-journey"),
+            restart: document.getElementById("restart-journey")
         }
 
         this.resources.fetchApiThenCache(_api.getBiexEpisodes(), this.setCategories)
@@ -54,26 +60,21 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
 
-            document.addEventListener('click', (el) => {
-                const id = el.target.getAttribute('id')
-
-                if (id == 'start-journey') {
-                    this.startJourney()
-                }
-
-                if (id == 'restart-journey') {
-                    this.restartJourney()
-                }
-            })
+            this.buttons.start.addEventListener('click', this.startJourney)
+            this.buttons.restart.addEventListener('click', this.restartJourney)
         })
 
         this.welcome.introduction.innerText = _s.introduction
+        this.buttons.start.innerHTML = "<span>" + _s.journey.start + "</span>"
+        this.buttons.restart.innerHTML = "<span>" + _s.journey.restart + "</span>"
 
         this.homeButton = document.getElementById('go-home')
-        this.homeButton.addEventListener("mousedown", this.goHome)
+        this.homeButton.addEventListener("click", this.goHome)
 
-        instance.chapters.backBtn.innerText = _s.journey.back
-        this.chapters.backBtn.addEventListener("click", this.backToCategories)
+        instance.chapters.backBtn.children[0].innerText = _s.journey.back
+        this.chapters.backBtn.addEventListener("click", this.goToLandingScreen)
+
+        instance.welcome.landingScreen.classList.add('visible')
 
     }
 
@@ -94,34 +95,30 @@ export default class World {
     }
 
     showMenuButtons() {
-        document.querySelectorAll('.episode__actions.visible').forEach(episode => {
-            episode.classList.remove('visible')
-        })
-        const episodeActions = document.querySelector('.episode.selected .episode__actions')
+        const episodeActions = document.querySelector('.episode.selected')
         episodeActions.classList.add('visible')
 
-        this.welcome.startJourney = document.getElementById("start-journey")
-        this.welcome.restartJourney = document.getElementById("restart-journey")
-        this.welcome.completed = document.getElementById("completed")
+        this.buttons.completed = document.getElementById("completed")
+
 
         if (this.episodeProgress() == 0) {
-            instance.welcome.restartJourney.style.display = "none"
+            instance.buttons.restart.classList.remove('visible')
         }
         else {
-            instance.welcome.restartJourney.style.display = "block"
+            instance.buttons.restart.classList.add('visible')
         }
 
         if (this.episodeProgress() == this.selectedEpisode.program.length) {
-            instance.welcome.completed.style.display = "block"
-            instance.welcome.startJourney.style.display = "none"
+            instance.buttons.completed.classList.add('visible')
+            instance.buttons.start.classList.remove('visible')
         }
         else {
-            instance.welcome.startJourney.style.display = "block"
-            instance.welcome.completed.style.display = "none"
+            instance.buttons.start.classList.add('visible')
+            instance.buttons.completed.classList.remove('visible')
         }
 
         if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
-            instance.welcome.startJourney.innerText = _s.journey.continue
+            instance.buttons.start.innerHTML = "<span>" + _s.journey.continue + "</span>"
         }
     }
 
@@ -132,51 +129,56 @@ export default class World {
 
         for (const [category, data] of Object.entries(instance.chapters.data)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
+            instance.welcome.landingScreen.classList.add('visible')
         }
 
         instance.selectCategoryListeners()
-        instance.chapters.container.style.display = 'grid'
     }
 
     setCategoryHtml(category) {
-        let categoryHtml = document.createElement("div")
-        categoryHtml.className = "category"
+
+        const categoryHtml = document.createElement("div")
+        categoryHtml.className = "category button button__default"
         categoryHtml.setAttribute("data-slug", category.slug)
-        categoryHtml.innerHTML = `<h3 class="category__title">${category.name}</h3>`
+        categoryHtml.innerHTML = "<span>" + category.name + "</span>"
         instance.chapters.categories.appendChild(categoryHtml)
+
+        const getDivider = document.querySelector('.categories .divider')
+
+        if (!getDivider) {
+            const divider = document.createElement("span")
+            divider.className = "divider"
+            instance.chapters.categories.appendChild(divider)
+        }
     }
 
     selectCategoryListeners() {
         document.querySelectorAll(".category").forEach(function (category) {
-            category.addEventListener("mousedown", () => {
-                instance.chapters.categories.style.display = 'none'
-
+            category.addEventListener("click", () => {
                 const categorySlug = category.getAttribute('data-slug')
                 instance.setEpisodes(instance.chapters.data[categorySlug]['episodes'])
             })
         })
     }
 
-    backToCategories() {
-        instance.chapters.categories.style.display = 'grid'
-        instance.chapters.episodes.style.display = 'none'
-        instance.chapters.episodes.innerHTML = ''
-        instance.chapters.backBtn.style.display = 'none'
-        instance.welcome.introduction.style.display = 'block'
+    goToLandingScreen() {
         instance.unselectAllEpisode()
         instance.placeholderEpisodeData()
+
+
+        instance.chapters.episodes.innerHTML = ''
+        instance.welcome.landingScreen.classList.add('visible')
+        instance.welcome.episodeScreen.classList.remove('visible')
     }
 
     setEpisodes(data) {
         data.forEach((episode, index) => {
             instance.setEpisodeHtml(episode, index)
+            instance.welcome.landingScreen.classList.remove('visible')
+            instance.welcome.episodeScreen.classList.add('visible')
         })
 
         instance.selectEpisodeListeners()
-
-        instance.chapters.backBtn.style.display = 'block'
-        instance.chapters.episodes.style.display = 'grid'
-        instance.welcome.introduction.style.display = 'none'
     }
 
     setEpisodeHtml(episode, index) {
@@ -195,39 +197,64 @@ export default class World {
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
                 <div class="episode__image"><img src="${episode.thumbnail}" /></div>
-                <div class="episode__icon episode__status">
+                <div class="button button__round episode__status">
                     <i class="icon icon-play-solid"></i>
                     <i class="icon icon-lock-solid"></i>
-                </div>
-                <div class="episode__icon episode__offline">
-                    <i class="icon icon-download-solid"></i>
-                    <span class="downloading"></span>
-                    <i class="icon icon-downloaded-solid"></i>
                 </div>
                 <div class="episode__heading">
                     <span class="episode__title">${episode.title}</span>
                     <span class="episode__completed" id="completed">${_s.journey.congratulations}</span>
                 </div>
+                <div class="episode__download">
+                    <div class="button episode__offline">
+                        <i class="icon icon-download-solid"></i>
+                        <span>Download</span>
+                    </div>
+                    <div class="downloading-progress"><div class="progress-line"></div></div>
+                    <span class="downloading-label"></span>
+                    <span class="downloading-complete">Ready to play</span>
+                </div>
             </div>
-            <div class="episode__actions">
-                <div class="button__restart-journey" id="restart-journey">${_s.journey.restart}</div>
-                <div class="button__start-new-journey" id="start-journey">${_s.journey.start}</div>
-            </div>
+            
         `
         instance.chapters.episodes.appendChild(episodeHtml)
     }
 
-    selectEpisodeListeners() {
-        document.querySelectorAll(".episode:not(.locked)").forEach(function (episode) {
+
+    setDescriptionHTML() {
+        const episode = instance.selectedEpisode
+        let descriptionHTML = document.createElement("div")
+        descriptionHTML.classList.add('episode__description')
+        descriptionHTML.setAttribute('data-id', episode.id)
+        descriptionHTML.setAttribute('data-slug', episode.category)
+
+        descriptionHTML.innerHTML = `
+                <h2>${episode.title}</h2>
+                <p>${episode.content}</p>
+        `
+
+        document.querySelector('.episodes__content').prepend(descriptionHTML)
+    }
+
+    selectEpisodeListeners(item) {
+        document.querySelectorAll(".episode:not(.locked)").forEach((episode) => {
             episode.addEventListener("click", () => {
+
+                const description = document.querySelector(".episode__description");
+
+                if (description)
+                    description.remove()
+
                 instance.addClassToSelectedEpisode(episode)
                 instance.updateSelectedEpisodeData(episode)
                 instance.loadEpisodeTextures()
                 instance.showMenuButtons()
+
+                instance.setDescriptionHTML(episode)
             })
         })
 
-        document.querySelectorAll(".episode:not(.locked) .icon-download-solid").forEach(function (episode) {
+        document.querySelectorAll(".episode:not(.locked) .episode__offline").forEach(function (episode) {
             episode.addEventListener("click", (event) => {
                 instance.downloadEpisode(episode)
                 event.stopPropagation()
@@ -277,10 +304,12 @@ export default class World {
         episode.closest(".episode").classList.remove('download')
         episode.closest(".episode").classList.add('downloading')
 
+        document.querySelector('.episode .episode__offline span').innerText = 'Downloading'
+
         selectedEpisode['data'].forEach(async (animationFilm) => {
             const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
             console.log('downloadEpisode ' + animationFilm.id + ' from ' + url)
-            this.offline.downloadFromWeb(url, { name: animationFilm.id + '_video', episodeId: episodeId } )
+            this.offline.downloadFromWeb(url, { name: animationFilm.id + '_video', episodeId: episodeId })
         })
     }
 
@@ -306,7 +335,6 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        // instance.controlRoom.updateTextureScreen4x4()
     }
 
     restartJourney() {
@@ -317,18 +345,23 @@ export default class World {
 
     finishJourney() {
         instance.showMenu()
-        instance.welcome.startJourney.style.display = "none"
-        instance.welcome.restartJourney.style.display = "block"
+        instance.buttons.start.classList.remove('visible')
+        instance.buttons.restart.classList.add('visible')
 
     }
 
     showMenu() {
         document.body.classList.add('freeze')
         instance.audio.addBgMusicElement()
+        instance.welcome.episodeScreen.classList.add('visible')
+        instance.points.delete()
     }
 
     hideMenu() {
         document.body.classList.remove('freeze')
+        console.log('h');
+
+        instance.welcome.episodeScreen.classList.remove('visible')
         instance.audio.removeBgMusicElement()
     }
 

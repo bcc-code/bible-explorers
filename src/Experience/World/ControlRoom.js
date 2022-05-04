@@ -36,7 +36,7 @@ export default class ControlRoom {
         this.setAnimation()
 
         // Events
-        window.addEventListener('mousedown', () => {
+        window.addEventListener('click', () => {
             if (this.experience.world.program)
                 this.clickedObject()
         })

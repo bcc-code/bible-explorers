@@ -9,7 +9,7 @@ export default class Audio {
         audio = this
 
         audio.el = document.getElementById("sound")
-        audio.el.addEventListener("mousedown", audio.toggleBgMusic)
+        audio.el.addEventListener("click", audio.toggleBgMusic)
     }
 
     initialize() {

@@ -19,7 +19,7 @@ export default class ProgressBar {
         };
 
         instance.el.steps.forEach(function(step) {
-            step.addEventListener("mousedown", () => {
+            step.addEventListener("click", () => {
                 let clickedStep = step.innerText - 1
                 if (clickedStep <= instance.program.episodeProgress())
                     instance.program.advance(clickedStep)
