@@ -196,7 +196,17 @@ export default class World {
         episodeHtml.innerHTML = `
             <div class="episode__number">${index + 1}</div>
             <div class="episode__thumbnail">
-                <div class="episode__image"><img src="${episode.thumbnail}" /></div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 961 160" class="episode__image" preserveAspectRatio="none">
+                    <defs>
+                        <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
+                            <path
+                                d="M961 54.91v78.94c0 4.35-1.77 8.43-4.99 11.51l-10.36 9.88c-3.22 3.07-7.5 4.76-12.05 4.76H.98L0 0h673.95c4.55 0 8.83 1.69 12.04 4.76l13.63 13c4.17 3.98 9.71 6.17 15.61 6.17h213.31c4.55 0 8.82 1.69 12.05 4.77l15.42 14.71c3.22 3.07 4.99 7.16 4.99 11.5Z" />
+                        </clipPath>
+                    </defs>
+                    <g clip-path="url(#maskImage)">
+                        <image width="100%" fill="none" y="-50%" class="" href="${episode.thumbnail}"/>
+                    </g>
+                </svg>
                 <div class="button button__round episode__status">
                     <i class="icon icon-play-solid"></i>
                     <i class="icon icon-lock-solid"></i>
