@@ -20,7 +20,7 @@ export default class Offline {
     initialize = function () {
         offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
         offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
-        offline.dbVersion = 1.2
+        offline.dbVersion = 2
         offline.store = "episodesData"
         offline.db = null
         offline.transaction = null
@@ -28,8 +28,13 @@ export default class Offline {
         offline.request = null
     }
 
-    createObjectStore = function (database) {
-        console.log("Creating objectStore")
+    createOrUpdateObjectStore = function (database) {
+        // console.log("createOrUpdateObjectStore")
+
+        if (database.objectStoreNames.contains(offline.store)) {
+            database.deleteObjectStore(offline.store)
+        }
+
         offline.objStore = database.createObjectStore(offline.store)
         offline.objStore.createIndex('episodeIndex', 'episodeId')
     }
@@ -39,31 +44,20 @@ export default class Offline {
             offline.request = offline.indexedDB.open("Bible Kids Explorers", offline.dbVersion)
 
         offline.request.onerror = function () {
-            console.log("Error creating/accessing IndexedDB database")
+            // console.log("Error creating/accessing IndexedDB database")
         }
 
         offline.request.onsuccess = function () {
-            console.log("Success creating/accessing IndexedDB database")
+            // console.log("Success creating/accessing IndexedDB database")
             offline.db = offline.request.result
 
             offline.db.onerror = function () {
-                console.log("Error creating/accessing IndexedDB database")
-            }
-
-            // Interim solution for Google Chrome to create an objectStore. Will be deprecated
-            if (offline.db.setVersion) {
-                if (offline.db.version != offline.dbVersion) {
-                    var setVersion = offline.db.setVersion(offline.dbVersion)
-                    setVersion.onsuccess = function () {
-                        offline.createObjectStore(offline.db)
-                    }
-                }
+                // console.log("Error creating/accessing IndexedDB database")
             }
         }
 
-        // For future use. Currently only in latest Firefox versions
         offline.request.onupgradeneeded = function (event) {
-            offline.createObjectStore(event.target.result)
+            offline.createOrUpdateObjectStore(event.target.result)
         }
     }
 
