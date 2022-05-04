@@ -24,6 +24,9 @@ const strings = {
         "feedback": "Tilbakemelding",
         "logIn": "Logg inn",
         "logOut": "Logg ut",
+        "offline": "Tilgjengelig offline",
+        "download": "Last ned",
+        "downloading": "Laster ned",
         "tooltips": {
             "video": "Skip video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
@@ -55,6 +58,9 @@ const strings = {
         "feedback": "Feedback",
         "logIn": "Log in",
         "logOut": "Log out",
+        "offline": "Available offline",
+        "download": "Download",
+        "downloading": "Downloading",
         "tooltips": {
             "video": "Watch video",
             "iris": "Listen task description from Iris",

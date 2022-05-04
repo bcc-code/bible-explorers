@@ -218,11 +218,11 @@ export default class World {
                 <div class="episode__download">
                     <div class="button episode__offline">
                         <i class="icon icon-download-solid"></i>
-                        <span>Download</span>
+                        <span>${_s.download}</span>
                     </div>
                     <div class="downloading-progress"><div class="progress-line"></div></div>
                     <span class="downloading-label"></span>
-                    <span class="downloading-complete">Ready to play</span>
+                    <span class="downloading-complete">${_s.offline}</span>
                 </div>
             </div>
             
@@ -314,7 +314,7 @@ export default class World {
         episode.closest(".episode").classList.remove('download')
         episode.closest(".episode").classList.add('downloading')
 
-        document.querySelector('.episode .episode__offline span').innerText = 'Downloading'
+        document.querySelector('.episode .episode__offline span').innerText = _s.downloading
 
         selectedEpisode['data'].forEach(async (animationFilm) => {
             const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
