@@ -304,34 +304,42 @@ export default class World {
     async downloadEpisode(episode) {
         if (!this.experience.auth0.isAuthenticated) return
 
-        const claims = await this.experience.auth0.getIdTokenClaims();
-        const idToken = claims.__raw;
+        let episodeEl = episode.closest(".episode")
+        const chapterId = episodeEl.getAttribute('data-id')
+        const categorySlug = episodeEl.getAttribute('data-slug')
+        const selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == chapterId })[0]
 
-        const episodeId = episode.closest(".episode").getAttribute('data-id')
-        const categorySlug = episode.closest(".episode").getAttribute('data-slug')
-        const selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == episodeId })[0]
+        episodeEl.classList.remove('download')
+        episodeEl.classList.add('downloading')
+        episodeEl.querySelector('.episode__offline span').innerText = _s.downloading
 
-        episode.closest(".episode").classList.remove('download')
-        episode.closest(".episode").classList.add('downloading')
+        await this.downloadAnimationFilms(selectedEpisode['data'], chapterId)
+    }
 
-        document.querySelector('.episode .episode__offline span').innerText = _s.downloading
+    async downloadAnimationFilms(animationFilms, chapterId) {
+        let episodesDownload = []
 
-        selectedEpisode['data'].forEach(async (animationFilm) => {
-            const url = await this.getEpisodeDownloadUrl(animationFilm.id, idToken)
-            console.log('downloadEpisode ' + animationFilm.id + ' from ' + url)
-            this.offline.downloadFromWeb(url, { name: animationFilm.id + '_video', episodeId: episodeId })
+        animationFilms.forEach(async (film) => {
+            const downloadUrl = await this.getEpisodeDownloadUrl(film)
+            episodesDownload.push({ downloadUrl: downloadUrl, data: { name: film.id + '_video', episodeId: chapterId }})
+
+            if (episodesDownload.length == animationFilms.length) {
+                this.offline.downloadFromWeb(episodesDownload)
+            }
         })
     }
 
-    async getEpisodeDownloadUrl(videoName, token) {
-        const episodeId = videoName.replace('episode-', '')
+    async getEpisodeDownloadUrl(film) {
+        const claims = await this.experience.auth0.getIdTokenClaims();
+        const idToken = claims.__raw;
         const locale = _lang.getLanguageCode()
+        const episodeId = film.id.replace('episode-', '')
 
         var btvplayer = BTVPlayer({
             type: 'episode',
             id: episodeId,
             locale: locale,
-            access_token: token
+            access_token: idToken
         })
 
         const allLanguagesVideos = await btvplayer.api.getDownloadables('episode', episodeId)
@@ -357,7 +365,6 @@ export default class World {
         instance.showMenu()
         instance.buttons.start.classList.remove('visible')
         instance.buttons.restart.classList.add('visible')
-
     }
 
     showMenu() {
@@ -369,8 +376,6 @@ export default class World {
 
     hideMenu() {
         document.body.classList.remove('freeze')
-        console.log('h');
-
         instance.welcome.episodeScreen.classList.remove('visible')
         instance.audio.removeBgMusicElement()
     }
@@ -392,5 +397,4 @@ export default class World {
             this.points.update()
         }
     }
-
 }

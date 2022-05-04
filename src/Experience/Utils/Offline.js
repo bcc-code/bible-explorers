@@ -20,7 +20,7 @@ export default class Offline {
     initialize = function () {
         offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
         offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
-        offline.dbVersion = 1.1
+        offline.dbVersion = 1.2
         offline.store = "episodesData"
         offline.db = null
         offline.transaction = null
@@ -67,31 +67,52 @@ export default class Offline {
         }
     }
 
-    downloadFromWeb = function (url, data) {
+    downloadFromWeb = function (episodes) {
+        offline.episodes = episodes
+        offline.totalEpisodes = episodes.length
+        offline.filesDownloaded = 0
+
+        offline.startDownloading()
+    }
+
+    startDownloading = function () {
+        const episode = offline.episodes[offline.filesDownloaded]
+
         var xhr = new XMLHttpRequest()
-
-        xhr.open("GET", url, true)
         xhr.responseType = "blob"
-
-        xhr.addEventListener("progress", function (e) {
-            if (e.lengthComputable) {
-                var percentage = (e.loaded / e.total) * 100
-                document.querySelector('.episode[data-id="' + data.episodeId + '"] span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
-                document.querySelector('.episode .progress-line').style.transform = `scaleX(${percentage / 100})`
-            }
-        })
-
-        xhr.addEventListener("load", function () {
-            if (xhr.status === 200) {
-                document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.remove('downloading')
-                document.querySelector('.episode[data-id="' + data.episodeId + '"]').classList.add('downloaded')
-
-                data.blob = xhr.response
-                offline.putFileInDb(data)
-            }
-        }, false)
-
+        xhr.open("GET", episode.downloadUrl, true)
+        xhr.addEventListener("progress", offline.onDownloadProgress)
+        xhr.addEventListener("load", offline.onDownloadComplete, false)
         xhr.send()
+    }
+
+    onDownloadProgress = function (e) {
+        if (e.lengthComputable) {
+            const episode = offline.episodes[offline.filesDownloaded]
+            var percentage = (offline.filesDownloaded * 100 + (e.loaded / e.total) * 100) / offline.totalEpisodes
+            
+            let episodeEl = document.querySelector('.episode[data-id="' + episode.data.episodeId + '"]')
+            episodeEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
+            episodeEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
+        }
+    }
+
+    onDownloadComplete = function () {
+        if (this.status === 200) {
+            let episode = offline.episodes[offline.filesDownloaded]
+
+            episode.data.blob = this.response
+            offline.putFileInDb(episode.data)
+
+            if (++offline.filesDownloaded == offline.totalEpisodes) {
+                let episodeEl = document.querySelector('.episode[data-id="' + episode.data.episodeId + '"]')
+                episodeEl.classList.remove('downloading')
+                episodeEl.classList.add('downloaded')
+            }
+            else {
+                offline.startDownloading()
+            }
+        }
     }
 
     putFileInDb = function (data) {
@@ -110,8 +131,6 @@ export default class Offline {
         getItem.onsuccess = function () {
             if (getItem.result) {
                 const item = getItem.result
-                // console.log("Got element!", item)
-
                 var r = new FileReader()
 
                 r.onload = function (e) {
@@ -131,7 +150,6 @@ export default class Offline {
                 r.readAsArrayBuffer(item.blob)
             }
             else {
-                console.log('Load from BTV')
                 fallback(videoName)
             }
         }
