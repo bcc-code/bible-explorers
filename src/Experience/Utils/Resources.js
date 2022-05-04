@@ -44,7 +44,7 @@ export default class Resources extends EventEmitter {
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+            console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
         }
 
         this.loadingManager.onError = function (url) {

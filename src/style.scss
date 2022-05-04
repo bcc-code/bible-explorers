@@ -4,7 +4,6 @@
 @import "./icons.scss";
 @import "./fonts.scss";
 
-
 :root {
     color-scheme: only light !important;
 }
@@ -23,6 +22,7 @@ sans-serif;
 
 // #endregion
 
+// #region mixins
 @mixin icon($name) {
     @extend [class^="icon-"];
     @extend [class*=" icon-"];
@@ -196,6 +196,8 @@ sans-serif;
         position: relative;
     }
 }
+
+// #endregion
 
 // #region General
 * {
@@ -924,9 +926,10 @@ button,
         }
     }
 
-    &.selected {
+    &:not(.selected) {
         opacity: 1;
     }
+
 
 
 }
