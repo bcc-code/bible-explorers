@@ -42,6 +42,7 @@ export default class World {
             landingScreen: document.getElementById("landing-screen"),
             episodeScreen: document.getElementById("episodes-screen"),
             introduction: document.getElementById("introduction"),
+            topBar: document.getElementById("topBar")
         }
 
         this.buttons = {
@@ -71,11 +72,8 @@ export default class World {
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("click", this.goHome)
 
-        instance.chapters.backBtn.children[0].innerText = _s.journey.back
         this.chapters.backBtn.addEventListener("click", this.goToLandingScreen)
-
-        instance.welcome.landingScreen.classList.add('visible')
-
+        this.chapters.backBtn.children[0].innerText = _s.journey.back
     }
 
     placeholderEpisodeData() {
@@ -95,11 +93,7 @@ export default class World {
     }
 
     showMenuButtons() {
-        const episodeActions = document.querySelector('.episode.selected')
-        episodeActions.classList.add('visible')
-
-        this.buttons.completed = document.getElementById("completed")
-
+        console.log('s');
 
         if (this.episodeProgress() == 0) {
             instance.buttons.restart.classList.remove('visible')
@@ -109,12 +103,10 @@ export default class World {
         }
 
         if (this.episodeProgress() == this.selectedEpisode.program.length) {
-            instance.buttons.completed.classList.add('visible')
             instance.buttons.start.classList.remove('visible')
         }
         else {
             instance.buttons.start.classList.add('visible')
-            instance.buttons.completed.classList.remove('visible')
         }
 
         if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
@@ -129,7 +121,6 @@ export default class World {
 
         for (const [category, data] of Object.entries(instance.chapters.data)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
-            instance.welcome.landingScreen.classList.add('visible')
         }
 
         instance.selectCategoryListeners()
@@ -165,7 +156,6 @@ export default class World {
         instance.unselectAllEpisode()
         instance.placeholderEpisodeData()
 
-
         instance.chapters.episodes.innerHTML = ''
         instance.welcome.landingScreen.classList.add('visible')
         instance.welcome.episodeScreen.classList.remove('visible')
@@ -179,6 +169,7 @@ export default class World {
         })
 
         instance.selectEpisodeListeners()
+
     }
 
     setEpisodeHtml(episode, index) {
@@ -194,36 +185,49 @@ export default class World {
         episodeHtml.setAttribute("data-slug", episode.category)
 
         episodeHtml.innerHTML = `
-            <div class="episode__number">${index + 1}</div>
-            <div class="episode__thumbnail">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 961 160" class="episode__image" preserveAspectRatio="none">
-                    <defs>
-                        <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
-                            <path
-                                d="M961 54.91v78.94c0 4.35-1.77 8.43-4.99 11.51l-10.36 9.88c-3.22 3.07-7.5 4.76-12.05 4.76H.98L0 0h673.95c4.55 0 8.83 1.69 12.04 4.76l13.63 13c4.17 3.98 9.71 6.17 15.61 6.17h213.31c4.55 0 8.82 1.69 12.05 4.77l15.42 14.71c3.22 3.07 4.99 7.16 4.99 11.5Z" />
-                        </clipPath>
-                    </defs>
-                    <g clip-path="url(#maskImage)">
-                        <image width="100%" fill="none" y="-50%" class="" href="${episode.thumbnail}"/>
-                    </g>
-                </svg>
-                <div class="button button__round episode__status">
-                    <i class="icon icon-play-solid"></i>
-                    <i class="icon icon-lock-solid"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" id="a" viewBox="0 0 990.75 176.94" class="episode__background">
+                <defs>
+                    <linearGradient id="gradient" x1="5.02" x2="961.72" y1="88.47" y2="88.47" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#131a43"/>
+                        <stop offset="1" stop-color="#412251"/>
+                    </linearGradient>
+                    <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
+                        <path d="M961.72 62.29v82.37c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12Z" />
+                    </clipPath>
+                </defs>
+
+                <path class="box" d="M961.72 62.29v82.37c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12Z"/>
+                
+                <g clip-path="url(#maskImage)">
+                    <image width="100%" fill="none" y="-50%" class="" href="${episode.thumbnail}"/>
+                </g>
+
+                <rect width="120" height="176.94" x="1"></rect>
+                <text class="episode__number" x="50" y="88.47" fill="white" font-size="36" font-weight="bold">${index + 1}</text>
+                <rect class="outline" width="5" height="176.94" x="120"></rect>
+
+                <path class="outline" d="m973.97 150.09-.23-85.55c-.01-3.18 3.77-4.84 6.11-2.69l5.96 5.48c2.62 2.41 4.15 5.79 4.22 9.35l.72 59.05c.07 3.36-1.15 6.61-3.41 9.09l-7.03 7.7c-2.24 2.45-6.32.88-6.33-2.44ZM713.46.5l212.55.22c3.18 0 4.82 3.79 2.66 6.12l-5.51 5.93a13.094 13.094 0 0 1-9.37 4.17l-186.06.41a13.09 13.09 0 0 1-9.07-3.46l-7.67-7.07c-2.44-2.25-.84-6.32 2.47-6.32Z"/>
+
+                <path class="outline" d="M960.29 46.76 944.93 31.4c-4.15-4.15-9.66-6.43-15.53-6.43H717.05c-4.54 0-8.8-1.77-12-4.97L691.48 6.43A21.823 21.823 0 0 0 675.95 0H0l1.02 176.94h933.42c5.87 0 11.38-2.28 15.53-6.43l10.32-10.32c4.15-4.14 6.43-9.66 6.43-15.53V62.29c0-5.87-2.28-11.38-6.43-15.53Zm1.43 97.9c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12v82.37Z"/>
+
+                <path class="outline" d="M194.67 147.44H2.01v29h224.85l-12.63-20.38c-4.12-6.86-10.97-8.62-19.55-8.62ZM250.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM290.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM337.77 151.24c-1.48-2.12-4.07-3.48-6.92-3.64l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2Z" />
+
+                <text class="episode__heading" x="160" y="88.47" fill="white" font-size="36" font-weight="bold">${episode.title}</text>
+
+            </svg>
+            
+            <div class="button button__round episode__status">
+                <i class="icon icon-play-solid"></i>
+                <i class="icon icon-lock-solid"></i>
+            </div>
+            <div class="episode__download">
+                <div class="button episode__offline">
+                    <i class="icon icon-download-solid"></i>
+                    <span>${_s.download}</span>
                 </div>
-                <div class="episode__heading">
-                    <span class="episode__title">${episode.title}</span>
-                    <span class="episode__completed" id="completed">${_s.journey.congratulations}</span>
-                </div>
-                <div class="episode__download">
-                    <div class="button episode__offline">
-                        <i class="icon icon-download-solid"></i>
-                        <span>${_s.download}</span>
-                    </div>
-                    <div class="downloading-progress"><div class="progress-line"></div></div>
-                    <span class="downloading-label"></span>
-                    <span class="downloading-complete">${_s.offline}</span>
-                </div>
+                <div class="downloading-progress"><div class="progress-line"></div></div>
+                <span class="downloading-label"></span>
+                <span class="downloading-complete">${_s.offline}</span>
             </div>
             
         `
@@ -275,6 +279,8 @@ export default class World {
     addClassToSelectedEpisode(episode) {
         instance.unselectAllEpisode()
         episode.classList.add('selected')
+
+
     }
 
     unselectAllEpisode() {

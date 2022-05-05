@@ -13,7 +13,7 @@
 
     <canvas class="webgl"></canvas>
 
-    <div class="topbar">
+    <div class="topbar" id="topBar">
         <div id="go-home" class="button button__round"><i class="icon icon-house-solid"></i></div>
         <div id="sound" class="button button__round"><i class="icon icon-volume-solid"></i><i
                 class="icon icon-volume-slash-solid"></i></div>
@@ -21,7 +21,31 @@
         <div id="settings" class="button button__round"><i class="icon icon-gear-solid"></i></div>
     </div>
 
-    <div id="loading-screen"></div>
+    <div id="loading-screen">
+        <div class="logo" aria-label="bible kids explorers logo"></div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo suscipit quis deserunt obcaecati repudiandae
+            odit commodi nesciunt ipsum accusamus mollitia?</p>
+        <div class="loader">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.37 138.76">
+                <defs>
+                    <clipPath id="loader-mask">
+                        <path
+                        d="M117.37 80.08c0 5.95-.88 11.69-2.53 17.1-.88 2.89-7.05 22.03-26.12 33.35-2.63 1.56-8.74 4.9-17.31 6.81 0 0-8.33 1.85-16.6 1.32C32.38 137.22.78 111.52.02 81.61-.41 64.6 6.39 49.17 17.59 38.19c2.02-1.99 5.47-.1 4.75 2.64-2.38 9.12-1.92 18.31 1.77 26.27 1.68 3.64 3.85 6.66 6.13 9.12 1.9 2.05 5.34.32 4.79-2.43-2.19-11.09-3.82-30 4.64-49.24.86-2.01 1.86-4.03 2.97-6.04C46.78 11.02 51.73 5.19 56.35.76c1.86-1.79 4.92-.21 4.66 2.36-.54 5.31-.77 11.5-.28 18.32.38 5.16 1.15 10.67 2.5 16.43 1.56 6.61 3.6 12.42 5.75 17.4.66 1.54 2.55 2.17 4 1.33 3.13-1.82 6.76-4.51 9.98-8.48 3.45-4.29 5.52-8.92 6.72-13.37.51-1.91 2.76-2.72 4.34-1.53 14.2 10.71 23.37 27.71 23.37 46.87Z" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <div class="loader__flame"><div class="flame"></div></div>
+            <div class="loader__text">
+                <span>Loading</span>
+                <div class="loader__dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="landing-screen">
         <div class="logo" aria-label="bible kids explorers logo"></div>
         <div id="introduction"></div>

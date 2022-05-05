@@ -11,6 +11,7 @@
 // #region Colors
 $primary: #3E306D;
 $accent: #0396e3;
+$accent2: #fcb04e;
 $dark: #131A43;
 $gradient: linear-gradient(90deg, $dark, $primary);
 $gradient2: linear-gradient(90deg, #C5516E, #EB9159);
@@ -302,106 +303,6 @@ button,
 // #endregion
 
 // #region Interface
-.timer {
-    position: absolute;
-    left: 3rem;
-    top: 3rem;
-    z-index: 7;
-
-    &__container {
-        font-family: sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        @include setBackground('../static/svgs/button_round.svg');
-        @include alignCenterVH();
-        color: #fff;
-    }
-
-    &__part {
-        font-size: 30px;
-        font-weight: bold;
-    }
-}
-
-.progress-bar {
-    width: calc(100% - 6rem - 96px);
-    position: absolute;
-    bottom: calc(3rem + 20px);
-    left: calc(3rem + 32px);
-
-    .modal-on &,
-    .freeze & {
-        display: none;
-    }
-
-    &__steps {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        z-index: 3;
-    }
-
-    &__step {
-        position: absolute;
-        width: 4rem;
-        height: 4rem;
-        border-radius: 50%;
-        top: -1.25rem;
-        z-index: 2;
-
-        color: #fff;
-        font-weight: bold;
-        font-size: 1.2rem;
-
-        background-color: $dark;
-        border: 4px solid $accent;
-        @include alignCenterVH();
-        transition: .3s ease;
-
-        &.locked {
-            @include icon(icon-lock-solid);
-            filter: grayscale(1);
-        }
-
-        &:last-child {
-            @include icon(icon-star-solid);
-        }
-
-        &:hover {
-            transform: scale(1.05);
-            background-color: $accent;
-        }
-    }
-
-    &__step:not(:last-child) {
-        cursor: pointer;
-    }
-
-    &__percentage {
-        height: 1.25rem;
-        width: 100%;
-        background-color: #fff;
-        border: 4px solid $accent;
-        position: relative;
-        z-index: 2;
-
-        .passed {
-            float: left;
-            height: 100%;
-            top: -10px;
-            background-image: $gradient;
-            transition: width 0.4s ease-in-out;
-        }
-    }
-}
-
-// #endregion
-
-// #region Components
 #videos-container {
     position: absolute;
     width: 1920px;
@@ -414,8 +315,128 @@ button,
 }
 
 #loading-screen {
-    @include fixed();
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $primary;
+    z-index: 99;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+
+    p {
+        max-width: 768px;
+        color: $accent2;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
 }
+
+.loader {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+
+    svg {
+        position: absolute;
+        width: 0;
+        height: 0;
+    }
+
+    span {
+        color: #fff;
+        font-size: 4rem;
+        font-weight: bold;
+    }
+
+    &__flame {
+        position: relative;
+        width: 117px;
+        height: 138px;
+        background-color: white;
+        clip-path: url(#loader-mask);
+
+        .flame {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $accent2;
+            transform-origin: bottom;
+            transform: scaleY(0);
+            transition: 1s ease;
+        }
+    }
+
+    &__text {
+        display: flex;
+        gap: 2rem;
+        align-items: baseline;
+    }
+
+    &__dots {
+        height: 1rem;
+        width: 7rem;
+        display: flex;
+        position: relative;
+    }
+
+    .dot {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background-color: #fff;
+        animation: move 500ms linear 0ms infinite;
+        margin-right: 2rem;
+
+        &:first-child {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: grow 500ms linear 0ms infinite;
+        }
+
+        &:last-child {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: 0;
+            animation: grow 500ms linear 0s infinite reverse;
+        }
+    }
+
+    @keyframes grow {
+        from {
+            transform: scale(0, 0);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1, 1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes move {
+        from {
+            transform: translateX(0px)
+        }
+
+        to {
+            transform: translateX(3rem)
+        }
+    }
+}
+
+
 
 #landing-screen {
     @include fixed();
@@ -514,15 +535,81 @@ button,
 
 }
 
-#menu {
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    display: none;
+.progress-bar {
+    width: calc(100% - 6rem - 96px);
+    position: absolute;
+    bottom: calc(3rem + 20px);
+    left: calc(3rem + 32px);
+
+    .modal-on &,
+    .freeze & {
+        display: none;
+    }
+
+    &__steps {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        z-index: 3;
+    }
+
+    &__step {
+        position: absolute;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        top: -1.25rem;
+        z-index: 2;
+
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2rem;
+
+        background-color: $dark;
+        border: 4px solid $accent;
+        @include alignCenterVH();
+        transition: .3s ease;
+
+        &.locked {
+            @include icon(icon-lock-solid);
+            filter: grayscale(1);
+        }
+
+        &:last-child {
+            @include icon(icon-star-solid);
+        }
+
+        &:hover {
+            transform: scale(1.05);
+            background-color: $accent;
+        }
+    }
+
+    &__step:not(:last-child) {
+        cursor: pointer;
+    }
+
+    &__percentage {
+        height: 1.25rem;
+        width: 100%;
+        background-color: #fff;
+        border: 4px solid $accent;
+        position: relative;
+        z-index: 2;
+
+        .passed {
+            float: left;
+            height: 100%;
+            top: -10px;
+            background-image: $gradient;
+            transition: width 0.4s ease-in-out;
+        }
+    }
 }
+
+// #endregion
+
+// #region Components
 
 #introduction {
     position: relative;
@@ -568,11 +655,12 @@ button,
     top: 0;
     left: 0;
     right: 0;
-    display: flex;
+    display: none;
     padding-left: 3rem;
     padding-top: 3rem;
     padding-right: 3rem;
     z-index: 1;
+    transition: opacity 1s ease;
 
     .button {
         z-index: 5;
@@ -624,7 +712,6 @@ button,
     #settings {
         margin-right: 0;
     }
-
 }
 
 .categories {
@@ -663,121 +750,23 @@ button,
     position: relative;
     display: flex;
     width: 100%;
-    height: 160px;
     cursor: pointer;
     transition: opacity .3s ease, transform .3s ease;
-    @include setBackground('../static/svgs/episode_image.svg');
 
-    &::after,
-    &::before {
-        pointer-events: none;
-        transition: .3s ease;
-    }
-
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        @include setBackground('../static/svgs/episode_border.svg');
-        z-index: 2;
-    }
-
-    &::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 352px;
-        height: 32px;
-        @include setBackground('../static/svgs/episode_corner.svg');
-        z-index: 3;
-    }
-
-    &__number {
-        position: absolute;
-        width: 8rem;
-        left: 0;
-        top: 0;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-bottom: 2rem;
-        background: $dark;
-        z-index: 2;
-
-        color: #fff;
-        font-size: 2.5rem;
-        font-weight: bold;
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 5px;
-            background: $accent;
-            transition: .3s ease;
-        }
-
-    }
-
-    &__thumbnail {
-        position: relative;
+    &__background {
         width: 100%;
-        display: flex;
-        align-items: center;
-        padding-bottom: 2rem;
-        padding-left: 10rem;
 
-
-        &::after,
-        &::before {
-            content: '';
-            position: absolute;
-            transition: .3s ease-in-out;
+        .box {
+            fill: url(#gradient);
         }
 
-        &::before {
-            width: 22%;
-            height: 16px;
-            right: 2.75rem;
-            top: -0.15rem;
-            @include setBackground('../static/svgs/artefact_top.svg');
+        .outline {
+            fill: $accent;
         }
 
-        &::after {
-            width: 16px;
-            height: 92px;
-            top: 3rem;
-            right: -1.5rem;
-            @include setBackground('../static/svgs/artefact_right.svg');
+        rect {
+            fill: $dark;
         }
-    }
-
-    &__image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
-
-    &__heading {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        z-index: 1;
-    }
-
-    &__title {
-        color: #fff;
-        font-size: 2.5rem;
-        font-weight: bold;
     }
 
     &__completed {
@@ -792,7 +781,8 @@ button,
         display: none;
         position: absolute;
         bottom: 0;
-        left: 22.5rem;
+        height: 2rem;
+        left: 21rem;
         padding: 0 1rem;
         z-index: 3;
 
@@ -803,7 +793,6 @@ button,
             right: 0;
             bottom: 0;
             top: 0;
-            // background-color: #FCB04E;
             background: $gradient2;
             border-radius: 1rem 1rem 0 0;
             transform: skewX(28deg);
@@ -859,7 +848,7 @@ button,
     .button__round {
         position: absolute;
         right: 3rem;
-        bottom: 1.25rem;
+        bottom: 1.35rem;
         width: 6rem;
         height: 6rem;
 
@@ -907,13 +896,21 @@ button,
         .episode__download .downloading-label {
             display: block;
         }
+
+        .episode__download {
+            width: 26rem;
+        }
     }
 
     &.downloaded {
+
+        .episode__download {
+            width: auto;
+        }
+
         .episode__download .button {
             display: none;
         }
-
 
         .episode__download .downloading-progress,
         .episode__download .downloading-label {
@@ -926,10 +923,13 @@ button,
         }
     }
 
-    &:not(.selected) {
-        opacity: 1;
+    &.selected {
+        transform: scale(1.02);
     }
 
+    &.selected~div {
+        opacity: 0.25;
+    }
 
 
 }

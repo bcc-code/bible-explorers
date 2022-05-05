@@ -24,7 +24,8 @@ export default class Resources extends EventEmitter {
         // Setup
         this.items = {}
         this.toLoad = this.sources.length
-        this.loaded = 0
+        this.itemsLoaded = 0
+        this.loadingScreenLoaded = false
         this.mediaItems = []
         this.mediaItemsScreens = []
         this.textureItems = []
@@ -35,16 +36,33 @@ export default class Resources extends EventEmitter {
     }
 
     loadManager() {
+
+        const loaderFlame = document.querySelector('.loader__flame .flame');
+
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
         }
 
         this.loadingManager.onLoad = () => {
             // console.log('Loading complete!')
+
+            this.experience.world.welcome.loadingScreen.style.display = "none"
+
+            if (this.loadingScreenLoaded === false) {
+                this.experience.world.welcome.topBar.style.display = "flex"
+                this.experience.world.welcome.landingScreen.classList.add('visible')
+            }
+
+            this.loadingScreenLoaded = true
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+            const progressRatio = itemsLoaded / itemsTotal
+
+            loaderFlame.style.transform = "scaleY(" + progressRatio + ")"
+
+            console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
         }
 
         this.loadingManager.onError = function (url) {
@@ -130,14 +148,14 @@ export default class Resources extends EventEmitter {
     onVideoLoad(video, url) {
         video.removeEventListener('canplay', this.onVideoLoad, false)
         this.loadingManager.itemEnd(url)
-        this.loaded++
+        this.itemsLoaded++
     }
 
     sourceLoaded(source, file) {
         this.items[source.name] = file
-        this.loaded++
+        this.itemsLoaded++
 
-        if (this.loaded === this.toLoad) {
+        if (this.itemsLoaded === this.toLoad) {
             this.trigger('ready')
         }
     }
@@ -154,7 +172,7 @@ export default class Resources extends EventEmitter {
     async loadThemeVideos(episodeId, videoName) {
         let animationId = videoName.replace('episode-', '')
         this.offline.loadFromIndexedDb(
-            { name: animationId+'_video', episodeId: episodeId },
+            { name: animationId + '_video', episodeId: episodeId },
             this.generateTextureForVideo,
             this.streamFromBtv,
             videoName
@@ -217,24 +235,24 @@ export default class Resources extends EventEmitter {
 
     fetchApiThenCache(theUrl, callback) {
         fetch(theUrl)
-            .then(function(response) {
+            .then(function (response) {
                 // console.log('Network ok - save also to cache', theUrl)
                 var responseClone = response.clone()
 
-                response.json().then(function(apiData) {
+                response.json().then(function (apiData) {
                     callback(apiData)
                 })
 
                 // Save to cache for offline use
-                caches.open('apiResponses').then(function(cache) {
+                caches.open('apiResponses').then(function (cache) {
                     cache.put(theUrl, responseClone)
                 })
             })
-            .catch(function() {
+            .catch(function () {
                 // console.log('Network down - fetch from cache', theUrl)
-                caches.open('apiResponses').then(function(cache) {
+                caches.open('apiResponses').then(function (cache) {
                     cache.match(theUrl).then(response => {
-                        response.json().then(function(cachedData) {
+                        response.json().then(function (cachedData) {
                             callback(cachedData)
                         })
                     })
