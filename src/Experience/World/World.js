@@ -297,7 +297,7 @@ export default class World {
             if (instance.resources.textureItems.hasOwnProperty(fileName))
                 return
 
-            instance.resources.loadEpisodeTextures(fileName, instance.selectedChapter.id, episode.thumbnail)
+            instance.resources.loadEpisodeTextures(fileName, episode.thumbnail)
         })
     }
 

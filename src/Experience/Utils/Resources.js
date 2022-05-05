@@ -160,22 +160,33 @@ export default class Resources extends EventEmitter {
         }
     }
 
-    loadVideosThumbnail(fileName, thumbnail) {
-        this.loaders.textureLoader.load(
-            thumbnail,
-            (texture) => {
-                this.textureItems[fileName] = texture
-            }
+    loadEpisodeTextures(videoName, thumbnail) {
+        this.offline.loadFromIndexedDb(
+            { 
+                name: videoName,
+                thumbnail: thumbnail
+            },
+            this.loadTexturesLocally,
+            this.loadTexturesOnline
         )
     }
 
-    async loadThemeVideos(episodeId, videoName) {
-        let animationId = videoName.replace('episode-', '')
-        this.offline.loadFromIndexedDb(
-            { name: animationId + '_video', episodeId: episodeId },
-            this.generateTextureForVideo,
-            this.streamFromBtv,
-            videoName
+    loadTexturesLocally(videoEl, videoName, videoUrl, thumbnailUrl) {
+        resources.loadVideoThumbnail(videoName, thumbnailUrl)
+        resources.generateTextureForVideo(videoEl, videoName, videoUrl)
+    }
+
+    loadTexturesOnline(videoName, thumbnailUrl) {
+        resources.loadVideoThumbnail(videoName, thumbnailUrl)
+        resources.streamFromBtv(videoName)
+    }
+
+    loadVideoThumbnail(videoName, thumbnailUrl) {
+        this.loaders.textureLoader.load(
+            thumbnailUrl,
+            (texture) => {
+                this.textureItems[videoName] = texture
+            }
         )
     }
 

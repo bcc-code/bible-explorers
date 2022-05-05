@@ -70,17 +70,34 @@ export default class Offline {
     }
 
     startDownloading = function () {
-        const episode = offline.episodes[offline.filesDownloaded]
+        const currentEpisode = offline.episodes[offline.filesDownloaded]
 
         var xhr = new XMLHttpRequest()
         xhr.responseType = "blob"
-        xhr.open("GET", episode.downloadUrl, true)
-        xhr.addEventListener("progress", offline.onDownloadProgress)
-        xhr.addEventListener("load", offline.onDownloadComplete, false)
+        xhr.open("GET", currentEpisode.data.thumbnail, true)
+        xhr.addEventListener("load", offline.onThumbnailDownloadComplete, false)
         xhr.send()
     }
 
-    onDownloadProgress = function (e) {
+    onThumbnailDownloadComplete = function () {
+        if (this.status === 200) {
+            offline.episodes[offline.filesDownloaded].data.thumbnail = this.response
+            offline.downloadVideo()
+        }
+    }
+
+    downloadVideo = function() {
+        const currentEpisode = offline.episodes[offline.filesDownloaded]
+
+        var xhr = new XMLHttpRequest()
+        xhr.responseType = "blob"
+        xhr.open("GET", currentEpisode.downloadUrl, true)
+        xhr.addEventListener("progress", offline.onVideoDownloadProgress)
+        xhr.addEventListener("load", offline.onVideoDownloadComplete, false)
+        xhr.send()
+    }
+
+    onVideoDownloadProgress = function (e) {
         if (e.lengthComputable) {
             const currentEpisode = offline.episodes[offline.filesDownloaded]
             var percentage = (offline.filesDownloaded * 100 + (e.loaded / e.total) * 100) / offline.totalEpisodes
@@ -91,7 +108,7 @@ export default class Offline {
         }
     }
 
-    onDownloadComplete = function () {
+    onVideoDownloadComplete = function () {
         if (this.status === 200) {
             let currentEpisode = offline.episodes[offline.filesDownloaded]
 
@@ -123,28 +140,43 @@ export default class Offline {
         getItem.onsuccess = function () {
             if (getItem.result) {
                 const item = getItem.result
-                var r = new FileReader()
+                let thumbnailUrl = null
 
-                r.onload = function (e) {
-                    const contents = e.target.result
-                    const uint8Array = new Uint8Array(contents)
+                // Load thumbnail
+                var f = new FileReader()
 
-                    const arrayBuffer = uint8Array.buffer
-                    const blob = new Blob([arrayBuffer])
-                    const fileUrl = URL.createObjectURL(blob)
+                f.onload = function (e) {
+                    const blob = offline.getArrayBufferBlob(e)
+                    thumbnailUrl = URL.createObjectURL(blob)
 
-                    const video = offline.createVideoElement(videoName, fileUrl)
-                    document.getElementById('videos-container').appendChild(video)
+                    // Load video blob as array buffer
+                    var r = new FileReader()
 
-                    callback(video, videoName, fileUrl)
+                    r.onload = function (e) {
+                        const blob = offline.getArrayBufferBlob(e)
+                        const videoUrl = URL.createObjectURL(blob)
+                        const videoEl = offline.createVideoElement(data.name, videoUrl)
+                        document.getElementById('videos-container').appendChild(videoEl)
+
+                        callback(videoEl, data.name, videoUrl, thumbnailUrl)
+                    }
+
+                    r.readAsArrayBuffer(item.video)
                 }
 
-                r.readAsArrayBuffer(item.blob)
+                f.readAsArrayBuffer(item.thumbnail)
             }
             else {
-                fallback(videoName)
+                fallback(data.name, data.thumbnail)
             }
         }
+    }
+
+    getArrayBufferBlob(e) {
+        const contents = e.target.result
+        const uint8Array = new Uint8Array(contents)
+        const arrayBuffer = uint8Array.buffer
+        return new Blob([arrayBuffer])
     }
 
     createVideoElement = function (videoName, path) {
