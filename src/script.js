@@ -20,6 +20,13 @@ const configureClient = async () => {
 
 window.onload = async () => {
     await configureClient()
+
+    const query = window.location.search
+    if (query.includes("code=") && query.includes("state=")) {
+        await experience.auth0.handleRedirectCallback()
+        window.history.replaceState({}, document.title, "/")
+    }
+
     experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
 
     if (experience.auth0.isAuthenticated) {
@@ -32,15 +39,6 @@ window.onload = async () => {
             if (hasAccess === true)
                 document.body.classList.add('admin')
         })
-
-        return
-    }
-
-    const query = window.location.search
-
-    if (query.includes("code=") && query.includes("state=")) {
-        await experience.auth0.handleRedirectCallback()
-        window.history.replaceState({}, document.title, "/")
     }
 }
 
