@@ -18,11 +18,11 @@ export default class Questions {
             let world = this.experience.world
             let program = world.program
             let currentStep = program.currentStep
-            let selectedEpisode = world.selectedEpisode
-            let localStorageId = 'answers-theme-' + selectedEpisode.id
+            let selectedChapter = world.selectedChapter
+            let localStorageId = 'answers-theme-' + selectedChapter.id
             let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
 
-            const questions = selectedEpisode.program[currentStep].questions
+            const questions = selectedChapter.program[currentStep].questions
 
             let html = `
                 <div class="modal__content questions ">

@@ -62,7 +62,7 @@ export default class Resources extends EventEmitter {
 
             loaderFlame.style.transform = "scaleY(" + progressRatio + ")"
 
-            console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
         }
 
         this.loadingManager.onError = function (url) {
@@ -186,12 +186,12 @@ export default class Resources extends EventEmitter {
     }
 
     async loadEpisodeFromBtv(videoName) {
-        const filmId = videoName.replace('episode-', '')
+        const episodeId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
 
         var btvplayer = BTVPlayer({
             type: 'episode',
-            id: filmId,
+            id: episodeId,
             locale: locale
         })
 
@@ -211,14 +211,14 @@ export default class Resources extends EventEmitter {
     }
 
     getGeneratedVideoElement(videoName) {
-        let video = document.getElementById('videojs-' + videoName + '_html5_api')
-        video.autoplay = false // Make sure the video won't start autoplay
+        let videoEl = document.getElementById('videojs-' + videoName + '_html5_api')
+        videoEl.autoplay = false // Make sure the video won't start autoplay
 
-        return video
+        return videoEl
     }
 
-    generateTextureForVideo(video, id, path) {
-        const texture = new THREE.VideoTexture(video)
+    generateTextureForVideo(videoEl, id, path) {
+        const texture = new THREE.VideoTexture(videoEl)
         texture.flipY = false
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
@@ -227,16 +227,15 @@ export default class Resources extends EventEmitter {
         resources.mediaItems[id] = {
             item: texture,
             path: path,
-            naturalWidth: video.videoWidth || 1,
-            naturalHeight: video.videoHeight || 1
+            naturalWidth: videoEl.videoWidth || 1,
+            naturalHeight: videoEl.videoHeight || 1
         }
-
     }
 
     fetchApiThenCache(theUrl, callback) {
         fetch(theUrl)
             .then(function (response) {
-                // console.log('Network ok - save also to cache', theUrl)
+                // console.log('Fetched - save also to cache', theUrl)
                 var responseClone = response.clone()
 
                 response.json().then(function (apiData) {
@@ -249,7 +248,7 @@ export default class Resources extends EventEmitter {
                 })
             })
             .catch(function () {
-                // console.log('Network down - fetch from cache', theUrl)
+                // console.log('Request failed - try to get it from the cache', theUrl)
                 caches.open('apiResponses').then(function (cache) {
                     cache.match(theUrl).then(response => {
                         response.json().then(function (cachedData) {

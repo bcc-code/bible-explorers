@@ -51,7 +51,7 @@ export default class CodeUnlock {
                 backspace: document.querySelector(".code-unlock__btn--backspace"),
                 confirm: document.querySelector(".code-unlock__btn--confirm")
             }
-            instance.secretCode = instance.world.selectedEpisode.program[instance.world.program.currentStep].codeToUnlock
+            instance.secretCode = instance.world.selectedChapter.program[instance.world.program.currentStep].codeToUnlock
 
             instance.el.numbers.forEach(function (number) {
                 number.addEventListener("click", () => {

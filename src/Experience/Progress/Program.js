@@ -27,12 +27,12 @@ export default class Program {
         this.world = this.experience.world
         this.camera = this.experience.camera
         this.highlight = this.world.highlight
-        this.programData = this.world.selectedEpisode.program
+        this.programData = this.world.selectedChapter.program
         this.points = this.experience.world.points
 
         // Get instance variables
-        this.episodeProgress = () => localStorage.getItem(this.world.getId())
-        this.currentStep = this.episodeProgress() || 0
+        this.chapterProgress = () => localStorage.getItem(this.world.getId())
+        this.currentStep = this.chapterProgress() || 0
         this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
         this.currentLocation = () => {
@@ -72,7 +72,7 @@ export default class Program {
     updateCurrentStep(newStep) {
         this.currentStep = newStep
 
-        if (newStep > this.episodeProgress())
+        if (newStep > this.chapterProgress())
             this.updateLocalStorage()
     }
 

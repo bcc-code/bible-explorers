@@ -9,7 +9,7 @@ export default class Archive {
         this.experience = new Experience()
         archive = this
 
-        archive.facts = this.experience.world.selectedEpisode.archive
+        archive.facts = this.experience.world.selectedChapter.archive
 
         archive.htmlEl = document.getElementById("archive")
         archive.htmlEl.addEventListener("click", this.toggleArchive)

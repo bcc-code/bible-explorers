@@ -20,8 +20,8 @@ export default class Offline {
     initialize = function () {
         offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
         offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
-        offline.dbVersion = 2
-        offline.store = "episodesData"
+        offline.dbVersion = 3
+        offline.store = "chaptersData"
         offline.db = null
         offline.transaction = null
         offline.objStore = null
@@ -36,7 +36,7 @@ export default class Offline {
         }
 
         offline.objStore = database.createObjectStore(offline.store)
-        offline.objStore.createIndex('episodeIndex', 'episodeId')
+        offline.objStore.createIndex('chapterIndex', 'chapterId')
     }
 
     setUpDbConnection = function () {
@@ -82,26 +82,26 @@ export default class Offline {
 
     onDownloadProgress = function (e) {
         if (e.lengthComputable) {
-            const episode = offline.episodes[offline.filesDownloaded]
+            const currentEpisode = offline.episodes[offline.filesDownloaded]
             var percentage = (offline.filesDownloaded * 100 + (e.loaded / e.total) * 100) / offline.totalEpisodes
             
-            let episodeEl = document.querySelector('.episode[data-id="' + episode.data.episodeId + '"]')
-            episodeEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
-            episodeEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
+            let chapterEl = document.querySelector('.chapter[data-id="' + currentEpisode.data.chapterId + '"]')
+            chapterEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
+            chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
         }
     }
 
     onDownloadComplete = function () {
         if (this.status === 200) {
-            let episode = offline.episodes[offline.filesDownloaded]
+            let currentEpisode = offline.episodes[offline.filesDownloaded]
 
-            episode.data.blob = this.response
-            offline.putFileInDb(episode.data)
+            currentEpisode.data.video = this.response
+            offline.putFileInDb(currentEpisode.data)
 
             if (++offline.filesDownloaded == offline.totalEpisodes) {
-                let episodeEl = document.querySelector('.episode[data-id="' + episode.data.episodeId + '"]')
-                episodeEl.classList.remove('downloading')
-                episodeEl.classList.add('downloaded')
+                let chapterEl = document.querySelector('.chapter[data-id="' + currentEpisode.data.chapterId + '"]')
+                chapterEl.classList.remove('downloading')
+                chapterEl.classList.add('downloaded')
             }
             else {
                 offline.startDownloading()
@@ -110,14 +110,12 @@ export default class Offline {
     }
 
     putFileInDb = function (data) {
-        // console.log("Putting " + data.name + " in " + offline.store)
-
         offline.transaction = offline.db.transaction([offline.store], "readwrite")
         offline.objStore = offline.transaction.objectStore(offline.store)
         offline.objStore.put(data, data.name)
     }
 
-    loadFromIndexedDb = function (data, callback = function () { }, fallback = function () { }, videoName) {
+    loadFromIndexedDb = function (data, callback, fallback) {
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
         const getItem = offline.objStore.get(data.name)
@@ -162,16 +160,16 @@ export default class Offline {
         return video
     }
 
-    markEpisodeIfAvailableOffline = function (episode) {
+    markChapterIfAvailableOffline = function (chapter) {
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
 
-        var episodeIndex = offline.objStore.index('episodeIndex')
-        var getIndex = episodeIndex.getAll(episode.id.toString())
+        var chapterIndex = offline.objStore.index('chapterIndex')
+        var getIndex = chapterIndex.getAll(chapter.id.toString())
 
         getIndex.onsuccess = function () {
-            if (getIndex.result.length == episode.data.length) {
-                document.querySelector('.episode[data-id="' + episode.id + '"]').classList.add('downloaded')
+            if (getIndex.result.length == chapter.episodes.length) {
+                document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded')
             }
         }
     }

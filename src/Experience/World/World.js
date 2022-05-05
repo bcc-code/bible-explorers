@@ -25,22 +25,22 @@ export default class World {
 
         instance = this
 
-        this.placeholderEpisodeData()
-        this.episodeProgress = () => localStorage.getItem(this.getId()) || 0
+        this.placeholderChapterData()
+        this.chapterProgress = () => localStorage.getItem(this.getId()) || 0
 
-        // Episodes
-        this.chapters = {
+        // Chapters
+        this.menu = {
             categories: document.querySelector(".categories.list"),
-            episodes: document.querySelector(".episodes.list"),
+            chapters: document.querySelector(".chapters.list"),
             backBtn: document.querySelector(".back_to"),
-            data: []
+            chaptersData: []
         }
 
         // Welcome screen
         this.welcome = {
             loadingScreen: document.getElementById("loading-screen"),
             landingScreen: document.getElementById("landing-screen"),
-            episodeScreen: document.getElementById("episodes-screen"),
+            chaptersScreen: document.getElementById("chapters-screen"),
             introduction: document.getElementById("introduction"),
             topBar: document.getElementById("topBar")
         }
@@ -50,7 +50,7 @@ export default class World {
             restart: document.getElementById("restart-journey")
         }
 
-        this.resources.fetchApiThenCache(_api.getBiexEpisodes(), this.setCategories)
+        this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -72,12 +72,12 @@ export default class World {
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("click", this.goHome)
 
-        this.chapters.backBtn.addEventListener("click", this.goToLandingScreen)
-        this.chapters.backBtn.children[0].innerText = _s.journey.back
+        this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
+        this.menu.backBtn.children[0].innerText = _s.journey.back
     }
 
-    placeholderEpisodeData() {
-        instance.selectedEpisode = {
+    placeholderChapterData() {
+        instance.selectedChapter = {
             id: 0,
             program: null,
             data: null
@@ -93,33 +93,31 @@ export default class World {
     }
 
     showMenuButtons() {
-        console.log('s');
-
-        if (this.episodeProgress() == 0) {
+        if (this.chapterProgress() == 0) {
             instance.buttons.restart.classList.remove('visible')
         }
         else {
             instance.buttons.restart.classList.add('visible')
         }
 
-        if (this.episodeProgress() == this.selectedEpisode.program.length) {
+        if (this.chapterProgress() == this.selectedChapter.program.length) {
             instance.buttons.start.classList.remove('visible')
         }
         else {
             instance.buttons.start.classList.add('visible')
         }
 
-        if (this.episodeProgress() > 0 && this.episodeProgress() < this.selectedEpisode.program.length) {
+        if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
             instance.buttons.start.innerHTML = "<span>" + _s.journey.continue + "</span>"
         }
     }
 
-    setCategories(data) {
-        if (!data) return
+    setCategories(result) {
+        if (result.hasOwnProperty('message')) return
 
-        instance.chapters.data = data
+        instance.menu.chaptersData = result
 
-        for (const [category, data] of Object.entries(instance.chapters.data)) {
+        for (const [category, data] of Object.entries(instance.menu.chaptersData)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
         }
 
@@ -127,19 +125,18 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-
         const categoryHtml = document.createElement("div")
         categoryHtml.className = "category button button__default"
         categoryHtml.setAttribute("data-slug", category.slug)
         categoryHtml.innerHTML = "<span>" + category.name + "</span>"
-        instance.chapters.categories.appendChild(categoryHtml)
+        instance.menu.categories.appendChild(categoryHtml)
 
         const getDivider = document.querySelector('.categories .divider')
 
         if (!getDivider) {
             const divider = document.createElement("span")
             divider.className = "divider"
-            instance.chapters.categories.appendChild(divider)
+            instance.menu.categories.appendChild(divider)
         }
     }
 
@@ -147,45 +144,45 @@ export default class World {
         document.querySelectorAll(".category").forEach(function (category) {
             category.addEventListener("click", () => {
                 const categorySlug = category.getAttribute('data-slug')
-                instance.setEpisodes(instance.chapters.data[categorySlug]['episodes'])
+                instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
             })
         })
     }
 
     goToLandingScreen() {
-        instance.unselectAllEpisode()
-        instance.placeholderEpisodeData()
+        instance.unselectAllChapters()
+        instance.placeholderChapterData()
 
-        instance.chapters.episodes.innerHTML = ''
+        instance.menu.chapters.innerHTML = ''
         instance.welcome.landingScreen.classList.add('visible')
-        instance.welcome.episodeScreen.classList.remove('visible')
+        instance.welcome.chaptersScreen.classList.remove('visible')
     }
 
-    setEpisodes(data) {
-        data.forEach((episode, index) => {
-            instance.setEpisodeHtml(episode, index)
+    setChapters(data) {
+        data.forEach((chapter, index) => {
+            instance.setChapterHtml(chapter, index)
             instance.welcome.landingScreen.classList.remove('visible')
-            instance.welcome.episodeScreen.classList.add('visible')
+            instance.welcome.chaptersScreen.classList.add('visible')
         })
 
-        instance.selectEpisodeListeners()
+        instance.selectChapterListeners()
 
     }
 
-    setEpisodeHtml(episode, index) {
-        let episodeHtml = document.createElement("div")
+    setChapterHtml(chapter, index) {
+        let chapterHtml = document.createElement("div")
 
-        let episodeClasses = "episode"
-        episodeClasses += episode.status == "future" ? " locked" : ""
-        episodeHtml.className = episodeClasses
+        let chapterClasses = "chapter"
+        chapterClasses += chapter.status == "future" ? " locked" : ""
+        chapterHtml.className = chapterClasses
 
-        this.offline.markEpisodeIfAvailableOffline(episode)
+        this.offline.markChapterIfAvailableOffline(chapter)
 
-        episodeHtml.setAttribute("data-id", episode.id)
-        episodeHtml.setAttribute("data-slug", episode.category)
+        chapterHtml.setAttribute("data-id", chapter.id)
+        chapterHtml.setAttribute("data-slug", chapter.category)
 
-        episodeHtml.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" id="a" viewBox="0 0 990.75 176.94" class="episode__background">
+        chapterHtml.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" id="a" viewBox="0 0 990.75 176.94" class="chapter__background">
                 <defs>
                     <linearGradient id="gradient" x1="5.02" x2="961.72" y1="88.47" y2="88.47" gradientUnits="userSpaceOnUse">
                         <stop offset="0" stop-color="#131a43"/>
@@ -199,11 +196,11 @@ export default class World {
                 <path class="box" d="M961.72 62.29v82.37c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12Z"/>
                 
                 <g clip-path="url(#maskImage)">
-                    <image width="100%" fill="none" y="-50%" class="" href="${episode.thumbnail}"/>
+                    <image width="100%" fill="none" y="-50%" class="" href="${chapter.thumbnail}"/>
                 </g>
 
                 <rect width="120" height="176.94" x="1"></rect>
-                <text class="episode__number" x="50" y="88.47" fill="white" font-size="36" font-weight="bold">${index + 1}</text>
+                <text class="chapter__number" x="50" y="88.47" fill="white" font-size="36" font-weight="bold">${index + 1}</text>
                 <rect class="outline" width="5" height="176.94" x="120"></rect>
 
                 <path class="outline" d="m973.97 150.09-.23-85.55c-.01-3.18 3.77-4.84 6.11-2.69l5.96 5.48c2.62 2.41 4.15 5.79 4.22 9.35l.72 59.05c.07 3.36-1.15 6.61-3.41 9.09l-7.03 7.7c-2.24 2.45-6.32.88-6.33-2.44ZM713.46.5l212.55.22c3.18 0 4.82 3.79 2.66 6.12l-5.51 5.93a13.094 13.094 0 0 1-9.37 4.17l-186.06.41a13.09 13.09 0 0 1-9.07-3.46l-7.67-7.07c-2.44-2.25-.84-6.32 2.47-6.32Z"/>
@@ -212,16 +209,16 @@ export default class World {
 
                 <path class="outline" d="M194.67 147.44H2.01v29h224.85l-12.63-20.38c-4.12-6.86-10.97-8.62-19.55-8.62ZM250.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM290.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM337.77 151.24c-1.48-2.12-4.07-3.48-6.92-3.64l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2Z" />
 
-                <text class="episode__heading" x="160" y="88.47" fill="white" font-size="36" font-weight="bold">${episode.title}</text>
+                <text class="chapter__heading" x="160" y="88.47" fill="white" font-size="36" font-weight="bold">${chapter.title}</text>
 
             </svg>
             
-            <div class="button button__round episode__status">
+            <div class="button button__round chapter__status">
                 <i class="icon icon-play-solid"></i>
                 <i class="icon icon-lock-solid"></i>
             </div>
-            <div class="episode__download">
-                <div class="button episode__offline">
+            <div class="chapter__download">
+                <div class="button chapter__offline">
                     <i class="icon icon-download-solid"></i>
                     <span>${_s.download}</span>
                 </div>
@@ -231,115 +228,119 @@ export default class World {
             </div>
             
         `
-        instance.chapters.episodes.appendChild(episodeHtml)
+        instance.menu.chapters.appendChild(chapterHtml)
     }
 
 
     setDescriptionHTML() {
-        const episode = instance.selectedEpisode
+        const chapter = instance.selectedChapter
         let descriptionHTML = document.createElement("div")
-        descriptionHTML.classList.add('episode__description')
-        descriptionHTML.setAttribute('data-id', episode.id)
-        descriptionHTML.setAttribute('data-slug', episode.category)
+        descriptionHTML.classList.add('chapter__description')
+        descriptionHTML.setAttribute('data-id', chapter.id)
+        descriptionHTML.setAttribute('data-slug', chapter.category)
 
         descriptionHTML.innerHTML = `
-                <h2>${episode.title}</h2>
-                <p>${episode.content}</p>
+                <h2>${chapter.title}</h2>
+                <p>${chapter.content}</p>
         `
 
-        document.querySelector('.episodes__content').prepend(descriptionHTML)
+        document.querySelector('.chapters__content').prepend(descriptionHTML)
     }
 
-    selectEpisodeListeners(item) {
-        document.querySelectorAll(".episode:not(.locked)").forEach((episode) => {
-            episode.addEventListener("click", () => {
+    selectChapterListeners(item) {
+        document.querySelectorAll(".chapter:not(.locked)").forEach((chapter) => {
+            chapter.addEventListener("click", () => {
 
-                const description = document.querySelector(".episode__description");
+                const description = document.querySelector(".chapter__description");
 
                 if (description)
                     description.remove()
 
-                instance.addClassToSelectedEpisode(episode)
-                instance.updateSelectedEpisodeData(episode)
-                instance.loadEpisodeTextures()
+                instance.addClassToSelectedChapter(chapter)
+                instance.updateSelectedChapterData(chapter)
+                instance.loadChapterTextures()
                 instance.showMenuButtons()
 
-                instance.setDescriptionHTML(episode)
+                instance.setDescriptionHTML(chapter)
             })
         })
 
-        document.querySelectorAll(".episode:not(.locked) .episode__offline").forEach(function (episode) {
-            episode.addEventListener("click", (event) => {
-                instance.downloadEpisode(episode)
+        document.querySelectorAll(".chapter:not(.locked) .chapter__offline").forEach(function (chapter) {
+            chapter.addEventListener("click", (event) => {
+                instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
     }
 
-    addClassToSelectedEpisode(episode) {
-        instance.unselectAllEpisode()
-        episode.classList.add('selected')
-
-
+    addClassToSelectedChapter(chapter) {
+        instance.unselectAllChapters()
+        chapter.classList.add('selected')
     }
 
-    unselectAllEpisode() {
-        document.querySelectorAll(".episode").forEach(function (thisEpisode) {
-            thisEpisode.classList.remove('selected')
+    unselectAllChapters() {
+        document.querySelectorAll(".chapter").forEach(function (thisChapter) {
+            thisChapter.classList.remove('selected')
         })
     }
 
-    updateSelectedEpisodeData(episode) {
-        const episodeId = episode.getAttribute('data-id')
-        const categorySlug = episode.getAttribute('data-slug')
-        instance.selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == episodeId })[0]
+    updateSelectedChapterData(chapter) {
+        const chapterId = chapter.getAttribute('data-id')
+        const categorySlug = chapter.getAttribute('data-slug')
+        instance.selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
     }
 
-    loadEpisodeTextures() {
-        instance.selectedEpisode.data.forEach((animationFilm) => {
-            const fileName = animationFilm.type + '-' + animationFilm.id
+    loadChapterTextures() {
+        instance.selectedChapter.episodes.forEach((episode) => {
+            const fileName = episode.type + '-' + episode.id
 
             if (instance.resources.textureItems.hasOwnProperty(fileName))
                 return
 
-            instance.resources.loadVideosThumbnail(fileName, animationFilm.thumbnail)
-            instance.resources.loadThemeVideos(instance.selectedEpisode.id, fileName)
+            instance.resources.loadEpisodeTextures(fileName, instance.selectedChapter.id, episode.thumbnail)
         })
     }
 
-    async downloadEpisode(episode) {
+    async downloadChapter(chapter) {
         if (!this.experience.auth0.isAuthenticated) return
 
-        let episodeEl = episode.closest(".episode")
-        const chapterId = episodeEl.getAttribute('data-id')
-        const categorySlug = episodeEl.getAttribute('data-slug')
-        const selectedEpisode = instance.chapters.data[categorySlug]['episodes'].filter((episode) => { return episode.id == chapterId })[0]
+        let chapterEl = chapter.closest(".chapter")
+        const chapterId = chapterEl.getAttribute('data-id')
+        const categorySlug = chapterEl.getAttribute('data-slug')
+        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
 
-        episodeEl.classList.remove('download')
-        episodeEl.classList.add('downloading')
-        episodeEl.querySelector('.episode__offline span').innerText = _s.downloading
+        chapterEl.classList.remove('download')
+        chapterEl.classList.add('downloading')
+        chapterEl.querySelector('.chapter__offline span').innerText = _s.downloading
 
-        await this.downloadAnimationFilms(selectedEpisode['data'], chapterId)
+        await this.downloadEpisodes(selectedChapter['episodes'], chapterId)
     }
 
-    async downloadAnimationFilms(animationFilms, chapterId) {
-        let episodesDownload = []
+    async downloadEpisodes(episodes, chapterId) {
+        let episodesDownloadUrls = []
 
-        animationFilms.forEach(async (film) => {
-            const downloadUrl = await this.getEpisodeDownloadUrl(film)
-            episodesDownload.push({ downloadUrl: downloadUrl, data: { name: film.id + '_video', episodeId: chapterId }})
+        episodes.forEach(async (episode) => {
+            const downloadUrl = await this.getEpisodeDownloadUrl(episode.id)
 
-            if (episodesDownload.length == animationFilms.length) {
-                this.offline.downloadFromWeb(episodesDownload)
+            episodesDownloadUrls.push({
+                downloadUrl: downloadUrl,
+                data: { 
+                    name: 'episode-' + episode.id,
+                    thumbnail: episode.thumbnail,
+                    chapterId: chapterId,
+                }
+            })
+
+            if (episodesDownloadUrls.length == episodes.length) {
+                this.offline.downloadFromWeb(episodesDownloadUrls)
             }
         })
     }
 
-    async getEpisodeDownloadUrl(film) {
+    async getEpisodeDownloadUrl(episodeId) {
         const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
         const locale = _lang.getLanguageCode()
-        const episodeId = film.id.replace('episode-', '')
 
         var btvplayer = BTVPlayer({
             type: 'episode',
@@ -362,8 +363,8 @@ export default class World {
     }
 
     restartJourney() {
-        localStorage.removeItem("progress-theme-" + instance.selectedEpisode.id)
-        localStorage.removeItem("answers-theme-" + instance.selectedEpisode.id)
+        localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
+        localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
         instance.startJourney()
     }
 
@@ -376,18 +377,18 @@ export default class World {
     showMenu() {
         document.body.classList.add('freeze')
         instance.audio.addBgMusicElement()
-        instance.welcome.episodeScreen.classList.add('visible')
+        instance.welcome.chaptersScreen.classList.add('visible')
         instance.points.delete()
     }
 
     hideMenu() {
         document.body.classList.remove('freeze')
-        instance.welcome.episodeScreen.classList.remove('visible')
+        instance.welcome.chaptersScreen.classList.remove('visible')
         instance.audio.removeBgMusicElement()
     }
 
     getId() {
-        return "progress-theme-" + this.selectedEpisode.id
+        return "progress-theme-" + this.selectedChapter.id
     }
 
     update() {

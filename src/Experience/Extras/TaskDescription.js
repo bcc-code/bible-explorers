@@ -21,9 +21,9 @@ export default class TaskDescription {
             let highlight = instance.world.highlight
             let points = instance.world.points
             let currentStep = program.currentStep
-            let selectedEpisode = instance.world.selectedEpisode
+            let selectedChapter = instance.world.selectedChapter
 
-            instance.text = selectedEpisode.program[currentStep].description
+            instance.text = selectedChapter.program[currentStep].description
 
             let html = `
                 <div class="modal__content task">
@@ -37,23 +37,23 @@ export default class TaskDescription {
             instance.modal = new Modal(html)
 
             document.getElementById("get-task").addEventListener("click", () => {
-                if (selectedEpisode.program[currentStep].taskType == 'questions') {
+                if (selectedChapter.program[currentStep].taskType == 'questions') {
                     camera.updateCameraTo('screensCloseLook')
 
                     setTimeout(function () {
                         program.addCustomInteractiveObj("tv_16x10_screen")
-                        points.add("tv_16x10_screen", selectedEpisode.program[currentStep].taskType)
+                        points.add("tv_16x10_screen", selectedChapter.program[currentStep].taskType)
                         highlight.add("tv_16x10_screen")
 
                     }, camera.data.moveDuration)
                 }
 
-                else if (selectedEpisode.program[currentStep].taskType == 'code') {
+                else if (selectedChapter.program[currentStep].taskType == 'code') {
                     camera.updateCameraTo('controlBoard')
 
                     setTimeout(function () {
                         program.addCustomInteractiveObj("panel_screen")
-                        points.add("panel_screen", selectedEpisode.program[currentStep].taskType)
+                        points.add("panel_screen", selectedChapter.program[currentStep].taskType)
                         highlight.add("panel_screen")
                     }, camera.data.moveDuration)
                 }

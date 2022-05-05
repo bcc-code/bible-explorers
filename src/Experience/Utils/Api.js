@@ -3,8 +3,8 @@ import _lang from '../Utils/Lang.js'
 let wpApiUrl_staging = "https://staging-bcckids.kinsta.cloud/wp-json"
 let wpApiUrl_production = "https://biblekids.io/wp-json"
 
-let getBiexEpisodes = () => wpApiUrl_production + "/biex-episodes/get?lang=" + _lang.getLanguageCode()
-let isAkLeder = (personId) => wpApiUrl_production + '/is-ak-leder/' + personId
-let apiJsonLocalPath = () => "api/biex-episodes-" + _lang.getLanguageCode() + ".json"
+let getBiexChapters = () => wpApiUrl_production + "/biex-chapters/get?lang=" + _lang.getLanguageCode()
+let isAkLeder = (personId) => wpApiUrl_production + '/is-ak-leder/' + personId + "?test=123"
+let apiJsonLocalPath = () => "api/biex-chapters-" + _lang.getLanguageCode() + ".json"
 
-export default { getBiexEpisodes, isAkLeder, apiJsonLocalPath }
+export default { getBiexChapters, isAkLeder, apiJsonLocalPath }
