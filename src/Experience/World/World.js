@@ -39,6 +39,7 @@ export default class World {
         // Welcome screen
         this.welcome = {
             loadingScreen: document.getElementById("loading-screen"),
+            conceptDescription: document.getElementById("concept-description"),
             landingScreen: document.getElementById("landing-screen"),
             chaptersScreen: document.getElementById("chapters-screen"),
             introduction: document.getElementById("introduction"),
@@ -50,6 +51,7 @@ export default class World {
             restart: document.getElementById("restart-journey")
         }
 
+        this.welcome.conceptDescription.innerText = _s.conceptDescription
         this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
 
         // Wait for resources

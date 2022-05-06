@@ -2,6 +2,7 @@ import _lang from '../Utils/Lang.js'
 
 const strings = {
     "no": {
+        "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
         "journey": {
             "seeAllChapters": "Gå til tidsreisene",
