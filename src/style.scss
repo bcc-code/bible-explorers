@@ -19,7 +19,7 @@ $gradient2: linear-gradient(90deg, #C5516E, #EB9159);
 $radius: 12px;
 
 $archivo-regular: "Archivo",
-sans-serif;
+    sans-serif;
 
 // #endregion
 
@@ -62,7 +62,7 @@ sans-serif;
     background-size: contain;
 }
 
-@mixin alignCenterVH($direction:false) {
+@mixin alignCenterVH($direction: false) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -436,8 +436,6 @@ button,
     }
 }
 
-
-
 #landing-screen {
     @include fixed();
 
@@ -466,7 +464,8 @@ button,
     &.visible {
         display: flex;
         align-items: center;
-        justify-content: center;
+        flex-direction: column;
+        gap: 4rem;
         padding: 3rem;
     }
 
@@ -485,7 +484,6 @@ button,
         position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         gap: 2rem;
     }
 
@@ -1377,22 +1375,26 @@ button,
     }
 
     &__footer {
-        position: absolute;
-        top: calc(100% + 1.25rem);
-        left: 0;
-        right: 0;
+        margin-top: auto;
+        margin-bottom: 1rem;
         display: flex;
         gap: 1rem;
 
-        button {
+        .button {
+            background: $gradient2;
+            border-radius: $radius;
+            height: 3rem;
+            line-height: 3rem;
+            font-size: 1.25rem;
             flex: 1;
             border: none;
         }
 
-        button:disabled {
+        .button:disabled {
             opacity: 0.2;
             pointer-events: none;
         }
+
     }
 
     .switch {
@@ -1432,11 +1434,11 @@ button,
         }
 
         input:checked+.slider {
-            background-color: #2196f3;
+            background: $gradient2;
         }
 
         input:focus+.slider {
-            box-shadow: 0 0 1px #2196f3;
+            box-shadow: 0 0 1px $gradient2;
         }
 
         input:checked+.slider:before {
