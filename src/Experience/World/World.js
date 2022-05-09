@@ -10,6 +10,7 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import Offline from '../Utils/Offline.js'
+import Game from '../Games/game.js'
 
 let instance = null
 
@@ -65,6 +66,8 @@ export default class World {
 
             this.buttons.start.addEventListener('click', this.startJourney)
             this.buttons.restart.addEventListener('click', this.restartJourney)
+
+            this.sortGame = new Game()
         })
 
         this.welcome.introduction.innerText = _s.introduction

@@ -300,6 +300,15 @@ button,
     cursor: grab;
 }
 
+.sort-game {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    outline: none;
+    cursor: grab;
+    z-index: 99;
+}
+
 // #endregion
 
 // #region Interface
@@ -435,8 +444,6 @@ button,
         }
     }
 }
-
-
 
 #landing-screen {
     @include fixed();
@@ -1729,4 +1736,15 @@ button,
     }
 }
 
+#sort-game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $gradient;
+    z-index: 99;
+}
+
+#webpack-dev-server-client-overlay {
+    display: none !important;
+}
 // #endregion
