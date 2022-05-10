@@ -78,7 +78,7 @@ export default class World {
                 })
 
                 quality.classList.add('selected')
-                instance.quality = quality.getAttribute('data-name')
+                instance.selectedQuality = quality.getAttribute('data-name')
                 instance.welcome.startJourney.style.opacity = 1
             })
         })
@@ -401,9 +401,22 @@ export default class World {
 
         const allLanguagesVideos = await btvplayer.api.getDownloadables('episode', episodeId)
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
-        const bestQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+        const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
 
-        return await btvplayer.api.getDownloadable('episode', episodeId, bestQualityVideo.id)
+        return await btvplayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id)
+    }
+
+    getSelectedQualityVideo(arr) {
+        switch (instance.selectedQuality) {
+            case 'low':
+                return arr.reduce((prev, current) => (prev.sizeInMB < current.sizeInMB) ? prev : current)
+
+            case 'medium':
+                return median(arr)
+
+            case 'high':
+                return arr.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+        }
     }
 
     startChapter() {
@@ -454,4 +467,19 @@ export default class World {
             this.points.update()
         }
     }
+}
+
+function median(values) {
+    if (values.length === 0) throw new Error("No inputs")
+  
+    values.sort(function(a,b){
+      return a.sizeInMB - b.sizeInMB
+    })
+  
+    var half = Math.floor(values.length / 2)
+    
+    if (values.length % 2)
+      return values[half]
+    
+    return (values[half - 1] + values[half]) / 2.0
 }
