@@ -36,38 +36,23 @@ export default class Resources extends EventEmitter {
     }
 
     loadManager() {
-
-        const loaderFlame = document.querySelector('.loader__flame .flame');
-
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
         }
 
         this.loadingManager.onLoad = () => {
             // console.log('Loading complete!')
-
-            this.experience.world.welcome.loadingScreen.style.display = "none"
-
-            if (this.loadingScreenLoaded === false) {
-                this.experience.world.welcome.topBar.style.display = "flex"
-                this.experience.world.welcome.landingScreen.classList.add('visible')
-            }
-
-            this.loadingScreenLoaded = true
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
             const progressRatio = itemsLoaded / itemsTotal
-
-            loaderFlame.style.transform = "scaleY(" + progressRatio + ")"
-
-            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+            document.querySelector('.loader__flame .flame').style.transform = "scaleY(" + progressRatio + ")"
         }
 
         this.loadingManager.onError = function (url) {
-            // console.log('There was an error loading ' + url);
-        };
+            // console.log('There was an error loading ' + url)
+        }
 
     }
 

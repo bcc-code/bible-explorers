@@ -40,6 +40,15 @@ export default class World {
         this.welcome = {
             loadingScreen: document.getElementById("loading-screen"),
             conceptDescription: document.getElementById("concept-description"),
+            loading: document.querySelector(".loader"),
+            startJourney: document.getElementById("start-journey"),
+            quality: {
+                container: document.querySelector("#quality"),
+                title: document.querySelector(".quality__title"),
+                low: document.querySelector(".quality[data-name='low'] span"),
+                medium: document.querySelector(".quality[data-name='medium'] span"),
+                high: document.querySelector(".quality[data-name='high'] span")
+            },
             landingScreen: document.getElementById("landing-screen"),
             chaptersScreen: document.getElementById("chapters-screen"),
             introduction: document.getElementById("introduction"),
@@ -47,11 +56,33 @@ export default class World {
         }
 
         this.buttons = {
-            start: document.getElementById("start-journey"),
-            restart: document.getElementById("restart-journey")
+            start: document.getElementById("start-chapter"),
+            restart: document.getElementById("restart-chapter")
         }
 
+        this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
+        this.welcome.startJourney.innerText = _s.journey.seeAllChapters
+        this.welcome.startJourney.addEventListener("click", instance.goToAllChapters)
+
+        // Quality
+        this.welcome.quality.title.innerText = _s.qualities.title
+        this.welcome.quality.low.innerText = _s.qualities.low
+        this.welcome.quality.medium.innerText = _s.qualities.medium
+        this.welcome.quality.high.innerText = _s.qualities.high
+
+        document.querySelectorAll(".qualities.list .quality.button").forEach(function (quality) {
+            quality.addEventListener("click", () => {
+                document.querySelectorAll(".qualities.list .quality.button.selected").forEach(function (quality) {
+                    quality.classList.remove('selected')
+                })
+
+                quality.classList.add('selected')
+                instance.quality = quality.getAttribute('data-name')
+                instance.welcome.startJourney.style.opacity = 1
+            })
+        })
+
         this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
 
         // Wait for resources
@@ -63,8 +94,17 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
 
-            this.buttons.start.addEventListener('click', this.startJourney)
-            this.buttons.restart.addEventListener('click', this.restartJourney)
+            this.buttons.start.addEventListener('click', this.startChapter)
+            this.buttons.restart.addEventListener('click', this.restartChapter)
+
+            setTimeout(function () {
+                instance.welcome.loading.style.opacity = 0
+                instance.welcome.quality.container.style.display = "block"
+
+                setTimeout(function () {
+                    instance.welcome.loading.style.display = "none"
+                }, 1000)
+            }, 1000)
         })
 
         this.welcome.introduction.innerText = _s.introduction
@@ -76,6 +116,12 @@ export default class World {
 
         this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
         this.menu.backBtn.children[0].innerText = _s.journey.back
+    }
+
+    goToAllChapters() {
+        instance.welcome.loadingScreen.style.display = "none"
+        instance.welcome.topBar.style.display = "flex"
+        instance.welcome.landingScreen.classList.add('visible')
     }
 
     placeholderChapterData() {
@@ -255,7 +301,6 @@ export default class World {
     selectChapterListeners(item) {
         document.querySelectorAll(".chapter:not(.locked)").forEach((chapter) => {
             chapter.addEventListener("click", () => {
-
                 const description = document.querySelector(".chapter__description");
 
                 if (description)
@@ -361,16 +406,16 @@ export default class World {
         return await btvplayer.api.getDownloadable('episode', episodeId, bestQualityVideo.id)
     }
 
-    startJourney() {
+    startChapter() {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
     }
 
-    restartJourney() {
+    restartChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
         localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
-        instance.startJourney()
+        instance.startChapter()
     }
 
     finishJourney() {

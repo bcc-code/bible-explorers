@@ -130,6 +130,9 @@ $archivo-regular: "Archivo",
         opacity: 0.4;
     }
 
+    &.selected::after {
+        opacity: 1;
+    }
 }
 
 @mixin popupHeader($background) {
@@ -348,6 +351,13 @@ button,
     align-items: center;
     flex-direction: column;
     gap: 2rem;
+    transition: 1s ease;
+    position: fixed;
+    background: #3E306D;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    justify-content: center;
 
     svg {
         position: absolute;
@@ -355,7 +365,7 @@ button,
         height: 0;
     }
 
-    span {
+    .loader__text {
         color: #fff;
         font-size: 4rem;
         font-weight: bold;
@@ -441,6 +451,19 @@ button,
     }
 }
 
+#start-journey {
+    color: #fff;
+    font-size: 4rem;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transition: .3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
 #landing-screen {
     @include fixed();
 
@@ -480,7 +503,7 @@ button,
         gap: 4rem;
         display: flex;
 
-        >div {
+        > div {
             flex: 1;
         }
     }
@@ -716,7 +739,8 @@ button,
     }
 }
 
-.categories {
+.categories,
+.qualities {
     position: relative;
     display: flex;
     align-items: center;
@@ -724,7 +748,8 @@ button,
     width: 34rem;
 }
 
-.category {
+.category,
+.quality {
     flex: 1;
 
     &:last-child::before,
@@ -732,6 +757,25 @@ button,
         transform: scaleX(-1);
     }
 }
+
+#quality {
+    display: none;
+
+    .quality__title {
+        color: #fff;
+        font-size: 2rem;
+        margin: 2rem 0 1.5rem;
+    }
+
+    .qualities {
+        width: 46rem;
+    }
+
+    .quality.button {
+        font-size: 1.25rem;
+    }
+}
+
 
 .chapters {
     display: flex;
@@ -926,8 +970,6 @@ button,
     &.selected~div {
         opacity: 0.25;
     }
-
-
 }
 
 .modal {
@@ -1731,7 +1773,6 @@ button,
 }
 
 // #endregion
-
 
 #webpack-dev-server-client-overlay {
     display: none !important;
