@@ -5,31 +5,41 @@ let instance = null
 
 export default class Game {
     constructor() {
-
-
         this.experience = new Experience()
         this.sizes = this.experience.sizes
 
         this.data = {
-            orange: "#fbaf4e",
-            orangeOultine: "#d27235",
-            pink: "#f65b98",
-            pinkOutline: "#b42c64",
-            strokeWidth: 10,
-            cornerRadius: 28,
-            width: 460,
-            height: 700,
-            x: 200,
-            y: 200
+            noOfIcons: 12,
+            colors: {
+                orange: "#fbaf4e",
+                orangeOultine: "#d27235",
+                pink: "#f65b98",
+                pinkOutline: "#b42c64"
+            },
+            box: {
+                x: 200,
+                y: 200,
+                width: 460,
+                height: 700,
+                strokeWidth: 10,
+                cornerRadius: 28
+            },
+            icon: {
+                width: 100,
+                height: 100
+            },
+            counter: {
+                correct: 0,
+                wrong: 0
+            }
         }
-
 
         // Setup
         instance = this
         this._init()
         this._store()
 
-        this.icons.forEach((icon, index) => {
+        this.icons.forEach(icon => {
             const defaultColor = icon.children[0].fill()
 
             icon.on('mouseover', () => {
@@ -42,33 +52,39 @@ export default class Game {
                 document.body.style.cursor = 'default'
             })
 
+            icon.on('dragstart', function () {
+                instance.draggedIconPosition = icon.position()
+            })
+
             icon.on('dragend', () => {
-                const cellRight = instance.cellsLeft[index % 6]
-                const cellWrong = instance.cellsRight[index % 6]
-                console.log(cellRight);
-                console.log(cellWrong);
+                if (!icon.inRightPlace && instance._isInRightBox(icon)) {
+                    const category = icon.name().replace('icon_', '')
+                    const box = instance.boxes.find(b => b.id() == category)
+                    const cell = instance.cells[category][instance.data.counter[category]++]
 
-                if (!icon.inRightPlace && instance._isNearCell(icon, cellRight)) {
-                    icon.position({
-                        x: cellRight.x() + instance.data.x + cellRight.width() / 2 - icon.width() / 2,
-                        y: cellRight.y() + instance.data.y + cellRight.height() / 2 - icon.height() / 2,
+                    icon.to({
+                        x: box.x() + cell.x() + cell.width() / 2 - icon.width() / 2,
+                        y: box.y() + cell.y() + cell.height() / 2 - icon.height() / 2,
+                        duration: 0.5
                     })
 
                     icon.inRightPlace = true
-                } else if (!icon.inRightPlace && instance._isNearCell(icon, cellWrong)) {
-                    icon.position({
-                        x: cellWrong.x() + instance.data.x + cellWrong.width() / 2 - icon.width() / 2,
-                        y: cellWrong.y() + instance.data.y + cellWrong.height() / 2 - icon.height() / 2,
-                    })
 
-                    icon.inRightPlace = true
+                    let totalCount = 0
+                    Object.values(instance.data.counter).forEach(c => totalCount += c);
+                    if (totalCount == instance.data.noOfIcons) {
+                        console.log('Game finished!')
+                    }
                 }
-
-
-
+                else {
+                    icon.to({
+                        x: instance.draggedIconPosition.x,
+                        y: instance.draggedIconPosition.y,
+                        duration: 0.5
+                    })
+                }
             })
         })
-
 
         this.buttons.forEach(button => {
             button.on('mouseover', () => {
@@ -79,7 +95,6 @@ export default class Game {
                 document.body.style.cursor = 'default'
             })
         })
-
     }
 
     _init() {
@@ -92,38 +107,34 @@ export default class Game {
             width: this.sizes.width,
             height: this.sizes.height,
         })
-
     }
 
     _store() {
         this.layer = new Konva.Layer()
         this.leftBox = this._box(
-            this.data.x,
-            this.data.y,
-            this.data.width,
-            this.data.height,
-            this.data.orange,
-            this.data.orangeOultine,
-            this.data.strokeWidth,
-            this.data.cornerRadius,
+            this.data.box.x,
+            this.data.box.y,
+            this.data.box.width,
+            this.data.box.height,
+            this.data.colors.orange,
+            this.data.colors.orangeOultine,
+            this.data.box.strokeWidth,
+            this.data.box.cornerRadius,
             "correct",
             "games/like.svg"
         )
         this.rightBox = this._box(
-            this.stage.width() - this.data.width - this.data.x,
-            this.data.y,
-            this.data.width,
-            this.data.height,
-            this.data.pink,
-            this.data.pinkOutline,
-            this.data.strokeWidth,
-            this.data.cornerRadius,
+            this.stage.width() - this.data.box.width - this.data.box.x,
+            this.data.box.y,
+            this.data.box.width,
+            this.data.box.height,
+            this.data.colors.pink,
+            this.data.colors.pinkOutline,
+            this.data.box.strokeWidth,
+            this.data.box.cornerRadius,
             "wrong",
             "games/dislike.svg"
         )
-
-        this.leftBox.attrs.id = 'left_box'
-        this.rightBox.attrs.id = 'right_box'
 
         this.layer.add(this.leftBox, this.rightBox)
         this.stage.add(this.layer)
@@ -132,8 +143,10 @@ export default class Game {
         this.container = []
         this.grids = []
         this.buttons = []
-        this.cellsLeft = []
-        this.cellsRight = []
+        this.cells = {
+            'correct': [],
+            'wrong': []
+        }
         this.boxes.forEach(el => {
             this.grids.push(el.children.filter(item => item.attrs.name === "grid")[0])
             this.container.push(el.children.filter(item => item.attrs.name === "container")[0])
@@ -141,25 +154,16 @@ export default class Game {
         })
 
         this.grids.forEach(grid => {
-
-            if (grid.attrs.id === "correct") {
-                grid.children.forEach(el => {
-                    this.cellsLeft.push(el)
-                })
-            } else if ((grid.attrs.id === "wrong")) {
-                grid.children.forEach(el => {
-                    this.cellsRight.push(el)
-                })
-            }
+            grid.children.forEach(el => {
+                this.cells[grid.id()].push(el)
+            })
         })
 
-
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < instance.data.noOfIcons; i++) {
             this.layer.add(this._createIcon(i))
         }
 
-        this.icons = this.layer.children.filter(item => item.attrs.name === "icon")
-
+        this.icons = this.layer.children.filter(item => item.attrs.name.startsWith("icon_"))
     }
 
     _box(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
@@ -168,7 +172,8 @@ export default class Game {
             y: y,
             width: w,
             height: h,
-            name: 'box'
+            name: 'box',
+            id: id
         })
         this.box.add(new Konva.Rect({
             width: w,
@@ -263,21 +268,30 @@ export default class Game {
     }
 
     _createIcon(index) {
-
         const randomColor = () => {
             const color = Math.floor(Math.random() * 16777215).toString(16);
             return "#" + color
         }
 
+        const marginGutter = 25
+        const wrapper = {
+            x: {
+                min: this.data.box.x + this.data.box.width + marginGutter,
+                max: this.sizes.width - this.data.box.width - this.data.box.x - this.data.icon.width - marginGutter
+            },
+            y: {
+                min: this.data.box.y + marginGutter,
+                max: this.sizes.height - (this.sizes.height - this.data.box.height - this.data.box.y) - this.data.icon.height - marginGutter
+            }
+        }
+
         const icon = new Konva.Group({
-            // x: this.stage.width() / 2 - 50,
-            x: Math.random() * this.sizes.width,
-            // y: this.stage.height() / 2 - 50,
-            y: Math.random() * this.sizes.height,
-            width: 100,
-            height: 100,
+            x: instance._getRndInteger(wrapper.x.min, wrapper.x.max),
+            y: instance._getRndInteger(wrapper.y.min, wrapper.y.max),
+            width: this.data.icon.width,
+            height: this.data.icon.height,
             draggable: true,
-            name: 'icon'
+            name: index < 6 ? 'icon_correct' : 'icon_wrong'
         })
         const shape = new Konva.Rect({
             width: icon.width(),
@@ -322,14 +336,23 @@ export default class Game {
         )
     }
 
-    _isNearCell(icon, cell) {
-        const cellX = instance.data.x + cell.x()
-        const cellY = instance.data.y + cell.y()
+    _isInRightBox(icon) {
+        const boxCategory = icon.name().replace('icon_', '')
+        const correctBox = instance.boxes.find(b => b.id() == boxCategory)
 
-        console.log(icon.x(), 'ix');
-        console.log(icon.y(), 'iy');
-        console.log(cellX, 'cx');
-        console.log(cellY, 'cy');
+        if (
+            icon.x() > correctBox.x() && icon.x() < correctBox.x() + correctBox.width() &&
+            icon.y() > correctBox.y() && icon.y() < correctBox.y() + correctBox.height()
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    _isNearCell(icon, cell) {
+        const cellX = instance.data.box.x + cell.x()
+        const cellY = instance.data.box.y + cell.y()
 
         if (
             icon.x() > cellX && icon.x() < cellX + cell.width() &&
@@ -339,6 +362,10 @@ export default class Game {
         } else {
             return false
         }
+    }
+
+    _getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
 }
 
