@@ -305,8 +305,13 @@ button,
 // #region Interface
 #videos-container {
     position: absolute;
-    width: 1920px;
-    height: 1080px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    // width: 1920px;
+    // height: 1080px;
+    aspect-ratio: 16/9;
     z-index: -1;
 
     .vjs-control-bar {
@@ -775,19 +780,16 @@ button,
     }
 
     &__download {
+        position: relative;
         display: none;
-        position: absolute;
-        bottom: 0;
-        height: 2rem;
-        left: 21rem;
         padding: 0 1rem;
         z-index: 3;
 
         &::before {
             content: '';
             position: absolute;
-            left: 0;
-            right: 0;
+            left: 16px;
+            right: 16px;
             bottom: 0;
             top: 0;
             background: $gradient2;
@@ -843,11 +845,8 @@ button,
     }
 
     .button__round {
-        position: absolute;
-        right: 3rem;
-        bottom: 1.35rem;
-        width: 6rem;
-        height: 6rem;
+        width: 100%;
+        height: 100%;
 
         .icon-play-solid {
             margin-left: 2px;
@@ -1732,3 +1731,8 @@ button,
 }
 
 // #endregion
+
+
+#webpack-dev-server-client-overlay {
+    display: none !important;
+}

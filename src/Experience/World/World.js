@@ -203,7 +203,7 @@ export default class World {
 
                 <rect width="120" height="176.94" x="1"></rect>
                 <text class="chapter__number" x="50" y="88.47" fill="white" font-size="36" font-weight="bold">${index + 1}</text>
-                <rect class="outline" width="5" height="176.94" x="120"></rect>
+                <rect class="outline" width="5" height="175.94" x="120" y="1"></rect>
 
                 <path class="outline" d="m973.97 150.09-.23-85.55c-.01-3.18 3.77-4.84 6.11-2.69l5.96 5.48c2.62 2.41 4.15 5.79 4.22 9.35l.72 59.05c.07 3.36-1.15 6.61-3.41 9.09l-7.03 7.7c-2.24 2.45-6.32.88-6.33-2.44ZM713.46.5l212.55.22c3.18 0 4.82 3.79 2.66 6.12l-5.51 5.93a13.094 13.094 0 0 1-9.37 4.17l-186.06.41a13.09 13.09 0 0 1-9.07-3.46l-7.67-7.07c-2.44-2.25-.84-6.32 2.47-6.32Z"/>
 
@@ -213,22 +213,25 @@ export default class World {
 
                 <text class="chapter__heading" x="160" y="88.47" fill="white" font-size="36" font-weight="bold">${chapter.title}</text>
 
+                <foreignObject x="798.75" y="52.94" width="96" height="96">
+                    <div class="button button__round chapter__status">
+                        <i class="icon icon-play-solid"></i>
+                        <i class="icon icon-lock-solid"></i>
+                    </div>
+                </foreignObject>
+
+                <foreignObject x="352" y="144.94" width="416" height="32">
+                    <div class="chapter__download">
+                        <div class="button chapter__offline">
+                            <i class="icon icon-download-solid"></i>
+                            <span>${_s.download}</span>
+                        </div>
+                        <div class="downloading-progress"><div class="progress-line"></div></div>
+                        <span class="downloading-label"></span>
+                        <span class="downloading-complete">${_s.offline}</span>
+                    </div>
+                </foreignObject>
             </svg>
-            
-            <div class="button button__round chapter__status">
-                <i class="icon icon-play-solid"></i>
-                <i class="icon icon-lock-solid"></i>
-            </div>
-            <div class="chapter__download">
-                <div class="button chapter__offline">
-                    <i class="icon icon-download-solid"></i>
-                    <span>${_s.download}</span>
-                </div>
-                <div class="downloading-progress"><div class="progress-line"></div></div>
-                <span class="downloading-label"></span>
-                <span class="downloading-complete">${_s.offline}</span>
-            </div>
-            
         `
         instance.menu.chapters.appendChild(chapterHtml)
     }
@@ -326,7 +329,7 @@ export default class World {
 
             episodesDownloadUrls.push({
                 downloadUrl: downloadUrl,
-                data: { 
+                data: {
                     name: 'episode-' + episode.id,
                     thumbnail: episode.thumbnail,
                     chapterId: chapterId,
