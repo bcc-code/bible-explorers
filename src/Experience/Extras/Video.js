@@ -157,11 +157,11 @@ export default class Video {
     }
 
     setTexture(id) {
-        if (!this.portalScreen.material.map) return
         if (!this.resources.textureItems.hasOwnProperty(id)) return
 
         this.portalScreen.material.map = this.resources.textureItems[id]
         this.portalScreen.material.map.flipY = false
+        this.portalScreen.material.needsUpdate = true
     }
 
     setProgress(currentTime) {
