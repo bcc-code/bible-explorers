@@ -10,7 +10,7 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import Offline from '../Utils/Offline.js'
-import Game from '../Games/game.js'
+import Game from '../Games/SortingGame.js'
 
 let instance = null
 
