@@ -43,8 +43,8 @@ export default class Settings {
                             </div>
                         </div>
                         <div class="login settings__footer">
-                            <button id="button__login" class="button button__default" disabled="${!settings.logInLogOut.login}"><span>${_s.logIn}</span></button>
-                            <button id="button__logout" class="button button__default" disabled="${!settings.logInLogOut.logout}"><span>${_s.logOut}</span></button>
+                            <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.logIn}</span></button>
+                            <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.logOut}</span></button>
                         </div>
                     </div>
                 </div>

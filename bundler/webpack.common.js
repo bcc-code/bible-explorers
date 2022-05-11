@@ -9,7 +9,7 @@ module.exports = {
     entry: path.resolve(__dirname, '../src/script.js'),
     output:
     {
-        filename: 'script-[hash].js',
+        filename: 'script.js',
         path: path.resolve(__dirname, '../dist')
     },
     devtool: 'source-map',
@@ -27,7 +27,7 @@ module.exports = {
             }),
 
             new MiniCSSExtractPlugin({
-                filename: "style-[hash].css"
+                filename: "style.css"
             }),
 
             new WorkboxPlugin.InjectManifest({

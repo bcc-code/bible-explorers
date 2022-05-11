@@ -2,6 +2,13 @@ import _lang from '../Utils/Lang.js'
 
 const strings = {
     "no": {
+        "loading": "Loader",
+        "qualities": {
+            "title": "Velg kvaliteten",
+            "low": "Lav (270p)",
+            "medium": "Medium (540p)",
+            "high": "Høy (1080p)"
+        },
         "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
         "journey": {
@@ -32,14 +39,22 @@ const strings = {
             "video": "Skip video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
             "task": "Fullfør oppgaven",
-            "questions": "Svar paa sporsmalene",
-            "code": "Los koden"
+            "questions": "Svar på spørsmålene",
+            "code": "Løs koden"
         }
     },
     "en": {
+        "loading": "Loading",
+        "qualities": {
+            "title": "Choose quality",
+            "low": "Low (270p)",
+            "medium": "Medium (540p)",
+            "high": "High (1080p)"
+        },
+        "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
         "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
         "journey": {
-            "seeAllChapters": "Go to all journeys",
+            "seeAllChapters": "Go to all chapters",
             "start": "Start journey",
             "continue": "Continue journey", 
             "restart": "Restart journey",
@@ -66,6 +81,8 @@ const strings = {
             "video": "Watch video",
             "iris": "Listen task description from Iris",
             "task": "Complete the task",
+            "questions": "Answer the questions",
+            "code": "Break the code"
         }
     }
 }

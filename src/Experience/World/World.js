@@ -10,7 +10,6 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import Offline from '../Utils/Offline.js'
-import Game from '../Games/SortingGame.js'
 
 let instance = null
 
@@ -41,6 +40,15 @@ export default class World {
         this.welcome = {
             loadingScreen: document.getElementById("loading-screen"),
             conceptDescription: document.getElementById("concept-description"),
+            loading: document.querySelector(".loader"),
+            startJourney: document.getElementById("start-journey"),
+            quality: {
+                container: document.querySelector("#quality"),
+                title: document.querySelector(".quality__title"),
+                low: document.querySelector(".quality[data-name='low'] span"),
+                medium: document.querySelector(".quality[data-name='medium'] span"),
+                high: document.querySelector(".quality[data-name='high'] span")
+            },
             landingScreen: document.getElementById("landing-screen"),
             chaptersScreen: document.getElementById("chapters-screen"),
             introduction: document.getElementById("introduction"),
@@ -48,11 +56,33 @@ export default class World {
         }
 
         this.buttons = {
-            start: document.getElementById("start-journey"),
-            restart: document.getElementById("restart-journey")
+            start: document.getElementById("start-chapter"),
+            restart: document.getElementById("restart-chapter")
         }
 
+        this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
+        this.welcome.startJourney.innerText = _s.journey.seeAllChapters
+        this.welcome.startJourney.addEventListener("click", instance.goToAllChapters)
+
+        // Quality
+        this.welcome.quality.title.innerText = _s.qualities.title
+        this.welcome.quality.low.innerText = _s.qualities.low
+        this.welcome.quality.medium.innerText = _s.qualities.medium
+        this.welcome.quality.high.innerText = _s.qualities.high
+
+        document.querySelectorAll(".qualities.list .quality.button").forEach(function (quality) {
+            quality.addEventListener("click", () => {
+                document.querySelectorAll(".qualities.list .quality.button.selected").forEach(function (quality) {
+                    quality.classList.remove('selected')
+                })
+
+                quality.classList.add('selected')
+                instance.selectedQuality = quality.getAttribute('data-name')
+                instance.welcome.startJourney.style.opacity = 1
+            })
+        })
+
         this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
 
         // Wait for resources
@@ -64,10 +94,17 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
 
-            this.buttons.start.addEventListener('click', this.startJourney)
-            this.buttons.restart.addEventListener('click', this.restartJourney)
+            this.buttons.start.addEventListener('click', this.startChapter)
+            this.buttons.restart.addEventListener('click', this.restartChapter)
 
-            this.sortGame = new Game()
+            setTimeout(function () {
+                instance.welcome.loading.style.opacity = 0
+                instance.welcome.quality.container.style.display = "block"
+
+                setTimeout(function () {
+                    instance.welcome.loading.style.display = "none"
+                }, 1000)
+            }, 1000)
         })
 
         this.welcome.introduction.innerText = _s.introduction
@@ -79,6 +116,12 @@ export default class World {
 
         this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
         this.menu.backBtn.children[0].innerText = _s.journey.back
+    }
+
+    goToAllChapters() {
+        instance.welcome.loadingScreen.style.display = "none"
+        instance.welcome.topBar.style.display = "flex"
+        instance.welcome.landingScreen.classList.add('visible')
     }
 
     placeholderChapterData() {
@@ -206,7 +249,7 @@ export default class World {
 
                 <rect width="120" height="176.94" x="1"></rect>
                 <text class="chapter__number" x="50" y="88.47" fill="white" font-size="36" font-weight="bold">${index + 1}</text>
-                <rect class="outline" width="5" height="176.94" x="120"></rect>
+                <rect class="outline" width="5" height="175.94" x="120" y="1"></rect>
 
                 <path class="outline" d="m973.97 150.09-.23-85.55c-.01-3.18 3.77-4.84 6.11-2.69l5.96 5.48c2.62 2.41 4.15 5.79 4.22 9.35l.72 59.05c.07 3.36-1.15 6.61-3.41 9.09l-7.03 7.7c-2.24 2.45-6.32.88-6.33-2.44ZM713.46.5l212.55.22c3.18 0 4.82 3.79 2.66 6.12l-5.51 5.93a13.094 13.094 0 0 1-9.37 4.17l-186.06.41a13.09 13.09 0 0 1-9.07-3.46l-7.67-7.07c-2.44-2.25-.84-6.32 2.47-6.32Z"/>
 
@@ -216,22 +259,25 @@ export default class World {
 
                 <text class="chapter__heading" x="160" y="88.47" fill="white" font-size="36" font-weight="bold">${chapter.title}</text>
 
+                <foreignObject x="798.75" y="52.94" width="96" height="96">
+                    <div class="button button__round chapter__status">
+                        <i class="icon icon-play-solid"></i>
+                        <i class="icon icon-lock-solid"></i>
+                    </div>
+                </foreignObject>
+
+                <foreignObject x="352" y="144.94" width="416" height="32">
+                    <div class="chapter__download">
+                        <div class="button chapter__offline">
+                            <i class="icon icon-download-solid"></i>
+                            <span>${_s.download}</span>
+                        </div>
+                        <div class="downloading-progress"><div class="progress-line"></div></div>
+                        <span class="downloading-label"></span>
+                        <span class="downloading-complete">${_s.offline}</span>
+                    </div>
+                </foreignObject>
             </svg>
-            
-            <div class="button button__round chapter__status">
-                <i class="icon icon-play-solid"></i>
-                <i class="icon icon-lock-solid"></i>
-            </div>
-            <div class="chapter__download">
-                <div class="button chapter__offline">
-                    <i class="icon icon-download-solid"></i>
-                    <span>${_s.download}</span>
-                </div>
-                <div class="downloading-progress"><div class="progress-line"></div></div>
-                <span class="downloading-label"></span>
-                <span class="downloading-complete">${_s.offline}</span>
-            </div>
-            
         `
         instance.menu.chapters.appendChild(chapterHtml)
     }
@@ -255,7 +301,6 @@ export default class World {
     selectChapterListeners(item) {
         document.querySelectorAll(".chapter:not(.locked)").forEach((chapter) => {
             chapter.addEventListener("click", () => {
-
                 const description = document.querySelector(".chapter__description");
 
                 if (description)
@@ -329,7 +374,7 @@ export default class World {
 
             episodesDownloadUrls.push({
                 downloadUrl: downloadUrl,
-                data: { 
+                data: {
                     name: 'episode-' + episode.id,
                     thumbnail: episode.thumbnail,
                     chapterId: chapterId,
@@ -356,21 +401,34 @@ export default class World {
 
         const allLanguagesVideos = await btvplayer.api.getDownloadables('episode', episodeId)
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
-        const bestQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+        const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
 
-        return await btvplayer.api.getDownloadable('episode', episodeId, bestQualityVideo.id)
+        return await btvplayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id)
     }
 
-    startJourney() {
+    getSelectedQualityVideo(arr) {
+        switch (instance.selectedQuality) {
+            case 'low':
+                return arr.reduce((prev, current) => (prev.sizeInMB < current.sizeInMB) ? prev : current)
+
+            case 'medium':
+                return median(arr)
+
+            case 'high':
+                return arr.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+        }
+    }
+
+    startChapter() {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
     }
 
-    restartJourney() {
+    restartChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
         localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
-        instance.startJourney()
+        instance.startChapter()
     }
 
     finishJourney() {
@@ -409,4 +467,19 @@ export default class World {
             this.points.update()
         }
     }
+}
+
+function median(values) {
+    if (values.length === 0) throw new Error("No inputs")
+  
+    values.sort(function(a,b){
+      return a.sizeInMB - b.sizeInMB
+    })
+  
+    var half = Math.floor(values.length / 2)
+    
+    if (values.length % 2)
+      return values[half]
+    
+    return (values[half - 1] + values[half]) / 2.0
 }

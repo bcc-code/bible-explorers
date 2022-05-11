@@ -165,8 +165,10 @@ export default class Program {
 
     currentVideo() {
         let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in this.programData) || !(this.programData[localCurrentStep].type == 'video'))
-            localCurrentStep--
+        while (!(localCurrentStep in this.programData) || !(this.programData[localCurrentStep].type == 'video')) {
+            if (localCurrentStep == 0) return null
+            else localCurrentStep--
+        }
 
         return this.programData[localCurrentStep].videoId
     }
