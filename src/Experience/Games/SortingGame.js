@@ -10,7 +10,6 @@ export default class Game {
         this.sizes = this.experience.sizes
 
         this.data = {
-            noOfIcons: 12,
             colors: {
                 orange: "#fbaf4e",
                 orangeOultine: "#d27235",
@@ -34,86 +33,17 @@ export default class Game {
             counter: {
                 correct: 0,
                 wrong: 0
-            }
+            },
+            icons: []
         }
 
         instance = this
     }
 
     toggleSortingGame() {
-        instance.program = instance.world.program
-
         this.init()
-        this.store()
-
-        this.icons.forEach(icon => {
-            const defaultColor = icon.children[0].fill()
-
-            icon.on('mouseover', () => {
-                icon.children[0].fill('red')
-                document.body.style.cursor = 'pointer'
-            })
-
-            icon.on('mouseout', () => {
-                icon.children[0].fill(defaultColor)
-                document.body.style.cursor = 'default'
-            })
-
-            icon.on('dragstart', function () {
-                instance.draggedIconPosition = icon.position()
-            })
-
-            icon.on('dragend', () => {
-                const category = icon.name().replace('icon_', '')
-                const box = instance.boxes.find(b => b.id() == category)
-                let selectedBox = category
-                let feedback = null
-
-                if (!icon.inRightPlace && instance.isInRightBox(icon)) {
-                    feedback = 'correct'
-                    const cell = instance.cells[category][instance.data.counter[category]++]
-
-                    icon.to({
-                        x: box.x() + cell.x() + cell.width() / 2 - icon.width() / 2,
-                        y: box.y() + cell.y() + cell.height() / 2 - icon.height() / 2,
-                        duration: 0.5
-                    })
-
-                    icon.inRightPlace = true
-
-                    let totalCount = 0
-                    Object.values(instance.data.counter).forEach(c => totalCount += c);
-                    if (totalCount == instance.data.noOfIcons) {
-                        console.log('Game finished!')
-                        instance.destroy()
-                    }
-                }
-                else {
-                    feedback = 'wrong'
-                    selectedBox = box.id() == 'correct' ? 'wrong' : 'correct'
-
-                    icon.to({
-                        x: instance.draggedIconPosition.x,
-                        y: instance.draggedIconPosition.y,
-                        duration: 0.5
-                    })
-                }
-
-                const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
-                const buttonBg = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "buttonBg")
-                instance.sortingFeedback(img, buttonBg, feedback)
-            })
-        })
-
-        this.buttons.forEach(button => {
-            button.on('mouseover', () => {
-                document.body.style.cursor = 'pointer'
-            })
-
-            button.on('mouseout', () => {
-                document.body.style.cursor = 'default'
-            })
-        })
+        this.createAllLayers()
+        this.addEventListeners()
     }
 
     init() {
@@ -127,11 +57,18 @@ export default class Game {
             height: this.sizes.height,
         })
 
+        instance.program = instance.world.program
+        const gameData = instance.program.getCurrentStepData().sorting
+
+        instance.data.noOfIcons = gameData.length
+        instance.data.icons = gameData
+
         document.body.classList.add('freeze')
     }
 
-    store() {
+    createAllLayers() {
         this.layer = new Konva.Layer()
+
         this.leftBox = this.createBox(
             this.data.box.x,
             this.data.box.y,
@@ -168,6 +105,8 @@ export default class Game {
             'correct': [],
             'wrong': []
         }
+        this.icons = []
+
         this.boxes.forEach(el => {
             this.grids.push(el.children.filter(item => item.attrs.name === "grid")[0])
             this.container.push(el.children.filter(item => item.attrs.name === "container")[0])
@@ -180,11 +119,82 @@ export default class Game {
             })
         })
 
-        for (let i = 0; i < instance.data.noOfIcons; i++) {
-            this.layer.add(this.createIcon(i))
-        }
+        instance.data.icons.forEach(iconData => {
+            const icon = this.createIcon(iconData)
+            instance.layer.add(icon)
+            instance.icons.push(icon)
+        })
+    }
 
-        this.icons = this.layer.children.filter(item => item.attrs.name.startsWith("icon_"))
+    addEventListeners() {
+        this.icons.forEach(icon => {
+            icon.on('mouseover', () => {
+                if (icon.draggable()) {
+                    icon.children[0].opacity(0.9)
+                    document.body.style.cursor = 'pointer'
+                }
+            })
+            icon.on('mouseout', () => {
+                if (icon.draggable()) {
+                    icon.children[0].opacity(1)
+                    document.body.style.cursor = 'default'
+                }
+            })
+
+            icon.on('dragstart', function () {
+                instance.draggedIconPosition = icon.position()
+            })
+            icon.on('dragend', () => {
+                const category = icon.name().replace('icon_', '')
+                const box = instance.boxes.find(b => b.id() == category)
+                let selectedBox = category
+                let feedback = null
+
+                if (!instance.intersected(icon, instance.leftBox)
+                    && !instance.intersected(icon, instance.rightBox)) {
+                    return
+                }
+
+                if (instance.movedToRightBox(icon)) {
+                    feedback = 'correct'
+                    const cell = instance.cells[category][instance.data.counter[category]++]
+
+                    icon.to({
+                        x: box.x() + cell.x() + cell.width() / 2 - icon.width() / 2,
+                        y: box.y() + cell.y() + cell.height() / 2 - icon.height() / 2,
+                        duration: 0.5
+                    })
+
+                    icon.draggable(false)
+                    instance.checkGameFinished()
+                }
+                else {
+                    feedback = 'wrong'
+                    selectedBox = box.id() == 'correct' ? 'wrong' : 'correct'
+
+                    icon.to({
+                        x: instance.draggedIconPosition.x,
+                        y: instance.draggedIconPosition.y,
+                        duration: 0.5
+                    })
+                }
+
+                const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
+                const buttonBg = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "buttonBg")
+                instance.sortingFeedback(img, buttonBg, feedback)
+            })
+        })
+    }
+
+    checkGameFinished() {
+        let totalCount = 0
+        Object.values(instance.data.counter).forEach(c => totalCount += c);
+        if (totalCount == instance.data.icons.length) {
+            setTimeout(function() {
+                console.log('Game finished!')
+                instance.destroy()
+            }, 1000)
+        }
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
@@ -291,12 +301,7 @@ export default class Game {
         return cell
     }
 
-    createIcon(index) {
-        const randomColor = () => {
-            const color = Math.floor(Math.random() * 16777215).toString(16);
-            return "#" + color
-        }
-
+    createIcon(data) {
         const marginGutter = 25
         const wrapper = {
             x: {
@@ -315,52 +320,30 @@ export default class Game {
             width: this.data.icon.width,
             height: this.data.icon.height,
             draggable: true,
-            name: index < 6 ? 'icon_correct' : 'icon_wrong'
+            name: data.correct_wrong ? 'icon_correct' : 'icon_wrong'
         })
-        const shape = new Konva.Rect({
-            width: icon.width(),
-            height: icon.height(),
-            fill: randomColor(),
-            cornerRadius: 10
+        Konva.Image.fromURL(data.icon, (img) => {
+            img.setAttrs({
+                width: icon.width(),
+                height: icon.height(),
+                name: "image"
+            })
+            icon.add(img)
         })
-        const text = new Konva.Text({
-            x: 10,
-            y: 10,
-            text: 'icon ' + index,
-            fontSize: 20,
-            fill: "white",
-            align: "center"
-        })
-
-        icon.add(shape, text)
-
-        const boundingBox = shape.getClientRect({ relativeTo: icon })
-
-        const box = new Konva.Rect({
-            x: boundingBox.x,
-            y: boundingBox.y,
-            width: boundingBox.width,
-            height: boundingBox.height,
-            stroke: 'red',
-            strokeWidth: 1,
-            cornerRadius: 10
-        })
-
-        icon.add(box)
 
         return icon
     }
 
-    _intersected(r1, r2) {
+    intersected(r1, r2) {
         return !(
-            r2.x > r1.x + r1.width ||
-            r2.x + r2.width < r1.x ||
-            r2.y > r1.y + r1.height ||
-            r2.y + r2.height < r1.y
+            r2.x() > r1.x() + r1.width() ||
+            r2.x() + r2.width() < r1.x() ||
+            r2.y() > r1.y() + r1.height() ||
+            r2.y() + r2.height() < r1.y()
         )
     }
 
-    isInRightBox(icon) {
+    movedToRightBox(icon) {
         const boxCategory = icon.name().replace('icon_', '')
         const correctBox = instance.boxes.find(b => b.id() == boxCategory)
 
@@ -374,7 +357,7 @@ export default class Game {
         }
     }
 
-    _isNearCell(icon, cell) {
+    isNearCell(icon, cell) {
         const cellX = instance.data.box.x + cell.x()
         const cellY = instance.data.box.y + cell.y()
 
