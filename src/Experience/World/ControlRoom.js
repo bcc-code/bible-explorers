@@ -1,8 +1,6 @@
-import { Tween } from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { Color, VideoTexture } from 'three'
+import { VideoTexture } from 'three'
 import Experience from "../Experience.js"
-import TWEEN from '@tweenjs/tween.js'
 
 export default class ControlRoom {
     constructor() {
@@ -49,7 +47,6 @@ export default class ControlRoom {
     }
 
     getObjects() {
-
         this.controlRoom = this.resources.scene.children.find(child => child.name === 'control_room')
         this.tv_4x4_frame = this.resources.scene.children.find(child => child.name === 'tv_4x4')
         this.tv_4x5_frame = this.resources.scene.children.find(child => child.name === 'tv_4x5')
@@ -71,7 +68,6 @@ export default class ControlRoom {
         this.roomTexture.push(this.controlRoom, this.tablet, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
         this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9)
-
     }
 
     getTextures() {
@@ -79,7 +75,6 @@ export default class ControlRoom {
     }
 
     setMaterials() {
-
         this.roomTexture.forEach(child => {
             child.material = new THREE.MeshBasicMaterial({ map: this.bakedTexture })
             child.material.map.flipY = false
@@ -87,7 +82,6 @@ export default class ControlRoom {
         })
 
         this.screenObjects.forEach(child => {
-
             if (child.name === 'tv_4x4_screen') {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.items.screen_default })
             }
@@ -104,14 +98,11 @@ export default class ControlRoom {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item })
             }
 
-
             if (child.material.map) {
                 child.material.map.flipY = false
                 child.material.map.encoding = THREE.sRGBEncoding
             }
-
         })
-
     }
 
     // Set textures
@@ -141,7 +132,6 @@ export default class ControlRoom {
         if (this.texture instanceof VideoTexture) {
             this.texture.image.play()
         }
-
     }
 
     // On click
@@ -183,9 +173,7 @@ export default class ControlRoom {
 
         this.animation.actions.arrow_h = this.animation.mixer.clipAction(this.resources.animations[1])
         this.animation.actions.arrow_h.play()
-
     }
-
 
     update() {
         this.checkObjectIntersection()

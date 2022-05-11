@@ -5,6 +5,7 @@ import CodeUnlock from '../Extras/CodeUnlock.js'
 import Questions from '../Extras/Questions.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import Video from '../Extras/Video.js'
+import SortingGame from '../Games/SortingGame.js'
 
 let instance = null
 
@@ -23,6 +24,7 @@ export default class Program {
         this.questions = new Questions()
         this.taskDescription = new TaskDescription()
         this.video = new Video()
+        this.sortingGame = new SortingGame()
         this.resources = this.experience.resources
         this.world = this.experience.world
         this.camera = this.experience.camera
@@ -143,18 +145,9 @@ export default class Program {
     }
 
     startAction() {
-        if (this.clickedObject === 'tv_16x10_screen') {
-            this.questions.toggleQuestions()
-        }
-
-        else if (this.clickedObject === 'tv_16x9_screen') {
+        if (this.clickedObject === 'tv_16x9_screen') {
             this.updateIrisTexture('SPEAK')
             this.taskDescription.toggleTaskDescription()
-        }
-
-        else if (this.clickedObject === 'panel_screen') {
-            this.timer.setMinutes(5)
-            this.codeUnlock.toggleCodeUnlock()
         }
 
         else if (this.clickedObject === 'panel_time_switchers_holder') {

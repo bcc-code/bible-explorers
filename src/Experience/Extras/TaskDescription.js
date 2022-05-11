@@ -16,11 +16,11 @@ export default class TaskDescription {
             instance.modal.destroy()
         }
         else {
-            let program = instance.world.program
-            let camera = program.camera
-            let highlight = instance.world.highlight
-            let points = instance.world.points
-            let currentStep = program.currentStep
+            instance.program = instance.world.program
+            instance.camera = instance.program.camera
+            instance.highlight = instance.world.highlight
+            instance.points = instance.world.points
+            let currentStep = instance.program.currentStep
             let selectedChapter = instance.world.selectedChapter
 
             instance.text = selectedChapter.program[currentStep].description
@@ -37,34 +37,36 @@ export default class TaskDescription {
             instance.modal = new Modal(html)
 
             document.getElementById("get-task").addEventListener("click", () => {
-                if (selectedChapter.program[currentStep].taskType == 'questions') {
-                    camera.updateCameraTo('screensCloseLook')
-
-                    setTimeout(function () {
-                        program.addCustomInteractiveObj("tv_16x10_screen")
-                        points.add("tv_16x10_screen", selectedChapter.program[currentStep].taskType)
-                        highlight.add("tv_16x10_screen")
-
-                    }, camera.data.moveDuration)
-                }
-
-                else if (selectedChapter.program[currentStep].taskType == 'code') {
-                    camera.updateCameraTo('controlBoard')
-
-                    setTimeout(function () {
-                        program.addCustomInteractiveObj("panel_screen")
-                        points.add("panel_screen", selectedChapter.program[currentStep].taskType)
-                        highlight.add("panel_screen")
-                    }, camera.data.moveDuration)
-                }
-
-                else if (program.stepType() == 'iris') {
-                    program.advance()
-                }
+                instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
 
                 instance.modal.destroy()
-                program.updateIrisTexture('READY')
+                instance.program.updateIrisTexture('READY')
+
+                if (instance.currentStepTaskType == 'questions') {
+                    instance.program.questions.toggleQuestions()
+                }
+
+                else if (instance.currentStepTaskType == 'code') {
+                    instance.program.timer.setMinutes(5)
+                    instance.program.codeUnlock.toggleCodeUnlock()
+                }
+
+                else if (instance.currentStepTaskType == 'sorting') {
+                    instance.program.sortingGame.toggleSortingGame()
+                }
+
+                else if (instance.program.stepType() == 'iris') {
+                    instance.program.advance()
+                }
             })
         }
+    }
+
+    startTask(screen) {
+        setTimeout(function () {
+            instance.program.addCustomInteractiveObj(screen)
+            instance.points.add(screen, instance.currentStepTaskType)
+            instance.highlight.add(screen)
+        }, instance.camera.data.moveDuration)
     }
 }

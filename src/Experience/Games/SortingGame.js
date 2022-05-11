@@ -6,6 +6,7 @@ let instance = null
 export default class Game {
     constructor() {
         this.experience = new Experience()
+        this.world = this.experience.world
         this.sizes = this.experience.sizes
 
         this.data = {
@@ -36,10 +37,14 @@ export default class Game {
             }
         }
 
-        // Setup
         instance = this
-        this._init()
-        this._store()
+    }
+
+    toggleSortingGame() {
+        instance.program = instance.world.program
+
+        this.init()
+        this.store()
 
         this.icons.forEach(icon => {
             const defaultColor = icon.children[0].fill()
@@ -64,7 +69,7 @@ export default class Game {
                 let selectedBox = category
                 let feedback = null
 
-                if (!icon.inRightPlace && instance._isInRightBox(icon)) {
+                if (!icon.inRightPlace && instance.isInRightBox(icon)) {
                     feedback = 'correct'
                     const cell = instance.cells[category][instance.data.counter[category]++]
 
@@ -80,6 +85,7 @@ export default class Game {
                     Object.values(instance.data.counter).forEach(c => totalCount += c);
                     if (totalCount == instance.data.noOfIcons) {
                         console.log('Game finished!')
+                        instance.destroy()
                     }
                 }
                 else {
@@ -95,7 +101,7 @@ export default class Game {
 
                 const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
                 const buttonBg = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "buttonBg")
-                instance._sortingFeedback(img, buttonBg, feedback)
+                instance.sortingFeedback(img, buttonBg, feedback)
             })
         })
 
@@ -110,7 +116,7 @@ export default class Game {
         })
     }
 
-    _init() {
+    init() {
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "sort-game")
         document.body.appendChild(gameWrapper)
@@ -120,11 +126,13 @@ export default class Game {
             width: this.sizes.width,
             height: this.sizes.height,
         })
+
+        document.body.classList.add('freeze')
     }
 
-    _store() {
+    store() {
         this.layer = new Konva.Layer()
-        this.leftBox = this._box(
+        this.leftBox = this.createBox(
             this.data.box.x,
             this.data.box.y,
             this.data.box.width,
@@ -136,7 +144,7 @@ export default class Game {
             "correct",
             "games/like.svg"
         )
-        this.rightBox = this._box(
+        this.rightBox = this.createBox(
             this.stage.width() - this.data.box.width - this.data.box.x,
             this.data.box.y,
             this.data.box.width,
@@ -173,13 +181,13 @@ export default class Game {
         })
 
         for (let i = 0; i < instance.data.noOfIcons; i++) {
-            this.layer.add(this._createIcon(i))
+            this.layer.add(this.createIcon(i))
         }
 
         this.icons = this.layer.children.filter(item => item.attrs.name.startsWith("icon_"))
     }
 
-    _box(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
+    createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
         this.box = new Konva.Group({
             x: x,
             y: y,
@@ -211,7 +219,7 @@ export default class Game {
         let posY = 30
 
         for (let i = 0; i < 6; i++) {
-            const cell = this._createCell(posX, posY, this.grid.width(), this.grid.height(), fill, stroke, strokeWidth, i + 1)
+            const cell = this.createCell(posX, posY, this.grid.width(), this.grid.height(), fill, stroke, strokeWidth, i + 1)
             this.grid.add(cell)
 
             if (i % 2 === 0) {
@@ -268,7 +276,7 @@ export default class Game {
         return this.box
     }
 
-    _createCell(x, y, w, h, fill, stroke, strokeWidth) {
+    createCell(x, y, w, h, fill, stroke, strokeWidth) {
         const cell = new Konva.Rect({
             x: x,
             y: y,
@@ -283,7 +291,7 @@ export default class Game {
         return cell
     }
 
-    _createIcon(index) {
+    createIcon(index) {
         const randomColor = () => {
             const color = Math.floor(Math.random() * 16777215).toString(16);
             return "#" + color
@@ -302,8 +310,8 @@ export default class Game {
         }
 
         const icon = new Konva.Group({
-            x: instance._getRndInteger(wrapper.x.min, wrapper.x.max),
-            y: instance._getRndInteger(wrapper.y.min, wrapper.y.max),
+            x: instance.getRndInteger(wrapper.x.min, wrapper.x.max),
+            y: instance.getRndInteger(wrapper.y.min, wrapper.y.max),
             width: this.data.icon.width,
             height: this.data.icon.height,
             draggable: true,
@@ -352,7 +360,7 @@ export default class Game {
         )
     }
 
-    _isInRightBox(icon) {
+    isInRightBox(icon) {
         const boxCategory = icon.name().replace('icon_', '')
         const correctBox = instance.boxes.find(b => b.id() == boxCategory)
 
@@ -380,13 +388,13 @@ export default class Game {
         }
     }
 
-    _sortingFeedback(img, layer, feedback) {
+    sortingFeedback(img, layer, feedback) {
         const color = instance.data.colors[feedback]
         instance.changedBtnImgSrc = img.image().src
 
         var blink = new Konva.Animation(function(frame) {
             if (frame.time < 500) {
-                instance._setNewImage(img, 'games/' + feedback + '.svg')
+                instance.setNewImage(img, 'games/' + feedback + '.svg')
                 layer.stroke(color)
             }
             else if (frame.time >= 500 && frame.time < 1000) {
@@ -396,7 +404,7 @@ export default class Game {
                 layer.stroke(color)
             }
             else {
-                instance._setNewImage(img, instance.changedBtnImgSrc)
+                instance.setNewImage(img, instance.changedBtnImgSrc)
                 layer.stroke('white')
                 this.stop()
             }
@@ -404,7 +412,7 @@ export default class Game {
         blink.start()
     }
 
-    _setNewImage(img, src) {
+    setNewImage(img, src) {
         var newImg = new Image()
         newImg.src = src
         newImg.onload = function() {
@@ -412,9 +420,13 @@ export default class Game {
         }
     }
 
-    _getRndInteger(min, max) {
+    getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
+
+    destroy() {
+        document.getElementById('sort-game').remove()
+        document.body.classList.remove('freeze')
+        instance.program.advance()
+    }
 }
-
-

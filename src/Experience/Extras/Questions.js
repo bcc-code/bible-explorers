@@ -66,9 +66,6 @@ export default class Questions {
                 current.classList.remove('visible')
                 current.nextElementSibling?.classList.add('visible')
 
-
-
-
                 if (current.nextElementSibling.matches(':last-child')) {
                     nextButton.classList.add('disabled')
                     submitButton.classList.remove('disabled')
@@ -91,13 +88,11 @@ export default class Questions {
 
             submitButton.addEventListener("click", () => {
                 // Save answers to Local Storage
-
                 let thisThemeAnswers = []
 
                 document.querySelectorAll('.questions textarea').forEach((answer) => {
                     thisThemeAnswers.push(answer.value)
                 })
-
 
                 allAnswersFromTheme[currentStep] = thisThemeAnswers
                 localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))

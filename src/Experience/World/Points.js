@@ -2,10 +2,8 @@ import Experience from "../Experience.js";
 import _s from '../Utils/Strings.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 
-
 export default class Points {
     constructor() {
-
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -41,6 +39,7 @@ export default class Points {
     }
 
     delete() {
+        if (!this.currentObject) return
         this.currentObject.remove(this.currentLabel)
         this.currentObject = null
         this.currentLabel = null
@@ -59,5 +58,4 @@ export default class Points {
     update() {
         this.labelRenderer.render(this.scene, this.camera.instance)
     }
-
 }

@@ -36,11 +36,12 @@ const strings = {
         "download": "Last ned",
         "downloading": "Laster ned",
         "tooltips": {
-            "video": "Skip video",
+            "video": "Hopp over video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
             "task": "Fullfør oppgaven",
             "questions": "Svar på spørsmålene",
-            "code": "Løs koden"
+            "code": "Løs koden",
+            "sorting": "Sorter ikonene i riktig boks"
         }
     },
     "en": {
@@ -82,7 +83,8 @@ const strings = {
             "iris": "Listen task description from Iris",
             "task": "Complete the task",
             "questions": "Answer the questions",
-            "code": "Break the code"
+            "code": "Break the code",
+            "sorting": "Sort the icons in the correct box"
         }
     }
 }
