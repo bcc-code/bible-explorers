@@ -14,7 +14,9 @@ export default class Game {
                 orange: "#fbaf4e",
                 orangeOultine: "#d27235",
                 pink: "#f65b98",
-                pinkOutline: "#b42c64"
+                pinkOutline: "#b42c64",
+                correct: "#00ff00",
+                wrong: "#ff0000"
             },
             box: {
                 x: 200,
@@ -57,9 +59,13 @@ export default class Game {
             })
 
             icon.on('dragend', () => {
+                const category = icon.name().replace('icon_', '')
+                const box = instance.boxes.find(b => b.id() == category)
+                let selectedBox = category
+                let feedback = null
+
                 if (!icon.inRightPlace && instance._isInRightBox(icon)) {
-                    const category = icon.name().replace('icon_', '')
-                    const box = instance.boxes.find(b => b.id() == category)
+                    feedback = 'correct'
                     const cell = instance.cells[category][instance.data.counter[category]++]
 
                     icon.to({
@@ -77,12 +83,19 @@ export default class Game {
                     }
                 }
                 else {
+                    feedback = 'wrong'
+                    selectedBox = box.id() == 'correct' ? 'wrong' : 'correct'
+
                     icon.to({
                         x: instance.draggedIconPosition.x,
                         y: instance.draggedIconPosition.y,
                         duration: 0.5
                     })
                 }
+
+                const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
+                const buttonBg = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "buttonBg")
+                instance._sortingFeedback(img, buttonBg, feedback)
             })
         })
 
@@ -225,6 +238,7 @@ export default class Game {
             x: 30,
             y: this.box.height() - 170,
             name: 'button',
+            id: id
         })
 
         button.add(new Konva.Rect({
@@ -234,6 +248,7 @@ export default class Game {
             stroke: "white",
             strokeWidth: strokeWidth,
             cornerRadius: radius / 2,
+            name: "buttonBg"
         }))
 
         Konva.Image.fromURL(buttonSrc, (imageNode) => {
@@ -243,7 +258,8 @@ export default class Game {
                 x: button.width() / 2 - 50,
                 y: 20,
                 width: 100,
-                height: 100
+                height: 100,
+                name: "image"
             })
         })
 
@@ -361,6 +377,38 @@ export default class Game {
             return true
         } else {
             return false
+        }
+    }
+
+    _sortingFeedback(img, layer, feedback) {
+        const color = instance.data.colors[feedback]
+        instance.changedBtnImgSrc = img.image().src
+
+        var blink = new Konva.Animation(function(frame) {
+            if (frame.time < 500) {
+                instance._setNewImage(img, 'games/' + feedback + '.svg')
+                layer.stroke(color)
+            }
+            else if (frame.time >= 500 && frame.time < 1000) {
+                layer.stroke('white')
+            }
+            else if (frame.time >= 1000 && frame.time < 1500) {
+                layer.stroke(color)
+            }
+            else {
+                instance._setNewImage(img, instance.changedBtnImgSrc)
+                layer.stroke('white')
+                this.stop()
+            }
+        })
+        blink.start()
+    }
+
+    _setNewImage(img, src) {
+        var newImg = new Image()
+        newImg.src = src
+        newImg.onload = function() {
+            img.image(newImg)
         }
     }
 
