@@ -979,6 +979,10 @@ button,
     &.selected~div {
         opacity: 0.25;
     }
+
+    foreignObject {
+        overflow: visible;
+    }
 }
 
 .modal {
