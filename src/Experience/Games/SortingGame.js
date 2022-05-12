@@ -21,14 +21,18 @@ export default class Game {
             box: {
                 x: 200,
                 y: 200,
-                width: 460,
-                height: 700,
+                width: 410,
+                height: 760,
                 strokeWidth: 10,
-                cornerRadius: 28
+                cornerRadius: 28,
+                buttonSrc: {
+                    wrong: "games/dislike.svg",
+                    correct: "games/like.svg"
+                }
             },
             icon: {
-                width: 100,
-                height: 100
+                width: 150,
+                height: 150
             },
             counter: {
                 correct: 0,
@@ -74,24 +78,24 @@ export default class Game {
             this.data.box.y,
             this.data.box.width,
             this.data.box.height,
-            this.data.colors.orange,
-            this.data.colors.orangeOultine,
+            this.data.colors.pink,
+            this.data.colors.pinkOutline,
             this.data.box.strokeWidth,
             this.data.box.cornerRadius,
-            "correct",
-            "games/like.svg"
+            "wrong",
+            this.data.box.buttonSrc.wrong
         )
         this.rightBox = this.createBox(
             this.stage.width() - this.data.box.width - this.data.box.x,
             this.data.box.y,
             this.data.box.width,
             this.data.box.height,
-            this.data.colors.pink,
-            this.data.colors.pinkOutline,
+            this.data.colors.orange,
+            this.data.colors.orangeOultine,
             this.data.box.strokeWidth,
             this.data.box.cornerRadius,
-            "wrong",
-            "games/dislike.svg"
+            "correct",
+            this.data.box.buttonSrc.correct
         )
 
         this.layer.add(this.leftBox, this.rightBox)
@@ -130,7 +134,7 @@ export default class Game {
         this.icons.forEach(icon => {
             icon.on('mouseover', () => {
                 if (icon.draggable()) {
-                    icon.children[0].opacity(0.9)
+                    icon.children[0].opacity(0.95)
                     document.body.style.cursor = 'pointer'
                 }
             })
@@ -143,6 +147,7 @@ export default class Game {
 
             icon.on('dragstart', function () {
                 instance.draggedIconPosition = icon.position()
+                icon.zIndex(10)
             })
             icon.on('dragend', () => {
                 const category = icon.name().replace('icon_', '')
@@ -181,7 +186,7 @@ export default class Game {
 
                 const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
                 const buttonBg = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "buttonBg")
-                instance.sortingFeedback(img, buttonBg, feedback)
+                instance.sortingFeedback(img, buttonBg, selectedBox, feedback)
             })
         })
     }
@@ -193,7 +198,7 @@ export default class Game {
             setTimeout(function() {
                 console.log('Game finished!')
                 instance.destroy()
-            }, 1000)
+            }, 2000)
         }
     }
 
@@ -302,21 +307,9 @@ export default class Game {
     }
 
     createIcon(data) {
-        const marginGutter = 25
-        const wrapper = {
-            x: {
-                min: this.data.box.x + this.data.box.width + marginGutter,
-                max: this.sizes.width - this.data.box.width - this.data.box.x - this.data.icon.width - marginGutter
-            },
-            y: {
-                min: this.data.box.y + marginGutter,
-                max: this.sizes.height - (this.sizes.height - this.data.box.height - this.data.box.y) - this.data.icon.height - marginGutter
-            }
-        }
-
         const icon = new Konva.Group({
-            x: instance.getRndInteger(wrapper.x.min, wrapper.x.max),
-            y: instance.getRndInteger(wrapper.y.min, wrapper.y.max),
+            x: instance.getIconPosition().x,
+            y: instance.getIconPosition().y,
             width: this.data.icon.width,
             height: this.data.icon.height,
             draggable: true,
@@ -371,9 +364,9 @@ export default class Game {
         }
     }
 
-    sortingFeedback(img, layer, feedback) {
+    sortingFeedback(img, layer, selectedBox, feedback) {
         const color = instance.data.colors[feedback]
-        instance.changedBtnImgSrc = img.image().src
+        const defaultBtnSrc = instance.data.box.buttonSrc[selectedBox]
 
         var blink = new Konva.Animation(function(frame) {
             if (frame.time < 500) {
@@ -387,7 +380,7 @@ export default class Game {
                 layer.stroke(color)
             }
             else {
-                instance.setNewImage(img, instance.changedBtnImgSrc)
+                instance.setNewImage(img, defaultBtnSrc)
                 layer.stroke('white')
                 this.stop()
             }
@@ -403,8 +396,20 @@ export default class Game {
         }
     }
 
-    getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    getIconPosition() {
+        const iconsPerRow = 3
+        const marginGutter = {
+            top: 25,
+            between: 50
+        }
+        marginGutter.sides = (instance.sizes.width - (instance.data.box.x + instance.data.box.width) * 2 - iconsPerRow * (instance.data.icon.width + marginGutter.between)) / 2
+
+        const position = {
+            x: instance.data.box.x + instance.data.box.width + marginGutter.sides + (instance.icons.length % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
+            y: instance.data.box.y + marginGutter.top + Math.floor(instance.icons.length / iconsPerRow) * (instance.data.icon.height + marginGutter.between)
+        }
+
+        return position
     }
 
     destroy() {
