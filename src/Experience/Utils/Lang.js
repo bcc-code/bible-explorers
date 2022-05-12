@@ -1,8 +1,8 @@
 
-const defaultLang = "no"
+const defaultLang = "en"
 const list = {
-    "no": "Norsk",
-    "en": "English"
+    "en": "English",
+    "no": "Norsk"
 }
 
 let getLanguageCode = () => localStorage.getItem('lang') || defaultLang

@@ -1,6 +1,49 @@
 import _lang from '../Utils/Lang.js'
 
 const strings = {
+    "en": {
+        "loading": "Loading",
+        "qualities": {
+            "title": "Choose quality",
+            "low": "Low (270p)",
+            "medium": "Medium (540p)",
+            "high": "High (1080p)"
+        },
+        "conceptDescription": "Sunday school teachers and mentors will have a whole new tool that can captivate and involve children, bringing the Bible to life for them in a completely new way.",
+        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
+        "journey": {
+            "seeAllChapters": "Go to all chapters",
+            "start": "Start journey",
+            "continue": "Continue journey", 
+            "restart": "Restart journey",
+            "congratulations": "You have completed this theme's journey!",
+            "back": "Back"
+        },
+        "codeUnlock": "Code unlock",
+        "taskDescription": "Task description",
+        "questions": "Questions",
+        "getTask": "Get task",
+        "submit": "Submit",
+        "archive": "Archive",
+        "info": "Info",
+        "settings": "Settings",
+        "soundEffects": "Sound effects",
+        "language": "Language",
+        "feedback": "Feedback",
+        "logIn": "Log in",
+        "logOut": "Log out",
+        "offline": "Available offline",
+        "download": "Download",
+        "downloading": "Downloading",
+        "tooltips": {
+            "video": "Watch video",
+            "iris": "Listen task description from Iris",
+            "task": "Complete the task",
+            "questions": "Answer the questions",
+            "code": "Break the code",
+            "sorting": "Sort the icons in the correct box"
+        }
+    },
     "no": {
         "loading": "Loader",
         "qualities": {
@@ -42,49 +85,6 @@ const strings = {
             "questions": "Svar på spørsmålene",
             "code": "Løs koden",
             "sorting": "Sorter ikonene i riktig boks"
-        }
-    },
-    "en": {
-        "loading": "Loading",
-        "qualities": {
-            "title": "Choose quality",
-            "low": "Low (270p)",
-            "medium": "Medium (540p)",
-            "high": "High (1080p)"
-        },
-        "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
-        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
-        "journey": {
-            "seeAllChapters": "Go to all chapters",
-            "start": "Start journey",
-            "continue": "Continue journey", 
-            "restart": "Restart journey",
-            "congratulations": "You have completed this theme's journey!",
-            "back": "Back"
-        },
-        "codeUnlock": "Code unlock",
-        "taskDescription": "Task description",
-        "questions": "Questions",
-        "getTask": "Get task",
-        "submit": "Submit",
-        "archive": "Archive",
-        "info": "Info",
-        "settings": "Settings",
-        "soundEffects": "Sound effects",
-        "language": "Language",
-        "feedback": "Feedback",
-        "logIn": "Log in",
-        "logOut": "Log out",
-        "offline": "Available offline",
-        "download": "Download",
-        "downloading": "Downloading",
-        "tooltips": {
-            "video": "Watch video",
-            "iris": "Listen task description from Iris",
-            "task": "Complete the task",
-            "questions": "Answer the questions",
-            "code": "Break the code",
-            "sorting": "Sort the icons in the correct box"
         }
     }
 }
