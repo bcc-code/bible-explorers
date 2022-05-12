@@ -24,7 +24,7 @@ module.exports = {
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, '../src/index.html'),
                 minify: true,
-                cache: false
+                hash: true
             }),
 
             new MiniCSSExtractPlugin({
@@ -34,7 +34,8 @@ module.exports = {
             new WorkboxPlugin.InjectManifest({
                 swSrc: "./src/js/sw/sw.js",
                 swDest: "./sw.js",
-                maximumFileSizeToCacheInBytes: 20000000
+                maximumFileSizeToCacheInBytes: 20000000,
+                exclude: [/\.map$/, /\index.html$/]
             })
         ],
     module:
