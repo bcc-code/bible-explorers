@@ -26,25 +26,25 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><div class="icon"><i></i></div><span>${_s.settings}</span></div>
+                    <div class="settings__header heading"><div class="icon"><i></i></div><span>${_s.settings.title}</span></div>
                     <div class="settings__content">
                         <div class="sound settings__item">
-                            <p>${_s.soundEffects}</p>
+                            <p>${_s.settings.soundEffects}</p>
                             <label class="switch">
                                 <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
                                 <span class="slider round"></span>
                             </label>
                         </div>
                         <div class="language settings__item">
-                            <p>${_s.language}</p>
+                            <p>${_s.settings.language}</p>
                             <div class="language__picker">
                                 <div class="language__current">${_lang.getLanguageName()}</div>
                                 <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
                             </div>
                         </div>
                         <div class="login settings__footer">
-                            <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.logIn}</span></button>
-                            <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.logOut}</span></button>
+                            <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.settings.logIn}</span></button>
+                            <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.settings.logOut}</span></button>
                         </div>
                     </div>
                 </div>

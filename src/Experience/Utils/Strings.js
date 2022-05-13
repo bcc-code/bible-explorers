@@ -19,25 +19,31 @@ const strings = {
             "congratulations": "You have completed this theme's journey!",
             "back": "Back"
         },
-        "codeUnlock": "Code unlock",
-        "taskDescription": "Task description",
-        "questions": "Questions",
-        "getTask": "Get task",
-        "submit": "Submit",
+        "task": {
+            "codeUnlock": "Code unlock",
+            "taskDescription": "Task description",
+            "questions": "Questions",
+            "getTask": "Get task",
+            "submit": "Submit"
+        },
         "archive": "Archive",
         "info": "Info",
-        "settings": "Settings",
-        "soundEffects": "Sound effects",
-        "language": "Language",
-        "feedback": "Feedback",
-        "logIn": "Log in",
-        "logOut": "Log out",
-        "offline": "Available offline",
-        "download": "Download",
-        "downloading": "Downloading",
+        "settings": {
+            "title": "Settings",
+            "soundEffects": "Sound effects",
+            "language": "Language",
+            "feedback": "Feedback",
+            "logIn": "Log in",
+            "logOut": "Log out"
+        },
+        "offline": {
+            "availableOffline": "Available offline",
+            "download": "Download",
+            "downloading": "Downloading"
+        },
         "tooltips": {
-            "video": "Watch video",
-            "iris": "Listen task description from Iris",
+            "video": "Skip video",
+            "iris": "Listen to task description from Iris",
             "task": "Complete the task",
             "questions": "Answer the questions",
             "code": "Break the code",
@@ -47,7 +53,7 @@ const strings = {
     "no": {
         "loading": "Loader",
         "qualities": {
-            "title": "Velg kvaliteten",
+            "title": "Velg kvalitet",
             "low": "Lav (270p)",
             "medium": "Medium (540p)",
             "high": "Høy (1080p)"
@@ -62,22 +68,28 @@ const strings = {
             "congratulations": "Du har fullført tidsreisen for dette temaet!",
             "back": "Tilbake"
         },
-        "codeUnlock": "Code unlock",
-        "taskDescription": "Oppgavebeskrivelse",
-        "questions": "Spørsmål",
-        "getTask": "Gå til oppgave",
-        "submit": "Send",
+        "task": {
+            "codeUnlock": "Code unlock",
+            "taskDescription": "Oppgavebeskrivelse",
+            "questions": "Spørsmål",
+            "getTask": "Gå til oppgave",
+            "submit": "Send"
+        },
         "archive": "Arkiv",
         "info": "Info",
-        "settings": "Innstillinger",
-        "soundEffects": "Lydeffekter",
-        "language": "Språk",
-        "feedback": "Tilbakemelding",
-        "logIn": "Logg inn",
-        "logOut": "Logg ut",
-        "offline": "Tilgjengelig offline",
-        "download": "Last ned",
-        "downloading": "Laster ned",
+        "settings": {
+            "title": "Innstillinger",
+            "soundEffects": "Lydeffekter",
+            "language": "Språk",
+            "feedback": "Tilbakemelding",
+            "logIn": "Logg inn",
+            "logOut": "Logg ut"
+        },
+        "offline": {
+            "availableOffline": "Tilgjengelig offline",
+            "download": "Last ned",
+            "downloading": "Laster ned"
+        },
         "tooltips": {
             "video": "Hopp over video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",

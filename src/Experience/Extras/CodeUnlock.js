@@ -18,7 +18,7 @@ export default class CodeUnlock {
         else {
             let html = `
                 <div class="modal__content code-unlock">
-                    <div class="code-unlock__header heading"><div class="icon"><i></i></div><span>${_s.codeUnlock}</span></div>
+                    <div class="code-unlock__header heading"><div class="icon"><i></i></div><span>${_s.task.codeUnlock}</span></div>
                     <div class="code-unlock__sidebar">
                         <div class="code-unlock__container">
                             <div class="code-unlock__screen">

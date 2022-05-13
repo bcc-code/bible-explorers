@@ -27,11 +27,11 @@ export default class TaskDescription {
 
             let html = `
                 <div class="modal__content task">
-                <div class="task__header heading"><div class="icon"><i></i></div><span>${_s.taskDescription}</span></div>
+                <div class="task__header heading"><div class="icon"><i></i></div><span>${_s.task.taskDescription}</span></div>
                     <div class="task__content">${instance.text}</div>
                 </div>
 
-                <div id="get-task" class="button button__goToTask"><span>${_s.getTask}</span></div>
+                <div id="get-task" class="button button__goToTask"><span>${_s.task.getTask}</span></div>
             `;
 
             instance.modal = new Modal(html)
