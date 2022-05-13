@@ -193,7 +193,7 @@ $archivo-regular: "Archivo",
     @include button('../static/svgs/button_long_goTo.svg', '../static/svgs/button_long_goTo_hover.svg');
 
     span {
-        padding-right: 1rem;
+        padding-right: 0.5rem;
     }
 }
 
@@ -464,19 +464,6 @@ button,
     }
 }
 
-#start-journey {
-    color: #fff;
-    font-size: 4rem;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0;
-    transition: .3s ease;
-
-    &:hover {
-        transform: scale(1.05);
-    }
-}
-
 #landing-screen {
     @include fixed();
 
@@ -521,19 +508,24 @@ button,
         }
     }
 
-    .chapters__items {
+    .chapter__items {
         position: relative;
         display: flex;
         flex-direction: column;
         gap: 2rem;
     }
 
-    .chapters__content {
+    .chapter__content {
         position: relative;
         display: flex;
         flex-direction: column;
         gap: 2rem;
         margin-top: 80px;
+        opacity: 0;
+    }
+
+    .chapter-selected + .chapter__content {
+        opacity: 1;
     }
 
     .chapter__description {
@@ -596,13 +588,13 @@ button,
         }
     }
 
-    .chapters__actions {
+    .chapter__actions {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         gap: 2rem;
-        padding: 2rem;
+        padding: 1rem 2rem 2rem;
         z-index: 5;
 
         .button {
@@ -836,10 +828,6 @@ button,
     flex-direction: column;
     gap: 2rem;
 
-    &:hover .chapter:not(.locked) {
-        opacity: 0.25;
-    }
-
     &:hover .chapter:not(.locked):hover {
         opacity: 1;
         transform: scale(1.02);
@@ -1022,7 +1010,7 @@ button,
         transform: scale(1.02);
     }
 
-    &.selected~div {
+    .chapter-selected &:not(.selected) {
         opacity: 0.25;
     }
 

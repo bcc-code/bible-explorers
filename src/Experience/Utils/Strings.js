@@ -12,7 +12,6 @@ const strings = {
         "conceptDescription": "Sunday school teachers and mentors will have a whole new tool that can captivate and involve children, bringing the Bible to life for them in a completely new way.",
         "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
         "journey": {
-            "seeAllChapters": "Go to all chapters",
             "start": "Start journey",
             "continue": "Continue journey", 
             "restart": "Restart journey",
@@ -61,7 +60,6 @@ const strings = {
         "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
         "journey": {
-            "seeAllChapters": "Gå til tidsreisene",
             "start": "Start tidsreise",
             "continue": "Fortsett tidsreise", 
             "restart": "Start reise på nytt",

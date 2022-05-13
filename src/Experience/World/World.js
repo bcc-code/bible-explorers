@@ -32,6 +32,8 @@ export default class World {
         this.menu = {
             categories: document.querySelector(".categories.list"),
             chapters: document.querySelector(".chapters.list"),
+            chapterItems: document.querySelector(".chapter__items"),
+            chapterContent: document.querySelector(".chapter__content"),
             backBtn: document.querySelector(".back_to"),
             chaptersData: []
         }
@@ -41,7 +43,6 @@ export default class World {
             loadingScreen: document.getElementById("loading-screen"),
             conceptDescription: document.getElementById("concept-description"),
             loading: document.querySelector(".loader"),
-            startJourney: document.getElementById("start-journey"),
             quality: {
                 container: document.querySelector("#quality"),
                 title: document.querySelector(".quality__title"),
@@ -62,8 +63,6 @@ export default class World {
 
         this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
-        this.welcome.startJourney.innerText = _s.journey.seeAllChapters
-        this.welcome.startJourney.addEventListener("click", instance.goToAllChapters)
 
         // Quality
         this.welcome.quality.title.innerText = _s.qualities.title
@@ -73,13 +72,9 @@ export default class World {
 
         document.querySelectorAll(".qualities.list .quality.button").forEach(function (quality) {
             quality.addEventListener("click", () => {
-                document.querySelectorAll(".qualities.list .quality.button.selected").forEach(function (quality) {
-                    quality.classList.remove('selected')
-                })
-
                 quality.classList.add('selected')
                 instance.selectedQuality = quality.getAttribute('data-name')
-                instance.welcome.startJourney.style.opacity = 1
+                instance.goToAllChapters()
             })
         })
 
@@ -137,7 +132,6 @@ export default class World {
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
-        // instance.program.updateIrisTexture('SLEEP')
     }
 
     showMenuButtons() {
@@ -200,6 +194,7 @@ export default class World {
     goToLandingScreen() {
         instance.unselectAllChapters()
         instance.placeholderChapterData()
+        instance.removeDescriptionHtml()
 
         instance.menu.chapters.innerHTML = ''
         instance.welcome.landingScreen.classList.add('visible')
@@ -282,38 +277,29 @@ export default class World {
         instance.menu.chapters.appendChild(chapterHtml)
     }
 
+    setDescriptionHtml() {
+        let chapter = instance.selectedChapter
+        let chapterDescription = instance.menu.chapterContent.querySelector('.chapter__description')
 
-    setDescriptionHTML() {
-        const chapter = instance.selectedChapter
-        let descriptionHTML = document.createElement("div")
-        descriptionHTML.classList.add('chapter__description')
-        descriptionHTML.setAttribute('data-id', chapter.id)
-        descriptionHTML.setAttribute('data-slug', chapter.category)
-
-        descriptionHTML.innerHTML = `
-            <div class="chapter__description-wrapper">
-                <h2>${chapter.title}</h2>
-                <p>${chapter.content}</p>
-            </div>
-        `
-
-        document.querySelector('.chapters__content').prepend(descriptionHTML)
+        chapterDescription.setAttribute('data-id', chapter.id)
+        chapterDescription.setAttribute('data-slug', chapter.category)
+        instance.menu.chapterContent.querySelector('h2').innerText = chapter.title
+        instance.menu.chapterContent.querySelector('p').innerText = chapter.content
+        instance.menu.chapterItems.classList.add('chapter-selected')
     }
 
-    selectChapterListeners(item) {
+    removeDescriptionHtml() {
+        instance.menu.chapterItems.classList.remove('chapter-selected')
+    }
+
+    selectChapterListeners() {
         document.querySelectorAll(".chapter:not(.locked)").forEach((chapter) => {
             chapter.addEventListener("click", () => {
-                const description = document.querySelector(".chapter__description");
-
-                if (description)
-                    description.remove()
-
                 instance.addClassToSelectedChapter(chapter)
                 instance.updateSelectedChapterData(chapter)
                 instance.loadChapterTextures()
                 instance.showMenuButtons()
-
-                instance.setDescriptionHTML(chapter)
+                instance.setDescriptionHtml()
             })
         })
 
