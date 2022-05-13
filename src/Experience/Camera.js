@@ -29,8 +29,8 @@ export default class Camera {
 
         this.cameraLocations = {
             'default': {
-                position: new THREE.Vector3(-2.423, 2.435, 7.019),
-                lookAt: new THREE.Vector3(-2.238, 1.469, -0.265),
+                position: new THREE.Vector3(-0.423, 2.435, 5.019),
+                lookAt: new THREE.Vector3(-0.238, 1.469, -0.265),
                 controls: {
                     minPolarAngle: -Math.PI,
                     maxPolarAngle: Math.PI,
@@ -129,7 +129,7 @@ export default class Camera {
         }
     }
 
-    updateCameraTo(location = 'default', callback = function(){}) {
+    updateCameraTo(location = 'default', callback = function () { }) {
         if (location == null) return
         this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
         this.updateCamera(this.cameraLocations[location], callback)
@@ -152,7 +152,8 @@ export default class Camera {
             cameraLookAt: lookAt
         }
 
-        this.setDefaultAngleControls()
+        if (!this.debug.active)
+            this.setDefaultAngleControls()
 
         this.updateCameraTween = new TWEEN.Tween(from)
             .to(to, duration)
@@ -170,7 +171,7 @@ export default class Camera {
                 )
             })
             .onComplete(() => {
-                if (controls) {
+                if (controls && !this.debug.active) {
                     camera.controls.minPolarAngle = controls.minPolarAngle
                     camera.controls.maxPolarAngle = controls.maxPolarAngle
                     camera.controls.minAzimuthAngle = controls.minAzimuthAngle
@@ -197,13 +198,6 @@ export default class Camera {
         this.zoomInTween.stop()
         this.controls.object.zoom = 1
         this.instance.updateProjectionMatrix()
-    }
-
-    setDebugCamera() {
-        this.instanceDebug = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
-        this.instanceDebug.position.set(5, 3, 15)
-        this.scene.add(this.instanceDebug)
-
     }
 
     setDefaultAngleControls() {

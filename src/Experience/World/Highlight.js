@@ -41,7 +41,7 @@ export default class Highlight {
 
         const outlineGeometry = object.geometry
         const outlineMaterial = new THREE.MeshBasicMaterial({
-            color: 0x000000,
+            color: 0xffffff,
             transparent: true,
             opacity: 0.1,
         })
