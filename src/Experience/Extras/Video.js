@@ -301,7 +301,7 @@ export default class Video {
             playButton: document.querySelector(".video__play")
         }
 
-        instance.el.videoOverlay.addEventListener("mouseover", () => { instance.el.videoControlBar.style.opacity = 1 })
+        instance.el.videoOverlay.addEventListener("mouseover", () => { if (!instance.el.videoOverlay.classList.contains('is-paused')) instance.el.videoControlBar.style.opacity = 1 })
         instance.el.videoOverlay.addEventListener("mouseout", () => { if (!instance.el.videoControlBar.classList.contains('show-controls')) instance.el.videoControlBar.style.opacity = 0 })
         instance.el.playPause.addEventListener("click", instance.togglePlay)
         instance.el.playButton.addEventListener("click", instance.togglePlay)

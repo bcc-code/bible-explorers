@@ -95,6 +95,7 @@ export default class World {
             setTimeout(function () {
                 instance.welcome.loading.style.opacity = 0
                 instance.welcome.quality.container.style.display = "block"
+                instance.welcome.topBar.style.display = "flex"
 
                 setTimeout(function () {
                     instance.welcome.loading.style.display = "none"
@@ -115,7 +116,6 @@ export default class World {
 
     goToAllChapters() {
         instance.welcome.loadingScreen.style.display = "none"
-        instance.welcome.topBar.style.display = "flex"
         instance.welcome.landingScreen.classList.add('visible')
     }
 

@@ -27,11 +27,10 @@ export default class TaskDescription {
 
             let html = `
                 <div class="modal__content task">
-                <div class="task__header heading"><div class="icon"><i></i></div><span>${_s.task.taskDescription}</span></div>
+                    <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
                     <div class="task__content">${instance.text}</div>
+                    <div id="get-task" class="button button__goToTask"><span>${_s.task.getTask}</span></div>
                 </div>
-
-                <div id="get-task" class="button button__goToTask"><span>${_s.task.getTask}</span></div>
             `;
 
             instance.modal = new Modal(html)

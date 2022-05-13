@@ -307,15 +307,6 @@ button,
     cursor: grab;
 }
 
-.sort-game {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    outline: none;
-    cursor: grab;
-    z-index: 99;
-}
-
 // #endregion
 
 // #region Interface
@@ -342,7 +333,7 @@ button,
     right: 0;
     bottom: 0;
     background-color: $primary;
-    z-index: 99;
+    z-index: 2;
     text-align: center;
 
     display: flex;
@@ -731,7 +722,7 @@ button,
     padding-left: 3rem;
     padding-top: 3rem;
     padding-right: 3rem;
-    z-index: 1;
+    z-index: 3;
     transition: opacity 1s ease;
 
     .button {
@@ -1067,16 +1058,31 @@ button,
             }
         }
 
+        &.task {
+            border-radius: $radius;
+            overflow: hidden;
+
+            #irisVideoBg {
+                width: 100%;
+            }
+            .task__content {
+                position: absolute;
+                top: 30px;
+                right: 30px;
+            }
+            #get-task {
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+            }
+        }
+
         &.settings i {
             @include icon(icon-gear-solid);
         }
 
         &.code-unlock i {
             @include icon(icon-star-solid);
-        }
-
-        &.task i {
-            @include icon(icon-question-solid);
         }
 
         &.questions i {
@@ -1219,16 +1225,20 @@ button,
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 7rem;
-        height: 7rem;
-        @include setBackground('../static/svgs/button_round.svg');
+        width: 16rem;
+        height: 16rem;
         @include alignCenterVH();
         cursor: pointer;
+        transition: .3s ease;
 
         i {
             margin-left: 2px;
-            color: #fff;
-            font-size: 2rem;
+            color: #c0b6a1;
+            font-size: 18rem;
+        }
+
+        &:hover {
+            opacity: 0.9;
         }
     }
 

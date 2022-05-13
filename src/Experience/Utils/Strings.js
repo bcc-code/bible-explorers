@@ -22,7 +22,7 @@ const strings = {
             "codeUnlock": "Code unlock",
             "taskDescription": "Task description",
             "questions": "Questions",
-            "getTask": "Get task",
+            "getTask": "Ready for the task",
             "submit": "Submit"
         },
         "archive": "Archive",
