@@ -56,6 +56,11 @@ export default [
         path: 'textures/codes.webm'
     },
     {
+        name: 'iris',
+        type: 'videoTexture',
+        path: 'textures/iris.mp4'
+    },
+    {
         name: 'BIEX_S01_E01_IRIS_SLEEP',
         type: 'videoTexture',
         path: 'textures/BIEX_S01_E01_IRIS_SLEEP.webm'

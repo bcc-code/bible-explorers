@@ -103,14 +103,14 @@ export default class Program {
         }
         else if (initial) {
             setTimeout(() => {
-                instance.updateIrisTexture('READY')
+                // instance.updateIrisTexture('READY')
             }, instance.camera.data.moveDuration)
         }
     }
 
     finish() {
         instance.camera.updateCameraTo()
-        instance.updateIrisTexture('SLEEP')
+        // instance.updateIrisTexture('SLEEP')
         setTimeout(() => {
             instance.world.finishJourney()
         }, instance.camera.data.moveDuration)
@@ -146,7 +146,7 @@ export default class Program {
 
     startAction() {
         if (this.clickedObject === 'tv_16x9_screen') {
-            this.updateIrisTexture('SPEAK')
+            // this.updateIrisTexture('SPEAK')
             this.taskDescription.toggleTaskDescription()
         }
 

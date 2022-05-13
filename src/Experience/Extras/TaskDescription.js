@@ -40,7 +40,7 @@ export default class TaskDescription {
                 instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
 
                 instance.modal.destroy()
-                instance.program.updateIrisTexture('READY')
+                // instance.program.updateIrisTexture('READY')
 
                 if (instance.currentStepTaskType == 'questions') {
                     instance.program.questions.toggleQuestions()

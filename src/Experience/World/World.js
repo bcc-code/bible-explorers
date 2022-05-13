@@ -137,7 +137,7 @@ export default class World {
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
-        instance.program.updateIrisTexture('SLEEP')
+        // instance.program.updateIrisTexture('SLEEP')
     }
 
     showMenuButtons() {
@@ -291,8 +291,10 @@ export default class World {
         descriptionHTML.setAttribute('data-slug', chapter.category)
 
         descriptionHTML.innerHTML = `
+            <div class="chapter__description-wrapper">
                 <h2>${chapter.title}</h2>
                 <p>${chapter.content}</p>
+            </div>
         `
 
         document.querySelector('.chapters__content').prepend(descriptionHTML)

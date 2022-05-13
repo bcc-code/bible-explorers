@@ -512,7 +512,7 @@ button,
         gap: 4rem;
         display: flex;
 
-        > div {
+        >div {
             flex: 1;
         }
     }
@@ -529,14 +529,34 @@ button,
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        margin-top: 80px;
     }
 
     .chapter__description {
+        position: relative;
         width: 100%;
-        height: 768px;
-        padding: 3rem 6rem;
 
-        @include setBackground('../static/svgs/chapter_description.svg');
+        &::after,
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            z-index: 1;
+        }
+
+        &::before {
+            height: 80px;
+            top: -74px;
+            right: 0;
+            @include setBackground('../static/svgs/description_top.svg');
+        }
+
+        &::after {
+            height: 186px;
+            bottom: -180px;
+            right: -19px;
+            @include setBackground('../static/svgs/description_bottom.svg');
+        }
 
         h2 {
             color: #fff;
@@ -550,6 +570,26 @@ button,
             color: #fff;
             margin: 1.5rem 0;
         }
+
+        &-wrapper {
+            position: relative;
+            z-index: 2;
+            background: $dark;
+            border-left: 5px solid $accent;
+            border-right: 5px solid $accent;
+            padding: 0 6rem 4rem;
+            background: $dark;
+
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                @include setBackground('../static/svgs/description_left.svg');
+                height: 120px;
+                width: 40px;
+            }
+        }
     }
 
     .chapters__actions {
@@ -558,6 +598,8 @@ button,
         align-items: center;
         justify-content: flex-end;
         gap: 2rem;
+        padding: 2rem;
+        z-index: 5;
 
         .button {
             display: none;
@@ -785,17 +827,16 @@ button,
     }
 }
 
-
 .chapters {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 
-    &:hover .chapter {
+    &:hover .chapter:not(.locked) {
         opacity: 0.25;
     }
 
-    &:hover .chapter:hover {
+    &:hover .chapter:not(.locked):hover {
         opacity: 1;
         transform: scale(1.02);
     }
@@ -917,6 +958,7 @@ button,
     }
 
     &.locked {
+        opacity: 0.25;
         pointer-events: none;
 
         .button__round::after,
@@ -1792,6 +1834,7 @@ button,
     background: $gradient;
     z-index: 99;
 }
+
 // #endregion
 
 #webpack-dev-server-client-overlay {

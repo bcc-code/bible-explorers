@@ -95,7 +95,7 @@ export default class ControlRoom {
             }
 
             if (child.name === 'tv_16x9_screen') {
-                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['BIEX_S01_E01_IRIS_SLEEP'].item })
+                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['iris'].item })
             }
 
             if (child.material.map) {
@@ -110,7 +110,6 @@ export default class ControlRoom {
         if (!texture) return
 
         this.texture = texture
-        this.texture.flipY = false
         this.changeMeshTexture(meshName, this.texture)
         this.playIfVideoTexture()
     }
