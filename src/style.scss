@@ -191,6 +191,10 @@ $archivo-regular: "Archivo",
 
 .button__goToTask {
     @include button('../static/svgs/button_long_goTo.svg', '../static/svgs/button_long_goTo_hover.svg');
+
+    span {
+        padding-right: 1rem;
+    }
 }
 
 .button__round {
