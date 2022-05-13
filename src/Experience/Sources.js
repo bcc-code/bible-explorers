@@ -21,29 +21,10 @@ export default [
         type: 'texture',
         path: 'textures/baked_v4.jpg'
     },
-
     {
         name: 'screen_default',
         type: 'texture',
         path: 'textures/screen_default.jpg'
-    },
-
-    {
-        name: 'map_default',
-        type: 'texture',
-        path: 'textures/map_default.jpg'
-    },
-
-    {
-        name: 'code_default',
-        type: 'texture',
-        path: 'textures/code_default.jpg'
-    },
-
-    {
-        name: 'iris_default',
-        type: 'texture',
-        path: 'textures/iris_default.jpg'
     },
     {
         name: 'map',
@@ -59,21 +40,5 @@ export default [
         name: 'iris',
         type: 'videoTexture',
         path: 'textures/iris.mp4'
-    },
-    {
-        name: 'BIEX_S01_E01_IRIS_SLEEP',
-        type: 'videoTexture',
-        path: 'textures/BIEX_S01_E01_IRIS_SLEEP.webm'
-    },
-    {
-        name: 'BIEX_S01_E01_IRIS_READY',
-        type: 'videoTexture',
-        path: 'textures/BIEX_S01_E01_IRIS_READY.webm'
-    },
-    {
-        name: 'BIEX_S01_E01_IRIS_SPEAK',
-        type: 'videoTexture',
-        path: 'textures/BIEX_S01_E01_IRIS_SPEAK.webm'
     }
-
 ]

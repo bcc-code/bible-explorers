@@ -101,16 +101,10 @@ export default class Program {
         if (this.currentStep == this.totalSteps) {
             this.finish()
         }
-        else if (initial) {
-            setTimeout(() => {
-                // instance.updateIrisTexture('READY')
-            }, instance.camera.data.moveDuration)
-        }
     }
 
     finish() {
         instance.camera.updateCameraTo()
-        // instance.updateIrisTexture('SLEEP')
         setTimeout(() => {
             instance.world.finishJourney()
         }, instance.camera.data.moveDuration)

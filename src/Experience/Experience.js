@@ -51,7 +51,6 @@ export default class Experience {
         this.time.on('animation', () => {
             this.update()
         })
-
     }
 
     resize() {
@@ -67,6 +66,5 @@ export default class Experience {
         this.world.update()
         this.stats.update()
         this.renderer.update()
-   
     }
 }

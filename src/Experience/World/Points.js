@@ -32,10 +32,7 @@ export default class Points {
         div.textContent = labelText
 
         this.currentLabel = new CSS2DObject(div)
-
-        console.log(object);
         this.currentLabel.position.set(0, object.geometry.boundingBox.min.y, 0)
-
         this.currentObject = object
         this.currentObject.add(this.currentLabel)
     }
