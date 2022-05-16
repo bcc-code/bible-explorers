@@ -6,6 +6,7 @@ import Questions from '../Extras/Questions.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import Video from '../Extras/Video.js'
 import SortingGame from '../Games/SortingGame.js'
+import CableConnector from '../Games/CableConnector.js'
 
 let instance = null
 

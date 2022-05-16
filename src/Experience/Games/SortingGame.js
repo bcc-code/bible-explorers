@@ -3,7 +3,7 @@ import Konva from 'konva'
 
 let instance = null
 
-export default class Game {
+export default class SortingGame {
     constructor() {
         this.experience = new Experience()
         this.world = this.experience.world
@@ -344,20 +344,6 @@ export default class Game {
         if (
             icon.x() > correctBox.x() && icon.x() < correctBox.x() + correctBox.width() &&
             icon.y() > correctBox.y() && icon.y() < correctBox.y() + correctBox.height()
-        ) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    isNearCell(icon, cell) {
-        const cellX = instance.data.box.x + cell.x()
-        const cellY = instance.data.box.y + cell.y()
-
-        if (
-            icon.x() > cellX && icon.x() < cellX + cell.width() &&
-            icon.y() > cellY && icon.y() < cellY + cell.height()
         ) {
             return true
         } else {
