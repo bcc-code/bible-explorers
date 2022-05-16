@@ -1238,7 +1238,7 @@ button,
         }
 
         &:hover {
-            opacity: 0.9;
+            opacity: 0.8;
         }
     }
 
@@ -1748,23 +1748,39 @@ button,
 
 // #region MiniGames
 .code-unlock {
-    width: 364px;
+    width: 640px;
 
     &__header {
-        height: 160px;
+        width: 100%;
+        height: 215.46px;
         @include setBackground('../static/svgs/heading.svg');
+
+        span {
+            font-size: 3rem;
+        }
+    }
+
+    .icon {
+        left: 2.3rem;
+        top: 2rem;
+        width: 5rem;
+        height: 5rem;
+
+        i::before {
+            font-size: 1.5rem !important
+        }
     }
 
     &__container {
-        border-radius: 7px;
+        border-radius: $radius;
         padding: 5px 5px 0;
-        border: 2px solid $accent;
+        border: 6px solid $accent;
         background: $gradient;
     }
 
     &__grid {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     &__screen {
@@ -1782,18 +1798,7 @@ button,
         position: relative;
     }
 
-    &__screen:before {
-        content: "0000";
-        color: #fff;
-        position: absolute;
-        left: 0;
-        right: 0;
-        text-align: center;
-        opacity: 0.05;
-    }
-
     &__input {
-        width: 193px;
         text-align: left;
         z-index: 1;
         color: $accent;
@@ -1808,13 +1813,13 @@ button,
         background: #23307a;
         cursor: pointer;
         transition: opacity ease 0.25s;
-        font-size: 24px;
+        font-size: 2.75rem;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    &__btn:nth-child(6n + 1) {
+    &__btn:nth-child(3n + 1) {
         margin-left: 0;
     }
 

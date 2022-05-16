@@ -25,17 +25,17 @@ export default class CodeUnlock {
                                 <span class="code-unlock__input"></span>
                             </div>
                             <div class="code-unlock__grid">
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--backspace"></button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">7</button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">8</button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">9</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--backspace"></button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--confirm"></button>
                             </div>
                         </div>
@@ -87,7 +87,8 @@ export default class CodeUnlock {
     }
 
     add(number) {
-        if (instance.el.code.textContent.length == instance.secretCode.length) return
+        const maxLength = 10
+        if (instance.el.code.textContent.length == maxLength) return
         instance.el.code.textContent += number
     }
 
