@@ -33,12 +33,7 @@ export default class Game {
             icon: {
                 width: 150,
                 height: 150
-            },
-            counter: {
-                correct: 0,
-                wrong: 0
-            },
-            icons: []
+            }
         }
 
         instance = this
@@ -51,6 +46,12 @@ export default class Game {
     }
 
     init() {
+        this.data.counter = {
+            correct: 0,
+            wrong: 0
+        }
+        this.data.icons = []
+
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "sort-game")
         document.body.appendChild(gameWrapper)
