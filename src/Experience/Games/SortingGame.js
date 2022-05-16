@@ -372,17 +372,17 @@ export default class Game {
         var blink = new Konva.Animation(function(frame) {
             if (frame.time < 500) {
                 instance.setNewImage(img, 'games/' + feedback + '.svg')
-                layer.stroke(color)
+                layer.fill(color)
             }
             else if (frame.time >= 500 && frame.time < 1000) {
-                layer.stroke('white')
+                layer.fill('blue')
             }
             else if (frame.time >= 1000 && frame.time < 1500) {
-                layer.stroke(color)
+                layer.fill(color)
             }
             else {
                 instance.setNewImage(img, defaultBtnSrc)
-                layer.stroke('white')
+                layer.fill('blue')
                 this.stop()
             }
         })
