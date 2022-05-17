@@ -37,8 +37,8 @@ export default class CableConnector {
                 items: []
             },
             plugin: {
-                width: 100,
-                height: 60,
+                width: 106,
+                height: 66,
                 items: []
             },
             colors: [
@@ -48,7 +48,6 @@ export default class CableConnector {
                 "#ff6ea9",
                 "#af4eaa"
             ],
-
             strokeColors: [
                 "#878787",
                 "#23307a",
@@ -63,179 +62,14 @@ export default class CableConnector {
         this.createAllLayers()
     }
 
-    init() {
-        const gameWrapper = document.createElement('div')
-        gameWrapper.setAttribute("id", "cable-connector")
-        document.body.appendChild(gameWrapper)
-
-        this.stage = new Konva.Stage({
-            container: 'cable-connector',
-            width: this.sizes.width,
-            height: this.sizes.height,
-        })
-
-        document.body.classList.add('freeze')
-    }
-
     createAllLayers() {
         this.layer = new Konva.Layer()
 
-        this.wrapper = new Konva.Group({
-            x: 100,
-            y: 100,
-            width: this.data.box.width,
-            height: this.data.box.height,
-        })
+        const box = this.box(this.data.side.width, 0, this.data.box.width, this.data.box.height)
+        const boxLeft = this.side(0, 0, this.data.side.width, this.data.box.height)
+        const boxRight = this.side(this.wrapper.width(), 0, this.data.side.width, this.data.box.height, -1)
 
-        const leftSide = new Konva.Group({
-            width: this.data.side.width,
-            height: this.data.box.height,
-        })
-
-        leftSide.add(new Konva.Rect({
-            width: leftSide.width(),
-            height: leftSide.height(),
-            fillLinearGradientStartPoint: {
-                x: 0,
-                y: 0
-            },
-            fillLinearGradientEndPoint: {
-                x: 300,
-                y: 0
-            },
-            fillLinearGradientColorStops: this.data.box.gradientColorSides,
-            cornerRadius: [this.data.box.cornerRadius, 0, 0, this.data.box.cornerRadius],
-            stroke: this.data.box.strokeColor,
-            strokeWidth: this.data.box.strokeWidth
-        }))
-
-        leftSide.add(new Konva.Rect({
-            width: 40,
-            height: leftSide.height() - 10,
-            x: leftSide.width(),
-            y: 5,
-            fillLinearGradientStartPoint: {
-                x: 0,
-                y: 0
-            },
-            fillLinearGradientEndPoint: {
-                x: 400,
-                y: leftSide.height()
-            },
-            fillLinearGradientColorStops: [
-                0, 'black',
-                0.1, 'black',
-                0.1, '#fbaf4e',
-                0.2, '#fbaf4e',
-                0.2, 'black',
-                0.3, 'black',
-                0.3, '#fbaf4e',
-                0.4, '#fbaf4e',
-                0.4, 'black',
-                0.5, 'black',
-                0.5, '#fbaf4e',
-                0.6, '#fbaf4e',
-                0.6, 'black',
-                0.7, 'black',
-                0.7, '#fbaf4e',
-                0.8, '#fbaf4e',
-                0.8, 'black',
-                0.9, 'black',
-                0.9, '#fbaf4e',
-                1, '#fbaf4e',
-            ],
-        }))
-
-        this.wrapper.add(leftSide)
-
-        const rigthSide = new Konva.Group({
-            x: this.data.box.width - this.data.side.width,
-            width: this.data.side.width,
-            height: this.data.box.height,
-        })
-
-        rigthSide.add(new Konva.Rect({
-            width: rigthSide.width(),
-            height: rigthSide.height(),
-            cornerRadius: [0, this.data.box.cornerRadius, this.data.box.cornerRadius, 0],
-            fillLinearGradientStartPoint: {
-                x: 300,
-                y: 0
-            },
-            fillLinearGradientEndPoint: {
-                x: 0,
-                y: 0
-            },
-            fillLinearGradientColorStops: this.data.box.gradientColorSides,
-            stroke: this.data.box.strokeColor,
-            strokeWidth: this.data.box.strokeWidth
-        }))
-
-        rigthSide.add(new Konva.Rect({
-            width: 40,
-            height: rigthSide.height() - 10,
-            x: 5,
-            y: 5,
-            fillLinearGradientStartPoint: {
-                x: 0,
-                y: 0
-            },
-            fillLinearGradientEndPoint: {
-                x: -400,
-                y: leftSide.height()
-            },
-            fillLinearGradientColorStops: [
-                0, 'black',
-                0.1, 'black',
-                0.1, '#fbaf4e',
-                0.2, '#fbaf4e',
-                0.2, 'black',
-                0.3, 'black',
-                0.3, '#fbaf4e',
-                0.4, '#fbaf4e',
-                0.4, 'black',
-                0.5, 'black',
-                0.5, '#fbaf4e',
-                0.6, '#fbaf4e',
-                0.6, 'black',
-                0.7, 'black',
-                0.7, '#fbaf4e',
-                0.8, '#fbaf4e',
-                0.8, 'black',
-                0.9, 'black',
-                0.9, '#fbaf4e',
-                1, '#fbaf4e',
-            ],
-        }))
-
-        this.wrapper.add(rigthSide)
-
-        // Plugins
-
-        const box = new Konva.Group({
-            x: this.data.side.width,
-            width: this.data.box.width - this.data.side.width * 2,
-            height: this.data.box.height,
-        })
-
-        box.add(new Konva.Rect({
-            width: box.width(),
-            height: box.height(),
-            fillLinearGradientStartPoint: {
-                x: 0,
-                y: 0
-            },
-            fillLinearGradientEndPoint: {
-                x: 0,
-                y: this.data.box.height
-            },
-            fillLinearGradientColorStops: this.data.box.gradientColor,
-            stroke: this.data.box.strokeColor,
-            strokeWidth: this.data.box.strokeWidth,
-            listening: false,
-        }))
-
-        this.wrapper.add(box)
+        this.wrapper.add(box, boxLeft, boxRight)
 
         box.add(this.outlet(5, 20, this.data.colors[0], this.data.strokeColors[0], this.data.default.strokeWidth))
         box.add(this.outlet(5, 220, this.data.colors[2], this.data.strokeColors[2], this.data.default.strokeWidth))
@@ -255,17 +89,145 @@ export default class CableConnector {
         box.add(this.plugIn(20, 620, this.data.colors[3], this.data.strokeColors[3], this.data.default.strokeWidth))
         box.add(this.plugIn(20, 820, this.data.colors[4], this.data.strokeColors[4], this.data.default.strokeWidth))
 
-        box.add(this.plugIn(box.width() - 40, 40, this.data.colors[0], this.data.strokeColors[0], this.data.default.strokeWidth, -1))
-        box.add(this.plugIn(box.width() - 40, 220, this.data.colors[2], this.data.strokeColors[2], this.data.default.strokeWidth, -1))
-        box.add(this.plugIn(box.width() - 40, 420, this.data.colors[1], this.data.strokeColors[1], this.data.default.strokeWidth, -1))
-        box.add(this.plugIn(box.width() - 40, 620, this.data.colors[3], this.data.strokeColors[3], this.data.default.strokeWidth, -1))
-        box.add(this.plugIn(box.width() - 40, 820, this.data.colors[4], this.data.strokeColors[4], this.data.default.strokeWidth, -1))
+        box.add(this.plugIn(box.width() - 40, 40, this.data.colors[4], this.data.strokeColors[4], this.data.default.strokeWidth, -1))
+        box.add(this.plugIn(box.width() / 2, 220, this.data.colors[0], this.data.strokeColors[0], this.data.default.strokeWidth, -1))
+        box.add(this.plugIn(box.width() - 40, 420, this.data.colors[3], this.data.strokeColors[3], this.data.default.strokeWidth, -1))
+        box.add(this.plugIn(box.width() - 40, 620, this.data.colors[1], this.data.strokeColors[1], this.data.default.strokeWidth, -1))
+        box.add(this.plugIn(box.width() - 40, 820, this.data.colors[2], this.data.strokeColors[2], this.data.default.strokeWidth, -1))
 
+        const item = this.data.plugin.items[0]
+        const itemEnd = this.data.plugin.items[6]
 
-        console.log(this.data.plugin.items);
+        const line1 = this.connector(
+            item.x() + item.width(), item.y() + item.height() / 2,
+            item.width() * 2, item.height() * 2,
+            itemEnd.x() - itemEnd.width(), itemEnd.y() + itemEnd.height() / 2,
+            this.data.strokeColors[0])
+
+        box.add(line1)
+
+        this.data.plugin.items.forEach(item => {
+
+            item.on('dragmove', () => {
+                line1.attrs.points[4] = item.x() - item.width()
+                line1.attrs.points[5] = item.y() + item.height() / 2
+            })
+        })
 
         this.layer.add(this.wrapper)
         this.stage.add(this.layer)
+    }
+
+    init() {
+        const gameWrapper = document.createElement('div')
+        gameWrapper.setAttribute("id", "cable-connector")
+        document.body.appendChild(gameWrapper)
+
+        this.stage = new Konva.Stage({
+            container: 'cable-connector',
+            width: this.sizes.width,
+            height: this.sizes.height,
+        })
+
+        this.wrapper = new Konva.Group({
+            x: 100,
+            y: 100,
+            width: this.data.box.width,
+            height: this.data.box.height,
+        })
+
+        document.body.classList.add('freeze')
+    }
+
+    box(x, y, w, h) {
+        const item = new Konva.Group({
+            x: x,
+            y: y,
+            width: w - this.data.side.width * 2,
+            height: h,
+        })
+
+        item.add(new Konva.Rect({
+            width: item.width(),
+            height: item.height(),
+            fillLinearGradientEndPointY: this.data.box.height,
+            fillLinearGradientColorStops: this.data.box.gradientColor,
+            stroke: this.data.box.strokeColor,
+            strokeWidth: this.data.box.strokeWidth,
+            shadowForStrokeEnabled: false,
+            listening: false
+        }))
+
+        const icon = new Konva.Group({
+            x: item.width() / 2,
+            y: item.height() / 2,
+        })
+
+        icon.add(new Konva.RegularPolygon({
+            sides: 3,
+            radius: 200,
+            fill: '#fbaf4e',
+            stroke: 'black',
+            strokeWidth: 20,
+            shadowForStrokeEnabled: false,
+            cornerRadius: 28,
+            rotation: 20,
+            opacity: 0.35,
+            lineJoin: 'round',
+            listening: false
+        }))
+
+        Konva.Image.fromURL('games/arrow.svg', image => {
+            icon.add(image)
+            image.setAttrs({
+                width: 80,
+                height: 200,
+                offset: {
+                    x: 33,
+                    y: 120
+                },
+                opacity: 0.35
+            })
+        })
+
+        item.add(icon)
+
+        return item
+    }
+
+    side(x, y, w, h, position = 1) {
+        const item = new Konva.Group({
+            x: x,
+            y: y,
+            width: w,
+            height: h,
+            scaleX: position,
+            listening: false
+        })
+
+        item.add(new Konva.Rect({
+            width: item.width(),
+            height: item.height(),
+            fillLinearGradientEndPointX: 300,
+            fillLinearGradientColorStops: this.data.box.gradientColorSides,
+            cornerRadius: [this.data.box.cornerRadius, 0, 0, this.data.box.cornerRadius],
+            stroke: this.data.box.strokeColor,
+            strokeWidth: this.data.box.strokeWidth,
+            shadowForStrokeEnabled: false
+        }))
+
+        Konva.Image.fromURL('games/band.svg', image => {
+            item.add(image)
+            image.setAttrs({
+                x: item.width(),
+                y: 5,
+                width: 50,
+                height: item.height() - 10,
+                scaleX: -1
+            })
+        })
+
+        return item
     }
 
     outlet(x, y, fill, strokeColor, strokeWidth, position = 1) {
@@ -277,15 +239,14 @@ export default class CableConnector {
             fill: fill,
             stroke: strokeColor,
             strokeWidth: strokeWidth,
+            shadowForStrokeEnabled: false,
             scaleX: position,
             name: 'outlet'
         })
 
         this.data.outlet.items.push(item)
-
         return item
     }
-
 
     plugIn(x, y, fill, strokeColor, strokeWidth, position = 1) {
         const item = new Konva.Group({
@@ -294,45 +255,57 @@ export default class CableConnector {
             width: this.data.plugin.width,
             height: this.data.plugin.height,
             scaleX: position,
-            name: 'plugin'
+            name: 'plugin',
+            draggable: true
         })
 
-        item.add(new Konva.Rect({
-            y: 8,
-            width: 40,
-            height: 16,
-            stroke: '#dcdcdc',
-            strokeWidth: strokeWidth,
-            cornerRadius: [8, 0, 0, 8]
-        }))
+        const pinHeight = item.height() / 4
+
+        for (let i = 0; i < 2; i++) {
+            item.add(new Konva.Rect({
+                y: i * pinHeight * 2, // calc ?!?
+                width: item.width() / 2,
+                height: pinHeight,
+                stroke: '#dcdcdc',
+                strokeWidth: strokeWidth,
+                offsetX: - item.width() / 4 + 10,
+                offsetY: - pinHeight / 2,
+                shadowForStrokeEnabled: false,
+                cornerRadius: 8
+            }))
+
+        }
 
         item.add(new Konva.Rect({
-            y: 36,
-            width: 40,
-            height: 16,
-            stroke: '#dcdcdc',
-            strokeWidth: strokeWidth,
-            cornerRadius: [8, 0, 0, 8]
-        }))
-
-        item.add(new Konva.Rect({
-            x: 40,
+            x: item.width() / 2,
             width: item.width() - 40,
             height: item.height(),
             fill: fill,
             stroke: strokeColor,
             strokeWidth: strokeWidth,
+            shadowForStrokeEnabled: false,
             cornerRadius: [0, 28, 28, 0]
         }))
 
-
+        this.data.plugin.items.push(item)
         return item
     }
 
-    addEventListeners() {
-
+    connector(x1, y1, x2, y2, x3, y3, fill) {
+        const item = new Konva.Line({
+            points: [
+                x1, y1,
+                x2, y2,
+                x3, y3
+            ],
+            stroke: fill,
+            strokeWidth: this.data.default.strokeWidth,
+            shadowForStrokeEnabled: false,
+            lineCap: 'round',
+            lineJoin: 'round',
+            tension: 0.5
+        })
+        return item
     }
-
-    destroy() {
-    }
+    
 }
