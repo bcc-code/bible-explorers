@@ -15,7 +15,8 @@ const strings = {
             "start": "Start journey",
             "continue": "Continue journey", 
             "restart": "Restart journey",
-            "congratulations": "You have completed this theme's journey!",
+            "congrats": "Congratulations!",
+            "completed": "You have completed chapter",
             "back": "Back"
         },
         "task": {
@@ -63,7 +64,8 @@ const strings = {
             "start": "Start tidsreise",
             "continue": "Fortsett tidsreise", 
             "restart": "Start reise på nytt",
-            "congratulations": "Du har fullført tidsreisen for dette temaet!",
+            "congrats": "Gratulerer!",
+            "completed": "Du har fullført",
             "back": "Tilbake"
         },
         "task": {

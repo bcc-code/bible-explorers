@@ -485,7 +485,7 @@ button,
         align-items: center;
         flex-direction: column;
         gap: 4rem;
-        padding: 10.5rem 3rem 3rem;
+        padding: 3rem;
     }
 
     .chapters__wrapper {
@@ -703,6 +703,7 @@ button,
     position: relative;
     width: 698px;
     height: 195px;
+    margin: 0.5rem 0;
     @include setBackground('../static/svgs/bible-kids-logo.svg');
 }
 
@@ -859,7 +860,7 @@ button,
     &__download {
         position: relative;
         display: none;
-        padding: 0 3rem 0 2rem;
+        padding: 0 2rem;
         z-index: 3;
         width: 14rem;
 
@@ -1832,6 +1833,68 @@ button,
     &__btn--confirm {
         background: lime;
         color: #fff;
+    }
+}
+
+.congrats {
+    width: 640px;
+
+    &__container {
+        border-radius: $radius;
+        padding: 3rem;
+        border: 6px solid $accent;
+        background: $gradient;
+        text-align: center;
+    }
+
+    .stars {
+        position: absolute;
+        top: -60px;
+        left: calc(100% - 391px);
+    }
+
+    .star {
+        @include icon(icon-star-solid);
+        position: absolute;
+
+        &:before {
+            color: transparent;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        &:nth-child(1):before {
+            right: 83px;
+            top: 35px;
+        }
+        &:nth-child(2):before {
+            top: -10px;
+        }
+        &:nth-child(3):before {
+            left: 120px;
+            top: 35px;
+        }
+
+        &.filled:before {
+            color: $accent2;
+            transition: .3s ease;
+            font-size: 6rem;
+        }
+        &.filled:nth-child(2):before {
+            font-size: 8rem;
+        }
+    }
+
+    &__title {
+        color: $accent2;
+        font-size: 4rem;
+        font-weight: bold;
+        margin: 40px 0;
+    }
+
+    &__chapter-completed {
+        color: #fff;
+        font-size: 2rem;
     }
 }
 
