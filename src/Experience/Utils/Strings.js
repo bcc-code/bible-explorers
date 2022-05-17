@@ -13,7 +13,7 @@ const strings = {
         "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
         "journey": {
             "start": "Start journey",
-            "continue": "Continue journey", 
+            "continue": "Continue journey",
             "restart": "Restart journey",
             "congrats": "Congratulations!",
             "completed": "You have completed chapter",
@@ -24,7 +24,7 @@ const strings = {
             "taskDescription": "Task description",
             "questions": "Questions",
             "getTask": "Ready for the task",
-            "submit": "Submit"
+            "submit": "Submit",
         },
         "archive": "Archive",
         "info": "Info",
@@ -48,6 +48,18 @@ const strings = {
             "questions": "Answer the questions",
             "code": "Break the code",
             "sorting": "Sort the icons in the correct box"
+        },
+        "miniGames": {
+            "sortingIcons": {
+                "title": "Sort the icons in the correct box",
+            },
+            "cableConnect": {
+                "title": "Cable connect game"
+            },
+
+            "reset": "Reset game",
+            "continue": "Continue journey",
+            "skip": "Complete"
         }
     },
     "no": {
@@ -62,7 +74,7 @@ const strings = {
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
         "journey": {
             "start": "Start tidsreise",
-            "continue": "Fortsett tidsreise", 
+            "continue": "Fortsett tidsreise",
             "restart": "Start reise på nytt",
             "congrats": "Gratulerer!",
             "completed": "Du har fullført",
@@ -73,7 +85,7 @@ const strings = {
             "taskDescription": "Oppgavebeskrivelse",
             "questions": "Spørsmål",
             "getTask": "Gå til oppgave",
-            "submit": "Send"
+            "submit": "Send",
         },
         "archive": "Arkiv",
         "info": "Info",
@@ -97,6 +109,17 @@ const strings = {
             "questions": "Svar på spørsmålene",
             "code": "Løs koden",
             "sorting": "Sorter ikonene i riktig boks"
+        },
+        "miniGames": {
+            "sortingIcons": {
+                "title": "Sorter ikonene i riktig boks"
+            },
+            "cableConnect": {
+                "title": "Kabel spil"
+            },
+            "reset": "Reset game",
+            "continue": "Continue journey",
+            "skip": "Complete"
         }
     }
 }

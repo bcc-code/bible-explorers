@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import Konva from 'konva'
+import _s from '../Utils/Strings.js'
 
 let instance = null
 
@@ -8,6 +9,7 @@ export default class Game {
         this.experience = new Experience()
         this.world = this.experience.world
         this.sizes = this.experience.sizes
+        this.debug = this.experience.debug
 
         this.data = {
             colors: {
@@ -33,6 +35,22 @@ export default class Game {
             icon: {
                 width: 150,
                 height: 150
+            },
+            button: {
+                width: 277,
+                height: 77,
+                srcContinue: {
+                    default: 'svgs/button_long_goTo.svg',
+                    hover: 'svgs/button_long_goTo_hover.svg'
+                },
+                srcDefault: {
+                    default: 'svgs/button_long.svg',
+                    hover: 'svgs/button_long_hover.svg'
+                },
+                fontSize: 24,
+                fontFamily: 'Archivo',
+                align: 'center',
+                textFill: 'white'
             }
         }
 
@@ -74,6 +92,16 @@ export default class Game {
     createAllLayers() {
         this.layer = new Konva.Layer()
 
+        this.layer.add(new Konva.Text({
+            text: _s.miniGames.sortingIcons.title,
+            fontSize: 48,
+            fontFamily: 'Archivo',
+            fill: 'white',
+            align: 'center',
+            width: this.sizes.width,
+            y: 100
+        }))
+
         this.leftBox = this.createBox(
             this.data.box.x,
             this.data.box.y,
@@ -106,6 +134,7 @@ export default class Game {
         this.container = []
         this.grids = []
         this.buttons = []
+        this.actions = []
         this.cells = {
             'correct': [],
             'wrong': []
@@ -129,6 +158,14 @@ export default class Game {
             instance.layer.add(icon)
             instance.icons.push(icon)
         })
+
+        this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset)
+
+        if (this.debug.active) {
+            console.log('active');
+            this.createButton("skip", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
+        }
+
     }
 
     addEventListeners() {
@@ -190,17 +227,134 @@ export default class Game {
                 instance.sortingFeedback(img, buttonBg, selectedBox, feedback)
             })
         })
+
+        this.actions.forEach(button => {
+            button.on('mouseover', () => {
+                document.body.style.cursor = 'pointer'
+                const img = button.children.find(item => item.name() == "image")
+                instance.setNewImage(img, instance.data.button.srcDefault.hover)
+            })
+            button.on('mouseout', () => {
+                document.body.style.cursor = 'default'
+                const img = button.children.find(item => item.name() == "image")
+                instance.setNewImage(img, instance.data.button.srcDefault.default)
+            })
+
+            button.offset({
+                x: button.width() / 2,
+                y: button.height() / 2
+            })
+
+            if (button.id() == "reset") {
+                button.on('click', () => {
+                    instance.destroy()
+                    instance.toggleSortingGame()
+                })
+            }
+
+            if (button.id() == "skip") {
+                button.on('click', () => {
+                    instance.destroy()
+                    instance.program.advance()
+                })
+            }
+
+        })
     }
 
     checkGameFinished() {
         let totalCount = 0
         Object.values(instance.data.counter).forEach(c => totalCount += c);
         if (totalCount == instance.data.icons.length) {
-            setTimeout(function() {
-                console.log('Game finished!')
+
+            const continueJourney = this.createButton("continue", this.sizes.width - this.data.box.x, this.sizes.height - 100, this.data.button.srcContinue.default, _s.miniGames.continue)
+            continueJourney.offset({
+                x: continueJourney.width() / 2,
+                y: continueJourney.height() / 2
+            })
+
+            const label = continueJourney.children.find(item => item.name() == "label")
+            label.offsetX(12)
+
+            continueJourney.on('mouseover', () => {
+                document.body.style.cursor = 'pointer'
+                const img = resetGame.children.find(item => item.name() == "image")
+                instance.setNewImage(img, instance.data.button.srcContinue.hover)
+            })
+            continueJourney.on('mouseout', () => {
+                document.body.style.cursor = 'default'
+                const img = resetGame.children.find(item => item.name() == "image")
+                instance.setNewImage(img, instance.data.button.srcContinue.default)
+            })
+
+            continueJourney.on('click', () => {
                 instance.destroy()
+                instance.program.advance()
+            })
+
+            setTimeout(function () {
+                // console.log('Game finished!')
             }, 2000)
         }
+    }
+
+    completeContent() {
+
+        const complete = new Konva.Layer()
+
+        const completeBox = new Konva.Group({
+            width: instance.sizes.width,
+            height: instance.sizes.height,
+        })
+
+        completeBox.add(new Konva.Rect({
+            width: completeBox.width(),
+            height: completeBox.height(),
+            fillLinearGradientEndPointX: completeBox.width(),
+            fillLinearGradientColorStops: [
+                0, '#131A43',
+                1, '#3E306D'
+            ],
+            opacity: .8
+        }))
+
+        const textBox = new Konva.Group({
+            x: completeBox.width() / 2,
+            y: completeBox.height() / 2,
+            width: 700,
+            height: 500,
+            offset: {
+                x: 350,
+                y: 250
+            }
+        })
+
+        textBox.add(new Konva.Path({
+            data: 'M40.93 8 8.13 41.18C2.93 46.44 0 53.64 0 61.16v370.2c0 6.76 2.37 13.29 6.68 18.39l16.82 19.91c5.15 6.1 12.6 9.6 20.44 9.6h90.11c6.76 0 13.27 2.6 18.26 7.3l6.55 6.15c4.99 4.7 11.51 7.3 18.26 7.3h482.93c8.02 0 15.63-3.66 20.78-10.01l12.83-15.79c4.09-5.04 6.34-11.4 6.34-17.98v-93.98c0-8-3.32-15.62-9.12-20.93-5.77-5.29-9.09-12.86-9.12-20.83l-.87-246.46c-.03-7.53-2.99-14.73-8.23-19.98l-16.48-16.5c-5.06-5.07-11.83-7.9-18.89-7.9H501.07c-7.5 0-14.66-3.2-19.78-8.84L470.43 8.85C465.3 3.21 458.14.01 450.65.01H59.91c-7.1 0-13.91 2.87-18.98 8Z',
+            fillLinearGradientEndPointX: textBox.width(),
+            fillLinearGradientColorStops: [
+                0, '#131A43',
+                1, '#3E306D'
+            ],
+            stroke: '#0396e3',
+            strokeWidth: 4,
+            lineJoin: 'round',
+            lineCap: 'round'
+        }))
+
+        textBox.add(new Konva.Text({
+            text: 'Congrats',
+            fontSize: 48,
+            fontFamily: 'Archivo',
+            fill: 'white',
+            align: 'center',
+            width: textBox.width(),
+            y: textBox.height() / 2
+        }))
+
+        completeBox.add(textBox)
+        complete.add(completeBox)
+        // instance.stage.add(complete)
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
@@ -328,6 +482,48 @@ export default class Game {
         return icon
     }
 
+    createButton(id, x, y, imgSrc, text) {
+        const button = new Konva.Group({
+            x: x,
+            y: y,
+            width: this.data.button.width,
+            height: this.data.button.height,
+            id: id
+        })
+
+        Konva.Image.fromURL(imgSrc, image => {
+            button.add(image)
+
+            image.setAttrs({
+                width: button.width(),
+                height: button.height(),
+                name: 'image'
+            })
+
+            image.zIndex(0)
+        })
+
+        button.add(new Konva.Text({
+            text: text,
+            fontSize: this.data.button.fontSize,
+            fontFamily: this.data.button.fontFamily,
+            align: this.data.button.align,
+            fill: this.data.button.textFill,
+            width: button.width(),
+            y: button.height() / 2,
+            offset: {
+                y: 12
+            },
+            id: 'label',
+            listening: false
+        }))
+
+        this.actions.push(button)
+        this.layer.add(button)
+
+        return button
+    }
+
     intersected(r1, r2) {
         return !(
             r2.x() > r1.x() + r1.width() ||
@@ -369,9 +565,11 @@ export default class Game {
         const color = instance.data.colors[feedback]
         const defaultBtnSrc = instance.data.box.buttonSrc[selectedBox]
 
-        var blink = new Konva.Animation(function(frame) {
+        var blink = new Konva.Animation(function (frame) {
             if (frame.time < 500) {
                 instance.setNewImage(img, 'games/' + feedback + '.svg')
+                img.attrs.height = 60
+                img.y(40)
                 layer.fill(color)
             }
             else if (frame.time >= 500 && frame.time < 1000) {
@@ -382,6 +580,8 @@ export default class Game {
             }
             else {
                 instance.setNewImage(img, defaultBtnSrc)
+                img.attrs.height = 100
+                img.y(20)
                 layer.fill('blue')
                 this.stop()
             }
@@ -392,7 +592,7 @@ export default class Game {
     setNewImage(img, src) {
         var newImg = new Image()
         newImg.src = src
-        newImg.onload = function() {
+        newImg.onload = function () {
             img.image(newImg)
         }
     }
@@ -416,6 +616,6 @@ export default class Game {
     destroy() {
         document.getElementById('sort-game').remove()
         document.body.classList.remove('freeze')
-        instance.program.advance()
     }
+
 }
