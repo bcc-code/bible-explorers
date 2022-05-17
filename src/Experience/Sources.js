@@ -29,12 +29,12 @@ export default [
     {
         name: 'map',
         type: 'videoTexture',
-        path: 'textures/map.webm'
+        path: 'textures/map.mp4'
     },
     {
         name: 'codes',
         type: 'videoTexture',
-        path: 'textures/codes.webm'
+        path: 'textures/codes.mp4'
     },
     {
         name: 'iris',
