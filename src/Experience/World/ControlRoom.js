@@ -103,6 +103,8 @@ export default class ControlRoom {
                 child.material.map.encoding = THREE.sRGBEncoding
             }
         })
+
+        this.tv_portal.material = new THREE.MeshBasicMaterial({ color: 0x131A43 })
     }
 
     // Set textures

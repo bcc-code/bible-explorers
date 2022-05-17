@@ -24,7 +24,6 @@ export default class Video {
         this.videoWidth = 1920
         this.videoHeight = 1111 // videoOverlayWidth * 9 / 16
         this.portalScreen = this.experience.world.controlRoom.tv_portal
-        this.portalScreen.material = new THREE.MeshBasicMaterial({ color: 0xffffff })
 
         this.setVideo(this.portalScreen)
         this.render()
