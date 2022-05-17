@@ -515,7 +515,7 @@ button,
         opacity: 0;
     }
 
-    .chapter-selected + .chapter__content {
+    .chapter-selected+.chapter__content {
         opacity: 1;
     }
 
@@ -1067,11 +1067,13 @@ button,
             #irisVideoBg {
                 width: 100%;
             }
+
             .task__content {
                 position: absolute;
                 top: 30px;
                 right: 30px;
             }
+
             #get-task {
                 position: absolute;
                 bottom: 30px;
@@ -1746,6 +1748,141 @@ button,
     }
 }
 
+.congrats {
+    width: 640px;
+
+    &__container {
+        position: relative;
+        border-radius: $radius;
+        padding: 3rem;
+        border: 6px solid $accent;
+        background: $gradient;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .splash {
+        position: absolute;
+        width: 320px;
+        height: 350px;
+        bottom: 40px;
+        background: url('/static/svgs/congrats.svg');
+        background-repeat: no-repeat;
+        transform-origin: bottom ;
+        opacity: 0;
+
+        &__left {
+            left: -225px;
+            transform: scaleX(-1) rotate(10deg);
+            animation: bounce-left 1s cubic-bezier(0.215, 0.610, 0.355, 1) 1s 1 forwards;
+        }
+
+        &__right {
+            right: -225px;
+            transform: rotate(-10deg);
+            animation: bounce-right 1s cubic-bezier(0.215, 0.610, 0.355, 1) 1s 1 forwards;
+        }
+    }
+
+    @keyframes bounce-right {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+            transform: rotate(20deg);
+        }
+
+        70% {
+            opacity: 1;
+            transform: rotate(-10deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: rotate(10deg);
+        }
+    }
+
+
+    @keyframes bounce-left {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+            transform: rotate(-20deg) scaleX(-1);
+        }
+
+        70% {
+            opacity: 1;
+            transform: rotate(10deg) scaleX(-1);
+        }
+
+        100% {
+            opacity: 1;
+            transform: rotate(-10deg) scaleX(-1);
+        }
+    }
+
+
+
+    .stars {
+        position: absolute;
+        top: -60px;
+        left: calc(100% - 391px);
+    }
+
+    .star {
+        @include icon(icon-star-solid);
+        position: absolute;
+
+        &:before {
+            color: transparent;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        &:nth-child(1):before {
+            right: 83px;
+            top: 35px;
+        }
+
+        &:nth-child(2):before {
+            top: -10px;
+        }
+
+        &:nth-child(3):before {
+            left: 120px;
+            top: 35px;
+        }
+
+        &.filled:before {
+            color: $accent2;
+            transition: .3s ease;
+            font-size: 6rem;
+        }
+
+        &.filled:nth-child(2):before {
+            font-size: 8rem;
+        }
+    }
+
+    &__title {
+        color: $accent2;
+        font-size: 4rem;
+        font-weight: bold;
+        margin: 40px 0;
+    }
+
+    &__chapter-completed {
+        color: #fff;
+        font-size: 2rem;
+    }
+}
+
 // #endregion
 
 // #region MiniGames
@@ -1833,68 +1970,6 @@ button,
     &__btn--confirm {
         background: lime;
         color: #fff;
-    }
-}
-
-.congrats {
-    width: 640px;
-
-    &__container {
-        border-radius: $radius;
-        padding: 3rem;
-        border: 6px solid $accent;
-        background: $gradient;
-        text-align: center;
-    }
-
-    .stars {
-        position: absolute;
-        top: -60px;
-        left: calc(100% - 391px);
-    }
-
-    .star {
-        @include icon(icon-star-solid);
-        position: absolute;
-
-        &:before {
-            color: transparent;
-            font-size: 4rem;
-            position: relative;
-        }
-
-        &:nth-child(1):before {
-            right: 83px;
-            top: 35px;
-        }
-        &:nth-child(2):before {
-            top: -10px;
-        }
-        &:nth-child(3):before {
-            left: 120px;
-            top: 35px;
-        }
-
-        &.filled:before {
-            color: $accent2;
-            transition: .3s ease;
-            font-size: 6rem;
-        }
-        &.filled:nth-child(2):before {
-            font-size: 8rem;
-        }
-    }
-
-    &__title {
-        color: $accent2;
-        font-size: 4rem;
-        font-weight: bold;
-        margin: 40px 0;
-    }
-
-    &__chapter-completed {
-        color: #fff;
-        font-size: 2rem;
     }
 }
 

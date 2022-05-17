@@ -17,6 +17,7 @@ export default class Congrats {
         let html = `
             <div class="modal__content congrats">
                 <div class="congrats__sidebar">
+                    <div class="splash splash__left"></div>
                     <div class="congrats__container">
                         <div class="stars">
                             <span class="star"></span>
@@ -30,6 +31,7 @@ export default class Congrats {
                             <span class="party party-right"></span>
                         </div>
                     </div>
+                    <div class="splash splash__right"></div>
                 </div>
             </div>
         `;
