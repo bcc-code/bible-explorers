@@ -267,8 +267,12 @@ export default class World {
                             <i class="icon icon-download-solid"></i>
                             <span>${_s.offline.download}</span>
                         </div>
-                        <div class="downloading-progress"><div class="progress-line"></div></div>
-                        <span class="downloading-label"></span>
+                        <div class="is-downloading">
+                            <div class="downloading-progress">
+                                <div class="progress-line"></div>
+                            </div>
+                            <span class="downloading-label"></span>
+                        </div>
                         <span class="downloading-complete">${_s.offline.availableOffline}</span>
                     </div>
                 </foreignObject>
