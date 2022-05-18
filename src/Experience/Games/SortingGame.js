@@ -53,10 +53,40 @@ export default class Game {
                     hover: 'svgs/button_long_hover.svg'
                 },
                 fontSize: 24,
-                fontFamily: 'Archivo',
+                fontFamily: 'Berlin Sans FB',
                 align: 'center',
-                textFill: 'white'
-            }
+                textFill: 'white',
+                icon: {
+                    width: 100,
+                    height: 80
+                },
+                sprite: {
+                    width: 360,
+                    height: 134
+                }
+
+            },
+
+        }
+
+        const spriteW = this.data.button.sprite.width
+        const spriteH = this.data.button.sprite.width
+
+        this.animations = {
+            // x, y, width, height (8frames)
+            button: [
+                0, 0, spriteW, spriteH,
+                spriteW * 2, 0, spriteW, spriteH,
+                spriteW * 3, 0, spriteW, spriteH,
+                spriteW * 4, 0, spriteW, spriteH,
+                spriteW * 5, 0, spriteW, spriteH,
+                spriteW * 6, 0, spriteW, spriteH,
+                spriteW * 7, 0, spriteW, spriteH,
+                spriteW * 8, 0, spriteW, spriteH,
+            ],
+            connected: [
+
+            ]
         }
 
         instance = this
@@ -112,7 +142,7 @@ export default class Game {
         this.layer.add(new Konva.Text({
             text: _s.miniGames.sortingIcons.title,
             fontSize: 48,
-            fontFamily: 'Archivo',
+            fontFamily: 'Berlin Sans FB',
             fill: 'white',
             align: 'center',
             width: this.sizes.width,
@@ -240,9 +270,7 @@ export default class Game {
                     instance.audio.playWrongSound()
                 }
 
-                const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
-                const buttonBg = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "buttonBg")
-                instance.sortingFeedback(img, buttonBg, selectedBox, feedback)
+                instance.sortingFeedback(selectedBox, feedback)
             })
         })
 
@@ -450,13 +478,20 @@ export default class Game {
             button.add(imageNode)
 
             imageNode.setAttrs({
-                x: button.width() / 2 - 50,
-                y: 20,
-                width: 100,
-                height: 100,
-                name: "image"
+                x: button.width() / 2,
+                y: button.height() / 2,
+                width: this.data.button.icon.width,
+                height: this.data.button.icon.height,
+                name: "image",
+                offset: {
+                    x: this.data.button.icon.width / 2,
+                    y: this.data.button.icon.height / 2
+                }
             })
         })
+
+
+
 
         this.box.add(button)
 
@@ -491,7 +526,7 @@ export default class Game {
             img.setAttrs({
                 width: icon.width(),
                 height: icon.height(),
-                name: "image"
+                name: "image",
             })
             icon.add(img)
         })
@@ -571,32 +606,34 @@ export default class Game {
         }
     }
 
-    sortingFeedback(img, layer, selectedBox, feedback) {
+    sortingFeedback(selectedBox, feedback) {
         const color = instance.data.colors[feedback]
-        const defaultBtnSrc = instance.data.box.buttonSrc[selectedBox]
 
-        var blink = new Konva.Animation(function (frame) {
-            if (frame.time < 500) {
-                instance.setNewImage(img, 'games/' + feedback + '.svg')
-                img.attrs.height = 60
-                img.y(40)
-                layer.fill(color)
-            }
-            else if (frame.time >= 500 && frame.time < 1000) {
-                layer.fill('blue')
-            }
-            else if (frame.time >= 1000 && frame.time < 1500) {
-                layer.fill(color)
-            }
-            else {
-                instance.setNewImage(img, defaultBtnSrc)
-                img.attrs.height = 100
-                img.y(20)
-                layer.fill('blue')
-                this.stop()
+        this.buttons.forEach(button => {
+            if (button.parent.id() === selectedBox) {
+                button.children[1].visible(false)
+
+                const imageObj = new Image()
+                imageObj.src = 'games/' + feedback + '.png'
+                imageObj.onload = function () {
+                    const blob = instance.setSprite(imageObj)
+
+                    button.children[0].fill(color)
+                    button.add(blob)
+                    blob.start()
+
+                    blob.on('frameIndexChange.konva', function () {
+
+                        if (this.frameIndex() == 7) {
+                            blob.stop()
+                            button.children[0].fill('blue')
+                            button.children[1].visible(true)
+                        }
+                    })
+                }
             }
         })
-        blink.start()
+
     }
 
     setNewImage(img, src) {
@@ -605,6 +642,26 @@ export default class Game {
         newImg.onload = function () {
             img.image(newImg)
         }
+    }
+
+    setSprite(imageObj) {
+        const sprite = new Konva.Sprite({
+            x: instance.data.button.width / 2,
+            y: instance.data.button.height / 2,
+            width: instance.data.button.sprite.width,
+            height: instance.data.button.sprite.height,
+            image: imageObj,
+            animation: 'button',
+            animations: instance.animations,
+            frameRate: 8,
+            frameIndex: 0,
+            offset: {
+                x: instance.data.button.width / 2,
+                y: instance.data.button.height / 2
+            }
+        })
+
+        return sprite
     }
 
     getIconPosition() {
