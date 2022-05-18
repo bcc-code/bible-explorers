@@ -851,7 +851,8 @@ button,
     flex-direction: column;
     gap: 2rem;
 
-    &:hover .chapter:not(.locked):hover {
+    &:hover .chapter:not(.locked):hover,
+    body.admin &:hover .chapter:hover {
         opacity: 1;
         transform: scale(1.02);
     }
