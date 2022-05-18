@@ -15,12 +15,12 @@
  */
 
 import { precacheAndRoute } from 'workbox-precaching'
-import { Route, registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { Route, registerRoute } from 'workbox-routing'
+import { NetworkFirst } from 'workbox-strategies'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 const indexHtml = new Route(({url}) => {
-  return url === '/index.html';
+  return url === '/'
 }, new NetworkFirst({
   plugins: [
     new CacheableResponsePlugin({
@@ -30,7 +30,7 @@ const indexHtml = new Route(({url}) => {
 }))
 
 const btvPlayer = new Route(({url}) => {
-  return url === 'https://brunstad.tv/Content/js/btvplayer.js';
+  return url === 'https://brunstad.tv/Content/js/btvplayer.js'
 }, new NetworkFirst({
   plugins: [
     new CacheableResponsePlugin({
