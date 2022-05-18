@@ -15,21 +15,17 @@ export default class Congrats {
 
     toggleCongrats() {
         let html = `
-            <div class="modal__content congrats">
+            <div class="modal__content congrats congrats__journey">
                 <div class="congrats__sidebar">
                     <div class="splash splash__left"></div>
                     <div class="congrats__container">
                         <div class="stars">
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
+                            <i class="icon icon-star-solid"></i>
+                            <i class="icon icon-star-solid"></i>
+                            <i class="icon icon-star-solid"></i>
                         </div>
                         <div class="congrats__title">${ _s.journey.congrats }</div>
                         <div class="congrats__chapter-completed">${ _s.journey.completed } <strong>${ instance.world.selectedChapter.title }</strong>!</div>
-                        <div class="party-icons">
-                            <span class="party party-left"></span>
-                            <span class="party party-right"></span>
-                        </div>
                     </div>
                     <div class="splash splash__right"></div>
                 </div>
@@ -43,7 +39,7 @@ export default class Congrats {
     }
 
     animateStars(timeout) {
-        const stars = document.querySelectorAll(".congrats .star")
+        const stars = document.querySelectorAll(".congrats .stars .icon")
         stars.forEach((star, index) => {
             setTimeout(function() {
                 star.classList.add('filled')

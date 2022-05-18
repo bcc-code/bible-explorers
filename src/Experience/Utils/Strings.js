@@ -53,6 +53,10 @@ const strings = {
         "miniGames": {
             "sortingIcons": {
                 "title": "Sort the icons in the correct box",
+                "completed": {
+                    "title": "Well done!",
+                    "message": "You have completed the task! You can continue your journey"
+                }
             },
             "cableConnect": {
                 "title": "Cable connect game"
@@ -114,15 +118,19 @@ const strings = {
         },
         "miniGames": {
             "sortingIcons": {
-                "title": "Sorter ikonene i riktig boks"
-            },
-            "cableConnect": {
-                "title": "Kabel spil"
-            },
-            "reset": "Reset game",
-            "continue": "Continue journey",
-            "skip": "Complete"
-        }
+                "title": "Sorter ikonene i riktig boks",
+                "completed": {
+                    "title": "Bra jobba!",
+                    "message": "Du har fullført oppgaven! Du kan nå gå videre i tidsreisen"
+                }
+            }
+        },
+        "cableConnect": {
+            "title": "Kabel spil"
+        },
+        "reset": "Reset game",
+        "continue": "Continue journey",
+        "skip": "Complete"
     }
 }
 

@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Konva from 'konva'
 import _s from '../Utils/Strings.js'
+import Modal from '../Utils/Modal.js'
 
 let instance = null
 
@@ -61,7 +62,7 @@ export default class Game {
                     height: 80
                 },
                 sprite: {
-                    width: 360,
+                    width: 240,
                     height: 134
                 }
 
@@ -312,28 +313,11 @@ export default class Game {
         Object.values(instance.data.counter).forEach(c => totalCount += c);
         if (totalCount == instance.data.icons.length) {
 
-            const continueJourney = this.createButton("continue", this.sizes.width - this.data.box.x, this.sizes.height - 100, this.data.button.srcContinue.default, _s.miniGames.continue)
-            continueJourney.offset({
-                x: continueJourney.width() / 2,
-                y: continueJourney.height() / 2
-            })
+            instance.toggleGameComeplete()
 
-            const label = continueJourney.children.find(item => item.name() == "label")
-            label.offsetX(12)
-
-            continueJourney.on('mouseover', () => {
-                document.body.style.cursor = 'pointer'
-                const img = continueJourney.children.find(item => item.name() == "image")
-                instance.setNewImage(img, instance.data.button.srcContinue.hover)
-            })
-            continueJourney.on('mouseout', () => {
-                document.body.style.cursor = 'default'
-                const img = continueJourney.children.find(item => item.name() == "image")
-                instance.setNewImage(img, instance.data.button.srcContinue.default)
-            })
-
-            continueJourney.on('click', () => {
+            document.getElementById('continue_journey').addEventListener('click', () => {
                 instance.destroy()
+                instance.modal.destroy()
                 instance.program.advance()
             })
 
@@ -343,63 +327,19 @@ export default class Game {
         }
     }
 
-    completeContent() {
+    toggleGameComeplete() {
 
-        const complete = new Konva.Layer()
+        let html = `
+            <div class="modal__content congrats congrats__miniGame">
+                <div class="congrats__container">
+                    <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.sortingIcons.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
+                    <div class="congrats__chapter-completed">${_s.miniGames.sortingIcons.completed.message}!</div>
+                    <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
+                </div>
+            </div>
+        `
 
-        const completeBox = new Konva.Group({
-            width: instance.sizes.width,
-            height: instance.sizes.height,
-        })
-
-        completeBox.add(new Konva.Rect({
-            width: completeBox.width(),
-            height: completeBox.height(),
-            fillLinearGradientEndPointX: completeBox.width(),
-            fillLinearGradientColorStops: [
-                0, '#131A43',
-                1, '#3E306D'
-            ],
-            opacity: .8
-        }))
-
-        const textBox = new Konva.Group({
-            x: completeBox.width() / 2,
-            y: completeBox.height() / 2,
-            width: 700,
-            height: 500,
-            offset: {
-                x: 350,
-                y: 250
-            }
-        })
-
-        textBox.add(new Konva.Path({
-            data: 'M40.93 8 8.13 41.18C2.93 46.44 0 53.64 0 61.16v370.2c0 6.76 2.37 13.29 6.68 18.39l16.82 19.91c5.15 6.1 12.6 9.6 20.44 9.6h90.11c6.76 0 13.27 2.6 18.26 7.3l6.55 6.15c4.99 4.7 11.51 7.3 18.26 7.3h482.93c8.02 0 15.63-3.66 20.78-10.01l12.83-15.79c4.09-5.04 6.34-11.4 6.34-17.98v-93.98c0-8-3.32-15.62-9.12-20.93-5.77-5.29-9.09-12.86-9.12-20.83l-.87-246.46c-.03-7.53-2.99-14.73-8.23-19.98l-16.48-16.5c-5.06-5.07-11.83-7.9-18.89-7.9H501.07c-7.5 0-14.66-3.2-19.78-8.84L470.43 8.85C465.3 3.21 458.14.01 450.65.01H59.91c-7.1 0-13.91 2.87-18.98 8Z',
-            fillLinearGradientEndPointX: textBox.width(),
-            fillLinearGradientColorStops: [
-                0, '#131A43',
-                1, '#3E306D'
-            ],
-            stroke: '#0396e3',
-            strokeWidth: 4,
-            lineJoin: 'round',
-            lineCap: 'round'
-        }))
-
-        textBox.add(new Konva.Text({
-            text: 'Congrats',
-            fontSize: 48,
-            fontFamily: 'Archivo',
-            fill: 'white',
-            align: 'center',
-            width: textBox.width(),
-            y: textBox.height() / 2
-        }))
-
-        completeBox.add(textBox)
-        complete.add(completeBox)
-        // instance.stage.add(complete)
+        instance.modal = new Modal(html)
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
@@ -489,9 +429,6 @@ export default class Game {
                 }
             })
         })
-
-
-
 
         this.box.add(button)
 
@@ -616,10 +553,11 @@ export default class Game {
                 const imageObj = new Image()
                 imageObj.src = 'games/' + feedback + '.png'
                 imageObj.onload = function () {
-                    const blob = instance.setSprite(imageObj)
+
+                    const blob = instance.setSprite(button, imageObj)
+                    button.add(blob)
 
                     button.children[0].fill(color)
-                    button.add(blob)
                     blob.start()
 
                     blob.on('frameIndexChange.konva', function () {
@@ -644,20 +582,20 @@ export default class Game {
         }
     }
 
-    setSprite(imageObj) {
+    setSprite(button, imageObj) {
         const sprite = new Konva.Sprite({
-            x: instance.data.button.width / 2,
-            y: instance.data.button.height / 2,
-            width: instance.data.button.sprite.width,
-            height: instance.data.button.sprite.height,
+            x: button.width() / 2,
+            y: button.height() / 2,
+            width: this.data.button.sprite.width,
+            height: this.data.button.sprite.height,
             image: imageObj,
             animation: 'button',
-            animations: instance.animations,
+            animations: this.animations,
             frameRate: 8,
             frameIndex: 0,
             offset: {
-                x: instance.data.button.width / 2,
-                y: instance.data.button.height / 2
+                x: this.data.button.sprite.width / 2,
+                y: this.data.button.sprite.height / 2
             }
         })
 
