@@ -576,10 +576,13 @@ button,
             margin: 1.5rem 0;
         }
 
-        &-wrapper {
-            position: relative;
-            z-index: 2;
-        }
+
+    }
+
+    .chapter__text {
+        max-height: 40vh;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .chapter__attachments {
@@ -917,9 +920,9 @@ button,
 
         .downloading-progress {
             position: relative;
-            width: 9rem;
+            flex: 1;
+            margin: 0 1rem;
             height: 4px;
-            display: none;
 
             &::after {
                 content: '';
@@ -930,6 +933,21 @@ button,
                 height: 100%;
                 background-color: #fff;
                 opacity: 0.4;
+            }
+        }
+
+        .is-downloading {
+            width: 100%;
+            display: none;
+
+            span {
+                font-family: $berlin-sans-r;
+                text-transform: uppercase;
+                position: relative;
+                font-size: 1rem;
+                line-height: 2rem;
+                letter-spacing: 0.15rem;
+                color: #fff;
             }
         }
 
@@ -1000,8 +1018,13 @@ button,
     &.downloading {
         opacity: 1;
 
+        .chapter__offline {
+            display: none;
+        }
+
         .chapter__download .is-downloading {
-            display: block;
+            display: flex;
+            align-items: center;
         }
 
         .chapter__download {
@@ -1574,10 +1597,8 @@ button,
     &__title {
         position: relative;
         display: inline-block;
+        margin: 2rem 0;
         color: $accent2;
-        font-size: 4rem;
-        font-weight: bold;
-        margin: 40px 0;
     }
 
     &__chapter-completed {
@@ -1626,9 +1647,6 @@ button,
             transform: rotate(-10deg) scaleX(-1);
         }
     }
-
-
-
 
     // Mini Games
 

@@ -269,6 +269,8 @@ export default class World {
                             <span>${_s.offline.download}</span>
                         </div>
                         <div class="is-downloading">
+                            <span>${_s.offline.downloading}</span>
+
                             <div class="downloading-progress">
                                 <div class="progress-line"></div>
                             </div>
@@ -370,7 +372,6 @@ export default class World {
 
         chapterEl.classList.remove('download')
         chapterEl.classList.add('downloading')
-        chapterEl.querySelector('.chapter__offline span').innerText = _s.offline.downloading
 
         await this.downloadEpisodes(selectedChapter['episodes'], chapterId)
     }
