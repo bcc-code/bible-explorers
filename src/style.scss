@@ -527,11 +527,20 @@ button,
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        opacity: 0;
+    }
+
+    .chapter-selected+.chapter__content {
+        opacity: 1;
+    }
+
+    .chapter__description {
+        position: relative;
+        width: 100%;
+        padding: 3rem 6rem 6rem;
         background: $gradient;
         border-radius: 1rem;
         border: 5px solid $accent;
-        opacity: 0;
-        padding: 2rem 0;
 
         &::after {
             content: '';
@@ -552,16 +561,6 @@ button,
             height: 120px;
             width: 40px;
         }
-    }
-
-    .chapter-selected+.chapter__content {
-        opacity: 1;
-    }
-
-    .chapter__description {
-        position: relative;
-        width: 100%;
-        padding: 1rem 4rem;
 
         h2 {
             color: #fff;
@@ -573,6 +572,7 @@ button,
 
         p {
             color: #fff;
+            font-size: 1.25rem;
             margin: 1.5rem 0;
         }
 
@@ -598,6 +598,10 @@ button,
         }
 
         a {
+            color: $accent2;
+            font-family: $berlin-sans-r;
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
             text-decoration: none;
 
             .icon {
@@ -616,7 +620,6 @@ button,
         align-items: center;
         justify-content: flex-end;
         gap: 2rem;
-        padding: 0 4rem;
         z-index: 5;
 
         .button {
