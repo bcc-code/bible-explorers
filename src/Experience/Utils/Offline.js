@@ -155,10 +155,11 @@ export default class Offline {
                     r.onload = function (e) {
                         const blob = offline.getArrayBufferBlob(e)
                         const videoUrl = URL.createObjectURL(blob)
-                        const videoEl = offline.createVideoElement(data.name, videoUrl)
+                        const videoEl = document.createElement("div")
+                        videoEl.setAttribute('id', data.name)
                         document.getElementById('videos-container').appendChild(videoEl)
 
-                        callback(videoEl, data.name, videoUrl, thumbnailUrl)
+                        callback(data.name, videoUrl, thumbnailUrl)
                     }
 
                     r.readAsArrayBuffer(item.video)
@@ -177,19 +178,6 @@ export default class Offline {
         const uint8Array = new Uint8Array(contents)
         const arrayBuffer = uint8Array.buffer
         return new Blob([arrayBuffer])
-    }
-
-    createVideoElement = function (videoName, path) {
-        let video = document.createElement('video')
-        video.setAttribute('id', videoName)
-        video.crossOrigin = 'anonymous'
-        video.muted = false
-        video.loop = false
-        video.controls = true
-        video.autoplay = false
-        video.src = path
-
-        return video
     }
 
     markChapterIfAvailableOffline = function (chapter) {

@@ -117,7 +117,7 @@ export default class Program {
         let interactiveObjects = []
 
         if (this.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat("panel_time_switchers_holder")
+            interactiveObjects = interactiveObjects.concat(["panel_time_switchers_holder", "panel_screen"])
         }
         else if (this.stepType() == 'iris' || this.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
@@ -137,14 +137,17 @@ export default class Program {
     }
 
     startAction() {
-        if (this.clickedObject === 'tv_16x9_screen') {
-            // this.updateIrisTexture('SPEAK')
+        if (this.clickedObject == 'tv_16x9_screen') {
             this.taskDescription.toggleTaskDescription()
         }
 
-        else if (this.clickedObject === 'panel_time_switchers_holder') {
+        else if (this.clickedObject == 'panel_time_switchers_holder') {
             this.video.defocus()
             this.advance()
+        }
+
+        else if (this.clickedObject == 'panel_screen') {
+            this.video.play()
         }
     }
 

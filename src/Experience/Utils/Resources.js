@@ -29,6 +29,7 @@ export default class Resources extends EventEmitter {
         this.mediaItems = []
         this.mediaItemsScreens = []
         this.textureItems = []
+        this.videoPlayers = []
 
         this.loadManager()
         this.setLoaders()
@@ -156,9 +157,9 @@ export default class Resources extends EventEmitter {
         )
     }
 
-    loadTexturesLocally(videoEl, videoName, videoUrl, thumbnailUrl) {
+    loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
         resources.loadVideoThumbnail(videoName, thumbnailUrl)
-        resources.generateTextureForVideo(videoEl, videoName, videoUrl)
+        resources.streamLocally(videoName, videoUrl)
     }
 
     loadTexturesOnline(videoName, thumbnailUrl) {
@@ -173,6 +174,22 @@ export default class Resources extends EventEmitter {
                 this.textureItems[videoName] = texture
             }
         )
+    }
+
+    streamLocally(videoName, videoUrl) {
+        let options = {
+            src: {
+                type: 'video/mp4',
+                src: videoUrl
+            },
+            videojs: {
+                autoplay: false
+            }
+        }
+
+        resources.videoPlayers[videoName] = createVideoJsPlayer(videoName, options)
+        const video = resources.getGeneratedVideoElement(videoName)
+        resources.generateTextureForVideo(video, videoName, videoUrl)
     }
 
     async streamFromBtv(videoName) {
@@ -193,16 +210,15 @@ export default class Resources extends EventEmitter {
 
         let btvContainer = document.createElement('div')
         btvContainer.setAttribute('id', videoName)
-
         document.getElementById('videos-container').appendChild(btvContainer)
 
-        await btvplayer.load({
+        resources.videoPlayers[videoName] = await btvplayer.load({
             el: videoName,
             options: {
                 videojs: {
                     autoplay: false
                 }
-            },
+            }
         })
     }
 

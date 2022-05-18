@@ -447,10 +447,6 @@ export default class World {
             this.controlRoom.update()
         }
 
-        if (this.program && this.program.video) {
-            this.program.video.update()
-        }
-
         if (this.points) {
             this.points.update()
         }

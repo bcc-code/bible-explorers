@@ -316,14 +316,18 @@ button,
     top: 0;
     width: 100%;
     height: 100%;
-    // width: 1920px;
-    // height: 1080px;
     aspect-ratio: 16/9;
     z-index: -1;
+}
 
-    .vjs-control-bar {
-        display: none;
-    }
+.skip-video__btn {
+    @include button('../static/svgs/button_long_goTo.svg', '../static/svgs/button_long_goTo_hover.svg');
+
+    right: 2rem;
+    bottom: 9.5rem;
+    position: absolute;
+    font-size: 1.75rem;
+    z-index: 1;
 }
 
 #loading-screen {
@@ -972,8 +976,7 @@ button,
     &.downloading {
         opacity: 1;
 
-        .chapter__download .downloading-progress,
-        .chapter__download .downloading-label {
+        .chapter__download .is-downloading {
             display: block;
         }
 
@@ -987,8 +990,7 @@ button,
             display: none;
         }
 
-        .chapter__download .downloading-progress,
-        .chapter__download .downloading-label {
+        .chapter__download .is-downloading {
             display: none;
         }
 
@@ -1063,9 +1065,12 @@ button,
         &.task {
             border-radius: $radius;
             overflow: hidden;
+            aspect-ratio: 16/9;
+            width: 1440px;
 
             #irisVideoBg {
                 width: 100%;
+                height: 100%;
             }
 
             .task__content {
@@ -1207,246 +1212,6 @@ button,
     &.ended {
         transform-origin: top right;
         transition: transform 1.5s ease-in-out;
-    }
-}
-
-.video {
-    position: absolute;
-    top: 0;
-    pointer-events: none;
-
-    .css3dobject {
-        background-color: white;
-        pointer-events: none;
-
-        &.hide {
-            display: none;
-        }
-    }
-
-    &__play {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 16rem;
-        height: 16rem;
-        @include alignCenterVH();
-        cursor: pointer;
-        transition: .3s ease;
-
-        i {
-            margin-left: 2px;
-            color: #c0b6a1;
-            font-size: 18rem;
-        }
-
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-
-    &__controls,
-    &__timeline {
-        display: flex;
-        width: 100%;
-    }
-
-    &__controlsBtn {
-        color: #f1ebe5;
-        cursor: pointer;
-        pointer-events: all;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        width: 3rem;
-        height: 3rem;
-        font-size: 1.5rem;
-
-        opacity: 0.9;
-        transition: opacity ease 200ms;
-
-        i {
-            display: none;
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-            opacity: 1;
-        }
-
-        &[disabled] {
-            opacity: 0.2;
-            pointer-events: none !important;
-        }
-
-        &.hide {
-            display: none !important;
-        }
-    }
-
-    &__controlbar {
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, rgba(0, 0, 0, 0) 100%);
-        padding: 30px 40px;
-        transition: opacity ease 300ms;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        box-sizing: border-box;
-        opacity: 0;
-        pointer-events: none;
-
-        &.show-controls {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        &.hide {
-            display: none;
-        }
-    }
-
-    &__overlay {
-        bottom: 0;
-        display: block;
-        pointer-events: none;
-        position: absolute;
-        transform: translateX(-50%);
-        pointer-events: all;
-        border-radius: 15px;
-        overflow: hidden;
-
-
-        &.is-playing .icon-pause-solid {
-            display: inline-block;
-        }
-
-        &.is-paused .icon-play-solid {
-            display: inline-block;
-        }
-
-        &.is-muted .icon-volume-slash-solid {
-            display: inline-block;
-        }
-    }
-
-    &__overlay:not(.is-fullscreen) {
-        .icon-expand-solid {
-            display: inline-block;
-        }
-    }
-
-    &__overlay:not(.is-muted) {
-        .icon-volume-solid {
-            display: inline-block;
-        }
-    }
-
-    &__overlay:not(.in-frustum),
-    &.hide {
-        pointer-events: none !important;
-
-        * {
-            pointer-events: none !important;
-        }
-
-        .video__play {
-            opacity: 0;
-        }
-
-        .video__controlbar {
-            opacity: 0 !important;
-        }
-    }
-
-    &__overlay.is-playing {
-        .video__play {
-            display: none;
-        }
-    }
-
-    &__controls>*:not(:last-child) {
-        margin-right: 20px;
-    }
-
-    &__timetracker {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        font-size: 1.5rem;
-        padding-left: 40px;
-        padding-right: 40px;
-        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-        user-select: none;
-        color: #f1ebe5;
-        align-self: center;
-    }
-
-    &__fullscreen {
-        margin-left: auto;
-    }
-
-    &__timeline {
-        height: 16px;
-        margin-bottom: 20px;
-        pointer-events: all;
-        position: relative;
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-    }
-
-    &__loadedbar,
-    &__seekbar,
-    &__progressbar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 4px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0%;
-    }
-
-    &__loadbar {
-        background-color: rgba(255, 255, 255, 0.5);
-        width: 0%;
-    }
-
-    &__seekbar {
-        background-color: rgba(255, 255, 255, 0.7);
-        width: 0%;
-    }
-
-    &__progressbar {
-        background-color: #ff003b;
-        width: 0%;
-    }
-
-    &__progress-button {
-        background-color: #ff003b;
-        border-radius: 50%;
-        cursor: pointer;
-        left: 0%;
-        position: absolute;
-        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-        transform-origin: center;
-        width: 16px;
-        height: 16px;
-        z-index: 2;
     }
 }
 
@@ -1805,7 +1570,6 @@ button,
         }
     }
 
-
     @keyframes bounce-left {
         0% {
             opacity: 0;
@@ -1826,8 +1590,6 @@ button,
             transform: rotate(-10deg) scaleX(-1);
         }
     }
-
-
 
     .stars {
         position: absolute;
