@@ -280,12 +280,12 @@ export default class Game {
 
             continueJourney.on('mouseover', () => {
                 document.body.style.cursor = 'pointer'
-                const img = resetGame.children.find(item => item.name() == "image")
+                const img = continueJourney.children.find(item => item.name() == "image")
                 instance.setNewImage(img, instance.data.button.srcContinue.hover)
             })
             continueJourney.on('mouseout', () => {
                 document.body.style.cursor = 'default'
-                const img = resetGame.children.find(item => item.name() == "image")
+                const img = continueJourney.children.find(item => item.name() == "image")
                 instance.setNewImage(img, instance.data.button.srcContinue.default)
             })
 
@@ -516,7 +516,7 @@ export default class Game {
             offset: {
                 y: 12
             },
-            id: 'label',
+            name: 'label',
             listening: false
         }))
 
@@ -539,14 +539,7 @@ export default class Game {
         const boxCategory = icon.name().replace('icon_', '')
         const correctBox = instance.boxes.find(b => b.id() == boxCategory)
 
-        if (
-            icon.x() > correctBox.x() && icon.x() < correctBox.x() + correctBox.width() &&
-            icon.y() > correctBox.y() && icon.y() < correctBox.y() + correctBox.height()
-        ) {
-            return true
-        } else {
-            return false
-        }
+        return instance.intersected(icon, correctBox)
     }
 
     isNearCell(icon, cell) {
