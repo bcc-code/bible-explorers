@@ -24,7 +24,7 @@ const strings = {
             "codeUnlock": "Code unlock",
             "taskDescription": "Task description",
             "questions": "Questions",
-            "getTask": "Ready for the task",
+            "getTask": "Ready",
             "submit": "Submit",
         },
         "archive": "Archive",
@@ -43,7 +43,7 @@ const strings = {
             "downloading": "Downloading"
         },
         "tooltips": {
-            "video": "Skip video",
+            "video": "Play video",
             "iris": "Listen to task description from Iris",
             "task": "Complete the task",
             "questions": "Answer the questions",
@@ -64,7 +64,7 @@ const strings = {
 
             "reset": "Reset game",
             "continue": "Continue journey",
-            "skip": "Complete"
+            "skip": "Skip"
         }
     },
     "no": {
@@ -109,7 +109,7 @@ const strings = {
             "downloading": "Laster ned"
         },
         "tooltips": {
-            "video": "Hopp over video",
+            "video": "Spill av video",
             "iris": "Hør på oppgavebeskrivelse fra Iris",
             "task": "Fullfør oppgaven",
             "questions": "Svar på spørsmålene",
@@ -130,7 +130,7 @@ const strings = {
         },
         "reset": "Reset game",
         "continue": "Continue journey",
-        "skip": "Complete"
+        "skip": "Hopp over"
     }
 }
 

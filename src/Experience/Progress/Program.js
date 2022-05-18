@@ -23,6 +23,7 @@ export default class Program {
         this.highlight = this.world.highlight
         this.programData = this.world.selectedChapter.program
         this.points = this.experience.world.points
+        this.debug = this.experience.debug
 
         this.archive = new Archive()
         this.timer = new Timer()
@@ -117,7 +118,11 @@ export default class Program {
         let interactiveObjects = []
 
         if (this.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat(["panel_time_switchers_holder", "panel_screen"])
+            interactiveObjects = interactiveObjects.concat(["panel_screen"])
+
+            if (this.debug.active) {
+                interactiveObjects = interactiveObjects.concat(["panel_time_switchers_holder"])
+            }
         }
         else if (this.stepType() == 'iris' || this.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
