@@ -270,7 +270,6 @@ export default class World {
                         </div>
                         <div class="is-downloading">
                             <span>${_s.offline.downloading}</span>
-
                             <div class="downloading-progress">
                                 <div class="progress-line"></div>
                             </div>
