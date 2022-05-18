@@ -293,9 +293,11 @@ export default class World {
         instance.menu.chapterContent.querySelector('h2').innerText = chapter.title
         instance.menu.chapterContent.querySelector('p').innerText = chapter.content
 
+        chapterAttachments.querySelector('.attachments').innerHTML = ''
+        chapterAttachments.querySelector('h3').innerText = ''
+
         if (chapter.attachments.length) {
             chapterAttachments.querySelector('h3').innerText = _s.journey.attachments + ':'
-            chapterAttachments.querySelector('.attachments').innerHTML = ''
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
                     <a href="${attachment.url}" target="_blank">

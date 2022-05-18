@@ -1077,6 +1077,7 @@ button,
         }
     }
 
+    body.admin &,
     &:not(.locked) {
         .icon-play-solid {
             display: inline-block;
@@ -1098,6 +1099,7 @@ button,
         }
     }
 
+    body.admin &,
     body.ak_leder &:not(.locked) {
         .chapter__download {
             display: flex;
