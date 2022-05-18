@@ -13,6 +13,10 @@ export default class Game {
         this.debug = this.experience.debug
 
         this.data = {
+            canvas: {
+                width: this.sizes.width,
+                height: this.sizes.height
+            },
             colors: {
                 orange: "#fbaf4e",
                 orangeOultine: "#d27235",
@@ -62,6 +66,7 @@ export default class Game {
         this.init()
         this.createAllLayers()
         this.addEventListeners()
+        window.addEventListener('resize', instance.resizeCanvas);
     }
 
     init() {
@@ -88,6 +93,17 @@ export default class Game {
         instance.data.icons = gameData
 
         document.body.classList.add('freeze')
+    }
+
+    resizeCanvas() {
+        var containerWidth = window.innerWidth
+        var containerHeight = window.innerHeight
+
+        var scaleX = containerWidth / instance.data.canvas.width
+        var scaleY = containerHeight / instance.data.canvas.height
+
+        instance.stage.width(instance.data.canvas.width * scaleX)
+        instance.stage.height(instance.data.canvas.height * scaleY)
     }
 
     createAllLayers() {
@@ -260,7 +276,6 @@ export default class Game {
                     instance.program.advance()
                 })
             }
-
         })
     }
 
@@ -611,5 +626,6 @@ export default class Game {
     destroy() {
         document.getElementById('sort-game').remove()
         document.body.classList.remove('freeze')
+        window.removeEventListener('resize', instance.resizeCanvas);
     }
 }
