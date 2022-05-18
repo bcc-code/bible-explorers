@@ -973,7 +973,6 @@ button,
         .downloading-complete {
             display: none;
         }
-
     }
 
     .button__round {
@@ -995,7 +994,7 @@ button,
         }
     }
 
-    &.locked {
+    body:not(.admin) &.locked {
         opacity: 0.25;
         pointer-events: none;
 
@@ -1010,7 +1009,7 @@ button,
         }
     }
 
-    body.admin &:not(.locked) {
+    body.ak_leder &:not(.locked) {
         .chapter__download {
             display: flex;
             align-items: center;

@@ -35,9 +35,12 @@ window.onload = async () => {
         let userData = await experience.auth0.getUser()
         let personId = userData['https://login.bcc.no/claims/personId']
 
-        experience.resources.fetchApiThenCache(_api.isAkLeder(personId), function(hasAccess) {
-            if (hasAccess === true)
-                document.body.classList.add('admin')
+        experience.resources.fetchApiThenCache(_api.getRoles(personId), function(roles) {
+            if (roles.includes("administrator") || roles.includes("editor"))
+                document.body.classList.add("admin", "ak_leder")
+
+            if (roles.includes("ak_leder"))
+                document.body.classList.add("ak_leder")
         })
     }
 }

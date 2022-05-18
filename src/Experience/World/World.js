@@ -296,6 +296,7 @@ export default class World {
 
         if (chapter.attachments.length) {
             chapterAttachments.querySelector('h3').innerText = _s.journey.attachments + ':'
+            chapterAttachments.querySelector('.attachments').innerHTML = ''
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
                     <a href="${attachment.url}" target="_blank">
