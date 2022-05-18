@@ -1,6 +1,3 @@
-// @import "./btvplayer/video-js.min.scss";
-// @import "./btvplayer/videojs-brunstadtv-skin.scss";
-
 @import "./icons.scss";
 @import "./fonts.scss";
 
@@ -582,6 +579,28 @@ button,
         &-wrapper {
             position: relative;
             z-index: 2;
+        }
+    }
+
+    .chapter__attachments {
+        h3, li, a {
+            color: #fff;
+        }
+
+        .attachment {
+            margin: 0.5rem 0;
+        }
+
+        a {
+            text-decoration: none;
+
+            .icon {
+                margin-right: 4px;
+            }
+
+            &:hover .attachment__name {
+                text-decoration: underline;
+            }
         }
     }
 

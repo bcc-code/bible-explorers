@@ -17,7 +17,8 @@ const strings = {
             "restart": "Restart journey",
             "congrats": "Congratulations!",
             "completed": "You have completed chapter",
-            "back": "Back"
+            "back": "Back",
+            "attachments": "Attachments"
         },
         "task": {
             "codeUnlock": "Code unlock",
@@ -78,7 +79,8 @@ const strings = {
             "restart": "Start reise på nytt",
             "congrats": "Gratulerer!",
             "completed": "Du har fullført",
-            "back": "Tilbake"
+            "back": "Tilbake",
+            "attachments": "Vedlegg"
         },
         "task": {
             "codeUnlock": "Code unlock",

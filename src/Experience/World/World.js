@@ -285,11 +285,27 @@ export default class World {
     setDescriptionHtml() {
         let chapter = instance.selectedChapter
         let chapterDescription = instance.menu.chapterContent.querySelector('.chapter__description')
+        let chapterAttachments = instance.menu.chapterContent.querySelector('.chapter__attachments')
+
+        console.log(chapter);
 
         chapterDescription.setAttribute('data-id', chapter.id)
         chapterDescription.setAttribute('data-slug', chapter.category)
         instance.menu.chapterContent.querySelector('h2').innerText = chapter.title
         instance.menu.chapterContent.querySelector('p').innerText = chapter.content
+
+        if (chapter.attachments.length) {
+            chapterAttachments.querySelector('h3').innerText = _s.journey.attachments + ':'
+            chapter.attachments.forEach((attachment) => {
+                chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
+                    <a href="${attachment.url}" target="_blank">
+                        <span class="icon icon-download-solid"></span>
+                        <span class="attachment__name">${attachment.title}</span>
+                    </a>
+                </div>`
+            })
+        }
+
         instance.menu.chapterItems.classList.add('chapter-selected')
     }
 
