@@ -8,6 +8,7 @@ export default class Game {
     constructor() {
         this.experience = new Experience()
         this.world = this.experience.world
+        this.audio = this.world.audio
         this.sizes = this.experience.sizes
         this.debug = this.experience.debug
 
@@ -162,10 +163,8 @@ export default class Game {
         this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset)
 
         if (this.debug.active) {
-            console.log('active');
             this.createButton("skip", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
         }
-
     }
 
     addEventListeners() {
@@ -198,7 +197,7 @@ export default class Game {
                     return
                 }
 
-                if (instance.movedToRightBox(icon)) {
+                if (instance.movedToCorrectBox(icon)) {
                     feedback = 'correct'
                     const cell = instance.cells[category][instance.data.counter[category]++]
 
@@ -209,6 +208,7 @@ export default class Game {
                     })
 
                     icon.draggable(false)
+                    instance.audio.playCodeUnlockedSound()
                     instance.checkGameFinished()
                 }
                 else {
@@ -220,6 +220,8 @@ export default class Game {
                         y: instance.draggedIconPosition.y,
                         duration: 0.5
                     })
+
+                    instance.audio.playWrongSound()
                 }
 
                 const img = instance.buttons.find(b => b.id() === selectedBox).children.find(item => item.name() == "image")
@@ -293,7 +295,7 @@ export default class Game {
             })
 
             setTimeout(function () {
-                // console.log('Game finished!')
+                instance.audio.playCongratsSound()
             }, 2000)
         }
     }
@@ -533,7 +535,7 @@ export default class Game {
         )
     }
 
-    movedToRightBox(icon) {
+    movedToCorrectBox(icon) {
         const boxCategory = icon.name().replace('icon_', '')
         const correctBox = instance.boxes.find(b => b.id() == boxCategory)
 
@@ -617,5 +619,4 @@ export default class Game {
         document.getElementById('sort-game').remove()
         document.body.classList.remove('freeze')
     }
-
 }
