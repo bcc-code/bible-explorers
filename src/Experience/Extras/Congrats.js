@@ -34,7 +34,7 @@ export default class Congrats {
 
         instance.modal = new Modal(html, instance.world.finishJourney)
 
-        instance.world.audio.playCodeUnlockedSound()
+        instance.world.audio.playCongratsSound()
         instance.animateStars(500)
     }
 

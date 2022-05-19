@@ -13,6 +13,17 @@ export default class Game {
         this.sizes = this.experience.sizes
         this.debug = this.experience.debug
 
+        instance = this
+    }
+
+    toggleSortingGame() {
+        this.init()
+        this.createAllLayers()
+        this.addEventListeners()
+        window.addEventListener('resize', instance.resize);
+    }
+
+    init() {
         this.data = {
             canvas: {
                 width: this.sizes.width,
@@ -27,8 +38,8 @@ export default class Game {
                 wrong: "#ff0000"
             },
             box: {
-                x: 200,
-                y: 200,
+                x: this.sizes.width / 15,
+                y: 225,
                 width: 410,
                 height: 760,
                 strokeWidth: 10,
@@ -65,16 +76,19 @@ export default class Game {
                     width: 240,
                     height: 134
                 }
-
             },
-
+            counter: {
+                correct: 0,
+                wrong: 0
+            },
+            icons: []
         }
 
         const spriteW = this.data.button.sprite.width
         const spriteH = this.data.button.sprite.width
 
         this.animations = {
-            // x, y, width, height (8frames)
+            // x, y, width, height (8 frames)
             button: [
                 0, 0, spriteW, spriteH,
                 spriteW * 2, 0, spriteW, spriteH,
@@ -84,28 +98,8 @@ export default class Game {
                 spriteW * 6, 0, spriteW, spriteH,
                 spriteW * 7, 0, spriteW, spriteH,
                 spriteW * 8, 0, spriteW, spriteH,
-            ],
-            connected: [
-
             ]
         }
-
-        instance = this
-    }
-
-    toggleSortingGame() {
-        this.init()
-        this.createAllLayers()
-        this.addEventListeners()
-        window.addEventListener('resize', instance.resizeCanvas);
-    }
-
-    init() {
-        this.data.counter = {
-            correct: 0,
-            wrong: 0
-        }
-        this.data.icons = []
 
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "sort-game")
@@ -132,29 +126,8 @@ export default class Game {
         document.body.classList.add('freeze')
     }
 
-    resizeCanvas() {
-        var containerWidth = window.innerWidth
-        var containerHeight = window.innerHeight
-
-        var scaleX = containerWidth / instance.data.canvas.width
-        var scaleY = containerHeight / instance.data.canvas.height
-
-        instance.stage.width(instance.data.canvas.width * scaleX)
-        instance.stage.height(instance.data.canvas.height * scaleY)
-    }
-
     createAllLayers() {
         this.layer = new Konva.Layer()
-
-        // this.layer.add(new Konva.Text({
-        //     text: _s.miniGames.sortingIcons.title,
-        //     fontSize: 48,
-        //     fontFamily: 'Berlin Sans FB',
-        //     fill: 'white',
-        //     align: 'center',
-        //     width: this.sizes.width,
-        //     y: 100
-        // }))
 
         this.leftBox = this.createBox(
             this.data.box.x,
@@ -188,7 +161,7 @@ export default class Game {
         this.container = []
         this.grids = []
         this.buttons = []
-        this.actions = []
+        this.btnActions = []
         this.cells = {
             'correct': [],
             'wrong': []
@@ -213,7 +186,7 @@ export default class Game {
             instance.icons.push(icon)
         })
 
-        this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset)
+        this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
 
         if (this.debug.active) {
             this.createButton("skip", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
@@ -261,8 +234,12 @@ export default class Game {
                     })
 
                     icon.draggable(false)
-                    instance.audio.playCodeUnlockedSound()
-                    instance.checkGameFinished()
+
+                    if (instance.gameIsFinished()) {
+                        setTimeout(instance.finishGame, 1500)
+                    } else {
+                        instance.audio.playCorrectSound()
+                    }
                 }
                 else {
                     feedback = 'wrong'
@@ -281,7 +258,7 @@ export default class Game {
             })
         })
 
-        this.actions.forEach(button => {
+        this.btnActions.forEach((button, index) => {
             button.on('mouseover', () => {
                 document.body.style.cursor = 'pointer'
                 const img = button.children.find(item => item.name() == "image")
@@ -314,27 +291,24 @@ export default class Game {
         })
     }
 
-    checkGameFinished() {
+    gameIsFinished() {
         let totalCount = 0
         Object.values(instance.data.counter).forEach(c => totalCount += c);
-        if (totalCount == instance.data.icons.length) {
-
-            instance.toggleGameComeplete()
-
-            document.getElementById('continue_journey').addEventListener('click', () => {
-                instance.destroy()
-                instance.modal.destroy()
-                instance.program.advance()
-            })
-
-            setTimeout(function () {
-                instance.audio.playCongratsSound()
-            }, 2000)
-        }
+        return totalCount == instance.data.icons.length            
     }
 
-    toggleGameComeplete() {
+    finishGame() {
+        instance.toggleGameComplete()
+        instance.audio.playCongratsSound()
 
+        document.getElementById('continue_journey').addEventListener('click', () => {
+            instance.destroy()
+            instance.modal.destroy()
+            instance.program.advance()
+        })
+    }
+
+    toggleGameComplete() {
         let html = `
             <div class="modal__content congrats congrats__miniGame">
                 <div class="congrats__container">
@@ -458,8 +432,8 @@ export default class Game {
 
     createIcon(data) {
         const icon = new Konva.Group({
-            x: instance.getIconPosition().x,
-            y: instance.getIconPosition().y,
+            x: instance.getIconPosition(instance.icons.length).x,
+            y: instance.getIconPosition(instance.icons.length).y,
             width: this.data.icon.width,
             height: this.data.icon.height,
             draggable: true,
@@ -477,13 +451,14 @@ export default class Game {
         return icon
     }
 
-    createButton(id, x, y, imgSrc, text) {
+    createButton(id, x, y, imgSrc, text, offset = { x: 0, y: 0 }) {
         const button = new Konva.Group({
             x: x,
             y: y,
             width: this.data.button.width,
             height: this.data.button.height,
-            id: id
+            id: id,
+            offset: offset
         })
 
         Konva.Image.fromURL(imgSrc, image => {
@@ -513,7 +488,7 @@ export default class Game {
             listening: false
         }))
 
-        this.actions.push(button)
+        this.btnActions.push(button)
         this.layer.add(button)
 
         return button
@@ -535,20 +510,6 @@ export default class Game {
         return instance.intersected(icon, correctBox)
     }
 
-    isNearCell(icon, cell) {
-        const cellX = instance.data.box.x + cell.x()
-        const cellY = instance.data.box.y + cell.y()
-
-        if (
-            icon.x() > cellX && icon.x() < cellX + cell.width() &&
-            icon.y() > cellY && icon.y() < cellY + cell.height()
-        ) {
-            return true
-        } else {
-            return false
-        }
-    }
-
     sortingFeedback(selectedBox, feedback) {
         const color = instance.data.colors[feedback]
 
@@ -559,7 +520,6 @@ export default class Game {
                 const imageObj = new Image()
                 imageObj.src = 'games/' + feedback + '.png'
                 imageObj.onload = function () {
-
                     const blob = instance.setSprite(button, imageObj)
                     button.add(blob)
 
@@ -567,7 +527,6 @@ export default class Game {
                     blob.start()
 
                     blob.on('frameIndexChange.konva', function () {
-
                         if (this.frameIndex() == 7) {
                             blob.stop()
                             button.children[0].fill('blue')
@@ -577,7 +536,6 @@ export default class Game {
                 }
             }
         })
-
     }
 
     setNewImage(img, src) {
@@ -608,25 +566,55 @@ export default class Game {
         return sprite
     }
 
-    getIconPosition() {
-        const iconsPerRow = 3
+    getIconPosition(index) {
+        const iconsWrapperWidth = instance.sizes.width - (instance.data.box.x + instance.data.box.width) * 2
         const marginGutter = {
             top: 25,
             between: 50
         }
-        marginGutter.sides = (instance.sizes.width - (instance.data.box.x + instance.data.box.width) * 2 - iconsPerRow * (instance.data.icon.width + marginGutter.between)) / 2
+
+        const boxSize = instance.data.icon.width + marginGutter.between
+        const iconsPerRow = Math.max(Math.min(Math.floor((iconsWrapperWidth - 100) / boxSize), 4), 2) // between [2-4]
+        marginGutter.sides = (iconsWrapperWidth - iconsPerRow * instance.data.icon.width - (iconsPerRow - 1) * marginGutter.between) / 2
 
         const position = {
-            x: instance.data.box.x + instance.data.box.width + marginGutter.sides + (instance.icons.length % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
-            y: instance.data.box.y + marginGutter.top + Math.floor(instance.icons.length / iconsPerRow) * (instance.data.icon.height + marginGutter.between)
+            x: instance.data.box.x + instance.data.box.width + marginGutter.sides + (index % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
+            y: instance.data.box.y + marginGutter.top + Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between)
         }
 
         return position
     }
 
+    resize() {
+        var containerWidth = window.innerWidth
+        var containerHeight = window.innerHeight
+        var scaleX = containerWidth / instance.data.canvas.width
+        var scaleY = containerHeight / instance.data.canvas.height
+
+        // Set stage dimension
+        instance.stage.width(instance.data.canvas.width * scaleX)
+        instance.stage.height(instance.data.canvas.height * scaleY)
+        
+        // Set boxes position
+        instance.leftBox.x(instance.sizes.width / 15)
+        instance.rightBox.x(instance.stage.width() - instance.data.box.width - instance.sizes.width / 15)
+
+        // Set icons position
+        instance.icons.forEach((icon, index) => {
+            icon.position(instance.getIconPosition(index))
+        })
+
+        // Set action buttons position
+        instance.btnActions.find(btn => btn.id() == "reset").x(instance.sizes.width / 2)
+
+        if (instance.debug.active) {
+            instance.btnActions.find(btn => btn.id() == "skip").x(instance.data.box.x)
+        }
+    }
+
     destroy() {
         document.getElementById('sort-game').remove()
         document.body.classList.remove('freeze')
-        window.removeEventListener('resize', instance.resizeCanvas);
+        window.removeEventListener('resize', instance.resize);
     }
 }
