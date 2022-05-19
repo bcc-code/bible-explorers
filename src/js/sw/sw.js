@@ -29,5 +29,16 @@ const btvPlayer = new Route(({url}) => {
   ]
 }))
 
+const castFramework = new Route(({url}) => {
+  return url === 'https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js'
+}, new NetworkFirst({
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200]
+    })
+  ]
+}))
+
 registerRoute(btvPlayer);
+registerRoute(castFramework);
 precacheAndRoute(self.__WB_MANIFEST)
