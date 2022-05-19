@@ -33,7 +33,8 @@ module.exports = {
             new WorkboxPlugin.InjectManifest({
                 swSrc: "./src/js/sw/sw.js",
                 swDest: "./sw.js",
-                maximumFileSizeToCacheInBytes: 20000000
+                maximumFileSizeToCacheInBytes: 20000000,
+                exclude: [/\.gitkeep$/, /\index.html$/,  /\style.css$/,  /\script.js$/]
             })
         ],
     module:

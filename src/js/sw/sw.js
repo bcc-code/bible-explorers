@@ -19,6 +19,16 @@ import { Route, registerRoute } from 'workbox-routing'
 import { NetworkFirst } from 'workbox-strategies'
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
+const assets = new Route(({url}) => {
+  return url === '/index.html' || url === '/style.css' || url === '/script.js'
+}, new NetworkFirst({
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200]
+    })
+  ]
+}))
+
 const btvPlayer = new Route(({url}) => {
   return url === 'https://brunstad.tv/Content/js/btvplayer.js'
 }, new NetworkFirst({
@@ -39,6 +49,7 @@ const castFramework = new Route(({url}) => {
   ]
 }))
 
+registerRoute(assets);
 registerRoute(btvPlayer);
 registerRoute(castFramework);
 precacheAndRoute(self.__WB_MANIFEST)
