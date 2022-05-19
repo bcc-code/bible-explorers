@@ -9,8 +9,8 @@ const strings = {
             "medium": "Medium (540p)",
             "high": "High (1080p)"
         },
-        "conceptDescription": "Sunday school teachers and mentors will have a whole new tool that can captivate and involve children, bringing the Bible to life for them in a completely new way.",
-        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
+        "conceptDescription": "Join our time travels and explore the book that can answer all questions",
+        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Explorers.",
         "journey": {
             "start": "Start journey",
             "continue": "Continue journey",
@@ -44,7 +44,7 @@ const strings = {
         },
         "tooltips": {
             "video": "Play video",
-            "iris": "Listen to task description from Iris",
+            "iris": "Talk to Iris",
             "task": "Complete the task",
             "questions": "Answer the questions",
             "code": "Break the code",
@@ -61,22 +61,21 @@ const strings = {
             "cableConnect": {
                 "title": "Cable connect game"
             },
-
             "reset": "Reset game",
             "continue": "Continue journey",
             "skip": "Skip"
         }
     },
     "no": {
-        "loading": "Loader",
+        "loading": "Laster",
         "qualities": {
             "title": "Velg kvalitet",
             "low": "Lav (270p)",
             "medium": "Medium (540p)",
             "high": "Høy (1080p)"
         },
-        "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
-        "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
+        "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
+        "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Explorers.",
         "journey": {
             "start": "Start tidsreise",
             "continue": "Fortsett tidsreise",
@@ -87,7 +86,7 @@ const strings = {
             "attachments": "Vedlegg"
         },
         "task": {
-            "codeUnlock": "Code unlock",
+            "codeUnlock": "Skriv riktig tall",
             "taskDescription": "Oppgavebeskrivelse",
             "questions": "Spørsmål",
             "getTask": "Gå til oppgave",
@@ -110,7 +109,7 @@ const strings = {
         },
         "tooltips": {
             "video": "Spill av video",
-            "iris": "Hør på oppgavebeskrivelse fra Iris",
+            "iris": "Snakk med Iris",
             "task": "Fullfør oppgaven",
             "questions": "Svar på spørsmålene",
             "code": "Løs koden",
@@ -123,14 +122,14 @@ const strings = {
                     "title": "Bra jobba!",
                     "message": "Du har fullført oppgaven! Du kan nå gå videre i tidsreisen"
                 }
-            }
-        },
-        "cableConnect": {
-            "title": "Kabel spil"
-        },
-        "reset": "Reset game",
-        "continue": "Continue journey",
-        "skip": "Hopp over"
+            },
+            "cableConnect": {
+                "title": "Kabel spill"
+            },
+            "reset": "Start spill på nytt",
+            "continue": "Fortsett reisen",
+            "skip": "Fullfør"
+        }
     }
 }
 
