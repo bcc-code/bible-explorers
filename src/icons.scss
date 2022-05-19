@@ -24,6 +24,15 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+
+.icon-arrow-left-long-to-line-solid:before {
+    content: "\e90f";
+}
+
+.icon-check-solid:before {
+    content: "\e910";
+}
+
 .icon-download-solid:before {
     content: "\e90e";
 }

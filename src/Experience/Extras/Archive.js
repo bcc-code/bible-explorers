@@ -29,7 +29,7 @@ export default class Archive {
         else {
             let html = `
                 <div class="modal__content archive">
-                    <div class="archive__header heading"><div class="icon"><i></i></div><span>${ _s.archive }</span></div>
+                    <div class="archive__header heading"><div class="icon icon-list-solid"><i></i></div><span>${ _s.archive }</span></div>
                     <ul class="archive__sidebar">`;
                         archive.facts.forEach((fact, index) => {
                             html += `<li class="${ index == 0 ? 'visible' : '' }" data-id="${ index }">${ fact.title }</li>`
