@@ -14,7 +14,7 @@ export default [
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/Controlroom_low_v11.glb'
+        path: 'models/Controlroom_low_v11_2.glb'
     },
     {
         name: 'baked',
@@ -40,5 +40,10 @@ export default [
         name: 'iris',
         type: 'videoTexture',
         path: 'textures/iris.mp4'
+    },
+    {
+        name: 'hud',
+        type: 'videoTexture',
+        path: 'textures/screen_hud.mp4'
     }
 ]

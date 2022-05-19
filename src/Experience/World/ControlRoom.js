@@ -65,9 +65,9 @@ export default class ControlRoom {
         this.arrow_h = this.resources.scene.children.find(child => child.name === 'arrow_H')
         this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
 
-        this.roomTexture.push(this.controlRoom, this.tablet, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
+        this.roomTexture.push(this.controlRoom, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
         this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
-        this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9)
+        this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet)
     }
 
     getTextures() {
@@ -96,6 +96,10 @@ export default class ControlRoom {
 
             if (child.name === 'tv_16x9_screen') {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['iris'].item })
+            }
+
+            if(child.name === "panel_screen") {
+                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['hud'].item })
             }
 
             if (child.material.map) {

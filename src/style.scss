@@ -1777,6 +1777,22 @@ button,
 // #endregion
 
 // #region MiniGames
+.game__title {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 4rem;
+    text-align: center;
+
+    h1 {
+        display: inline-block;
+        color: #fff;
+        padding: 1rem 4rem;
+        background: $gradient2;
+        border-radius: 1.5rem;
+    }
+}
+
 .code-unlock {
     width: 640px;
 
@@ -1832,7 +1848,6 @@ button,
         position: relative;
     }
 
-
     &__input {
         text-align: left;
         z-index: 1;
@@ -1856,18 +1871,14 @@ button,
         display: flex;
         justify-content: center;
         align-items: center;
-    }
 
-    &__btn:nth-child(3n + 1) {
-        margin-left: 0;
-    }
+        &--backspace {
+            background: #fe7968;
+        }
 
-    &__btn--backspace {
-        background: #fe7968;
-    }
-
-    &__btn--confirm {
-        background: #1DBC60;
+        &--confirm {
+            background: #1DBC60;
+        }
     }
 
     .heading .icon {
