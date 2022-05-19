@@ -20,7 +20,7 @@ import { NetworkFirst } from 'workbox-strategies'
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 const assets = new Route(({url}) => {
-  return url === '/index.html' || url === '/style.css' || url === '/script.js'
+  return url === '/'
 }, new NetworkFirst({
   plugins: [
     new CacheableResponsePlugin({
