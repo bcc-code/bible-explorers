@@ -316,7 +316,7 @@ export default class World {
     }
 
     selectChapterListeners() {
-        document.querySelectorAll("body.ak_leder:not(.admin) .chapter:not(.locked), body.admin .chapter").forEach((chapter) => {
+        document.querySelectorAll(".chapter:not(.locked), body.admin .chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
                 instance.addClassToSelectedChapter(chapter)
                 instance.updateSelectedChapterData(chapter)
@@ -326,7 +326,7 @@ export default class World {
             })
         })
 
-        document.querySelectorAll("body.ak_leder:not(.admin) .chapter:not(.locked) .chapter__offline, body.admin .chapter .chapter__offline").forEach(function (chapter) {
+        document.querySelectorAll(".chapter:not(.locked) .chapter__offline, body.admin .chapter__offline").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
