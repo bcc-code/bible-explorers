@@ -23,8 +23,7 @@ module.exports = {
 
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, '../src/index.html'),
-                minify: true,
-                hash: true
+                minify: true
             }),
 
             new MiniCSSExtractPlugin({
