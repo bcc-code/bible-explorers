@@ -108,7 +108,7 @@ export default class Video {
     }
 
     focus() {
-        instance.camera.zoomIn()
+        instance.camera.zoomIn(1500)
         instance.portalScreen.material.color.set(new THREE.Color().setRGB(1, 1, 1))
     }
 
@@ -118,16 +118,12 @@ export default class Video {
             if (document.fullscreenElement) {
                 instance.video().exitFullscreen()
             }
-            instance.camera.zoomOut()
         }
     }
 
     finish() {
         instance.defocus()
-
-        setTimeout(function () {
-            instance.world.program.advance()
-        }, instance.camera.data.moveDuration)
+        instance.world.program.advance()
     }
 
     togglePlay() {

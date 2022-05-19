@@ -140,7 +140,7 @@ export default class Camera {
             this.updateCameraTween.stop()
 
         if (this.zoomInTween)
-            this.zoomOut()
+            this.zoomOut(1500)
 
         const from = {
             cameraPosition: new THREE.Vector3().copy(this.instance.position),
@@ -184,9 +184,9 @@ export default class Camera {
         this.controls.autoRotate = false
     }
 
-    zoomIn() {
+    zoomIn(time) {
         this.zoomInTween = new TWEEN.Tween(this.controls.object)
-            .to({ zoom: 1.3 }, 5000)
+            .to({ zoom: 1.3 }, time)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 this.instance.updateProjectionMatrix()
@@ -194,9 +194,9 @@ export default class Camera {
             .start()
     }
 
-    zoomOut() {
+    zoomOut(time) {
         this.zoomInTween = new TWEEN.Tween(this.controls.object)
-            .to({ zoom: 1 }, 3500)
+            .to({ zoom: 1 }, time)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 this.instance.updateProjectionMatrix()
