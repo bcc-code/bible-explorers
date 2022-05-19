@@ -111,6 +111,10 @@ export default class Game {
         gameWrapper.setAttribute("id", "sort-game")
         document.body.appendChild(gameWrapper)
 
+        const title = document.createElement('div')
+        title.classList.add('game__title')
+        title.innerHTML = "<h1>" + _s.miniGames.sortingIcons.title + "</h1>"
+
         this.stage = new Konva.Stage({
             container: 'sort-game',
             width: this.sizes.width,
@@ -122,6 +126,8 @@ export default class Game {
 
         instance.data.noOfIcons = gameData.length
         instance.data.icons = gameData
+
+        gameWrapper.prepend(title)
 
         document.body.classList.add('freeze')
     }
@@ -140,15 +146,15 @@ export default class Game {
     createAllLayers() {
         this.layer = new Konva.Layer()
 
-        this.layer.add(new Konva.Text({
-            text: _s.miniGames.sortingIcons.title,
-            fontSize: 48,
-            fontFamily: 'Berlin Sans FB',
-            fill: 'white',
-            align: 'center',
-            width: this.sizes.width,
-            y: 100
-        }))
+        // this.layer.add(new Konva.Text({
+        //     text: _s.miniGames.sortingIcons.title,
+        //     fontSize: 48,
+        //     fontFamily: 'Berlin Sans FB',
+        //     fill: 'white',
+        //     align: 'center',
+        //     width: this.sizes.width,
+        //     y: 100
+        // }))
 
         this.leftBox = this.createBox(
             this.data.box.x,
