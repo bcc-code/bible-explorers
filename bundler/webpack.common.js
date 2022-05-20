@@ -34,7 +34,7 @@ module.exports = {
                 swSrc: "./src/js/sw/sw.js",
                 swDest: "./sw.js",
                 maximumFileSizeToCacheInBytes: 20000000,
-                exclude: [/\.gitkeep$/, /\.map$/, /\index.html$/,  /\style.css$/,  /\script.js$/]
+                exclude: [/\.gitkeep$/, /\.map$/, /\.txt$/, /\index.html$/,  /\style.css/,  /\script.js/]
             })
         ],
     module:
