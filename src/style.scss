@@ -1931,6 +1931,19 @@ button,
     z-index: 99;
 }
 
+.miniGame {
+    &__actions {
+        position: absolute;
+        bottom: 100px;
+        left: 100px;
+        right: 100px;
+
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+}
+
 // #endregion
 
 #webpack-dev-server-client-overlay {

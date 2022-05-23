@@ -1,5 +1,7 @@
 import Experience from '../Experience.js'
 import Konva from 'konva'
+import _s from '../Utils/Strings.js'
+import Modal from '../Utils/Modal.js'
 
 let instance = null
 
@@ -44,14 +46,11 @@ export default class CableConnector {
 
         this.init()
         this.setup()
+        this.addEventListeners()
     }
 
     setup() {
-        const stage = new Konva.Stage({
-            container: 'cable-connector',
-            width: this.sizes.width,
-            height: this.sizes.height,
-        })
+
         const layer = new Konva.Layer()
 
         const container = new Container({
@@ -117,12 +116,6 @@ export default class CableConnector {
             container.item.add(outlet_r._draw().scaleX(-1))
         }
 
-
-
-        this.outlets.items.forEach(outlet => {
-            console.log(outlet.item);
-        })
-
         this.cables.forEach((cable) => {
 
             cable.item.zIndex(2)
@@ -141,16 +134,88 @@ export default class CableConnector {
             })
         })
 
-        stage.add(layer)
-
+        this.stage.add(layer)
     }
 
     init() {
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "cable-connector")
+        gameWrapper.classList.add('miniGame')
         document.body.appendChild(gameWrapper)
+
+        const title = document.createElement('div')
+        title.classList.add('game__title')
+        title.innerHTML = "<h1>" + _s.miniGames.cableConnect.title + "</h1>"
+
+
+        const actions = document.createElement('div')
+        actions.classList.add('miniGame__actions')
+
+        this.stage = new Konva.Stage({
+            container: 'cable-connector',
+            width: this.sizes.width,
+            height: this.sizes.height,
+        })
+
+        const resetBtn = this.addButton('button__reset', 'button__default', _s.miniGames.reset)
+        const backBtn = this.addButton('button__back', 'button__default', _s.journey.back)
+
+
+        gameWrapper.appendChild(title)
+        gameWrapper.appendChild(actions)
+
+        actions.appendChild(backBtn)
+        actions.appendChild(resetBtn)
+
         document.body.classList.add('freeze')
     }
+
+    addEventListeners() {
+        const buttons = document.querySelectorAll('.miniGame .button')
+
+        buttons.forEach(button => {
+            if (button.classList.contains('button__reset')) {
+                button.addEventListener('click', () => {
+                    // do something
+                })
+            }
+
+            if (button.classList.contains('button__back')) {
+                button.addEventListener('click', () => {
+                    // do something
+                    instance.destroy()
+                })
+            }
+        })
+    }
+
+    addButton(name, background, label) {
+        const button = document.createElement('div')
+        button.className = "button " + background + ' ' + name
+        button.innerHTML = "<span>" + label + "</span>"
+
+        return button
+    }
+
+    toggleGameComplete() {
+        let html = `
+            <div class="modal__content congrats congrats__miniGame">
+                <div class="congrats__container">
+                    <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.cableConnect.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
+                    <div class="congrats__chapter-completed">${_s.miniGames.cableConnect.completed.message}!</div>
+                    <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
+                </div>
+            </div>
+        `
+
+        instance.modal = new Modal(html)
+    }
+
+    destroy() {
+        document.getElementById('cable-connector').remove()
+        document.body.classList.remove('freeze')
+    }
+
 }
 
 class Container {
@@ -401,6 +466,7 @@ class Cable {
         })
         return cord
     }
+
 
 }
 

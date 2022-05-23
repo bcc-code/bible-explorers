@@ -59,7 +59,11 @@ const strings = {
                 }
             },
             "cableConnect": {
-                "title": "Cable connect game"
+                "title": "Cable connect game",
+                "completed": {
+                    "title": "Well done!",
+                    "message": "You have completed the task! You can continue your journey"
+                }
             },
             "reset": "Reset game",
             "continue": "Continue journey",
@@ -124,7 +128,11 @@ const strings = {
                 }
             },
             "cableConnect": {
-                "title": "Kabel spill"
+                "title": "Kabel spill",
+                "completed": {
+                    "title": "Bra jobba!",
+                    "message": "Du har fullført oppgaven! Du kan nå gå videre i tidsreisen"
+                }
             },
             "reset": "Start spill på nytt",
             "continue": "Fortsett reisen",
