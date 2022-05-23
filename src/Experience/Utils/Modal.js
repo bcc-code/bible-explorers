@@ -3,9 +3,10 @@ import Experience from "../Experience.js";
 let modal = null
 
 export default class Modal {
-    constructor(html) {
+    constructor(html, callback = function(){}) {
         this.experience = new Experience()
         this.program = this.experience.world.program
+        this.callback = callback
 
         modal = this
 
@@ -28,6 +29,7 @@ export default class Modal {
     destroy() {
         modal.htmlEl.remove()
         document.body.classList.remove('modal-on')
+        modal.callback()
         modal = null
     }
 

@@ -23,8 +23,7 @@ module.exports = {
 
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, '../src/index.html'),
-                minify: true,
-                hash: true
+                minify: true
             }),
 
             new MiniCSSExtractPlugin({
@@ -35,7 +34,7 @@ module.exports = {
                 swSrc: "./src/js/sw/sw.js",
                 swDest: "./sw.js",
                 maximumFileSizeToCacheInBytes: 20000000,
-                exclude: [/\.map$/, /\index.html$/]
+                exclude: [/\.map$/, /\.txt$/, /\.gitkeep$/, /index\.html$/, /style\.css$/, /script\.js$/]
             })
         ],
     module:

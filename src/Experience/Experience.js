@@ -56,9 +56,6 @@ export default class Experience {
     resize() {
         this.camera.resize()
         this.renderer.resize()
-
-        if (this.world.program)
-            this.world.program.video.resize()
     }
 
     update() {

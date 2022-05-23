@@ -15,12 +15,12 @@
  */
 
 import { precacheAndRoute } from 'workbox-precaching'
-import { Route, registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { Route, registerRoute } from 'workbox-routing'
+import { NetworkFirst } from 'workbox-strategies'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
-const indexHtml = new Route(({url}) => {
-  return url === '/index.html';
+const assets = new Route(({url}) => {
+  return url.pathname === '/' || url.pathname === '/style.css' || url.pathname === '/script.js'
 }, new NetworkFirst({
   plugins: [
     new CacheableResponsePlugin({
@@ -30,7 +30,7 @@ const indexHtml = new Route(({url}) => {
 }))
 
 const btvPlayer = new Route(({url}) => {
-  return url === 'https://brunstad.tv/Content/js/btvplayer.js';
+  return url === 'https://brunstad.tv/Content/js/btvplayer.js'
 }, new NetworkFirst({
   plugins: [
     new CacheableResponsePlugin({
@@ -39,6 +39,17 @@ const btvPlayer = new Route(({url}) => {
   ]
 }))
 
-registerRoute(indexHtml);
+const castFramework = new Route(({url}) => {
+  return url === 'https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js'
+}, new NetworkFirst({
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200]
+    })
+  ]
+}))
+
+registerRoute(assets);
 registerRoute(btvPlayer);
+registerRoute(castFramework);
 precacheAndRoute(self.__WB_MANIFEST)

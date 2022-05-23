@@ -18,7 +18,7 @@ export default class CodeUnlock {
         else {
             let html = `
                 <div class="modal__content code-unlock">
-                    <div class="code-unlock__header heading"><div class="icon"><i></i></div><span>${_s.task.codeUnlock}</span></div>
+                    <div class="code-unlock__header game__title"><h1>${_s.task.codeUnlock}</h1></div>
                     <div class="code-unlock__sidebar">
                         <div class="code-unlock__container">
                             <div class="code-unlock__screen">
@@ -35,8 +35,8 @@ export default class CodeUnlock {
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
                                 <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--backspace"></button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--confirm"></button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--backspace"><i class="icon icon-arrow-left-long-to-line-solid"></i></button>
+                                <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
                             </div>
                         </div>
                     </div>

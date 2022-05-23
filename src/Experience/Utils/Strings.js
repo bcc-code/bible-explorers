@@ -9,21 +9,23 @@ const strings = {
             "medium": "Medium (540p)",
             "high": "High (1080p)"
         },
-        "conceptDescription": "Sunday school teachers and mentors will have a whole new tool that can captivate and involve children, bringing the Bible to life for them in a completely new way.",
-        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Bible Kids Explorers.",
+        "conceptDescription": "Join our time travels and explore the book that can answer all questions",
+        "introduction": "Children between 6-12 years old can now go unto fantastic journeys and experience the Bible in a completely new way - with Explorers.",
         "journey": {
             "start": "Start journey",
-            "continue": "Continue journey", 
+            "continue": "Continue journey",
             "restart": "Restart journey",
-            "congratulations": "You have completed this theme's journey!",
-            "back": "Back"
+            "congrats": "Congratulations!",
+            "completed": "You have completed chapter",
+            "back": "Back",
+            "attachments": "Attachments"
         },
         "task": {
             "codeUnlock": "Code unlock",
             "taskDescription": "Task description",
             "questions": "Questions",
-            "getTask": "Ready for the task",
-            "submit": "Submit"
+            "getTask": "Ready",
+            "submit": "Submit",
         },
         "archive": "Archive",
         "info": "Info",
@@ -41,37 +43,54 @@ const strings = {
             "downloading": "Downloading"
         },
         "tooltips": {
-            "video": "Skip video",
-            "iris": "Listen to task description from Iris",
+            "video": "Play video",
+            "iris": "Talk to Iris",
             "task": "Complete the task",
             "questions": "Answer the questions",
             "code": "Break the code",
             "sorting": "Sort the icons in the correct box"
+        },
+        "miniGames": {
+            "sortingIcons": {
+                "title": "Sort the icons in the correct box",
+                "completed": {
+                    "title": "Well done!",
+                    "message": "You have completed the task! You can continue your journey"
+                }
+            },
+            "cableConnect": {
+                "title": "Cable connect game"
+            },
+            "reset": "Reset game",
+            "continue": "Continue journey",
+            "skip": "Skip"
         }
     },
     "no": {
-        "loading": "Loader",
+        "loading": "Laster",
         "qualities": {
             "title": "Velg kvalitet",
             "low": "Lav (270p)",
             "medium": "Medium (540p)",
             "high": "Høy (1080p)"
         },
-        "conceptDescription": "Målet er å gi søndagsskolelærere og mentorer et helt nytt verktøy som kan fenge og engasjere barna på en måte som gjør Bibelen levende for dem.",
-        "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Bible Kids Explorers.",
+        "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
+        "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte - med Explorers.",
         "journey": {
             "start": "Start tidsreise",
-            "continue": "Fortsett tidsreise", 
+            "continue": "Fortsett tidsreise",
             "restart": "Start reise på nytt",
-            "congratulations": "Du har fullført tidsreisen for dette temaet!",
-            "back": "Tilbake"
+            "congrats": "Gratulerer!",
+            "completed": "Du har fullført",
+            "back": "Tilbake",
+            "attachments": "Vedlegg"
         },
         "task": {
-            "codeUnlock": "Code unlock",
+            "codeUnlock": "Skriv riktig tall",
             "taskDescription": "Oppgavebeskrivelse",
             "questions": "Spørsmål",
             "getTask": "Gå til oppgave",
-            "submit": "Send"
+            "submit": "Send",
         },
         "archive": "Arkiv",
         "info": "Info",
@@ -89,12 +108,27 @@ const strings = {
             "downloading": "Laster ned"
         },
         "tooltips": {
-            "video": "Hopp over video",
-            "iris": "Hør på oppgavebeskrivelse fra Iris",
+            "video": "Spill av video",
+            "iris": "Snakk med Iris",
             "task": "Fullfør oppgaven",
             "questions": "Svar på spørsmålene",
             "code": "Løs koden",
             "sorting": "Sorter ikonene i riktig boks"
+        },
+        "miniGames": {
+            "sortingIcons": {
+                "title": "Sorter ikonene i riktig boks",
+                "completed": {
+                    "title": "Bra jobba!",
+                    "message": "Du har fullført oppgaven! Du kan nå gå videre i tidsreisen"
+                }
+            },
+            "cableConnect": {
+                "title": "Kabel spill"
+            },
+            "reset": "Start spill på nytt",
+            "continue": "Fortsett reisen",
+            "skip": "Fullfør"
         }
     }
 }

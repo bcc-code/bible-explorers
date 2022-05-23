@@ -26,7 +26,7 @@ export default class Questions {
 
             let html = `
                 <div class="modal__content questions ">
-                    <div class="questions__header heading"><div class="icon"><i></i></div><span>${_s.task.questions}</span></div>
+                    <div class="questions__header heading"><i class="icon icon-question-solid"></i><span>${_s.task.questions}</span></div>
                     <div class="questions__content">`
 
             questions.forEach((question, index) => {

@@ -246,7 +246,7 @@ export default class World {
                 </g>
 
                 <rect width="120" height="176.94" x="1"></rect>
-                <text class="chapter__number" x="50" y="88.47" fill="white" font-size="36" font-weight="bold">${index + 1}</text>
+                <text class="chapter__number" x="50" y="88.47" fill="white" font-size="40" font-family="Berlin Sans FB">${index + 1}</text>
                 <rect class="outline" width="5" height="175.94" x="120" y="1"></rect>
 
                 <path class="outline" d="m973.97 150.09-.23-85.55c-.01-3.18 3.77-4.84 6.11-2.69l5.96 5.48c2.62 2.41 4.15 5.79 4.22 9.35l.72 59.05c.07 3.36-1.15 6.61-3.41 9.09l-7.03 7.7c-2.24 2.45-6.32.88-6.33-2.44ZM713.46.5l212.55.22c3.18 0 4.82 3.79 2.66 6.12l-5.51 5.93a13.094 13.094 0 0 1-9.37 4.17l-186.06.41a13.09 13.09 0 0 1-9.07-3.46l-7.67-7.07c-2.44-2.25-.84-6.32 2.47-6.32Z"/>
@@ -255,7 +255,8 @@ export default class World {
 
                 <path class="outline" d="M194.67 147.44H2.01v29h224.85l-12.63-20.38c-4.12-6.86-10.97-8.62-19.55-8.62ZM250.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM290.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM337.77 151.24c-1.48-2.12-4.07-3.48-6.92-3.64l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2Z" />
 
-                <text class="chapter__heading" x="160" y="88.47" fill="white" font-size="36" font-weight="bold">${chapter.title}</text>
+                <text class="chapter__heading" x="160" y="88.47" font-family="Berlin Sans FB" fill="white" font-size="40">${chapter.title}</text>
+                <text class="chapter__date" x="160" y="112.47" font-family="Archivo" fill="white" font-size="16">${chapter.date}</text>
 
                 <foreignObject x="798.75" y="52.94" width="96" height="96">
                     <div class="button button__round chapter__status">
@@ -270,8 +271,13 @@ export default class World {
                             <i class="icon icon-download-solid"></i>
                             <span>${_s.offline.download}</span>
                         </div>
-                        <div class="downloading-progress"><div class="progress-line"></div></div>
-                        <span class="downloading-label"></span>
+                        <div class="is-downloading">
+                            <span>${_s.offline.downloading}</span>
+                            <div class="downloading-progress">
+                                <div class="progress-line"></div>
+                            </div>
+                            <span class="downloading-label"></span>
+                        </div>
                         <span class="downloading-complete">${_s.offline.availableOffline}</span>
                     </div>
                 </foreignObject>
@@ -283,11 +289,28 @@ export default class World {
     setDescriptionHtml() {
         let chapter = instance.selectedChapter
         let chapterDescription = instance.menu.chapterContent.querySelector('.chapter__description')
+        let chapterAttachments = instance.menu.chapterContent.querySelector('.chapter__attachments')
 
         chapterDescription.setAttribute('data-id', chapter.id)
         chapterDescription.setAttribute('data-slug', chapter.category)
         instance.menu.chapterContent.querySelector('h2').innerText = chapter.title
         instance.menu.chapterContent.querySelector('p').innerText = chapter.content
+
+        chapterAttachments.querySelector('.attachments').innerHTML = ''
+        chapterAttachments.querySelector('h3').innerText = ''
+
+        if (chapter.attachments.length) {
+            chapterAttachments.querySelector('h3').innerText = _s.journey.attachments + ':'
+            chapter.attachments.forEach((attachment) => {
+                chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
+                    <a href="${attachment.url}" target="_blank">
+                        <span class="icon icon-download-solid"></span>
+                        <span class="attachment__name">${attachment.title}</span>
+                    </a>
+                </div>`
+            })
+        }
+
         instance.menu.chapterItems.classList.add('chapter-selected')
     }
 
@@ -296,7 +319,7 @@ export default class World {
     }
 
     selectChapterListeners() {
-        document.querySelectorAll(".chapter:not(.locked)").forEach((chapter) => {
+        document.querySelectorAll(".chapter:not(.locked), body.admin .chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
                 instance.addClassToSelectedChapter(chapter)
                 instance.updateSelectedChapterData(chapter)
@@ -306,7 +329,7 @@ export default class World {
             })
         })
 
-        document.querySelectorAll(".chapter:not(.locked) .chapter__offline").forEach(function (chapter) {
+        document.querySelectorAll(".chapter:not(.locked) .chapter__offline, body.admin .chapter__offline").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
@@ -352,7 +375,6 @@ export default class World {
 
         chapterEl.classList.remove('download')
         chapterEl.classList.add('downloading')
-        chapterEl.querySelector('.chapter__offline span').innerText = _s.offline.downloading
 
         await this.downloadEpisodes(selectedChapter['episodes'], chapterId)
     }
@@ -450,10 +472,6 @@ export default class World {
             this.controlRoom.update()
         }
 
-        if (this.program && this.program.video) {
-            this.program.video.update()
-        }
-
         if (this.points) {
             this.points.update()
         }
@@ -462,15 +480,15 @@ export default class World {
 
 function median(values) {
     if (values.length === 0) throw new Error("No inputs")
-  
-    values.sort(function(a,b){
-      return a.sizeInMB - b.sizeInMB
+
+    values.sort(function (a, b) {
+        return a.sizeInMB - b.sizeInMB
     })
-  
+
     var half = Math.floor(values.length / 2)
-    
+
     if (values.length % 2)
-      return values[half]
-    
+        return values[half]
+
     return (values[half - 1] + values[half]) / 2.0
 }

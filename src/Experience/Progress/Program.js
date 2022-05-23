@@ -6,7 +6,7 @@ import Questions from '../Extras/Questions.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import Video from '../Extras/Video.js'
 import SortingGame from '../Games/SortingGame.js'
-import CableConnector from '../Games/CableConnector.js'
+import Congrats from '../Extras/Congrats.js'
 
 let instance = null
 
@@ -16,9 +16,15 @@ export default class Program {
     }
 
     initialize() {
-        instance = this
-
         this.experience = new Experience()
+        this.resources = this.experience.resources
+        this.world = this.experience.world
+        this.camera = this.experience.camera
+        this.highlight = this.world.highlight
+        this.programData = this.world.selectedChapter.program
+        this.points = this.experience.world.points
+        this.debug = this.experience.debug
+
         this.archive = new Archive()
         this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
@@ -26,12 +32,9 @@ export default class Program {
         this.taskDescription = new TaskDescription()
         this.video = new Video()
         this.sortingGame = new SortingGame()
-        this.resources = this.experience.resources
-        this.world = this.experience.world
-        this.camera = this.experience.camera
-        this.highlight = this.world.highlight
-        this.programData = this.world.selectedChapter.program
-        this.points = this.experience.world.points
+        this.congrats = new Congrats()
+
+        instance = this
 
         // Get instance variables
         this.chapterProgress = () => localStorage.getItem(this.world.getId())
@@ -51,7 +54,7 @@ export default class Program {
             !document.body.classList.contains('freeze') &&
             !document.body.classList.contains('modal-on')
 
-        this.startInteractivity(true)
+        this.startInteractivity()
     }
 
     control(currentIntersect) {
@@ -67,8 +70,8 @@ export default class Program {
     advance(step = ++this.currentStep) {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
-        this.world.audio.playWhoosh()
         this.resetCustomInteractiveObjs()
+        this.world.audio.playWhoosh()
         this.startInteractivity()
     }
 
@@ -79,7 +82,7 @@ export default class Program {
             this.updateLocalStorage()
     }
 
-    startInteractivity(initial = false) {
+    startInteractivity() {
         let currentVideo = this.currentVideo()
         let nextVideo = this.nextVideo()
 
@@ -100,15 +103,10 @@ export default class Program {
         }
 
         if (this.currentStep == this.totalSteps) {
-            this.finish()
+            setTimeout(() => {
+                instance.congrats.toggleCongrats()
+            }, instance.camera.data.moveDuration)
         }
-    }
-
-    finish() {
-        instance.camera.updateCameraTo()
-        setTimeout(() => {
-            instance.world.finishJourney()
-        }, instance.camera.data.moveDuration)
     }
 
     objectIsClickable() {
@@ -120,7 +118,11 @@ export default class Program {
         let interactiveObjects = []
 
         if (this.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat("panel_time_switchers_holder")
+            interactiveObjects = interactiveObjects.concat(["panel_screen"])
+
+            if (this.debug.active) {
+                interactiveObjects = interactiveObjects.concat(["panel_time_switchers_holder"])
+            }
         }
         else if (this.stepType() == 'iris' || this.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
@@ -140,14 +142,17 @@ export default class Program {
     }
 
     startAction() {
-        if (this.clickedObject === 'tv_16x9_screen') {
-            // this.updateIrisTexture('SPEAK')
+        if (this.clickedObject == 'tv_16x9_screen') {
             this.taskDescription.toggleTaskDescription()
         }
 
-        else if (this.clickedObject === 'panel_time_switchers_holder') {
+        else if (this.clickedObject == 'panel_time_switchers_holder') {
             this.video.defocus()
             this.advance()
+        }
+
+        else if (this.clickedObject == 'panel_screen') {
+            this.video.play()
         }
     }
 

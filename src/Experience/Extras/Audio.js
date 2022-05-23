@@ -61,13 +61,51 @@ export default class Audio {
                 audio.codeUnlockedSound = new THREE.Audio(audio.listener)
                 audio.codeUnlockedSound.setBuffer(buffer)
                 audio.codeUnlockedSound.play()
-            });
+            })
         }
         else if (audio.codeUnlockedSound.isPlaying) {
             audio.codeUnlockedSound.pause()
         }
         else {
             audio.codeUnlockedSound.play()
+        }
+    }
+
+    playCorrectSound() {
+        if (!audio.experience.settings.soundOn) return
+        this.initialize()
+
+        if (!audio.correctSound) {
+            audio.audioLoader.load('sounds/correct.mp3', function(buffer) {
+                audio.correctSound = new THREE.Audio(audio.listener)
+                audio.correctSound.setBuffer(buffer)
+                audio.correctSound.play()
+            })
+        }
+        else if (audio.correctSound.isPlaying) {
+            audio.correctSound.pause()
+        }
+        else {
+            audio.correctSound.play()
+        }
+    }
+
+    playWrongSound() {
+        if (!audio.experience.settings.soundOn) return
+        this.initialize()
+
+        if (!audio.wrongSound) {
+            audio.audioLoader.load('sounds/wrong.mp3', function(buffer) {
+                audio.wrongSound = new THREE.Audio(audio.listener)
+                audio.wrongSound.setBuffer(buffer)
+                audio.wrongSound.play()
+            })
+        }
+        else if (audio.wrongSound.isPlaying) {
+            audio.wrongSound.pause()
+        }
+        else {
+            audio.wrongSound.play()
         }
     }
 
@@ -80,13 +118,32 @@ export default class Audio {
                 audio.whoosh = new THREE.Audio(audio.listener)
                 audio.whoosh.setBuffer(buffer)
                 audio.whoosh.play()
-            });
+            })
         }
         else if (audio.whoosh.isPlaying) {
             audio.whoosh.pause()
         }
         else {
             audio.whoosh.play()
+        }
+    }
+
+    playCongratsSound() {
+        if (!audio.experience.settings.soundOn) return
+        this.initialize()
+
+        if (!audio.congratsSound) {
+            audio.audioLoader.load('sounds/congrats.mp3', function(buffer) {
+                audio.congratsSound = new THREE.Audio(audio.listener)
+                audio.congratsSound.setBuffer(buffer)
+                audio.congratsSound.play()
+            })
+        }
+        else if (audio.congratsSound.isPlaying) {
+            audio.congratsSound.pause()
+        }
+        else {
+            audio.congratsSound.play()
         }
     }
 }

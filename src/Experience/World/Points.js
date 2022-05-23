@@ -31,6 +31,11 @@ export default class Points {
         div.className = 'label'
         div.textContent = labelText
 
+        const hightlight = document.createElement('div')
+        hightlight.classList.add('highlight__circle')
+
+        div.append(hightlight)
+
         this.currentLabel = new CSS2DObject(div)
         this.currentLabel.position.set(0, object.geometry.boundingBox.min.y, 0)
         this.currentObject = object

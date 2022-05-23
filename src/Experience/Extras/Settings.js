@@ -26,7 +26,7 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><div class="icon"><i></i></div><span>${_s.settings.title}</span></div>
+                    <div class="settings__header heading"><i class="icon icon-gear-solid"></i><span>${_s.settings.title}</span></div>
                     <div class="settings__content">
                         <div class="sound settings__item">
                             <p>${_s.settings.soundEffects}</p>
@@ -42,6 +42,10 @@ export default class Settings {
                                 <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
                             </div>
                         </div>
+                        <a class="feedback settings__item" href="https://uservoice.bcc.no/" target="blank">
+                            <p>${_s.settings.feedback}</p>
+                            <i class="icon icon-envelope-solid"></i>
+                        </a>
                         <div class="login settings__footer">
                             <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.settings.logIn}</span></button>
                             <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.settings.logOut}</span></button>
