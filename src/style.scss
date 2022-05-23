@@ -12,6 +12,7 @@ $accent2: #fcb04e;
 $dark: #131A43;
 $gradient: linear-gradient(90deg, $dark, $primary);
 $gradient2: linear-gradient(90deg, #C5516E, #EB9159);
+$gradient-with-opacity: linear-gradient(90deg, rgba(19,26,67,.8), rgba(62,48,109,.8));
 
 $radius: 12px;
 
@@ -1173,7 +1174,7 @@ button,
         right: 0;
         bottom: 0;
         z-index: 1;
-        background: $gradient;
+        background: $gradient-with-opacity;
     }
 
     &__close {
@@ -1912,7 +1913,7 @@ button,
     position: absolute;
     top: 0;
     left: 0;
-    background: $gradient;
+    background: $gradient-with-opacity;
     z-index: 99;
 }
 
