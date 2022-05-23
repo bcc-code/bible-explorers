@@ -296,7 +296,7 @@ export default class Game {
     gameIsFinished() {
         let totalCount = 0
         Object.values(instance.data.counter).forEach(c => totalCount += c);
-        return totalCount == instance.data.icons.length            
+        return totalCount == instance.data.icons.length
     }
 
     finishGame() {

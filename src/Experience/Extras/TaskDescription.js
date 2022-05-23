@@ -22,7 +22,7 @@ export default class TaskDescription {
             instance.points = instance.world.points
             let currentStep = instance.program.currentStep
             let selectedChapter = instance.world.selectedChapter
-
+            instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
             instance.text = selectedChapter.program[currentStep].description
 
             let html = `
@@ -34,10 +34,9 @@ export default class TaskDescription {
             `;
 
             instance.modal = new Modal(html)
+            const getTaskBtn = document.getElementById("get-task")
 
-            document.getElementById("get-task").addEventListener("click", () => {
-                instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
-
+            getTaskBtn.addEventListener("click", () => {
                 instance.modal.destroy()
 
                 if (instance.currentStepTaskType == 'questions') {
@@ -57,6 +56,19 @@ export default class TaskDescription {
                     instance.program.advance()
                 }
             })
+
+            if (instance.currentStepTaskType == 'sorting') {
+                const noOfIcons = instance.program.getCurrentStepData().sorting.length
+                getTaskBtn.classList.add('disabled')
+
+                document.querySelector('input.no-of-icons').addEventListener("input", (event) => {
+                    if (event.target.value == noOfIcons) {
+                        getTaskBtn.classList.remove('disabled')
+                    } else {
+                        getTaskBtn.classList.add('disabled')
+                    }
+                })
+            }
         }
     }
 
