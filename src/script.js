@@ -3,8 +3,10 @@ import Experience from './Experience/Experience.js'
 import createAuth0Client from '@auth0/auth0-spa-js';
 import _api from './Experience/Utils/Api.js'
 
+
 // Start 3D experience
 const experience = new Experience(document.querySelector('.webgl'))
+
 
 // Auth0
 const fetchAuthConfig = () => fetch("/auth_config.json")

@@ -91,6 +91,7 @@ export default class World {
             this.audio = new Audio()
             this.cableConnector = new CableConnector()
 
+
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
