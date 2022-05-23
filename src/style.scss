@@ -1185,7 +1185,7 @@ button,
 
     &__container {
         position: relative;
-        max-width: 1440px;
+        max-width: 1280px;
         z-index: 2;
     }
 
@@ -1202,7 +1202,7 @@ button,
             border-radius: $radius;
             overflow: hidden;
             aspect-ratio: 16/9;
-            width: 1440px;
+            width: 100%;
 
             #irisVideoBg {
                 width: 100%;
