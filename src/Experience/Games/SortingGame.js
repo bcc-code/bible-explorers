@@ -186,10 +186,11 @@ export default class Game {
             instance.icons.push(icon)
         })
 
+        this.createButton("back", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.journey.back)
         this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
 
         if (this.debug.active) {
-            this.createButton("skip", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
+            this.createButton("skip", this.stage.width() - this.data.box.x - this.data.button.width, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
         }
     }
 
@@ -258,7 +259,7 @@ export default class Game {
             })
         })
 
-        this.btnActions.forEach((button, index) => {
+        this.btnActions.forEach(button => {
             button.on('mouseover', () => {
                 document.body.style.cursor = 'pointer'
                 const img = button.children.find(item => item.name() == "image")
@@ -270,15 +271,16 @@ export default class Game {
                 instance.setNewImage(img, instance.data.button.srcDefault.default)
             })
 
-            button.offset({
-                x: button.width() / 2,
-                y: button.height() / 2
-            })
-
             if (button.id() == "reset") {
                 button.on('click', () => {
                     instance.destroy()
                     instance.toggleSortingGame()
+                })
+            }
+
+            if (button.id() == "back") {
+                button.on('click', () => {
+                    instance.destroy()
                 })
             }
 
@@ -605,10 +607,11 @@ export default class Game {
         })
 
         // Set action buttons position
+        instance.btnActions.find(btn => btn.id() == "back").x(instance.sizes.width / 15)
         instance.btnActions.find(btn => btn.id() == "reset").x(instance.sizes.width / 2)
 
         if (instance.debug.active) {
-            instance.btnActions.find(btn => btn.id() == "skip").x(instance.data.box.x)
+            instance.btnActions.find(btn => btn.id() == "skip").x(instance.stage.width() - instance.sizes.width / 15 - instance.data.button.width)
         }
     }
 
