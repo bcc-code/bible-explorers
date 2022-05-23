@@ -1353,7 +1353,6 @@ button,
 }
 
 .settings {
-
     &__content {
         display: flex;
         flex-direction: column;
@@ -1467,12 +1466,13 @@ button,
 
         .language__current {
             font-size: 1.2rem;
-            height: 2rem;
-            padding: 0 1rem;
+            height: 2.5rem;
+            padding: 0.25rem 1rem;
             line-height: 2rem;
-            border: 1px solid rgba($dark, 0.2);
-            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
             color: #fff;
+            cursor: pointer;
         }
 
         .language__list {
@@ -1490,12 +1490,11 @@ button,
         }
 
         .language__list li {
-            padding: 0.5rem 1rem;
+            padding: 0.25rem 2rem;
             color: $dark;
             border-radius: 8px;
             cursor: pointer;
             transition: .3s ease;
-
 
             &:hover {
                 background-color: #0396e3;
