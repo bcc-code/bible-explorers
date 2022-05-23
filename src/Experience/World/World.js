@@ -75,6 +75,9 @@ export default class World {
                 quality.classList.add('selected')
                 instance.selectedQuality = quality.getAttribute('data-name')
                 instance.goToAllChapters()
+
+                setFullscreen()
+                instance.audio.toggleBgMusic()
             })
         })
 
@@ -132,6 +135,7 @@ export default class World {
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
+        instance.audio.playWhoosh()
     }
 
     showMenuButtons() {
@@ -472,6 +476,16 @@ export default class World {
         if (this.points) {
             this.points.update()
         }
+    }
+}
+
+function setFullscreen() {
+    if (document.body.requestFullscreen) {
+        document.body.requestFullscreen()
+    } else if (document.body.webkitRequestFullscreen) { /* Safari */
+        document.body.webkitRequestFullscreen()
+    } else if (document.body.msRequestFullscreen) { /* IE11 */
+        document.body.msRequestFullscreen()
     }
 }
 

@@ -71,7 +71,6 @@ export default class Program {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
         this.resetCustomInteractiveObjs()
-        this.world.audio.playWhoosh()
         this.startInteractivity()
     }
 
@@ -83,6 +82,7 @@ export default class Program {
     }
 
     startInteractivity() {
+        this.world.audio.playWhoosh()
         let currentVideo = this.currentVideo()
         let nextVideo = this.nextVideo()
 
