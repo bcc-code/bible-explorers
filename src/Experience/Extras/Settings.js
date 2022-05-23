@@ -42,10 +42,10 @@ export default class Settings {
                                 <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
                             </div>
                         </div>
-                        <div class="feedback settings__item">
-                            <p>${ _s.settings.feedback }</p>
-                            <a href="https://uservoice.bcc.no/" target="blank"><i class="icon icon-arrow-right-long-solid"></i></a>
-                        </div>
+                        <a class="feedback settings__item" href="https://uservoice.bcc.no/" target="blank">
+                            <p>${_s.settings.feedback}</p>
+                            <i class="icon icon-envelope-solid"></i>
+                        </a>
                         <div class="login settings__footer">
                             <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.settings.logIn}</span></button>
                             <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.settings.logOut}</span></button>
