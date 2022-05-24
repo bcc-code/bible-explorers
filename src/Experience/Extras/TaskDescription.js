@@ -61,7 +61,16 @@ export default class TaskDescription {
                 const noOfIcons = instance.program.getCurrentStepData().sorting.length
                 getTaskBtn.classList.add('disabled')
 
-                document.querySelector('input.no-of-icons').addEventListener("input", (event) => {
+                var input = document.createElement("input")
+                input.classList.add("no-of-icons")
+                input.setAttribute("type", "number")
+                input.setAttribute("placeholder", "0")
+                input.setAttribute("min", "0")
+                input.setAttribute("max", "12")
+                input.setAttribute("maxLength", "2")
+                document.querySelector('.task__content').appendChild(input)
+
+                input.addEventListener("input", (event) => {
                     if (event.target.value == noOfIcons) {
                         getTaskBtn.classList.remove('disabled')
                     } else {
