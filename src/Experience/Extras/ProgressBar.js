@@ -37,10 +37,10 @@ export default class ProgressBar {
         var leftAdjustment = 21;
         let html = '<div class="progress-bar__steps">'
             for (let i = 0; i < instance.program.totalSteps; i++) {
-                var left = 'calc(' + i * instance.stepWidth + '% - ' + leftAdjustment + 'px)';
-                html += `<div class="progress-bar__step ${ i > instance.program.chapterProgress() ? 'locked' : '' }" style="left: ${ left }">${ i+1 }</div>`
+                // var left = 'calc(' + i * instance.stepWidth + '% - ' + leftAdjustment + 'px)';
+                html += `<div class="progress-bar__step ${ i > instance.program.chapterProgress() ? 'locked' : '' }">${ i+1 }</div>`
             }
-            html += `<div class="progress-bar__step" style="left: calc(100% - ${ leftAdjustment }px)">#</div>`
+            html += `<div class="progress-bar__step">#</div>`
 
         html += `</div>
             <div class="progress-bar__percentage">

@@ -62,8 +62,12 @@ export default class Video {
                     let skipVideo = document.createElement('div')
                     skipVideo.classList.add("button", "button__goToTask", "skip-video__btn")
 
+                    const bg = document.createElement('div')
+                    bg.classList.add('button__bg')
+
                     let span = document.createElement('span')
                     span.innerText = _s.miniGames.skip
+                    skipVideo.appendChild(bg)
                     skipVideo.appendChild(span)
 
                     skipVideo.addEventListener('click', instance.finish)

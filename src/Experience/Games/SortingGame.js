@@ -106,7 +106,7 @@ export default class Game {
         document.body.appendChild(gameWrapper)
 
         const title = document.createElement('div')
-        title.classList.add('game__title')
+        title.classList.add('heading')
         title.innerHTML = "<h1>" + _s.miniGames.sortingIcons.title + "</h1>"
 
         this.stage = new Konva.Stage({
@@ -186,12 +186,12 @@ export default class Game {
             instance.icons.push(icon)
         })
 
-        this.createButton("back", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.journey.back)
-        this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
+        // this.createButton("back", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.journey.back)
+        // this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
 
-        if (this.debug.active) {
-            this.createButton("skip", this.stage.width() - this.data.box.x - this.data.button.width, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
-        }
+        // if (this.debug.active) {
+        //     this.createButton("skip", this.stage.width() - this.data.box.x - this.data.button.width, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
+        // }
     }
 
     addEventListeners() {
@@ -316,7 +316,7 @@ export default class Game {
                 <div class="congrats__container">
                     <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.sortingIcons.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
                     <div class="congrats__chapter-completed">${_s.miniGames.sortingIcons.completed.message}!</div>
-                    <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
+                    <div id="continue_journey" class="button button__goToTask"><div class="button__bg"></div><span>${_s.miniGames.continue}</span></div>
                 </div>
             </div>
         `

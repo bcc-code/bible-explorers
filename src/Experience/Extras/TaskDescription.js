@@ -27,9 +27,18 @@ export default class TaskDescription {
 
             let html = `
                 <div class="modal__content task">
-                    <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                    <div class="task__content">${instance.text}</div>
-                    <div id="get-task" class="button button__goToTask"><span>${_s.task.getTask}</span></div>
+                    <div class="task__video">
+                        <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
+                    </div>
+                    <div class="task__content">
+                        <div class="modal__extras">
+                            <span class="left"></span>
+                            <span class="bottomLeft"></span>
+                            <span class="bottomLeftSmall"></span>
+                        </div>
+                        ${instance.text}
+                    </div>
+                    <div id="get-task" class="button button__goToTask"><div class="button__bg"></div><span>${_s.task.getTask}</span></div>
                 </div>
             `;
 

@@ -26,8 +26,13 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><i class="icon icon-gear-solid"></i><span>${_s.settings.title}</span></div>
+                    <div class="settings__header heading"><h1>${_s.settings.title}</h1></div>
                     <div class="settings__content">
+                        <div class="modal__extras">
+                            <span class="left"></span>
+                            <span class="bottomLeft"></span>
+                            <span class="bottomLeftSmall"></span>
+                        </div>
                         <div class="sound settings__item">
                             <p>${_s.settings.soundEffects}</p>
                             <label class="switch">
