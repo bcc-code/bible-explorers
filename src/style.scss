@@ -392,7 +392,7 @@ button,
         height: 100%;
         width: 100%;
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: auto;
 
         display: flex;
         align-items: center;
@@ -448,6 +448,10 @@ button,
         font-size: 2rem;
         font-weight: bold;
     }
+
+    .container__scroll {
+        justify-content: center;
+    }
 }
 
 #landing-screen {
@@ -464,6 +468,10 @@ button,
 
     &.visible {
         @include alignCenterVH($direction: true)
+    }
+
+    .container__scroll {
+        justify-content: center;
     }
 }
 
@@ -1007,6 +1015,7 @@ button,
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
@@ -2406,7 +2415,7 @@ button,
 
         &__percentage {
             height: 0.5rem;
-            border: 4px solid $accent;
+            border: 2px solid $accent;
         }
 
         &__step.locked::before,
@@ -2462,6 +2471,41 @@ button,
     .loader {
         font-size: 2rem;
     }
+
+    #chapters-screen {
+        .chapters__wrapper {
+            flex-direction: column;
+        }
+
+        .chapter__items {
+            width: 100%;
+        }
+
+        .chapter__description {
+            padding: 3rem;
+        }
+    }
+
+    .task {
+        padding-bottom: 4rem;
+        gap: 1rem;
+
+        &__video {
+            width: 80px;
+
+            #irisVideoBg {
+                border-radius: 1rem 0.25rem;
+            }
+        }
+
+        &__content {
+            padding: 2rem;
+            p {
+                font-size: 1rem
+            }
+        }
+    }
+
 }
 
 @media (max-width: 768px) {
@@ -2475,5 +2519,14 @@ button,
 
     #loading-screen p {
         font-size: 1.15rem
+    }
+
+    .categories,
+    .qualities {
+        flex-direction: column;
+    }
+
+    .divider {
+        display: none;
     }
 }
