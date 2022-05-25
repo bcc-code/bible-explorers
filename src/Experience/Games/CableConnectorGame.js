@@ -323,13 +323,26 @@ export default class CableConnector {
     toggleGameComplete() {
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
-                <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.cableConnect.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
+                <div class="congrats__title">
+                    <i class="icon icon-star-solid"></i>
+                    <i class="icon icon-star-solid"></i>
+                    <h1>${_s.miniGames.cableConnect.completed.title}</h1>
+                    <i class="icon icon-star-solid"></i>
+                    <i class="icon icon-star-solid"></i>
+                </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.cableConnect.completed.message}!</div>
-                <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
+                <div id="continue_journey" class="button button__goToTask">
+                    <div class="button__bg"></div>
+                    <span>${_s.miniGames.continue}</span>
+                </div>
             </div>
+
         </div>`
 
         instance.modal = new Modal(html)
+
+        document.querySelector('.modal').classList.add('modal__congrats')
+
     }
 
     resize() {

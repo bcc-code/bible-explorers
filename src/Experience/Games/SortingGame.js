@@ -323,7 +323,10 @@ export default class SortingGame {
             <div class="congrats__container">
                 <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.sortingIcons.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
                 <div class="congrats__chapter-completed">${_s.miniGames.sortingIcons.completed.message}!</div>
-                <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
+                <div id="continue_journey" class="button button__goToTask">
+                    <div class="button__bg"></div>
+                    <span>${_s.miniGames.continue}</span>
+                </div>
             </div>
         </div>`
 
