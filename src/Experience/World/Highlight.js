@@ -42,12 +42,26 @@ export default class Highlight {
         const outlineGeometry = object.geometry
         const outlineMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
+            side: THREE.DoubleSide,
             transparent: true,
-            opacity: 0.1,
+            opacity: 1
         })
         this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
         this.outline.name = object.name + "_outline"
+        this.outline.scale.multiplyScalar(1.03)
         object.add(this.outline)
+
+        if (object.name === "tv_16x9") {
+            this.outline.position.x = -0.03
+            this.outline.position.y = -0.01
+            this.outline.position.z = 0.03
+        }
+
+        if (object.name === "panel_screen") {
+            this.outline.opacity = 1
+        }
+
+
     }
 
     remove() {
@@ -57,7 +71,7 @@ export default class Highlight {
 
     pulse() {
         this.instance = new TWEEN.Tween(this.outline.material)
-            .to({ opacity: 0.5 }, 1500)
+            .to({ opacity: 0 }, 1500)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .repeat(Infinity)
             .yoyo(true)

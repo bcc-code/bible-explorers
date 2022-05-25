@@ -67,6 +67,7 @@ export default class ControlRoom {
 
         this.roomTexture.push(this.controlRoom, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
         this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
+
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet)
     }
 
@@ -98,7 +99,7 @@ export default class ControlRoom {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['iris'].item })
             }
 
-            if(child.name === "panel_screen") {
+            if (child.name === "panel_screen") {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['hud'].item })
             }
 
@@ -106,6 +107,10 @@ export default class ControlRoom {
                 child.material.map.flipY = false
                 child.material.map.encoding = THREE.sRGBEncoding
             }
+        })
+
+        this.clickableObjects.forEach(child => {
+            child.layers.enable(1)
         })
 
         this.tv_portal.material = new THREE.MeshBasicMaterial({ color: 0x131A43 })
@@ -143,6 +148,7 @@ export default class ControlRoom {
 
     checkObjectIntersection() {
         this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
+        this.raycaster.layers.set(1)
         const intersects = this.raycaster.intersectObjects(this.clickableObjects)
 
         if (intersects.length > 0) {

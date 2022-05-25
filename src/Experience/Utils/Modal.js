@@ -20,7 +20,7 @@ export default class Modal {
             close: modal.htmlEl.querySelector(".modal__close")
         }
 
-        modal.el.overlay.addEventListener("click", modal.destroy)
+        // modal.el.overlay.addEventListener("click", modal.destroy)
         modal.el.close.addEventListener("click", modal.destroy)
 
         document.body.classList.add('modal-on')

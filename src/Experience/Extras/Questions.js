@@ -49,6 +49,8 @@ export default class Questions {
 
             questions.modal = new Modal(html)
 
+            document.querySelector('.modal').classList.add('modal__questions')
+
             const nextButton = document.querySelector('.button__next')
             const prevButton = document.querySelector('.button__prev')
             const submitButton = document.querySelector('.button__submit')

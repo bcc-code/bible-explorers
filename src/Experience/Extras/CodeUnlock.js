@@ -45,6 +45,8 @@ export default class CodeUnlock {
 
             instance.modal = new Modal(html)
 
+            document.querySelector('.modal').classList.add('modal__code-unlock')
+
             instance.el = {
                 code: document.querySelector(".code-unlock__input"),
                 numbers: document.querySelectorAll(".code-unlock__btn--number"),

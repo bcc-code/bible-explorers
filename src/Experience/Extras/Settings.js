@@ -61,6 +61,8 @@ export default class Settings {
 
             settings.modal = new Modal(html)
 
+            document.querySelector('.modal').classList.add('modal__settings')
+
             settings.el = {
                 soundToggle: document.querySelector(".sound input[type=checkbox]"),
                 currentLang: document.querySelector(".language .language__current"),
