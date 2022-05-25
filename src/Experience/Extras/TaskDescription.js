@@ -42,8 +42,6 @@ export default class TaskDescription {
                 </div>
             `;
 
-
-            
             instance.modal = new Modal(html)
             const getTaskBtn = document.getElementById("get-task")
 

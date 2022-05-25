@@ -522,7 +522,7 @@ button,
     .chapter__description {
         position: relative;
         width: 100%;
-        padding: 3rem 6rem 6rem;
+        padding: 3rem 6rem 5rem;
         background: $gradient;
         border-radius: 1rem;
         border: 5px solid $accent;
@@ -545,10 +545,18 @@ button,
             margin-top: 0;
         }
 
+        a {
+            color: $accent;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .chapter__text {
-        max-height: 28vh;
+        max-height: 30vh;
         overflow-x: hidden;
         overflow-y: auto;
     }
@@ -1149,7 +1157,7 @@ button,
         justify-content: center;
         flex-direction: column;
         background: $gradient;
-        padding: 1.5rem 0;
+        padding: 1.5rem 0 3rem;
         border-radius: 1rem 0 0 1rem;
 
         color: #fff;
@@ -1171,7 +1179,7 @@ button,
         flex-direction: column;
         justify-content: center;
         flex: 1;
-        padding: 1.5rem 3rem;
+        padding: 1.5rem 3rem 3rem;
     }
 
     &__title {
@@ -2458,7 +2466,6 @@ button,
             margin-right: 1rem;
             z-index: 2;
         }
-
     }
 
     #loading-screen p {
