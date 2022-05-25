@@ -1933,10 +1933,9 @@ button,
 
 .miniGame {
     &__actions {
-        position: absolute;
+        width: 100%;
+        position: fixed;
         bottom: 100px;
-        left: 100px;
-        right: 100px;
 
         display: flex;
         justify-content: center;

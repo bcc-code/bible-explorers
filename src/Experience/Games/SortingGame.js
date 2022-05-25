@@ -20,7 +20,7 @@ export default class SortingGame {
         this.init()
         this.createAllLayers()
         this.addEventListeners()
-        window.addEventListener('resize', instance.resize);
+        window.addEventListener('resize', instance.resize)
     }
 
     init() {
@@ -311,15 +311,13 @@ export default class SortingGame {
     }
 
     toggleGameComplete() {
-        let html = `
-            <div class="modal__content congrats congrats__miniGame">
-                <div class="congrats__container">
-                    <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.sortingIcons.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
-                    <div class="congrats__chapter-completed">${_s.miniGames.sortingIcons.completed.message}!</div>
-                    <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
-                </div>
+        let html = `<div class="modal__content congrats congrats__miniGame">
+            <div class="congrats__container">
+                <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.sortingIcons.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
+                <div class="congrats__chapter-completed">${_s.miniGames.sortingIcons.completed.message}!</div>
+                <div id="continue_journey" class="button button__goToTask"><span>${_s.miniGames.continue}</span></div>
             </div>
-        `
+        </div>`
 
         instance.modal = new Modal(html)
     }
@@ -618,6 +616,6 @@ export default class SortingGame {
     destroy() {
         document.getElementById('sort-game').remove()
         document.body.classList.remove('freeze')
-        window.removeEventListener('resize', instance.resize);
+        window.removeEventListener('resize', instance.resize)
     }
 }
