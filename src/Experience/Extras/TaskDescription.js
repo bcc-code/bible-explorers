@@ -65,6 +65,10 @@ export default class TaskDescription {
                     instance.program.sortingGame.toggleSortingGame()
                 }
 
+                else if (instance.currentStepTaskType == 'cables') {
+                    instance.program.cableConnectorGame.toggleCableConnector()
+                }
+
                 else if (instance.program.stepType() == 'iris') {
                     instance.program.advance()
                 }
