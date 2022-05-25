@@ -1782,8 +1782,6 @@ button,
                 vertical-align: 3px;
             }
         }
-
-        // https://pqina.nl/blog/fade-out-overflow-using-css-mask-image/
     }
 }
 
@@ -1792,7 +1790,7 @@ button,
 .settings,
 .archive {
     display: flex;
-    align-items: flex-start;
+    // align-items: flex-start;
     gap: 2rem;
     max-width: 1280px;
 
