@@ -27,9 +27,18 @@ export default class TaskDescription {
 
             let html = `
                 <div class="modal__content task">
-                    <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                    <div class="task__content">${instance.text}</div>
-                    <div id="get-task" class="button button__goToTask"><span>${_s.task.getTask}</span></div>
+                    <div class="task__video">
+                        <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
+                    </div>
+                    <div class="task__content">
+                        <div class="modal__extras">
+                            <span class="left"></span>
+                            <span class="bottomLeft"></span>
+                            <span class="bottomLeftSmall"></span>
+                        </div>
+                        ${instance.text}
+                    </div>
+                    <div id="get-task" class="button button__goToTask"><div class="button__bg"></div><span>${_s.task.getTask}</span></div>
                 </div>
             `;
 
@@ -65,7 +74,16 @@ export default class TaskDescription {
                 const noOfIcons = instance.program.getCurrentStepData().sorting.length
                 getTaskBtn.classList.add('disabled')
 
-                document.querySelector('input.no-of-icons').addEventListener("input", (event) => {
+                var input = document.createElement("input")
+                input.classList.add("no-of-icons")
+                input.setAttribute("type", "number")
+                input.setAttribute("placeholder", "0")
+                input.setAttribute("min", "0")
+                input.setAttribute("max", "12")
+                input.setAttribute("maxLength", "2")
+                document.querySelector('.task__content').appendChild(input)
+
+                input.addEventListener("input", (event) => {
                     if (event.target.value == noOfIcons) {
                         getTaskBtn.classList.remove('disabled')
                     } else {

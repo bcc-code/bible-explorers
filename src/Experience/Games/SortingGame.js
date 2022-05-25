@@ -106,7 +106,7 @@ export default class SortingGame {
         document.body.appendChild(gameWrapper)
 
         const title = document.createElement('div')
-        title.classList.add('game__title')
+        title.classList.add('heading')
         title.innerHTML = "<h1>" + _s.miniGames.sortingIcons.title + "</h1>"
 
         this.stage = new Konva.Stage({
@@ -186,12 +186,12 @@ export default class SortingGame {
             instance.icons.push(icon)
         })
 
-        this.createButton("back", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.journey.back)
-        this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
+        // this.createButton("back", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.journey.back)
+        // this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
 
-        if (this.debug.active) {
-            this.createButton("skip", this.stage.width() - this.data.box.x - this.data.button.width, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
-        }
+        // if (this.debug.active) {
+        //     this.createButton("skip", this.stage.width() - this.data.box.x - this.data.button.width, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
+        // }
     }
 
     addEventListeners() {

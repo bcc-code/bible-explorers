@@ -37,8 +37,10 @@ export default class Modal {
         return `
             <div class="modal__overlay"></div>
             <div class="modal__close button button__round"><i class="icon icon-xmark-solid"></i></div>
-            <div class="modal__container">
-                ${ html }
+            <div class="modal__scroll">
+                <div class="modal__container">
+                    ${ html }
+                </div>
             </div>
         `
     }

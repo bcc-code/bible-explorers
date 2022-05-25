@@ -42,7 +42,7 @@ export default class World {
         this.welcome = {
             loadingScreen: document.getElementById("loading-screen"),
             conceptDescription: document.getElementById("concept-description"),
-            loading: document.querySelector(".loader"),
+            loading: document.getElementById("page-loader"),
             quality: {
                 container: document.querySelector("#quality"),
                 title: document.querySelector(".quality__title"),
@@ -75,6 +75,9 @@ export default class World {
                 quality.classList.add('selected')
                 instance.selectedQuality = quality.getAttribute('data-name')
                 instance.goToAllChapters()
+
+                setFullscreen()
+                instance.audio.toggleBgMusic()
             })
         })
 
@@ -93,19 +96,21 @@ export default class World {
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
             setTimeout(function () {
-                instance.welcome.loading.style.opacity = 0
+                instance.welcome.loading.style.display = "none"
                 instance.welcome.quality.container.style.display = "block"
                 instance.welcome.topBar.style.display = "flex"
-
-                setTimeout(function () {
-                    instance.welcome.loading.style.display = "none"
-                }, 1000)
+                instance.welcome.loadingScreen.style.display = "flex"
             }, 1000)
         })
 
+        this.start = document.createElement('span')
+        this.start .innerText = _s.journey.start
+        this.restart = document.createElement('span')
+        this.restart.innerText = _s.journey.restart
+
         this.welcome.introduction.innerText = _s.introduction
-        this.buttons.start.innerHTML = "<span>" + _s.journey.start + "</span>"
-        this.buttons.restart.innerHTML = "<span>" + _s.journey.restart + "</span>"
+        this.buttons.start.appendChild( this.start)
+        this.buttons.restart.appendChild(this.restart)
 
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("click", this.goHome)
@@ -132,6 +137,7 @@ export default class World {
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
+        instance.audio.playWhoosh()
     }
 
     showMenuButtons() {
@@ -150,7 +156,7 @@ export default class World {
         }
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
-            instance.buttons.start.innerHTML = "<span>" + _s.journey.continue + "</span>"
+            this.start.innerText = _s.journey.continue
         }
     }
 
@@ -170,8 +176,12 @@ export default class World {
         const categoryHtml = document.createElement("div")
         categoryHtml.className = "category button button__default"
         categoryHtml.setAttribute("data-slug", category.slug)
-        categoryHtml.innerHTML = "<span>" + category.name + "</span>"
+
+        const span = document.createElement('span')
+        span.innerText = category.name
+
         instance.menu.categories.appendChild(categoryHtml)
+        categoryHtml.appendChild(span)
 
         const getDivider = document.querySelector('.categories .divider')
 
@@ -225,60 +235,39 @@ export default class World {
         chapterHtml.setAttribute("data-slug", chapter.category)
 
         chapterHtml.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" id="a" viewBox="0 0 990.75 176.94" class="chapter__background">
-                <defs>
-                    <linearGradient id="gradient" x1="5.02" x2="961.72" y1="88.47" y2="88.47" gradientUnits="userSpaceOnUse">
-                        <stop offset="0" stop-color="#131a43"/>
-                        <stop offset="1" stop-color="#412251"/>
-                    </linearGradient>
-                    <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
-                        <path d="M961.72 62.29v82.37c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12Z" />
-                    </clipPath>
-                </defs>
-
-                <path class="box" d="M961.72 62.29v82.37c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12Z"/>
-                
-                <g clip-path="url(#maskImage)">
-                    <image width="100%" fill="none" y="-50%" class="" href="${chapter.thumbnail}"/>
-                </g>
-
-                <rect width="120" height="176.94" x="1"></rect>
-                <text class="chapter__number" x="50" y="88.47" fill="white" font-size="40" font-family="Berlin Sans FB">${index + 1}</text>
-                <rect class="outline" width="5" height="175.94" x="120" y="1"></rect>
-
-                <path class="outline" d="m973.97 150.09-.23-85.55c-.01-3.18 3.77-4.84 6.11-2.69l5.96 5.48c2.62 2.41 4.15 5.79 4.22 9.35l.72 59.05c.07 3.36-1.15 6.61-3.41 9.09l-7.03 7.7c-2.24 2.45-6.32.88-6.33-2.44ZM713.46.5l212.55.22c3.18 0 4.82 3.79 2.66 6.12l-5.51 5.93a13.094 13.094 0 0 1-9.37 4.17l-186.06.41a13.09 13.09 0 0 1-9.07-3.46l-7.67-7.07c-2.44-2.25-.84-6.32 2.47-6.32Z"/>
-
-                <path class="outline" d="M960.29 46.76 944.93 31.4c-4.15-4.15-9.66-6.43-15.53-6.43H717.05c-4.54 0-8.8-1.77-12-4.97L691.48 6.43A21.823 21.823 0 0 0 675.95 0H0l1.02 176.94h933.42c5.87 0 11.38-2.28 15.53-6.43l10.32-10.32c4.15-4.14 6.43-9.66 6.43-15.53V62.29c0-5.87-2.28-11.38-6.43-15.53Zm1.43 97.9c0 4.53-1.76 8.79-4.97 12l-10.31 10.31a16.853 16.853 0 0 1-12 4.97H6L5.02 5h670.93c4.53 0 8.79 1.76 11.99 4.97l13.57 13.56c4.15 4.15 9.67 6.44 15.54 6.44H929.4c4.53 0 8.79 1.76 12 4.97l15.35 15.35c3.21 3.21 4.97 7.47 4.97 12v82.37Z"/>
-
-                <path class="outline" d="M194.67 147.44H2.01v29h224.85l-12.63-20.38c-4.12-6.86-10.97-8.62-19.55-8.62ZM250.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM290.84 147.6l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2c-1.48-2.12-4.07-3.48-6.92-3.64ZM337.77 151.24c-1.48-2.12-4.07-3.48-6.92-3.64l-2.7-.15c-7.05-.39-11.69 6.25-8.03 11.49l11.9 17.5h22l-16.24-25.2Z" />
-
-                <text class="chapter__heading" x="160" y="88.47" font-family="Berlin Sans FB" fill="white" font-size="40">${chapter.title}</text>
-                <text class="chapter__date" x="160" y="112.47" font-family="Archivo" fill="white" font-size="16">${chapter.date}</text>
-
-                <foreignObject x="798.75" y="52.94" width="96" height="96">
-                    <div class="button button__round chapter__status">
-                        <i class="icon icon-play-solid"></i>
-                        <i class="icon icon-lock-solid"></i>
-                    </div>
-                </foreignObject>
-
-                <foreignObject x="352" y="144.94" width="416" height="32">
-                    <div class="chapter__download">
-                        <div class="button chapter__offline">
-                            <i class="icon icon-download-solid"></i>
-                            <span>${_s.offline.download}</span>
-                        </div>
-                        <div class="is-downloading">
-                            <span>${_s.offline.downloading}</span>
-                            <div class="downloading-progress">
-                                <div class="progress-line"></div>
-                            </div>
-                            <span class="downloading-label"></span>
-                        </div>
-                        <span class="downloading-complete">${_s.offline.availableOffline}</span>
-                    </div>
-                </foreignObject>
-            </svg>
+            <div class="chapter__box">
+                <div class="chapter__extras">
+                    <span class="bottomLeft"></span>
+                    <span class="bottomLeftSmall"></span>
+                    <span class="right"></span>
+                    <span class="rightOutside"></span>
+                </div>
+                <div class="chapter__background" style="background-image: url('${chapter.thumbnail}')"></div>
+                <div class="chapter__number">
+                    <i class="icon icon-lock-solid"></i>
+                    <span>${index + 1}</span>
+                </div>
+                <div class="chapter__heading">
+                    <h2 class="chapter__title">${chapter.title}</h2>
+                    <span class="chapter__date">${chapter.date}</span>
+                </div>
+            </div>
+            <div class="chapter__states">
+                <div class="chapter__offline">
+                    <i class="icon icon-download-solid"></i>
+                    <span>${_s.offline.download}</span>
+                </div>
+                <div class="chapter__downloading">
+                    <span>${_s.offline.downloading}</span>
+                    <span class="downloading-progress">
+                        <span class="progress-line"></span>
+                    </span>
+                    <span class="downloading-label"></span>
+                </div>
+                <div class="chapter__downloaded">
+                    <span>${_s.offline.availableOffline}</span>
+                </div>
+            </div>
         `
         instance.menu.chapters.appendChild(chapterHtml)
     }
@@ -472,6 +461,16 @@ export default class World {
         if (this.points) {
             this.points.update()
         }
+    }
+}
+
+function setFullscreen() {
+    if (document.body.requestFullscreen) {
+        document.body.requestFullscreen()
+    } else if (document.body.webkitRequestFullscreen) { /* Safari */
+        document.body.webkitRequestFullscreen()
+    } else if (document.body.msRequestFullscreen) { /* IE11 */
+        document.body.msRequestFullscreen()
     }
 }
 
