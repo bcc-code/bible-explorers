@@ -10,7 +10,6 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import Offline from '../Utils/Offline.js'
-import CableConnector from '../Games/CableConnector.js'
 
 let instance = null
 
@@ -89,8 +88,6 @@ export default class World {
             this.points = new Points()
             this.highlight = new Highlight()
             this.audio = new Audio()
-            this.cableConnector = new CableConnector()
-
 
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)

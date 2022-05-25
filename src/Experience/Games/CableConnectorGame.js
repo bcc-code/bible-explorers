@@ -13,7 +13,6 @@ export default class CableConnector {
         this.sizes = this.experience.sizes
 
         instance = this
-        instance.toggleCableConnector()
     }
 
     toggleCableConnector() {
@@ -100,6 +99,8 @@ export default class CableConnector {
             width: this.sizes.width,
             height: this.sizes.height,
         })
+
+        instance.program = instance.world.program
 
         const backBtn = this.addButton('button__back', 'button__default', _s.journey.back)
         const resetBtn = this.addButton('button__reset', 'button__default', _s.miniGames.reset)
