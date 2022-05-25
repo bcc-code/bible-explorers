@@ -18,7 +18,8 @@ const strings = {
             "congrats": "Congratulations!",
             "completed": "You have completed chapter",
             "back": "Back",
-            "attachments": "Attachments"
+            "attachments": "Attachments",
+            "homescreen": "Go to homescreen"
         },
         "task": {
             "codeUnlock": "Code unlock",
@@ -87,7 +88,8 @@ const strings = {
             "congrats": "Gratulerer!",
             "completed": "Du har fullført",
             "back": "Tilbake",
-            "attachments": "Vedlegg"
+            "attachments": "Vedlegg",
+            "homescreen": "Gå hjem"
         },
         "task": {
             "codeUnlock": "Skriv riktig tall",

@@ -104,12 +104,12 @@ export default class World {
         })
 
         this.start = document.createElement('span')
-        this.start .innerText = _s.journey.start
+        this.start.innerText = _s.journey.start
         this.restart = document.createElement('span')
         this.restart.innerText = _s.journey.restart
 
         this.welcome.introduction.innerText = _s.introduction
-        this.buttons.start.appendChild( this.start)
+        this.buttons.start.appendChild(this.start)
         this.buttons.restart.appendChild(this.restart)
 
         this.homeButton = document.getElementById('go-home')
@@ -451,6 +451,12 @@ export default class World {
 
     getId() {
         return "progress-theme-" + this.selectedChapter.id
+    }
+
+    resize() {
+        if (this.points) {
+            this.points.resize()
+        }
     }
 
     update() {

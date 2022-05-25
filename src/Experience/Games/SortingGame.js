@@ -103,11 +103,15 @@ export default class SortingGame {
 
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "sort-game")
+        gameWrapper.classList.add('miniGame')
         document.body.appendChild(gameWrapper)
 
         const title = document.createElement('div')
         title.classList.add('heading')
         title.innerHTML = "<h1>" + _s.miniGames.sortingIcons.title + "</h1>"
+
+        const actions = document.createElement('div')
+        actions.classList.add('miniGame__actions')
 
         this.stage = new Konva.Stage({
             container: 'sort-game',
@@ -115,13 +119,20 @@ export default class SortingGame {
             height: this.sizes.height,
         })
 
+        const resetBtn = this.addButton('button__reset', 'button__default', _s.miniGames.reset)
+        const backBtn = this.addButton('button__back', 'button__default', _s.journey.back)
+
+        gameWrapper.appendChild(title)
+        gameWrapper.appendChild(actions)
+
+        actions.appendChild(backBtn)
+        actions.appendChild(resetBtn)
+
         instance.program = instance.world.program
         const gameData = instance.program.getCurrentStepData().sorting
 
         instance.data.noOfIcons = gameData.length
         instance.data.icons = gameData
-
-        gameWrapper.prepend(title)
 
         document.body.classList.add('freeze')
     }
@@ -270,24 +281,21 @@ export default class SortingGame {
                 const img = button.children.find(item => item.name() == "image")
                 instance.setNewImage(img, instance.data.button.srcDefault.default)
             })
+        })
 
-            if (button.id() == "reset") {
-                button.on('click', () => {
+        const buttons = document.querySelectorAll('.miniGame .button')
+
+        buttons.forEach(button => {
+            if (button.classList.contains('button__reset')) {
+                button.addEventListener('click', () => {
                     instance.destroy()
                     instance.toggleSortingGame()
                 })
             }
 
-            if (button.id() == "back") {
-                button.on('click', () => {
+            if (button.classList.contains('button__back')) {
+                button.addEventListener('click', () => {
                     instance.destroy()
-                })
-            }
-
-            if (button.id() == "skip") {
-                button.on('click', () => {
-                    instance.destroy()
-                    instance.program.advance()
                 })
             }
         })
@@ -320,6 +328,8 @@ export default class SortingGame {
         </div>`
 
         instance.modal = new Modal(html)
+
+        document.querySelector('.modal').classList.add('modal__congrats')
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
@@ -449,6 +459,14 @@ export default class SortingGame {
         })
 
         return icon
+    }
+
+    addButton(name, background, label) {
+        const button = document.createElement('div')
+        button.className = "button " + background + ' ' + name
+        button.innerHTML = "<span>" + label + "</span>"
+
+        return button
     }
 
     createButton(id, x, y, imgSrc, text, offset = { x: 0, y: 0 }) {
@@ -594,7 +612,7 @@ export default class SortingGame {
         // Set stage dimension
         instance.stage.width(instance.data.canvas.width * scaleX)
         instance.stage.height(instance.data.canvas.height * scaleY)
-        
+
         // Set boxes position
         instance.leftBox.x(instance.sizes.width / 15)
         instance.rightBox.x(instance.stage.width() - instance.data.box.width - instance.sizes.width / 15)

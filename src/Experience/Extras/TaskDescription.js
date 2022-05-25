@@ -42,8 +42,12 @@ export default class TaskDescription {
                 </div>
             `;
 
+
+            
             instance.modal = new Modal(html)
             const getTaskBtn = document.getElementById("get-task")
+
+            document.querySelector('.modal').classList.add('modal__task')
 
             getTaskBtn.addEventListener("click", () => {
                 instance.modal.destroy()
@@ -81,7 +85,16 @@ export default class TaskDescription {
                 input.setAttribute("min", "0")
                 input.setAttribute("max", "12")
                 input.setAttribute("maxLength", "2")
-                document.querySelector('.task__content').appendChild(input)
+
+                const div = document.createElement("div")
+                div.classList.add('numberOfIcons')
+                const label = document.createElement("span")
+
+                label.innerText = "Icons found:"
+
+                div.appendChild(label)
+                div.appendChild(input)
+                document.querySelector('.task__content').appendChild(div)
 
                 input.addEventListener("input", (event) => {
                     if (event.target.value == noOfIcons) {

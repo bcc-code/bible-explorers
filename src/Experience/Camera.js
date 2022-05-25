@@ -103,6 +103,10 @@ export default class Camera {
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
         this.instance.position.copy(this.cameraLocations.default.position)
+
+        this.instance.layers.enable(0)
+        this.instance.layers.enable(1)
+
         this.scene.add(this.instance)
     }
 
