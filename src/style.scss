@@ -1726,8 +1726,11 @@ button,
 
     &__content {
         img {
-            width: 34%;
+            display: block;
             float: left;
+            width: 34%;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
         }
     }
 
