@@ -347,7 +347,7 @@ export default class World {
             if (instance.resources.textureItems.hasOwnProperty(fileName))
                 return
 
-            instance.resources.loadEpisodeTextures(fileName, episode.thumbnail)
+            instance.resources.loadEpisodeTextures(fileName)
         })
     }
 
@@ -369,13 +369,13 @@ export default class World {
         let episodesDownloadUrls = []
 
         episodes.forEach(async (episode) => {
-            const downloadUrl = await this.getEpisodeDownloadUrl(episode.id)
+            const episodeUrls = await this.getEpisodeDownloadUrls(episode.id)
 
             episodesDownloadUrls.push({
-                downloadUrl: downloadUrl,
+                downloadUrl: episodeUrls.downloadUrl,
                 data: {
                     name: 'episode-' + episode.id,
-                    thumbnail: episode.thumbnail,
+                    thumbnail: episodeUrls.thumbnail,
                     chapterId: chapterId,
                 }
             })
@@ -386,23 +386,31 @@ export default class World {
         })
     }
 
-    async getEpisodeDownloadUrl(episodeId) {
+    async getEpisodeDownloadUrls(episodeId) {
         const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
         const locale = _lang.getLanguageCode()
 
-        var btvplayer = BTVPlayer({
+        var btvPlayer = BTVPlayer({
             type: 'episode',
             id: episodeId,
             locale: locale,
             access_token: idToken
         })
 
-        const allLanguagesVideos = await btvplayer.api.getDownloadables('episode', episodeId)
+        const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
         const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
 
-        return await btvplayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id)
+        const episode = {
+            downloadUrl: await btvPlayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id),
+            info: await btvPlayer.api.getEpisodeInfo('episode', episodeId)
+        }
+
+        return {
+            downloadUrl: episode.downloadUrl,
+            thumbnail: episode.info.image
+        }
     }
 
     getSelectedQualityVideo(arr) {
