@@ -27,8 +27,8 @@ export default class Resources extends EventEmitter {
         this.itemsLoaded = 0
         this.loadingScreenLoaded = false
         this.mediaItems = []
-        this.mediaItemsScreens = []
         this.textureItems = []
+        this.posterImages = []
         this.videoPlayers = []
 
         this.loadManager()
@@ -201,7 +201,7 @@ export default class Resources extends EventEmitter {
         const episodeId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
 
-        var btvplayer = BTVPlayer({
+        var btvPlayer = BTVPlayer({
             type: 'episode',
             id: episodeId,
             locale: locale
@@ -211,7 +211,7 @@ export default class Resources extends EventEmitter {
         btvContainer.setAttribute('id', videoName)
         document.getElementById('videos-container').appendChild(btvContainer)
 
-        resources.videoPlayers[videoName] = await btvplayer.load({
+        const loadResponse = await btvPlayer.load({
             el: videoName,
             options: {
                 videojs: {
@@ -219,6 +219,9 @@ export default class Resources extends EventEmitter {
                 }
             }
         })
+
+        resources.videoPlayers[videoName] = loadResponse.player
+        resources.posterImages[videoName] = loadResponse.info.image
     }
 
     getGeneratedVideoElement(videoName) {
