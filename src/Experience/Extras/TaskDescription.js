@@ -30,22 +30,33 @@ export default class TaskDescription {
                     <div class="task__video">
                         <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
                     </div>
-                    <div class="task__content">
-                        <div class="modal__extras">
-                            <span class="left"></span>
-                            <span class="bottomLeft"></span>
-                            <span class="bottomLeftSmall"></span>
+                    <div class="task__wrapper">
+                        <div class="task__content">
+                            <div class="modal__extras">
+                                <span class="left"></span>
+                                <span class="bottomLeft"></span>
+                                <span class="bottomLeftSmall"></span>
+                            </div>
+                            ${instance.text}
                         </div>
-                        ${instance.text}
+                        <div class="modal__actions">
+                            <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
+                            <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.getTask}</span></div></div>
+                        </div>
                     </div>
-                    <div id="get-task" class="button button__goToTask"><div class="button__bg"></div><span>${_s.task.getTask}</span></div>
+                   
                 </div>
             `;
 
             instance.modal = new Modal(html)
             const getTaskBtn = document.getElementById("get-task")
+            const backBtn = document.getElementById("backBTN")
 
             document.querySelector('.modal').classList.add('modal__task')
+
+            backBtn.addEventListener('click', () => {
+                instance.modal.destroy()
+            })
 
             getTaskBtn.addEventListener("click", () => {
                 instance.modal.destroy()

@@ -175,6 +175,7 @@ $secondary-font: 'PT Sans', sans-serif;
 }
 
 .button {
+    display: inline-block;
     position: relative;
     color: #fff;
     font-family: $secondary-font;
@@ -188,6 +189,7 @@ $secondary-font: 'PT Sans', sans-serif;
 
     &.disabled {
         pointer-events: none;
+        filter: grayscale(1);
         opacity: 0.4;
     }
 
@@ -197,7 +199,7 @@ $secondary-font: 'PT Sans', sans-serif;
 }
 
 .button__default {
-    padding: 1rem 0;
+    padding: 1rem 2rem;
     min-width: 16rem;
     background: $gradient;
     border: 5px solid $accent;
@@ -208,8 +210,8 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
-.button__goToTask {
-    padding: 1rem 0;
+.button__continue {
+    padding: 5px;
     min-width: 16rem;
     border-radius: 1rem 3rem 3rem 1rem;
     transition: .3s ease;
@@ -217,22 +219,18 @@ $secondary-font: 'PT Sans', sans-serif;
     &::before {
         content: '';
         position: absolute;
-        top: -5px;
-        left: -5px;
-        right: -5px;
-        bottom: -5px;
-        background: $gradient2;
-        border-radius: 1.25rem 3rem 3rem 1.25rem;
-    }
-
-    .button__bg {
-        position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 1;
+        background: $gradient2;
+        border-radius: 1.25rem 3rem 3rem 1.25rem;
+    }
+
+    .button__content {
+        position: relative;
         background: $gradient;
+        padding: 1rem 2rem;
         border-radius: 1rem 3rem 3rem 1rem;
         transition: .3s ease;
     }
@@ -242,39 +240,37 @@ $secondary-font: 'PT Sans', sans-serif;
         z-index: 2;
     }
 
-    &:hover .button__bg {
+    &:hover .button__content {
         background: $gradient2;
     }
 }
 
 .button__round {
-    width: 3.5rem;
-    height: 3.5rem;
+    padding: 5px;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
 
-    @include alignCenterVH();
 
     &::before {
         content: '';
         position: absolute;
-        left: -0.75rem;
-        right: -0.75rem;
-        top: -0.75rem;
-        bottom: -0.75rem;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
         border-radius: 50%;
         background: $gradient2;
     }
 
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        background: $gradient;
+    .button__content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
         border-radius: 50%;
-        transition: .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+        background: $gradient;
+        @include alignCenterVH();
     }
 
     i {
@@ -282,7 +278,7 @@ $secondary-font: 'PT Sans', sans-serif;
         z-index: 1;
     }
 
-    &:hover::after {
+    &:hover .button__content {
         background: $gradient2;
     }
 }
@@ -326,7 +322,7 @@ h1 {
 
 h2 {
     font-family: $secondary-font;
-    letter-spacing: 0.15rem;
+    letter-spacing: 0.1rem;
     font-size: 2.125rem;
 }
 
@@ -561,6 +557,7 @@ button,
     }
 
     .chapter__attachments {
+
         h3,
         li,
         a {
@@ -605,7 +602,7 @@ button,
         }
     }
 
-    .button__goToTask {
+    .button__continue {
         margin-right: 5px;
     }
 }
@@ -717,12 +714,9 @@ button,
 }
 
 .skip-video__btn {
-    // @include button('../static/svgs/button_long_goTo.svg', '../static/svgs/button_long_goTo_hover.svg');
-
     right: 2rem;
     bottom: 9.5rem;
     position: absolute;
-    font-size: 1.75rem;
     z-index: 1;
 }
 
@@ -964,7 +958,7 @@ button,
 
     .button {
         z-index: 5;
-        margin-right: 3rem;
+        margin-right: 1rem;
     }
 
     .modal-on & {
@@ -1405,14 +1399,14 @@ button,
             margin-right: auto;
         }
 
-        .button__next {
+        .button__continue {
             margin-left: auto;
         }
 
         &.hide-nav {
 
             .button__prev,
-            .button__next {
+            .button__continue {
                 display: none;
             }
 
@@ -1500,6 +1494,12 @@ button,
             display: none;
         }
     }
+
+    &__actions {
+        margin-top: 2rem;
+        z-index: 2;
+        display: flex;
+    }
 }
 
 .heading {
@@ -1510,12 +1510,28 @@ button,
     text-align: center;
     pointer-events: none;
 
-    h1 {
+    h2 {
+        position: relative;
         display: inline-block;
         color: #fff;
+        min-width: 20rem;
         padding: 1rem 4rem;
-        background: $gradient2;
-        border-radius: 1.5rem;
+        background: $gradient;
+        border: 5px solid $accent;
+        border-radius: 1rem 1rem 4rem 4rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -5rem;
+            width: 10rem;
+            height: 1rem;
+            background: $accent;
+            border-radius: 0 0 4rem 4rem;
+        }
+
     }
 
 }
@@ -1788,7 +1804,6 @@ button,
 .settings,
 .archive {
     display: flex;
-    // align-items: flex-start;
     gap: 2rem;
     max-width: 1280px;
 
@@ -1808,7 +1823,11 @@ button,
 }
 
 .task {
-    padding-bottom: 6rem;
+
+    &__wrapper {
+        flex: 1;
+        width: auto;
+    }
 
     &__content {
         flex: 1;
@@ -1887,19 +1906,6 @@ button,
 
     input:focus::-webkit-input-placeholder {
         opacity: 0.1;
-    }
-
-    #get-task {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        margin-top: 2rem;
-        z-index: 2;
-
-        &.disabled {
-            pointer-events: none;
-            filter: grayscale(1);
-        }
     }
 
 }
@@ -2066,7 +2072,6 @@ button,
     // Mini Games
 
     .button {
-        display: inline-block;
         margin-top: 2rem;
     }
 
@@ -2393,7 +2398,7 @@ button,
         border-radius: 0.5rem 0.75rem 1rem 1rem;
     }
 
-    .button__goToTask {
+    .button__continue {
         padding: 0.5rem 0;
         min-width: 12rem;
 

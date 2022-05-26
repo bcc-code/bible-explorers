@@ -26,9 +26,8 @@ export default class Congrats {
                         </div>
                         <h1 class="congrats__title">${_s.journey.congrats}</h1>
                         <div class="congrats__chapter-completed">${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong>!</div>
-                        <div id="homescreen" class="button button__goToTask">
-                            <div class="button__bg"></div>
-                            <span>${_s.journey.homescreen}</span>
+                        <div id="homescreen" class="button button__continue">
+                            <div class="button__content"><span>${_s.journey.homescreen}</span></div>
                         </div>
                     </div>
                     <div class="splash splash__right"></div>

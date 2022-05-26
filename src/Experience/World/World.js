@@ -109,7 +109,7 @@ export default class World {
         this.restart.innerText = _s.journey.restart
 
         this.welcome.introduction.innerText = _s.introduction
-        this.buttons.start.appendChild(this.start)
+        this.buttons.start.children[0].appendChild(this.start)
         this.buttons.restart.appendChild(this.restart)
 
         this.homeButton = document.getElementById('go-home')

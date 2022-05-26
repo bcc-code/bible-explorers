@@ -108,7 +108,7 @@ export default class SortingGame {
 
         const title = document.createElement('div')
         title.classList.add('heading')
-        title.innerHTML = "<h1>" + _s.miniGames.sortingIcons + "</h1>"
+        title.innerHTML = "<h2>" + _s.miniGames.sortingIcons + "</h2>"
 
         const actions = document.createElement('div')
         actions.classList.add('miniGame__actions')
@@ -196,13 +196,7 @@ export default class SortingGame {
             instance.layer.add(icon)
             instance.icons.push(icon)
         })
-
-        // this.createButton("back", this.data.box.x, this.sizes.height - 100, this.data.button.srcDefault.default, _s.journey.back)
-        // this.createButton("reset", this.sizes.width / 2, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.reset, { x: this.data.button.width / 2 })
-
-        // if (this.debug.active) {
-        //     this.createButton("skip", this.stage.width() - this.data.box.x - this.data.button.width, this.sizes.height - 100, this.data.button.srcDefault.default, _s.miniGames.skip)
-        // }
+       
     }
 
     addEventListeners() {
@@ -323,9 +317,8 @@ export default class SortingGame {
             <div class="congrats__container">
                 <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}!</div>
-                <div id="continue_journey" class="button button__goToTask">
-                    <div class="button__bg"></div>
-                    <span>${_s.miniGames.continue}</span>
+                <div id="continue_journey" class="button button__continue">
+                    <div class="button__content"> <span>${_s.miniGames.continue}</span></div>
                 </div>
             </div>
         </div>`

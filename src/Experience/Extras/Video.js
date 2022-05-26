@@ -61,15 +61,15 @@ export default class Video {
             if (instance.showSkipBtn()) {
                 if (!instance.videoJsEl().querySelector('.skip-video__btn')) {
                     let skipVideo = document.createElement('div')
-                    skipVideo.classList.add("button", "button__goToTask", "skip-video__btn")
+                    skipVideo.classList.add("button", "button__continue", "skip-video__btn")
 
                     const bg = document.createElement('div')
-                    bg.classList.add('button__bg')
+                    bg.classList.add('button__content')
 
                     let span = document.createElement('span')
                     span.innerText = _s.miniGames.skip
                     skipVideo.appendChild(bg)
-                    skipVideo.appendChild(span)
+                    bg.appendChild(span)
 
                     skipVideo.addEventListener('click', instance.finish)
                     instance.videoJsEl().appendChild(skipVideo)

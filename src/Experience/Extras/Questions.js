@@ -26,7 +26,7 @@ export default class Questions {
 
             let html = `
                 <div class="modal__content questions ">
-                    <div class="questions__header heading"><h1>${_s.task.questions}</h1></div>
+                    <div class="questions__header heading"><h2>${_s.task.questions}</h2></div>
                     <div class="questions__content">`
 
             questions.forEach((question, index) => {
@@ -41,9 +41,9 @@ export default class Questions {
                 </div>
 
                 <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">
-                    <div class="button button__prev button__round"><i class="icon icon-arrow-left-long-solid"></i></div>
+                    <div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>
                     <div id="submit-task" class="button button__submit button__default"><span>${_s.task.submit}</span></div>
-                    <div class="button button__next button__round"><i class="icon icon-arrow-right-long-solid"></i></div>
+                    <div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>
                 </div>
             `;
 

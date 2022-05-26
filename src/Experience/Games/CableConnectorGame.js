@@ -89,8 +89,8 @@ export default class CableConnector {
         document.body.appendChild(gameWrapper)
 
         const title = document.createElement('div')
-        title.classList.add('game__title')
-        title.innerHTML = "<h1>" + _s.miniGames.cableConnect + "</h1>"
+        title.classList.add('heading')
+        title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
 
         const actions = document.createElement('div')
         actions.classList.add('miniGame__actions')
@@ -281,6 +281,7 @@ export default class CableConnector {
             if (button.classList.contains('button__back')) {
                 button.addEventListener('click', () => {
                     instance.destroy()
+                    instance.world.program.taskDescription.toggleTaskDescription()
                 })
             }
 
@@ -330,9 +331,8 @@ export default class CableConnector {
                     <i class="icon icon-star-solid"></i>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}!</div>
-                <div id="continue_journey" class="button button__goToTask">
-                    <div class="button__bg"></div>
-                    <span>${_s.miniGames.continue}</span>
+                <div id="continue_journey" class="button button__continue">
+                    <div class="button__content"><span>${_s.miniGames.continue}</span></div>
                 </div>
             </div>
 

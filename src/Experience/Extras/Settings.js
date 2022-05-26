@@ -26,7 +26,7 @@ export default class Settings {
         else {
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><h1>${_s.settings.title}</h1></div>
+                    <div class="settings__header heading"><h2>${_s.settings.title}</h2></div>
                     <div class="settings__content">
                         <div class="modal__extras">
                             <span class="left"></span>
