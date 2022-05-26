@@ -2,7 +2,16 @@
 const defaultLang = "en"
 const list = {
     "en": "English",
-    "no": "Norsk"
+    "no": "Norsk",
+    // "de": "Deutsch",
+    "nl": "Nederlands",
+    "fr": "Français",
+    "pl": "Polski",
+    "ro": "Română",
+    // "es": "Español",
+    // "pt-pt": "Português",
+    "ru": "Русский",
+    "fi": "Suomi"
 }
 
 let getLanguageCode = () => localStorage.getItem('lang') || defaultLang
