@@ -145,25 +145,22 @@ export default class Resources extends EventEmitter {
         }
     }
 
-    loadEpisodeTextures(videoName, thumbnail) {
+    loadEpisodeTextures(videoName) {
         this.offline.loadFromIndexedDb(
-            { 
-                name: videoName,
-                thumbnail: thumbnail
-            },
+            videoName,
             this.loadTexturesLocally,
             this.loadTexturesOnline
         )
     }
 
     loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
-        resources.loadVideoThumbnail(videoName, thumbnailUrl)
         resources.streamLocally(videoName, videoUrl)
+        resources.loadVideoThumbnail(videoName, thumbnailUrl)
     }
 
-    loadTexturesOnline(videoName, thumbnailUrl) {
-        resources.loadVideoThumbnail(videoName, thumbnailUrl)
-        resources.streamFromBtv(videoName)
+    async loadTexturesOnline(videoName) {
+        await resources.streamFromBtv(videoName)
+        resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
     }
 
     loadVideoThumbnail(videoName, thumbnailUrl) {

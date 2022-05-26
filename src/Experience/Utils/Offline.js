@@ -132,10 +132,10 @@ export default class Offline {
         offline.objStore.put(data, data.name)
     }
 
-    loadFromIndexedDb = function (data, callback, fallback) {
+    loadFromIndexedDb = function (videoName, callback, fallback) {
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
-        const getItem = offline.objStore.get(data.name)
+        const getItem = offline.objStore.get(videoName)
 
         getItem.onsuccess = function () {
             if (getItem.result) {
@@ -156,10 +156,10 @@ export default class Offline {
                         const blob = offline.getArrayBufferBlob(e)
                         const videoUrl = URL.createObjectURL(blob)
                         const videoEl = document.createElement("div")
-                        videoEl.setAttribute('id', data.name)
+                        videoEl.setAttribute('id', videoName)
                         document.getElementById('videos-container').appendChild(videoEl)
 
-                        callback(data.name, videoUrl, thumbnailUrl)
+                        callback(videoName, videoUrl, thumbnailUrl)
                     }
 
                     r.readAsArrayBuffer(item.video)
@@ -168,7 +168,7 @@ export default class Offline {
                 f.readAsArrayBuffer(item.thumbnail)
             }
             else {
-                fallback(data.name, data.thumbnail)
+                fallback(videoName)
             }
         }
     }
