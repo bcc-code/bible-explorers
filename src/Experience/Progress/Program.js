@@ -123,10 +123,6 @@ export default class Program {
 
         if (this.stepType() == 'video') {
             interactiveObjects = interactiveObjects.concat(["panel_screen"])
-
-            if (this.debug.active) {
-                interactiveObjects = interactiveObjects.concat(["panel_time_switchers_holder"])
-            }
         }
         else if (this.stepType() == 'iris' || this.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
@@ -148,11 +144,6 @@ export default class Program {
     startAction() {
         if (this.clickedObject == 'tv_16x9_screen') {
             this.taskDescription.toggleTaskDescription()
-        }
-
-        else if (this.clickedObject == 'panel_time_switchers_holder') {
-            this.video.defocus()
-            this.advance()
         }
 
         else if (this.clickedObject == 'panel_screen') {
@@ -182,9 +173,5 @@ export default class Program {
 
     updateLocalStorage() {
         localStorage.setItem(this.world.getId(), this.currentStep)
-    }
-
-    updateIrisTexture(mode) {
-        instance.world.controlRoom.setTexture('tv_16x9_screen', instance.resources.textureItems['BIEX_S01_E01_IRIS_' + mode].item)
     }
 }

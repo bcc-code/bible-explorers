@@ -60,13 +60,12 @@ export default class ControlRoom {
         this.tv_portal = this.resources.scene.children.find(child => child.name === 'tv_portal_screen')
 
         this.tablet = this.resources.scene.children.find(child => child.name === 'panel_screen')
-        this.switcher = this.resources.scene.children.find(child => child.name === 'panel_time_switchers_holder')
 
         this.arrow_h = this.resources.scene.children.find(child => child.name === 'arrow_H')
         this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
 
-        this.roomTexture.push(this.controlRoom, this.switcher, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
-        this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet, this.switcher)
+        this.roomTexture.push(this.controlRoom, this.arrow_h, this.arrow_m, this.tv_4x4_frame, this.tv_4x5_frame, this.tv_16x10_frame, this.tv_16x9_frame)
+        this.clickableObjects.push(this.tv_16x10, this.tv_16x9, this.tablet)
 
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet)
     }
