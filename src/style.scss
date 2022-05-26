@@ -544,7 +544,7 @@ button,
             margin-top: 0;
         }
 
-        a {
+        p a {
             color: $accent;
             text-decoration: none;
 
@@ -561,7 +561,6 @@ button,
     }
 
     .chapter__attachments {
-
         h3,
         li,
         a {
@@ -1688,6 +1687,7 @@ button,
             position: absolute;
             top: 3rem;
             right: 0;
+            z-index: 2;
             border-radius: 8px;
             background-color: #fff;
             padding: 4px;

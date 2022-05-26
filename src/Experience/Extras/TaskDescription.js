@@ -73,8 +73,7 @@ export default class TaskDescription {
             })
 
             if (instance.currentStepTaskType == 'sorting') {
-                const noOfIcons = instance.program.getCurrentStepData().sorting.length
-                getTaskBtn.classList.add('disabled')
+                const noOfCorrectIcons = instance.program.getCurrentStepData().sorting.filter(i => i.correct_wrong === true).length
 
                 var input = document.createElement("input")
                 input.classList.add("no-of-icons")
@@ -86,16 +85,13 @@ export default class TaskDescription {
 
                 const div = document.createElement("div")
                 div.classList.add('numberOfIcons')
-                const label = document.createElement("span")
 
-                label.innerText = "Icons found:"
-
-                div.appendChild(label)
                 div.appendChild(input)
                 document.querySelector('.task__content').appendChild(div)
 
+                getTaskBtn.classList.add('disabled')
                 input.addEventListener("input", (event) => {
-                    if (event.target.value == noOfIcons) {
+                    if (event.target.value == noOfCorrectIcons) {
                         getTaskBtn.classList.remove('disabled')
                     } else {
                         getTaskBtn.classList.add('disabled')

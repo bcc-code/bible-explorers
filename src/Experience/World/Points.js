@@ -21,6 +21,8 @@ export default class Points {
 
         this.objects.filter(child => {
             if (child.name === name) {
+                // First step is a task description from Iris
+                if (type == 'task') type = 'iris'
                 this.create(child, _s.tooltips[type])
             }
         })

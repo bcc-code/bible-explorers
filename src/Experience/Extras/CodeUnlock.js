@@ -106,7 +106,8 @@ export default class CodeUnlock {
             instance.world.program.advance()
             instance.destroy()
         } else {
-            console.log("Incorrect code")
+            // console.log("Incorrect code")
+            instance.world.audio.playWrongSound()
         }
     }
 

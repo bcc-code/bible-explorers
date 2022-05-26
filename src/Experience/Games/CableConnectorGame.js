@@ -11,6 +11,7 @@ export default class CableConnector {
         this.world = this.experience.world
         this.audio = this.world.audio
         this.sizes = this.experience.sizes
+        this.debug = this.experience.debug
 
         instance = this
     }
@@ -89,7 +90,7 @@ export default class CableConnector {
 
         const title = document.createElement('div')
         title.classList.add('game__title')
-        title.innerHTML = "<h1>" + _s.miniGames.cableConnect.title + "</h1>"
+        title.innerHTML = "<h1>" + _s.miniGames.cableConnect + "</h1>"
 
         const actions = document.createElement('div')
         actions.classList.add('miniGame__actions')
@@ -102,14 +103,21 @@ export default class CableConnector {
 
         instance.program = instance.world.program
 
-        const backBtn = this.addButton('button__back', 'button__default', _s.journey.back)
-        const resetBtn = this.addButton('button__reset', 'button__default', _s.miniGames.reset)
-
         gameWrapper.appendChild(title)
         gameWrapper.appendChild(actions)
 
-        actions.appendChild(backBtn)
-        actions.appendChild(resetBtn)
+        actions.appendChild(
+            this.addButton('button__back', 'button__default', _s.journey.back)
+        )
+        actions.appendChild(
+            this.addButton('button__reset', 'button__default', _s.miniGames.reset)
+        )
+
+        if (instance.debug.active) {
+            actions.appendChild(
+                this.addButton('button__skip', 'button__default', _s.miniGames.skip)
+            )
+        }
 
         document.body.classList.add('freeze')
     }
@@ -236,8 +244,8 @@ export default class CableConnector {
                         correspondingOutlet.connected = true
 
                         if (instance.bothPlugsConnected(cable)) {
-                            cable.item.zIndex(0)
                             // console.log("'" + cable.color + "' cable is now connected!")
+                            cable.item.zIndex(0)
                         }
 
                         if (instance.allCablesConnected()) {
@@ -257,22 +265,6 @@ export default class CableConnector {
     connectedToCorrectOutlet(plugPosition, correspondingOutlet) {
         return Math.abs(plugPosition.x - correspondingOutlet.position.x) < 80
             && Math.abs(plugPosition.y - correspondingOutlet.position.y) < 60
-    }
-
-    updateCableCord(cable, item) {
-        const cord = cable.item.children.find(c => c.name() === "cord")
-
-        if (item.name() === "plug_left") {
-            cord.points()[0] = item.x() + instance.data.cable.plug.width
-            cord.points()[1] = item.y() + instance.data.cable.plug.height / 2
-            cord.points()[2] = item.x() + instance.data.cable.plug.width + 60
-            cord.points()[3] = item.y() + instance.data.cable.plug.height / 2
-        } else if (item.name() === "plug_right") {
-            cord.points()[6] = item.x() - instance.data.cable.plug.width - 60
-            cord.points()[7] = item.y() + instance.data.cable.plug.height / 2
-            cord.points()[8] = item.x() - instance.data.cable.plug.width
-            cord.points()[9] = item.y() + instance.data.cable.plug.height / 2
-        }
     }
 
     bothPlugsConnected(cable) {
@@ -296,6 +288,13 @@ export default class CableConnector {
                 button.addEventListener('click', () => {
                     instance.destroy()
                     instance.toggleCableConnector()
+                })
+            }
+
+            if (button.classList.contains('button__skip')) {
+                button.addEventListener('click', () => {
+                    instance.destroy()
+                    instance.program.advance()
                 })
             }
         })
@@ -326,11 +325,11 @@ export default class CableConnector {
                 <div class="congrats__title">
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
-                    <h1>${_s.miniGames.cableConnect.completed.title}</h1>
+                    <h1>${_s.miniGames.completed.title}</h1>
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.cableConnect.completed.message}!</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.completed.message}!</div>
                 <div id="continue_journey" class="button button__goToTask">
                     <div class="button__bg"></div>
                     <span>${_s.miniGames.continue}</span>
