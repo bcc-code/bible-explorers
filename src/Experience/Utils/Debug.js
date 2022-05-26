@@ -14,16 +14,18 @@ class Debug {
 
 class StatsModule {
     constructor() {
-        this.experience = new Experience();
-        this.stats = new Stats();
+        this.experience = new Experience()
+        this.stats = new Stats()
 
         if (this.experience.debug.active) {
             document.body.classList.add('debug')
-            document.body.appendChild(this.stats.dom)
+            document.body.appendChild(this.stats.domElement)
+
         } else {
             document.body.classList.remove('debug')
         }
     }
+
 
     update() {
         if (this.experience.debug.active) {
@@ -31,5 +33,4 @@ class StatsModule {
         }
     }
 }
-
 export { Debug, StatsModule }

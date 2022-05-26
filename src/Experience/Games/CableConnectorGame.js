@@ -24,6 +24,10 @@ export default class CableConnector {
     }
 
     init() {
+
+        const spriteW = 180
+        const spriteH = 100
+
         this.data = {
             canvas: {
                 width: this.sizes.width,
@@ -71,7 +75,20 @@ export default class CableConnector {
                     "#fcb04e",
                     "#f75b99",
                     "#9f4096",
-                ]
+                ],
+                default: '#cccccc'
+            },
+            sprite: {
+                src: 'games/sparkles.png',
+                width: spriteW,
+                height: spriteH,
+                animations: {
+                    sparkle: [
+                        0, 0, spriteW, spriteH,
+                        spriteW * 2, 0, spriteW, spriteH,
+                        spriteW * 3, 0, spriteW, spriteH,
+                    ]
+                }
             },
             itemsLength: 5
         }
@@ -196,6 +213,7 @@ export default class CableConnector {
         containerObj.item.add(outletsGroup)
 
         this.cables.forEach(cable => {
+
             cable.item.on('dragstart', () => {
                 cable.item.zIndex(4)
             })
@@ -213,11 +231,9 @@ export default class CableConnector {
                         document.body.style.cursor = 'default'
                     }
                 })
-
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
                 })
-
                 plug.on('dragend', () => {
                     const direction = plug.name().replace('plug_', '')
                     const plugPosition = {
@@ -227,12 +243,30 @@ export default class CableConnector {
                     let correspondingOutlet = instance.outlets[direction].find(o => o.color == cable.color)
 
                     if (instance.connectedToCorrectOutlet(plugPosition, correspondingOutlet)) {
+
+                        const imageObj = new Image()
+                        imageObj.src = this.data.sprite.src
+                        imageObj.onload = function () {
+                            const blob = instance.setSprite(plug, imageObj)
+                            plug.add(blob)
+                            blob.start()
+                            instance.audio.playCorrectSound()
+
+                            blob.on('frameIndexChange.konva', function () {
+                                if (this.frameIndex() == 2) {
+                                    blob.stop()
+                                }
+                            })
+                        }
+
                         const plugInPosition = {
                             x: direction == "left"
                                 ? correspondingOutlet.position.x + correspondingOutlet.width + cable.strokeWidth
                                 : correspondingOutlet.position.x - correspondingOutlet.width - cable.strokeWidth,
                             y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2,
                         }
+
+                        // console.log('correct');
 
                         plug.move({
                             x: plugInPosition.x - plugPosition.x,
@@ -253,13 +287,36 @@ export default class CableConnector {
                         }
                     }
                     else {
+                        instance.audio.playWrongSound()
                         // console.log("Not connected to any outlet or to the correct outlet")
                     }
                 })
             })
         })
 
+        console.log(containerObj);
+
         this.stage.add(layer)
+    }
+
+    setSprite(obj, imageObj) {
+        const sprite = new Konva.Sprite({
+            x: obj.width() / 2,
+            y: obj.height() / 2,
+            width: this.data.sprite.width,
+            height: this.data.sprite.height,
+            image: imageObj,
+            animation: 'sparkle',
+            animations: this.data.sprite.animations,
+            frameRate: 3,
+            frameIndex: 0,
+            offset: {
+                x: obj.width() / 2,
+                y: obj.height() / 2
+            }
+        })
+
+        return sprite
     }
 
     connectedToCorrectOutlet(plugPosition, correspondingOutlet) {
@@ -517,7 +574,7 @@ class Cable {
         this.fill = fill
         this.stroke = stroke
         this.strokeWidth = 10
-        
+
         this.item = null
     }
 
@@ -618,7 +675,7 @@ class Cable {
             points: [b.x1, b.y1, b.x2, b.y2, b.x3, b.y3, b.x4, b.y4],
         })
     }
-    
+
     _updateDottedLines() {
         const b = this._getBezierPoints()
         this.bezierLine.points([b.x1, b.y1, b.x2, b.y2, b.x3, b.y3, b.x4, b.y4])

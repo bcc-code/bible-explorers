@@ -37,6 +37,7 @@
     "workbox-precaching": "^6.5.3"
   },
   "devDependencies": {
+    "@types/three": "^0.140.0",
     "gsap": "^3.9.1",
     "mini-svg-data-uri": "^1.4.4",
     "node-sass": "^7.0.1",

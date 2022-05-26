@@ -85,7 +85,7 @@ export default class SortingGame {
         }
 
         const spriteW = this.data.button.sprite.width
-        const spriteH = this.data.button.sprite.width
+        const spriteH = this.data.button.sprite.height
 
         this.animations = {
             // x, y, width, height (8 frames)
