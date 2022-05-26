@@ -4,6 +4,8 @@ let instance = null
 
 export default class ProgressBar {
     constructor() {
+        this.experience = new Experience()
+        this.debug = this.experience.debug
         instance = this
 
         this.experience = new Experience()
@@ -21,7 +23,7 @@ export default class ProgressBar {
         instance.el.steps.forEach(function(step) {
             step.addEventListener("click", () => {
                 let clickedStep = step.innerText - 1
-                if (clickedStep <= instance.program.chapterProgress())
+                if (instance.debug.active || clickedStep <= instance.program.chapterProgress())
                     instance.program.advance(clickedStep)
             })
         });
@@ -34,10 +36,8 @@ export default class ProgressBar {
     }
 
     static generateHtml() {
-        var leftAdjustment = 21;
         let html = '<div class="progress-bar__steps">'
             for (let i = 0; i < instance.program.totalSteps; i++) {
-                // var left = 'calc(' + i * instance.stepWidth + '% - ' + leftAdjustment + 'px)';
                 html += `<div class="progress-bar__step ${ i > instance.program.chapterProgress() ? 'locked' : '' }">${ i+1 }</div>`
             }
             html += `<div class="progress-bar__step">#</div>`

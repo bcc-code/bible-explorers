@@ -312,7 +312,7 @@ const strings = {
             "homescreen": "Finalizare"
         },
         "task": {
-            "codeUnlock": "Scrie cifra corectă",
+            "codeUnlock": "Scrie numărul corect",
             "taskDescription": "Descrierea sarcinii",
             "questions": "Întrebare",
             "getTask": "Mergi la sarcină",
