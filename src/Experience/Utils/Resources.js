@@ -54,7 +54,6 @@ export default class Resources extends EventEmitter {
         this.loadingManager.onError = function (url) {
             // console.log('There was an error loading ' + url)
         }
-
     }
 
     setLoaders() {
