@@ -19,26 +19,28 @@ export default class CodeUnlock {
             let html = `
                 <div class="modal__content code-unlock">
                     <div class="code-unlock__header heading"><h2>${_s.task.codeUnlock}</h2></div>
-                    <div class="code-unlock__sidebar">
-                        <div class="code-unlock__container">
-                            <div class="code-unlock__screen">
-                                <span class="code-unlock__input"></span>
-                            </div>
-                            <div class="code-unlock__grid">
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">7</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">8</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">9</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--backspace"><i class="icon icon-arrow-left-long-to-line-solid"></i></button>
-                                <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
-                            </div>
+                    <div class="code-unlock__container">
+                        <div class="code-unlock__screen">
+                            <span class="code-unlock__input"></span>
                         </div>
+                        <div class="code-unlock__grid">
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">7</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">8</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">9</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--backspace"><i class="icon icon-arrow-left-long-to-line-solid"></i></button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="modal__actions">
+                        <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
                     </div>
                 </div>
             `;
@@ -46,6 +48,12 @@ export default class CodeUnlock {
             instance.modal = new Modal(html)
 
             document.querySelector('.modal').classList.add('modal__code-unlock')
+
+            const backBtn = document.getElementById("backBTN")
+            backBtn.addEventListener('click', () => {
+                instance.modal.destroy()
+                instance.world.program.taskDescription.toggleTaskDescription()
+            })
 
             instance.el = {
                 code: document.querySelector(".code-unlock__input"),

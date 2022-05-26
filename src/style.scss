@@ -1515,7 +1515,7 @@ button,
         display: inline-block;
         color: #fff;
         min-width: 20rem;
-        padding: 1rem 4rem;
+        padding: 1.5rem 4rem 0.75rem;
         background: $gradient;
         border: 5px solid $accent;
         border-radius: 1rem 1rem 4rem 4rem;
@@ -1748,7 +1748,6 @@ button,
 
     &__content {
         img {
-            display: block;
             float: right;
             width: 34%;
             margin-left: 1rem;
@@ -1974,6 +1973,10 @@ button,
         li.visible {
             background-color: $dark;
         }
+    }
+
+    &__content {
+        padding: 3rem 6rem;
     }
 }
 
@@ -2572,6 +2575,10 @@ button,
         .chapter__description {
             padding: 3rem;
         }
+    }
+
+    .archive__content {
+        padding: 3rem;
     }
 
     .task {
