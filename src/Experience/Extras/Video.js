@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import TWEEN from '@tweenjs/tween.js'
 import Experience from "../Experience.js";
 import _lang from '../Utils/Lang.js'
 import _s from '../Utils/Strings.js'
@@ -48,9 +49,9 @@ export default class Video {
         if (!this.texture || !this.texture.image.currentSrc.includes(mediaItem.path)) {
             this.texture = mediaItem
 
-            this.portalScreen.material.map = this.texture
-            this.portalScreen.material.tonnedMap = false
-            this.portalScreen.material.needsUpdate = true
+            // Set texture when starting directly on a video task type
+            if (this.portalScreen.material.map != this.resources.textureItems[id])
+                this.setTexture(id)
 
             this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
         }
@@ -103,6 +104,7 @@ export default class Video {
     play() {
         if (!instance.texture) return
 
+        instance.portalScreen.material.map = instance.texture
         instance.texture.image.play()
         instance.video().requestFullscreen()
     }
@@ -113,7 +115,11 @@ export default class Video {
 
     focus() {
         instance.camera.zoomIn(1500)
-        instance.portalScreen.material.color.set(new THREE.Color().setRGB(1, 1, 1))
+
+        new TWEEN.Tween(instance.portalScreen.material)
+            .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start()
     }
 
     defocus() {
@@ -122,6 +128,11 @@ export default class Video {
             if (document.fullscreenElement) {
                 instance.video().exitFullscreen()
             }
+
+            new TWEEN.Tween(instance.portalScreen.material)
+                .to({ color: new THREE.Color(0x131A43) }, 1000)
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .start()
         }
     }
 
