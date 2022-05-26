@@ -129,7 +129,7 @@ export default class SortingGame {
         actions.appendChild(resetBtn)
 
         instance.program = instance.world.program
-        const gameData = instance.program.getCurrentStepData().sorting
+        const gameData = instance.program.getCurrentStepData().sorting.sort(() => Math.random() - 0.5)
 
         instance.data.noOfIcons = gameData.length
         instance.data.icons = gameData
@@ -196,7 +196,6 @@ export default class SortingGame {
             instance.layer.add(icon)
             instance.icons.push(icon)
         })
-       
     }
 
     addEventListeners() {
@@ -290,6 +289,7 @@ export default class SortingGame {
             if (button.classList.contains('button__back')) {
                 button.addEventListener('click', () => {
                     instance.destroy()
+                    instance.world.program.taskDescription.toggleTaskDescription()
                 })
             }
         })
