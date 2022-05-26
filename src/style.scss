@@ -16,11 +16,9 @@ $gradient-with-opacity: linear-gradient(90deg, rgba(19, 26, 67, 1), rgba(62, 48,
 
 $radius: 12px;
 
-$archivo: "Archivo",
+$primary-font: "Archivo",
     sans-serif;
-
-$berlin-sans-r: 'Berlin Sans FB';
-$berlin-sans-b: 'Berlin Sans FB Bold';
+$secondary-font: 'PT Sans', sans-serif;
 
 // #endregion
 
@@ -179,7 +177,8 @@ $berlin-sans-b: 'Berlin Sans FB Bold';
 .button {
     position: relative;
     color: #fff;
-    font-family: $berlin-sans-r;
+    font-family: $secondary-font;
+    font-weight: bold;
     letter-spacing: 0.1rem;
     font-size: 1.25rem;
     text-align: center;
@@ -303,7 +302,7 @@ body {
 }
 
 body {
-    font-family: $archivo;
+    font-family: $primary-font;
     font-size: 16px;
     font-weight: normal;
     line-height: 1.5;
@@ -320,25 +319,25 @@ ul {
 }
 
 h1 {
-    font-family: $berlin-sans-r;
+    font-family: $secondary-font;
     letter-spacing: 0.15rem;
     font-size: 3rem;
 }
 
 h2 {
-    font-family: $berlin-sans-r;
+    font-family: $secondary-font;
     letter-spacing: 0.15rem;
     font-size: 2.125rem;
 }
 
 h3 {
-    font-family: $berlin-sans-r;
+    font-family: $secondary-font;
     letter-spacing: 0.15rem;
     font-size: 1.5rem;
 }
 
 h4 {
-    font-family: $berlin-sans-r;
+    font-family: $secondary-font;
     letter-spacing: 0.15rem;
     font-size: 1.25rem;
 }
@@ -575,7 +574,7 @@ button,
 
         a {
             color: $accent2;
-            font-family: $berlin-sans-r;
+            font-family: $secondary-font;
             text-transform: uppercase;
             letter-spacing: 0.15rem;
             text-decoration: none;
@@ -634,7 +633,7 @@ button,
 
     &__text {
         color: #fff;
-        font-family: $berlin-sans-r;
+        font-family: $secondary-font;
         font-weight: bold;
     }
 
@@ -1168,7 +1167,7 @@ button,
         }
 
         span {
-            font-family: $berlin-sans-r;
+            font-family: $secondary-font;
             letter-spacing: 0.25rem;
         }
     }
@@ -1183,13 +1182,13 @@ button,
     }
 
     &__title {
-        font-family: $berlin-sans-r;
+        font-family: $secondary-font;
         line-height: 1.25;
         color: #fff;
     }
 
     &__date {
-        font-family: $berlin-sans-r;
+        font-family: $secondary-font;
         font-size: 1.25rem;
         opacity: 0.6;
         color: #fff;
@@ -1857,7 +1856,7 @@ button,
         justify-content: end;
 
         span {
-            font-family: $berlin-sans-r;
+            font-family: $secondary-font;
             font-size: 2rem;
             opacity: 0.6;
         }
@@ -1871,7 +1870,7 @@ button,
         border: none;
         border-radius: 1rem 2rem;
         background: $gradient2;
-        font-family: $berlin-sans-r;
+        font-family: $secondary-font;
         font-size: 2rem;
         text-align: center;
         color: #fff;
