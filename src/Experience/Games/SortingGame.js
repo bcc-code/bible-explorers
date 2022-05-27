@@ -284,6 +284,13 @@ export default class SortingGame {
                     instance.world.program.taskDescription.toggleTaskDescription()
                 })
             }
+
+            if (button.classList.contains('button__skip')) {
+                button.addEventListener('click', () => {
+                    instance.destroy()
+                    instance.program.advance()
+                })
+            }
         })
     }
 

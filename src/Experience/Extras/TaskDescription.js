@@ -13,7 +13,7 @@ export default class TaskDescription {
 
     toggleTaskDescription() {
         if (document.querySelector('.modal')) {
-            instance.modal.destroy()
+            instance.destroy()
         }
         else {
             instance.program = instance.world.program
@@ -55,11 +55,11 @@ export default class TaskDescription {
             document.querySelector('.modal').classList.add('modal__task')
 
             backBtn.addEventListener('click', () => {
-                instance.modal.destroy()
+                instance.destroy()
             })
 
             getTaskBtn.addEventListener("click", () => {
-                instance.modal.destroy()
+                instance.destroy()
 
                 if (instance.currentStepTaskType == 'questions') {
                     instance.program.questions.toggleQuestions()
@@ -96,9 +96,9 @@ export default class TaskDescription {
 
                 const div = document.createElement("div")
                 div.classList.add('numberOfIcons')
-
                 div.appendChild(input)
                 document.querySelector('.task__content').appendChild(div)
+                input.focus()
 
                 getTaskBtn.classList.add('disabled')
                 input.addEventListener("input", (event) => {
@@ -109,6 +109,8 @@ export default class TaskDescription {
                     }
                 })
             }
+
+            instance.setControls()
         }
     }
 
@@ -118,5 +120,22 @@ export default class TaskDescription {
             instance.points.add(screen, instance.currentStepTaskType)
             instance.highlight.add(screen)
         }, instance.camera.data.moveDuration)
+    }
+
+    setControls() {
+        document.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                const getTaskBtn = document.getElementById("get-task")
+
+                if (!getTaskBtn.classList.contains('disabled')) {
+                    getTaskBtn.click()
+                }
+            }
+        }
+    }
+
+    destroy() {
+        document.onkeydown = null
+        instance.modal.destroy()
     }
 }
