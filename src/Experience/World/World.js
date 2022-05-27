@@ -242,7 +242,7 @@ export default class World {
                     <span class="right"></span>
                     <span class="rightOutside"></span>
                 </div>
-                <div class="chapter__background" style="background-image: url('${chapter.thumbnail}')"></div>
+                <div class="chapter__background"></div>
                 <div class="chapter__number">
                     <i class="icon icon-lock-solid"></i>
                     <span>${index + 1}</span>
@@ -270,6 +270,11 @@ export default class World {
             </div>
         `
         instance.menu.chapters.appendChild(chapterHtml)
+        instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
+    }
+
+    setChapterBgImage(chapter) {
+        document.querySelector('.chapter[data-id="' + chapter.id + '"] .chapter__background').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
     }
 
     setDescriptionHtml() {
@@ -368,19 +373,32 @@ export default class World {
     }
 
     cacheChapterAssets(chapter) {
-        const sortingTasks = chapter['program'].filter(step => step.taskType == "sorting")
+        instance.cacheChapterThumbnail(chapter.thumbnail)
+        instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
+    }
 
-        if (sortingTasks.length) {
-            sortingTasks.forEach(task => task.sorting.forEach(s => {
-                caches.open("chaptersAssets").then((cache) => {
-                    var request = new Request(s.icon)
-                    fetch(request)
-                        .then((fetchedResponse) => {
-                            cache.put(s.icon, fetchedResponse)
-                        })
+    cacheChapterThumbnail(url) {
+        if (!url) return
+
+        instance.fetchAndCacheAsset(url)
+    }
+
+    cacheSortingGameIcons(sortingTasks) {
+        if (sortingTasks.length == 0) return
+
+        sortingTasks.forEach(task => task.sorting.forEach(s => {
+            instance.fetchAndCacheAsset(s.icon)
+        }))
+    }
+
+    fetchAndCacheAsset(url) {
+        caches.open("chaptersAssets").then((cache) => {
+            var request = new Request(url)
+            fetch(request)
+                .then((fetchedResponse) => {
+                    cache.put(url, fetchedResponse)
                 })
-            }))
-        }
+        })
     }
 
     async downloadEpisodes(episodes, chapterId) {

@@ -9,6 +9,7 @@ export default class SortingGame {
     constructor() {
         this.experience = new Experience()
         this.world = this.experience.world
+        this.offline = this.world.offline
         this.audio = this.world.audio
         this.sizes = this.experience.sizes
         this.debug = this.experience.debug
@@ -198,7 +199,7 @@ export default class SortingGame {
         })
 
         instance.data.icons.forEach(async (data) => {
-            instance.fetchIconUrl(data, instance.createIcon)
+            instance.offline.fetchChapterAsset(data, "icon", instance.createIcon)
         })
     }
 
@@ -432,25 +433,6 @@ export default class SortingGame {
         })
 
         return cell
-    }
-
-    fetchIconUrl(data, callback) {
-        caches.open("chaptersAssets").then((cache) => {
-            cache.match(data.icon)
-                .then((response) => {
-                    if (response) {
-                        response.blob().then((blob) => {
-                            callback({
-                                icon: URL.createObjectURL(blob),
-                                correct_wrong: data.correct_wrong
-                            })
-                        })
-                    }
-                    else {
-                        callback(data)
-                    }
-                })
-        })
     }
 
     createIcon(data) {

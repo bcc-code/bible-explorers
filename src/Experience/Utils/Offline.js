@@ -199,4 +199,24 @@ export default class Offline {
             }
         }
     }
+
+    fetchChapterAsset(data, param, callback) {
+        caches.open("chaptersAssets").then((cache) => {
+            cache.match(data[param])
+                .then((response) => {
+                    if (response) {
+                        response.blob().then((blob) => {
+                            const url = URL.createObjectURL(blob)
+                            const newData = Object.assign({}, data)
+                            newData[param] = url
+                            
+                            callback(newData)
+                        })
+                    }
+                    else {
+                        callback(data)
+                    }
+                })
+        })
+    }
 }
