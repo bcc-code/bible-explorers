@@ -24,7 +24,6 @@ export default class CableConnector {
     }
 
     init() {
-
         const spriteW = 180
         const spriteH = 100
 
@@ -174,7 +173,8 @@ export default class CableConnector {
                 width: this.data.outlet.width,
                 height: this.data.outlet.height,
                 fill: this.data.color.hex[randomOrder.outlet_l[i]],
-                stroke: this.data.color.stroke[randomOrder.outlet_l[i]]
+                stroke: this.data.color.stroke[randomOrder.outlet_l[i]],
+                name: "left"
             })
 
             const cable = new Cable({
@@ -193,7 +193,8 @@ export default class CableConnector {
                 width: this.data.outlet.width,
                 height: this.data.outlet.height,
                 fill: this.data.color.hex[randomOrder.outlet_r[i]],
-                stroke: this.data.color.stroke[randomOrder.outlet_r[i]]
+                stroke: this.data.color.stroke[randomOrder.outlet_r[i]],
+                name: "right"
             })
 
             outlet_l.item.cache()
@@ -212,8 +213,10 @@ export default class CableConnector {
         containerObj.item.add(cablesGroup)
         containerObj.item.add(outletsGroup)
 
-        this.cables.forEach(cable => {
+        this.sparkleSprite = this.setSprite()
+        containerObj.item.add(this.sparkleSprite)
 
+        this.cables.forEach(cable => {
             cable.item.on('dragstart', () => {
                 cable.item.zIndex(4)
             })
@@ -243,21 +246,8 @@ export default class CableConnector {
                     let correspondingOutlet = instance.outlets[direction].find(o => o.color == cable.color)
 
                     if (instance.connectedToCorrectOutlet(plugPosition, correspondingOutlet)) {
-
-                        const imageObj = new Image()
-                        imageObj.src = this.data.sprite.src
-                        imageObj.onload = function () {
-                            const blob = instance.setSprite(plug, imageObj)
-                            plug.add(blob)
-                            blob.start()
-                            instance.audio.playCorrectSound()
-
-                            blob.on('frameIndexChange.konva', function () {
-                                if (this.frameIndex() == 2) {
-                                    blob.stop()
-                                }
-                            })
-                        }
+                       instance.audio.playCorrectSound()
+                       instance.playAnimation(correspondingOutlet)
 
                         const plugInPosition = {
                             x: direction == "left"
@@ -265,8 +255,6 @@ export default class CableConnector {
                                 : correspondingOutlet.position.x - correspondingOutlet.width - cable.strokeWidth,
                             y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2,
                         }
-
-                        // console.log('correct');
 
                         plug.move({
                             x: plugInPosition.x - plugPosition.x,
@@ -278,45 +266,77 @@ export default class CableConnector {
                         correspondingOutlet.connected = true
 
                         if (instance.bothPlugsConnected(cable)) {
-                            // console.log("'" + cable.color + "' cable is now connected!")
                             cable.item.zIndex(0)
                         }
 
                         if (instance.allCablesConnected()) {
-                            instance.finishGame()
+                            setTimeout(instance.finishGame, 1000)
                         }
                     }
                     else {
-                        instance.audio.playWrongSound()
-                        // console.log("Not connected to any outlet or to the correct outlet")
+                        let connectedToAnyOtherOutlet = false
+                        instance.outlets[direction].filter(o => o.color != cable.color).forEach(otherOutlet => {
+                            if (instance.connectedToCorrectOutlet(plugPosition, otherOutlet))
+                                connectedToAnyOtherOutlet = true
+                        })
+
+                        if (connectedToAnyOtherOutlet)
+                            instance.audio.playWrongSound()
                     }
                 })
             })
         })
 
-        console.log(containerObj);
-
         this.stage.add(layer)
     }
 
-    setSprite(obj, imageObj) {
-        const sprite = new Konva.Sprite({
-            x: obj.width() / 2,
-            y: obj.height() / 2,
+    playAnimation(outlet) {
+        const direction = outlet.item.name()
+        const newPosition = {
+            x: direction == "left"
+                ? outlet.position.x + outlet.width + 15
+                : outlet.position.x - outlet.width - 15,
+            y: outlet.position.y + outlet.height / 2
+        }
+        this.sparkleSprite.position(newPosition)
+        const animation = this.sparkleSprite
+
+        if (animation.isRunning()) {
+            animation.stop()
+            animation.frameIndex(0)
+        }
+
+        animation.visible(true)
+        animation.start()
+
+        animation.on('frameIndexChange.konva', function() {
+            if (this.frameIndex() == 2) {
+                animation.stop()
+                animation.visible(false)
+            }
+        })
+    }
+
+    setSprite() {
+        const image = new Image()
+        image.src = this.data.sprite.src
+
+        return new Konva.Sprite({
+            x: 0,
+            y: 0,
             width: this.data.sprite.width,
             height: this.data.sprite.height,
-            image: imageObj,
+            image: image,
             animation: 'sparkle',
             animations: this.data.sprite.animations,
             frameRate: 3,
             frameIndex: 0,
+            visible: false,
             offset: {
-                x: obj.width() / 2,
-                y: obj.height() / 2
+                x: this.data.sprite.width / 2,
+                y: this.data.sprite.height / 2
             }
         })
-
-        return sprite
     }
 
     connectedToCorrectOutlet(plugPosition, correspondingOutlet) {
@@ -398,7 +418,6 @@ export default class CableConnector {
         instance.modal = new Modal(html)
 
         document.querySelector('.modal').classList.add('modal__congrats')
-
     }
 
     resize() {
@@ -535,7 +554,7 @@ class Container {
 }
 
 class Outlet {
-    constructor({ color, x, y, width, height, fill, stroke }) {
+    constructor({ color, x, y, width, height, fill, stroke, name }) {
         this.color = color
         this.position = { x, y }
         this.width = width
@@ -544,6 +563,7 @@ class Outlet {
         this.stroke = stroke
         this.strokeWidth = 10
         this.connected = false
+        this.name = name
         this.item = this._draw()
     }
 
@@ -556,7 +576,7 @@ class Outlet {
             fill: this.fill,
             stroke: this.stroke,
             strokeWidth: this.strokeWidth,
-            name: "outlet",
+            name: this.name,
             offset: {
                 x: -this.strokeWidth
             }
