@@ -64,7 +64,8 @@ export default class Audio {
             })
         }
         else if (audio.codeUnlockedSound.isPlaying) {
-            audio.codeUnlockedSound.pause()
+            audio.codeUnlockedSound.stop()
+            audio.codeUnlockedSound.play()
         }
         else {
             audio.codeUnlockedSound.play()
@@ -83,7 +84,8 @@ export default class Audio {
             })
         }
         else if (audio.correctSound.isPlaying) {
-            audio.correctSound.pause()
+            audio.correctSound.stop()
+            audio.correctSound.play()
         }
         else {
             audio.correctSound.play()
@@ -102,7 +104,8 @@ export default class Audio {
             })
         }
         else if (audio.wrongSound.isPlaying) {
-            audio.wrongSound.pause()
+            audio.wrongSound.stop()
+            audio.wrongSound.play()
         }
         else {
             audio.wrongSound.play()
@@ -121,7 +124,8 @@ export default class Audio {
             })
         }
         else if (audio.whoosh.isPlaying) {
-            audio.whoosh.pause()
+            audio.whoosh.stop()
+            audio.whoosh.play()
         }
         else {
             audio.whoosh.play()
@@ -140,7 +144,8 @@ export default class Audio {
             })
         }
         else if (audio.congratsSound.isPlaying) {
-            audio.congratsSound.pause()
+            audio.congratsSound.stop()
+            audio.congratsSound.play()
         }
         else {
             audio.congratsSound.play()

@@ -119,14 +119,21 @@ export default class SortingGame {
             height: this.sizes.height,
         })
 
-        const resetBtn = this.addButton('button__reset', 'button__default', _s.miniGames.reset)
-        const backBtn = this.addButton('button__back', 'button__default', _s.journey.back)
-
         gameWrapper.appendChild(title)
         gameWrapper.appendChild(actions)
 
-        actions.appendChild(backBtn)
-        actions.appendChild(resetBtn)
+        actions.appendChild(
+            this.addButton('button__back', 'button__default', _s.journey.back)
+        )
+        actions.appendChild(
+            this.addButton('button__reset', 'button__default', _s.miniGames.reset)
+        )
+
+        if (instance.debug.active) {
+            actions.appendChild(
+                this.addButton('button__skip', 'button__default', _s.miniGames.skip)
+            )
+        }
 
         instance.program = instance.world.program
         const gameData = instance.program.getCurrentStepData().sorting.sort(() => Math.random() - 0.5)
@@ -172,7 +179,6 @@ export default class SortingGame {
         this.container = []
         this.grids = []
         this.buttons = []
-        this.btnActions = []
         this.cells = {
             'correct': [],
             'wrong': []
@@ -215,7 +221,7 @@ export default class SortingGame {
 
             icon.on('dragstart', function () {
                 instance.draggedIconPosition = icon.position()
-                icon.zIndex(10)
+                icon.zIndex(9)
             })
             icon.on('dragend', () => {
                 const category = icon.name().replace('icon_', '')
@@ -239,11 +245,10 @@ export default class SortingGame {
                     })
 
                     icon.draggable(false)
+                    instance.audio.playCorrectSound()
 
                     if (instance.gameIsFinished()) {
                         setTimeout(instance.finishGame, 1500)
-                    } else {
-                        instance.audio.playCorrectSound()
                     }
                 }
                 else {
@@ -260,19 +265,6 @@ export default class SortingGame {
                 }
 
                 instance.sortingFeedback(selectedBox, feedback)
-            })
-        })
-
-        this.btnActions.forEach(button => {
-            button.on('mouseover', () => {
-                document.body.style.cursor = 'pointer'
-                const img = button.children.find(item => item.name() == "image")
-                instance.setNewImage(img, instance.data.button.srcDefault.hover)
-            })
-            button.on('mouseout', () => {
-                document.body.style.cursor = 'default'
-                const img = button.children.find(item => item.name() == "image")
-                instance.setNewImage(img, instance.data.button.srcDefault.default)
             })
         })
 
@@ -416,6 +408,9 @@ export default class SortingGame {
             })
         })
 
+        button.add(this.setSprite("correct", { x: button.width() / 2, y: button.height() / 2 }))
+        button.add(this.setSprite("wrong", { x: button.width() / 2, y: button.height() / 2 }))
+        
         this.box.add(button)
 
         return this.box
@@ -502,7 +497,6 @@ export default class SortingGame {
             listening: false
         }))
 
-        this.btnActions.push(button)
         this.layer.add(button)
 
         return button
@@ -525,59 +519,71 @@ export default class SortingGame {
     }
 
     sortingFeedback(selectedBox, feedback) {
-        const color = instance.data.colors[feedback]
-
         this.buttons.forEach(button => {
             if (button.parent.id() === selectedBox) {
                 button.children[1].visible(false)
-
-                const imageObj = new Image()
-                imageObj.src = 'games/' + feedback + '.png'
-                imageObj.onload = function () {
-                    const blob = instance.setSprite(button, imageObj)
-                    button.add(blob)
-
-                    button.children[0].fill(color)
-                    blob.start()
-
-                    blob.on('frameIndexChange.konva', function () {
-                        if (this.frameIndex() == 7) {
-                            blob.stop()
-                            button.children[0].fill('blue')
-                            button.children[1].visible(true)
-                        }
-                    })
-                }
+                this.playAnimation(button, feedback)
             }
         })
     }
 
-    setNewImage(img, src) {
-        var newImg = new Image()
-        newImg.src = src
-        newImg.onload = function () {
-            img.image(newImg)
+    playAnimation(button, feedback) {
+        const animation = button.findOne('#' + feedback)
+        const buttonBg = button.findOne('.buttonBg')
+        const image = button.findOne('.image')
+
+        if (animation.isRunning()) {
+            animation.stop()
+            animation.frameIndex(0)
         }
+        else {
+            const otherFeedback = feedback == 'correct' ? 'wrong' : 'correct'
+            const otherAnimation = button.findOne('#' + otherFeedback)
+
+            if (otherAnimation.isRunning()) {
+                otherAnimation.stop()
+                otherAnimation.frameIndex(0)
+                otherAnimation.visible(false)
+            }
+        }
+
+        buttonBg.fill(instance.data.colors[feedback])
+        image.visible(false)
+        animation.visible(true)
+        animation.start()
+
+        animation.on('frameIndexChange.konva', function() {
+            if (this.frameIndex() == 7) {
+                animation.visible(false)
+                animation.stop()
+                buttonBg.fill('blue')
+                image.visible(true)
+            }
+        })
     }
 
-    setSprite(button, imageObj) {
-        const sprite = new Konva.Sprite({
-            x: button.width() / 2,
-            y: button.height() / 2,
+    setSprite(id, position) {
+        const image = new Image()
+        image.src = 'games/' + id + '.png'
+
+        return new Konva.Sprite({
+            x: position.x,
+            y: position.y,
             width: this.data.button.sprite.width,
             height: this.data.button.sprite.height,
-            image: imageObj,
+            image: image,
             animation: 'button',
             animations: this.animations,
             frameRate: 8,
             frameIndex: 0,
+            name: "animationSprite",
+            id: id,
+            visible: false,
             offset: {
                 x: this.data.button.sprite.width / 2,
                 y: this.data.button.sprite.height / 2
             }
         })
-
-        return sprite
     }
 
     getIconPosition(index) {
@@ -617,14 +623,6 @@ export default class SortingGame {
         instance.icons.forEach((icon, index) => {
             icon.position(instance.getIconPosition(index))
         })
-
-        // Set action buttons position
-        instance.btnActions.find(btn => btn.id() == "back").x(instance.sizes.width / 15)
-        instance.btnActions.find(btn => btn.id() == "reset").x(instance.sizes.width / 2)
-
-        if (instance.debug.active) {
-            instance.btnActions.find(btn => btn.id() == "skip").x(instance.stage.width() - instance.sizes.width / 15 - instance.data.button.width)
-        }
     }
 
     destroy() {
