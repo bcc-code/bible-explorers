@@ -359,10 +359,28 @@ export default class World {
         const categorySlug = chapterEl.getAttribute('data-slug')
         const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
 
+        instance.cacheChapterAssets(selectedChapter)
+
         chapterEl.classList.remove('download')
         chapterEl.classList.add('downloading')
 
         await this.downloadEpisodes(selectedChapter['episodes'], chapterId)
+    }
+
+    cacheChapterAssets(chapter) {
+        const sortingTasks = chapter['program'].filter(step => step.taskType == "sorting")
+
+        if (sortingTasks.length) {
+            sortingTasks.forEach(task => task.sorting.forEach(s => {
+                caches.open("chaptersAssets").then((cache) => {
+                    var request = new Request(s.icon)
+                    fetch(request)
+                        .then((fetchedResponse) => {
+                            cache.put(s.icon, fetchedResponse)
+                        })
+                })
+            }))
+        }
     }
 
     async downloadEpisodes(episodes, chapterId) {

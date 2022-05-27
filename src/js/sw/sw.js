@@ -49,7 +49,7 @@ const castFramework = new Route(({url}) => {
   ]
 }))
 
-registerRoute(assets);
-registerRoute(btvPlayer);
-registerRoute(castFramework);
+registerRoute(assets)
+registerRoute(btvPlayer)
+registerRoute(castFramework)
 precacheAndRoute(self.__WB_MANIFEST)

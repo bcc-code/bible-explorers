@@ -133,6 +133,11 @@ export default class Offline {
     }
 
     loadFromIndexedDb = function (videoName, callback, fallback) {
+        if (!offline.db) {
+            fallback(videoName)
+            return
+        }
+
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
         const getItem = offline.objStore.get(videoName)
@@ -181,6 +186,7 @@ export default class Offline {
     }
 
     markChapterIfAvailableOffline = function (chapter) {
+        if (!offline.db) return
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
 

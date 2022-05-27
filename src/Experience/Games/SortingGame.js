@@ -19,7 +19,7 @@ export default class SortingGame {
     toggleSortingGame() {
         this.init()
         this.createAllLayers()
-        this.addEventListeners()
+        this.addEventListenersForButtons()
         window.addEventListener('resize', instance.resize)
     }
 
@@ -197,80 +197,13 @@ export default class SortingGame {
             })
         })
 
-        instance.data.icons.forEach(iconData => {
-            const icon = this.createIcon(iconData)
-            instance.layer.add(icon)
-            instance.icons.push(icon)
+        instance.data.icons.forEach(async (data) => {
+            instance.fetchIconUrl(data, instance.createIcon)
         })
     }
 
-    addEventListeners() {
-        this.icons.forEach(icon => {
-            icon.on('mouseover', () => {
-                if (icon.draggable()) {
-                    icon.children[0].opacity(0.95)
-                    document.body.style.cursor = 'pointer'
-                }
-            })
-            icon.on('mouseout', () => {
-                if (icon.draggable()) {
-                    icon.children[0].opacity(1)
-                    document.body.style.cursor = 'default'
-                }
-            })
-
-            icon.on('dragstart', function () {
-                instance.draggedIconPosition = icon.position()
-                icon.zIndex(9)
-            })
-            icon.on('dragend', () => {
-                const category = icon.name().replace('icon_', '')
-                const box = instance.boxes.find(b => b.id() == category)
-                let selectedBox = category
-                let feedback = null
-
-                if (!instance.intersected(icon, instance.leftBox)
-                    && !instance.intersected(icon, instance.rightBox)) {
-                    return
-                }
-
-                if (instance.movedToCorrectBox(icon)) {
-                    feedback = 'correct'
-                    const cell = instance.cells[category][instance.data.counter[category]++]
-
-                    icon.to({
-                        x: box.x() + cell.x() + cell.width() / 2 - icon.width() / 2,
-                        y: box.y() + cell.y() + cell.height() / 2 - icon.height() / 2,
-                        duration: 0.5
-                    })
-
-                    icon.draggable(false)
-                    instance.audio.playCorrectSound()
-
-                    if (instance.gameIsFinished()) {
-                        setTimeout(instance.finishGame, 1500)
-                    }
-                }
-                else {
-                    feedback = 'wrong'
-                    selectedBox = box.id() == 'correct' ? 'wrong' : 'correct'
-
-                    icon.to({
-                        x: instance.draggedIconPosition.x,
-                        y: instance.draggedIconPosition.y,
-                        duration: 0.5
-                    })
-
-                    instance.audio.playWrongSound()
-                }
-
-                instance.sortingFeedback(selectedBox, feedback)
-            })
-        })
-
-        const buttons = document.querySelectorAll('.miniGame .button')
-
-        buttons.forEach(button => {
+    addEventListenersForButtons() {
+        document.querySelectorAll('.miniGame .button').forEach(button => {
             if (button.classList.contains('button__reset')) {
                 button.addEventListener('click', () => {
                     instance.destroy()
@@ -291,6 +224,69 @@ export default class SortingGame {
                     instance.program.advance()
                 })
             }
+        })
+    }
+
+    addEventListenersForIcon(icon) {
+        icon.on('mouseover', () => {
+            if (icon.draggable()) {
+                icon.children[0].opacity(0.95)
+                document.body.style.cursor = 'pointer'
+            }
+        })
+        icon.on('mouseout', () => {
+            if (icon.draggable()) {
+                icon.children[0].opacity(1)
+                document.body.style.cursor = 'default'
+            }
+        })
+
+        icon.on('dragstart', function () {
+            instance.draggedIconPosition = icon.position()
+            icon.zIndex(9)
+        })
+        icon.on('dragend', () => {
+            const category = icon.name().replace('icon_', '')
+            const box = instance.boxes.find(b => b.id() == category)
+            let selectedBox = category
+            let feedback = null
+
+            if (!instance.intersected(icon, instance.leftBox)
+                && !instance.intersected(icon, instance.rightBox)) {
+                return
+            }
+
+            if (instance.movedToCorrectBox(icon)) {
+                feedback = 'correct'
+                const cell = instance.cells[category][instance.data.counter[category]++]
+
+                icon.to({
+                    x: box.x() + cell.x() + cell.width() / 2 - icon.width() / 2,
+                    y: box.y() + cell.y() + cell.height() / 2 - icon.height() / 2,
+                    duration: 0.5
+                })
+
+                icon.draggable(false)
+                instance.audio.playCorrectSound()
+
+                if (instance.gameIsFinished()) {
+                    setTimeout(instance.finishGame, 1000)
+                }
+            }
+            else {
+                feedback = 'wrong'
+                selectedBox = box.id() == 'correct' ? 'wrong' : 'correct'
+
+                icon.to({
+                    x: instance.draggedIconPosition.x,
+                    y: instance.draggedIconPosition.y,
+                    duration: 0.5
+                })
+
+                instance.audio.playWrongSound()
+            }
+
+            instance.sortingFeedback(selectedBox, feedback)
         })
     }
 
@@ -438,15 +434,35 @@ export default class SortingGame {
         return cell
     }
 
+    fetchIconUrl(data, callback) {
+        caches.open("chaptersAssets").then((cache) => {
+            cache.match(data.icon)
+                .then((response) => {
+                    if (response) {
+                        response.blob().then((blob) => {
+                            callback({
+                                icon: URL.createObjectURL(blob),
+                                correct_wrong: data.correct_wrong
+                            })
+                        })
+                    }
+                    else {
+                        callback(data)
+                    }
+                })
+        })
+    }
+
     createIcon(data) {
         const icon = new Konva.Group({
             x: instance.getIconPosition(instance.icons.length).x,
             y: instance.getIconPosition(instance.icons.length).y,
-            width: this.data.icon.width,
-            height: this.data.icon.height,
+            width: instance.data.icon.width,
+            height: instance.data.icon.height,
             draggable: true,
             name: data.correct_wrong ? 'icon_correct' : 'icon_wrong'
         })
+
         Konva.Image.fromURL(data.icon, (img) => {
             img.setAttrs({
                 width: icon.width(),
@@ -456,7 +472,9 @@ export default class SortingGame {
             icon.add(img)
         })
 
-        return icon
+        instance.layer.add(icon)
+        instance.icons.push(icon)
+        instance.addEventListenersForIcon(icon)
     }
 
     addButton(name, background, label) {
