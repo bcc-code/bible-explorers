@@ -117,7 +117,7 @@ export default class Video {
     focus() {
         instance.camera.zoomIn(1500)
 
-        this.tablet.material.map.source.data.play()
+        this.tablet.material.map.image.play()
         new TWEEN.Tween(instance.portalScreen.material)
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
             .easing(TWEEN.Easing.Quadratic.InOut)
@@ -131,7 +131,7 @@ export default class Video {
                 instance.video().exitFullscreen()
             }
 
-            this.tablet.material.map.source.data.pause()
+            this.tablet.material.map.image.pause()
             new TWEEN.Tween(instance.portalScreen.material)
                 .to({ color: new THREE.Color(0x131A43) }, 1000)
                 .easing(TWEEN.Easing.Quadratic.InOut)
