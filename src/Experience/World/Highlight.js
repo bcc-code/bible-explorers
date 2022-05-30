@@ -58,7 +58,7 @@ export default class Highlight {
         }
 
         if (object.name === "panel_screen") {
-            this.outline.opacity = 1
+            this.outline.visible = false
         }
     }
 

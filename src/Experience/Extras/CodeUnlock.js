@@ -33,8 +33,8 @@ export default class CodeUnlock {
                             <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
                             <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
                             <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
-                            <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
                             <button type="button" class="code-unlock__btn code-unlock__btn--backspace"><i class="icon icon-arrow-left-long-to-line-solid"></i></button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
                             <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ export default class CodeUnlock {
             document.querySelector('.modal').classList.add('modal__code-unlock')
 
             const backBtn = document.getElementById("backBTN")
-            backBtn.addEventListener('click', () => {
+            backBtn.addEventListener('click', (e) => {
                 instance.modal.destroy()
                 instance.world.program.taskDescription.toggleTaskDescription()
             })
@@ -71,6 +71,8 @@ export default class CodeUnlock {
 
             instance.el.backspace.addEventListener("click", instance.remove)
             instance.el.confirm.addEventListener("click", instance.checkCode)
+
+
 
             document.onkeydown = (e) => {
                 if (e.key === '1' ||
@@ -108,6 +110,8 @@ export default class CodeUnlock {
     }
 
     checkCode() {
+        const wrapper = document.querySelector('.code-unlock')
+
         if (instance.el.code.textContent == instance.secretCode) {
             instance.world.program.timer.destroy()
             instance.world.audio.playCodeUnlockedSound()
@@ -115,6 +119,10 @@ export default class CodeUnlock {
             instance.destroy()
         } else {
             // console.log("Incorrect code")
+            wrapper.classList.add('wrong-code')
+            setTimeout(() => {
+                wrapper.classList.remove('wrong-code')
+            }, 2000)
             instance.world.audio.playWrongSound()
         }
     }

@@ -53,7 +53,8 @@ export default class TaskDescription {
 
             document.querySelector('.modal').classList.add('modal__task')
 
-            backBtn.addEventListener('click', () => {
+            backBtn.addEventListener('click', (e) => {
+                e.stopPropagation()
                 instance.destroy()
             })
 
