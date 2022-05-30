@@ -79,7 +79,7 @@ export default class CableConnector {
                     "#9f4096",
                 ],
                 default: '#cccccc',
-                defaultStroke: '#c8c8c8'
+                defaultStroke: '#bbbbbb'
             },
             sprite: {
                 src: 'games/sparkles.png',
@@ -224,16 +224,16 @@ export default class CableConnector {
                         cable.item.opacity(0.98)
                         document.body.style.cursor = 'pointer'
                     }
+
                 })
                 plug.on('mouseout', () => {
                     if (plug.draggable()) {
                         cable.item.opacity(1)
                         document.body.style.cursor = 'default'
                     }
+
                 })
 
-                plug.on('dragstart', () => {
-                })
 
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
@@ -788,8 +788,7 @@ class Cable {
             y,
             width: 100,
             height: 100,
-            name: 'plug_' + position,
-            draggable: true
+            name: 'plug_' + position
         })
 
         // Add cable pins
