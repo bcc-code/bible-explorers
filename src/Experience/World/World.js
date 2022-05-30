@@ -77,7 +77,7 @@ export default class World {
                 instance.goToAllChapters()
 
                 setFullscreen()
-                instance.audio.toggleBgMusic()
+                instance.audio.playBgMusic()
             })
         })
 

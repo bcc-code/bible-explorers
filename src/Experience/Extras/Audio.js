@@ -43,6 +43,26 @@ export default class Audio {
         }
     }
 
+    playBgMusic() {
+        if (!audio.experience.settings.soundOn) return
+        audio.initialize()
+
+        if (!audio.bgMusic) {
+            audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
+                audio.bgMusic = new THREE.Audio(audio.listener)
+                audio.bgMusic.setBuffer(buffer)
+                audio.bgMusic.setLoop(true)
+                audio.bgMusic.setVolume(0.5)
+                audio.bgMusic.play()
+                audio.el.classList.add('sound-on')
+            })
+        }
+        else if (!audio.bgMusic.isPlaying) {
+            audio.bgMusic.play()
+            audio.el.classList.add('sound-on')
+        }
+    }
+
     addBgMusicElement() {
         audio.el.style.display = 'flex'
     }
