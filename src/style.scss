@@ -1496,6 +1496,7 @@ button,
     }
 
     &__actions {
+        width: 100%;
         margin-top: 2rem;
         z-index: 2;
         display: flex;
@@ -1803,6 +1804,7 @@ button,
 .settings,
 .archive {
     display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     max-width: 1280px;
 
@@ -1840,7 +1842,7 @@ button,
 
     &__video {
         position: relative;
-        width: 240px;
+        width: 16rem;
         aspect-ratio: 1/1;
 
         &::after {

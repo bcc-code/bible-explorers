@@ -39,12 +39,11 @@ export default class TaskDescription {
                             </div>
                             ${instance.text}
                         </div>
-                        <div class="modal__actions">
-                            <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                            <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.getTask}</span></div></div>
-                        </div>
                     </div>
-                   
+                    <div class="modal__actions">
+                        <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
+                        <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.getTask}</span></div></div>
+                    </div>
                 </div>
             `;
 

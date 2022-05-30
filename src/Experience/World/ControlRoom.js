@@ -101,6 +101,8 @@ export default class ControlRoom {
 
             if (child.name === "panel_screen") {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['hud'].item })
+                console.log(child);
+                child.scale.z = -1
             }
 
             if (child.material.map) {
