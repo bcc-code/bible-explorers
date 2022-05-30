@@ -2,6 +2,7 @@ import Experience from '../Experience.js'
 import Konva from 'konva'
 import _s from '../Utils/Strings.js'
 import Modal from '../Utils/Modal.js'
+import Timer from '../Extras/Timer.js'
 
 let instance = null
 
@@ -9,6 +10,7 @@ export default class CableConnector {
     constructor() {
         this.experience = new Experience()
         this.world = this.experience.world
+        this.program = this.world.program
         this.audio = this.world.audio
         this.sizes = this.experience.sizes
         this.debug = this.experience.debug
@@ -19,6 +21,7 @@ export default class CableConnector {
     toggleCableConnector() {
         this.init()
         this.setup()
+        this.startTimer()
         this.addEventListeners()
         window.addEventListener('resize', instance.resize)
     }
@@ -290,6 +293,44 @@ export default class CableConnector {
         this.stage.add(layer)
     }
 
+    startTimer() {
+        const currentStep = instance.program.currentStep
+        const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
+        
+        if (timerInMinutes > 0) {
+            this.timer = new Timer()
+            this.timer.setMinutes(timerInMinutes)
+            document.addEventListener('timeElapsed', instance.onTimeElapsed)
+        }
+    }
+
+    onTimeElapsed() {
+        instance.toggleTryAgain()
+        document.querySelector('.congrats .button__continue').addEventListener('click', () => {
+            instance.modal.destroy()
+            instance.destroy()
+            instance.toggleCableConnector()
+        })
+    }
+
+    toggleTryAgain() {
+        let html = `<div class="modal__content congrats congrats__miniGame">
+            <div class="congrats__container">
+                <div class="congrats__title">
+                    <h1>${_s.miniGames.timeElapsed.title}</h1>
+                </div>
+                <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}!</div>
+                <div class="button button__continue">
+                    <div class="button__content"><span>${_s.miniGames.reset}</span></div>
+                </div>
+            </div>
+        </div>`
+
+        instance.modal = new Modal(html)
+
+        document.querySelector('.modal').classList.add('modal__congrats')
+    }
+
     playAnimation(outlet) {
         const direction = outlet.item.name()
         const newPosition = {
@@ -412,7 +453,6 @@ export default class CableConnector {
                     <div class="button__content"><span>${_s.miniGames.continue}</span></div>
                 </div>
             </div>
-
         </div>`
 
         instance.modal = new Modal(html)
@@ -427,7 +467,10 @@ export default class CableConnector {
     destroy() {
         document.getElementById('cable-connector').remove()
         document.body.classList.remove('freeze')
-        window.removeEventListener('resize', instance.resize);
+        window.removeEventListener('resize', instance.resize)
+
+        if (instance.timer)
+            instance.timer.destroy()
     }
 }
 

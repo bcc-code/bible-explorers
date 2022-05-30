@@ -54,6 +54,10 @@ const strings = {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
             },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
             "reset": "Start over",
             "continue": "Continue the journey",
             "skip": "Skip"
@@ -111,6 +115,10 @@ const strings = {
             "completed": {
                 "title": "Bra jobba!",
                 "message": "Du har fullført oppgaven! Du kan fortsette tidsreisen"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "Tiden er ute. Prøv å feste alle kablene før tiden går ut"
             },
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
@@ -170,6 +178,10 @@ const strings = {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
             },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
             "skip": "Skip"
@@ -227,6 +239,10 @@ const strings = {
             "completed": {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
             },
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
@@ -286,6 +302,10 @@ const strings = {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
             },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
             "skip": "Skip"
@@ -343,6 +363,10 @@ const strings = {
             "completed": {
                 "title": "Bravo!",
                 "message": "Ai terminat sarcina și acum poți să continui călătoria"
+            },
+            "timeElapsed": {
+                "title": "Ups!",
+                "message": "Timpul s-a epuizat. Încearcă să conectezi toate cablurile înainte ca timpul să se scurgă"
             },
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
@@ -402,6 +426,10 @@ const strings = {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
             },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
             "skip": "Skip"
@@ -459,6 +487,10 @@ const strings = {
             "completed": {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
             },
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",

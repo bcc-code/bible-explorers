@@ -66,7 +66,6 @@ export default class TaskDescription {
                 }
 
                 else if (instance.currentStepTaskType == 'code') {
-                    instance.program.timer.setMinutes(5)
                     instance.program.codeUnlock.toggleCodeUnlock()
                 }
 

@@ -1,6 +1,5 @@
 import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
-import Timer from '../Extras/Timer.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
 import Questions from '../Extras/Questions.js'
 import TaskDescription from '../Extras/TaskDescription.js'
@@ -27,7 +26,6 @@ export default class Program {
         this.debug = this.experience.debug
 
         this.archive = new Archive()
-        this.timer = new Timer()
         this.codeUnlock = new CodeUnlock()
         this.questions = new Questions()
         this.taskDescription = new TaskDescription()

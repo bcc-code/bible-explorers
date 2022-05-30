@@ -5,6 +5,7 @@ export default class Timer {
         timer = this
         timer.interval = null
         timer.remainingSeconds = 0
+        timer.timeElapsedEvent = new Event('timeElapsed')
     }
 
     setMinutes(minutes) {
@@ -44,6 +45,7 @@ export default class Timer {
     
             if (timer.remainingSeconds === 0) {
                 timer.stop()
+                document.dispatchEvent(timer.timeElapsedEvent)
             }
         }, 1000)
     }
@@ -54,18 +56,17 @@ export default class Timer {
     }
 
     destroy() {
+        if (!timer) return
         timer.stop()
         timer.remainingSeconds = 0
         timer.htmlEl.remove()
     }
     
     static getHTML() {
-        return `
-            <div class="timer__container">
-                <span class="timer__part timer__part--minutes">0${ timer.minutes }</span>
-                <span class="timer__part">:</span>
-                <span class="timer__part timer__part--seconds">00</span>
-            </div>
-        `
+        return `<div class="timer__container">
+            <span class="timer__part timer__part--minutes">0${ timer.minutes }</span>
+            <span class="timer__part">:</span>
+            <span class="timer__part timer__part--seconds">00</span>
+        </div>`
     }
 }

@@ -1706,7 +1706,7 @@ button,
             z-index: 2;
             border-radius: 8px;
             background-color: #fff;
-            padding: 4px;
+            padding: 6px 4px;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
@@ -2166,6 +2166,31 @@ button,
 // #endregion
 
 // #region MiniGames
+.timer {
+    position: absolute;
+    left: 3rem;
+    top: 3rem;
+    z-index: 100;
+
+    &__container {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        @include setBackground('../static/svgs/button_round.svg');
+        @include alignCenterVH();
+        color: #fff;
+    }
+
+    &__part {
+        font-size: 30px;
+        font-weight: bold;
+    }
+}
+
 .game__title {
     position: fixed;
     left: 0;
