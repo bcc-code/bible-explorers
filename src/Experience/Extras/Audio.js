@@ -24,14 +24,7 @@ export default class Audio {
         audio.initialize()
 
         if (!audio.bgMusic) {
-            audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
-                audio.bgMusic = new THREE.Audio(audio.listener)
-                audio.bgMusic.setBuffer(buffer)
-                audio.bgMusic.setLoop(true)
-                audio.bgMusic.setVolume(0.5)
-                audio.bgMusic.play()
-                audio.el.classList.add('sound-on')
-            })
+            audio.loadBgMusic()
         }
         else if (audio.bgMusic.isPlaying) {
             audio.bgMusic.pause()
@@ -43,6 +36,30 @@ export default class Audio {
         }
     }
 
+    playBgMusic() {
+        if (!audio.experience.settings.soundOn) return
+        audio.initialize()
+
+        if (!audio.bgMusic) {
+            audio.loadBgMusic()
+        }
+        else if (!audio.bgMusic.isPlaying) {
+            audio.bgMusic.play()
+            audio.el.classList.add('sound-on')
+        }
+    }
+
+    loadBgMusic() {
+        audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
+            audio.bgMusic = new THREE.Audio(audio.listener)
+            audio.bgMusic.setBuffer(buffer)
+            audio.bgMusic.setLoop(true)
+            audio.bgMusic.setVolume(0.5)
+            audio.bgMusic.play()
+            audio.el.classList.add('sound-on')
+        })
+    }
+
     addBgMusicElement() {
         audio.el.style.display = 'flex'
     }
@@ -52,23 +69,24 @@ export default class Audio {
         audio.el.style.display = 'none'
     }
 
-    playCodeUnlockedSound() {
+    playWhoosh() {
         if (!audio.experience.settings.soundOn) return
         this.initialize()
 
-        if (!audio.codeUnlockedSound) {
-            audio.audioLoader.load('sounds/item-collected-sound.mp3', function(buffer) {
-                audio.codeUnlockedSound = new THREE.Audio(audio.listener)
-                audio.codeUnlockedSound.setBuffer(buffer)
-                audio.codeUnlockedSound.play()
+        if (!audio.whoosh) {
+            audio.audioLoader.load('sounds/whoosh-between-screens.mp3', function(buffer) {
+                audio.whoosh = new THREE.Audio(audio.listener)
+                audio.whoosh.setBuffer(buffer)
+                audio.whoosh.setVolume(0.5)
+                audio.whoosh.play()
             })
         }
-        else if (audio.codeUnlockedSound.isPlaying) {
-            audio.codeUnlockedSound.stop()
-            audio.codeUnlockedSound.play()
+        else if (audio.whoosh.isPlaying) {
+            audio.whoosh.stop()
+            audio.whoosh.play()
         }
         else {
-            audio.codeUnlockedSound.play()
+            audio.whoosh.play()
         }
     }
 
@@ -80,6 +98,7 @@ export default class Audio {
             audio.audioLoader.load('sounds/correct.mp3', function(buffer) {
                 audio.correctSound = new THREE.Audio(audio.listener)
                 audio.correctSound.setBuffer(buffer)
+                audio.correctSound.setVolume(0.5)
                 audio.correctSound.play()
             })
         }
@@ -100,6 +119,7 @@ export default class Audio {
             audio.audioLoader.load('sounds/wrong.mp3', function(buffer) {
                 audio.wrongSound = new THREE.Audio(audio.listener)
                 audio.wrongSound.setBuffer(buffer)
+                audio.wrongSound.setVolume(0.5)
                 audio.wrongSound.play()
             })
         }
@@ -112,23 +132,24 @@ export default class Audio {
         }
     }
 
-    playWhoosh() {
+    playTaskCompleted() {
         if (!audio.experience.settings.soundOn) return
         this.initialize()
 
-        if (!audio.whoosh) {
-            audio.audioLoader.load('sounds/whoosh-between-screens.mp3', function(buffer) {
-                audio.whoosh = new THREE.Audio(audio.listener)
-                audio.whoosh.setBuffer(buffer)
-                audio.whoosh.play()
+        if (!audio.taskCompletedSound) {
+            audio.audioLoader.load('sounds/task-completed.mp3', function(buffer) {
+                audio.taskCompletedSound = new THREE.Audio(audio.listener)
+                audio.taskCompletedSound.setBuffer(buffer)
+                audio.taskCompletedSound.setVolume(0.5)
+                audio.taskCompletedSound.play()
             })
         }
-        else if (audio.whoosh.isPlaying) {
-            audio.whoosh.stop()
-            audio.whoosh.play()
+        else if (audio.taskCompletedSound.isPlaying) {
+            audio.taskCompletedSound.stop()
+            audio.taskCompletedSound.play()
         }
         else {
-            audio.whoosh.play()
+            audio.taskCompletedSound.play()
         }
     }
 
@@ -140,6 +161,7 @@ export default class Audio {
             audio.audioLoader.load('sounds/congrats.mp3', function(buffer) {
                 audio.congratsSound = new THREE.Audio(audio.listener)
                 audio.congratsSound.setBuffer(buffer)
+                audio.congratsSound.setVolume(0.5)
                 audio.congratsSound.play()
             })
         }

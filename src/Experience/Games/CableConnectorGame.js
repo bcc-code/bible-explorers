@@ -388,7 +388,7 @@ export default class CableConnector {
 
     finishGame() {
         instance.toggleGameComplete()
-        instance.audio.playCongratsSound()
+        instance.audio.playTaskCompleted()
 
         document.getElementById('continue_journey').addEventListener('click', () => {
             instance.destroy()
@@ -539,7 +539,7 @@ class Container {
             strokeWidth: this.strokeWidth,
         }))
 
-        Konva.Image.fromURL('games/band.svg', image => {
+        Konva.Image.fromURL('games/band.png', image => {
             side.add(image)
             image.setAttrs({
                 x: instance.sizes.width / 10 - this.bandWidth - this.strokeWidth / 2,

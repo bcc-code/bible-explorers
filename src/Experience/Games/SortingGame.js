@@ -299,7 +299,7 @@ export default class SortingGame {
 
     finishGame() {
         instance.toggleGameComplete()
-        instance.audio.playCongratsSound()
+        instance.audio.playTaskCompleted()
 
         document.getElementById('continue_journey').addEventListener('click', () => {
             instance.destroy()

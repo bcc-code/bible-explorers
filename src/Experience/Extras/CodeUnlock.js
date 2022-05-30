@@ -114,7 +114,7 @@ export default class CodeUnlock {
 
         if (instance.el.code.textContent == instance.secretCode) {
             instance.world.program.timer.destroy()
-            instance.world.audio.playCodeUnlockedSound()
+            instance.world.audio.playTaskCompleted()
             instance.world.program.advance()
             instance.destroy()
         } else {
