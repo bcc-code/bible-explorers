@@ -10,6 +10,7 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import Offline from '../Utils/Offline.js'
+import _appInsights from '../Utils/AppInsights.js'
 
 let instance = null
 
@@ -219,7 +220,6 @@ export default class World {
         })
 
         instance.selectChapterListeners()
-
     }
 
     setChapterHtml(chapter, index) {
@@ -369,7 +369,7 @@ export default class World {
         chapterEl.classList.remove('download')
         chapterEl.classList.add('downloading')
 
-        await this.downloadEpisodes(selectedChapter['episodes'], chapterId)
+        await this.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
     }
 
     cacheChapterAssets(chapter) {
@@ -401,7 +401,7 @@ export default class World {
         })
     }
 
-    async downloadEpisodes(episodes, chapterId) {
+    async downloadEpisodes(episodes, data) {
         let episodesDownloadUrls = []
 
         episodes.forEach(async (episode) => {
@@ -412,7 +412,11 @@ export default class World {
                 data: {
                     name: 'episode-' + episode.id,
                     thumbnail: episodeUrls.thumbnail,
-                    chapterId: chapterId,
+                    chapterId: data.chapterId,
+                    chapterTitle: data.chapterTitle,
+                    category: data.categorySlug,
+                    language: _lang.getLanguageCode(),
+                    quality: instance.selectedQuality
                 }
             })
 
@@ -436,8 +440,15 @@ export default class World {
 
         const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
-        const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
 
+        if (!myLanguageVideos)
+            _appInsights.trackException({
+                exception: "No videos found",
+                episodeId: episodeId,
+                language: locale
+            })
+
+        const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
         const episode = {
             downloadUrl: await btvPlayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id),
             info: await btvPlayer.api.getEpisodeInfo('episode', episodeId)
@@ -466,6 +477,16 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
+
+        _appInsights.trackEvent({
+            name: "Start chapter",
+            properties: {
+                title: instance.selectedChapter.title,
+                category: instance.selectedChapter.category,
+                language: _lang.getLanguageCode(),
+                quality: instance.selectedQuality
+            }
+        })
     }
 
     restartChapter() {
@@ -478,6 +499,16 @@ export default class World {
         instance.showMenu()
         instance.buttons.start.classList.remove('visible')
         instance.buttons.restart.classList.add('visible')
+
+        _appInsights.trackEvent({
+            name: "Finish chapter",
+            properties: {
+                title: instance.selectedChapter.title,
+                category: instance.selectedChapter.category,
+                language: _lang.getLanguageCode(),
+                quality: instance.selectedQuality
+            }
+        })
     }
 
     showMenu() {

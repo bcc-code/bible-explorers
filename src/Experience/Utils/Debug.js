@@ -20,12 +20,11 @@ class StatsModule {
         if (this.experience.debug.active) {
             document.body.classList.add('debug')
             document.body.appendChild(this.stats.domElement)
-
-        } else {
+        }
+        else {
             document.body.classList.remove('debug')
         }
     }
-
 
     update() {
         if (this.experience.debug.active) {
@@ -33,4 +32,5 @@ class StatsModule {
         }
     }
 }
+
 export { Debug, StatsModule }

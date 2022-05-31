@@ -2,6 +2,7 @@ import Experience from "../Experience.js"
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
+import _appInsights from '../Utils/AppInsights.js'
 
 let settings = null
 
@@ -24,6 +25,8 @@ export default class Settings {
             settings.modal.destroy()
         }
         else {
+            _appInsights.trackPageView("Settings")
+
             let html = `
                 <div class="modal__content settings">
                     <div class="settings__header heading"><h2>${_s.settings.title}</h2></div>
@@ -89,7 +92,6 @@ export default class Settings {
 
     toggleSound() {
         settings.soundOn = this.checked
-
     }
 
     toggleLanguageList() {

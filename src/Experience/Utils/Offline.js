@@ -1,3 +1,5 @@
+import _appInsights from '../Utils/AppInsights.js'
+
 let offline = null
 
 export default class Offline {
@@ -119,6 +121,16 @@ export default class Offline {
                 let chapterEl = document.querySelector('.chapter[data-id="' + currentEpisode.data.chapterId + '"]')
                 chapterEl.classList.remove('downloading')
                 chapterEl.classList.add('downloaded')
+
+                _appInsights.trackEvent({
+                    name: "Chapter downloaded",
+                    properties: {
+                        title: currentEpisode.data.chapterTitle,
+                        category: currentEpisode.data.category,
+                        language: currentEpisode.data.language,
+                        quality: currentEpisode.data.quality
+                    }
+                })
             }
             else {
                 offline.startDownloading()
