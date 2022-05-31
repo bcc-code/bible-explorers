@@ -346,14 +346,31 @@ export default class CableConnector {
                                 instance.deselectOutlet(currentVisible)
                             }
                             else {
-                                // console.log("Different colors");
+                                console.log("Different colors");
                                 instance.stopOutletClick()
 
-                                setTimeout(() => {
-                                    instance.deselectOutlet(currentVisible)
-                                    instance.deselectOutlet(outlet)
-                                    instance.startOutletClick()
-                                }, 1000, currentVisible)
+                                console.log(outlet);
+                                console.log(currentVisible);
+
+                                const tween = new Konva.Tween({
+                                    node: currentVisible.item,
+                                    duration: 1,
+                                    easing: Konva.Easings.EaseInOut,
+                                    onUpdate: () => {
+                                        console.log('updated');
+                                    },
+                                    onFinish: () => {
+                                        console.log('finished');
+
+                                        instance.deselectOutlet(currentVisible)
+                                        instance.deselectOutlet(outlet)
+                                        instance.startOutletClick()
+                                    },
+                                    // add tweaks here
+                                    
+                                })
+
+                                tween.play()
                             }
                         }
                     }
