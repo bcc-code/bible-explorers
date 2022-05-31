@@ -325,42 +325,37 @@ export default class CableConnector {
                     instance.deselectOutlet(outlet)
                 } else {
                     const currentVisible = instance.outlets.find(o => o.isVisible === true && o.colorFound === false)
-
                     instance.selectOutlet(outlet, index)
 
-                    if (currentVisible) {
-                        if (currentVisible.color === outlet.color) {
-                            outlet.colorFound = true
-                            currentVisible.colorFound = true
+                    if (!currentVisible) return
 
-                            this.cables.forEach(c => {
-                                if (c.color === outlet.color) {
-                                    instance.colorCable(c)
-                                }
-                            })
+                    if (currentVisible.color === outlet.color) {
+                        // Same color. Cable gets colored
 
-                            // console.log("Same color. Cable gets colored");
+                        outlet.colorFound = true
+                        currentVisible.colorFound = true
+
+                        instance.colorCable(this.cables.find(c => c.color === outlet.color))
+                    }
+                    else {
+                        // Different colors
+                        if (outlet.name === currentVisible.name) {
+                            instance.deselectOutlet(currentVisible)
                         }
                         else {
-                            if (outlet.name === currentVisible.name) {
-                                instance.deselectOutlet(currentVisible)
-                            }
-                            else {
-                                // console.log("Different colors");
-                                instance.stopOutletClick()
+                            // Opposite sides. Show wrong animation
+                            instance.stopOutletClick()
 
-                                setTimeout(() => {
-                                    instance.deselectOutlet(currentVisible)
-                                    instance.deselectOutlet(outlet)
-                                    instance.startOutletClick()
-                                }, 1000, currentVisible)
-                            }
+                            setTimeout(() => {
+                                instance.deselectOutlet(currentVisible)
+                                instance.deselectOutlet(outlet)
+                                instance.startOutletClick()
+                            }, 1000, currentVisible)
                         }
                     }
                 }
             })
         })
-
 
         this.stage.add(layer)
     }
