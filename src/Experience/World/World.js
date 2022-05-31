@@ -284,7 +284,7 @@ export default class World {
 
         chapterDescription.setAttribute('data-id', chapter.id)
         chapterDescription.setAttribute('data-slug', chapter.category)
-        instance.menu.chapterContent.querySelector('.chapter__title').innerText = chapter.title
+        instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
         instance.menu.chapterContent.querySelector('.chapter__text-content').innerHTML = chapter.content
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
