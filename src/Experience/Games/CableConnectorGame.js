@@ -58,21 +58,21 @@ export default class CableConnector {
             },
             color: {
                 name: [
-                    'gray',
-                    'blue',
+                    'lightBlue',
+                    'darkBlue',
                     'yellow',
                     'pink',
                     'purple'
                 ],
                 hex: [
-                    "#989898",
+                    "#2c90cf",
                     "#373e93",
                     "#f9c662",
                     "#ff6ea9",
                     "#af4eaa"
                 ],
                 stroke: [
-                    "#878787",
+                    "#2b78c3",
                     "#23307a",
                     "#fcb04e",
                     "#f75b99",
