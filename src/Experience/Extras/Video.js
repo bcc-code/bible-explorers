@@ -87,12 +87,10 @@ export default class Video {
             }
         })
 
-
         // Event listener on video end
         this.video().on('ended', instance.finish)
 
         this.focus()
-        this.setControls()
     }
 
     setTexture(id) {
@@ -120,26 +118,24 @@ export default class Video {
 
     focus() {
         instance.camera.zoomIn(1500)
+        instance.tablet.material.map.image.play()
+        instance.audio.fadeOutBgMusic()
 
-        this.tablet.material.map.image.play()
         new TWEEN.Tween(instance.portalScreen.material)
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .start()
-            .onComplete(() => {
-                instance.audio.fadeOutBgMusic()
-            })
     }
 
     defocus() {
         if (instance.texture) {
             instance.pause()
+            instance.tablet.material.map.image.pause()
 
-            if (player.isFullscreen_) {
+            if (this.video().isFullscreen_) {
                 instance.video().exitFullscreen()
             }
 
-            this.tablet.material.map.image.pause()
             new TWEEN.Tween(instance.portalScreen.material)
                 .to({ color: new THREE.Color(0x131A43) }, 1000)
                 .easing(TWEEN.Easing.Quadratic.InOut)
@@ -153,7 +149,6 @@ export default class Video {
     finish() {
         instance.defocus()
         instance.world.program.advance()
-
     }
 
     togglePlay() {
@@ -166,25 +161,6 @@ export default class Video {
 
     //#endregion
 
-    setControls() {
-        document.onkeydown = (e) => {
-            if (e.key === ' ') {
-                instance.togglePlay()
-            }
-            else if (e.key === 'ArrowLeft') {
-                instance.video().currentTime -= 10
-            }
-            else if (e.key === 'ArrowRight') {
-                instance.video().currentTime += 10
-            }
-            else if (e.key === 'ArrowUp') {
-                instance.video().volume = Math.min(instance.video().volume + 0.1, 1)
-            }
-            else if (e.key === 'ArrowDown') {
-                instance.video().volume = Math.max(instance.video().volume - 0.1, 0)
-            }
-        }
-    }
 
     getVideoQuality() {
         switch (this.world.selectedQuality) {

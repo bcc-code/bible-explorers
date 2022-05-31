@@ -351,18 +351,14 @@ export default class CableConnector {
                                 duration: 1,
                                 easing: Konva.Easings.EaseInOut,
                                 onUpdate: () => {
-                                    console.log('updated');
+                                    // add tweaks here
                                 },
                                 onFinish: () => {
-                                    console.log('finished');
-
                                     instance.deselectOutlet(currentVisible)
                                     instance.deselectOutlet(outlet)
                                     instance.startOutletClick()
-                                },
-                                // add tweaks here
+                                }
                             })
-
                             tween.play()
                         }
                     }

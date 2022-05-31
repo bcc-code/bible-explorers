@@ -26,14 +26,30 @@ export default class Audio {
         if (!audio.bgMusic) {
             audio.loadBgMusic()
         }
-        else if (audio.bgMusic.isPlaying) {
-            audio.fadeOutBgMusic()
-            audio.el.classList.remove('sound-on')
-        }
         else {
-            audio.fadeInBgMusic()
-            audio.el.classList.add('sound-on')
+            if (audio.el.classList.contains('sound-on')) {
+                audio.fadeOutBgMusic()
+
+                setTimeout(() => {
+                    audio.bgMusic.pause()
+                }, 600)
+            }
+            else {
+                audio.bgMusic.play()
+                audio.fadeInBgMusic()
+            }
         }
+    }
+
+    loadBgMusic() {
+        audio.audioLoader.load('sounds/bg-music.mp3', function(buffer) {
+            audio.bgMusic = new THREE.Audio(audio.listener)
+            audio.bgMusic.setBuffer(buffer)
+            audio.bgMusic.setLoop(true)
+            audio.bgMusic.setVolume(0)
+            audio.bgMusic.play()
+            audio.fadeInBgMusic()
+        })
     }
 
     playBgMusic() {
@@ -43,47 +59,37 @@ export default class Audio {
         if (!audio.bgMusic) {
             audio.loadBgMusic()
         }
-        else if (!audio.bgMusic.isPlaying) {
+        else if (!audio.el.classList.contains('sound-on')) {
+            audio.bgMusic.play()
             audio.fadeInBgMusic()
-            audio.el.classList.add('sound-on')
         }
     }
 
     fadeInBgMusic() {
-        audio.bgMusic.setVolume(0)
-        audio.bgMusic.play()
+        if (audio.bgMusic.isPlaying)
+            audio.el.classList.add('sound-on')
 
         const fadeInAudio = setInterval(() => {
             const volume = audio.bgMusic.getVolume() + 0.05
             audio.bgMusic.setVolume(volume)
 
             if (audio.bgMusic.getVolume() > 0.5) {
-                clearInterval(fadeInAudio);
+                clearInterval(fadeInAudio)
             }
-        }, 100);
+        }, 100)
     }
 
     fadeOutBgMusic() {
-
+        audio.el.classList.remove('sound-on')
         const fadeOutAudio = setInterval(() => {
             const volume = audio.bgMusic.getVolume() - 0.1
             audio.bgMusic.setVolume(volume)
 
             if (audio.bgMusic.getVolume() < 0.1) {
-                clearInterval(fadeOutAudio);
-                audio.bgMusic.pause()
+                clearInterval(fadeOutAudio)
+                audio.bgMusic.setVolume(0)
             }
-        }, 100);
-    }
-
-    loadBgMusic() {
-        audio.audioLoader.load('sounds/bg-music.mp3', function(buffer) {
-            audio.bgMusic = new THREE.Audio(audio.listener)
-            audio.bgMusic.setBuffer(buffer)
-            audio.bgMusic.setLoop(true)
-            audio.fadeInBgMusic()
-            audio.el.classList.add('sound-on')
-        })
+        }, 100)
     }
 
     playWhoosh() {
