@@ -27,11 +27,11 @@ export default class Audio {
             audio.loadBgMusic()
         }
         else if (audio.bgMusic.isPlaying) {
-            audio.bgMusic.pause()
+            audio.fadeOutBgMusic()
             audio.el.classList.remove('sound-on')
         }
         else {
-            audio.bgMusic.play()
+            audio.fadeInBgMusic()
             audio.el.classList.add('sound-on')
         }
     }
@@ -44,29 +44,46 @@ export default class Audio {
             audio.loadBgMusic()
         }
         else if (!audio.bgMusic.isPlaying) {
-            audio.bgMusic.play()
+            audio.fadeInBgMusic()
             audio.el.classList.add('sound-on')
         }
     }
 
+    fadeInBgMusic() {
+        audio.bgMusic.setVolume(0)
+        audio.bgMusic.play()
+
+        const fadeInAudio = setInterval(() => {
+            const volume = audio.bgMusic.getVolume() + 0.05
+            audio.bgMusic.setVolume(volume)
+
+            if (audio.bgMusic.getVolume() > 0.5) {
+                clearInterval(fadeInAudio);
+            }
+        }, 100);
+    }
+
+    fadeOutBgMusic() {
+
+        const fadeOutAudio = setInterval(() => {
+            const volume = audio.bgMusic.getVolume() - 0.1
+            audio.bgMusic.setVolume(volume)
+
+            if (audio.bgMusic.getVolume() < 0.1) {
+                clearInterval(fadeOutAudio);
+                audio.bgMusic.pause()
+            }
+        }, 100);
+    }
+
     loadBgMusic() {
-        audio.audioLoader.load('sounds/background-instrumental-music.mp3', function(buffer) {
+        audio.audioLoader.load('sounds/background-instrumental-music.mp3', function (buffer) {
             audio.bgMusic = new THREE.Audio(audio.listener)
             audio.bgMusic.setBuffer(buffer)
             audio.bgMusic.setLoop(true)
-            audio.bgMusic.setVolume(0.5)
-            audio.bgMusic.play()
+            audio.fadeInBgMusic()
             audio.el.classList.add('sound-on')
         })
-    }
-
-    addBgMusicElement() {
-        audio.el.style.display = 'flex'
-    }
-
-    removeBgMusicElement() {
-        if (audio.bgMusic) audio.bgMusic.pause()
-        audio.el.style.display = 'none'
     }
 
     playWhoosh() {
@@ -74,7 +91,7 @@ export default class Audio {
         this.initialize()
 
         if (!audio.whoosh) {
-            audio.audioLoader.load('sounds/whoosh-between-screens.mp3', function(buffer) {
+            audio.audioLoader.load('sounds/whoosh-between-screens.mp3', function (buffer) {
                 audio.whoosh = new THREE.Audio(audio.listener)
                 audio.whoosh.setBuffer(buffer)
                 audio.whoosh.setVolume(0.5)
@@ -95,7 +112,7 @@ export default class Audio {
         this.initialize()
 
         if (!audio.correctSound) {
-            audio.audioLoader.load('sounds/correct.mp3', function(buffer) {
+            audio.audioLoader.load('sounds/correct.mp3', function (buffer) {
                 audio.correctSound = new THREE.Audio(audio.listener)
                 audio.correctSound.setBuffer(buffer)
                 audio.correctSound.setVolume(0.5)
@@ -116,7 +133,7 @@ export default class Audio {
         this.initialize()
 
         if (!audio.wrongSound) {
-            audio.audioLoader.load('sounds/wrong.mp3', function(buffer) {
+            audio.audioLoader.load('sounds/wrong.mp3', function (buffer) {
                 audio.wrongSound = new THREE.Audio(audio.listener)
                 audio.wrongSound.setBuffer(buffer)
                 audio.wrongSound.setVolume(0.5)
@@ -137,7 +154,7 @@ export default class Audio {
         this.initialize()
 
         if (!audio.taskCompletedSound) {
-            audio.audioLoader.load('sounds/task-completed.mp3', function(buffer) {
+            audio.audioLoader.load('sounds/task-completed.mp3', function (buffer) {
                 audio.taskCompletedSound = new THREE.Audio(audio.listener)
                 audio.taskCompletedSound.setBuffer(buffer)
                 audio.taskCompletedSound.setVolume(0.5)
@@ -158,7 +175,7 @@ export default class Audio {
         this.initialize()
 
         if (!audio.congratsSound) {
-            audio.audioLoader.load('sounds/congrats.mp3', function(buffer) {
+            audio.audioLoader.load('sounds/congrats.mp3', function (buffer) {
                 audio.congratsSound = new THREE.Audio(audio.listener)
                 audio.congratsSound.setBuffer(buffer)
                 audio.congratsSound.setVolume(0.5)

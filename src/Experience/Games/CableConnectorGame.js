@@ -346,11 +346,24 @@ export default class CableConnector {
                             // Opposite sides. Show wrong animation
                             instance.stopOutletClick()
 
-                            setTimeout(() => {
-                                instance.deselectOutlet(currentVisible)
-                                instance.deselectOutlet(outlet)
-                                instance.startOutletClick()
-                            }, 1000, currentVisible)
+                            const tween = new Konva.Tween({
+                                node: currentVisible.item,
+                                duration: 1,
+                                easing: Konva.Easings.EaseInOut,
+                                onUpdate: () => {
+                                    console.log('updated');
+                                },
+                                onFinish: () => {
+                                    console.log('finished');
+
+                                    instance.deselectOutlet(currentVisible)
+                                    instance.deselectOutlet(outlet)
+                                    instance.startOutletClick()
+                                },
+                                // add tweaks here
+                            })
+
+                            tween.play()
                         }
                     }
                 }

@@ -482,7 +482,6 @@ export default class World {
 
     showMenu() {
         document.body.classList.add('freeze')
-        instance.audio.addBgMusicElement()
         instance.welcome.chaptersScreen.classList.add('visible')
         instance.points.delete()
     }
@@ -490,7 +489,6 @@ export default class World {
     hideMenu() {
         document.body.classList.remove('freeze')
         instance.welcome.chaptersScreen.classList.remove('visible')
-        instance.audio.removeBgMusicElement()
     }
 
     getId() {

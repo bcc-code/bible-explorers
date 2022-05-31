@@ -15,6 +15,8 @@ export default class Video {
         this.world = this.experience.world
         this.resources = this.experience.resources
         this.camera = this.experience.camera
+        this.audio = this.experience.world.audio
+
         instance = this
 
         // Setup
@@ -80,10 +82,11 @@ export default class Video {
 
         // Event listener on fullscreen change
         this.video().on('fullscreenchange', function () {
-            if (!document.fullscreenElement) {
+            if (!this.isFullscreen_) {
                 instance.pause()
             }
         })
+
 
         // Event listener on video end
         this.video().on('ended', instance.finish)
@@ -108,6 +111,7 @@ export default class Video {
         instance.portalScreen.material.map = instance.texture
         instance.texture.image.play()
         instance.video().requestFullscreen()
+        instance.audio.fadeOutBgMusic()
     }
 
     pause() {
@@ -122,12 +126,16 @@ export default class Video {
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .start()
+            .onComplete(() => {
+                instance.audio.fadeOutBgMusic()
+            })
     }
 
     defocus() {
         if (instance.texture) {
             instance.pause()
-            if (document.fullscreenElement) {
+
+            if (player.isFullscreen_) {
                 instance.video().exitFullscreen()
             }
 
@@ -136,12 +144,16 @@ export default class Video {
                 .to({ color: new THREE.Color(0x131A43) }, 1000)
                 .easing(TWEEN.Easing.Quadratic.InOut)
                 .start()
+                .onComplete(() => {
+                    instance.audio.fadeInBgMusic()
+                })
         }
     }
 
     finish() {
         instance.defocus()
         instance.world.program.advance()
+
     }
 
     togglePlay() {
