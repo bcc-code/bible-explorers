@@ -77,7 +77,7 @@ export default class Audio {
     }
 
     loadBgMusic() {
-        audio.audioLoader.load('sounds/background-instrumental-music.mp3', function (buffer) {
+        audio.audioLoader.load('sounds/bg-music.mp3', function(buffer) {
             audio.bgMusic = new THREE.Audio(audio.listener)
             audio.bgMusic.setBuffer(buffer)
             audio.bgMusic.setLoop(true)
