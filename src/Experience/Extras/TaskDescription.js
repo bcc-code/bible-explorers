@@ -77,6 +77,10 @@ export default class TaskDescription {
                     instance.program.cableConnectorGame.toggleCableConnector()
                 }
 
+                else if (instance.currentStepTaskType == 'question_and_code') {
+                    instance.program.advance()
+                }
+
                 else if (instance.program.stepType() == 'iris') {
                     instance.program.advance()
                 }
