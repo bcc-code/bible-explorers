@@ -348,7 +348,7 @@ export default class CableConnector {
                         currentVisible.colorFound = true
                         instance.audio.playCorrectSound()
 
-                        instance.animateIcon(triangle, 'green', containerObj, layer)
+                        instance.animateIcon(triangle, '#1DBC60', containerObj, layer)
 
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
@@ -362,7 +362,7 @@ export default class CableConnector {
                             instance.stopOutletClick()
                             instance.audio.playWrongSound()
 
-                            instance.animateIcon(triangle, 'red', containerObj, layer, () => {
+                            instance.animateIcon(triangle, '#fe7968', containerObj, layer, () => {
                                 instance.deselectOutlet(currentVisible)
                                 instance.deselectOutlet(outlet)
                                 instance.startOutletClick()
