@@ -27,6 +27,7 @@ const strings = {
             "questions": "Question",
             "getTask": "Go to the task",
             "submit": "Submit",
+            "next": "Next"
         },
         "archive": "Archive",
         "settings": {
