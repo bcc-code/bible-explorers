@@ -89,7 +89,6 @@ export default class Questions {
             submitButton.addEventListener("click", () => {
                 // Save answers to Local Storage
                 let thisThemeAnswers = []
-
                 document.querySelectorAll('.questions textarea').forEach((answer) => {
                     thisThemeAnswers.push(answer.value)
                 })

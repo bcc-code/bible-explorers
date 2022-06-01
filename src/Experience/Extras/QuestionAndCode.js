@@ -33,12 +33,17 @@ export default class QuestionAndCode {
         const localStorageId = 'answers-theme-' + selectedChapter.id
         let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
 
-        const questionTextarea = `<textarea class="question__textarea" rows="2"></textarea>`
-        const html = instance.program.taskDescription.getModalHtml(instance.data.question, questionTextarea)
+        const answersWrapper = `<div class="answers__wrapper">
+            <input type="text" class="answers__input" />
+            <input type="text" class="answers__input" />
+            <input type="text" class="answers__input" />
+            <input type="text" class="answers__input" />
+        </div>`
+        const html = instance.program.taskDescription.getModalHtml(instance.data.question, answersWrapper)
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const input = document.querySelector('.question__textarea')
+        const inputs = document.querySelectorAll('.answers__input')
         const backBtn = document.getElementById("backBTN")
         const getTaskBtn = document.getElementById('get-task')
 
@@ -48,20 +53,32 @@ export default class QuestionAndCode {
             instance.program.taskDescription.toggleTaskDescription()
         })
 
-        input.value = allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep] : ''
-        input.focus()
-        if (input.textLength == 0) {
+        let allInputsEmpty = true
+        inputs.forEach((input, index) => {
+            input.value = allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep][index] : ''
+
+            if (index == 0) input.focus()
+            if (input.value.length != 0) allInputsEmpty = false
+
+            input.addEventListener("input", () => {
+                [...inputs].filter(input => input.value.length == 0).length == 0
+                    ? getTaskBtn.classList.remove('disabled')
+                    : getTaskBtn.classList.add('disabled')
+            })
+        })
+
+        if (allInputsEmpty) {
             getTaskBtn.classList.add('disabled')
         }
-        input.addEventListener("input", () => {
-            input.textLength == 0
-                ? getTaskBtn.classList.add('disabled')
-                : getTaskBtn.classList.remove('disabled')
-        })
 
         getTaskBtn.addEventListener("click", () => {
             // Save answers to Local Storage
-            allAnswersFromTheme[currentStep] = input.value
+            let thisTaskAnswers = []
+            inputs.forEach((input) => {
+                thisTaskAnswers.push(input.value)
+            })
+
+            allAnswersFromTheme[currentStep] = thisTaskAnswers
             localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
 
             instance.modal.destroy()
