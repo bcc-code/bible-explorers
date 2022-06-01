@@ -82,11 +82,19 @@ export default class CableConnector {
                 defaultStroke: '#bbbbbb'
             },
             sprite: {
-                src: 'games/sparkles.png',
+                src: {
+                    sparkles: 'games/sparkles.png',
+                    explosion: 'games/explosion.png'
+                },
                 width: spriteW,
                 height: spriteH,
                 animations: {
                     sparkle: [
+                        0, 0, spriteW, spriteH,
+                        spriteW * 2, 0, spriteW, spriteH,
+                        spriteW * 3, 0, spriteW, spriteH,
+                    ],
+                    explosion: [
                         0, 0, spriteW, spriteH,
                         spriteW * 2, 0, spriteW, spriteH,
                         spriteW * 3, 0, spriteW, spriteH,
@@ -209,8 +217,13 @@ export default class CableConnector {
         containerObj.item.add(cablesGroup)
         containerObj.item.add(outletsGroup)
 
-        this.sparkleSprite = this.setSprite()
-        containerObj.item.add(this.sparkleSprite)
+        const sparkleSprite = this.setSprite(this.data.sprite.src.sparkles, 'sparkle')
+        const explosionSprite = this.setSprite(this.data.sprite.src.explosion, 'explosion')
+        containerObj.item.add(sparkleSprite)
+        containerObj.item.add(explosionSprite)
+
+        const triangle = containerObj.item.findOne('.triangle')
+
 
         this.cables.forEach(cable => {
 
@@ -233,8 +246,6 @@ export default class CableConnector {
                     }
 
                 })
-
-
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
 
@@ -249,7 +260,6 @@ export default class CableConnector {
                     plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
                     plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
                 })
-
                 plug.on('dragend', () => {
                     const direction = plug.name().replace('plug_', '')
                     const plugPosition = {
@@ -257,11 +267,10 @@ export default class CableConnector {
                         y: cable.item.y() + plug.y()
                     }
                     let correspondingOutlet = instance.outlets.find(o => o.color == cable.color && o.name === direction)
-                    // console.log(correspondingOutlet);
 
-                    if (instance.connectedToCorrectOutlet(plugPosition, correspondingOutlet)) {
+                    if (instance.connectedToOutlet(plugPosition, correspondingOutlet)) {
                         instance.audio.playCorrectSound()
-                        instance.playAnimation(correspondingOutlet)
+                        instance.playAnimation(correspondingOutlet, sparkleSprite)
 
                         const plugInPosition = {
                             x: direction == "left"
@@ -290,8 +299,11 @@ export default class CableConnector {
                     else {
                         let connectedToAnyOtherOutlet = false
                         instance.outlets.filter(o => o.color != cable.color && o.name === direction).forEach(otherOutlet => {
-                            if (instance.connectedToCorrectOutlet(plugPosition, otherOutlet))
+                            if (instance.connectedToOutlet(plugPosition, otherOutlet)) {
                                 connectedToAnyOtherOutlet = true
+                                instance.playAnimation(otherOutlet, explosionSprite)
+                            }
+
                         })
 
                         if (connectedToAnyOtherOutlet)
@@ -334,6 +346,9 @@ export default class CableConnector {
 
                         outlet.colorFound = true
                         currentVisible.colorFound = true
+                        instance.audio.playCorrectSound()
+
+                        instance.animateIcon(triangle, 'green', containerObj, layer)
 
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
@@ -345,21 +360,14 @@ export default class CableConnector {
                         else {
                             // Opposite sides. Show wrong animation
                             instance.stopOutletClick()
+                            instance.audio.playWrongSound()
 
-                            const tween = new Konva.Tween({
-                                node: currentVisible.item,
-                                duration: 1,
-                                easing: Konva.Easings.EaseInOut,
-                                onUpdate: () => {
-                                    // add tweaks here
-                                },
-                                onFinish: () => {
-                                    instance.deselectOutlet(currentVisible)
-                                    instance.deselectOutlet(outlet)
-                                    instance.startOutletClick()
-                                }
+                            instance.animateIcon(triangle, 'red', containerObj, layer, () => {
+                                instance.deselectOutlet(currentVisible)
+                                instance.deselectOutlet(outlet)
+                                instance.startOutletClick()
                             })
-                            tween.play()
+
                         }
                     }
                 }
@@ -367,6 +375,34 @@ export default class CableConnector {
         })
 
         this.stage.add(layer)
+    }
+
+    animateIcon(obj, fill, containerObj, layer, callback = () => { }) {
+        const amplitude = 5;
+        const period = 100;
+        const centerX = containerObj.item.width() / 2
+
+        const animation = new Konva.Animation((frame) => {
+            obj.x(amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX)
+            obj.fill(fill)
+            obj.opacity(1)
+        }, layer)
+
+        animation.start()
+
+        this.tween = new Konva.Tween({
+            node: obj,
+            duration: 1,
+            easing: Konva.Easings.EaseInOut,
+            onFinish: () => {
+                obj.fill('#fbaf4e')
+                obj.opacity(0.35)
+                animation.stop()
+                callback()
+            }
+        })
+
+        this.tween.play()
     }
 
     startTimer() {
@@ -442,16 +478,17 @@ export default class CableConnector {
         instance.outlets.forEach(o => o.canClick = true)
     }
 
-    playAnimation(outlet) {
-        const direction = outlet.item.name()
+    playAnimation(obj, spriteObj) {
+        const direction = obj.item.name()
         const newPosition = {
             x: direction == "left"
-                ? outlet.position.x + outlet.width + 15
-                : outlet.position.x - outlet.width - 15,
-            y: outlet.position.y + outlet.height / 2
+                ? obj.position.x + obj.width + 15
+                : obj.position.x - obj.width - 15,
+            y: obj.position.y + obj.height / 2
         }
-        this.sparkleSprite.position(newPosition)
-        const animation = this.sparkleSprite
+
+        spriteObj.position(newPosition)
+        const animation = spriteObj
 
         if (animation.isRunning()) {
             animation.stop()
@@ -469,9 +506,9 @@ export default class CableConnector {
         })
     }
 
-    setSprite() {
+    setSprite(src, animation) {
         const image = new Image()
-        image.src = this.data.sprite.src
+        image.src = src
 
         return new Konva.Sprite({
             x: 0,
@@ -479,7 +516,7 @@ export default class CableConnector {
             width: this.data.sprite.width,
             height: this.data.sprite.height,
             image: image,
-            animation: 'sparkle',
+            animation: animation,
             animations: this.data.sprite.animations,
             frameRate: 3,
             frameIndex: 0,
@@ -491,7 +528,7 @@ export default class CableConnector {
         })
     }
 
-    connectedToCorrectOutlet(plugPosition, correspondingOutlet) {
+    connectedToOutlet(plugPosition, correspondingOutlet) {
         return Math.abs(plugPosition.x - correspondingOutlet.position.x) < 80
             && Math.abs(plugPosition.y - correspondingOutlet.position.y) < 60
     }
@@ -652,7 +689,8 @@ class Container {
             cornerRadius: this.radius,
             rotation: 20,
             opacity: 0.35,
-            lineJoin: 'round'
+            lineJoin: 'round',
+            name: 'triangle'
         }))
 
         Konva.Image.fromURL('games/volt.svg', image => {
