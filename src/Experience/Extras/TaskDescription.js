@@ -34,12 +34,26 @@ export default class TaskDescription {
             instance.modal = new Modal(html)
             document.querySelector('.modal').classList.add('modal__task')
 
-            // Fetch audio and start speaking
-            instance.currentStepData = selectedChapter.program[currentStep]
-            instance.offline.fetchChapterAsset(instance.currentStepData, "audio", instance.setTaskDescriptionAudio)
-
             const backBtn = document.getElementById("backBTN")
             const getTaskBtn = document.getElementById("get-task")
+            const playBTN = document.getElementById("playBTN")
+
+            instance.currentStepData = selectedChapter.program[currentStep]
+            if (instance.currentStepData.audio) {
+                // Fetch audio from blob or url
+                instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
+                    instance.taskAudio = data.audio
+                })
+
+                playBTN.addEventListener("click", () => {
+                    if (!instance.taskAudio) return
+                    instance.audio.togglePlayTaskDescription(instance.taskAudio)
+                    playBTN.classList.toggle("is-playing")
+                })
+            }
+            else {
+                playBTN.remove()
+            }
 
             backBtn.addEventListener('click', (e) => {
                 e.stopPropagation()
@@ -108,6 +122,7 @@ export default class TaskDescription {
         return `<div class="modal__content task">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
+                <div id="playBTN"><i class="icon icon-play-solid"></i></div>
             </div>
             <div class="task__wrapper">
                 <div class="task__content">
@@ -125,19 +140,6 @@ export default class TaskDescription {
                 <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>
             </div>
         </div>`
-    }
-
-    startTask(screen) {
-        setTimeout(function () {
-            instance.program.addCustomInteractiveObj(screen)
-            instance.points.add(screen, instance.currentStepTaskType)
-            instance.highlight.add(screen)
-        }, instance.camera.data.moveDuration)
-    }
-
-    setTaskDescriptionAudio(data) {
-        instance.taskAudio = data.audio
-        instance.audio.playTaskDescription(instance.taskAudio)
     }
 
     destroy() {
