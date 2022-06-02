@@ -2495,39 +2495,24 @@ button,
         font-size: 1rem;
     }
 
-    .topbar .button {
-        margin-right: 2rem;
-    }
-
     .button__default {
-        padding: 0.5rem 0;
+        padding: 0.75rem 0;
         min-width: 12rem;
         border: 4px solid $accent;
         border-radius: 0.5rem 0.75rem 1rem 1rem;
     }
 
     .button__continue {
-        padding: 0.5rem 0;
         min-width: 12rem;
 
-        &::before {
-            top: -4px;
-            right: -4px;
-            left: -4px;
-            bottom: -4px;
+        .button__content {
+            padding: 0.688rem 2rem;
         }
     }
 
     .button__round {
-        width: 2.5rem;
-        height: 2.5rem;
-
-        &::before {
-            left: -0.5rem;
-            top: -0.5rem;
-            right: -0.5rem;
-            bottom: -0.5rem;
-        }
+        width: 3.5rem;
+        height: 3.5rem;
     }
 
     .divider {
@@ -2634,6 +2619,12 @@ button,
         }
     }
 
+    .topbar {
+        padding-top: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
     .task {
         &__content {
             p {
@@ -2655,6 +2646,13 @@ button,
 }
 
 @media (max-width: 992px) {
+    
+    .topbar {
+        padding-top: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
     .button {
         font-size: 1.125;
     }
