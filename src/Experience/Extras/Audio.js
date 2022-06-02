@@ -10,6 +10,7 @@ export default class Audio {
 
         audio.el = document.getElementById("sound")
         audio.el.addEventListener("click", audio.toggleBgMusic)
+        audio.taskDescriptionAudios = []
     }
 
     initialize() {
@@ -90,6 +91,29 @@ export default class Audio {
                 audio.bgMusic.setVolume(0)
             }
         }, 100)
+    }
+
+    playTaskDescription(url) {
+        audio.initialize()
+        audio.fadeOutBgMusic()
+
+        if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
+            audio.audioLoader.load(url, function(buffer) {
+                audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
+                audio.taskDescriptionAudios[url].setBuffer(buffer)
+                audio.taskDescriptionAudios[url].play()
+            })
+        }
+        else {
+            audio.taskDescriptionAudios[url].play()
+        }
+    }
+
+    stopTaskDescription(url) {
+        if (audio.taskDescriptionAudios.hasOwnProperty(url))
+            audio.taskDescriptionAudios[url].stop()
+
+        audio.fadeInBgMusic()
     }
 
     playWhoosh() {

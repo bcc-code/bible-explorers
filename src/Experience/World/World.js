@@ -1,3 +1,4 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
@@ -9,7 +10,6 @@ import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
-import Offline from '../Utils/Offline.js'
 import _appInsights from '../Utils/AppInsights.js'
 
 let instance = null
@@ -374,6 +374,7 @@ export default class World {
 
     cacheChapterAssets(chapter) {
         instance.cacheChapterThumbnail(chapter.thumbnail)
+        instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
         instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
     }
 
@@ -381,6 +382,11 @@ export default class World {
         if (!url) return
 
         instance.fetchAndCacheAsset(url)
+    }
+
+    cacheTaskDescriptionAudios(tasks) {
+        if (tasks.length == 0) return
+        tasks.forEach(task => instance.fetchAndCacheAsset(task.audio))
     }
 
     cacheSortingGameIcons(sortingTasks) {

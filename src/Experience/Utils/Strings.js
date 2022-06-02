@@ -27,6 +27,7 @@ const strings = {
             "questions": "Question",
             "getTask": "Go to the task",
             "submit": "Submit",
+            "next": "Next"
         },
         "archive": "Archive",
         "settings": {
@@ -89,6 +90,7 @@ const strings = {
             "questions": "Spørsmål",
             "getTask": "Gå til oppgaven",
             "submit": "Send",
+            "next": "Next"
         },
         "archive": "Arkiv",
         "settings": {
@@ -151,6 +153,7 @@ const strings = {
             "questions": "Vraag",
             "getTask": "Ga naar de opdracht",
             "submit": "Verzend",
+            "next": "Next"
         },
         "archive": "Archief",
         "settings": {
@@ -213,6 +216,7 @@ const strings = {
             "questions": "Question",
             "getTask": "Aller à la tâche",
             "submit": "Envoyer",
+            "next": "Next"
         },
         "archive": "Archive",
         "settings": {
@@ -275,6 +279,7 @@ const strings = {
             "questions": "Pytanie",
             "getTask": "Przejdź do zadania",
             "submit": "Wyślij",
+            "next": "Next"
         },
         "archive": "Archiwum",
         "settings": {
@@ -337,6 +342,7 @@ const strings = {
             "questions": "Întrebare",
             "getTask": "Mergi la sarcină",
             "submit": "Trimite",
+            "next": "Next"
         },
         "archive": "Arhivă",
         "settings": {
@@ -399,6 +405,7 @@ const strings = {
             "questions": "Вопрос",
             "getTask": "Перейти к заданию",
             "submit": "Отправить",
+            "next": "Next"
         },
         "archive": "Архив",
         "settings": {
@@ -461,6 +468,7 @@ const strings = {
             "questions": "Kysymys",
             "getTask": "Mene tehtävään",
             "submit": "Lähetä",
+            "next": "Next"
         },
         "archive": "Arkisto",
         "settings": {

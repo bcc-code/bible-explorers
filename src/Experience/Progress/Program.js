@@ -6,6 +6,7 @@ import TaskDescription from '../Extras/TaskDescription.js'
 import Video from '../Extras/Video.js'
 import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
+import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Congrats from '../Extras/Congrats.js'
 
 let instance = null
@@ -32,6 +33,7 @@ export default class Program {
         this.video = new Video()
         this.sortingGame = new SortingGame()
         this.cableConnectorGame = new CableConnectorGame()
+        this.questionAndCode = new QuestionAndCode()
         this.congrats = new Congrats()
 
         instance = this

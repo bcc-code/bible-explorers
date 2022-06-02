@@ -24,28 +24,26 @@ export default class Questions {
 
             const questions = selectedChapter.program[currentStep].questions
 
-            let html = `
-                <div class="modal__content questions ">
-                    <div class="questions__header heading"><h2>${_s.task.questions}</h2></div>
-                    <div class="questions__content">`
+            let html = `<div class="modal__content questions">
+                <div class="questions__header heading"><h2>${_s.task.questions}</h2></div>
+                <div class="questions__content">`
 
-            questions.forEach((question, index) => {
-                html += `<div class="question">
-                                <span class="question__label"> Question ${index + 1} / ${questions.length}</span>
-                                <div class="question__title">${question.title}</div>
-                                <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}">${allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep][index] : ''}</textarea>
-                            </div>`
-            })
+                questions.forEach((question, index) => {
+                    html += `<div class="question">
+                        <span class="question__label"> Question ${index + 1} / ${questions.length}</span>
+                        <div class="question__title">${question.title}</div>
+                        <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}">${allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep][index] : ''}</textarea>
+                    </div>`
+                })
 
             html += `</div>
-                </div>
+            </div>
 
-                <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">
-                    <div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>
-                    <div id="submit-task" class="button button__submit button__default"><span>${_s.task.submit}</span></div>
-                    <div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>
-                </div>
-            `;
+            <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">
+                <div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>
+                <div id="submit-task" class="button button__submit button__default"><span>${_s.task.submit}</span></div>
+                <div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>
+            </div>`
 
             questions.modal = new Modal(html)
 
@@ -91,7 +89,6 @@ export default class Questions {
             submitButton.addEventListener("click", () => {
                 // Save answers to Local Storage
                 let thisThemeAnswers = []
-
                 document.querySelectorAll('.questions textarea').forEach((answer) => {
                     thisThemeAnswers.push(answer.value)
                 })
@@ -101,8 +98,6 @@ export default class Questions {
                 questions.modal.destroy()
                 program.advance()
             })
-
-
         }
     }
 }

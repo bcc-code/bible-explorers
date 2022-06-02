@@ -1,3 +1,4 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
@@ -6,6 +7,7 @@ let instance = null
 
 export default class TaskDescription {
     constructor() {
+        this.offline = new Offline()
         this.experience = new Experience()
         this.world = this.experience.world
         instance = this
@@ -20,38 +22,24 @@ export default class TaskDescription {
             instance.camera = instance.program.camera
             instance.highlight = instance.world.highlight
             instance.points = instance.world.points
+            instance.audio = instance.world.audio
+
             let currentStep = instance.program.currentStep
             let selectedChapter = instance.world.selectedChapter
+            
             instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
             instance.text = selectedChapter.program[currentStep].description
 
-            let html = `
-                <div class="modal__content task">
-                    <div class="task__video">
-                        <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                    </div>
-                    <div class="task__wrapper">
-                        <div class="task__content">
-                            <div class="modal__extras">
-                                <span class="left"></span>
-                                <span class="bottomLeft"></span>
-                                <span class="bottomLeftSmall"></span>
-                            </div>
-                            ${instance.text}
-                        </div>
-                    </div>
-                    <div class="modal__actions">
-                        <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                        <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.getTask}</span></div></div>
-                    </div>
-                </div>
-            `;
-
+            let html = instance.getModalHtml(instance.text)
             instance.modal = new Modal(html)
-            const getTaskBtn = document.getElementById("get-task")
-            const backBtn = document.getElementById("backBTN")
-
             document.querySelector('.modal').classList.add('modal__task')
+
+            // Fetch audio and start speaking
+            instance.currentStepData = selectedChapter.program[currentStep]
+            instance.offline.fetchChapterAsset(instance.currentStepData, "audio", instance.setTaskDescriptionAudio)
+
+            const backBtn = document.getElementById("backBTN")
+            const getTaskBtn = document.getElementById("get-task")
 
             backBtn.addEventListener('click', (e) => {
                 e.stopPropagation()
@@ -66,7 +54,8 @@ export default class TaskDescription {
                 }
 
                 else if (instance.currentStepTaskType == 'code') {
-                    instance.program.codeUnlock.toggleCodeUnlock()
+                    const code = selectedChapter.program[currentStep].codeToUnlock
+                    instance.program.codeUnlock.toggleCodeUnlock(code)
                 }
 
                 else if (instance.currentStepTaskType == 'sorting') {
@@ -75,6 +64,10 @@ export default class TaskDescription {
 
                 else if (instance.currentStepTaskType == 'cables') {
                     instance.program.cableConnectorGame.toggleCableConnector()
+                }
+
+                else if (instance.currentStepTaskType == 'question_and_code') {
+                    instance.program.questionAndCode.toggleQuestionAndCode()
                 }
 
                 else if (instance.program.stepType() == 'iris') {
@@ -108,9 +101,30 @@ export default class TaskDescription {
                     }
                 })
             }
-
-            instance.setControls()
         }
+    }
+
+    getModalHtml(title, additionalContent = '') {
+        return `<div class="modal__content task">
+            <div class="task__video">
+                <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
+            </div>
+            <div class="task__wrapper">
+                <div class="task__content">
+                    <div class="modal__extras">
+                        <span class="left"></span>
+                        <span class="bottomLeft"></span>
+                        <span class="bottomLeftSmall"></span>
+                    </div>
+                    ${title}
+                    ${additionalContent}
+                </div>
+            </div>
+            <div class="modal__actions">
+                <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
+                <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>
+            </div>
+        </div>`
     }
 
     startTask(screen) {
@@ -121,20 +135,14 @@ export default class TaskDescription {
         }, instance.camera.data.moveDuration)
     }
 
-    setControls() {
-        document.onkeydown = (e) => {
-            if (e.key === 'Enter') {
-                const getTaskBtn = document.getElementById("get-task")
-
-                if (!getTaskBtn.classList.contains('disabled')) {
-                    getTaskBtn.click()
-                }
-            }
-        }
+    setTaskDescriptionAudio(data) {
+        instance.taskAudio = data.audio
+        instance.audio.playTaskDescription(instance.taskAudio)
     }
 
     destroy() {
         document.onkeydown = null
         instance.modal.destroy()
+        instance.audio.stopTaskDescription(instance.taskAudio)
     }
 }

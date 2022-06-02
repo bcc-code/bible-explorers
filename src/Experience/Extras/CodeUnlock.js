@@ -11,11 +11,13 @@ export default class CodeUnlock {
         this.world = this.experience.world
     }
 
-    toggleCodeUnlock() {
+    toggleCodeUnlock(code) {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         }
         else {
+            instance.secretCode = code
+
             let html = `<div class="modal__content code-unlock">
                 <div class="code-unlock__header heading"><h2>${_s.task.codeUnlock}</h2></div>
                 <div class="code-unlock__container">
@@ -59,7 +61,6 @@ export default class CodeUnlock {
                 backspace: document.querySelector(".code-unlock__btn--backspace"),
                 confirm: document.querySelector(".code-unlock__btn--confirm")
             }
-            instance.secretCode = instance.world.selectedChapter.program[instance.world.program.currentStep].codeToUnlock
 
             instance.el.numbers.forEach(function (number) {
                 number.addEventListener("click", () => {
