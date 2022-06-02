@@ -331,7 +331,7 @@ export default class CableConnector {
                 outlet.item.shadowBlur(0)
             })
 
-            outlet.item.on('click', () => {
+            outlet.item.on('touchstart click', () => {
                 if (!outlet.canClick) return
                 if (outlet.connected) return
 
