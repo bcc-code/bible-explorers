@@ -47,7 +47,7 @@ export default class Settings {
                                 <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
                             </div>
                         </div>
-                        <a class="feedback settings__item" href="https://uservoice.bcc.no/" target="blank">
+                        <a class="feedback settings__item" href="mailto:hello@biblekids.io" target="blank">
                             <p>${_s.settings.feedback}</p>
                             <i class="icon icon-envelope-solid"></i>
                         </a>
