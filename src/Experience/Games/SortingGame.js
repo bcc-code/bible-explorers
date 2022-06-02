@@ -414,7 +414,7 @@ export default class SortingGame {
 
         button.add(this.setSprite("correct", { x: button.width() / 2, y: button.height() / 2 }))
         button.add(this.setSprite("wrong", { x: button.width() / 2, y: button.height() / 2 }))
-        
+
         this.box.add(button)
 
         return this.box
@@ -559,7 +559,7 @@ export default class SortingGame {
         animation.visible(true)
         animation.start()
 
-        animation.on('frameIndexChange.konva', function() {
+        animation.on('frameIndexChange.konva', function () {
             if (this.frameIndex() == 7) {
                 animation.visible(false)
                 animation.stop()

@@ -47,8 +47,8 @@ export default class Resources extends EventEmitter {
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
             // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            const progressRatio = itemsLoaded / itemsTotal
-            document.querySelector('.loader__flame .flame').style.transform = "scaleY(" + progressRatio + ")"
+            const progressRatio = Math.round(itemsLoaded / itemsTotal * 100)
+            document.querySelector('.loader__flame .flame').style.height = progressRatio + "%"
         }
 
         this.loadingManager.onError = function (url) {

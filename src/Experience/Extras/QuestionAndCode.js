@@ -33,11 +33,12 @@ export default class QuestionAndCode {
         const localStorageId = 'answers-theme-' + selectedChapter.id
         let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
 
-        const answersWrapper = `<div class="answers__wrapper">
-            <input type="text" class="answers__input" />
-            <input type="text" class="answers__input" />
-            <input type="text" class="answers__input" />
-            <input type="text" class="answers__input" />
+        const answersWrapper = `
+        <div class="answers__wrapper">
+            <div class="answers__field"><input type="text" class="answers__input" /></div>
+            <div class="answers__field"><input type="text" class="answers__input" /></div>
+            <div class="answers__field"><input type="text" class="answers__input" /></div>
+            <div class="answers__field"><input type="text" class="answers__input" /></div>
         </div>`
         const html = instance.program.taskDescription.getModalHtml(instance.data.question, answersWrapper)
         instance.modal = new Modal(html)
