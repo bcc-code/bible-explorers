@@ -1,3 +1,4 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
@@ -6,6 +7,7 @@ let instance = null
 
 export default class TaskDescription {
     constructor() {
+        this.offline = new Offline()
         this.experience = new Experience()
         this.world = this.experience.world
         instance = this
@@ -32,9 +34,9 @@ export default class TaskDescription {
             instance.modal = new Modal(html)
             document.querySelector('.modal').classList.add('modal__task')
 
-            // Start speaking
-            instance.taskAudio = selectedChapter.program[currentStep].audio
-            instance.audio.playTaskDescription(instance.taskAudio)
+            // Fetch audio and start speaking
+            instance.currentStepData = selectedChapter.program[currentStep]
+            instance.offline.fetchChapterAsset(instance.currentStepData, "audio", instance.setTaskDescriptionAudio)
 
             const backBtn = document.getElementById("backBTN")
             const getTaskBtn = document.getElementById("get-task")
@@ -131,6 +133,11 @@ export default class TaskDescription {
             instance.points.add(screen, instance.currentStepTaskType)
             instance.highlight.add(screen)
         }, instance.camera.data.moveDuration)
+    }
+
+    setTaskDescriptionAudio(data) {
+        instance.taskAudio = data.audio
+        instance.audio.playTaskDescription(instance.taskAudio)
     }
 
     destroy() {
