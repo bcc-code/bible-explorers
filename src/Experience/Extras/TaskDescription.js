@@ -20,14 +20,21 @@ export default class TaskDescription {
             instance.camera = instance.program.camera
             instance.highlight = instance.world.highlight
             instance.points = instance.world.points
+            instance.audio = instance.world.audio
+
             let currentStep = instance.program.currentStep
             let selectedChapter = instance.world.selectedChapter
+            
             instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
             instance.text = selectedChapter.program[currentStep].description
 
             let html = instance.getModalHtml(instance.text)
             instance.modal = new Modal(html)
             document.querySelector('.modal').classList.add('modal__task')
+
+            // Start speaking
+            instance.taskAudio = selectedChapter.program[currentStep].audio
+            instance.audio.playTaskDescription(instance.taskAudio)
 
             const backBtn = document.getElementById("backBTN")
             const getTaskBtn = document.getElementById("get-task")
@@ -129,5 +136,6 @@ export default class TaskDescription {
     destroy() {
         document.onkeydown = null
         instance.modal.destroy()
+        instance.audio.stopTaskDescription(instance.taskAudio)
     }
 }
