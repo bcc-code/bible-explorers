@@ -118,6 +118,10 @@ export default class CableConnector {
         gameWrapper.classList.add('miniGame')
         document.body.appendChild(gameWrapper)
 
+        const gameContainer = document.createElement('div')
+        gameContainer.setAttribute("id", "miniGame__connector")
+        gameWrapper.appendChild(gameContainer)
+
         const title = document.createElement('div')
         title.classList.add('heading')
         title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
@@ -126,7 +130,7 @@ export default class CableConnector {
         actions.classList.add('miniGame__actions')
 
         this.stage = new Konva.Stage({
-            container: 'cable-connector',
+            container: 'miniGame__connector',
             width: this.sizes.width,
             height: this.sizes.height,
         })
@@ -222,7 +226,7 @@ export default class CableConnector {
         containerObj.item.add(sparkleSprite)
         containerObj.item.add(explosionSprite)
 
-        const triangle = containerObj.item.findOne('.triangle')
+        this.triangle = containerObj.item.findOne('.triangle')
 
 
         this.cables.forEach(cable => {
@@ -327,7 +331,7 @@ export default class CableConnector {
                 outlet.item.shadowBlur(0)
             })
 
-            outlet.item.on('click', () => {
+            outlet.item.on('touchstart click', () => {
                 if (!outlet.canClick) return
                 if (outlet.connected) return
 
@@ -348,7 +352,7 @@ export default class CableConnector {
                         currentVisible.colorFound = true
                         instance.audio.playCorrectSound()
 
-                        instance.animateIcon(triangle, '#1DBC60', containerObj, layer)
+                        instance.animateIcon(this.triangle, '#1DBC60', containerObj, layer)
 
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
@@ -362,7 +366,7 @@ export default class CableConnector {
                             instance.stopOutletClick()
                             instance.audio.playWrongSound()
 
-                            instance.animateIcon(triangle, '#fe7968', containerObj, layer, () => {
+                            instance.animateIcon(this.triangle, '#fe7968', containerObj, layer, () => {
                                 instance.deselectOutlet(currentVisible)
                                 instance.deselectOutlet(outlet)
                                 instance.startOutletClick()
@@ -380,7 +384,7 @@ export default class CableConnector {
     animateIcon(obj, fill, containerObj, layer, callback = () => { }) {
         const amplitude = 5;
         const period = 100;
-        const centerX = containerObj.item.width() / 2
+        const centerX = 0
 
         const animation = new Konva.Animation((frame) => {
             obj.x(amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX)
@@ -565,6 +569,9 @@ export default class CableConnector {
                 })
             }
         })
+
+        this.resize()
+        window.addEventListener('resize', this.resize)
     }
 
     addButton(name, background, label) {
@@ -608,8 +615,29 @@ export default class CableConnector {
         document.querySelector('.modal').classList.add('modal__congrats')
     }
 
+    resizeBreakpoint(x, callback, callback2) {
+        if (x.matches) { // If media query matches
+            callback
+        } else {
+            callback2
+        }
+    }
+
     resize() {
-        instance.container.x((instance.sizes.width - instance.data.container.width) / 2)
+
+        const containerWidth = window.innerWidth
+        const containerHeight = window.innerHeight
+        let scaleX = containerWidth / instance.data.canvas.width
+        let scaleY = containerHeight / instance.data.canvas.height
+
+        console.log(containerWidth + " x " + containerHeight);
+        scaleX = scaleY = Math.min(scaleX, scaleY);
+
+        // Set stage dimension
+        instance.stage.width(instance.data.canvas.width * scaleX)
+        instance.stage.height(instance.data.canvas.height * scaleY)
+        instance.stage.scale({ x: scaleX, y: scaleY })
+
     }
 
     destroy() {

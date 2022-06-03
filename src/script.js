@@ -40,7 +40,7 @@ window.onload = async () => {
         let userData = await experience.auth0.getUser()
         let personId = userData['https://login.bcc.no/claims/personId']
 
-        experience.resources.fetchApiThenCache(_api.getRoles(personId), function(roles) {
+        experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
             if (roles.includes("administrator") || roles.includes("editor"))
                 document.body.classList.add("admin", "ak_leder")
 
@@ -53,7 +53,7 @@ window.onload = async () => {
 // Register Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        navigator.serviceWorker.register('/sw.js').then(function (registration) {
             registration.update()
         })
     })
