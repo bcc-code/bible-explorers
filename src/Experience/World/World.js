@@ -375,13 +375,18 @@ export default class World {
 
     cacheChapterAssets(chapter) {
         instance.cacheChapterThumbnail(chapter.thumbnail)
+        instance.cacheChapterBgMusic(chapter.background_music)
         instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
         instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
     }
 
     cacheChapterThumbnail(url) {
         if (!url) return
+        instance.fetchAndCacheAsset(url)
+    }
 
+    cacheChapterBgMusic(url) {
+        if (!url) return
         instance.fetchAndCacheAsset(url)
     }
 
@@ -495,8 +500,11 @@ export default class World {
             }
         })
 
-        if (instance.selectedChapter.background_music)
-            instance.audio.playBgMusic(instance.selectedChapter.background_music)
+        if (instance.selectedChapter.background_music) {
+            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
+                instance.audio.playBgMusic(chapter.background_music)
+            })
+        }
     }
 
     restartChapter() {
