@@ -139,6 +139,7 @@ export default class World {
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
         instance.audio.playWhoosh()
+        instance.audio.playBgMusic()
     }
 
     showMenuButtons() {
@@ -493,6 +494,9 @@ export default class World {
                 quality: instance.selectedQuality
             }
         })
+
+        if (instance.selectedChapter.background_music)
+            instance.audio.playBgMusic(instance.selectedChapter.background_music)
     }
 
     restartChapter() {
@@ -505,6 +509,7 @@ export default class World {
         instance.showMenu()
         instance.buttons.start.classList.remove('visible')
         instance.buttons.restart.classList.add('visible')
+        instance.audio.playBgMusic()
 
         _appInsights.trackEvent({
             name: "Finish chapter",

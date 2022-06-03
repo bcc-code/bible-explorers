@@ -8,9 +8,15 @@ export default class Audio {
         this.experience = new Experience()
         audio = this
 
-        audio.el = document.getElementById("sound")
-        audio.el.addEventListener("click", audio.toggleBgMusic)
         audio.taskDescriptionAudios = []
+        audio.bgMusicAudios = {
+            default: 'sounds/bg-music.mp3',
+            playingSrc: '',
+            objs: {}
+        }
+
+        audio.el = document.getElementById("sound")
+        audio.el.addEventListener("click", audio.togglePlayBgMusic)
     }
 
     initialize() {
@@ -20,50 +26,57 @@ export default class Audio {
         }
     }
 
-    toggleBgMusic() {
+    playBgMusic(soundtrack = audio.bgMusicAudios['default']) {
         if (!audio.experience.settings.soundOn) return
+        audio.initialize()
+
+        if (audio.el.classList.contains('sound-on') && audio.bgMusicAudios.playingSrc != soundtrack) {
+            audio.fadeOutBgMusic()
+        }
+
+        setTimeout(() => {
+            if (audio.notLoaded(soundtrack)) {
+                audio.loadBgMusic(soundtrack)
+            }
+            else {
+                if (audio.bgMusicAudios.playingSrc != soundtrack) {
+                    audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
+                    audio.bgMusicAudios.playingSrc = soundtrack
+                }
+    
+                audio.fadeInBgMusic()
+            }
+        }, 700)
+    }
+
+    togglePlayBgMusic() {
+        if (!audio.experience.settings.soundOn) return
+        audio.el.classList.add('pointer-events-none')
+
         audio.initialize()
 
         if (!audio.bgMusic) {
             audio.loadBgMusic()
         }
         else {
-            if (audio.el.classList.contains('sound-on')) {
-                audio.fadeOutBgMusic()
-
-                setTimeout(() => {
-                    audio.bgMusic.pause()
-                }, 600)
-            }
-            else {
-                audio.bgMusic.play()
-                audio.fadeInBgMusic()
-            }
+            audio.el.classList.contains('sound-on')
+                ? audio.fadeOutBgMusic()
+                : audio.fadeInBgMusic()
         }
     }
 
-    loadBgMusic() {
-        audio.audioLoader.load('sounds/bg-music.mp3', function(buffer) {
+    loadBgMusic(soundtrack = audio.bgMusicAudios['default']) {
+        audio.audioLoader.load(soundtrack, function(buffer) {
             audio.bgMusic = new THREE.Audio(audio.listener)
             audio.bgMusic.setBuffer(buffer)
             audio.bgMusic.setLoop(true)
             audio.bgMusic.setVolume(0)
             audio.bgMusic.play()
             audio.fadeInBgMusic()
+
+            audio.bgMusicAudios.objs[soundtrack] = audio.bgMusic
+            audio.bgMusicAudios.playingSrc = soundtrack
         })
-    }
-
-    playBgMusic() {
-        if (!audio.experience.settings.soundOn) return
-        audio.initialize()
-
-        if (!audio.bgMusic) {
-            audio.loadBgMusic()
-        }
-        else if (!audio.el.classList.contains('sound-on')) {
-            audio.bgMusic.play()
-            audio.fadeInBgMusic()
-        }
     }
 
     fadeInBgMusic() {
@@ -76,12 +89,14 @@ export default class Audio {
 
             if (audio.bgMusic.getVolume() > 0.5) {
                 clearInterval(fadeInAudio)
+                audio.el.classList.remove('pointer-events-none')
             }
         }, 100)
     }
 
-    fadeOutBgMusic() {
+    fadeOutBgMusic(callback = () => {}) {
         audio.el.classList.remove('sound-on')
+
         const fadeOutAudio = setInterval(() => {
             const volume = audio.bgMusic.getVolume() - 0.1
             audio.bgMusic.setVolume(volume)
@@ -89,8 +104,14 @@ export default class Audio {
             if (audio.bgMusic.getVolume() < 0.1) {
                 clearInterval(fadeOutAudio)
                 audio.bgMusic.setVolume(0)
+                callback()
+                audio.el.classList.remove('pointer-events-none')
             }
         }, 100)
+    }
+
+    notLoaded(soundtrack) {
+        return !audio.bgMusicAudios.objs[soundtrack]
     }
 
     togglePlayTaskDescription(url) {

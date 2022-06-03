@@ -3,7 +3,7 @@ import Experience from "../Experience.js";
 let modal = null
 
 export default class Modal {
-    constructor(html, callback = function(){}) {
+    constructor(html, callback = () => {}) {
         this.experience = new Experience()
         this.program = this.experience.world.program
         this.callback = callback
