@@ -17,20 +17,16 @@ export default class QuestionAndCode {
         else {
             instance.world = instance.experience.world
             instance.program = instance.world.program
-
-            const currentStep = instance.program.currentStep
-            const selectedChapter = instance.world.selectedChapter
-
-            instance.data = selectedChapter.program[currentStep].question_and_code
-
+            instance.currentStep = instance.program.currentStep
+            instance.selectedChapter = instance.world.selectedChapter
+            instance.data = instance.selectedChapter.program[instance.currentStep].question_and_code
+            instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.toggleQuestion()
         }
     }
 
     toggleQuestion() {
-        const currentStep = instance.program.currentStep
-        const selectedChapter = instance.world.selectedChapter
-        const localStorageId = 'answers-theme-' + selectedChapter.id
+        const localStorageId = 'answers-theme-' + instance.selectedChapter.id
         let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
 
         const answersWrapper = `
@@ -48,6 +44,9 @@ export default class QuestionAndCode {
         const backBtn = document.getElementById("backBTN")
         const getTaskBtn = document.getElementById('get-task')
 
+        if (!instance.currentStepData.audio)
+            playBTN.remove()
+
         backBtn.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
@@ -56,7 +55,7 @@ export default class QuestionAndCode {
 
         let allInputsEmpty = true
         inputs.forEach((input, index) => {
-            input.value = allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep][index] : ''
+            input.value = allAnswersFromTheme.hasOwnProperty(instance.currentStep) ? allAnswersFromTheme[instance.currentStep][index] : ''
 
             if (index == 0) input.focus()
             if (input.value.length != 0) allInputsEmpty = false
@@ -79,7 +78,7 @@ export default class QuestionAndCode {
                 thisTaskAnswers.push(input.value)
             })
 
-            allAnswersFromTheme[currentStep] = thisTaskAnswers
+            allAnswersFromTheme[instance.currentStep] = thisTaskAnswers
             localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
 
             instance.modal.destroy()
@@ -94,6 +93,9 @@ export default class QuestionAndCode {
 
         const backBtn = document.getElementById("backBTN")
         const getTaskBtn = document.getElementById('get-task')
+
+        if (!instance.currentStepData.audio)
+            playBTN.remove()
 
         backBtn.addEventListener('click', (e) => {
             e.stopPropagation()
@@ -114,6 +116,9 @@ export default class QuestionAndCode {
 
         const backBtn = document.getElementById("backBTN")
         const getTaskBtn = document.getElementById('get-task')
+
+        if (!instance.currentStepData.audio)
+            playBTN.remove()
 
         backBtn.addEventListener('click', (e) => {
             e.stopPropagation()
