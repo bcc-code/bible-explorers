@@ -3,13 +3,14 @@ const defaultLang = "en"
 const list = {
     "en": "English",
     "no": "Norsk",
-    // "de": "Deutsch",
+    "de": "Deutsch",
     "nl": "Nederlands",
     "fr": "Français",
     "pl": "Polski",
     "ro": "Română",
     // "es": "Español",
-    // "pt-pt": "Português",
+    "pt-pt": "Português",
+    "it": "Italiano",
     "ru": "Русский",
     "fi": "Suomi"
 }

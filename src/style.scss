@@ -802,8 +802,8 @@ button,
 }
 
 #playBTN {
-    width: 100%;
-    height: 100%;
+    width: 80px;
+    height: 100px;
     cursor: pointer;
     position: relative;
     display: flex;
@@ -813,6 +813,9 @@ button,
     font-size: 5rem;
     opacity: 0.8;
     transition: 0.3s ease;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
 
     &.is-playing {
         opacity: 0;
@@ -823,7 +826,7 @@ button,
     }
 
     &:hover {
-        transform: scale(1.05);
+        transform: translateY(-50%) scale(1.05);
         opacity: 0.8;
     }
 }

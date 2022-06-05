@@ -90,7 +90,7 @@ const strings = {
             "questions": "Spørsmål",
             "getTask": "Gå til oppgaven",
             "submit": "Send",
-            "next": "Next"
+            "next": "Neste"
         },
         "archive": "Arkiv",
         "settings": {
@@ -125,6 +125,69 @@ const strings = {
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
             "skip": "Hopp over"
+        }
+    },
+    "de": {
+        "loading": "Wird geladen",
+        "qualities": {
+            "title": "Video-Qualität auswählen",
+            "low": "Niedrig (270p)",
+            "medium": "Mittel (540p)",
+            "high": "Hoch (1080p)"
+        },
+        "conceptDescription": "Komm mit auf Zeitreise und erforsche das Buch, das alle Fragen beantworten kann",
+        "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
+        "journey": {
+            "start": "Zeitreise starten",
+            "continue": "Zeitreise fortsetzen",
+            "restart": "Zeitreise neu starten",
+            "congrats": "Glückwunsch!",
+            "completed": "Du hast es geschafft",
+            "back": "Zurück",
+            "attachments": "Attachments",
+            "homescreen": "Fertig"
+        },
+        "task": {
+            "codeUnlock": "Korrekte Zahl eingeben",
+            "taskDescription": "Aufgabenbeschreibung",
+            "questions": "Frage",
+            "getTask": "Weiter zur Aufgabe",
+            "submit": "Senden",
+            "next": "Weiter"
+        },
+        "archive": "Archiv",
+        "settings": {
+            "title": "Einstellungen",
+            "soundEffects": "Sound-Effekte",
+            "language": "Sprache",
+            "feedback": "Rückmeldung",
+            "logIn": "Einloggen",
+            "logOut": "Ausloggen"
+        },
+        "offline": {
+            "availableOffline": "Offline verfügbar",
+            "download": "Herunterladen",
+            "downloading": "Wird heruntergeladen"
+        },
+        "tooltips": {
+            "video": "Play video",
+            "iris": "Sprich mit Iris",
+            "task": "Erledige die Aufgabe"
+        },
+        "miniGames": {
+            "sortingIcons": "Sortiere die Icons in die richtige Box",
+            "cableConnect": "Verbinde die Kabel mit der richtigen Farbe",
+            "completed": {
+                "title": "Well done!",
+                "message": "You have completed the task! You can continue your journey"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
+            "reset": "Neu starten",
+            "continue": "Reise fortsetzen",
+            "skip": "Überspring"
         }
     },
     "nl": {
@@ -377,6 +440,132 @@ const strings = {
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
             "skip": "Sări peste"
+        }
+    },
+    "pt-pt": {
+        "loading": "Carregando",
+        "qualities": {
+            "title": "Escolha a qualidade",
+            "low": "Baixo (270p)",
+            "medium": "Médio (540p)",
+            "high": "Alto (1080p)"
+        },
+        "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
+        "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
+        "journey": {
+            "start": "Comece a viajem no tempo",
+            "continue": "Continue a viajem no tempo",
+            "restart": "Reinicie a jornada",
+            "congrats": "Parabéns!",
+            "completed": "Você concluiu",
+            "back": "Voltar",
+            "attachments": "Attachments",
+            "homescreen": "Done"
+        },
+        "task": {
+            "codeUnlock": "Digite o número correto",
+            "taskDescription": "Descrição da tarefa",
+            "questions": "Pergunta",
+            "getTask": "Vá para a tarefa",
+            "submit": "Enviar",
+            "next": "Next"
+        },
+        "archive": "Arquivo",
+        "settings": {
+            "title": "Configurações",
+            "soundEffects": "Efeitos sonoros",
+            "language": "Idioma",
+            "feedback": "Comentários",
+            "logIn": "Conecte-se",
+            "logOut": "Sair"
+        },
+        "offline": {
+            "availableOffline": "Disponível off-line",
+            "download": "Download",
+            "downloading": "Baixando"
+        },
+        "tooltips": {
+            "video": "Play video",
+            "iris": "Falar com a Iris",
+            "task": "Complete a tarefa"
+        },
+        "miniGames": {
+            "sortingIcons": "Classifique os icones para a caixa correta",
+            "cableConnect": "Junte os cabos para a cor certa",
+            "completed": {
+                "title": "Well done!",
+                "message": "You have completed the task! You can continue your journey"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
+            "reset": "Recomeçar jogada",
+            "continue": "Continue a viagem",
+            "skip": "Skip"
+        }
+    },
+    "it": {
+        "loading": "Caricamento",
+        "qualities": {
+            "title": "Scegli la qualità",
+            "low": "Bassa (270p)",
+            "medium": "Media (540p)",
+            "high": "Alta (1080p)"
+        },
+        "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
+        "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
+        "journey": {
+            "start": "Inizia il viaggio nel tempo",
+            "continue": "Continua il viaggio nel tempo",
+            "restart": "Ricomincia il viaggio",
+            "congrats": "Complimenti!",
+            "completed": "Hai finito",
+            "back": "Indietro",
+            "attachments": "Attachments",
+            "homescreen": "Done"
+        },
+        "task": {
+            "codeUnlock": "Inserisci il numero corretto",
+            "taskDescription": "Descrizione dell'attività",
+            "questions": "Domanda",
+            "getTask": "Vai all'attività",
+            "submit": "Invia",
+            "next": "Next"
+        },
+        "archive": "Archivio",
+        "settings": {
+            "title": "Impostazioni",
+            "soundEffects": "Effetti sonori",
+            "language": "Lingua",
+            "feedback": "Feedback",
+            "logIn": "Accedi",
+            "logOut": "Esci"
+        },
+        "offline": {
+            "availableOffline": "Disponibile offline",
+            "download": "Download",
+            "downloading": "Download in corso"
+        },
+        "tooltips": {
+            "video": "Play video",
+            "iris": "Parla con Iris",
+            "task": "Completa l'attività"
+        },
+        "miniGames": {
+            "sortingIcons": "Ordina le icone nella casella giusta",
+            "cableConnect": "Unisci i cavi al colore giusto",
+            "completed": {
+                "title": "Well done!",
+                "message": "You have completed the task! You can continue your journey"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "The time is over. Try to join all the cables before the time goes out"
+            },
+            "reset": "Ricomincia il gioco da capo",
+            "continue": "Continua il tuo viaggio",
+            "skip": "Skip"
         }
     },
     "ru": {
