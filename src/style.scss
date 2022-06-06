@@ -1392,7 +1392,6 @@ button,
     bottom: 0;
     z-index: 101;
 
-
     &__overlay {
         position: fixed;
         top: 0;
@@ -1407,7 +1406,7 @@ button,
         position: absolute;
         top: 3rem;
         right: 3rem;
-        z-index: 2;
+        z-index: 10;
     }
 
     &__container {
@@ -1548,6 +1547,7 @@ button,
     top: 2rem;
     text-align: center;
     pointer-events: none;
+    z-index: 10;
 
     h2 {
         position: relative;
@@ -2642,6 +2642,10 @@ button,
         }
     }
 
+    .fact__description {
+        max-height: 45vh;
+    }
+
     #loading-screen p {
         max-width: 30rem;
         font-size: 1.25rem;
@@ -2731,6 +2735,10 @@ button,
 
     .congrats__chapter-completed {
         font-size: 1.25rem;
+    }
+
+    .fact__description {
+        max-height: 40vh;
     }
 
     #miniGame__connector {
