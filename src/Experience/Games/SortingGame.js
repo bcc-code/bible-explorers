@@ -21,14 +21,31 @@ export default class SortingGame {
         this.init()
         this.createAllLayers()
         this.addEventListenersForButtons()
-        window.addEventListener('resize', instance.resize)
+        // window.addEventListener('resize', instance.resize)
     }
 
     init() {
+
+        const gameWrapper = document.createElement('div')
+        gameWrapper.setAttribute("id", "sort-game")
+        gameWrapper.classList.add('miniGame')
+        document.body.appendChild(gameWrapper)
+
+        const gameContainer = document.createElement('div')
+        gameContainer.setAttribute("id", "miniGame__sorting")
+        gameWrapper.appendChild(gameContainer)
+
+        const title = document.createElement('div')
+        title.classList.add('heading')
+        title.innerHTML = "<h2>" + _s.miniGames.sortingIcons + "</h2>"
+
+        const actions = document.createElement('div')
+        actions.classList.add('miniGame__actions')
+
         this.data = {
             canvas: {
-                width: this.sizes.width,
-                height: this.sizes.height
+                width: gameContainer.offsetWidth,
+                height: gameContainer.offsetHeight
             },
             colors: {
                 orange: "#fbaf4e",
@@ -39,24 +56,22 @@ export default class SortingGame {
                 wrong: "#ff0000"
             },
             box: {
-                x: this.sizes.width / 15,
-                y: 225,
-                width: 410,
-                height: 760,
-                strokeWidth: 10,
-                cornerRadius: 28,
+                x: 0,
+                y: 0,
+                width: gameContainer.offsetWidth * 3 / 12,
+                height: gameContainer.offsetHeight,
+                strokeWidth: 6,
+                cornerRadius: 10,
                 buttonSrc: {
                     wrong: "games/dislike.svg",
                     correct: "games/like.svg"
                 }
             },
             icon: {
-                width: 150,
-                height: 150
+                width: gameContainer.offsetWidth / 12,
+                height: gameContainer.offsetWidth / 12
             },
             button: {
-                width: 277,
-                height: 77,
                 srcContinue: {
                     default: 'svgs/button_long_goTo.svg',
                     hover: 'svgs/button_long_goTo_hover.svg'
@@ -70,8 +85,8 @@ export default class SortingGame {
                 align: 'center',
                 textFill: 'white',
                 icon: {
-                    width: 100,
-                    height: 80
+                    width: 72,
+                    height: 60
                 },
                 sprite: {
                     width: 240,
@@ -102,22 +117,10 @@ export default class SortingGame {
             ]
         }
 
-        const gameWrapper = document.createElement('div')
-        gameWrapper.setAttribute("id", "sort-game")
-        gameWrapper.classList.add('miniGame')
-        document.body.appendChild(gameWrapper)
-
-        const title = document.createElement('div')
-        title.classList.add('heading')
-        title.innerHTML = "<h2>" + _s.miniGames.sortingIcons + "</h2>"
-
-        const actions = document.createElement('div')
-        actions.classList.add('miniGame__actions')
-
         this.stage = new Konva.Stage({
-            container: 'sort-game',
-            width: this.sizes.width,
-            height: this.sizes.height,
+            container: 'miniGame__sorting',
+            width: instance.data.canvas.width,
+            height: instance.data.canvas.height
         })
 
         gameWrapper.appendChild(title)
@@ -337,15 +340,15 @@ export default class SortingGame {
             width: w,
             height: h,
             fill: fill,
-            stroke: stroke,
-            strokeWidth: strokeWidth,
             cornerRadius: radius,
             name: 'container'
         }))
 
+        const padding = 30
+
         this.grid = new Konva.Group({
-            width: w - 60,
-            height: h - 260,
+            width: w - padding * 2,
+            height: this.box.height() * 3 / 4 - padding * 2,
             name: 'grid',
             id: id
         })
@@ -378,10 +381,10 @@ export default class SortingGame {
         }
 
         const button = new Konva.Group({
-            width: this.box.width() - 60,
-            height: 140,
-            x: 30,
-            y: this.box.height() - 170,
+            width: this.box.width() - padding * 2,
+            height: this.box.height() / 4 - padding,
+            x: padding,
+            y: this.box.height() * 3 / 4,
             name: 'button',
             id: id
         })
@@ -463,48 +466,6 @@ export default class SortingGame {
         const button = document.createElement('div')
         button.className = "button " + background + ' ' + name
         button.innerHTML = "<span>" + label + "</span>"
-
-        return button
-    }
-
-    createButton(id, x, y, imgSrc, text, offset = { x: 0, y: 0 }) {
-        const button = new Konva.Group({
-            x: x,
-            y: y,
-            width: this.data.button.width,
-            height: this.data.button.height,
-            id: id,
-            offset: offset
-        })
-
-        Konva.Image.fromURL(imgSrc, image => {
-            button.add(image)
-
-            image.setAttrs({
-                width: button.width(),
-                height: button.height(),
-                name: 'image'
-            })
-
-            image.zIndex(0)
-        })
-
-        button.add(new Konva.Text({
-            text: text,
-            fontSize: this.data.button.fontSize,
-            fontFamily: this.data.button.fontFamily,
-            align: this.data.button.align,
-            fill: this.data.button.textFill,
-            width: button.width(),
-            y: button.height() / 2,
-            offset: {
-                y: 12
-            },
-            name: 'label',
-            listening: false
-        }))
-
-        this.layer.add(button)
 
         return button
     }
@@ -594,10 +555,10 @@ export default class SortingGame {
     }
 
     getIconPosition(index) {
-        const iconsWrapperWidth = instance.sizes.width - (instance.data.box.x + instance.data.box.width) * 2
+        const iconsWrapperWidth = instance.data.canvas.width - (instance.data.box.x + instance.data.box.width) * 2
         const marginGutter = {
-            top: 25,
-            between: 50
+            top: 10,
+            between: 20
         }
 
         const boxSize = instance.data.icon.width + marginGutter.between

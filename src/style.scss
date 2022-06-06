@@ -2449,11 +2449,18 @@ button,
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2rem;
 }
 
 #miniGame__connector {
     width: 1000px;
     height: 500px;
+}
+
+#miniGame__sorting {
+    max-width: 1600px;
+    width: 100%;
+    height: 800px;
 }
 
 .miniGame {
@@ -2670,6 +2677,10 @@ button,
         width: 900px;
         height: 450px;
     }
+
+    #miniGame__sorting {
+        height: 500px;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -2725,6 +2736,10 @@ button,
     #miniGame__connector {
         width: 800px;
         height: 400px;
+    }
+
+    #miniGame__sorting {
+        height: 500px;
     }
 }
 
