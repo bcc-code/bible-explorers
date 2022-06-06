@@ -16,6 +16,8 @@ export default class CableConnector {
         this.debug = this.experience.debug
 
         instance = this
+
+
     }
 
     toggleCableConnector() {
@@ -27,24 +29,39 @@ export default class CableConnector {
     }
 
     init() {
+        const gameWrapper = document.createElement('div')
+        gameWrapper.setAttribute("id", "cable-connector")
+        gameWrapper.classList.add('miniGame')
+        document.body.appendChild(gameWrapper)
+
+        const gameContainer = document.createElement('div')
+        gameContainer.setAttribute("id", "miniGame__connector")
+        gameWrapper.appendChild(gameContainer)
+
+        const title = document.createElement('div')
+        title.classList.add('heading')
+        title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
+
+        const actions = document.createElement('div')
+        actions.classList.add('miniGame__actions')
+
+        gameWrapper.appendChild(title)
+        gameWrapper.appendChild(actions)
+
         const spriteW = 180
         const spriteH = 100
 
         this.data = {
             canvas: {
-                width: this.sizes.width,
-                height: this.sizes.height
-            },
-            container: {
-                width: this.sizes.width - 200,
-                height: this.sizes.height - 320
+                width: gameContainer.offsetWidth,
+                height: gameContainer.offsetHeight,
             },
             cable: {
-                width: this.sizes.width / 2,
+                width: 0,
                 pin: {
-                    width: 40,
-                    height: 10,
-                    radius: 5,
+                    width: 30,
+                    height: 15,
+                    radius: 10,
                 },
                 plug: {
                     width: 60,
@@ -109,32 +126,13 @@ export default class CableConnector {
             outlet_r: getRandomOrder(this.data.itemsLength)
         }
 
-        const gameWrapper = document.createElement('div')
-        gameWrapper.setAttribute("id", "cable-connector")
-        gameWrapper.classList.add('miniGame')
-        document.body.appendChild(gameWrapper)
-
-        const gameContainer = document.createElement('div')
-        gameContainer.setAttribute("id", "miniGame__connector")
-        gameWrapper.appendChild(gameContainer)
-
-        const title = document.createElement('div')
-        title.classList.add('heading')
-        title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
-
-        const actions = document.createElement('div')
-        actions.classList.add('miniGame__actions')
-
         this.stage = new Konva.Stage({
             container: 'miniGame__connector',
-            width: this.sizes.width,
-            height: this.sizes.height,
+            width: gameContainer.offsetWidth,
+            height: gameContainer.offsetHeight
         })
 
         instance.program = instance.world.program
-
-        gameWrapper.appendChild(title)
-        gameWrapper.appendChild(actions)
 
         actions.appendChild(
             this.addButton('button__back', 'button__default', _s.journey.back)
@@ -156,10 +154,10 @@ export default class CableConnector {
         const layer = new Konva.Layer()
 
         const containerObj = new Container({
-            x: (this.sizes.width - this.data.container.width) / 2,
-            y: 160,
-            width: this.data.container.width,
-            height: this.data.container.height
+            x: 0,
+            y: 0,
+            width: this.data.canvas.width,
+            height: this.data.canvas.height
         })
 
         const cablesGroup = new Konva.Group({ name: "cables" })
@@ -169,17 +167,14 @@ export default class CableConnector {
         layer.add(this.container)
 
         const background = containerObj.item.findOne('.background')
-
-        const outletWidth = background.width() / 12 / 3
+        const outletWidth = background.width() / 12 / 2.5
         const outletHeight = background.height() / 5 - 30
-
         const cableWidth = background.width() / 2
 
-        this.data.cable.plug.height = background.height() / 5 - 50
-        this.data.cable.plug.width = background.width() / 12 / 2
-
-        this.data.cable.pin.height = this.data.cable.plug.height / 4
-        this.data.cable.pin.width = this.data.cable.plug.width / 1.5
+        this.data.cable.plug.height = outletHeight - 10
+        this.data.cable.plug.width = outletWidth * 2
+        this.data.cable.pin.height = outletHeight / 4
+        this.data.cable.pin.width = outletWidth - 4
 
         const spaceLeft = containerObj.height - (outletHeight * this.data.itemsLength)
         const spaceBetween = spaceLeft / (this.data.itemsLength + 1)
@@ -194,8 +189,17 @@ export default class CableConnector {
                 width: outletWidth,
                 height: outletHeight,
                 fill: this.data.color.default,
-                stroke: this.data.color.defaultStroke,
                 name: "left"
+            })
+
+            const outlet_r = new Outlet({
+                color: this.data.color.name[instance.randomOrder.outlet_r[i]],
+                x: containerObj.width - containerObj.sideWidth,
+                y: getY(i),
+                width: outletWidth,
+                height: outletHeight,
+                fill: this.data.color.default,
+                name: "right"
             })
 
             const cable = new Cable({
@@ -207,16 +211,7 @@ export default class CableConnector {
                 stroke: this.data.color.defaultStroke,
             })
 
-            const outlet_r = new Outlet({
-                color: this.data.color.name[instance.randomOrder.outlet_r[i]],
-                x: containerObj.width - containerObj.sideWidth,
-                y: getY(i),
-                width: outletWidth,
-                height: outletHeight,
-                fill: this.data.color.default,
-                stroke: this.data.color.defaultStroke,
-                name: "right"
-            })
+
 
             this.cables.push(cable)
             this.outlets.push(outlet_l, outlet_r)
@@ -236,7 +231,6 @@ export default class CableConnector {
         containerObj.item.add(explosionSprite)
 
         this.triangle = containerObj.item.findOne('.triangle')
-
 
         this.cables.forEach(cable => {
 
@@ -263,10 +257,10 @@ export default class CableConnector {
                     cable._updateDottedLines()
 
                     const maxX = plug.getParent().x() - background.x() - containerObj.bandWidth
-                    const maxY = plug.getParent().y() - containerObj.strokeWidth
+                    const maxY = plug.getParent().y()
 
-                    const minX = plug.getParent().x() - background.width() - background.x() + containerObj.bandWidth
-                    const minY = plug.getParent().y() - background.height() + plug.height() / 2 + containerObj.strokeWidth * 2
+                    const minX = plug.getParent().x() - background.width() - background.x() - containerObj.bandWidth
+                    const minY = plug.getParent().y() - background.height() + plug.height() / 2
 
                     plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
                     plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
@@ -285,8 +279,8 @@ export default class CableConnector {
 
                         const plugInPosition = {
                             x: direction == "left"
-                                ? correspondingOutlet.position.x + correspondingOutlet.width + cable.strokeWidth
-                                : correspondingOutlet.position.x - correspondingOutlet.width - cable.strokeWidth,
+                                ? correspondingOutlet.position.x + correspondingOutlet.width
+                                : correspondingOutlet.position.x - correspondingOutlet.width,
                             y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2,
                         }
 
@@ -632,18 +626,19 @@ export default class CableConnector {
 
     resize() {
 
-        const containerWidth = window.innerWidth
-        const containerHeight = window.innerHeight
-        let scaleX = containerWidth / instance.data.canvas.width
-        let scaleY = containerHeight / instance.data.canvas.height
+        const container = document.querySelector('#miniGame__connector')
+        const containerWidth = container.offsetWidth
+        const containerHeight = container.offsetHeight
+        // let scaleX = containerWidth / instance.data.canvas.width
+        // let scaleY = containerHeight / instance.data.canvas.height
 
         console.log(containerWidth + " x " + containerHeight);
-        scaleX = scaleY = Math.min(scaleX, scaleY);
+        // scaleX = scaleY = Math.min(scaleX, scaleY);
 
-        // Set stage dimension
-        instance.stage.width(instance.data.canvas.width * scaleX)
-        instance.stage.height(instance.data.canvas.height * scaleY)
-        instance.stage.scale({ x: scaleX, y: scaleY })
+        // // Set stage dimension
+        // instance.stage.width(containerWidth)
+        // instance.stage.height(containerHeight)
+        // instance.stage.scale({ x: 1, y: 1 })
 
     }
 
@@ -663,7 +658,6 @@ class Container {
         this.width = width
         this.height = height
         this.stroke = "#cbcbcb"
-        this.strokeWidth = 6
         this.radius = 30
         this.sideWidth = width * 1.5 / 12
         this.bandWidth = this.sideWidth / 4
@@ -694,8 +688,6 @@ class Container {
                 0, '#1a1a1a',
                 1, '#4d4d4d'
             ],
-            stroke: this.stroke,
-            strokeWidth: this.strokeWidth,
             name: "background"
         })
 
@@ -713,8 +705,6 @@ class Container {
             sides: 3,
             radius: this.width / 10,
             fill: '#fbaf4e',
-            stroke: 'black',
-            strokeWidth: this.strokeWidth,
             cornerRadius: this.radius,
             rotation: 20,
             opacity: 0.35,
@@ -732,7 +722,7 @@ class Container {
                 opacity: 0.35
             })
 
-            image.offset({ x: image.width() / 2, y: image.height() / 2 + 15 })
+            image.offset({ x: image.width() / 2 - 5, y: image.height() / 2 + 10 })
         })
 
         return icon
@@ -754,17 +744,14 @@ class Container {
                 1, '#666666'
             ],
             cornerRadius: [this.radius, 0, 0, this.radius],
-            stroke: this.stroke,
-            strokeWidth: this.strokeWidth,
         }))
 
         Konva.Image.fromURL('games/band.png', image => {
             side.add(image)
             image.setAttrs({
-                x: this.sideWidth - this.bandWidth - this.strokeWidth / 2,
-                y: this.strokeWidth / 2,
+                x: this.sideWidth - this.bandWidth,
                 width: this.bandWidth,
-                height: this.height - this.strokeWidth,
+                height: this.height
             })
         })
 
@@ -773,14 +760,12 @@ class Container {
 }
 
 class Outlet {
-    constructor({ color, x, y, width, height, fill, stroke, name }) {
+    constructor({ color, x, y, width, height, fill, name }) {
         this.color = color
         this.position = { x, y }
         this.width = width
         this.height = height
         this.fill = fill
-        this.stroke = stroke
-        this.strokeWidth = 6
         this.connected = false
         this.isVisible = false
         this.colorFound = false
@@ -796,13 +781,9 @@ class Outlet {
             width: this.width,
             height: this.height,
             fill: this.fill,
-            stroke: this.stroke,
-            strokeWidth: this.strokeWidth,
             name: this.name,
+            cornerRadius: [0, 4, 4, 0],
             shadowColor: 'white',
-            offset: {
-                x: -this.strokeWidth
-            }
         })
 
         this.item = outlet
@@ -811,7 +792,6 @@ class Outlet {
 
     _update() {
         this.item.fill(this.fill)
-        this.item.stroke(this.stroke)
     }
 }
 
@@ -883,9 +863,7 @@ class Cable {
             width: instance.data.cable.plug.width,
             height: instance.data.cable.plug.height,
             fill: this.fill,
-            stroke: this.stroke,
-            strokeWidth: this.strokeWidth,
-            cornerRadius: [0, instance.data.cable.plug.radius, instance.data.cable.plug.radius, 0],
+            cornerRadius: [4, instance.data.cable.plug.radius, instance.data.cable.plug.radius, 4],
             name: 'plug'
         }))
 

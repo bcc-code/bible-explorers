@@ -249,8 +249,8 @@ $secondary-font: 'PT Sans', sans-serif;
         width: 4rem;
         height: 4rem;
         border-radius: 50%;
-    
-    
+
+
         &::before {
             content: '';
             position: absolute;
@@ -261,7 +261,7 @@ $secondary-font: 'PT Sans', sans-serif;
             border-radius: 50%;
             background: $gradient2;
         }
-    
+
         .button__content {
             position: relative;
             width: 100%;
@@ -271,12 +271,12 @@ $secondary-font: 'PT Sans', sans-serif;
             background: $gradient;
             @include alignCenterVH();
         }
-    
+
         i {
             position: relative;
             z-index: 1;
         }
-    
+
         &:hover .button__content {
             background: $gradient2;
         }
@@ -2445,11 +2445,15 @@ button,
     right: 0;
     background: $gradient-with-opacity;
     z-index: 99;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #miniGame__connector {
-    display: flex;
-    justify-content: center;
+    width: 1000px;
+    height: 500px;
 }
 
 .miniGame {
@@ -2661,6 +2665,11 @@ button,
     .timer__part {
         font-size: 2rem;
     }
+
+    #miniGame__connector {
+        width: 900px;
+        height: 450px;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -2714,8 +2723,8 @@ button,
     }
 
     #miniGame__connector {
-        position: relative;
-        top: 2rem;
+        width: 90%;
+        height: 400px;
     }
 }
 
