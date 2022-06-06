@@ -197,11 +197,14 @@ export default class Resources extends EventEmitter {
     async loadEpisodeFromBtv(videoName) {
         const episodeId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
+        const claims = await this.experience.auth0.getIdTokenClaims();
+        const idToken = claims ? claims.__raw : '';
 
         var btvPlayer = BTVPlayer({
             type: 'episode',
             id: episodeId,
-            locale: locale
+            locale: locale,
+            access_token: idToken
         })
 
         let btvContainer = document.createElement('div')
