@@ -1646,7 +1646,6 @@ button,
         margin-top: auto;
         margin-bottom: 1rem;
         display: flex;
-        gap: 1rem;
 
         .button {
             background: $gradient2;
@@ -1656,7 +1655,14 @@ button,
             font-size: 1.25rem;
             flex: 1;
             border: none;
+            margin-right: 0.5rem;
         }
+
+        button:last-child {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+
 
         .button:disabled {
             opacity: 0.2;
