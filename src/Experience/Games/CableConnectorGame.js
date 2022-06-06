@@ -308,20 +308,16 @@ export default class CableConnector {
                                 connectedToAnyOtherOutlet = true
                                 instance.playAnimation(otherOutlet, explosionSprite)
                             }
-
                         })
 
                         if (connectedToAnyOtherOutlet)
                             instance.audio.playWrongSound()
                     }
                 })
-
             })
-
         })
 
         this.outlets.forEach(outlet => {
-
             outlet.item.on('mouseover', () => {
                 document.body.style.cursor = 'pointer'
                 outlet.item.shadowBlur(10)
@@ -372,7 +368,6 @@ export default class CableConnector {
                                 instance.deselectOutlet(outlet)
                                 instance.startOutletClick()
                             })
-
                         }
                     }
                 }

@@ -21,11 +21,11 @@ export default class Settings {
     }
 
     toggleSettings() {
-        if (document.querySelector('.modal')) {
+        if (document.querySelector(".modal")) {
             settings.modal.destroy()
         }
         else {
-            _appInsights.trackPageView("Settings")
+            _appInsights.trackPageView({ name: "Settings" })
 
             let html = `
                 <div class="modal__content settings">

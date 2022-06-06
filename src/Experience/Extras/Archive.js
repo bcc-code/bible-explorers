@@ -34,7 +34,7 @@ export default class Archive {
             archive.modal.destroy()
         }
         else {
-            _appInsights.trackPageView("Archive")
+            _appInsights.trackPageView({ name: "Archive" })
 
             let html = `<div class="modal__content archive">
                 <div class="archive__header heading"><h2>${_s.archive}</h2></div>
