@@ -36,15 +36,11 @@ export default class CableConnector {
                 height: this.sizes.height
             },
             container: {
-                width: this.sizes.width - 500,
-                height: this.sizes.height - 450
-            },
-            outlet: {
-                width: 40,
-                height: 100
+                width: this.sizes.width - 200,
+                height: this.sizes.height - 320
             },
             cable: {
-                width: this.sizes.width / 5,
+                width: this.sizes.width / 2,
                 pin: {
                     width: 40,
                     height: 10,
@@ -161,7 +157,7 @@ export default class CableConnector {
 
         const containerObj = new Container({
             x: (this.sizes.width - this.data.container.width) / 2,
-            y: 225,
+            y: 160,
             width: this.data.container.width,
             height: this.data.container.height
         })
@@ -172,18 +168,31 @@ export default class CableConnector {
         this.container = containerObj._draw()
         layer.add(this.container)
 
-        const spaceLeft = containerObj.height - (this.data.outlet.height * this.data.itemsLength)
+        const background = containerObj.item.findOne('.background')
+
+        const outletWidth = background.width() / 12 / 3
+        const outletHeight = background.height() / 5 - 30
+
+        const cableWidth = background.width() / 2
+
+        this.data.cable.plug.height = background.height() / 5 - 50
+        this.data.cable.plug.width = background.width() / 12 / 2
+
+        this.data.cable.pin.height = this.data.cable.plug.height / 4
+        this.data.cable.pin.width = this.data.cable.plug.width / 1.5
+
+        const spaceLeft = containerObj.height - (outletHeight * this.data.itemsLength)
         const spaceBetween = spaceLeft / (this.data.itemsLength + 1)
-        const getY = (index) => spaceBetween + index * (this.data.outlet.height + spaceBetween)
-        const cableX = containerObj.width / 2 - this.data.cable.width / 2
+        const getY = (index) => spaceBetween + index * (outletHeight + spaceBetween)
+        const cableX = containerObj.width / 2 - cableWidth / 2
 
         for (let i = 0; i < this.data.itemsLength; i++) {
             const outlet_l = new Outlet({
                 color: this.data.color.name[instance.randomOrder.outlet_l[i]],
                 x: containerObj.sideWidth,
                 y: getY(i),
-                width: this.data.outlet.width,
-                height: this.data.outlet.height,
+                width: outletWidth,
+                height: outletHeight,
                 fill: this.data.color.default,
                 stroke: this.data.color.defaultStroke,
                 name: "left"
@@ -192,8 +201,8 @@ export default class CableConnector {
             const cable = new Cable({
                 color: this.data.color.name[instance.randomOrder.cable[i]],
                 x: cableX,
-                y: getY(i) + this.data.outlet.height / 2 - this.data.cable.plug.height / 2,
-                width: this.data.cable.width,
+                y: getY(i) + outletHeight / 2 - this.data.cable.plug.height / 2,
+                width: cableWidth,
                 fill: this.data.color.default,
                 stroke: this.data.color.defaultStroke,
             })
@@ -202,8 +211,8 @@ export default class CableConnector {
                 color: this.data.color.name[instance.randomOrder.outlet_r[i]],
                 x: containerObj.width - containerObj.sideWidth,
                 y: getY(i),
-                width: this.data.outlet.width,
-                height: this.data.outlet.height,
+                width: outletWidth,
+                height: outletHeight,
                 fill: this.data.color.default,
                 stroke: this.data.color.defaultStroke,
                 name: "right"
@@ -253,13 +262,11 @@ export default class CableConnector {
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
 
-                    const wrapper = containerObj.item.findOne('.background')
-
-                    const maxX = plug.getParent().x() - wrapper.x() - containerObj.bandWidth
+                    const maxX = plug.getParent().x() - background.x() - containerObj.bandWidth
                     const maxY = plug.getParent().y() - containerObj.strokeWidth
 
-                    const minX = plug.getParent().x() - wrapper.width() - wrapper.x() + containerObj.bandWidth
-                    const minY = plug.getParent().y() - wrapper.height() + plug.height() / 2 + containerObj.strokeWidth * 2
+                    const minX = plug.getParent().x() - background.width() - background.x() + containerObj.bandWidth
+                    const minY = plug.getParent().y() - background.height() + plug.height() / 2 + containerObj.strokeWidth * 2
 
                     plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
                     plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
@@ -352,7 +359,7 @@ export default class CableConnector {
                         currentVisible.colorFound = true
                         instance.audio.playCorrectSound()
 
-                        instance.animateIcon(this.triangle, '#1DBC60', containerObj, layer)
+                        // instance.animateIcon(this.triangle, '#1DBC60', containerObj, layer)
 
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
@@ -656,15 +663,10 @@ class Container {
         this.width = width
         this.height = height
         this.stroke = "#cbcbcb"
-        this.strokeWidth = 10
+        this.strokeWidth = 6
         this.radius = 30
-        this.bandWidth = 50
-        this.sideWidth = instance.sizes.width / 10
-
-        this.outlet = {
-            width: 40,
-            height: 100,
-        }
+        this.sideWidth = width * 1.5 / 12
+        this.bandWidth = this.sideWidth / 4
     }
 
     _draw() {
@@ -684,8 +686,8 @@ class Container {
 
     _bg() {
         const background = new Konva.Rect({
-            x: this.sideWidth,
-            width: this.width - this.sideWidth * 2,
+            x: this.width / 12,
+            width: this.width * 10 / 12,
             height: this.height,
             fillLinearGradientEndPointY: this.height,
             fillLinearGradientColorStops: [
@@ -704,34 +706,33 @@ class Container {
         const icon = new Konva.Group({
             x: this.width / 2,
             y: this.height / 2,
-            // listening: false,
             name: "warningSign"
         })
 
-        icon.add(new Konva.RegularPolygon({
+        const triangle = new Konva.RegularPolygon({
             sides: 3,
-            radius: 200,
+            radius: this.width / 10,
             fill: '#fbaf4e',
             stroke: 'black',
-            strokeWidth: this.strokeWidth * 2,
+            strokeWidth: this.strokeWidth,
             cornerRadius: this.radius,
             rotation: 20,
             opacity: 0.35,
             lineJoin: 'round',
             name: 'triangle'
-        }))
+        })
+
+        icon.add(triangle)
 
         Konva.Image.fromURL('games/volt.svg', image => {
             icon.add(image)
             image.setAttrs({
-                width: 80,
-                height: 200,
-                offset: {
-                    x: 33,
-                    y: 120
-                },
+                width: triangle.radius() / 2,
+                height: triangle.radius() / 0.8,
                 opacity: 0.35
             })
+
+            image.offset({ x: image.width() / 2, y: image.height() / 2 + 15 })
         })
 
         return icon
@@ -741,7 +742,6 @@ class Container {
         const side = new Konva.Group({
             x: x,
             y: y,
-            listening: false,
             name: "side"
         })
 
@@ -761,7 +761,7 @@ class Container {
         Konva.Image.fromURL('games/band.png', image => {
             side.add(image)
             image.setAttrs({
-                x: instance.sizes.width / 10 - this.bandWidth - this.strokeWidth / 2,
+                x: this.sideWidth - this.bandWidth - this.strokeWidth / 2,
                 y: this.strokeWidth / 2,
                 width: this.bandWidth,
                 height: this.height - this.strokeWidth,
@@ -780,7 +780,7 @@ class Outlet {
         this.height = height
         this.fill = fill
         this.stroke = stroke
-        this.strokeWidth = 10
+        this.strokeWidth = 6
         this.connected = false
         this.isVisible = false
         this.colorFound = false
@@ -822,7 +822,7 @@ class Cable {
         this.width = width
         this.fill = fill
         this.stroke = stroke
-        this.strokeWidth = 10
+        this.strokeWidth = 6
         this.item = null
     }
 
@@ -856,32 +856,27 @@ class Cable {
         const plug = new Konva.Group({
             x,
             y,
-            width: 100,
-            height: 100,
+            width: instance.data.cable.plug.width + instance.data.cable.pin.width,
+            height: instance.data.cable.plug.height + instance.data.cable.pin.height,
             name: 'plug_' + position
         })
 
         // Add cable pins
-        plug.add(new Konva.Rect({
-            x: -instance.data.cable.pin.width,
-            y: 10,
-            width: instance.data.cable.pin.width,
-            height: instance.data.cable.pin.height,
-            stroke: "#dcdcdc",
-            strokeWidth: this.strokeWidth,
-            cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
-            name: 'pin'
-        }))
-        plug.add(new Konva.Rect({
-            x: -instance.data.cable.pin.width,
-            y: 40,
-            width: instance.data.cable.pin.width,
-            height: instance.data.cable.pin.height,
-            stroke: "#dcdcdc",
-            strokeWidth: this.strokeWidth,
-            cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
-            name: 'pin'
-        }))
+        const spaceLeft = instance.data.cable.plug.height - (instance.data.cable.pin.height * 2) // 2 is item length
+        const spaceBetween = spaceLeft / (2 + 1)
+        const getY = (index) => spaceBetween + index * (instance.data.cable.pin.height + spaceBetween)
+
+        for (let i = 0; i < 2; i++) {
+            plug.add(new Konva.Rect({
+                x: -instance.data.cable.pin.width,
+                y: getY(i),
+                width: instance.data.cable.pin.width,
+                height: instance.data.cable.pin.height,
+                fill: "#dcdcdc",
+                cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
+                name: 'pin'
+            }))
+        }
 
         // Add cable plug
         plug.add(new Konva.Rect({

@@ -2476,15 +2476,14 @@ button,
     display: none !important;
 }
 
-
 @media (max-width: 1600px) {
 
     h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     h2 {
-        font-size: 1.725rem;
+        font-size: 1.5rem;
     }
 
     h3 {
@@ -2493,6 +2492,10 @@ button,
 
     h4 {
         font-size: 1.15rem;
+    }
+
+    .logo {
+        width: 320px;
     }
 
     .chapter {
@@ -2526,6 +2529,10 @@ button,
             margin-top: 0;
         }
 
+        &__box {
+            min-height: 8rem;
+        }
+
         .button {
             margin-top: -1.75rem;
         }
@@ -2534,21 +2541,6 @@ button,
 
     .timer__part {
         font-size: 2.5;
-    }
-}
-
-@media (max-width: 1400px) {
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    .logo {
-        width: 320px;
     }
 
     .button {
@@ -2574,7 +2566,6 @@ button,
             height: 3.5rem;
         }
     }
-
 
     .divider {
         height: 2rem;
@@ -2712,10 +2703,19 @@ button,
             padding: 0.5rem 2rem;
             border-radius: 0 0 2rem 2rem;
         }
+
+        &__part {
+            font-size: 1.5rem;
+        }
     }
 
     .congrats__chapter-completed {
         font-size: 1.25rem;
+    }
+
+    #miniGame__connector {
+        position: relative;
+        top: 2rem;
     }
 }
 

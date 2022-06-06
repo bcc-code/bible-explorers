@@ -2,7 +2,7 @@ import './style.scss'
 import Experience from './Experience/Experience.js'
 import createAuth0Client from '@auth0/auth0-spa-js';
 import _api from './Experience/Utils/Api.js'
-import _appInsights from './Experience/Utils/AppInsights'
+import _appInsights from './Experience/Utils/AppInsights.js'
 
 // Application Insights
 _appInsights.loadAppInsights()
