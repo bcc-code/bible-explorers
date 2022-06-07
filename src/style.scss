@@ -1915,11 +1915,18 @@ button,
     }
 
     &__tips {
+        display: none;
         width: 24rem;
-        aspect-ratio: 2/1;
+        aspect-ratio: 40/27;
         background-image: url('/static/games/cable_connect.gif');
         background-repeat: no-repeat;
         background-size: contain;
+    }
+
+    &.cables {
+        .task__tips {
+            display: block;
+        }
     }
 
     .numberOfIcons {
@@ -2534,6 +2541,13 @@ button,
             color: inherit;
             font-weight: bold;
         }
+    }
+}
+
+@media (min-width: 1601px) {
+    #miniGame__connector {
+        width: 1400px;
+        height: 700px;
     }
 }
 

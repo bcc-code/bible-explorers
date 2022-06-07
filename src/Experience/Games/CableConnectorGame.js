@@ -61,12 +61,12 @@ export default class CableConnector {
                 pin: {
                     width: 30,
                     height: 15,
-                    radius: 10,
+                    radius: 100,
                 },
                 plug: {
                     width: 60,
                     height: 60,
-                    radius: 30
+                    radius: 1000
                 }
             },
             color: {
@@ -171,9 +171,9 @@ export default class CableConnector {
         const outletHeight = background.height() / 5 - 30
         const cableWidth = background.width() / 2
 
-        this.data.cable.plug.height = outletHeight - 10
+        this.data.cable.plug.height = outletHeight * 4 / 6
         this.data.cable.plug.width = outletWidth * 2
-        this.data.cable.pin.height = outletHeight / 4
+        this.data.cable.pin.height = outletHeight / 6
         this.data.cable.pin.width = outletWidth - 4
 
         const spaceLeft = containerObj.height - (outletHeight * this.data.itemsLength)
@@ -256,11 +256,11 @@ export default class CableConnector {
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
 
-                    const maxX = plug.getParent().x() - background.x() - containerObj.bandWidth
+                    const maxX = plug.getParent().x() - containerObj.sideWidth - containerObj.bandWidth
                     const maxY = plug.getParent().y()
 
-                    const minX = plug.getParent().x() - background.width() - background.x() - containerObj.bandWidth
-                    const minY = plug.getParent().y() - background.height() + plug.height() / 2
+                    const minX = plug.getParent().x() - containerObj.width + containerObj.sideWidth + containerObj.bandWidth
+                    const minY = plug.getParent().y() - containerObj.height + plug.height() - spaceBetween
 
                     plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
                     plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
@@ -328,7 +328,7 @@ export default class CableConnector {
                 outlet.item.shadowBlur(0)
             })
 
-            outlet.item.on('touchstart click', () => {
+            outlet.item.on('touchstart click', (event) => {
                 if (!outlet.canClick) return
                 if (outlet.connected) return
 
@@ -336,7 +336,8 @@ export default class CableConnector {
 
                 if (outlet.isVisible) {
                     instance.deselectOutlet(outlet)
-                } else {
+                }
+                else {
                     const currentVisible = instance.outlets.find(o => o.isVisible === true && o.colorFound === false)
                     instance.selectOutlet(outlet, index)
 
@@ -345,15 +346,17 @@ export default class CableConnector {
                     if (currentVisible.color === outlet.color) {
                         // Same color. Cable gets colored
 
+                        outlet.canClick = false
+                        currentVisible.canClick = false
                         outlet.colorFound = true
                         currentVisible.colorFound = true
                         instance.audio.playCorrectSound()
 
                         // instance.animateIcon(this.triangle, '#1DBC60', containerObj, layer)
-
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
                     else {
+
                         // Different colors
                         if (outlet.name === currentVisible.name) {
                             instance.deselectOutlet(currentVisible)
@@ -363,7 +366,7 @@ export default class CableConnector {
                             instance.stopOutletClick()
                             instance.audio.playWrongSound()
 
-                            instance.animateIcon(this.triangle, '#fe7968', containerObj, layer, () => {
+                            instance.animateIcon(this.triangle, '#fe7968', layer, () => {
                                 instance.deselectOutlet(currentVisible)
                                 instance.deselectOutlet(outlet)
                                 instance.startOutletClick()
@@ -371,13 +374,16 @@ export default class CableConnector {
                         }
                     }
                 }
+
+
+
             })
         })
 
         this.stage.add(layer)
     }
 
-    animateIcon(obj, fill, containerObj, layer, callback = () => { }) {
+    animateIcon(obj, fill, layer, callback = () => { }) {
         const amplitude = 5;
         const period = 100;
         const centerX = 0
@@ -627,7 +633,7 @@ export default class CableConnector {
         // let scaleX = containerWidth / instance.data.canvas.width
         // let scaleY = containerHeight / instance.data.canvas.height
 
-        console.log(containerWidth + " x " + containerHeight);
+        // console.log(containerWidth + " x " + containerHeight);
         // scaleX = scaleY = Math.min(scaleX, scaleY);
 
         // // Set stage dimension
@@ -765,7 +771,7 @@ class Outlet {
         this.isVisible = false
         this.colorFound = false
         this.canClick = true
-        this.name = name
+        this.name = name 
         this.item = null
     }
 
@@ -776,7 +782,7 @@ class Outlet {
             width: this.width,
             height: this.height,
             fill: this.fill,
-            name: this.name,
+            name: 'outlet_' + this.color,
             cornerRadius: [0, 4, 4, 0],
             shadowColor: 'white',
         })
