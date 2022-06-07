@@ -2493,6 +2493,43 @@ button,
     display: none !important;
 }
 
+
+.notification {
+    position: fixed;
+    top: 3rem;
+    left: 2rem;
+    width: 28rem;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    >* {
+        pointer-events: all;
+    }
+
+    &__close {
+        position: absolute;
+        top: -1.25rem;
+        right: -1.25rem;
+    }
+
+    &__container {
+        padding: 2rem 3rem;
+        background: $gradient2;
+        border-radius: 3rem 1rem;
+        color: #fff;
+        font-size: 1.25rem;
+
+        a {
+            color: inherit;
+            font-weight: bold;
+        }
+    }
+}
+
 @media (max-width: 1600px) {
 
     h1 {
@@ -2690,6 +2727,14 @@ button,
 
     #miniGame__sorting {
         height: 500px;
+    }
+
+    .popup {
+        &__container {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 2rem 1rem;
+        }
     }
 }
 

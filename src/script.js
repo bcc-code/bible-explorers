@@ -1,6 +1,6 @@
 import './style.scss'
 import Experience from './Experience/Experience.js'
-import Popup from './Experience/Utils/Popup';
+import Notification from './Experience/Utils/Notification.js';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import _api from './Experience/Utils/Api.js'
 import _s from './Experience/Utils/Strings.js'
@@ -50,7 +50,7 @@ window.onload = async () => {
                 document.body.classList.add("ak_leder")
             }
             else {
-                new Popup(_s.settings.noAccess)
+                new Notification(_s.settings.noAccess)
             }
         })
     }
