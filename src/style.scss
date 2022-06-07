@@ -1262,6 +1262,10 @@ button,
     }
 
     &__attachments {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
 
         h3,
         li,
@@ -1269,15 +1273,21 @@ button,
             color: #fff;
         }
 
+        .attachments {
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
         .attachment {
-            margin: 0.5rem 0;
+            margin: 1rem;
         }
 
         a {
             color: $accent2;
             font-family: $secondary-font;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.15rem;
             text-decoration: none;
 
             .icon {

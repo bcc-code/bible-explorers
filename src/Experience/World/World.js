@@ -286,13 +286,11 @@ export default class World {
         chapterDescription.setAttribute('data-id', chapter.id)
         chapterDescription.setAttribute('data-slug', chapter.category)
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
-        instance.menu.chapterContent.querySelector('.chapter__text-content').innerHTML = chapter.content
+        instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
-        chapterAttachments.querySelector('h3').innerText = ''
 
         if (chapter.attachments.length) {
-            chapterAttachments.querySelector('h3').innerText = _s.journey.attachments + ':'
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
                     <a href="${attachment.url}" target="_blank">
@@ -303,7 +301,9 @@ export default class World {
             })
         }
 
+
         instance.menu.chapterItems.classList.add('chapter-selected')
+
     }
 
     removeDescriptionHtml() {
