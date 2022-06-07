@@ -101,7 +101,7 @@ const strings = {
             "feedback": "Tilbakemelding",
             "logIn": "Logg inn",
             "logOut": "Logg ut",
-            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+            "noAccess": "Du har ikke tilgang til å vise denne filmen. For å få tilgang send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Tilgjengelig offline",
