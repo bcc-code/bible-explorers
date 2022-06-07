@@ -51,6 +51,7 @@ export default class Experience {
         this.time.on('animation', () => {
             this.update()
         })
+
     }
 
     resize() {

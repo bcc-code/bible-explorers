@@ -13,7 +13,9 @@ export default class Camera {
         this.canvas = this.experience.canvas
         this.resources = this.experience.resources
         this.debug = this.experience.debug
+
         camera = this
+
 
         // Options
         this.cameraUpdated = false
@@ -112,7 +114,13 @@ export default class Camera {
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
+        // this.controls.addEventListener( 'change', render )
         this.controls.target.copy(this.cameraLocations.default.lookAt)
+
+        this.controls.addEventListener('change', () => {
+            console.log('eve');
+            this.experience.renderer.update()
+        })
     }
 
     autoRotateControls() {
@@ -133,7 +141,7 @@ export default class Camera {
         }
     }
 
-    updateCameraTo(location = 'default', callback = () => {}) {
+    updateCameraTo(location = 'default', callback = () => { }) {
         if (location == null) return
         this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
         this.updateCamera(this.cameraLocations[location], callback)
@@ -222,11 +230,10 @@ export default class Camera {
 
     update() {
         TWEEN.update()
-        this.controls.update()
-
-        if (this.controls.autoRotate) {
-            this.changeRotateDirection()
-        }
+        // this.controls.update()
+        // if (this.controls.autoRotate) {
+        //     this.changeRotateDirection()
+        // }
 
     }
 

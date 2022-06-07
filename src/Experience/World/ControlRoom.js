@@ -31,7 +31,7 @@ export default class ControlRoom {
         this.getObjects()
         this.getTextures()
         this.setMaterials()
-        this.setAnimation()
+        // this.setAnimation()
 
         // Events
         window.addEventListener('click', () => {
@@ -190,6 +190,6 @@ export default class ControlRoom {
 
     update() {
         this.checkObjectIntersection()
-        this.animation.mixer.update(this.time.delta * 0.001)
+        // this.animation.mixer.update(this.time.delta * 0.001)
     }
 }
