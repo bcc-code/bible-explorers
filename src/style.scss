@@ -1914,6 +1914,14 @@ button,
         }
     }
 
+    &__tips {
+        width: 24rem;
+        aspect-ratio: 2/1;
+        background-image: url('/static/games/cable_connect.gif');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
     .numberOfIcons {
         margin-top: 2rem;
         display: flex;
@@ -2492,7 +2500,6 @@ button,
 #webpack-dev-server-client-overlay {
     display: none !important;
 }
-
 
 .notification {
     position: fixed;

@@ -133,6 +133,7 @@ export default class TaskDescription {
                     </div>
                     ${title}
                     ${additionalContent}
+                    <div class="task__tips"></div>
                 </div>
             </div>
             <div class="modal__actions">
