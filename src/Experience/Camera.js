@@ -118,7 +118,7 @@ export default class Camera {
         this.controls.target.copy(this.cameraLocations.default.lookAt)
 
         this.controls.addEventListener('change', () => {
-            console.log('eve');
+            console.log('render');
             this.experience.renderer.update()
         })
     }
@@ -230,10 +230,10 @@ export default class Camera {
 
     update() {
         TWEEN.update()
-        // this.controls.update()
-        // if (this.controls.autoRotate) {
-        //     this.changeRotateDirection()
-        // }
+        this.controls.update()
+        if (this.controls.autoRotate) {
+            this.changeRotateDirection()
+        }
 
     }
 
