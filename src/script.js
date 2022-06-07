@@ -1,7 +1,9 @@
 import './style.scss'
 import Experience from './Experience/Experience.js'
+import Popup from './Experience/Utils/Popup';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import _api from './Experience/Utils/Api.js'
+import _s from './Experience/Utils/Strings.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 
 // Application Insights
@@ -41,11 +43,15 @@ window.onload = async () => {
         let personId = userData['https://login.bcc.no/claims/personId']
 
         experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
-            if (roles.includes("administrator") || roles.includes("editor"))
+            if (roles.includes("administrator") || roles.includes("editor")) {
                 document.body.classList.add("admin", "ak_leder")
-
-            if (roles.includes("ak_leder"))
+            }
+            else if (roles.includes("ak_leder")) {
                 document.body.classList.add("ak_leder")
+            }
+            else {
+                new Popup(_s.settings.noAccess)
+            }
         })
     }
 }

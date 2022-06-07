@@ -36,7 +36,8 @@ const strings = {
             "language": "Language",
             "feedback": "Feedback",
             "logIn": "Log in",
-            "logOut": "Log out"
+            "logOut": "Log out",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Available offline",
@@ -99,7 +100,8 @@ const strings = {
             "language": "Språk",
             "feedback": "Tilbakemelding",
             "logIn": "Logg inn",
-            "logOut": "Logg ut"
+            "logOut": "Logg ut",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Tilgjengelig offline",
@@ -162,7 +164,8 @@ const strings = {
             "language": "Sprache",
             "feedback": "Rückmeldung",
             "logIn": "Einloggen",
-            "logOut": "Ausloggen"
+            "logOut": "Ausloggen",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Offline verfügbar",
@@ -225,7 +228,8 @@ const strings = {
             "language": "Taal",
             "feedback": "Feedback",
             "logIn": "Log in",
-            "logOut": "Log uit"
+            "logOut": "Log uit",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Online beschikbaar",
@@ -288,7 +292,8 @@ const strings = {
             "language": "Langue",
             "feedback": "Commentaires",
             "logIn": "Se connecter",
-            "logOut": "Se déconnecter"
+            "logOut": "Se déconnecter",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponible hors connexion",
@@ -351,7 +356,8 @@ const strings = {
             "language": "Język",
             "feedback": "Feedback",
             "logIn": "Zaloguj",
-            "logOut": "Wyloguj"
+            "logOut": "Wyloguj",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Dostępne offline",
@@ -414,7 +420,8 @@ const strings = {
             "language": "Limbă",
             "feedback": "Feedback",
             "logIn": "Logare",
-            "logOut": "Delogare"
+            "logOut": "Delogare",
+            "noAccess": "Nu ai acces pentru a viziona filmele. Pentru a primi acces, trimite un email la <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponibil offline",
@@ -477,7 +484,8 @@ const strings = {
             "language": "Idioma",
             "feedback": "Comentários",
             "logIn": "Conecte-se",
-            "logOut": "Sair"
+            "logOut": "Sair",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponível off-line",
@@ -540,7 +548,8 @@ const strings = {
             "language": "Lingua",
             "feedback": "Feedback",
             "logIn": "Accedi",
-            "logOut": "Esci"
+            "logOut": "Esci",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponibile offline",
@@ -603,7 +612,8 @@ const strings = {
             "language": "Язык",
             "feedback": "Обратная связь",
             "logIn": "Войти",
-            "logOut": "Выйти"
+            "logOut": "Выйти",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Доступно офлайн",
@@ -666,7 +676,8 @@ const strings = {
             "language": "Kieli",
             "feedback": "Palaute",
             "logIn": "Kirjaudu sisään",
-            "logOut": "Kirjaudu ulos"
+            "logOut": "Kirjaudu ulos",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Saatavilla offline-tilassa",
