@@ -1232,7 +1232,6 @@ button,
             padding-bottom: 1rem;
             border-bottom: 5px solid $accent;
             border-radius: 2px;
-            margin-bottom: 2rem;
         }
 
         p {
@@ -1246,7 +1245,7 @@ button,
         }
 
         p a {
-            color: $accent;
+            color: $accent2;
             text-decoration: none;
 
             &:hover {
@@ -1259,13 +1258,13 @@ button,
         max-height: 30vh;
         overflow-x: hidden;
         overflow-y: auto;
+        padding-right: 1rem;
     }
 
     &__attachments {
         background: rgba(255, 255, 255, 0.1);
-        padding: 1rem;
         margin-bottom: 2rem;
-        border-radius: 1rem;
+        border-radius: 0 0 1rem 1rem;
 
         h3,
         li,
