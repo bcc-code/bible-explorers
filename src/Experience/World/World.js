@@ -270,7 +270,7 @@ export default class World {
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.remove}"></span>
+                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
                 </div>
             </div>
         `
