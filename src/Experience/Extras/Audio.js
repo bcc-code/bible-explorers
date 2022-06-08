@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Experience from "../Experience.js"
 
 let audio = null
+let bgAudioQueue = [];
 
 export default class Audio {
     constructor() {
@@ -27,6 +28,7 @@ export default class Audio {
     }
 
     playBgMusic(soundtrack = audio.bgMusicAudios['default']) {
+        bgAudioQueue.push(soundtrack);
         if (!audio.experience.settings.soundOn) return
         audio.initialize()
 
@@ -50,9 +52,7 @@ export default class Audio {
     }
 
     togglePlayBgMusic() {
-        if (!audio) {
-            audio.initialize()
-        }
+        audio.initialize()
         if (!audio.experience.settings.soundOn) return
         audio.el.classList.add('pointer-events-none')
 
@@ -69,15 +69,16 @@ export default class Audio {
 
     loadBgMusic(soundtrack = audio.bgMusicAudios['default']) {
         audio.audioLoader.load(soundtrack, function(buffer) {
+            if (bgAudioQueue.at(-1) === soundtrack ){
             audio.bgMusic = new THREE.Audio(audio.listener)
             audio.bgMusic.setBuffer(buffer)
             audio.bgMusic.setLoop(true)
             audio.bgMusic.setVolume(0)
             audio.bgMusic.play()
             audio.fadeInBgMusic()
-
             audio.bgMusicAudios.objs[soundtrack] = audio.bgMusic
             audio.bgMusicAudios.playingSrc = soundtrack
+            }
         })
     }
 
@@ -149,7 +150,6 @@ export default class Audio {
     playWhoosh() {
         if (!audio.experience.settings.soundOn) return
         this.initialize()
-
         if (!audio.whoosh) {
             audio.audioLoader.load('sounds/whoosh-between-screens.mp3', function (buffer) {
                 audio.whoosh = new THREE.Audio(audio.listener)
