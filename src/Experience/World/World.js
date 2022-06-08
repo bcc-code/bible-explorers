@@ -230,8 +230,6 @@ export default class World {
         chapterClasses += chapter.status == "future" ? " locked" : ""
         chapterHtml.className = chapterClasses
 
-        this.offline.markChapterIfAvailableOffline(chapter)
-
         chapterHtml.setAttribute("data-id", chapter.id)
         chapterHtml.setAttribute("data-slug", chapter.category)
 
@@ -273,6 +271,16 @@ export default class World {
         `
         instance.menu.chapters.appendChild(chapterHtml)
         instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
+
+        instance.markChapterIfCompleted(chapter)
+        instance.offline.markChapterIfAvailableOffline(chapter)
+    }
+
+    markChapterIfCompleted(chapter) {
+        const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
+        
+        if (chapterProgress == chapter.program.length)
+            document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }
 
     setChapterBgImage(chapter) {
@@ -349,7 +357,7 @@ export default class World {
     updateSelectedChapterData(chapter) {
         const chapterId = chapter.getAttribute('data-id')
         const categorySlug = chapter.getAttribute('data-slug')
-        instance.selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
+        instance.selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
     }
 
     loadChapterTextures() {
@@ -369,7 +377,7 @@ export default class World {
         let chapterEl = chapter.closest(".chapter")
         const chapterId = chapterEl.getAttribute('data-id')
         const categorySlug = chapterEl.getAttribute('data-slug')
-        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
+        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
 
         instance.cacheChapterAssets(selectedChapter)
 
@@ -383,7 +391,7 @@ export default class World {
         let chapterEl = chapter.closest(".chapter")
         const chapterId = chapterEl.getAttribute('data-id')
         const categorySlug = chapterEl.getAttribute('data-slug')
-        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
+        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
 
         selectedChapter['episodes'].forEach(episode => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id))
         chapterEl.classList.remove('downloaded')
@@ -544,6 +552,8 @@ export default class World {
                 quality: instance.selectedQuality
             }
         })
+
+        document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
     }
 
     showMenu() {
