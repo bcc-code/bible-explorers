@@ -295,7 +295,6 @@ $secondary-font: 'PT Sans', sans-serif;
 
 html,
 body {
-    height: 100%;
     overflow: hidden;
 }
 
@@ -306,6 +305,14 @@ body {
     line-height: 1.5;
     letter-spacing: 0.5px;
     color: $dark;
+    height: 100vh;
+}
+
+@supports (-webkit-touch-callout: none) {
+    body {
+        /* The hack for Safari */
+        height: -webkit-fill-available;
+    }
 }
 
 ul {
