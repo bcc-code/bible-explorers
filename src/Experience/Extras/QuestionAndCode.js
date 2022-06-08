@@ -36,7 +36,7 @@ export default class QuestionAndCode {
             <div class="answers__field"><input type="text" class="answers__input" /></div>
             <div class="answers__field"><input type="text" class="answers__input" /></div>
         </div>`
-        const html = instance.program.taskDescription.getModalHtml(instance.data.question, answersWrapper)
+        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.question, answersWrapper)
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
@@ -87,7 +87,7 @@ export default class QuestionAndCode {
     }
 
     toggleSubmitMessage() {
-        const html = instance.program.taskDescription.getModalHtml(instance.data.submit_message)
+        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.submit_message)
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
@@ -110,7 +110,7 @@ export default class QuestionAndCode {
     }
 
     toggleCodeDescription() {
-        const html = instance.program.taskDescription.getModalHtml(instance.data.code_description)
+        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.code_description)
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
