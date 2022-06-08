@@ -309,6 +309,7 @@ body {
 }
 
 @supports (-webkit-touch-callout: none) {
+
     body,
     html {
         /* The hack for Safari */
@@ -1284,11 +1285,12 @@ button,
         .attachments {
             display: flex;
             flex-wrap: wrap;
-
+            padding: 1rem;
         }
 
         .attachment {
-            margin: 1rem;
+            margin-right: 2rem;
+            margin-bottom: 0.5rem;
         }
 
         a {
@@ -2536,6 +2538,20 @@ button,
 
 #webpack-dev-server-client-overlay {
     display: none !important;
+}
+
+.copyright {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    color: #fff;
+    z-index: 10;
+    pointer-events: none;
+
+    a {
+        pointer-events: all;
+        color: $accent2;
+    }
 }
 
 .notification {
