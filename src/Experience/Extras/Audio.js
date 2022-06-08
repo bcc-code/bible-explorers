@@ -138,7 +138,8 @@ export default class Audio {
         if (audio.taskDescriptionAudios.hasOwnProperty(url))
             audio.taskDescriptionAudios[url].stop()
 
-        audio.fadeInBgMusic()
+        if (audio.bgMusicAudios.enabled())
+            audio.fadeInBgMusic()
     }
 
     playWhoosh() {
