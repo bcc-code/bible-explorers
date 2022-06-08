@@ -50,10 +50,12 @@ export default class Audio {
     }
 
     togglePlayBgMusic() {
+        if (!audio) {
+            audio.initialize()
+        }
         if (!audio.experience.settings.soundOn) return
         audio.el.classList.add('pointer-events-none')
 
-        audio.initialize()
 
         if (!audio.bgMusic) {
             audio.loadBgMusic()
@@ -80,6 +82,7 @@ export default class Audio {
     }
 
     fadeInBgMusic() {
+        audio.bgMusic.play();
         if (audio.bgMusic.isPlaying)
             audio.el.classList.add('sound-on')
 
@@ -106,6 +109,7 @@ export default class Audio {
                 audio.bgMusic.setVolume(0)
                 callback()
                 audio.el.classList.remove('pointer-events-none')
+                audio.bgMusic.pause();
             }
         }, 100)
     }
