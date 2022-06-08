@@ -1385,7 +1385,12 @@ button,
         }
 
         .chapter__downloaded {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+
+            .icon {
+                margin-left: 1rem;
+            }
         }
     }
 
