@@ -138,7 +138,7 @@ export default class Audio {
         if (audio.taskDescriptionAudios.hasOwnProperty(url))
             audio.taskDescriptionAudios[url].stop()
 
-        if (audio.bgMusicAudios.enabled())
+        if (audio.el.classList.contains('sound-on'))
             audio.fadeInBgMusic()
     }
 
