@@ -20,10 +20,8 @@ export default class CableConnector {
     }
 
     toggleCableConnector() {
-        this.timer = new Timer()
-
         this.init()
-        this.startTimer()
+        this.startTimerIfNecessary()
         this.setup()
         this.addEventListeners()
         window.addEventListener('resize', instance.resize)
@@ -213,15 +211,12 @@ export default class CableConnector {
                 stroke: this.data.color.defaultStroke,
             })
 
-
-
             this.cables.push(cable)
             this.outlets.push(outlet_l, outlet_r)
 
             outletsGroup.add(outlet_l._draw())
             outletsGroup.add(outlet_r._draw().scaleX(-1))
             cablesGroup.add(cable._draw())
-
         }
 
         containerObj.item.add(cablesGroup)
@@ -232,10 +227,7 @@ export default class CableConnector {
         containerObj.item.add(sparkleSprite)
         containerObj.item.add(explosionSprite)
 
-
-        console.log(this.timer);
         this.cables.forEach(cable => {
-
             cable.item.on('dragstart', () => {
                 cable.item.zIndex(4)
             })
@@ -246,15 +238,15 @@ export default class CableConnector {
                         cable.item.opacity(0.98)
                         document.body.style.cursor = 'pointer'
                     }
-
                 })
+
                 plug.on('mouseout', () => {
                     if (plug.draggable()) {
                         cable.item.opacity(1)
                         document.body.style.cursor = 'default'
                     }
-
                 })
+
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
 
@@ -267,6 +259,7 @@ export default class CableConnector {
                     plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
                     plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
                 })
+
                 plug.on('dragend', () => {
                     const direction = plug.name().replace('plug_', '')
                     const plugPosition = {
@@ -283,7 +276,7 @@ export default class CableConnector {
                             x: direction == "left"
                                 ? correspondingOutlet.position.x + correspondingOutlet.width
                                 : correspondingOutlet.position.x - correspondingOutlet.width,
-                            y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2,
+                            y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2
                         }
 
                         plug.move({
@@ -300,23 +293,21 @@ export default class CableConnector {
                         }
 
                         if (instance.allCablesConnected()) {
-
-                            this.timer.destroy()
-
+                            instance.stopTimerIfNecessary()
                             setTimeout(instance.finishGame, 1000)
                         }
                     }
                     else {
-                        let connectedToAnyOtherOutlet = false
+                        let outletConnectedTo = null
                         instance.outlets.filter(o => o.color != cable.color && o.name === direction).forEach(otherOutlet => {
-                            if (instance.connectedToOutlet(plugPosition, otherOutlet)) {
-                                connectedToAnyOtherOutlet = true
-                                instance.playAnimation(otherOutlet, explosionSprite)
-                            }
+                            if (instance.connectedToOutlet(plugPosition, otherOutlet))
+                                outletConnectedTo = otherOutlet
                         })
 
-                        if (connectedToAnyOtherOutlet)
+                        if (outletConnectedTo) {
                             instance.audio.playWrongSound()
+                            instance.playAnimation(outletConnectedTo, explosionSprite)
+                        }
                     }
                 })
             })
@@ -324,6 +315,7 @@ export default class CableConnector {
 
         this.outlets.forEach(outlet => {
             outlet.item.on('mouseover', () => {
+                if (outlet.colorFound) return
                 document.body.style.cursor = 'pointer'
                 outlet.item.shadowBlur(10)
             })
@@ -335,6 +327,7 @@ export default class CableConnector {
 
             outlet.item.on('touchstart click', (event) => {
                 if (!outlet.canClick) return
+                if (outlet.colorFound) return
                 if (outlet.connected) return
 
                 const index = instance.data.color.name.indexOf(outlet.color)
@@ -350,18 +343,15 @@ export default class CableConnector {
 
                     if (currentVisible.color === outlet.color) {
                         // Same color. Cable gets colored
-
                         outlet.canClick = false
                         currentVisible.canClick = false
                         outlet.colorFound = true
                         currentVisible.colorFound = true
                         instance.audio.playCorrectSound()
 
-                        // instance.animateIcon(this.triangle, '#1DBC60', containerObj, layer)
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
                     else {
-
                         // Different colors
                         if (outlet.name === currentVisible.name) {
                             instance.deselectOutlet(currentVisible)
@@ -379,9 +369,6 @@ export default class CableConnector {
                         }
                     }
                 }
-
-
-
             })
         })
 
@@ -416,14 +403,25 @@ export default class CableConnector {
         this.tween.play()
     }
 
-    startTimer() {
+    startTimerIfNecessary() {
         const currentStep = instance.program.currentStep
         const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
 
         if (timerInMinutes > 0) {
+            this.timer = new Timer()
             this.timer.setMinutes(timerInMinutes)
             document.addEventListener('timeElapsed', instance.onTimeElapsed)
         }
+    }
+
+    stopTimerIfNecessary() {
+        const currentStep = instance.program.currentStep
+        const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
+
+        if (timerInMinutes > 0) {
+            this.timer.destroy()
+            document.removeEventListener('timeElapsed', instance.onTimeElapsed)
+        }  
     }
 
     onTimeElapsed() {
@@ -489,7 +487,7 @@ export default class CableConnector {
     }
 
     playAnimation(obj, spriteObj) {
-        const direction = obj.item.name()
+        const direction = obj.name
         const newPosition = {
             x: direction == "left"
                 ? obj.position.x + obj.width + 15
@@ -539,8 +537,8 @@ export default class CableConnector {
     }
 
     connectedToOutlet(plugPosition, correspondingOutlet) {
-        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 10
-            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height + 10
+        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 20
+            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height / 2
     }
 
     bothPlugsConnected(cable) {
