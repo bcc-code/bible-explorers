@@ -17,13 +17,14 @@ export default class CableConnector {
 
         instance = this
 
-
     }
 
     toggleCableConnector() {
+        this.timer = new Timer()
+
         this.init()
-        this.setup()
         this.startTimer()
+        this.setup()
         this.addEventListeners()
         window.addEventListener('resize', instance.resize)
     }
@@ -166,6 +167,7 @@ export default class CableConnector {
         this.container = containerObj._draw()
         layer.add(this.container)
 
+        this.triangle = containerObj.item.findOne('.triangle')
         const background = containerObj.item.findOne('.background')
         const outletWidth = background.width() / 12 / 2.5
         const outletHeight = background.height() / 5 - 30
@@ -230,8 +232,8 @@ export default class CableConnector {
         containerObj.item.add(sparkleSprite)
         containerObj.item.add(explosionSprite)
 
-        this.triangle = containerObj.item.findOne('.triangle')
 
+        console.log(this.timer);
         this.cables.forEach(cable => {
 
             cable.item.on('dragstart', () => {
@@ -298,6 +300,9 @@ export default class CableConnector {
                         }
 
                         if (instance.allCablesConnected()) {
+
+                            this.timer.destroy()
+
                             setTimeout(instance.finishGame, 1000)
                         }
                     }
@@ -416,7 +421,6 @@ export default class CableConnector {
         const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
 
         if (timerInMinutes > 0) {
-            this.timer = new Timer()
             this.timer.setMinutes(timerInMinutes)
             document.addEventListener('timeElapsed', instance.onTimeElapsed)
         }
@@ -771,7 +775,7 @@ class Outlet {
         this.isVisible = false
         this.colorFound = false
         this.canClick = true
-        this.name = name 
+        this.name = name
         this.item = null
     }
 
