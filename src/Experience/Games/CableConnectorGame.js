@@ -535,8 +535,8 @@ export default class CableConnector {
     }
 
     connectedToOutlet(plugPosition, correspondingOutlet) {
-        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < 80
-            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < 60
+        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 10
+            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height + 10
     }
 
     bothPlugsConnected(cable) {
