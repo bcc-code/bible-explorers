@@ -1088,6 +1088,18 @@ button,
             font-family: $secondary-font;
             letter-spacing: 0.25rem;
         }
+
+        .stars {
+            display: none;
+            color: $accent2;
+            font-size: 1rem;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                margin: 0.15rem;
+            }
+        }
     }
 
     &__heading {
@@ -1388,6 +1400,12 @@ button,
             .icon {
                 margin-left: 1rem;
             }
+        }
+    }
+
+    &.completed {
+        .chapter__number .stars {
+            display: flex;
         }
     }
 

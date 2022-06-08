@@ -247,6 +247,11 @@ export default class World {
                 <div class="chapter__number">
                     <i class="icon icon-lock-solid"></i>
                     <span>${index + 1}</span>
+                    <div class="stars">
+                        <i class="icon icon-star-solid"></i>
+                        <i class="icon icon-star-solid"></i>
+                        <i class="icon icon-star-solid"></i>
+                    </div>
                 </div>
                 <div class="chapter__heading">
                     <h2 class="chapter__title">${chapter.title}</h2>
@@ -534,6 +539,7 @@ export default class World {
         instance.buttons.start.classList.remove('visible')
         instance.buttons.restart.classList.add('visible')
         instance.audio.playBgMusic()
+
 
         _appInsights.trackEvent({
             name: "Finish chapter",
