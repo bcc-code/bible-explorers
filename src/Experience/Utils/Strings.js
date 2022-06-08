@@ -43,7 +43,7 @@ const strings = {
             "availableOffline": "Available offline",
             "download": "Download",
             "downloading": "Downloading",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -108,7 +108,7 @@ const strings = {
             "availableOffline": "Tilgjengelig offline",
             "download": "Last ned",
             "downloading": "Laster ned",
-            "remove": "Slett"
+            "remove": "Slett offline-versjonen"
         },
         "tooltips": {
             "video": "Spill av video",
@@ -173,7 +173,7 @@ const strings = {
             "availableOffline": "Offline verfügbar",
             "download": "Herunterladen",
             "downloading": "Wird heruntergeladen",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -238,7 +238,7 @@ const strings = {
             "availableOffline": "Online beschikbaar",
             "download": "Download",
             "downloading": "Downloaden",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -303,7 +303,7 @@ const strings = {
             "availableOffline": "Disponible hors connexion",
             "download": "Télécharger",
             "downloading": "Téléchargement",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -368,7 +368,7 @@ const strings = {
             "availableOffline": "Dostępne offline",
             "download": "Pobierz",
             "downloading": "Pobieranie",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -433,7 +433,7 @@ const strings = {
             "availableOffline": "Disponibil offline",
             "download": "Descărcare",
             "downloading": "Se descarcă",
-            "remove": "Șterge fișierele salvate offline"
+            "remove": "Șterge versiunea offline"
         },
         "tooltips": {
             "video": "Pornește video",
@@ -498,7 +498,7 @@ const strings = {
             "availableOffline": "Disponível off-line",
             "download": "Download",
             "downloading": "Baixando",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -563,7 +563,7 @@ const strings = {
             "availableOffline": "Disponibile offline",
             "download": "Download",
             "downloading": "Download in corso",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -628,7 +628,7 @@ const strings = {
             "availableOffline": "Доступно офлайн",
             "download": "Скачать",
             "downloading": "Скачивание",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -693,7 +693,7 @@ const strings = {
             "availableOffline": "Saatavilla offline-tilassa",
             "download": "Lataa",
             "downloading": "Ladataan tiedostoa",
-            "remove": "Remove"
+            "remove": "Remove offline version"
         },
         "tooltips": {
             "video": "Play video",
