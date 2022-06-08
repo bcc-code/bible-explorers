@@ -144,6 +144,12 @@ export default class Offline {
         offline.objStore.put(data, data.name)
     }
 
+    deleteEpisodeFromDb = function (videoName) {
+        offline.transaction = offline.db.transaction([offline.store], "readwrite")
+        offline.objStore = offline.transaction.objectStore(offline.store)
+        offline.objStore.delete(videoName)
+    }
+
     loadFromIndexedDb = function (videoName, callback, fallback) {
         if (!offline.db) {
             fallback(videoName)

@@ -267,6 +267,7 @@ export default class World {
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
+                    <span class="icon icon-xmark-solid" title="${_s.offline.remove}"></span>
                 </div>
             </div>
         `
@@ -301,9 +302,7 @@ export default class World {
             })
         }
 
-
         instance.menu.chapterItems.classList.add('chapter-selected')
-
     }
 
     removeDescriptionHtml() {
@@ -324,6 +323,13 @@ export default class World {
         document.querySelectorAll(".chapter:not(.locked) .chapter__offline, body.admin .chapter__offline").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
                 instance.downloadChapter(chapter)
+                event.stopPropagation()
+            })
+        })
+
+        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (chapter) {
+            chapter.addEventListener("click", (event) => {
+                instance.removeChapter(chapter)
                 event.stopPropagation()
             })
         })
@@ -371,6 +377,16 @@ export default class World {
         chapterEl.classList.add('downloading')
 
         await this.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
+    }
+
+    removeChapter(chapter) {
+        let chapterEl = chapter.closest(".chapter")
+        const chapterId = chapterEl.getAttribute('data-id')
+        const categorySlug = chapterEl.getAttribute('data-slug')
+        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
+
+        selectedChapter['episodes'].forEach(episode => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id))
+        chapterEl.classList.remove('downloaded')
     }
 
     cacheChapterAssets(chapter) {
