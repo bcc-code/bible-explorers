@@ -438,7 +438,7 @@ export default class World {
             episodesDownloadUrls.push({
                 downloadUrl: episodeUrls.downloadUrl,
                 data: {
-                    name: 'episode-' + episode.id,
+                    name: episode.type + '-' + episode.id,
                     thumbnail: episodeUrls.thumbnail,
                     chapterId: data.chapterId,
                     chapterTitle: data.chapterTitle,

@@ -1,3 +1,4 @@
+import Experience from '../Experience.js'
 import _appInsights from '../Utils/AppInsights.js'
 
 let offline = null
@@ -7,6 +8,7 @@ export default class Offline {
         if (offline)
             return offline
 
+        this.experience = new Experience()
         offline = this
 
         if ("indexedDB" in window) {
@@ -131,6 +133,8 @@ export default class Offline {
                         quality: currentEpisode.data.quality
                     }
                 })
+
+                offline.experience.resources.updateBtvStreamWithDownloadedVersion(currentEpisode.data.name)
             }
             else {
                 offline.startDownloading()
