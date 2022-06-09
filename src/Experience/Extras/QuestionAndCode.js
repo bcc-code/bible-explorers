@@ -62,7 +62,6 @@ export default class QuestionAndCode {
 
             if (index == 0) {
                 input.focus()
-                window.scrollTo(0, 0)
                 document.body.scrollTop = 0
             }
             if (input.value.length != 0) allInputsEmpty = false
