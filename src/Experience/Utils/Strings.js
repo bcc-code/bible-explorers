@@ -56,11 +56,11 @@ const strings = {
             "cableConnect": "Join the cables to the right color",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Start over",
             "continue": "Continue the journey",
@@ -122,11 +122,11 @@ const strings = {
             "cableConnect": "Fest kablene til riktig farge",
             "completed": {
                 "title": "Bra jobba!",
-                "message": "Du har fullført oppgaven! Du kan fortsette tidsreisen"
+                "message": "Du har fullført oppgaven!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "Tiden er ute. Prøv å feste alle kablene før tiden går ut"
+                "message": "Tiden er ute. Prøv å feste alle kablene før tiden går ut."
             },
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
@@ -188,11 +188,11 @@ const strings = {
             "cableConnect": "Verbinde die Kabel mit der richtigen Farbe",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
@@ -254,11 +254,11 @@ const strings = {
             "cableConnect": "Maak de kabels vast aan de juiste kleur",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
@@ -320,11 +320,11 @@ const strings = {
             "cableConnect": "Relier les câbles à la bonne couleur",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
@@ -386,11 +386,11 @@ const strings = {
             "cableConnect": "Połącz kable z odpowiednim kolorem",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
@@ -452,15 +452,15 @@ const strings = {
             "cableConnect": "Conectează cablurile la culoarea corectă",
             "completed": {
                 "title": "Bravo!",
-                "message": "Ai terminat sarcina și acum poți să continui călătoria"
+                "message": "Ai terminat sarcina cu succes!"
             },
             "timeElapsed": {
                 "title": "Ups!",
-                "message": "Timpul s-a epuizat. Încearcă să conectezi toate cablurile înainte ca timpul să se scurgă"
+                "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
-            "skip": "Sări peste"
+            "skip": "Mergi mai departe"
         }
     },
     "pt-pt": {
@@ -518,11 +518,11 @@ const strings = {
             "cableConnect": "Junte os cabos para a cor certa",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
@@ -584,11 +584,11 @@ const strings = {
             "cableConnect": "Unisci i cavi al colore giusto",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
@@ -650,11 +650,11 @@ const strings = {
             "cableConnect": "Соедините кабели нужного цвета",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
@@ -716,11 +716,11 @@ const strings = {
             "cableConnect": "Yhdistä johdot oikeisiin väreihin",
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have successfully completed the task!"
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out"
+                "message": "The time is over. Try to join all the cables before the time goes out."
             },
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",

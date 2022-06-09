@@ -44,10 +44,10 @@ export default class Experience {
         this.auth0 = {}
 
         if (WebGL.isWebGLAvailable()) {
-            console.log('is available');
+            console.log('WebGL is available')
         } else {
-            const warning = WebGL.getWebGLErrorMessage();
-            console.log('is not available');
+            const warning = WebGL.getWebGLErrorMessage()
+            console.log('WebGL is not available', warning)
         }
 
         // Sizes resize event
