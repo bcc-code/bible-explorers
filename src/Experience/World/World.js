@@ -284,7 +284,7 @@ export default class World {
     markChapterIfCompleted(chapter) {
         const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
         
-        if (chapterProgress == chapter.program.length)
+        if (chapterProgress == chapter.program.length && chapterProgress > 0)
             document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }
 
