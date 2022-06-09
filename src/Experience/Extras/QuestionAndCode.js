@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
+import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 
 let instance = null
@@ -89,7 +90,9 @@ export default class QuestionAndCode {
                     method: "POST",
                     body: JSON.stringify({
                         answer: thisTaskAnswers,
-                        chapterId: instance.selectedChapter.id
+                        chapterId: instance.selectedChapter.id,
+                        chapterTitle: instance.selectedChapter.title,
+                        language: _lang.getLanguageCode()
                     })
                 })
             }
