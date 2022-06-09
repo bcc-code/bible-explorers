@@ -11,6 +11,7 @@ const strings = {
         },
         "conceptDescription": "Join time travels and explore the book that can answer every question",
         "introduction": "Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Start the time travel",
             "continue": "Continue the time travel",
@@ -76,6 +77,7 @@ const strings = {
         },
         "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
+        "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
         "journey": {
             "start": "Start tidsreisen",
             "continue": "Fortsett tidsreisen",
@@ -141,6 +143,7 @@ const strings = {
         },
         "conceptDescription": "Komm mit auf Zeitreise und erforsche das Buch, das alle Fragen beantworten kann",
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Zeitreise starten",
             "continue": "Zeitreise fortsetzen",
@@ -206,6 +209,7 @@ const strings = {
         },
         "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Start de tijdreis",
             "continue": "Ga door met de tijdreis",
@@ -271,6 +275,7 @@ const strings = {
         },
         "conceptDescription": "Rejoins les voyages dans le temps et explore le livre qui peut répondre à toutes les questions",
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Commencer le voyage dans le temps",
             "continue": "Continuer le voyage dans le temps",
@@ -336,6 +341,7 @@ const strings = {
         },
         "conceptDescription": "Dołącz do podróży w czasie i odkryj książkę, która odpowie na każde pytanie",
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Rozpocznij podróż w czasie",
             "continue": "Kontynuuj podróż",
@@ -401,6 +407,7 @@ const strings = {
         },
         "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
+        "notAvailable": "Nici un capitol disponibil în limba selectată",
         "journey": {
             "start": "Începe călătoria în timp",
             "continue": "Continuă călătoria în timp",
@@ -466,6 +473,7 @@ const strings = {
         },
         "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Comece a viajem no tempo",
             "continue": "Continue a viajem no tempo",
@@ -531,6 +539,7 @@ const strings = {
         },
         "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Inizia il viaggio nel tempo",
             "continue": "Continua il viaggio nel tempo",
@@ -596,6 +605,7 @@ const strings = {
         },
         "conceptDescription": "Присоединяйтесь к путешествию во времени и исследуйте книгу, способную ответить на все вопросы",
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Начать путешествие во времени",
             "continue": "Продолжить путешествие во времени",
@@ -661,6 +671,7 @@ const strings = {
         },
         "conceptDescription": "Liity aikamatkalle ja tutki kirjaa josta saat vastaukset kaikkiin kysymyksiin",
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
+        "notAvailable": "No chapter available in the selected language",
         "journey": {
             "start": "Aloita aikamatka",
             "continue": "Jatka aikamatkaa",

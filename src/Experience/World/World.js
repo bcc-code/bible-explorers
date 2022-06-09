@@ -163,6 +163,7 @@ export default class World {
     }
 
     setCategories(result) {
+        if (result.length == 0) instance.addNotAvailableInYourLanguageMessage()
         if (result.hasOwnProperty('message')) return
 
         instance.menu.chaptersData = result
@@ -172,6 +173,13 @@ export default class World {
         }
 
         instance.selectCategoryListeners()
+    }
+
+    addNotAvailableInYourLanguageMessage() {
+        const notAvailableEl = document.createElement("div")
+        notAvailableEl.className = "not-available"
+        notAvailableEl.innerText = _s.notAvailable
+        instance.menu.categories.appendChild(notAvailableEl)
     }
 
     setCategoryHtml(category) {
