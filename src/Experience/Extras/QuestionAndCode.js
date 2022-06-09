@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
+import _api from '../Utils/Api.js'
 
 let instance = null
 
@@ -72,6 +73,8 @@ export default class QuestionAndCode {
         }
 
         getTaskBtn.addEventListener("click", () => {
+            const initialAnswers = allAnswersFromTheme[instance.currentStep]
+
             // Save answers to Local Storage
             let thisTaskAnswers = []
             inputs.forEach((input) => {
@@ -80,6 +83,16 @@ export default class QuestionAndCode {
 
             allAnswersFromTheme[instance.currentStep] = thisTaskAnswers
             localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
+
+            if (JSON.stringify(initialAnswers) != JSON.stringify(thisTaskAnswers)) {
+                fetch(_api.saveAnswer(), {
+                    method: "POST",
+                    body: JSON.stringify({
+                        answer: thisTaskAnswers,
+                        chapterId: instance.selectedChapter.id
+                    })
+                })
+            }
 
             instance.modal.destroy()
             instance.toggleSubmitMessage()

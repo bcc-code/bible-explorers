@@ -5,6 +5,6 @@ let wpApiUrl_production = "https://biblekids.io/wp-json"
 
 let getBiexChapters = () => wpApiUrl_production + "/biex-chapters/get?lang=" + _lang.getLanguageCode()
 let getRoles = (personId) => wpApiUrl_production + '/roles/' + personId
-let apiJsonLocalPath = () => "api/biex-chapters-" + _lang.getLanguageCode() + ".json"
+let saveAnswer = () => wpApiUrl_staging + '/answer/save'
 
-export default { getBiexChapters, getRoles, apiJsonLocalPath }
+export default { getBiexChapters, getRoles, saveAnswer }
