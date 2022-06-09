@@ -17,24 +17,94 @@ export default class CableConnector {
 
         instance = this
 
+        this.data = {
+            stage: {
+                width: 1175,
+                height: 548
+            },
+            assets: {
+                outlet_blue: 'outlet_blue.png',
+                outlet_lightblue: 'outlet_lightblue.png',
+                outlet_yellow: 'outlet_yellow.png',
+                outlet_purple: 'outlet_purple.png',
+                outlet_pink: 'outlet_pink.png',
+                plug_blue: 'plug_blue.png',
+                plug_lightblue: 'plug_lightblue.png',
+                plug_yellow: 'plug_yellow.png',
+                plug_purple: 'plug_purple.png',
+                plug_pink: 'plug_pink.png',
+                side_left: 'side_left.png',
+                side_right: 'side_right.png',
+                background: 'background.png',
+                warning_sign: 'warning_sign.png',
+                warning_sign_wrong: 'warning_sign_wrong.png',
+                explosion: 'explosion.png',
+                sparkles: 'sparkles.png',
+            },
+            items: {
+                name: [
+                    'lightBlue',
+                    'darkBlue',
+                    'yellow',
+                    'pink',
+                    'purple'
+                ],
+                color: [
+                    "#2b78c3",
+                    "#23307a",
+                    "#fcb04e",
+                    "#f75b99",
+                    "#9f4096",
+                ]
+            },
+            animation: {
+                width: 180,
+                height: 100,
+                steps: []
+            },
+            plug: {
+                width: 90,
+                height: 66
+            },
+            itemsLength: 5
+        }
+
+        this.data.animation.steps = [
+            0, 0, this.data.animation.width, this.data.animation.height,
+            this.data.animation.width * 2, 0, this.data.animation.width, this.data.animation.height,
+            this.data.animation.width * 3, 0, this.data.animation.width, this.data.animation.height,
+        ]
+
+        this.cables = []
+        this.outlets = []
+
+        this.randomOrder = {
+            outlet_l: getRandomOrder(this.data.itemsLength),
+            cable: getRandomOrder(this.data.itemsLength),
+            outlet_r: getRandomOrder(this.data.itemsLength)
+        }
+
+
     }
 
     toggleCableConnector() {
-        this.init()
-        this.startTimerIfNecessary()
-        this.setup()
+        this.html()
+        this.loadImages(this.data.assets, this.initStage)
+        // to decomment
+        // this.startTimerIfNecessary()
+        // this.setup()
         this.addEventListeners()
         window.addEventListener('resize', instance.resize)
     }
 
-    init() {
+    html() {
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "cable-connector")
         gameWrapper.classList.add('miniGame')
         document.body.appendChild(gameWrapper)
 
         const gameContainer = document.createElement('div')
-        gameContainer.setAttribute("id", "miniGame__connector")
+        gameContainer.setAttribute("id", "container")
         gameWrapper.appendChild(gameContainer)
 
         const title = document.createElement('div')
@@ -46,92 +116,6 @@ export default class CableConnector {
 
         gameWrapper.appendChild(title)
         gameWrapper.appendChild(actions)
-
-        const spriteW = 180
-        const spriteH = 100
-
-        this.data = {
-            canvas: {
-                width: gameContainer.offsetWidth,
-                height: gameContainer.offsetHeight,
-            },
-            cable: {
-                width: 0,
-                pin: {
-                    width: 30,
-                    height: 15,
-                    radius: 100,
-                },
-                plug: {
-                    width: 60,
-                    height: 60,
-                    radius: 1000
-                }
-            },
-            color: {
-                name: [
-                    'lightBlue',
-                    'darkBlue',
-                    'yellow',
-                    'pink',
-                    'purple'
-                ],
-                hex: [
-                    "#2c90cf",
-                    "#373e93",
-                    "#f9c662",
-                    "#ff6ea9",
-                    "#af4eaa"
-                ],
-                stroke: [
-                    "#2b78c3",
-                    "#23307a",
-                    "#fcb04e",
-                    "#f75b99",
-                    "#9f4096",
-                ],
-                default: '#cccccc',
-                defaultStroke: '#bbbbbb'
-            },
-            sprite: {
-                src: {
-                    sparkles: 'games/sparkles.png',
-                    explosion: 'games/explosion.png'
-                },
-                width: spriteW,
-                height: spriteH,
-                animations: {
-                    sparkle: [
-                        0, 0, spriteW, spriteH,
-                        spriteW * 2, 0, spriteW, spriteH,
-                        spriteW * 3, 0, spriteW, spriteH,
-                    ],
-                    explosion: [
-                        0, 0, spriteW, spriteH,
-                        spriteW * 2, 0, spriteW, spriteH,
-                        spriteW * 3, 0, spriteW, spriteH,
-                    ]
-                }
-            },
-            itemsLength: 5
-        }
-
-        this.cables = []
-        this.outlets = []
-
-        this.randomOrder = {
-            outlet_l: getRandomOrder(this.data.itemsLength),
-            cable: getRandomOrder(this.data.itemsLength),
-            outlet_r: getRandomOrder(this.data.itemsLength)
-        }
-
-        this.stage = new Konva.Stage({
-            container: 'miniGame__connector',
-            width: gameContainer.offsetWidth,
-            height: gameContainer.offsetHeight
-        })
-
-        instance.program = instance.world.program
 
         actions.appendChild(
             this.addButton('button__back', 'button__default', _s.journey.back)
@@ -145,8 +129,112 @@ export default class CableConnector {
                 this.addButton('button__skip', 'button__default', _s.miniGames.skip)
             )
         }
-
         document.body.classList.add('freeze')
+
+    }
+
+    loadImages(sources, callback) {
+        const assetDir = 'games/cable-connect/assets/'
+        const images = {}
+        let loadedImages = 0
+        let numImages = 0
+
+        for (let src in sources) {
+            numImages++
+        }
+
+        for (let src in sources) {
+            images[src] = new Image()
+            images[src].onload = () => {
+                if (++loadedImages >= numImages) callback(images)
+            }
+            images[src].src = assetDir + sources[src]
+        }
+    }
+
+    initStage(images) {
+
+        instance.program = instance.world.program
+
+        instance.stage = new Konva.Stage({
+            container: 'container',
+            width: instance.data.stage.width,
+            height: instance.data.stage.height
+        })
+
+
+        for (let key in images) {
+            const privKey = key
+            const item = images[key]
+
+            if (privKey.includes('outlet')) {
+                instance.outlets.push(item)
+            }
+
+            if (privKey.includes('plug')) {
+                instance.cables.push(item)
+            }
+        }
+
+        const staticLayer = new Konva.Layer()
+
+        const background = new Konva.Image({
+            image: images['background'],
+            width: instance.stage.width(),
+            height: instance.stage.height()
+        })
+
+        const sideWidth = instance.stage.width() / 5.5
+
+        const sideLeft = new Konva.Image({
+            image: images['side_left'],
+            width: sideWidth,
+            height: instance.stage.height()
+        })
+        const sideRight = new Konva.Image({
+            image: images['side_right'],
+            x: instance.stage.width() - sideWidth,
+            width: sideWidth,
+            height: instance.stage.height()
+        })
+
+        staticLayer.add(background, sideLeft, sideRight)
+
+        const draggableLayer = new Konva.Layer()
+
+        // //#region cables
+        const outletWidth = 49
+        const outletHeight = 74
+        const spaceLeft = instance.stage.height() - (outletHeight * instance.data.itemsLength)
+        const spaceBetween = spaceLeft / (instance.data.itemsLength + 1)
+        const getY = (index) => spaceBetween + index * (outletHeight + spaceBetween)
+
+
+        for (let key in instance.outlets) {
+            const outlet = instance.outlets[key]
+
+            const outlets_l = new Konva.Image({
+                image: outlet,
+                x: sideLeft.width(),
+                y: getY(key),
+                width: outletWidth,
+                height: outletHeight
+            })
+
+            const outlets_r = new Konva.Image({
+                image: outlet,
+                x: sideRight.x() - outletWidth,
+                y: getY(key),
+                width: outletWidth,
+                height: outletHeight
+            })
+
+            draggableLayer.add(outlets_l, outlets_r)
+        }
+
+
+        instance.stage.add(staticLayer)
+        instance.stage.add(draggableLayer)
     }
 
     setup() {
@@ -421,7 +509,7 @@ export default class CableConnector {
         if (timerInMinutes > 0) {
             this.timer.destroy()
             document.removeEventListener('timeElapsed', instance.onTimeElapsed)
-        }  
+        }
     }
 
     onTimeElapsed() {
@@ -574,8 +662,8 @@ export default class CableConnector {
             }
         })
 
-        this.resize()
-        window.addEventListener('resize', this.resize)
+        // this.resize()
+        // window.addEventListener('resize', this.resize)
     }
 
     addButton(name, background, label) {
@@ -627,6 +715,7 @@ export default class CableConnector {
         }
     }
 
+
     resize() {
 
         const container = document.querySelector('#miniGame__connector')
@@ -656,29 +745,22 @@ export default class CableConnector {
 }
 
 class Container {
-    constructor({ x, y, width, height }) {
+    constructor({ x = 0, y = 0, width, height, src, }) {
         this.position = { x, y }
         this.width = width
         this.height = height
-        this.stroke = "#cbcbcb"
-        this.radius = 30
-        this.sideWidth = width * 1.5 / 12
-        this.bandWidth = this.sideWidth / 4
+        this.src = src
     }
 
     _draw() {
-        this.item = new Konva.Group({
-            x: this.position.x,
-            y: this.position.y,
-            name: "container"
+        Konva.Image.fromURL(this.src, background => {
+            background.setAttrs({
+                x: this.sideWidth - this.bandWidth,
+                width: this.bandWidth,
+                height: this.height,
+                name: 'background'
+            })
         })
-
-        this.item.add(this._bg())
-        this.item.add(this._icon())
-        this.item.add(this._side({ x: 0, y: 0 }))
-        this.item.add(this._side({ x: this.width, y: 0 }).scaleX(-1))
-
-        return this.item
     }
 
     _bg() {

@@ -1949,8 +1949,8 @@ button,
     &__tips {
         display: none;
         width: 24rem;
-        aspect-ratio: 40/27;
-        background-image: url('/static/games/cable_connect.gif');
+        aspect-ratio: 145/108;
+        background-image: url('/static/games/cable-connect/tutorial_Connecting.gif');
         background-repeat: no-repeat;
         background-size: contain;
     }
@@ -2506,8 +2506,8 @@ button,
 }
 
 #miniGame__connector {
-    width: 1000px;
-    height: 500px;
+    // width: 1000px;
+    // height: 500px;
 }
 
 #miniGame__sorting {
@@ -2592,8 +2592,8 @@ button,
 
 @media (min-width: 1601px) {
     #miniGame__connector {
-        width: 1400px;
-        height: 700px;
+        // width: 1400px;
+        // height: 700px;
     }
 }
 

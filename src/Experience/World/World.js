@@ -11,6 +11,7 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import _appInsights from '../Utils/AppInsights.js'
+import CableConnectorGame from '../Games/CableConnectorGame.js'
 
 let instance = null
 
@@ -28,6 +29,7 @@ export default class World {
 
         this.placeholderChapterData()
         this.chapterProgress = () => localStorage.getItem(this.getId()) || 0
+
 
         // Chapters
         this.menu = {
@@ -102,6 +104,10 @@ export default class World {
                 instance.welcome.topBar.style.display = "flex"
                 instance.welcome.loadingScreen.style.display = "flex"
             }, 1000)
+
+            // to delete
+            this.cableConnectorGame = new CableConnectorGame()
+            this.cableConnectorGame.toggleCableConnector()
         })
 
         this.start = document.createElement('span')
@@ -283,7 +289,7 @@ export default class World {
 
     markChapterIfCompleted(chapter) {
         const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
-        
+
         if (chapterProgress == chapter.program.length)
             document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }

@@ -118,7 +118,6 @@ export default class Camera {
         this.controls.target.copy(this.cameraLocations.default.lookAt)
 
         this.controls.addEventListener('change', () => {
-            console.log('render');
             this.experience.renderer.update()
         })
     }
