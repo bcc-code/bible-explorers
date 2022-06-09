@@ -9,126 +9,130 @@
 
     <link href="/static/favicon.ico" rel="icon" media="(prefers-color-scheme: light)" />
     <link href="/static/favicon-dark.ico" rel="icon" media="(prefers-color-scheme: dark)" />
-    
+
 </head>
 
 <body class="freeze">
+
     <div id="videos-container"></div>
 
     <canvas class="webgl"></canvas>
 
-    <div class="topbar" id="topBar">
-        <div id="go-home" class="button button__round">
-            <div class="button__content">
-                <i class="icon icon-house-solid"></i>
+    <main>
+        <div class="topbar" id="topBar">
+            <div id="go-home" class="button button__round">
+                <div class="button__content">
+                    <i class="icon icon-house-solid"></i>
+                </div>
             </div>
-        </div>
-        <div id="archive" class="button button__round">
-            <div class="button__content">
-                <i class="icon icon-folder-solid"></i>
+            <div id="archive" class="button button__round">
+                <div class="button__content">
+                    <i class="icon icon-folder-solid"></i>
+                </div>
             </div>
-        </div>
-        <div id="sound" class="button button__round">
-            <div class="button__content">
-                <i class="icon icon-volume-solid"></i>
-                <i class="icon icon-volume-slash-solid"></i>
+            <div id="sound" class="button button__round">
+                <div class="button__content">
+                    <i class="icon icon-volume-solid"></i>
+                    <i class="icon icon-volume-slash-solid"></i>
+                </div>
             </div>
-        </div>
-        <div id="settings" class="button button__round">
-            <div class="button__content">
-                <i class="icon icon-gear-solid"></i>
-            </div>
-        </div>
-    </div>
-
-    <div id="page-loader" class="loader">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.37 138.76">
-            <defs>
-                <clipPath id="loader-mask">
-                    <path
-                        d="M117.37 80.08c0 5.95-.88 11.69-2.53 17.1-.88 2.89-7.05 22.03-26.12 33.35-2.63 1.56-8.74 4.9-17.31 6.81 0 0-8.33 1.85-16.6 1.32C32.38 137.22.78 111.52.02 81.61-.41 64.6 6.39 49.17 17.59 38.19c2.02-1.99 5.47-.1 4.75 2.64-2.38 9.12-1.92 18.31 1.77 26.27 1.68 3.64 3.85 6.66 6.13 9.12 1.9 2.05 5.34.32 4.79-2.43-2.19-11.09-3.82-30 4.64-49.24.86-2.01 1.86-4.03 2.97-6.04C46.78 11.02 51.73 5.19 56.35.76c1.86-1.79 4.92-.21 4.66 2.36-.54 5.31-.77 11.5-.28 18.32.38 5.16 1.15 10.67 2.5 16.43 1.56 6.61 3.6 12.42 5.75 17.4.66 1.54 2.55 2.17 4 1.33 3.13-1.82 6.76-4.51 9.98-8.48 3.45-4.29 5.52-8.92 6.72-13.37.51-1.91 2.76-2.72 4.34-1.53 14.2 10.71 23.37 27.71 23.37 46.87Z" />
-                </clipPath>
-            </defs>
-        </svg>
-        <div class="loader__flame">
-            <div class="flame"></div>
-        </div>
-        <div class="loader__text">
-            <span></span>
-            <div class="loader__dots">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
-    </div>
-
-    <div id="loading-screen" class="container">
-        <div class="container__scroll">
-            <div class="logo" aria-label="bible kids explorers logo"></div>
-            <p id="concept-description"></p>
-
-            <div id="quality">
-                <h3 class="quality__title"></h3>
-                <div class="qualities list">
-                    <div class="quality button button__default" data-name="low"><span></span></div>
-                    <span class="divider"></span>
-                    <div class="quality button button__default" data-name="medium"><span></span></div>
-                    <span class="divider"></span>
-                    <div class="quality button button__default" data-name="high"><span></span></div>
+            <div id="settings" class="button button__round">
+                <div class="button__content">
+                    <i class="icon icon-gear-solid"></i>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="landing-screen" class="container">
-        <div class="container__scroll">
-            <div class="logo" aria-label="bible kids explorers logo"></div>
-            <div id="introduction"></div>
-            <div class="categories list"></div>
-        </div>
-    </div>
-
-    <div id="chapters-screen" class="container">
-        <div class="container__scroll">
-            <div class="logo" aria-label="bible kids explorers logo"></div>
-            <div class="chapters__wrapper">
-                <div class="chapter__items">
-                    <div class="chapters list"></div>
-                    <div class="back_to button button__default"><span></span></div>
+        <div id="page-loader" class="loader">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.37 138.76">
+                <defs>
+                    <clipPath id="loader-mask">
+                        <path
+                            d="M117.37 80.08c0 5.95-.88 11.69-2.53 17.1-.88 2.89-7.05 22.03-26.12 33.35-2.63 1.56-8.74 4.9-17.31 6.81 0 0-8.33 1.85-16.6 1.32C32.38 137.22.78 111.52.02 81.61-.41 64.6 6.39 49.17 17.59 38.19c2.02-1.99 5.47-.1 4.75 2.64-2.38 9.12-1.92 18.31 1.77 26.27 1.68 3.64 3.85 6.66 6.13 9.12 1.9 2.05 5.34.32 4.79-2.43-2.19-11.09-3.82-30 4.64-49.24.86-2.01 1.86-4.03 2.97-6.04C46.78 11.02 51.73 5.19 56.35.76c1.86-1.79 4.92-.21 4.66 2.36-.54 5.31-.77 11.5-.28 18.32.38 5.16 1.15 10.67 2.5 16.43 1.56 6.61 3.6 12.42 5.75 17.4.66 1.54 2.55 2.17 4 1.33 3.13-1.82 6.76-4.51 9.98-8.48 3.45-4.29 5.52-8.92 6.72-13.37.51-1.91 2.76-2.72 4.34-1.53 14.2 10.71 23.37 27.71 23.37 46.87Z" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <div class="loader__flame">
+                <div class="flame"></div>
+            </div>
+            <div class="loader__text">
+                <span></span>
+                <div class="loader__dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
                 </div>
-                <div class="chapter__content">
-                    <div class="chapter__description">
-                        <div class="chapter__extras">
-                            <span class="left"></span>
-                            <span class="bottomLeft"></span>
-                            <span class="bottomLeftSmall"></span>
-                        </div>
-                        <h2 class="chapter__title"></h2>
-                        <div class="chapter__attachments">
-                            <div class="attachments"></div>
-                        </div>
-                        <div class="chapter__text"></div>
-                    </div>
-                    <div class="chapter__actions">
-                        <div class="button button__default" id="restart-chapter"></div>
-                        <div class="button button__continue" id="start-chapter">
-                            <div class="button__content"></div>
-                        </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="container">
+            <div class="container__scroll">
+                <div class="logo" aria-label="bible kids explorers logo"></div>
+                <p id="concept-description"></p>
+
+                <div id="quality">
+                    <h3 class="quality__title"></h3>
+                    <div class="qualities list">
+                        <div class="quality button button__default" data-name="low"><span></span></div>
+                        <span class="divider"></span>
+                        <div class="quality button button__default" data-name="medium"><span></span></div>
+                        <span class="divider"></span>
+                        <div class="quality button button__default" data-name="high"><span></span></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div id="landing-screen" class="container">
+            <div class="container__scroll">
+                <div class="logo" aria-label="bible kids explorers logo"></div>
+                <div id="introduction"></div>
+                <div class="categories list"></div>
+            </div>
+        </div>
+
+        <div id="chapters-screen" class="container">
+            <div class="container__scroll">
+                <div class="logo" aria-label="bible kids explorers logo"></div>
+                <div class="chapters__wrapper">
+                    <div class="chapter__items">
+                        <div class="chapters list"></div>
+                        <div class="back_to button button__default"><span></span></div>
+                    </div>
+                    <div class="chapter__content">
+                        <div class="chapter__description">
+                            <div class="chapter__extras">
+                                <span class="left"></span>
+                                <span class="bottomLeft"></span>
+                                <span class="bottomLeftSmall"></span>
+                            </div>
+                            <h2 class="chapter__title"></h2>
+                            <div class="chapter__attachments">
+                                <div class="attachments"></div>
+                            </div>
+                            <div class="chapter__text"></div>
+                        </div>
+                        <div class="chapter__actions">
+                            <div class="button button__default" id="restart-chapter"></div>
+                            <div class="button button__continue" id="start-chapter">
+                                <div class="button__content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="progress-bar" class="progress-bar"></div>
+
+    </main>
+
 
     <div class="copyright">Copyright 2022 © <a href="https://bcc.media" target="_blank">bcc.media</a> foundation</div>
 
-    <div id="progress-bar" class="progress-bar"></div>
-
-    <div class="loading-bar"></div>
-
     <script src="https://brunstad.tv/Content/js/btvplayer.js"></script>
+
 </body>
 
 </html>

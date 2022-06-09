@@ -60,20 +60,13 @@ export default class QuestionAndCode {
         inputs.forEach((input, index) => {
             input.value = allAnswersFromTheme.hasOwnProperty(instance.currentStep) ? allAnswersFromTheme[instance.currentStep][index] : ''
 
-            if (index == 0) {
-                input.focus()
-                document.body.scrollTop = 0
-            }
+            if (index == 0) input.focus()
             if (input.value.length != 0) allInputsEmpty = false
 
             input.addEventListener("input", () => {
                 [...inputs].filter(input => input.value.length == 0).length == 0
                     ? getTaskBtn.classList.remove('disabled')
                     : getTaskBtn.classList.add('disabled')
-            })
-
-            input.addEventListener('focus', () => {
-                document.body.scrollTop = 0
             })
 
         })
