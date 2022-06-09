@@ -73,12 +73,11 @@ export default class QuestionAndCode {
                     : getTaskBtn.classList.add('disabled')
             })
 
-            input.addEventListener('touchmove', (e) => {
+            document.addEventListener('touchmove', (e) => {
                 e.preventDefault()
             })
 
             input.addEventListener('focus', () => {
-                window.scrollTo(0, 0)
                 document.body.scrollTop = 0
             })
 
