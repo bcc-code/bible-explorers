@@ -343,6 +343,7 @@ export default class World {
         document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
                 instance.removeChapter(chapter)
+                instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
