@@ -30,7 +30,7 @@ export default class TaskDescription {
             instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
             instance.text = selectedChapter.program[currentStep].description
 
-            let html = instance.getModalHtml(instance.text)
+            let html = instance.getModalHtml(instance.currentStepTaskType, instance.text)
             instance.modal = new Modal(html)
             document.querySelector('.modal').classList.add('modal__task')
 
@@ -118,8 +118,8 @@ export default class TaskDescription {
         }
     }
 
-    getModalHtml(title, additionalContent = '') {
-        return `<div class="modal__content task">
+    getModalHtml(type, title, additionalContent = '') {
+        return `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
                 <div id="playBTN"><i class="icon icon-play-solid"></i></div>
@@ -133,6 +133,7 @@ export default class TaskDescription {
                     </div>
                     ${title}
                     ${additionalContent}
+                    <div class="task__tips"></div>
                 </div>
             </div>
             <div class="modal__actions">

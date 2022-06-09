@@ -17,13 +17,12 @@ export default class CableConnector {
 
         instance = this
 
-
     }
 
     toggleCableConnector() {
         this.init()
+        this.startTimerIfNecessary()
         this.setup()
-        this.startTimer()
         this.addEventListeners()
         window.addEventListener('resize', instance.resize)
     }
@@ -61,12 +60,12 @@ export default class CableConnector {
                 pin: {
                     width: 30,
                     height: 15,
-                    radius: 10,
+                    radius: 100,
                 },
                 plug: {
                     width: 60,
                     height: 60,
-                    radius: 30
+                    radius: 1000
                 }
             },
             color: {
@@ -166,14 +165,15 @@ export default class CableConnector {
         this.container = containerObj._draw()
         layer.add(this.container)
 
+        this.triangle = containerObj.item.findOne('.triangle')
         const background = containerObj.item.findOne('.background')
         const outletWidth = background.width() / 12 / 2.5
         const outletHeight = background.height() / 5 - 30
         const cableWidth = background.width() / 2
 
-        this.data.cable.plug.height = outletHeight - 10
+        this.data.cable.plug.height = outletHeight * 4 / 6
         this.data.cable.plug.width = outletWidth * 2
-        this.data.cable.pin.height = outletHeight / 4
+        this.data.cable.pin.height = outletHeight / 6
         this.data.cable.pin.width = outletWidth - 4
 
         const spaceLeft = containerObj.height - (outletHeight * this.data.itemsLength)
@@ -211,15 +211,12 @@ export default class CableConnector {
                 stroke: this.data.color.defaultStroke,
             })
 
-
-
             this.cables.push(cable)
             this.outlets.push(outlet_l, outlet_r)
 
             outletsGroup.add(outlet_l._draw())
             outletsGroup.add(outlet_r._draw().scaleX(-1))
             cablesGroup.add(cable._draw())
-
         }
 
         containerObj.item.add(cablesGroup)
@@ -230,10 +227,7 @@ export default class CableConnector {
         containerObj.item.add(sparkleSprite)
         containerObj.item.add(explosionSprite)
 
-        this.triangle = containerObj.item.findOne('.triangle')
-
         this.cables.forEach(cable => {
-
             cable.item.on('dragstart', () => {
                 cable.item.zIndex(4)
             })
@@ -244,27 +238,28 @@ export default class CableConnector {
                         cable.item.opacity(0.98)
                         document.body.style.cursor = 'pointer'
                     }
-
                 })
+
                 plug.on('mouseout', () => {
                     if (plug.draggable()) {
                         cable.item.opacity(1)
                         document.body.style.cursor = 'default'
                     }
-
                 })
+
                 plug.on('dragmove', () => {
                     cable._updateDottedLines()
 
-                    const maxX = plug.getParent().x() - background.x() - containerObj.bandWidth
+                    const maxX = plug.getParent().x() - containerObj.sideWidth - containerObj.bandWidth
                     const maxY = plug.getParent().y()
 
-                    const minX = plug.getParent().x() - background.width() - background.x() - containerObj.bandWidth
-                    const minY = plug.getParent().y() - background.height() + plug.height() / 2
+                    const minX = plug.getParent().x() - containerObj.width + containerObj.sideWidth + containerObj.bandWidth
+                    const minY = plug.getParent().y() - containerObj.height + plug.height() - spaceBetween
 
                     plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
                     plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
                 })
+
                 plug.on('dragend', () => {
                     const direction = plug.name().replace('plug_', '')
                     const plugPosition = {
@@ -281,7 +276,7 @@ export default class CableConnector {
                             x: direction == "left"
                                 ? correspondingOutlet.position.x + correspondingOutlet.width
                                 : correspondingOutlet.position.x - correspondingOutlet.width,
-                            y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2,
+                            y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2
                         }
 
                         plug.move({
@@ -298,20 +293,21 @@ export default class CableConnector {
                         }
 
                         if (instance.allCablesConnected()) {
+                            instance.stopTimerIfNecessary()
                             setTimeout(instance.finishGame, 1000)
                         }
                     }
                     else {
-                        let connectedToAnyOtherOutlet = false
+                        let outletConnectedTo = null
                         instance.outlets.filter(o => o.color != cable.color && o.name === direction).forEach(otherOutlet => {
-                            if (instance.connectedToOutlet(plugPosition, otherOutlet)) {
-                                connectedToAnyOtherOutlet = true
-                                instance.playAnimation(otherOutlet, explosionSprite)
-                            }
+                            if (instance.connectedToOutlet(plugPosition, otherOutlet))
+                                outletConnectedTo = otherOutlet
                         })
 
-                        if (connectedToAnyOtherOutlet)
+                        if (outletConnectedTo) {
                             instance.audio.playWrongSound()
+                            instance.playAnimation(outletConnectedTo, explosionSprite)
+                        }
                     }
                 })
             })
@@ -319,6 +315,7 @@ export default class CableConnector {
 
         this.outlets.forEach(outlet => {
             outlet.item.on('mouseover', () => {
+                if (outlet.colorFound) return
                 document.body.style.cursor = 'pointer'
                 outlet.item.shadowBlur(10)
             })
@@ -328,15 +325,17 @@ export default class CableConnector {
                 outlet.item.shadowBlur(0)
             })
 
-            outlet.item.on('touchstart click', () => {
+            outlet.item.on('touchstart click', (event) => {
                 if (!outlet.canClick) return
+                if (outlet.colorFound) return
                 if (outlet.connected) return
 
                 const index = instance.data.color.name.indexOf(outlet.color)
 
                 if (outlet.isVisible) {
                     instance.deselectOutlet(outlet)
-                } else {
+                }
+                else {
                     const currentVisible = instance.outlets.find(o => o.isVisible === true && o.colorFound === false)
                     instance.selectOutlet(outlet, index)
 
@@ -344,12 +343,11 @@ export default class CableConnector {
 
                     if (currentVisible.color === outlet.color) {
                         // Same color. Cable gets colored
-
+                        outlet.canClick = false
+                        currentVisible.canClick = false
                         outlet.colorFound = true
                         currentVisible.colorFound = true
                         instance.audio.playCorrectSound()
-
-                        // instance.animateIcon(this.triangle, '#1DBC60', containerObj, layer)
 
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
@@ -363,7 +361,7 @@ export default class CableConnector {
                             instance.stopOutletClick()
                             instance.audio.playWrongSound()
 
-                            instance.animateIcon(this.triangle, '#fe7968', containerObj, layer, () => {
+                            instance.animateIcon(this.triangle, '#fe7968', layer, () => {
                                 instance.deselectOutlet(currentVisible)
                                 instance.deselectOutlet(outlet)
                                 instance.startOutletClick()
@@ -377,7 +375,7 @@ export default class CableConnector {
         this.stage.add(layer)
     }
 
-    animateIcon(obj, fill, containerObj, layer, callback = () => { }) {
+    animateIcon(obj, fill, layer, callback = () => { }) {
         const amplitude = 5;
         const period = 100;
         const centerX = 0
@@ -405,7 +403,7 @@ export default class CableConnector {
         this.tween.play()
     }
 
-    startTimer() {
+    startTimerIfNecessary() {
         const currentStep = instance.program.currentStep
         const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
 
@@ -414,6 +412,16 @@ export default class CableConnector {
             this.timer.setMinutes(timerInMinutes)
             document.addEventListener('timeElapsed', instance.onTimeElapsed)
         }
+    }
+
+    stopTimerIfNecessary() {
+        const currentStep = instance.program.currentStep
+        const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
+
+        if (timerInMinutes > 0) {
+            this.timer.destroy()
+            document.removeEventListener('timeElapsed', instance.onTimeElapsed)
+        }  
     }
 
     onTimeElapsed() {
@@ -479,7 +487,7 @@ export default class CableConnector {
     }
 
     playAnimation(obj, spriteObj) {
-        const direction = obj.item.name()
+        const direction = obj.name
         const newPosition = {
             x: direction == "left"
                 ? obj.position.x + obj.width + 15
@@ -529,8 +537,8 @@ export default class CableConnector {
     }
 
     connectedToOutlet(plugPosition, correspondingOutlet) {
-        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < 80
-            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < 60
+        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 20
+            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height / 2
     }
 
     bothPlugsConnected(cable) {
@@ -627,7 +635,7 @@ export default class CableConnector {
         // let scaleX = containerWidth / instance.data.canvas.width
         // let scaleY = containerHeight / instance.data.canvas.height
 
-        console.log(containerWidth + " x " + containerHeight);
+        // console.log(containerWidth + " x " + containerHeight);
         // scaleX = scaleY = Math.min(scaleX, scaleY);
 
         // // Set stage dimension
@@ -776,7 +784,7 @@ class Outlet {
             width: this.width,
             height: this.height,
             fill: this.fill,
-            name: this.name,
+            name: 'outlet_' + this.color,
             cornerRadius: [0, 4, 4, 0],
             shadowColor: 'white',
         })

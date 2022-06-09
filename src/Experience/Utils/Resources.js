@@ -145,6 +145,14 @@ export default class Resources extends EventEmitter {
         }
     }
 
+    updateBtvStreamWithDownloadedVersion(videoName) {
+        let videoEl = document.getElementById(videoName)
+        if (videoEl) {
+            videoEl.remove()
+            this.loadEpisodeTextures(videoName)
+        }
+    }
+
     loadEpisodeTextures(videoName) {
         this.offline.loadFromIndexedDb(
             videoName,
@@ -197,7 +205,7 @@ export default class Resources extends EventEmitter {
     async loadEpisodeFromBtv(videoName) {
         const episodeId = videoName.replace('episode-', '')
         const locale = _lang.getLanguageCode()
-        const claims = await this.experience.auth0.getIdTokenClaims();
+        const claims = await resources.experience.auth0.getIdTokenClaims()
         const idToken = claims ? claims.__raw : '';
 
         var btvPlayer = BTVPlayer({
@@ -249,7 +257,6 @@ export default class Resources extends EventEmitter {
     fetchApiThenCache(theUrl, callback) {
         fetch(theUrl)
             .then(function (response) {
-                // console.log('Fetched - save also to cache', theUrl)
                 var responseClone = response.clone()
 
                 response.json().then(function (apiData) {
@@ -262,7 +269,6 @@ export default class Resources extends EventEmitter {
                 })
             })
             .catch(function () {
-                // console.log('Request failed - try to get it from the cache', theUrl)
                 caches.open('apiResponses').then(function (cache) {
                     cache.match(theUrl).then(response => {
                         response.json().then(function (cachedData) {

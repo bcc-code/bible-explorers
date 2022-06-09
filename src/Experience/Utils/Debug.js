@@ -8,6 +8,7 @@ class Debug {
 
         if (this.active) {
             this.ui = new GUI()
+            this.ui.close()
         }
     }
 }

@@ -230,8 +230,6 @@ export default class World {
         chapterClasses += chapter.status == "future" ? " locked" : ""
         chapterHtml.className = chapterClasses
 
-        this.offline.markChapterIfAvailableOffline(chapter)
-
         chapterHtml.setAttribute("data-id", chapter.id)
         chapterHtml.setAttribute("data-slug", chapter.category)
 
@@ -247,6 +245,11 @@ export default class World {
                 <div class="chapter__number">
                     <i class="icon icon-lock-solid"></i>
                     <span>${index + 1}</span>
+                    <div class="stars">
+                        <i class="icon icon-star-solid"></i>
+                        <i class="icon icon-star-solid"></i>
+                        <i class="icon icon-star-solid"></i>
+                    </div>
                 </div>
                 <div class="chapter__heading">
                     <h2 class="chapter__title">${chapter.title}</h2>
@@ -267,11 +270,22 @@ export default class World {
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
+                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
                 </div>
             </div>
         `
         instance.menu.chapters.appendChild(chapterHtml)
         instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
+
+        instance.markChapterIfCompleted(chapter)
+        instance.offline.markChapterIfAvailableOffline(chapter)
+    }
+
+    markChapterIfCompleted(chapter) {
+        const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
+        
+        if (chapterProgress == chapter.program.length)
+            document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }
 
     setChapterBgImage(chapter) {
@@ -286,13 +300,11 @@ export default class World {
         chapterDescription.setAttribute('data-id', chapter.id)
         chapterDescription.setAttribute('data-slug', chapter.category)
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
-        instance.menu.chapterContent.querySelector('.chapter__text-content').innerHTML = chapter.content
+        instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
-        chapterAttachments.querySelector('h3').innerText = ''
 
         if (chapter.attachments.length) {
-            chapterAttachments.querySelector('h3').innerText = _s.journey.attachments + ':'
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
                     <a href="${attachment.url}" target="_blank">
@@ -327,6 +339,13 @@ export default class World {
                 event.stopPropagation()
             })
         })
+
+        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (chapter) {
+            chapter.addEventListener("click", (event) => {
+                instance.removeChapter(chapter)
+                event.stopPropagation()
+            })
+        })
     }
 
     addClassToSelectedChapter(chapter) {
@@ -343,7 +362,7 @@ export default class World {
     updateSelectedChapterData(chapter) {
         const chapterId = chapter.getAttribute('data-id')
         const categorySlug = chapter.getAttribute('data-slug')
-        instance.selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
+        instance.selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
     }
 
     loadChapterTextures() {
@@ -363,7 +382,7 @@ export default class World {
         let chapterEl = chapter.closest(".chapter")
         const chapterId = chapterEl.getAttribute('data-id')
         const categorySlug = chapterEl.getAttribute('data-slug')
-        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].filter((chapter) => { return chapter.id == chapterId })[0]
+        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
 
         instance.cacheChapterAssets(selectedChapter)
 
@@ -371,6 +390,16 @@ export default class World {
         chapterEl.classList.add('downloading')
 
         await this.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
+    }
+
+    removeChapter(chapter) {
+        let chapterEl = chapter.closest(".chapter")
+        const chapterId = chapterEl.getAttribute('data-id')
+        const categorySlug = chapterEl.getAttribute('data-slug')
+        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
+
+        selectedChapter['episodes'].forEach(episode => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id))
+        chapterEl.classList.remove('downloaded')
     }
 
     cacheChapterAssets(chapter) {
@@ -422,7 +451,7 @@ export default class World {
             episodesDownloadUrls.push({
                 downloadUrl: episodeUrls.downloadUrl,
                 data: {
-                    name: 'episode-' + episode.id,
+                    name: episode.type + '-' + episode.id,
                     thumbnail: episodeUrls.thumbnail,
                     chapterId: data.chapterId,
                     chapterTitle: data.chapterTitle,
@@ -490,6 +519,8 @@ export default class World {
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
 
+        document.querySelector('.copyright').classList.add('hidden')
+
         _appInsights.trackEvent({
             name: "Start chapter",
             properties: {
@@ -519,6 +550,7 @@ export default class World {
         instance.buttons.restart.classList.add('visible')
         instance.audio.playBgMusic()
 
+
         _appInsights.trackEvent({
             name: "Finish chapter",
             properties: {
@@ -528,11 +560,14 @@ export default class World {
                 quality: instance.selectedQuality
             }
         })
+
+        document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
     }
 
     showMenu() {
         document.body.classList.add('freeze')
         instance.welcome.chaptersScreen.classList.add('visible')
+        document.querySelector('.copyright').classList.remove('hidden')
         instance.points.delete()
     }
 

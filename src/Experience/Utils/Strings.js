@@ -36,12 +36,14 @@ const strings = {
             "language": "Language",
             "feedback": "Feedback",
             "logIn": "Log in",
-            "logOut": "Log out"
+            "logOut": "Log out",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Available offline",
             "download": "Download",
-            "downloading": "Downloading"
+            "downloading": "Downloading",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -99,12 +101,14 @@ const strings = {
             "language": "Språk",
             "feedback": "Tilbakemelding",
             "logIn": "Logg inn",
-            "logOut": "Logg ut"
+            "logOut": "Logg ut",
+            "noAccess": "Du har ikke tilgang til å vise denne filmen. For å få tilgang send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Tilgjengelig offline",
             "download": "Last ned",
-            "downloading": "Laster ned"
+            "downloading": "Laster ned",
+            "update": "Oppdater offline-versjonen"
         },
         "tooltips": {
             "video": "Spill av video",
@@ -162,12 +166,14 @@ const strings = {
             "language": "Sprache",
             "feedback": "Rückmeldung",
             "logIn": "Einloggen",
-            "logOut": "Ausloggen"
+            "logOut": "Ausloggen",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Offline verfügbar",
             "download": "Herunterladen",
-            "downloading": "Wird heruntergeladen"
+            "downloading": "Wird heruntergeladen",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -225,12 +231,14 @@ const strings = {
             "language": "Taal",
             "feedback": "Feedback",
             "logIn": "Log in",
-            "logOut": "Log uit"
+            "logOut": "Log uit",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Online beschikbaar",
             "download": "Download",
-            "downloading": "Downloaden"
+            "downloading": "Downloaden",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -288,12 +296,14 @@ const strings = {
             "language": "Langue",
             "feedback": "Commentaires",
             "logIn": "Se connecter",
-            "logOut": "Se déconnecter"
+            "logOut": "Se déconnecter",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponible hors connexion",
             "download": "Télécharger",
-            "downloading": "Téléchargement"
+            "downloading": "Téléchargement",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -351,12 +361,14 @@ const strings = {
             "language": "Język",
             "feedback": "Feedback",
             "logIn": "Zaloguj",
-            "logOut": "Wyloguj"
+            "logOut": "Wyloguj",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Dostępne offline",
             "download": "Pobierz",
-            "downloading": "Pobieranie"
+            "downloading": "Pobieranie",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -414,12 +426,14 @@ const strings = {
             "language": "Limbă",
             "feedback": "Feedback",
             "logIn": "Logare",
-            "logOut": "Delogare"
+            "logOut": "Delogare",
+            "noAccess": "Nu ai acces pentru a viziona filmele. Pentru a primi acces, trimite un email la <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponibil offline",
             "download": "Descărcare",
-            "downloading": "Se descarcă"
+            "downloading": "Se descarcă",
+            "update": "Actualizează versiunea offline"
         },
         "tooltips": {
             "video": "Pornește video",
@@ -477,12 +491,14 @@ const strings = {
             "language": "Idioma",
             "feedback": "Comentários",
             "logIn": "Conecte-se",
-            "logOut": "Sair"
+            "logOut": "Sair",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponível off-line",
             "download": "Download",
-            "downloading": "Baixando"
+            "downloading": "Baixando",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -540,12 +556,14 @@ const strings = {
             "language": "Lingua",
             "feedback": "Feedback",
             "logIn": "Accedi",
-            "logOut": "Esci"
+            "logOut": "Esci",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Disponibile offline",
             "download": "Download",
-            "downloading": "Download in corso"
+            "downloading": "Download in corso",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -603,12 +621,14 @@ const strings = {
             "language": "Язык",
             "feedback": "Обратная связь",
             "logIn": "Войти",
-            "logOut": "Выйти"
+            "logOut": "Выйти",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Доступно офлайн",
             "download": "Скачать",
-            "downloading": "Скачивание"
+            "downloading": "Скачивание",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
@@ -666,12 +686,14 @@ const strings = {
             "language": "Kieli",
             "feedback": "Palaute",
             "logIn": "Kirjaudu sisään",
-            "logOut": "Kirjaudu ulos"
+            "logOut": "Kirjaudu ulos",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "offline": {
             "availableOffline": "Saatavilla offline-tilassa",
             "download": "Lataa",
-            "downloading": "Ladataan tiedostoa"
+            "downloading": "Ladataan tiedostoa",
+            "update": "Update offline version"
         },
         "tooltips": {
             "video": "Play video",
