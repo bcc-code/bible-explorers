@@ -10,6 +10,7 @@ export default class QuestionAndCode {
     constructor() {
         this.experience = new Experience()
         instance = this
+
     }
 
     toggleQuestionAndCode() {
@@ -59,7 +60,11 @@ export default class QuestionAndCode {
         inputs.forEach((input, index) => {
             input.value = allAnswersFromTheme.hasOwnProperty(instance.currentStep) ? allAnswersFromTheme[instance.currentStep][index] : ''
 
-            if (index == 0) input.focus()
+            if (index == 0) {
+                input.focus()
+                window.scrollTo(0, 0)
+                document.body.scrollTop = 0
+            }
             if (input.value.length != 0) allInputsEmpty = false
 
             input.addEventListener("input", () => {
@@ -67,6 +72,16 @@ export default class QuestionAndCode {
                     ? getTaskBtn.classList.remove('disabled')
                     : getTaskBtn.classList.add('disabled')
             })
+
+            input.addEventListener('touchmove', (e) => {
+                e.preventDefault()
+            })
+
+            input.addEventListener('focus', () => {
+                window.scrollTo(0, 0)
+                document.body.scrollTop = 0
+            })
+
         })
 
         if (allInputsEmpty) {
