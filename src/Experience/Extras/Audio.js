@@ -125,9 +125,11 @@ export default class Audio {
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.audioLoader.load(url, function(buffer) {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
+                audio.taskDescriptionAudios[url].onEnded = () => audio.fadeInBgMusic();
                 audio.taskDescriptionAudios[url].setBuffer(buffer)
                 audio.taskDescriptionAudios[url].play()
                 audio.fadeOutBgMusic()
+                audio.finish
             })
         }
         else if (audio.taskDescriptionAudios[url].isPlaying) {
