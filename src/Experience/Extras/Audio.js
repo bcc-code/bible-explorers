@@ -83,7 +83,8 @@ export default class Audio {
     }
 
     fadeInBgMusic() {
-        audio.bgMusic.play();
+        if (!audio.bgMusic.isPlaying)
+            audio.bgMusic.play();
         if (audio.bgMusic.isPlaying)
             audio.el.classList.add('sound-on')
 
