@@ -278,6 +278,8 @@ export default class World {
                 </div>
                 <div class="chapter__download-failed">
                     <span>${_s.offline.downloadFailed}</span>
+                    <span class="separator">/</span>
+                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.tryAgain}"></span>
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
@@ -354,6 +356,13 @@ export default class World {
 
         document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (button) {
             button.addEventListener("click", instance.confirmRedownload)
+        })
+
+        document.querySelectorAll(".chapter__download-failed").forEach(function (chapter) {
+            chapter.addEventListener("click", (event) => {
+                instance.downloadChapter(chapter)
+                event.stopPropagation()
+            })
         })
     }
 
@@ -496,7 +505,7 @@ export default class World {
         let episodesDownloadUrls = []
 
         episodes.forEach(async (episode) => {
-            const episodeUrls = await this.getEpisodeDownloadUrls(episode.id)
+            const episodeUrls = await this.getEpisodeDownloadUrls(episode.id, data.chapterId)
             if (!episodeUrls) return
 
             episodesDownloadUrls.push({
@@ -516,16 +525,9 @@ export default class World {
                 this.offline.downloadFromWeb(episodesDownloadUrls)
             }
         })
-
-        // One or more episodes could not be downloaded
-        if (episodesDownloadUrls.length <= episodes.length) {
-            const chapter = document.querySelector('.chapter[data-id="' + data.chapterId + '"]')
-            chapter.classList.remove('downloading')
-            chapter.classList.add('failed')
-        }
     }
 
-    async getEpisodeDownloadUrls(episodeId) {
+    async getEpisodeDownloadUrls(episodeId, chapterId) {
         const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
         const locale = _lang.getLanguageCode()
@@ -543,9 +545,15 @@ export default class World {
         if (!myLanguageVideos.length) {
             _appInsights.trackException({
                 exception: "No videos found",
+                chapterId: chapterId,
                 episodeId: episodeId,
                 language: locale
             })
+
+            // There was a problem downloading the episode
+            const chapter = document.querySelector('.chapter[data-id="' + chapterId + '"]')
+            chapter.classList.remove('downloading')
+            chapter.classList.add('failed')
 
             return
         }

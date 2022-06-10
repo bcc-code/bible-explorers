@@ -46,7 +46,8 @@ const strings = {
             "downloading": "Downloading",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Play video",
@@ -114,7 +115,8 @@ const strings = {
             "downloading": "Laster ned",
             "update": "Oppdater offline-versjonen",
             "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?",
-            "downloadFailed": "Det har oppstått et problem ved nedlastingen av kapitelet!"
+            "downloadFailed": "Det har oppstått et problem ved nedlastingen av kapitelet!",
+            "tryAgain": "Prøv på nytt"
         },
         "tooltips": {
             "video": "Spill av video",
@@ -182,7 +184,8 @@ const strings = {
             "downloading": "Wird heruntergeladen",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Video abspielen",
@@ -250,7 +253,8 @@ const strings = {
             "downloading": "Downloaden",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Speel de video af",
@@ -318,7 +322,8 @@ const strings = {
             "downloading": "Téléchargement",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Lire la vidéo",
@@ -386,7 +391,8 @@ const strings = {
             "downloading": "Pobieranie",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Odtwórz film",
@@ -454,7 +460,8 @@ const strings = {
             "downloading": "Se descarcă",
             "update": "Actualizează versiunea offline",
             "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?",
-            "downloadFailed": "A apărut o problemă la descărcarea capitolului!"
+            "downloadFailed": "A apărut o problemă la descărcarea capitolului!",
+            "tryAgain": "Încearcă din nou"
         },
         "tooltips": {
             "video": "Pornește video",
@@ -522,7 +529,8 @@ const strings = {
             "downloading": "Descargando",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Reproducir video",
@@ -590,7 +598,8 @@ const strings = {
             "downloading": "Baixando",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Play video",
@@ -658,7 +667,8 @@ const strings = {
             "downloading": "Download in corso",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Riproduci il video",
@@ -726,7 +736,8 @@ const strings = {
             "downloading": "Скачивание",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Включить видео",
@@ -794,7 +805,8 @@ const strings = {
             "downloading": "Ladataan tiedostoa",
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!"
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Toista video",

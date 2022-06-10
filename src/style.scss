@@ -1437,6 +1437,13 @@ button,
                 font-size: 1rem;
                 color: #fff;
             }
+
+            .icon, .separator {
+                margin-left: 0.5rem;
+            }
+            .icon:hover {
+                font-weight: bold;
+            }
         }
     }
 
