@@ -56,7 +56,6 @@ export default class Audio {
         if (!audio.experience.settings.soundOn) return
         audio.el.classList.add('pointer-events-none')
 
-
         if (!audio.bgMusic) {
             audio.loadBgMusic()
         }
@@ -68,6 +67,12 @@ export default class Audio {
     }
 
     loadBgMusic(soundtrack = audio.bgMusicAudios['default']) {
+        if (audio?.bgMusic) 
+        {
+            // Workaround for double player issue .stop() doesn't work
+            audio.bgMusic = null;
+        }
+        
         audio.audioLoader.load(soundtrack, function(buffer) {
             if (bgAudioQueue.at(-1) === soundtrack ){
             audio.bgMusic = new THREE.Audio(audio.listener)
@@ -103,7 +108,7 @@ export default class Audio {
         audio.el.classList.remove('sound-on')
 
         const fadeOutAudio = setInterval(() => {
-            const volume = audio.bgMusic.getVolume() - 0.1
+            const volume = audio.bgMusic?.getVolume() - 0.1
             audio.bgMusic.setVolume(volume)
 
             if (audio.bgMusic.getVolume() < 0.1) {
