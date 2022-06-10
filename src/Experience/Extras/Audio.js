@@ -135,6 +135,7 @@ export default class Audio {
         }
         else if (audio.taskDescriptionAudios[url].isPlaying) {
             audio.taskDescriptionAudios[url].stop()
+            audio.fadeInBgMusic()
         }
         else {
             audio.taskDescriptionAudios[url].play()
