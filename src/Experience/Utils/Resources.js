@@ -118,7 +118,7 @@ export default class Resources extends EventEmitter {
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.sRGBEncoding
-
+                texture.needsUpdate = true; 
                 this.textureItems[source.name] = {
                     item: texture,
                     path: source.path,
