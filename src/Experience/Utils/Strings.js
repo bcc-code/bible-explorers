@@ -463,6 +463,72 @@ const strings = {
             "skip": "Mergi mai departe"
         }
     },
+    "es": {
+        "loading": "Cargando",
+        "qualities": {
+            "title": "Seleccionar Calidad del Video",
+            "low": "Baja (270p)",
+            "medium": "Media (540p)",
+            "high": "Alta (1080p)"
+        },
+        "conceptDescription": "Unete a un viaje en el tiempo y explora el libro que puede responder todas las preguntas",
+        "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
+        "notAvailable": "No chapter available in the selected language",
+        "journey": {
+            "start": "Comenzar el viaje en el tiempo",
+            "continue": "Continuar con el viaje en el tiempo",
+            "restart": "Empezar el viaje de nuevo",
+            "congrats": "Felicitaciones!",
+            "completed": "Tu has terminado",
+            "back": "Regresar",
+            "attachments": "Adjunto",
+            "homescreen": "Listo"
+        },
+        "task": {
+            "codeUnlock": "Escribe el numero correcto",
+            "taskDescription": "Tarea de descripción",
+            "questions": "Pregunta",
+            "getTask": "Ir a la tarea",
+            "submit": "Enviar",
+            "next": "Next"
+        },
+        "archive": "Archivo",
+        "settings": {
+            "title": "Configuración",
+            "soundEffects": "Efectos de sonidos",
+            "language": "Idioma",
+            "feedback": "Retroalimentación",
+            "logIn": "Iniciar sección",
+            "logOut": "Cerrar sección",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+        },
+        "offline": {
+            "availableOffline": "Disponible sin conexión",
+            "download": "Descargar",
+            "downloading": "Descargando",
+            "update": "Update offline version"
+        },
+        "tooltips": {
+            "video": "Reproducir video",
+            "iris": "Habla con Iris",
+            "task": "Completar la tarea"
+        },
+        "miniGames": {
+            "sortingIcons": "Ordenar los iconos en el cuadro correcto",
+            "cableConnect": "Conecte los cables al color correcto",
+            "completed": {
+                "title": "Buen Trabajo!",
+                "message": "Has completado tu tarea!"
+            },
+            "timeElapsed": {
+                "title": "Ups!",
+                "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
+            },
+            "reset": "Reinicia el juego",
+            "continue": "Continuar el viaje",
+            "skip": "Saltar"
+        }
+    },
     "pt-pt": {
         "loading": "Carregando",
         "qualities": {
