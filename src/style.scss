@@ -841,6 +841,7 @@ button,
     position: relative;
     width: 698px;
     margin: 0;
+    padding-bottom: 3rem;
     @include setBackground('../static/svgs/bible-kids-logo.svg');
 
     &::before {
@@ -848,6 +849,21 @@ button,
         position: relative;
         display: block;
         padding-bottom: 27.66%;
+    }
+
+    &::after {
+        content: 'BETA';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: $gradient2;
+        padding: 0.25rem 1rem;
+        font-family: $primary-font;
+        font-weight: bold;
+        letter-spacing: 0.2rem;
+        font-size: 1.25rem;
+        color: #fff;
+        border-radius: 1rem;
     }
 }
 
@@ -1976,15 +1992,15 @@ button,
     &__tips {
         display: none;
         width: 24rem;
-        aspect-ratio: 145/108;
-        background-image: url('/static/games/tutorial_Connecting.gif');
-        background-repeat: no-repeat;
-        background-size: contain;
     }
 
     &.cables {
         .task__tips {
-            display: none;
+            display: inline-block;
+        }
+
+        video {
+            width: 100%;
         }
     }
 
