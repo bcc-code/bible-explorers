@@ -106,7 +106,7 @@ export default class Resources extends EventEmitter {
                 video.setAttribute('playsinline', '')
                 // Black textures on iOS fix
                 video.crossOrigin = ''
-                video.muted = false
+                video.muted = true
                 video.loop = true
                 video.controls = false
                 video.autoplay = true
@@ -117,7 +117,7 @@ export default class Resources extends EventEmitter {
                 texture.flipY = false
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
-                // texture.encoding = THREE.sRGBEncoding
+                texture.encoding = THREE.sRGBEncoding
                 texture.needsUpdate = true; 
                 this.textureItems[source.name] = {
                     item: texture,
