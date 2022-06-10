@@ -452,7 +452,7 @@ button,
     flex-direction: column;
 
     p {
-        max-width: 30rem;
+        max-width: 40rem;
         color: $accent2;
         font-size: 1.5rem;
         font-weight: bold;
@@ -897,7 +897,6 @@ button,
     }
 
     .modal-on & {
-
         #settings,
         #sound {
             display: none;
@@ -1668,9 +1667,7 @@ button,
             background: $accent;
             border-radius: 0 0 4rem 4rem;
         }
-
     }
-
 }
 
 .tooltip {
@@ -1743,12 +1740,10 @@ button,
             margin-left: 0.5rem;
         }
 
-
         .button:disabled {
             opacity: 0.2;
             pointer-events: none;
         }
-
     }
 
     .switch {
@@ -2843,8 +2838,6 @@ button,
         &__step:last-child::before {
             font-size: 1rem;
         }
-
-
     }
 
     .timer__part {
