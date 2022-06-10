@@ -306,6 +306,11 @@ body {
     letter-spacing: 0.5px;
     color: $dark;
     height: 100vh;
+    position: fixed;
+}
+
+main {
+    position: fixed;
 }
 
 @supports (-webkit-touch-callout: none) {
@@ -609,7 +614,7 @@ button,
 }
 
 .progress-bar {
-    position: absolute;
+    position: fixed;
     left: 4rem;
     right: 4rem;
     bottom: 4rem;
@@ -931,6 +936,12 @@ button,
 .qualities .quality,
 .categories .category {
     margin: 0 1rem;
+}
+
+.not-available {
+    color: $accent2;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .chapters__wrapper {
@@ -1626,24 +1637,6 @@ button,
         margin-right: 7.5px;
     }
 
-}
-
-.loading-bar {
-    position: absolute;
-    top: 50%;
-    width: 0%;
-    height: 4px;
-    background: whitesmoke;
-    transform: scaleX(0);
-    transform-origin: top left;
-    transition: transform 0.4s ease-in-out;
-    will-change: transform;
-    z-index: 4;
-
-    &.ended {
-        transform-origin: top right;
-        transition: transform 1.5s ease-in-out;
-    }
 }
 
 .settings {

@@ -695,7 +695,7 @@ export default class CableConnector {
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.completed.message}!</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
                 <div id="continue_journey" class="button button__continue">
                     <div class="button__content"><span>${_s.miniGames.continue}</span></div>
                 </div>

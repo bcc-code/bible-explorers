@@ -169,6 +169,7 @@ export default class World {
     }
 
     setCategories(result) {
+        if (result.length == 0) instance.addNotAvailableInYourLanguageMessage()
         if (result.hasOwnProperty('message')) return
 
         instance.menu.chaptersData = result
@@ -178,6 +179,13 @@ export default class World {
         }
 
         instance.selectCategoryListeners()
+    }
+
+    addNotAvailableInYourLanguageMessage() {
+        const notAvailableEl = document.createElement("div")
+        notAvailableEl.className = "not-available"
+        notAvailableEl.innerText = _s.notAvailable
+        instance.menu.categories.appendChild(notAvailableEl)
     }
 
     setCategoryHtml(category) {
@@ -289,8 +297,8 @@ export default class World {
 
     markChapterIfCompleted(chapter) {
         const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
-
-        if (chapterProgress == chapter.program.length)
+        
+        if (chapterProgress == chapter.program.length && chapterProgress > 0)
             document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }
 
@@ -349,6 +357,7 @@ export default class World {
         document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
                 instance.removeChapter(chapter)
+                instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
@@ -411,6 +420,7 @@ export default class World {
     cacheChapterAssets(chapter) {
         instance.cacheChapterThumbnail(chapter.thumbnail)
         instance.cacheChapterBgMusic(chapter.background_music)
+        instance.cacheChapterArchiveImages(chapter.archive)
         instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
         instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
     }
@@ -423,6 +433,10 @@ export default class World {
     cacheChapterBgMusic(url) {
         if (!url) return
         instance.fetchAndCacheAsset(url)
+    }
+
+    cacheChapterArchiveImages(facts) {
+        facts.forEach(fact => instance.fetchAndCacheAsset(fact.image.url))
     }
 
     cacheTaskDescriptionAudios(tasks) {
@@ -439,6 +453,7 @@ export default class World {
     }
 
     fetchAndCacheAsset(url) {
+        if (!url) return
         caches.open("chaptersAssets").then((cache) => {
             var request = new Request(url)
             fetch(request)
@@ -542,6 +557,12 @@ export default class World {
                 instance.audio.playBgMusic(chapter.background_music)
             })
         }
+
+        instance.selectedChapter.archive.forEach(fact => {
+            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
+                fact.image = data
+            })
+        })
     }
 
     restartChapter() {

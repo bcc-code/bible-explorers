@@ -9,6 +9,7 @@ import Renderer from './Renderer.js'
 import sources from './Sources.js'
 import Settings from './Extras/Settings.js'
 import World from './World/World.js'
+import WebGL from 'three/examples/jsm/capabilities/WebGL.js'
 
 let instance = null
 
@@ -41,6 +42,13 @@ export default class Experience {
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
         this.auth0 = {}
+
+        if (WebGL.isWebGLAvailable()) {
+            console.log('WebGL is available')
+        } else {
+            const warning = WebGL.getWebGLErrorMessage()
+            console.log('WebGL is not available', warning)
+        }
 
         // Sizes resize event
         this.sizes.on('resize', () => {

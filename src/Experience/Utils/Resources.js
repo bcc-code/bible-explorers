@@ -104,7 +104,8 @@ export default class Resources extends EventEmitter {
                 video.setAttribute('id', source.name)
                 video.setAttribute('webkit-playsinline', 'webkit-playsinline')
                 video.setAttribute('playsinline', '')
-                video.crossOrigin = 'anonymous'
+                // Black textures on iOS fix
+                video.crossOrigin = ''
                 video.muted = false
                 video.loop = true
                 video.controls = false
