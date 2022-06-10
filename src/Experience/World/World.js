@@ -276,6 +276,9 @@ export default class World {
                     </span>
                     <span class="downloading-label"></span>
                 </div>
+                <div class="chapter__download-failed">
+                    <span>${_s.offline.downloadFailed}</span>
+                </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
                     <span class="separator">/</span>
@@ -427,6 +430,7 @@ export default class World {
         instance.cacheChapterAssets(selectedChapter)
 
         chapterEl.classList.remove('download')
+        chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
         await this.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
@@ -493,6 +497,7 @@ export default class World {
 
         episodes.forEach(async (episode) => {
             const episodeUrls = await this.getEpisodeDownloadUrls(episode.id)
+            if (!episodeUrls) return
 
             episodesDownloadUrls.push({
                 downloadUrl: episodeUrls.downloadUrl,
@@ -511,6 +516,13 @@ export default class World {
                 this.offline.downloadFromWeb(episodesDownloadUrls)
             }
         })
+
+        // One or more episodes could not be downloaded
+        if (episodesDownloadUrls.length <= episodes.length) {
+            const chapter = document.querySelector('.chapter[data-id="' + data.chapterId + '"]')
+            chapter.classList.remove('downloading')
+            chapter.classList.add('failed')
+        }
     }
 
     async getEpisodeDownloadUrls(episodeId) {
@@ -528,12 +540,15 @@ export default class World {
         const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
 
-        if (!myLanguageVideos)
+        if (!myLanguageVideos.length) {
             _appInsights.trackException({
                 exception: "No videos found",
                 episodeId: episodeId,
                 language: locale
             })
+
+            return
+        }
 
         const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
         const episode = {

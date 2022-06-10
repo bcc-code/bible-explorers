@@ -70,34 +70,35 @@ export default class Audio {
         if (audio?.bgMusic) 
         {
             // Workaround for double player issue .stop() doesn't work
-            audio.bgMusic = null;
+            audio.bgMusic = null
         }
         
         audio.audioLoader.load(soundtrack, function(buffer) {
-            if (bgAudioQueue.at(-1) === soundtrack ){
-            audio.bgMusic = new THREE.Audio(audio.listener)
-            audio.bgMusic.setBuffer(buffer)
-            audio.bgMusic.setLoop(true)
-            audio.bgMusic.setVolume(0)
-            audio.bgMusic.play()
-            audio.fadeInBgMusic()
-            audio.bgMusicAudios.objs[soundtrack] = audio.bgMusic
-            audio.bgMusicAudios.playingSrc = soundtrack
+            if (bgAudioQueue.at(-1) === soundtrack) {
+                audio.bgMusic = new THREE.Audio(audio.listener)
+                audio.bgMusic.setBuffer(buffer)
+                audio.bgMusic.setLoop(true)
+                audio.bgMusic.setVolume(0)
+                audio.bgMusic.play()
+                audio.fadeInBgMusic()
+                audio.bgMusicAudios.objs[soundtrack] = audio.bgMusic
+                audio.bgMusicAudios.playingSrc = soundtrack
             }
         })
     }
 
     fadeInBgMusic() {
         if (!audio.bgMusic.isPlaying)
-            audio.bgMusic.play();
+            audio.bgMusic.play()
+
         if (audio.bgMusic.isPlaying)
             audio.el.classList.add('sound-on')
 
         const fadeInAudio = setInterval(() => {
-            const volume = audio.bgMusic.getVolume() + 0.05
-            audio.bgMusic.setVolume(volume)
+            const volume = audio.bgMusic?.getVolume() + 0.05
+            audio.bgMusic?.setVolume(volume)
 
-            if (audio.bgMusic.getVolume() > 0.5) {
+            if (audio.bgMusic?.getVolume() > 0.5) {
                 clearInterval(fadeInAudio)
                 audio.el.classList.remove('pointer-events-none')
             }
@@ -109,14 +110,14 @@ export default class Audio {
 
         const fadeOutAudio = setInterval(() => {
             const volume = audio.bgMusic?.getVolume() - 0.1
-            audio.bgMusic.setVolume(volume)
+            audio.bgMusic?.setVolume(volume)
 
-            if (audio.bgMusic.getVolume() < 0.1) {
+            if (audio.bgMusic?.getVolume() < 0.1) {
                 clearInterval(fadeOutAudio)
-                audio.bgMusic.setVolume(0)
+                audio.bgMusic?.setVolume(0)
                 callback()
                 audio.el.classList.remove('pointer-events-none')
-                audio.bgMusic.pause();
+                audio.bgMusic.pause()
             }
         }, 100)
     }

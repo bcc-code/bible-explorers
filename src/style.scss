@@ -1159,7 +1159,6 @@ button,
                 opacity: 0.8;
             }
         }
-
     }
 
     &__offline {
@@ -1400,9 +1399,8 @@ button,
     }
 
     &.downloaded {
-
         .chapter__offline,
-        .chapter__donwloading {
+        .chapter__downloading {
             display: none;
         }
 
@@ -1422,6 +1420,23 @@ button,
     &.completed {
         .chapter__number .stars {
             display: flex;
+        }
+    }
+
+    .chapter__download-failed {
+        display: none;
+    }
+    &.failed {
+        .chapter__offline {
+            display: none;
+        }
+        .chapter__download-failed {
+            display: inline-block;
+
+            span {
+                font-size: 1rem;
+                color: #fff;
+            }
         }
     }
 
