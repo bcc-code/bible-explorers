@@ -3,16 +3,15 @@ import Experience from "../Experience.js";
 let notification = null
 
 export default class Notification {
-    constructor(text, callback = () => { }) {
+    constructor(text, icon = "") {
         this.experience = new Experience()
         this.program = this.experience.world.program
-        this.callback = callback
 
         notification = this
 
         notification.htmlEl = document.createElement("div")
         notification.htmlEl.className = "notification"
-        notification.htmlEl.innerHTML = Notification.generateHtml(text)
+        notification.htmlEl.innerHTML = Notification.generateHtml(text, icon)
         document.body.appendChild(notification.htmlEl)
 
         notification.el = {
@@ -28,11 +27,12 @@ export default class Notification {
         notification = null
     }
 
-    static generateHtml(text) {
+    static generateHtml(text, icon) {
         return `
             <div class="notification__close button button__round"><div class="button__content"><i class="icon icon-xmark-solid"></i></div></div>
             <div class="notification__container">
-                ${text}
+                ${icon}
+                <span>${text}</span>
             </div>
         `
     }
