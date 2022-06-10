@@ -1410,8 +1410,11 @@ button,
             display: inline-flex;
             align-items: center;
 
-            .icon {
-                margin-left: 1rem;
+            .icon, .separator {
+                margin-left: 0.5rem;
+            }
+            .icon:hover {
+                font-weight: bold;
             }
         }
     }
