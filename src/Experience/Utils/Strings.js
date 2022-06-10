@@ -44,7 +44,8 @@ const strings = {
             "availableOffline": "Available offline",
             "download": "Download",
             "downloading": "Downloading",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Play video",
@@ -110,7 +111,8 @@ const strings = {
             "availableOffline": "Tilgjengelig offline",
             "download": "Last ned",
             "downloading": "Laster ned",
-            "update": "Oppdater offline-versjonen"
+            "update": "Oppdater offline-versjonen",
+            "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?"
         },
         "tooltips": {
             "video": "Spill av video",
@@ -176,7 +178,8 @@ const strings = {
             "availableOffline": "Offline verfügbar",
             "download": "Herunterladen",
             "downloading": "Wird heruntergeladen",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Video abspielen",
@@ -242,7 +245,8 @@ const strings = {
             "availableOffline": "Online beschikbaar",
             "download": "Download",
             "downloading": "Downloaden",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Speel de video af",
@@ -308,7 +312,8 @@ const strings = {
             "availableOffline": "Disponible hors connexion",
             "download": "Télécharger",
             "downloading": "Téléchargement",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Lire la vidéo",
@@ -374,7 +379,8 @@ const strings = {
             "availableOffline": "Dostępne offline",
             "download": "Pobierz",
             "downloading": "Pobieranie",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Odtwórz film",
@@ -440,7 +446,8 @@ const strings = {
             "availableOffline": "Disponibil offline",
             "download": "Descărcare",
             "downloading": "Se descarcă",
-            "update": "Actualizează versiunea offline"
+            "update": "Actualizează versiunea offline",
+            "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?"
         },
         "tooltips": {
             "video": "Pornește video",
@@ -506,7 +513,8 @@ const strings = {
             "availableOffline": "Disponible sin conexión",
             "download": "Descargar",
             "downloading": "Descargando",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Reproducir video",
@@ -572,7 +580,8 @@ const strings = {
             "availableOffline": "Disponível off-line",
             "download": "Download",
             "downloading": "Baixando",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Play video",
@@ -638,7 +647,8 @@ const strings = {
             "availableOffline": "Disponibile offline",
             "download": "Download",
             "downloading": "Download in corso",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Riproduci il video",
@@ -704,7 +714,8 @@ const strings = {
             "availableOffline": "Доступно офлайн",
             "download": "Скачать",
             "downloading": "Скачивание",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Включить видео",
@@ -770,7 +781,8 @@ const strings = {
             "availableOffline": "Saatavilla offline-tilassa",
             "download": "Lataa",
             "downloading": "Ladataan tiedostoa",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?"
         },
         "tooltips": {
             "video": "Toista video",

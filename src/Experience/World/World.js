@@ -278,6 +278,7 @@ export default class World {
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
+                    <span class="separator">/</span>
                     <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
                 </div>
             </div>
@@ -348,13 +349,43 @@ export default class World {
             })
         })
 
-        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (chapter) {
-            chapter.addEventListener("click", (event) => {
-                instance.removeChapter(chapter)
-                instance.downloadChapter(chapter)
-                event.stopPropagation()
-            })
+        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (button) {
+            button.addEventListener("click", instance.confirmRedownload)
         })
+    }
+
+    confirmRedownload(event) {
+        const button = event.currentTarget
+        button.removeEventListener("click", instance.confirmRedownload)
+
+        button.innerHTML = `<span style="margin-right: 0.25rem">${_s.offline.redownloadConfirmation}</span>
+            <span class="refuse icon icon-xmark-solid"></span>
+            <span class="separator">/</span>
+            <span class="redownload icon icon-check-solid"></span>`
+
+        button.querySelector('.refuse').addEventListener("click", (event) => {
+            instance.setDownloadHtml(button)
+            event.stopPropagation()
+        })
+        button.querySelector('.redownload').addEventListener("click", (event) => {
+            instance.redownloadChapter(button)
+            instance.setDownloadHtml(button)
+            event.stopPropagation()
+        })
+
+        event.stopPropagation()
+    }
+
+    setDownloadHtml(button) {
+        button.innerHTML = `<span>${_s.offline.availableOffline}</span>
+            <span class="separator">/</span>
+            <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>`
+        button.addEventListener("click", instance.confirmRedownload)
+    }
+
+    redownloadChapter(chapter) {
+        instance.removeChapter(chapter)
+        instance.downloadChapter(chapter)
     }
 
     addClassToSelectedChapter(chapter) {
