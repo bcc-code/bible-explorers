@@ -452,11 +452,11 @@ button,
     flex-direction: column;
 
     p {
-        max-width: 48rem;
+        max-width: 30rem;
         color: $accent2;
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
-        margin: 4rem 0;
+        margin: 3rem 0;
     }
 
     .container__scroll {
@@ -839,7 +839,7 @@ button,
 
 .logo {
     position: relative;
-    width: 698px;
+    width: 30rem;
     margin: 0;
     padding-bottom: 3rem;
     @include setBackground('../static/svgs/bible-kids-logo.svg');
@@ -998,7 +998,7 @@ button,
     &__box {
         display: flex;
         position: relative;
-        min-height: 10rem;
+        min-height: 9rem;
         border: 5px solid $accent;
         border-radius: 1rem 2rem 3rem 1rem;
     }
@@ -1053,7 +1053,7 @@ button,
             right: -2px;
             top: 1.5rem;
             width: 1.25rem;
-            height: 6rem;
+            height: 4.5rem;
             background: $accent;
             border-radius: 1.5rem 0 0 1.5rem;
         }
@@ -1138,7 +1138,7 @@ button,
         flex-direction: column;
         justify-content: center;
         flex: 1;
-        padding: 1.5rem 3rem 3rem;
+        padding: 1.5rem 3rem 2rem;
     }
 
     &__title {
@@ -2817,7 +2817,6 @@ button,
     }
 
     #loading-screen p {
-        max-width: 30rem;
         font-size: 1.25rem;
         margin: 2rem 0;
     }
@@ -2862,6 +2861,10 @@ button,
             font-size: 1rem;
             border-radius: 2rem 1rem;
         }
+    }
+
+    .chapters__wrapper {
+        margin-top: 2rem;
     }
 }
 
