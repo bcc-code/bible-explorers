@@ -305,12 +305,14 @@ body {
     line-height: 1.5;
     letter-spacing: 0.5px;
     color: $dark;
-    height: 100vh;
-    position: fixed;
 }
 
 main {
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 @supports (-webkit-touch-callout: none) {
@@ -1408,9 +1410,11 @@ button,
             display: inline-flex;
             align-items: center;
 
-            .icon, .separator {
+            .icon,
+            .separator {
                 margin-left: 0.5rem;
             }
+
             .icon:hover {
                 font-weight: bold;
             }
@@ -1975,7 +1979,7 @@ button,
 
     &.cables {
         .task__tips {
-            display: block;
+            display: none;
         }
     }
 
@@ -2306,6 +2310,33 @@ button,
             right: -5rem;
         }
 
+    }
+}
+
+.experience {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: $gradient2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+        letter-spacing: normal;
+        font-weight: normal;
+        font-size: 2rem;
+        color: #fff;
+    }
+
+    .button {
+        margin-top: 2rem;
     }
 }
 

@@ -25,6 +25,12 @@ const configureClient = async () => {
     })
 }
 
+// Detect browser 
+
+if (! navigator.userAgent.match(/chrome|chromium|crios/i)) {
+    new Notification(_s.browserNotification)
+}
+
 window.onload = async () => {
     await configureClient()
 
