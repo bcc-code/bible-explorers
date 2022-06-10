@@ -3,6 +3,8 @@ import Konva from 'konva'
 import _s from '../Utils/Strings.js'
 import Modal from '../Utils/Modal.js'
 import Timer from '../Extras/Timer.js'
+import { update } from '@tweenjs/tween.js'
+import { RedFormat } from 'three'
 
 let instance = null
 
@@ -43,28 +45,24 @@ export default class CableConnector {
             },
             items: {
                 name: [
-                    'lightBlue',
                     'darkBlue',
+                    'lightBlue',
                     'yellow',
-                    'pink',
-                    'purple'
+                    'purple',
+                    'pink'
                 ],
                 color: [
-                    "#2b78c3",
                     "#23307a",
+                    "#2b78c3",
                     "#fcb04e",
-                    "#f75b99",
                     "#9f4096",
+                    "#f75b99"
                 ]
             },
             animation: {
                 width: 180,
                 height: 100,
                 steps: []
-            },
-            plug: {
-                width: 90,
-                height: 66
             },
             itemsLength: 5
         }
@@ -154,7 +152,11 @@ export default class CableConnector {
 
     initStage(images) {
 
+
+
         instance.program = instance.world.program
+
+        //#region stage
 
         instance.stage = new Konva.Stage({
             container: 'container',
@@ -162,30 +164,36 @@ export default class CableConnector {
             height: instance.data.stage.height
         })
 
+        const cableWidth = instance.stage.width() / 6
+        const outletWidth = 49
+        const outletHeight = 74
+        const plugWidth = 90.5
+        const plugHeight = 66
+        const sideWidth = instance.stage.width() / 5.5
+
+        const outlets = []
+        const plugs = []
 
         for (let key in images) {
             const privKey = key
             const item = images[key]
 
             if (privKey.includes('outlet')) {
-                instance.outlets.push(item)
+                outlets.push(item)
             }
 
             if (privKey.includes('plug')) {
-                instance.cables.push(item)
+                plugs.push(item)
             }
         }
-
-        const staticLayer = new Konva.Layer()
+        
+        const layer = new Konva.Layer()
 
         const background = new Konva.Image({
             image: images['background'],
             width: instance.stage.width(),
             height: instance.stage.height()
         })
-
-        const sideWidth = instance.stage.width() / 5.5
-
         const sideLeft = new Konva.Image({
             image: images['side_left'],
             width: sideWidth,
@@ -197,45 +205,161 @@ export default class CableConnector {
             width: sideWidth,
             height: instance.stage.height()
         })
+        layer.add(background, sideLeft, sideRight)
 
-        staticLayer.add(background, sideLeft, sideRight)
-
-        const draggableLayer = new Konva.Layer()
-
-        // //#region cables
-        const outletWidth = 49
-        const outletHeight = 74
-        const spaceLeft = instance.stage.height() - (outletHeight * instance.data.itemsLength)
-        const spaceBetween = spaceLeft / (instance.data.itemsLength + 1)
-        const getY = (index) => spaceBetween + index * (outletHeight + spaceBetween)
-
-
-        for (let key in instance.outlets) {
-            const outlet = instance.outlets[key]
-
-            const outlets_l = new Konva.Image({
-                image: outlet,
-                x: sideLeft.width(),
-                y: getY(key),
-                width: outletWidth,
-                height: outletHeight
-            })
-
-            const outlets_r = new Konva.Image({
-                image: outlet,
-                x: sideRight.x() - outletWidth,
-                y: getY(key),
-                width: outletWidth,
-                height: outletHeight
-            })
-
-            draggableLayer.add(outlets_l, outlets_r)
+        const positionY = (index, objHeight) => {
+            const spaceLeft = instance.stage.height() - (objHeight * instance.data.itemsLength)
+            const spaceBetween = spaceLeft / (instance.data.itemsLength + 1)
+            return spaceBetween + index * (objHeight + spaceBetween)
         }
 
+        for (let key in plugs) {
+            const plugImage = plugs[key]
+            const cable = new Konva.Group({ name: 'cable' })
 
-        instance.stage.add(staticLayer)
-        instance.stage.add(draggableLayer)
+            function buildAnchor(x, y) {
+                const anchor = new Konva.Circle({
+                    x: x,
+                    y: y,
+                    // radius: 10,
+                    // fill: 'red',
+                    // draggable: true
+                })
+                cable.add(anchor)
+
+                anchor.on('dragmove', () => {
+                    updateLines(bezier)
+                })
+
+                return anchor
+            }
+
+            function buildPlug(x, y, position) {
+                const plug = new Konva.Image({
+                    image: plugImage,
+                    x: x,
+                    y: y,
+                    width: plugWidth,
+                    height: plugHeight,
+                    // fill: 'red',
+                    shadowColor: '#fff',
+                    draggable: true,
+                })
+
+                if (position == 'left') {
+                    plug.scaleX(-1)
+                } else if (position == 'right') {
+                    plug.scaleX(1)
+                }
+
+                cable.add(plug)
+
+                plug.on('mouseover', () => {
+                    document.body.style.cursor = "pointer"
+                    plug.shadowBlur(10)
+                })
+
+                plug.on('mouseout', () => {
+                    document.body.style.cursor = "default"
+                    plug.shadowBlur(0)
+                })
+
+                plug.on('dragmove', () => {
+                    updateLines(bezier)
+                })
+
+                return plug
+            }
+
+            const bezierLine = new Konva.Shape({
+                stroke: instance.data.items.color[key],
+                strokeWidth: 20,
+                lineCap: 'round',
+                name: 'cord',
+                sceneFunc: (ctx, shape) => {
+                    ctx.beginPath()
+                    ctx.moveTo(bezier.start.x(), bezier.start.y() + plugHeight / 2)
+                    ctx.bezierCurveTo(
+                        bezier.control1.x(),
+                        bezier.control1.y(),
+                        bezier.control2.x(),
+                        bezier.control2.y(),
+                        bezier.end.x(),
+                        bezier.end.y() + plugHeight / 2
+                    )
+                    ctx.fillStrokeShape(shape)
+                },
+            })
+
+            const bezierLinePath = new Konva.Line({
+                // stroke: 'red',
+                // strokeWidth: 2,
+                id: 'bezierLinePath',
+                points: [0, 0]
+            })
+
+            cable.add(bezierLinePath, bezierLine)
+
+            const posX1 = instance.stage.width() / 2 - cableWidth / 2
+            const posX2 = instance.stage.width() / 2 + cableWidth / 2
+            const posY = positionY(key, plugHeight)
+
+            const bezier = {
+                start: buildPlug(posX1, posY, 'left'),
+                control1: buildAnchor(posX1 + 100, posY + plugHeight / 2),
+                control2: buildAnchor(posX2 - 100, posY + plugHeight / 2),
+                end: buildPlug(posX2, posY, 'right')
+            }
+
+            instance.cables.push(cable)
+            layer.add(cable)
+        }
+
+        for (let key in outlets) {
+            const outletImage = outlets[key]
+
+            function buildOutlet(x, y, position) {
+                const outlet = new Konva.Image({
+                    image: outletImage,
+                    x: x,
+                    y: positionY(key, outletHeight),
+                    width: outletWidth,
+                    height: outletHeight,
+                    name: position
+                })
+
+                instance.outlets.push(outlet)
+                layer.add(outlet)
+
+                return outlet
+            }
+
+            buildOutlet(sideLeft.width(), positionY(key, outletHeight))
+            buildOutlet(sideRight.x() - outletWidth, positionY(key, outletHeight))
+        }
+
+        const updateLines = (bezier) => {
+            const b = bezier
+            const bezierLinePath = layer.findOne("#bezierLinePath")
+
+            bezierLinePath.points([
+                b.start.x(),
+                b.start.y(),
+                b.control1.x(),
+                b.control1.y(),
+                b.control2.x(),
+                b.control2.y(),
+                b.end.x(),
+                b.end.y()
+            ])
+
+        }
+
+        // #endregion
+
+        instance.stage.add(layer)
     }
+
 
     setup() {
         const layer = new Konva.Layer()
@@ -707,33 +831,6 @@ export default class CableConnector {
         document.querySelector('.modal').classList.add('modal__congrats')
     }
 
-    resizeBreakpoint(x, callback, callback2) {
-        if (x.matches) { // If media query matches
-            callback
-        } else {
-            callback2
-        }
-    }
-
-
-    resize() {
-
-        const container = document.querySelector('#miniGame__connector')
-        const containerWidth = container.offsetWidth
-        const containerHeight = container.offsetHeight
-        // let scaleX = containerWidth / instance.data.canvas.width
-        // let scaleY = containerHeight / instance.data.canvas.height
-
-        // console.log(containerWidth + " x " + containerHeight);
-        // scaleX = scaleY = Math.min(scaleX, scaleY);
-
-        // // Set stage dimension
-        // instance.stage.width(containerWidth)
-        // instance.stage.height(containerHeight)
-        // instance.stage.scale({ x: 1, y: 1 })
-
-    }
-
     destroy() {
         document.getElementById('cable-connector').remove()
         document.body.classList.remove('freeze')
@@ -741,265 +838,6 @@ export default class CableConnector {
 
         if (instance.timer)
             instance.timer.destroy()
-    }
-}
-
-class Container {
-    constructor({ x = 0, y = 0, width, height, src, }) {
-        this.position = { x, y }
-        this.width = width
-        this.height = height
-        this.src = src
-    }
-
-    _draw() {
-        Konva.Image.fromURL(this.src, background => {
-            background.setAttrs({
-                x: this.sideWidth - this.bandWidth,
-                width: this.bandWidth,
-                height: this.height,
-                name: 'background'
-            })
-        })
-    }
-
-    _bg() {
-        const background = new Konva.Rect({
-            x: this.width / 12,
-            width: this.width * 10 / 12,
-            height: this.height,
-            fillLinearGradientEndPointY: this.height,
-            fillLinearGradientColorStops: [
-                0, '#1a1a1a',
-                1, '#4d4d4d'
-            ],
-            name: "background"
-        })
-
-        return background
-    }
-
-    _icon() {
-        const icon = new Konva.Group({
-            x: this.width / 2,
-            y: this.height / 2,
-            name: "warningSign"
-        })
-
-        const triangle = new Konva.RegularPolygon({
-            sides: 3,
-            radius: this.width / 10,
-            fill: '#fbaf4e',
-            cornerRadius: this.radius,
-            rotation: 20,
-            opacity: 0.35,
-            lineJoin: 'round',
-            name: 'triangle'
-        })
-
-        icon.add(triangle)
-
-        Konva.Image.fromURL('games/volt.svg', image => {
-            icon.add(image)
-            image.setAttrs({
-                width: triangle.radius() / 2,
-                height: triangle.radius() / 0.8,
-                opacity: 0.35
-            })
-
-            image.offset({ x: image.width() / 2 - 5, y: image.height() / 2 + 10 })
-        })
-
-        return icon
-    }
-
-    _side({ x, y }) {
-        const side = new Konva.Group({
-            x: x,
-            y: y,
-            name: "side"
-        })
-
-        side.add(new Konva.Rect({
-            width: this.sideWidth,
-            height: this.height,
-            fillLinearGradientEndPointX: this.sideWidth,
-            fillLinearGradientColorStops: [
-                0, '#989898',
-                1, '#666666'
-            ],
-            cornerRadius: [this.radius, 0, 0, this.radius],
-        }))
-
-        Konva.Image.fromURL('games/band.png', image => {
-            side.add(image)
-            image.setAttrs({
-                x: this.sideWidth - this.bandWidth,
-                width: this.bandWidth,
-                height: this.height
-            })
-        })
-
-        return side
-    }
-}
-
-class Outlet {
-    constructor({ color, x, y, width, height, fill, name }) {
-        this.color = color
-        this.position = { x, y }
-        this.width = width
-        this.height = height
-        this.fill = fill
-        this.connected = false
-        this.isVisible = false
-        this.colorFound = false
-        this.canClick = true
-        this.name = name
-        this.item = null
-    }
-
-    _draw() {
-        const outlet = new Konva.Rect({
-            x: this.position.x,
-            y: this.position.y,
-            width: this.width,
-            height: this.height,
-            fill: this.fill,
-            name: 'outlet_' + this.color,
-            cornerRadius: [0, 4, 4, 0],
-            shadowColor: 'white',
-        })
-
-        this.item = outlet
-        return outlet
-    }
-
-    _update() {
-        this.item.fill(this.fill)
-    }
-}
-
-class Cable {
-    constructor({ color, x, y, width, fill, stroke }) {
-        this.color = color
-        this.position = { x, y }
-        this.width = width
-        this.fill = fill
-        this.stroke = stroke
-        this.strokeWidth = 6
-        this.item = null
-    }
-
-    _draw() {
-        const cable = new Konva.Group({
-            x: this.position.x,
-            y: this.position.y
-        })
-
-        this.plug_l = this._plug({ x: 0, y: 0 }, "left")
-        this.controlOne = this._controlPoint({ x: this.width / 4, y: instance.data.cable.plug.height / 2 }, "one")
-        this.controlTwo = this._controlPoint({ x: this.width / 1.33, y: instance.data.cable.plug.height / 2 }, "two")
-        this.plug_r = this._plug({ x: this.width, y: 0 }, "right").scaleX(-1)
-
-        this.cord = this._cord([
-            this.plug_l.x() + instance.data.cable.plug.width, instance.data.cable.plug.height / 2,
-            this.plug_l.x() + instance.data.cable.plug.width + 60, instance.data.cable.plug.height / 2,
-            (this.plug_l.x() + this.plug_r.x()) / 2, instance.data.cable.plug.height / 2,
-            this.plug_r.x() - instance.data.cable.plug.width - 60, instance.data.cable.plug.height / 2,
-            this.plug_r.x() - instance.data.cable.plug.width, instance.data.cable.plug.height / 2
-        ])
-
-        this.bezierLine = this._bezierLine()
-
-        this.item = cable
-        cable.add(this.plug_l, this.cord, this.bezierLine, this.plug_r)
-        return cable
-    }
-
-    _plug({ x, y }, position) {
-        const plug = new Konva.Group({
-            x,
-            y,
-            width: instance.data.cable.plug.width + instance.data.cable.pin.width,
-            height: instance.data.cable.plug.height + instance.data.cable.pin.height,
-            name: 'plug_' + position
-        })
-
-        // Add cable pins
-        const spaceLeft = instance.data.cable.plug.height - (instance.data.cable.pin.height * 2) // 2 is item length
-        const spaceBetween = spaceLeft / (2 + 1)
-        const getY = (index) => spaceBetween + index * (instance.data.cable.pin.height + spaceBetween)
-
-        for (let i = 0; i < 2; i++) {
-            plug.add(new Konva.Rect({
-                x: -instance.data.cable.pin.width,
-                y: getY(i),
-                width: instance.data.cable.pin.width,
-                height: instance.data.cable.pin.height,
-                fill: "#dcdcdc",
-                cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
-                name: 'pin'
-            }))
-        }
-
-        // Add cable plug
-        plug.add(new Konva.Rect({
-            width: instance.data.cable.plug.width,
-            height: instance.data.cable.plug.height,
-            fill: this.fill,
-            cornerRadius: [4, instance.data.cable.plug.radius, instance.data.cable.plug.radius, 4],
-            name: 'plug'
-        }))
-
-        return plug
-    }
-
-    _controlPoint({ x, y }, id) {
-        return new Konva.Group({
-            x, y,
-            name: 'controlPoint_' + id
-        })
-    }
-
-    _cord() {
-        return new Konva.Shape({
-            stroke: this.stroke,
-            strokeWidth: this.strokeWidth,
-            name: 'cord',
-            sceneFunc: (ctx, shape) => {
-                const b = this._getBezierPoints()
-                ctx.beginPath()
-                ctx.moveTo(b.x1, b.y1)
-                ctx.bezierCurveTo(b.x2, b.y2, b.x3, b.y3, b.x4, b.y4)
-                ctx.fillStrokeShape(shape)
-            },
-        })
-    }
-
-    _bezierLine() {
-        const b = this._getBezierPoints()
-        return new Konva.Line({
-            points: [b.x1, b.y1, b.x2, b.y2, b.x3, b.y3, b.x4, b.y4],
-        })
-    }
-
-    _updateDottedLines() {
-        const b = this._getBezierPoints()
-        this.bezierLine.points([b.x1, b.y1, b.x2, b.y2, b.x3, b.y3, b.x4, b.y4])
-    }
-
-    _getBezierPoints() {
-        return {
-            x1: this.plug_l.x() + instance.data.cable.plug.width,
-            y1: this.plug_l.y() + instance.data.cable.plug.height / 2,
-            x2: (this.plug_l.x() + this.plug_r.x()) / 4,
-            y2: this.plug_l.y() + instance.data.cable.plug.height / 2,
-            x3: (this.plug_l.x() + this.plug_r.x()) / 1.33,
-            y3: this.plug_r.y() + instance.data.cable.plug.height / 2,
-            x4: this.plug_r.x() - instance.data.cable.plug.width,
-            y4: this.plug_r.y() + instance.data.cable.plug.height / 2
-        }
     }
 }
 
