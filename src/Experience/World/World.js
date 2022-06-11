@@ -530,7 +530,8 @@ export default class World {
     async getEpisodeDownloadUrls(episodeId, chapterId) {
         const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
-        const locale = _lang.getLanguageCode()
+        let locale = _lang.getLanguageCode()
+        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
 
         var btvPlayer = BTVPlayer({
             type: 'episode',
