@@ -309,10 +309,6 @@ body {
 
 main {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 @supports (-webkit-touch-callout: none) {
@@ -1688,7 +1684,6 @@ button,
         font-weight: bold;
         margin-right: 7.5px;
     }
-
 }
 
 .settings {
@@ -2303,7 +2298,6 @@ button,
     }
 
     &__miniGame {
-
         .icon {
             position: absolute;
             font-size: 2rem;
@@ -2330,7 +2324,6 @@ button,
         .icon:last-of-type {
             right: -5rem;
         }
-
     }
 }
 
