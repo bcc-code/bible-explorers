@@ -151,13 +151,9 @@ export default class CableConnector {
     }
 
     initStage(images) {
-
-
-
         instance.program = instance.world.program
 
         //#region stage
-
         instance.stage = new Konva.Stage({
             container: 'container',
             width: instance.data.stage.width,
