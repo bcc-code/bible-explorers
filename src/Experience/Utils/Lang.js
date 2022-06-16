@@ -8,7 +8,7 @@ const list = {
     "fr": "Français",
     "pl": "Polski",
     "ro": "Română",
-    // "es": "Español",
+    "es": "Español",
     "pt-pt": "Português",
     "it": "Italiano",
     "ru": "Русский",

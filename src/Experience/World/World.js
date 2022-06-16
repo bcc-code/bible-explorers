@@ -282,8 +282,14 @@ export default class World {
                     </span>
                     <span class="downloading-label"></span>
                 </div>
+                <div class="chapter__download-failed">
+                    <span>${_s.offline.downloadFailed}</span>
+                    <span class="separator">/</span>
+                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.tryAgain}"></span>
+                </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
+                    <span class="separator">/</span>
                     <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
                 </div>
             </div>
@@ -354,13 +360,50 @@ export default class World {
             })
         })
 
-        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (chapter) {
+        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.admin .chapter__downloaded").forEach(function (button) {
+            button.addEventListener("click", instance.confirmRedownload)
+        })
+
+        document.querySelectorAll(".chapter__download-failed").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
-                instance.removeChapter(chapter)
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
+    }
+
+    confirmRedownload(event) {
+        const button = event.currentTarget
+        button.removeEventListener("click", instance.confirmRedownload)
+
+        button.innerHTML = `<span style="margin-right: 0.25rem">${_s.offline.redownloadConfirmation}</span>
+            <span class="refuse icon icon-xmark-solid"></span>
+            <span class="separator">/</span>
+            <span class="redownload icon icon-check-solid"></span>`
+
+        button.querySelector('.refuse').addEventListener("click", (event) => {
+            instance.setDownloadHtml(button)
+            event.stopPropagation()
+        })
+        button.querySelector('.redownload').addEventListener("click", (event) => {
+            instance.redownloadChapter(button)
+            instance.setDownloadHtml(button)
+            event.stopPropagation()
+        })
+
+        event.stopPropagation()
+    }
+
+    setDownloadHtml(button) {
+        button.innerHTML = `<span>${_s.offline.availableOffline}</span>
+            <span class="separator">/</span>
+            <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>`
+        button.addEventListener("click", instance.confirmRedownload)
+    }
+
+    redownloadChapter(chapter) {
+        instance.removeChapter(chapter)
+        instance.downloadChapter(chapter)
     }
 
     addClassToSelectedChapter(chapter) {
@@ -402,6 +445,7 @@ export default class World {
         instance.cacheChapterAssets(selectedChapter)
 
         chapterEl.classList.remove('download')
+        chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
         await this.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
@@ -467,7 +511,8 @@ export default class World {
         let episodesDownloadUrls = []
 
         episodes.forEach(async (episode) => {
-            const episodeUrls = await this.getEpisodeDownloadUrls(episode.id)
+            const episodeUrls = await this.getEpisodeDownloadUrls(episode.id, data.chapterId)
+            if (!episodeUrls) return
 
             episodesDownloadUrls.push({
                 downloadUrl: episodeUrls.downloadUrl,
@@ -488,10 +533,11 @@ export default class World {
         })
     }
 
-    async getEpisodeDownloadUrls(episodeId) {
+    async getEpisodeDownloadUrls(episodeId, chapterId) {
         const claims = await this.experience.auth0.getIdTokenClaims();
         const idToken = claims.__raw;
-        const locale = _lang.getLanguageCode()
+        let locale = _lang.getLanguageCode()
+        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
 
         var btvPlayer = BTVPlayer({
             type: 'episode',
@@ -503,12 +549,21 @@ export default class World {
         const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
 
-        if (!myLanguageVideos)
+        if (!myLanguageVideos.length) {
             _appInsights.trackException({
                 exception: "No videos found",
+                chapterId: chapterId,
                 episodeId: episodeId,
                 language: locale
             })
+
+            // There was a problem downloading the episode
+            const chapter = document.querySelector('.chapter[data-id="' + chapterId + '"]')
+            chapter.classList.remove('downloading')
+            chapter.classList.add('failed')
+
+            return
+        }
 
         const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
         const episode = {

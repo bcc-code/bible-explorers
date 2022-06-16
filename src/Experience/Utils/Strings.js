@@ -12,6 +12,7 @@ const strings = {
         "conceptDescription": "Join time travels and explore the book that can answer every question",
         "introduction": "Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Start the time travel",
             "continue": "Continue the time travel",
@@ -44,7 +45,10 @@ const strings = {
             "availableOffline": "Available offline",
             "download": "Download",
             "downloading": "Downloading",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Play video",
@@ -60,7 +64,7 @@ const strings = {
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "message": "Time is up; try to attach all the wires before time is up."
             },
             "reset": "Start over",
             "continue": "Continue the journey",
@@ -78,6 +82,7 @@ const strings = {
         "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
         "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
+        "browserNotification": "Anbefalt nettleser for dette konseptet er Chrome",
         "journey": {
             "start": "Start tidsreisen",
             "continue": "Fortsett tidsreisen",
@@ -110,7 +115,10 @@ const strings = {
             "availableOffline": "Tilgjengelig offline",
             "download": "Last ned",
             "downloading": "Laster ned",
-            "update": "Oppdater offline-versjonen"
+            "update": "Oppdater offline-versjonen",
+            "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?",
+            "downloadFailed": "Det har oppstått et problem ved nedlastingen av kapitelet!",
+            "tryAgain": "Prøv på nytt"
         },
         "tooltips": {
             "video": "Spill av video",
@@ -126,7 +134,7 @@ const strings = {
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "Tiden er ute. Prøv å feste alle kablene før tiden går ut."
+                "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
@@ -136,7 +144,7 @@ const strings = {
     "de": {
         "loading": "Wird geladen",
         "qualities": {
-            "title": "Video-Qualität auswählen",
+            "title": "Videoqualität auswählen",
             "low": "Niedrig (270p)",
             "medium": "Mittel (540p)",
             "high": "Hoch (1080p)"
@@ -144,6 +152,7 @@ const strings = {
         "conceptDescription": "Komm mit auf Zeitreise und erforsche das Buch, das alle Fragen beantworten kann",
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Zeitreise starten",
             "continue": "Zeitreise fortsetzen",
@@ -151,7 +160,7 @@ const strings = {
             "congrats": "Glückwunsch!",
             "completed": "Du hast es geschafft",
             "back": "Zurück",
-            "attachments": "Attachments",
+            "attachments": "Anhang",
             "homescreen": "Fertig"
         },
         "task": {
@@ -176,10 +185,13 @@ const strings = {
             "availableOffline": "Offline verfügbar",
             "download": "Herunterladen",
             "downloading": "Wird heruntergeladen",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Video abspielen",
             "iris": "Sprich mit Iris",
             "task": "Erledige die Aufgabe"
         },
@@ -187,22 +199,22 @@ const strings = {
             "sortingIcons": "Sortiere die Icons in die richtige Box",
             "cableConnect": "Verbinde die Kabel mit der richtigen Farbe",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Gut gemacht!",
+                "message": "Du hast die Aufgabe geschafft!"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Uuups!",
+                "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
-            "skip": "Überspring"
+            "skip": "Überspringen"
         }
     },
     "nl": {
         "loading": "Laden",
         "qualities": {
-            "title": "Kies kwaliteit",
+            "title": "Kies videokwaliteit",
             "low": "Laag (270p)",
             "medium": "Gemiddeld (540p)",
             "high": "Hoog (1080p)"
@@ -210,6 +222,7 @@ const strings = {
         "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Start de tijdreis",
             "continue": "Ga door met de tijdreis",
@@ -217,8 +230,8 @@ const strings = {
             "congrats": "Gefeliciteerd!",
             "completed": "Je hebt het gehaald",
             "back": "Terug",
-            "attachments": "Attachments",
-            "homescreen": "Done"
+            "attachments": "Bijlagen",
+            "homescreen": "Klaar"
         },
         "task": {
             "codeUnlock": "Voer het juiste getal in",
@@ -242,10 +255,13 @@ const strings = {
             "availableOffline": "Online beschikbaar",
             "download": "Download",
             "downloading": "Downloaden",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Speel de video af",
             "iris": "Praat met Iris",
             "task": "Doe de opdracht"
         },
@@ -253,22 +269,22 @@ const strings = {
             "sortingIcons": "Zet de plaatjes in de juiste box",
             "cableConnect": "Maak de kabels vast aan de juiste kleur",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Goed gedaan!",
+                "message": "Je hebt de opdracht voltooid!"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Oeps!",
+                "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
-            "skip": "Skip"
+            "skip": "Overslaan"
         }
     },
     "fr": {
         "loading": "Chargement",
         "qualities": {
-            "title": "Choisir la qualité",
+            "title": "Choisir la qualité vidéo",
             "low": "Basse (270p)",
             "medium": "Moyenne (540p)",
             "high": "Haute (1080p)"
@@ -276,6 +292,7 @@ const strings = {
         "conceptDescription": "Rejoins les voyages dans le temps et explore le livre qui peut répondre à toutes les questions",
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Commencer le voyage dans le temps",
             "continue": "Continuer le voyage dans le temps",
@@ -283,8 +300,8 @@ const strings = {
             "congrats": "Félicitations !",
             "completed": "Tu as terminé",
             "back": "Retour",
-            "attachments": "Attachments",
-            "homescreen": "Done"
+            "attachments": "Pièces jointes",
+            "homescreen": "Terminé"
         },
         "task": {
             "codeUnlock": "Saisir le bon numéro",
@@ -308,10 +325,13 @@ const strings = {
             "availableOffline": "Disponible hors connexion",
             "download": "Télécharger",
             "downloading": "Téléchargement",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Lire la vidéo",
             "iris": "Parler à Iris",
             "task": "Effectuer la tâche"
         },
@@ -319,22 +339,22 @@ const strings = {
             "sortingIcons": "Trier les icônes dans la bonne boîte",
             "cableConnect": "Relier les câbles à la bonne couleur",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Bien joué !",
+                "message": "Tu as réussi la tâche !"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Oups!",
+                "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
-            "skip": "Skip"
+            "skip": "Sauter"
         }
     },
     "pl": {
         "loading": "Ładowanie",
         "qualities": {
-            "title": "Wybierz jakość",
+            "title": "Wybierz jakość filmu",
             "low": "Niska (270p)",
             "medium": "Średnia (540p)",
             "high": "Wysoka (1080p)"
@@ -342,6 +362,7 @@ const strings = {
         "conceptDescription": "Dołącz do podróży w czasie i odkryj książkę, która odpowie na każde pytanie",
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Rozpocznij podróż w czasie",
             "continue": "Kontynuuj podróż",
@@ -349,8 +370,8 @@ const strings = {
             "congrats": "Gratulacje!",
             "completed": "Ukończyłeś",
             "back": "Powrót",
-            "attachments": "Attachments",
-            "homescreen": "Done"
+            "attachments": "Załączniki",
+            "homescreen": "Gotowe"
         },
         "task": {
             "codeUnlock": "Wpisz poprawny numer",
@@ -374,10 +395,13 @@ const strings = {
             "availableOffline": "Dostępne offline",
             "download": "Pobierz",
             "downloading": "Pobieranie",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Odtwórz film",
             "iris": "Porozmawiaj z Iris",
             "task": "Wykonaj zadanie"
         },
@@ -385,16 +409,16 @@ const strings = {
             "sortingIcons": "Posortuj ikony w odpowiednim polu",
             "cableConnect": "Połącz kable z odpowiednim kolorem",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Dobra robota!",
+                "message": "Wykonaliście zadanie!"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Ups!",
+                "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
-            "skip": "Skip"
+            "skip": "Pomiń"
         }
     },
     "ro": {
@@ -408,6 +432,7 @@ const strings = {
         "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
         "notAvailable": "Nici un capitol disponibil în limba selectată",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Începe călătoria în timp",
             "continue": "Continuă călătoria în timp",
@@ -440,7 +465,10 @@ const strings = {
             "availableOffline": "Disponibil offline",
             "download": "Descărcare",
             "downloading": "Se descarcă",
-            "update": "Actualizează versiunea offline"
+            "update": "Actualizează versiunea offline",
+            "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?",
+            "downloadFailed": "A apărut o problemă la descărcarea capitolului!",
+            "tryAgain": "Încearcă din nou"
         },
         "tooltips": {
             "video": "Pornește video",
@@ -463,6 +491,76 @@ const strings = {
             "skip": "Mergi mai departe"
         }
     },
+    "es": {
+        "loading": "Cargando",
+        "qualities": {
+            "title": "Seleccionar Calidad del Video",
+            "low": "Baja (270p)",
+            "medium": "Media (540p)",
+            "high": "Alta (1080p)"
+        },
+        "conceptDescription": "Unete a un viaje en el tiempo y explora el libro que puede responder todas las preguntas",
+        "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
+        "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
+        "journey": {
+            "start": "Comenzar el viaje en el tiempo",
+            "continue": "Continuar con el viaje en el tiempo",
+            "restart": "Empezar el viaje de nuevo",
+            "congrats": "Felicitaciones!",
+            "completed": "Tu has terminado",
+            "back": "Regresar",
+            "attachments": "Adjunto",
+            "homescreen": "Listo"
+        },
+        "task": {
+            "codeUnlock": "Escribe el numero correcto",
+            "taskDescription": "Tarea de descripción",
+            "questions": "Pregunta",
+            "getTask": "Ir a la tarea",
+            "submit": "Enviar",
+            "next": "Next"
+        },
+        "archive": "Archivo",
+        "settings": {
+            "title": "Configuración",
+            "soundEffects": "Efectos de sonidos",
+            "language": "Idioma",
+            "feedback": "Retroalimentación",
+            "logIn": "Iniciar sección",
+            "logOut": "Cerrar sección",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+        },
+        "offline": {
+            "availableOffline": "Disponible sin conexión",
+            "download": "Descargar",
+            "downloading": "Descargando",
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
+        },
+        "tooltips": {
+            "video": "Reproducir video",
+            "iris": "Habla con Iris",
+            "task": "Completar la tarea"
+        },
+        "miniGames": {
+            "sortingIcons": "Ordenar los iconos en el cuadro correcto",
+            "cableConnect": "Conecte los cables al color correcto",
+            "completed": {
+                "title": "Buen Trabajo!",
+                "message": "Has completado tu tarea!"
+            },
+            "timeElapsed": {
+                "title": "Ups!",
+                "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
+            },
+            "reset": "Reinicia el juego",
+            "continue": "Continuar el viaje",
+            "skip": "Saltar"
+        }
+    },
     "pt-pt": {
         "loading": "Carregando",
         "qualities": {
@@ -474,6 +572,7 @@ const strings = {
         "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Comece a viajem no tempo",
             "continue": "Continue a viajem no tempo",
@@ -506,7 +605,10 @@ const strings = {
             "availableOffline": "Disponível off-line",
             "download": "Download",
             "downloading": "Baixando",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
             "video": "Play video",
@@ -522,7 +624,7 @@ const strings = {
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "message": "Time is up; try to attach all the wires before time is up."
             },
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
@@ -532,7 +634,7 @@ const strings = {
     "it": {
         "loading": "Caricamento",
         "qualities": {
-            "title": "Scegli la qualità",
+            "title": "Scegli la qualità del video",
             "low": "Bassa (270p)",
             "medium": "Media (540p)",
             "high": "Alta (1080p)"
@@ -540,6 +642,7 @@ const strings = {
         "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Inizia il viaggio nel tempo",
             "continue": "Continua il viaggio nel tempo",
@@ -547,8 +650,8 @@ const strings = {
             "congrats": "Complimenti!",
             "completed": "Hai finito",
             "back": "Indietro",
-            "attachments": "Attachments",
-            "homescreen": "Done"
+            "attachments": "Allegati",
+            "homescreen": "Fatto"
         },
         "task": {
             "codeUnlock": "Inserisci il numero corretto",
@@ -572,10 +675,13 @@ const strings = {
             "availableOffline": "Disponibile offline",
             "download": "Download",
             "downloading": "Download in corso",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Riproduci il video",
             "iris": "Parla con Iris",
             "task": "Completa l'attività"
         },
@@ -583,22 +689,22 @@ const strings = {
             "sortingIcons": "Ordina le icone nella casella giusta",
             "cableConnect": "Unisci i cavi al colore giusto",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Ottimo lavoro!",
+                "message": "Hai completato il compito!"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Ops!",
+                "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
-            "skip": "Skip"
+            "skip": "Salta"
         }
     },
     "ru": {
         "loading": "Загрузка",
         "qualities": {
-            "title": "Выбрать качество",
+            "title": "Выберите качество видео",
             "low": "Низкое (270p)",
             "medium": "Среднее (540p)",
             "high": "Высокое (1080p)"
@@ -606,6 +712,7 @@ const strings = {
         "conceptDescription": "Присоединяйтесь к путешествию во времени и исследуйте книгу, способную ответить на все вопросы",
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Начать путешествие во времени",
             "continue": "Продолжить путешествие во времени",
@@ -613,8 +720,8 @@ const strings = {
             "congrats": "Поздравляем!",
             "completed": "Вы завершили",
             "back": "Назад",
-            "attachments": "Attachments",
-            "homescreen": "Done"
+            "attachments": "Вложения",
+            "homescreen": "Готово"
         },
         "task": {
             "codeUnlock": "Введите правильный номер",
@@ -638,10 +745,13 @@ const strings = {
             "availableOffline": "Доступно офлайн",
             "download": "Скачать",
             "downloading": "Скачивание",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Включить видео",
             "iris": "Поговорить с Ирис",
             "task": "Завершите задание"
         },
@@ -649,22 +759,22 @@ const strings = {
             "sortingIcons": "Рассортируйте иконки по правильным коробкам",
             "cableConnect": "Соедините кабели нужного цвета",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Отличная работа!",
+                "message": "Вы выполнили задание!"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Ой!",
+                "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
-            "skip": "Skip"
+            "skip": "Пропустить"
         }
     },
     "fi": {
         "loading": "Ladataan",
         "qualities": {
-            "title": "Valitse laatu",
+            "title": "Valitse videon laatu",
             "low": "Matala (270p)",
             "medium": "Keskitaso (540p)",
             "high": "Korkea (1080p)"
@@ -672,6 +782,7 @@ const strings = {
         "conceptDescription": "Liity aikamatkalle ja tutki kirjaa josta saat vastaukset kaikkiin kysymyksiin",
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
         "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
             "start": "Aloita aikamatka",
             "continue": "Jatka aikamatkaa",
@@ -679,8 +790,8 @@ const strings = {
             "congrats": "Onnittelut!",
             "completed": "Olet suorittanut",
             "back": "Takaisin",
-            "attachments": "Attachments",
-            "homescreen": "Done"
+            "attachments": "Liitteet",
+            "homescreen": "Valmis"
         },
         "task": {
             "codeUnlock": "Kirjoita oikea numero",
@@ -704,10 +815,13 @@ const strings = {
             "availableOffline": "Saatavilla offline-tilassa",
             "download": "Lataa",
             "downloading": "Ladataan tiedostoa",
-            "update": "Update offline version"
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
         },
         "tooltips": {
-            "video": "Play video",
+            "video": "Toista video",
             "iris": "Puhu Irikselle",
             "task": "Suorita tehtävä loppuun"
         },
@@ -715,16 +829,16 @@ const strings = {
             "sortingIcons": "Järjestä kuvakkeet oikeisiin laatikoihin ",
             "cableConnect": "Yhdistä johdot oikeisiin väreihin",
             "completed": {
-                "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "title": "Hyvin tehty!",
+                "message": "Olet suorittanut tehtävän!"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "The time is over. Try to join all the cables before the time goes out."
+                "title": "Hups!",
+                "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
-            "skip": "Skip"
+            "skip": "Ohita"
         }
     }
 }

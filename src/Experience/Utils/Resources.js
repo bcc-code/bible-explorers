@@ -105,6 +105,7 @@ export default class Resources extends EventEmitter {
                 video.setAttribute('webkit-playsinline', 'webkit-playsinline')
                 video.setAttribute('playsinline', '')
                 // Black textures on iOS fix
+                video.style.background = "white";
                 video.crossOrigin = ''
                 video.muted = false
                 video.loop = true
@@ -118,7 +119,7 @@ export default class Resources extends EventEmitter {
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.sRGBEncoding
-
+                texture.needsUpdate = true; 
                 this.textureItems[source.name] = {
                     item: texture,
                     path: source.path,
@@ -205,7 +206,9 @@ export default class Resources extends EventEmitter {
 
     async loadEpisodeFromBtv(videoName) {
         const episodeId = videoName.replace('episode-', '')
-        const locale = _lang.getLanguageCode()
+        let locale = _lang.getLanguageCode()
+        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
+
         const claims = await resources.experience.auth0.getIdTokenClaims()
         const idToken = claims ? claims.__raw : '';
 

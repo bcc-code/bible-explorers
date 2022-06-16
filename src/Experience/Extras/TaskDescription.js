@@ -133,7 +133,9 @@ export default class TaskDescription {
                     </div>
                     ${title}
                     ${additionalContent}
-                    <div class="task__tips"></div>
+                    <div class="task__tips">
+                        <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
+                    </div>
                 </div>
             </div>
             <div class="modal__actions">
