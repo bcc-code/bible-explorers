@@ -16,6 +16,7 @@ export default class Settings {
             login: false,
             logout: false
         }
+
         settings.el = document.getElementById("settings")
         settings.el.addEventListener("click", settings.toggleSettings)
     }
@@ -55,8 +56,11 @@ export default class Settings {
                             <i class="icon icon-envelope-solid"></i>
                         </a>
                         <div class="login settings__footer">
-                            <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.settings.logIn}</span></button>
-                            <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.settings.logOut}</span></button>
+                            <p><span id="loggedIn"></span> <span id="userName"></span> <span id="userRole"></span></p>
+                            <div class="button__actions">
+                                <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.settings.logIn}</span></button>
+                                <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.settings.logOut}</span></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +76,10 @@ export default class Settings {
                 languageList: document.querySelector(".language .language__list"),
                 languages: document.querySelectorAll(".language .language__list li"),
                 login: document.getElementById("button__login"),
-                logout: document.getElementById("button__logout")
+                logout: document.getElementById("button__logout"),
+                loggedIn: document.getElementById("loggedIn"),
+                userName: document.getElementById("userName"),
+                userRole: document.getElementById("userRole")
             }
 
             settings.el.soundToggle.addEventListener("change", settings.toggleSound)
@@ -105,6 +112,14 @@ export default class Settings {
         if (settings.el.login) {
             settings.el.login.disabled = settings.logInLogOut.login
             settings.el.logout.disabled = settings.logInLogOut.logout
+
+            settings.el.loggedIn.innerText = this.experience.auth0.isAuthenticated ? _s.settings.loggedInAs : _s.settings.notLoggedIn
+            settings.el.userName.innerText = experience.auth0.userData?.name || ''
+            settings.el.userRole.innerText = this.experience.auth0.isAuthenticated
+                ? document.body.classList.contains("ak_leder")
+                    ? '(' + _s.settings.mentor + ')'
+                    : '(' + _s.settings.noRole + ')'
+                : ''
         }
     }
 

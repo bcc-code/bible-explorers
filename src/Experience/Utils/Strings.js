@@ -37,6 +37,10 @@ const strings = {
             "soundEffects": "Sound effects",
             "language": "Language",
             "feedback": "Feedback",
+            "notLoggedIn": "You are not logged in!",
+            "loggedInAs": "You are logged in as:",
+            "mentor": "mentor",
+            "noRole": "no role",
             "logIn": "Log in",
             "logOut": "Log out",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"

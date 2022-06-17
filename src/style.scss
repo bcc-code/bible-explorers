@@ -1715,9 +1715,12 @@ button,
     }
 
     &__footer {
-        margin-top: auto;
+        margin-top: 1.5rem;
         margin-bottom: 1rem;
-        display: flex;
+        
+        .button__actions {
+            display: flex;
+        }
 
         .button {
             background: $gradient2;
