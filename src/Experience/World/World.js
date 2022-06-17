@@ -78,7 +78,7 @@ export default class World {
                 instance.goToAllChapters()
 
                 setFullscreen()
-                instance.audio.playBgMusic()
+                instance.audio.changeBgMusic()
             })
         })
 
@@ -139,7 +139,7 @@ export default class World {
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
         instance.audio.playWhoosh()
-        instance.audio.playBgMusic()
+        instance.audio.changeBgMusic()
     }
 
     showMenuButtons() {
@@ -603,7 +603,7 @@ export default class World {
 
         if (instance.selectedChapter.background_music) {
             instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
-                instance.audio.playBgMusic(chapter.background_music)
+                instance.audio.changeBgMusic(chapter.background_music)
             })
         }
 
@@ -624,8 +624,7 @@ export default class World {
         instance.showMenu()
         instance.buttons.start.classList.remove('visible')
         instance.buttons.restart.classList.add('visible')
-        instance.audio.playBgMusic()
-
+        instance.audio.changeBgMusic()
 
         _appInsights.trackEvent({
             name: "Finish chapter",

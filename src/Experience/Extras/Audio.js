@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
+import _STATE from '../Utils/AudioStates.js'
 
 let audio = null
-let bgAudioQueue = [];
 
 export default class Audio {
     constructor() {
@@ -11,8 +11,9 @@ export default class Audio {
 
         audio.taskDescriptionAudios = []
         audio.bgMusicAudios = {
+            state: _STATE.UNDEFINED,
+            otherAudioIsPlaying: false,
             default: 'sounds/bg-music.mp3',
-            playingSrc: '',
             objs: {}
         }
 
@@ -27,102 +28,140 @@ export default class Audio {
         }
     }
 
-    playBgMusic(soundtrack = audio.bgMusicAudios['default']) {
-        bgAudioQueue.push(soundtrack);
+    changeBgMusic(soundtrack = audio.bgMusicAudios.default) {
         if (!audio.experience.settings.soundOn) return
         audio.initialize()
 
-        if (audio.el.classList.contains('sound-on') && audio.bgMusicAudios.playingSrc != soundtrack) {
-            audio.fadeOutBgMusic()
+        if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
+            audio.loadAndPlay(soundtrack)
         }
-
-        setTimeout(() => {
-            if (audio.notLoaded(soundtrack)) {
-                audio.loadBgMusic(soundtrack)
-            }
-            else {
-                if (audio.bgMusicAudios.playingSrc != soundtrack) {
-                    audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
-                    audio.bgMusicAudios.playingSrc = soundtrack
-                }
-    
-                audio.fadeInBgMusic()
-            }
-        }, 700)
+        else if (audio.bgMusicAudios.state == _STATE.PLAYING) {
+            audio.fadeOutBgMusic(() => {
+                audio.loadAndPlay(soundtrack)
+            })
+        }
+        else {
+            audio.loadBgMusic(soundtrack)
+        }
     }
 
     togglePlayBgMusic() {
-        audio.initialize()
         if (!audio.experience.settings.soundOn) return
-        audio.el.classList.add('pointer-events-none')
 
-        if (!audio.bgMusic) {
-            audio.loadBgMusic()
+        audio.initialize()
+        audio.disableToggleBtn()
+
+        if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
+            audio.loadAndPlay(audio.bgMusicAudios.default)
         }
         else {
-            audio.el.classList.contains('sound-on')
-                ? audio.fadeOutBgMusic()
-                : audio.fadeInBgMusic()
+            if (audio.bgMusicAudios.state == _STATE.PLAYING) {
+                audio.bgMusicAudios.state = _STATE.PAUSED
+                audio.pauseBgMusic()
+            }
+            else if (audio.bgMusicAudios.state == _STATE.PAUSED) {
+                audio.bgMusicAudios.state = _STATE.PLAYING
+                audio.playBgMusic()
+            }
         }
     }
 
-    loadBgMusic(soundtrack = audio.bgMusicAudios['default']) {
-        if (audio?.bgMusic) 
-        {
-            // Workaround for double player issue .stop() doesn't work
-            audio.bgMusic = null
+    loadAndPlay(soundtrack) {
+        audio.loadBgMusic(
+            soundtrack,
+            audio.playBgMusic
+        )
+    }
+
+    loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => {}) {
+        if (audio.notFetchedYet(soundtrack)) {
+            audio.disableToggleBtn()
+
+            audio.audioLoader.load(soundtrack, function(buffer) {
+                audio.bgMusicAudios.state = _STATE.PLAYING
+                audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
+                audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
+                audio.bgMusicAudios.objs[soundtrack].setLoop(true)
+                audio.bgMusicAudios.objs[soundtrack].setVolume(0)
+
+                audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
+                audio.enableToggleBtn()
+
+                callback()
+            })
         }
-        
-        audio.audioLoader.load(soundtrack, function(buffer) {
-            if (bgAudioQueue.at(-1) === soundtrack) {
-                audio.bgMusic = new THREE.Audio(audio.listener)
-                audio.bgMusic.setBuffer(buffer)
-                audio.bgMusic.setLoop(true)
-                audio.bgMusic.setVolume(0)
-                audio.bgMusic.play()
-                audio.fadeInBgMusic()
-                audio.bgMusicAudios.objs[soundtrack] = audio.bgMusic
-                audio.bgMusicAudios.playingSrc = soundtrack
-            }
-        })
+        else {
+            audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
+            callback()
+        }
+    }
+
+    playBgMusic() {
+        audio.fadeInBgMusic()
+        audio.setSoundIconOn()
+    }
+    
+    pauseBgMusic() {
+        audio.fadeOutBgMusic()
+        audio.setSoundIconOff()
+    }
+
+    setOtherAudioIsPlaying(value) {
+        audio.bgMusicAudios.otherAudioIsPlaying = value
     }
 
     fadeInBgMusic() {
-        if (!audio.bgMusic.isPlaying)
-            audio.bgMusic.play()
+        if (!audio.bgMusic) return
+        if (audio.bgMusicAudios.otherAudioIsPlaying) return
+        if (audio.bgMusicAudios.state != _STATE.PLAYING) return
 
-        if (audio.bgMusic.isPlaying)
-            audio.el.classList.add('sound-on')
+        audio.bgMusic.play()
 
         const fadeInAudio = setInterval(() => {
-            const volume = audio.bgMusic?.getVolume() + 0.05
-            audio.bgMusic?.setVolume(volume)
+            audio.bgMusic.setVolume(
+                audio.bgMusic.getVolume() + 0.05
+            )
 
-            if (audio.bgMusic?.getVolume() > 0.5) {
+            if (audio.bgMusic.getVolume() > 0.5) {
                 clearInterval(fadeInAudio)
-                audio.el.classList.remove('pointer-events-none')
+                audio.enableToggleBtn()
             }
         }, 100)
     }
 
     fadeOutBgMusic(callback = () => {}) {
-        audio.el.classList.remove('sound-on')
+        if (!audio.bgMusic) return
 
         const fadeOutAudio = setInterval(() => {
-            const volume = audio.bgMusic?.getVolume() - 0.1
-            audio.bgMusic?.setVolume(volume)
+            audio.bgMusic.setVolume(
+                audio.bgMusic.getVolume() - 0.1
+            )
 
-            if (audio.bgMusic?.getVolume() < 0.1) {
+            if (audio.bgMusic.getVolume() < 0.1) {
                 clearInterval(fadeOutAudio)
-                audio.bgMusic?.setVolume(0)
-                callback()
-                audio.el.classList.remove('pointer-events-none')
+                audio.enableToggleBtn()
+                audio.bgMusic.setVolume(0)
                 audio.bgMusic.pause()
+                callback()
             }
         }, 100)
     }
 
-    notLoaded(soundtrack) {
+    setSoundIconOn() {
+        audio.el.classList.add('sound-on')
+    }
+    setSoundIconOff() {
+        audio.el.classList.remove('sound-on')
+    }
+
+    disableToggleBtn() {
+        audio.el.classList.add('pointer-events-none')
+    }
+    enableToggleBtn() {
+        audio.el.classList.remove('pointer-events-none')
+    }
+
+    notFetchedYet(soundtrack) {
         return !audio.bgMusicAudios.objs[soundtrack]
     }
 
@@ -132,19 +171,21 @@ export default class Audio {
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.audioLoader.load(url, function(buffer) {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
-                audio.taskDescriptionAudios[url].onEnded = () => audio.fadeInBgMusic();
+                audio.taskDescriptionAudios[url].onEnded = () => audio.fadeInBgMusic()
                 audio.taskDescriptionAudios[url].setBuffer(buffer)
                 audio.taskDescriptionAudios[url].play()
+                audio.setOtherAudioIsPlaying(true)
                 audio.fadeOutBgMusic()
-                audio.finish
             })
         }
         else if (audio.taskDescriptionAudios[url].isPlaying) {
             audio.taskDescriptionAudios[url].stop()
+            audio.setOtherAudioIsPlaying(false)
             audio.fadeInBgMusic()
         }
         else {
             audio.taskDescriptionAudios[url].play()
+            audio.setOtherAudioIsPlaying(true)
             audio.fadeOutBgMusic()
         }
     }
@@ -153,8 +194,8 @@ export default class Audio {
         if (audio.taskDescriptionAudios.hasOwnProperty(url))
             audio.taskDescriptionAudios[url].stop()
 
-        if (audio.el.classList.contains('sound-on'))
-            audio.fadeInBgMusic()
+        audio.setOtherAudioIsPlaying(false)
+        audio.fadeInBgMusic()
     }
 
     playWhoosh() {

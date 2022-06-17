@@ -109,7 +109,6 @@ export default class Video {
         instance.portalScreen.material.map = instance.texture
         instance.texture.image.play()
         instance.video().requestFullscreen()
-        instance.audio.fadeOutBgMusic()
     }
 
     pause() {
@@ -119,7 +118,9 @@ export default class Video {
     focus() {
         instance.camera.zoomIn(1500)
         instance.tablet.material.map.image.play()
-        instance.audio.fadeOutBgMusic()
+
+        instance.audio.setOtherAudioIsPlaying(true)
+        audio.fadeOutBgMusic()
 
         new TWEEN.Tween(instance.portalScreen.material)
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
@@ -141,7 +142,8 @@ export default class Video {
                 .easing(TWEEN.Easing.Quadratic.InOut)
                 .start()
                 .onComplete(() => {
-                    instance.audio.fadeInBgMusic()
+                    instance.audio.setOtherAudioIsPlaying(false)
+                    audio.fadeInBgMusic()
                 })
         }
     }
