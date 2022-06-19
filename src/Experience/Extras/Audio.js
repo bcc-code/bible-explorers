@@ -115,9 +115,8 @@ export default class Audio {
         if (audio.bgMusicAudios.otherAudioIsPlaying) return
         if (audio.bgMusicAudios.state != _STATE.PLAYING) return
 
-        audio.bgMusic.play()
-
         const fadeInAudio = setInterval(() => {
+
             audio.bgMusic.setVolume(
                 audio.bgMusic.getVolume() + 0.05
             )

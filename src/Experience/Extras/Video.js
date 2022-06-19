@@ -120,7 +120,7 @@ export default class Video {
         instance.tablet.material.map.image.play()
 
         instance.audio.setOtherAudioIsPlaying(true)
-        audio.fadeOutBgMusic()
+        instance.audio.fadeOutBgMusic()
 
         new TWEEN.Tween(instance.portalScreen.material)
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
@@ -143,7 +143,7 @@ export default class Video {
                 .start()
                 .onComplete(() => {
                     instance.audio.setOtherAudioIsPlaying(false)
-                    audio.fadeInBgMusic()
+                    instance.audio.fadeInBgMusic()
                 })
         }
     }
