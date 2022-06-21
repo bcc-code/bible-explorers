@@ -11,13 +11,16 @@ export default class Offline {
         this.experience = new Experience()
         offline = this
 
+        offline.data = []
+        offline.downloaded = []
+
         if ("indexedDB" in window) {
             this.initialize()
             this.setUpDbConnection()
         }
         else {
-            console.log("This browser doesn't support IndexedDB");
-            return;
+            console.log("This browser doesn't support IndexedDB")
+            return
         }
     }
 
@@ -66,61 +69,80 @@ export default class Offline {
     }
 
     downloadFromWeb = function (episodes) {
-        offline.episodes = episodes
-        offline.totalEpisodes = episodes.length
-        offline.filesDownloaded = 0
+        let chapterId = episodes[0].data.chapterId
 
-        offline.startDownloading()
+        offline.getDownloadedEpisodesFromChapter(chapterId, (downloadedEpisodes) => {
+            offline.data[chapterId] = episodes
+
+            if (episodes.length == downloadedEpisodes.length) {
+                // The user wants to redownload the chapter
+                offline.downloaded[chapterId] = []
+            }
+            else {
+                // Continue interrupted download
+                offline.downloaded[chapterId] = downloadedEpisodes
+            }
+
+            const notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+            offline.startDownloading(notDownloadedEpisodes[0])
+        })
     }
 
-    startDownloading = function () {
-        const currentEpisode = offline.episodes[offline.filesDownloaded]
+    getNotDownloadedEpisodes = function (allEpisodes, downloadedEpisodes) {
+        return allEpisodes.filter(allEp => {
+            return !downloadedEpisodes.some(dwEp => {
+                return allEp.data.name === dwEp.name
+            })
+        })
+    }
 
+    startDownloading = function (currentEpisode) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = "blob"
         xhr.open("GET", currentEpisode.data.thumbnail, true)
-        xhr.addEventListener("load", offline.onThumbnailDownloadComplete, false)
+        xhr.addEventListener("load", () => { offline.onThumbnailDownloadComplete(currentEpisode, xhr) }, false)
         xhr.send()
     }
 
-    onThumbnailDownloadComplete = function () {
-        if (this.status === 200) {
-            offline.episodes[offline.filesDownloaded].data.thumbnail = this.response
-            offline.downloadVideo()
+    onThumbnailDownloadComplete = function (currentEpisode, xhr) {
+        if (xhr.status === 200) {
+            currentEpisode.data.thumbnail = xhr.response
+            offline.downloadVideo(currentEpisode)
         }
     }
 
-    downloadVideo = function() {
-        const currentEpisode = offline.episodes[offline.filesDownloaded]
-
+    downloadVideo = function(currentEpisode) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = "blob"
         xhr.open("GET", currentEpisode.downloadUrl, true)
-        xhr.addEventListener("progress", offline.onVideoDownloadProgress)
-        xhr.addEventListener("load", offline.onVideoDownloadComplete, false)
+        xhr.addEventListener("progress", (event) => { offline.onVideoDownloadProgress(currentEpisode.data.chapterId, event) })
+        xhr.addEventListener("load", () => { offline.onVideoDownloadComplete(currentEpisode, xhr) }, false)
         xhr.send()
     }
 
-    onVideoDownloadProgress = function (e) {
+    onVideoDownloadProgress = function (chapterId, e) {
         if (e.lengthComputable) {
-            const currentEpisode = offline.episodes[offline.filesDownloaded]
-            var percentage = (offline.filesDownloaded * 100 + (e.loaded / e.total) * 100) / offline.totalEpisodes
+            var percentage = (offline.downloaded[chapterId].length * 100 + (e.loaded / e.total) * 100) / offline.data[chapterId].length
             
-            let chapterEl = document.querySelector('.chapter[data-id="' + currentEpisode.data.chapterId + '"]')
-            chapterEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
-            chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
+            let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
+            if (chapterEl) {
+                chapterEl.classList.add('downloading')
+                chapterEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
+                chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
+            }
         }
     }
 
-    onVideoDownloadComplete = function () {
-        if (this.status === 200) {
-            let currentEpisode = offline.episodes[offline.filesDownloaded]
-
-            currentEpisode.data.video = this.response
+    onVideoDownloadComplete = function (currentEpisode, xhr) {
+        if (xhr.status === 200) {
+            currentEpisode.data.video = xhr.response
             offline.putFileInDb(currentEpisode.data)
 
-            if (++offline.filesDownloaded == offline.totalEpisodes) {
-                let chapterEl = document.querySelector('.chapter[data-id="' + currentEpisode.data.chapterId + '"]')
+            const chapterId = currentEpisode.data.chapterId
+            offline.downloaded[chapterId].push(currentEpisode.data)
+
+            if (offline.data[chapterId].length == offline.downloaded[chapterId].length) {
+                let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
                 chapterEl.classList.remove('downloading')
                 chapterEl.classList.add('downloaded')
 
@@ -137,7 +159,9 @@ export default class Offline {
                 offline.experience.resources.updateBtvStreamWithDownloadedVersion(currentEpisode.data.name)
             }
             else {
-                offline.startDownloading()
+                // Next episode to download
+                const notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+                offline.startDownloading(notDownloadedEpisodes[0])
             }
         }
     }
@@ -208,17 +232,23 @@ export default class Offline {
     }
 
     markChapterIfAvailableOffline = function (chapter) {
+        offline.getDownloadedEpisodesFromChapter(chapter.id, (downloadedEpisodes) => {
+            if (downloadedEpisodes.length == chapter.episodes.length) {
+                document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded')
+            }
+        })
+    }
+
+    getDownloadedEpisodesFromChapter = function (chapterId, callback = () => {}) {
         if (!offline.db) return
         offline.transaction = offline.db.transaction([offline.store], "readonly")
         offline.objStore = offline.transaction.objectStore(offline.store)
 
         var chapterIndex = offline.objStore.index('chapterIndex')
-        var getIndex = chapterIndex.getAll(chapter.id.toString())
+        var getIndex = chapterIndex.getAll(chapterId.toString())
 
         getIndex.onsuccess = function () {
-            if (getIndex.result.length == chapter.episodes.length) {
-                document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded')
-            }
+            callback(getIndex.result)
         }
     }
 

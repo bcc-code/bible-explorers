@@ -473,7 +473,7 @@ const strings = {
             "questions": "Întrebare",
             "getTask": "Mergi la sarcină",
             "submit": "Trimite",
-            "next": "Next"
+            "next": "Mai departe"
         },
         "archive": "Arhivă",
         "settings": {
