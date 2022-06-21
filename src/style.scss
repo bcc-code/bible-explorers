@@ -71,69 +71,6 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
-@mixin button($default, $hover, $small: false) {
-    height: 4.5rem;
-
-    span {
-        display: block;
-        position: relative;
-        z-index: 1;
-    }
-
-    @if $small {
-        border-radius: 50%;
-        @include alignCenterVH();
-        width: 4.5rem;
-
-        i {
-            position: relative;
-            z-index: 1;
-        }
-    }
-
-    @else {
-        line-height: 4.5rem;
-        width: 16rem;
-    }
-
-    &::after,
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    &::before {
-        @include setBackground($default);
-    }
-
-    &::after {
-        opacity: 0;
-        @include setBackground($hover);
-        transition: .3s ease;
-    }
-
-    &:hover::after {
-        opacity: 1;
-    }
-
-    &:hover {
-        transform: scale(1.05);
-    }
-
-    &.disabled {
-        pointer-events: none;
-        opacity: 0.4;
-    }
-
-    &.selected::after {
-        opacity: 1;
-    }
-}
-
 @mixin popupHeader($background) {
     width: 482px;
     height: 162px;
@@ -893,6 +830,7 @@ button,
     }
 
     .modal-on & {
+
         #settings,
         #sound {
             display: none;
@@ -1554,7 +1492,7 @@ button,
         overflow-y: auto;
 
         padding: 2rem;
-        display: grid;
+        display: flex;
         align-items: center;
         justify-content: center;
     }
@@ -1688,6 +1626,7 @@ button,
 
 .settings {
     &__content {
+        width: 28rem;
         display: flex;
         flex-direction: column;
     }
@@ -1712,12 +1651,18 @@ button,
         &:not(:last-child) {
             margin-bottom: 1.5rem;
         }
+
+        &.faq__button {
+            cursor: pointer;
+            @extend .button;
+            text-align: left;
+        }
     }
 
     &__footer {
         margin-top: 1.5rem;
         margin-bottom: 1rem;
-        
+
         .button__actions {
             display: flex;
         }
@@ -1922,7 +1867,8 @@ button,
 .task,
 .questions,
 .settings,
-.archive {
+.archive,
+.faq {
     display: flex;
     flex-wrap: wrap;
     max-width: 1140px;
@@ -2150,10 +2096,55 @@ button,
     }
 }
 
-.settings {
+.faq {
+
     &__content {
-        width: 28rem;
+        min-width: 30rem;
+        padding: 3rem 6rem;
     }
+
+    &__item {
+        position: relative;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            display: block;
+            height: 1px;
+            background: #fff;
+            opacity: 0.25;
+        }
+
+        p {
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: $accent2;
+        }
+        
+        &:last-child::after {
+            display: none;
+        }
+    }
+
+    &__question {
+        font-size: 1.25rem;
+        font-weight: bold;
+        font-family: $secondary-font
+    }
+
+    &__answer {
+        font-size: 1rem;
+        letter-spacing: 0.15px;
+        font-weight: lighter;
+    }
+
 }
 
 .congrats {

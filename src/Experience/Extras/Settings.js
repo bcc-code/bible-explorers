@@ -19,6 +19,7 @@ export default class Settings {
 
         settings.el = document.getElementById("settings")
         settings.el.addEventListener("click", settings.toggleSettings)
+
     }
 
     toggleSettings() {
@@ -55,6 +56,9 @@ export default class Settings {
                             <p>${_s.settings.feedback}</p>
                             <i class="icon icon-envelope-solid"></i>
                         </a>
+                        <div class="faq__button settings__item">
+                            <p>${_s.settings.faq}</p>
+                        </div>
                         <div class="login settings__footer">
                             <p><span id="loggedIn"></span> <span id="userName"></span> <span id="userRole"></span></p>
                             <div class="button__actions">
@@ -79,7 +83,7 @@ export default class Settings {
                 logout: document.getElementById("button__logout"),
                 loggedIn: document.getElementById("loggedIn"),
                 userName: document.getElementById("userName"),
-                userRole: document.getElementById("userRole")
+                userRole: document.getElementById("userRole"),
             }
 
             settings.el.soundToggle.addEventListener("change", settings.toggleSound)
@@ -93,6 +97,7 @@ export default class Settings {
                 })
             })
 
+            settings.toggleFaq()
             settings.updateUI()
         }
     }
@@ -103,6 +108,45 @@ export default class Settings {
 
     toggleLanguageList() {
         settings.el.languageList.classList.toggle("hide")
+    }
+
+    toggleFaq() {
+        const button = document.querySelector('.faq__button')
+        button.addEventListener('click', () => {
+
+            if (document.querySelector(".modal")) {
+                settings.modal.destroy()
+            }
+
+            const questions =  Object.values(_s.faq.questions)
+            const answers = Object.values(_s.faq.answers)
+
+            let html = `
+                <div class="modal__content faq">
+                    <div class="faq__header heading"><h2>${_s.settings.faq}</h2></div>
+                    <div class="faq__content">
+                        <div class="modal__extras">
+                            <span class="left"></span>
+                            <span class="bottomLeft"></span>
+                            <span class="bottomLeftSmall"></span>
+                        </div>
+                        
+                        <ol class="faq__list">`
+                        for (let i=0; i<questions.length; i++) {
+                            html +=  `<li class="faq__item">
+                                <p class="faq__question">${questions[i]}</p>
+                                <p class="faq__answer">${answers[i]}</p>`
+                            }
+                            html += `</li>
+                        </ol>
+                    </div>
+                </div>`
+
+            const faq = new Modal(html)
+            document.querySelector('.modal').classList.add('modal__faq')
+
+        })
+
     }
 
     updateUI = async () => {
