@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import _appInsights from '../Utils/AppInsights.js'
+import _lang from '../Utils/Lang.js'
 
 let offline = null
 
@@ -189,7 +190,7 @@ export default class Offline {
         const getItem = offline.objStore.get(videoName)
 
         getItem.onsuccess = function () {
-            if (getItem.result) {
+            if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
                 const item = getItem.result
                 let thumbnailUrl = null
 
