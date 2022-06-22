@@ -23,7 +23,6 @@ export default class Notification {
 
     destroy() {
         notification.htmlEl.remove()
-        notification.callback()
         notification = null
     }
 
