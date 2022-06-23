@@ -245,10 +245,22 @@ export default class SortingGame {
             }
         })
 
+        icon.on('dragmove', () => {
+            const maxX = icon.getParent().x()
+            const maxY = icon.getParent().y()
+
+            const minX = maxX - instance.stage.width() + icon.width()
+            const minY = maxY - instance.stage.height() + icon.height()
+
+            icon.x(Math.min(Math.max(icon.x(), -maxX), -minX))
+            icon.y(Math.min(Math.max(icon.y(), -maxY), -minY))
+        })
+
         icon.on('dragstart', function () {
             instance.draggedIconPosition = icon.position()
             icon.zIndex(9)
         })
+
         icon.on('dragend', () => {
             const category = icon.name().replace('icon_', '')
             const box = instance.boxes.find(b => b.id() == category)
