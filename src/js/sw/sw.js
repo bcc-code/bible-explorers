@@ -30,7 +30,7 @@ const assets = new Route(({url}) => {
 }))
 
 const btvPlayer = new Route(({url}) => {
-  return url === 'https://brunstad.tv/Content/js/btvplayer.js'
+  return url === 'https://brunstad.tv/Content/js/btvplayer.js?v=2022-06-24'
 }, new NetworkFirst({
   plugins: [
     new CacheableResponsePlugin({
