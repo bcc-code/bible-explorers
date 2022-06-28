@@ -104,7 +104,6 @@ export default class Resources extends EventEmitter {
                 video.setAttribute('id', source.name)
                 video.setAttribute('webkit-playsinline', 'webkit-playsinline')
                 video.setAttribute('playsinline', '')
-                // Black textures on iOS fix
                 video.style.background = "white";
                 video.crossOrigin = ''
                 video.muted = false
@@ -119,7 +118,7 @@ export default class Resources extends EventEmitter {
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.sRGBEncoding
-                texture.needsUpdate = true; 
+                texture.needsUpdate = true;
                 this.textureItems[source.name] = {
                     item: texture,
                     path: source.path,
@@ -194,14 +193,10 @@ export default class Resources extends EventEmitter {
         }
 
         resources.videoPlayers[videoName] = createVideoJsPlayer(videoName, options)
-        const video = resources.getGeneratedVideoElement(videoName)
-        resources.generateTextureForVideo(video, videoName, videoUrl)
     }
 
     async streamFromBtv(videoName) {
         await resources.loadEpisodeFromBtv(videoName)
-        const video = resources.getGeneratedVideoElement(videoName)
-        resources.generateTextureForVideo(video, videoName, 'https://brunstad.tv/series/' + videoName)
     }
 
     async loadEpisodeFromBtv(videoName) {
@@ -234,28 +229,6 @@ export default class Resources extends EventEmitter {
 
         resources.videoPlayers[videoName] = loadResponse.player
         resources.posterImages[videoName] = loadResponse.info.image
-    }
-
-    getGeneratedVideoElement(videoName) {
-        let videoEl = document.getElementById('videojs-' + videoName + '_html5_api')
-        videoEl.autoplay = false // Make sure the video won't start autoplay
-
-        return videoEl
-    }
-
-    generateTextureForVideo(videoEl, id, path) {
-        const texture = new THREE.VideoTexture(videoEl)
-        texture.flipY = false
-        texture.minFilter = THREE.LinearFilter
-        texture.magFilter = THREE.LinearFilter
-        texture.encoding = THREE.sRGBEncoding
-
-        resources.mediaItems[id] = {
-            item: texture,
-            path: path,
-            naturalWidth: videoEl.videoWidth || 1,
-            naturalHeight: videoEl.videoHeight || 1
-        }
     }
 
     fetchApiThenCache(theUrl, callback) {
