@@ -244,7 +244,6 @@ export default class SortingGame {
                 document.body.style.cursor = 'default'
             }
         })
-
         icon.on('dragmove', () => {
             const maxX = icon.getParent().x()
             const maxY = icon.getParent().y()
@@ -255,12 +254,10 @@ export default class SortingGame {
             icon.x(Math.min(Math.max(icon.x(), -maxX), -minX))
             icon.y(Math.min(Math.max(icon.y(), -maxY), -minY))
         })
-
-        icon.on('dragstart', function () {
+        icon.on('dragstart', () => {
             instance.draggedIconPosition = icon.position()
             icon.zIndex(9)
         })
-
         icon.on('dragend', () => {
             const category = icon.name().replace('icon_', '')
             const box = instance.boxes.find(b => b.id() == category)
