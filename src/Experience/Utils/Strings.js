@@ -79,6 +79,7 @@ const strings = {
             "task": "Complete the task"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Sort the icons to the right box",
             "cableConnect": "Join the cables to the right color",
             "completed": {
@@ -89,6 +90,11 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another",
             "reset": "Start over",
             "continue": "Continue the journey",
             "skip": "Skip"

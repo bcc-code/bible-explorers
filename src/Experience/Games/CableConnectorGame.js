@@ -1,8 +1,9 @@
 import Experience from '../Experience.js'
 import Konva from 'konva'
-import _s from '../Utils/Strings.js'
 import Modal from '../Utils/Modal.js'
 import Timer from '../Extras/Timer.js'
+import _s from '../Utils/Strings.js'
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -410,7 +411,7 @@ export default class CableConnector {
         if (timerInMinutes > 0) {
             this.timer = new Timer()
             this.timer.setMinutes(timerInMinutes)
-            document.addEventListener('timeElapsed', instance.onTimeElapsed)
+            document.addEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed)
         }
     }
 
@@ -420,7 +421,7 @@ export default class CableConnector {
 
         if (timerInMinutes > 0) {
             this.timer.destroy()
-            document.removeEventListener('timeElapsed', instance.onTimeElapsed)
+            document.removeEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed)
         }  
     }
 
@@ -439,7 +440,7 @@ export default class CableConnector {
                 <div class="congrats__title">
                     <h1>${_s.miniGames.timeElapsed.title}</h1>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}!</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}</div>
                 <div class="button button__continue">
                     <div class="button__content"><span>${_s.miniGames.reset}</span></div>
                 </div>
@@ -628,7 +629,6 @@ export default class CableConnector {
     }
 
     resize() {
-
         const container = document.querySelector('#miniGame__connector')
         const containerWidth = container.offsetWidth
         const containerHeight = container.offsetHeight

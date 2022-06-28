@@ -163,7 +163,6 @@ export default class Video {
 
     //#endregion
 
-
     getVideoQuality() {
         switch (this.world.selectedQuality) {
             case 'low':

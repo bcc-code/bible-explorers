@@ -12,6 +12,8 @@ import Points from './Points.js'
 import Highlight from './Highlight.js'
 import _appInsights from '../Utils/AppInsights.js'
 
+import SimonSaysGame from '../Games/SimonSaysGame.js'
+
 let instance = null
 
 export default class World {
@@ -92,6 +94,8 @@ export default class World {
             this.points = new Points()
             this.highlight = new Highlight()
             this.audio = new Audio()
+
+            this.simonSays = new SimonSaysGame()
 
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)

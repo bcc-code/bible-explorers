@@ -1,3 +1,5 @@
+import _e from '../Utils/Events.js'
+
 let timer = null
 
 export default class Timer {
@@ -5,7 +7,6 @@ export default class Timer {
         timer = this
         timer.interval = null
         timer.remainingSeconds = 0
-        timer.timeElapsedEvent = new Event('timeElapsed')
     }
 
     setMinutes(minutes) {
@@ -45,7 +46,7 @@ export default class Timer {
     
             if (timer.remainingSeconds === 0) {
                 timer.stop()
-                document.dispatchEvent(timer.timeElapsedEvent)
+                document.dispatchEvent(_e.EVENTS.TIME_ELAPSED)
             }
         }, 1000)
     }

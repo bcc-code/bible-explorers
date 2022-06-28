@@ -16,8 +16,7 @@ $gradient-with-opacity: linear-gradient(90deg, rgba(19, 26, 67, 1), rgba(62, 48,
 
 $radius: 12px;
 
-$primary-font: "Archivo",
-    sans-serif;
+$primary-font: "Archivo", sans-serif;
 $secondary-font: 'PT Sans', sans-serif;
 
 // #endregion
@@ -2520,7 +2519,8 @@ button,
 }
 
 #sort-game,
-#cable-connector {
+#cable-connector,
+#simon-says {
     position: fixed;
     top: 0;
     left: 0;
@@ -2561,6 +2561,31 @@ button,
     .button {
         margin: 0 1rem;
         pointer-events: all;
+    }
+}
+
+#simon-says {
+    #miniGame__simon-says {
+        display: flex;
+
+        &.active {
+            cursor: pointer;
+        }
+    }
+    
+    .note {
+        width: 100px;
+        height: 100px;
+        margin-right: 25px;
+        transition: .3s ease;
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    .lighten {
+        filter: brightness(1.25);
+        border: 5px solid #fff;
     }
 }
 

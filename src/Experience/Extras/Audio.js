@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
 import _STATE from '../Utils/AudioStates.js'
+import _e from '../Utils/Events.js'
 
 let audio = null
 
@@ -16,6 +17,8 @@ export default class Audio {
             default: 'sounds/bg-music.mp3',
             objs: {}
         }
+
+        audio.notes = []
 
         audio.el = document.getElementById("sound")
         audio.el.addEventListener("click", audio.togglePlayBgMusic)
@@ -299,6 +302,32 @@ export default class Audio {
         }
         else {
             audio.congratsSound.play()
+        }
+    }
+
+    loadMelodyNotes(notes) {
+        this.initialize()
+
+        notes.forEach(note => {
+            if (!audio.notes[note]) {
+                audio.audioLoader.load('sounds/notes/' + note + '.mp3', function (buffer) {
+                    audio.notes[note] = new THREE.Audio(audio.listener)
+                    audio.notes[note].setBuffer(buffer)
+                    audio.notes[note].onEnded = () => document.dispatchEvent(_e.EVENTS.NOTE_PLAYED)
+                })
+            }
+        })
+    }
+
+    playNote(note) {
+        this.initialize()
+
+        if (audio.notes[note].isPlaying) {
+            audio.notes[note].stop()
+            audio.notes[note].play()
+        }
+        else {
+            audio.notes[note].play()
         }
     }
 }
