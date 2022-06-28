@@ -295,6 +295,14 @@ export default class SimonSays {
         instance.modal = new Modal(html)
 
         document.querySelector('.modal').classList.add('modal__congrats')
+        
+        if (instance.allMelodiesPlayed()) {
+            document.getElementById('play-another').style.display = 'none'
+        }
+    }
+
+    allMelodiesPlayed() {
+        return instance.nrOfPlays + 1 == instance.data.melodies.length
     }
 
     allNotesPlayed() {
