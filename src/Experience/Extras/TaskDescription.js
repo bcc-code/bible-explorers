@@ -80,6 +80,10 @@ export default class TaskDescription {
                     instance.program.cableConnectorGame.toggleCableConnector()
                 }
 
+                else if (instance.currentStepTaskType == 'simon_says') {
+                    instance.program.simonSays.toggleSimonSays()
+                }
+
                 else if (instance.currentStepTaskType == 'question_and_code') {
                     instance.program.questionAndCode.toggleQuestionAndCode()
                 }

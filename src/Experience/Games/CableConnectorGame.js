@@ -17,7 +17,6 @@ export default class CableConnector {
         this.debug = this.experience.debug
 
         instance = this
-
     }
 
     toggleCableConnector() {

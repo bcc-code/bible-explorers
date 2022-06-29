@@ -94,7 +94,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "playAnother": "Play another",
+            "playAnother": "Play another melody",
             "reset": "Start over",
             "continue": "Continue the journey",
             "skip": "Skip"
@@ -178,6 +178,7 @@ const strings = {
             "task": "Fullfør oppgaven"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Sorter ikonene i riktig boks",
             "cableConnect": "Fest kablene til riktig farge",
             "completed": {
@@ -188,6 +189,12 @@ const strings = {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
             "skip": "Hopp over"
@@ -271,6 +278,7 @@ const strings = {
             "task": "Erledige die Aufgabe"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Sortiere die Icons in die richtige Box",
             "cableConnect": "Verbinde die Kabel mit der richtigen Farbe",
             "completed": {
@@ -281,6 +289,12 @@ const strings = {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
             "skip": "Überspringen"
@@ -364,6 +378,7 @@ const strings = {
             "task": "Doe de opdracht"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Zet de plaatjes in de juiste box",
             "cableConnect": "Maak de kabels vast aan de juiste kleur",
             "completed": {
@@ -374,6 +389,12 @@ const strings = {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
             "skip": "Overslaan"
@@ -457,6 +478,7 @@ const strings = {
             "task": "Effectuer la tâche"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Trier les icônes dans la bonne boîte",
             "cableConnect": "Relier les câbles à la bonne couleur",
             "completed": {
@@ -467,6 +489,12 @@ const strings = {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
             "skip": "Sauter"
@@ -550,6 +578,7 @@ const strings = {
             "task": "Wykonaj zadanie"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Posortuj ikony w odpowiednim polu",
             "cableConnect": "Połącz kable z odpowiednim kolorem",
             "completed": {
@@ -560,6 +589,12 @@ const strings = {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
             "skip": "Pomiń"
@@ -643,6 +678,7 @@ const strings = {
             "task": "Finalizează sarcina"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Sortează imaginile în căsuța corectă",
             "cableConnect": "Conectează cablurile la culoarea corectă",
             "completed": {
@@ -653,6 +689,12 @@ const strings = {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
             "skip": "Mergi mai departe"
@@ -736,6 +778,7 @@ const strings = {
             "task": "Completar la tarea"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Ordenar los iconos en el cuadro correcto",
             "cableConnect": "Conecte los cables al color correcto",
             "completed": {
@@ -746,6 +789,12 @@ const strings = {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
             "skip": "Saltar"
@@ -829,6 +878,7 @@ const strings = {
             "task": "Complete a tarefa"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Classifique os icones para a caixa correta",
             "cableConnect": "Junte os cabos para a cor certa",
             "completed": {
@@ -839,6 +889,12 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
             "skip": "Skip"
@@ -922,6 +978,7 @@ const strings = {
             "task": "Completa l'attività"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Ordina le icone nella casella giusta",
             "cableConnect": "Unisci i cavi al colore giusto",
             "completed": {
@@ -932,6 +989,12 @@ const strings = {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
             "skip": "Salta"
@@ -1015,6 +1078,7 @@ const strings = {
             "task": "Завершите задание"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Рассортируйте иконки по правильным коробкам",
             "cableConnect": "Соедините кабели нужного цвета",
             "completed": {
@@ -1025,6 +1089,12 @@ const strings = {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
             "skip": "Пропустить"
@@ -1108,6 +1178,7 @@ const strings = {
             "task": "Suorita tehtävä loppuun"
         },
         "miniGames": {
+            "simonSays": "Simon Says",
             "sortingIcons": "Järjestä kuvakkeet oikeisiin laatikoihin ",
             "cableConnect": "Yhdistä johdot oikeisiin väreihin",
             "completed": {
@@ -1118,6 +1189,12 @@ const strings = {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
+            
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
             "skip": "Ohita"

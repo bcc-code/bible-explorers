@@ -9,17 +9,15 @@ export default class SimonSays {
     constructor() {
         this.experience = new Experience()
         this.world = this.experience.world
-        this.program = this.world.program
         this.audio = this.world.audio
         this.debug = this.experience.debug
 
         instance = this
         instance.nrOfPlays = 0
-
-        this.toggleSimonSays()
     }
 
     toggleSimonSays() {
+        this.audio.pauseBgMusic()
         this.init()
         this.addEventListeners()
         this.startGame()
@@ -200,7 +198,7 @@ export default class SimonSays {
             if (button.classList.contains('button__skip')) {
                 button.addEventListener('click', () => {
                     instance.destroy()
-                    instance.program.advance()
+                    instance.world.program.advance()
                 })
             }
         })
@@ -225,7 +223,7 @@ export default class SimonSays {
     wrongNote() {
         instance.toggleTryAgain()
 
-        document.getElementById('continue_journey').addEventListener('click', () => {
+        document.getElementById('try-again').addEventListener('click', () => {
             instance.modal.destroy()
             instance.destroy()
             instance.toggleSimonSays()
@@ -241,7 +239,7 @@ export default class SimonSays {
                     <h1>${_s.miniGames.failed.title}</h1>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
-                <div id="continue_journey" class="button button__continue">
+                <div id="try-again" class="button button__continue">
                     <div class="button__content"><span>${_s.miniGames.reset}</span></div>
                 </div>
             </div>
@@ -263,10 +261,11 @@ export default class SimonSays {
             instance.nrOfPlays++
             instance.toggleSimonSays()
         })
-        document.getElementById('continue_journey').addEventListener('click', () => {
+        document.getElementById('continue-journey').addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
             instance.program.advance()
+            this.audio.playBgMusic()
         })
     }
 
@@ -283,10 +282,10 @@ export default class SimonSays {
                     <i class="icon icon-star-solid"></i>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
-                <div id="play-another" class="button button__play-another">
+                <div id="play-another" class="button button__continue">
                     <div class="button__content"><span>${_s.miniGames.playAnother}</span></div>
                 </div>
-                <div id="continue_journey" class="button button__continue">
+                <div id="continue-journey" class="button button__continue">
                     <div class="button__content"><span>${_s.miniGames.continue}</span></div>
                 </div>
             </div>
