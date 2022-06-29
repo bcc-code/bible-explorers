@@ -41,23 +41,16 @@ export default class Video {
     }
 
     load(id) {
-        const mediaItem = this.resources.mediaItems[id].item
+
         this.playingVideoId = id
 
-        // Pause initial video
-        if (this.texture && !this.texture.image.currentSrc.includes(mediaItem.path))
-            this.texture.image.pause()
+        this.video().currentTime(0)
 
-        // Update video on screen (set initial or replace if it's a new video)
-        if (!this.texture || !this.texture.image.currentSrc.includes(mediaItem.path)) {
-            this.texture = mediaItem
+        // Set texture when starting directly on a video task type
+        if (this.portalScreen.material.map != this.resources.textureItems[id])
+            this.setTexture(id)
 
-            // Set texture when starting directly on a video task type
-            if (this.portalScreen.material.map != this.resources.textureItems[id])
-                this.setTexture(id)
-
-            this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
-        }
+        this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
         // Event listener on video update
         this.video().on('timeupdate', function () {
@@ -104,15 +97,12 @@ export default class Video {
     //#region Actions
 
     play() {
-        if (!instance.texture) return
-
-        instance.portalScreen.material.map = instance.texture
-        instance.texture.image.play()
+        instance.video().play()
         instance.video().requestFullscreen()
     }
 
     pause() {
-        instance.texture.image.pause()
+        instance.video().pause()
     }
 
     focus() {
@@ -151,14 +141,6 @@ export default class Video {
     finish() {
         instance.defocus()
         instance.world.program.advance()
-    }
-
-    togglePlay() {
-        if (!instance.texture) return
-
-        instance.texture.image.paused
-            ? instance.play()
-            : instance.pause()
     }
 
     //#endregion

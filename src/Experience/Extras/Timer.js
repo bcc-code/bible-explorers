@@ -38,6 +38,7 @@ export default class Timer {
     start(minutes) {
         if (timer.remainingSeconds === 0) {
             timer.remainingSeconds = minutes * 60
+            // timer.remainingSeconds = 35
         }
         
         timer.interval = setInterval(() => {

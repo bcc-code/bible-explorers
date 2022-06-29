@@ -131,6 +131,8 @@ export default class CableConnector {
             height: gameContainer.offsetHeight
         })
 
+        this.correspondingOutlet = null
+
         instance.program = instance.world.program
 
         actions.appendChild(
@@ -181,9 +183,10 @@ export default class CableConnector {
         const getY = (index) => spaceBetween + index * (outletHeight + spaceBetween)
         const cableX = containerObj.width / 2 - cableWidth / 2
 
-        for (let i = 0; i < this.data.itemsLength; i++) {
+        for (let i = 0; i < 5; i++) {
             const outlet_l = new Outlet({
                 color: this.data.color.name[instance.randomOrder.outlet_l[i]],
+                // color: this.data.color.name[1],
                 x: containerObj.sideWidth,
                 y: getY(i),
                 width: outletWidth,
@@ -194,6 +197,7 @@ export default class CableConnector {
 
             const outlet_r = new Outlet({
                 color: this.data.color.name[instance.randomOrder.outlet_r[i]],
+                // color: this.data.color.name[1],
                 x: containerObj.width - containerObj.sideWidth,
                 y: getY(i),
                 width: outletWidth,
@@ -204,6 +208,7 @@ export default class CableConnector {
 
             const cable = new Cable({
                 color: this.data.color.name[instance.randomOrder.cable[i]],
+                // color: this.data.color.name[1],
                 x: cableX,
                 y: getY(i) + outletHeight / 2 - this.data.cable.plug.height / 2,
                 width: cableWidth,
@@ -261,22 +266,26 @@ export default class CableConnector {
                 })
 
                 plug.on('dragend', () => {
+
+                    if (instance.timerWithTimeElapsed()) return
+
                     const direction = plug.name().replace('plug_', '')
                     const plugPosition = {
                         x: cable.item.x() + plug.x(),
                         y: cable.item.y() + plug.y()
                     }
-                    let correspondingOutlet = instance.outlets.find(o => o.color == cable.color && o.name === direction)
+                    instance.correspondingOutlet = instance.outlets.find(o => o.color == cable.color && o.name === direction)
 
-                    if (instance.connectedToOutlet(plugPosition, correspondingOutlet)) {
+                    if (instance.connectedToOutlet(plugPosition, instance.correspondingOutlet)) {
+
                         instance.audio.playCorrectSound()
-                        instance.playAnimation(correspondingOutlet, sparkleSprite)
+                        instance.playAnimation(instance.correspondingOutlet, sparkleSprite)
 
                         const plugInPosition = {
                             x: direction == "left"
-                                ? correspondingOutlet.position.x + correspondingOutlet.width
-                                : correspondingOutlet.position.x - correspondingOutlet.width,
-                            y: correspondingOutlet.position.y + correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2
+                                ? instance.correspondingOutlet.position.x + instance.correspondingOutlet.width
+                                : instance.correspondingOutlet.position.x - instance.correspondingOutlet.width,
+                            y: instance.correspondingOutlet.position.y + instance.correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2
                         }
 
                         plug.move({
@@ -286,7 +295,8 @@ export default class CableConnector {
 
                         plug.draggable(false)
                         plug.zIndex(0)
-                        correspondingOutlet.connected = true
+                        instance.correspondingOutlet.connected = true
+
 
                         if (instance.bothPlugsConnected(cable)) {
                             cable.item.zIndex(0)
@@ -372,6 +382,7 @@ export default class CableConnector {
             })
         })
 
+
         this.stage.add(layer)
     }
 
@@ -403,6 +414,11 @@ export default class CableConnector {
         this.tween.play()
     }
 
+    timerWithTimeElapsed() {
+        const currentStep = instance.program.currentStep
+        return instance.world.selectedChapter.program[currentStep].timer && instance.timer.remainingSeconds == 0
+    }
+
     startTimerIfNecessary() {
         const currentStep = instance.program.currentStep
         const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
@@ -421,16 +437,16 @@ export default class CableConnector {
         if (timerInMinutes > 0) {
             this.timer.destroy()
             document.removeEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed)
-        }  
+        }
     }
 
     onTimeElapsed() {
         instance.toggleTryAgain()
-        document.querySelector('.congrats .button__continue').addEventListener('click', () => {
-            instance.modal.destroy()
-            instance.destroy()
-            instance.toggleCableConnector()
+
+        instance.cables.forEach(cable => {
+            cable.item.find('.plug').forEach(plug => plug.stopDrag())
         })
+
     }
 
     toggleTryAgain() {
@@ -449,6 +465,12 @@ export default class CableConnector {
         instance.modal = new Modal(html)
 
         document.querySelector('.modal').classList.add('modal__congrats')
+
+        document.querySelector('.congrats .button__continue').addEventListener('click', () => {
+            instance.modal.destroy()
+            instance.destroy()
+            instance.toggleCableConnector()
+        })
     }
 
     colorCable(cable) {
