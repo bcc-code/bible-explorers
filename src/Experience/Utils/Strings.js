@@ -1308,7 +1308,7 @@ const strings = {
             "high": "Høj (1080p)"
         },
         "conceptDescription": "Kom med på tidsrejsen og udforsk bogen, som kan besvare alle spørgsmål",
-        "introduction": "Nu kan børnene I aldermen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers. ",
+        "introduction": "Nu kan børnene i alderen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
