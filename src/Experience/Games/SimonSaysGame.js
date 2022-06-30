@@ -142,6 +142,8 @@ export default class SimonSays {
 
     lightenPad(i) {
         const note = document.querySelector("[data-id='" + i + "']")
+        if (!note) return
+
         note.classList.add('lighten')
         
         setTimeout(() => {
@@ -185,6 +187,7 @@ export default class SimonSays {
             if (button.classList.contains('button__back')) {
                 button.addEventListener('click', () => {
                     instance.destroy()
+                    instance.world.program.taskDescription.toggleTaskDescription()
                 })
             }
 
@@ -221,6 +224,9 @@ export default class SimonSays {
     }
 
     wrongNote() {
+        const existingModal = document.querySelectorAll('.modal__content')
+        if (existingModal.length) return
+
         instance.toggleTryAgain()
 
         document.getElementById('try-again').addEventListener('click', () => {
@@ -264,7 +270,7 @@ export default class SimonSays {
         document.getElementById('continue-journey').addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
-            instance.program.advance()
+            instance.world.program.advance()
             this.audio.playBgMusic()
         })
     }
@@ -309,13 +315,22 @@ export default class SimonSays {
     }
 
     canPlay() {
-        return document.getElementById('miniGame__simon-says').classList.contains('active')
+        const miniGame = document.getElementById('miniGame__simon-says')
+        if (!miniGame) return false
+
+        return miniGame.classList.contains('active')
     }
     allowPlaying() {
-        document.getElementById('miniGame__simon-says').classList.add('active')
+        const miniGame = document.getElementById('miniGame__simon-says')
+        if (!miniGame) return
+
+        miniGame.classList.add('active')
     }
     blockPlaying() {
-        document.getElementById('miniGame__simon-says').classList.remove('active')
+        const miniGame = document.getElementById('miniGame__simon-says')
+        if (!miniGame) return
+
+        miniGame.classList.remove('active')
     }
 
     destroy() {
