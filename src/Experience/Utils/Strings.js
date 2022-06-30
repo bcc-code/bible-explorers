@@ -1199,7 +1199,205 @@ const strings = {
             "continue": "Jatka matkaa",
             "skip": "Ohita"
         }
-    }
+    },
+    "hu": {
+        "loading": "Betöltés",
+        "qualities": {
+            "title": "Videó minőség választása",
+            "low": "Alacsony (270p)",
+            "medium": "Közepes (540p)",
+            "high": "Magas (1080p)"
+        },
+        "conceptDescription": "Csatlakozz az időutazáshoz és fedezd fel a könyvet, amely minden kérdésre választ ad!",
+        "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
+        "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
+        "journey": {
+            "start": "Időutazás elkezdése",
+            "continue": "Időutazás folytatása ",
+            "restart": "Utazás újrakezdése",
+            "congrats": "Gratulálunk!",
+            "completed": "Befejezted",
+            "back": "Vissza",
+            "attachments": "Csatolmányok",
+            "homescreen": "Kész"
+        },
+        "task": {
+            "codeUnlock": "Add meg a helyes számot",
+            "taskDescription": "Feladat leírása",
+            "questions": "Kérdés",
+            "getTask": "Menj a feladathoz",
+            "submit": "Küldés",
+            "next": "Next"
+        },
+        "archive": "Archívum",
+        "settings": {
+            "title": "Beállítások",
+            "soundEffects": "Hanghatások",
+            "language": "Nyelv",
+            "feedback": "Visszajelzés",
+            "faq": "FAQ",
+            "notLoggedIn": "You are not logged in!",
+            "loggedInAs": "You are logged in as:",
+            "mentor": "mentor",
+            "noRole": "no role",
+            "logIn": "Bejelentkezés",
+            "logOut": "Kijelentkezés",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+        },
+         "faq": {
+            "questions": [
+                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
+                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
+                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
+                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
+                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
+                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+            ],
+            "answers": [
+                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
+                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
+                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
+                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
+                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+            ]
+        },
+        "offline": {
+            "availableOffline": "Elérhető offline",
+            "download": "Letöltés",
+            "downloading": "Letöltés folyamatban",
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
+        },
+        "tooltips": {
+            "video": "Videó lejátszása",
+            "iris": "Beszélj Irisszel",
+            "task": "Fejezd be a feladatot"
+        },
+        "miniGames": {
+            "simonSays": "Simon Says",
+            "sortingIcons": "Válogasd az ikonokat a megfelelő dobozba",
+            "cableConnect": "Csatlakoztasd a kábeleket a megfelelő színhez",
+            "completed": {
+                "title": "Szép munka!",
+                "message": "Teljesítetted a feladatot! Folytathatod az utazást"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "Hoppá! Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
+            },
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
+            "reset": "Újrakezdés",
+            "continue": "Utazás folytatása",
+            "skip": "Átugrás"
+        }
+    },
+    "da": {
+        "loading": "Loading",
+        "qualities": {
+            "title": "Vælg kvalitet",
+            "low": "Lav (270p)",
+            "medium": "Medium (540p)",
+            "high": "Høj (1080p)"
+        },
+        "conceptDescription": "Kom med på tidsrejsen og udforsk bogen, som kan besvare alle spørgsmål",
+        "introduction": "Nu kan børnene I aldermen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers. ",
+        "notAvailable": "No chapter available in the selected language",
+        "browserNotification": "Recommended browser for this concept is Chrome",
+        "journey": {
+            "start": "Start tidsrejsen",
+            "continue": "Fortsæt tidsrejsen",
+            "restart": "Start tidsrejsen forfra",
+            "congrats": "Tillykke!",
+            "completed": "Du har gennemført",
+            "back": "Tilbage",
+            "attachments": "Attachments",
+            "homescreen": "Done"
+        },
+        "task": {
+            "codeUnlock": "Skriv det rigtige antal",
+            "taskDescription": "Opgavebeskrivelse",
+            "questions": "Spørgsmål",
+            "getTask": "Gå til opgaven",
+            "submit": "Send",
+            "next": "Next"
+        },
+        "archive": "Arkiv",
+        "settings": {
+            "title": "Indstillinger",
+            "soundEffects": "Lydeffekter",
+            "language": "Sprog",
+            "feedback": "Tilbagemelding",
+            "faq": "FAQ",
+            "notLoggedIn": "You are not logged in!",
+            "loggedInAs": "You are logged in as:",
+            "mentor": "mentor",
+            "noRole": "no role",
+            "logIn": "Log ind",
+            "logOut": "Log ud",
+            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+        },
+         "faq": {
+            "questions": [
+                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
+                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
+                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
+                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
+                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
+                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+            ],
+            "answers": [
+                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
+                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
+                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
+                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
+                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+            ]
+        },
+        "offline": {
+            "availableOffline": "Tilgængelig offline",
+            "download": "Download",
+            "downloading": "Downloader",
+            "update": "Update offline version",
+            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+            "downloadFailed": "There was a problem with downloading the chapter!",
+            "tryAgain": "Try again"
+        },
+        "tooltips": {
+            "video": "Play video",
+            "iris": "Snak med Iris",
+            "task": "Fuldfør opgaven"
+        },
+        "miniGames": {
+            "simonSays": "Simon Says",
+            "sortingIcons": "Sortere ikonerne i de rigtige bokse",
+            "cableConnect": "Tilslut kablerne til den rigtige farve",
+            "completed": {
+                "title": "Well done!",
+                "message": "You have completed the task! You can continue your journey"
+            },
+            "timeElapsed": {
+                "title": "Oops!",
+                "message": "Oops! Time is up; try to attach all the wires before time is up."
+            },
+            "failed": {
+                "title": "Oops!",
+                "message": "You've played the wrong note of the melody!"
+            },
+            "playAnother": "Play another melody",
+            "reset": "Start spillet forfra",
+            "continue": "Fortsæt rejsen",
+            "skip": "Skip"
+        }
+    },
 }
 
 const getStrings = (strings) => {

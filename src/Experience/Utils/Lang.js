@@ -4,10 +4,12 @@ const list = {
     "en": "English",
     "no": "Norsk",
     "de": "Deutsch",
+    "da": "Dansk",
     "nl": "Nederlands",
     "fr": "Français",
     "pl": "Polski",
     "ro": "Română",
+    "hu": "Magyar",
     "es": "Español",
     "pt-pt": "Português",
     "it": "Italiano",
@@ -21,7 +23,7 @@ let getLanguagesList = () => {
     let html = ''
     Object.entries(list).forEach(([code, language]) => {
         if (code == getLanguageCode()) return // Skip current language
-        html += `<li data-id="${ code }">${ language }</li>`
+        html += `<li data-id="${code}">${language}</li>`
     })
     return html
 }
