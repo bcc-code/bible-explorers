@@ -88,6 +88,10 @@ export default class TaskDescription {
                     instance.program.questionAndCode.toggleQuestionAndCode()
                 }
 
+                else if (instance.currentStepTaskType == 'picture_and_code') {
+                    instance.program.pictureAndCode.togglePictureAndCode()
+                }
+
                 else if (instance.program.stepType() == 'iris') {
                     instance.program.advance()
                 }

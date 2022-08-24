@@ -8,6 +8,7 @@ import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
+import PictureAndCode from '../Extras/PictureAndCode.js'
 import Congrats from '../Extras/Congrats.js'
 
 let instance = null
@@ -36,6 +37,7 @@ export default class Program {
         this.cableConnectorGame = new CableConnectorGame()
         this.simonSays = new SimonSaysGame()
         this.questionAndCode = new QuestionAndCode()
+        this.pictureAndCode = new PictureAndCode()
         this.congrats = new Congrats()
 
         instance = this

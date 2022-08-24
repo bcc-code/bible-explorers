@@ -2019,6 +2019,26 @@ button,
     }
 }
 
+.picture-and-code {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .modal__actions {
+        position: absolute;
+        bottom: 0;
+        padding: 50px;
+    }
+}
+
 .answers__wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
