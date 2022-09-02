@@ -109,7 +109,7 @@ export default class Program {
         if (this.currentStep == this.totalSteps) {
             setTimeout(() => {
                 instance.congrats.toggleCongrats()
-            
+
 
             }, instance.camera.data.moveDuration)
         }

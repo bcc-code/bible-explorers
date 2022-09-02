@@ -26,7 +26,7 @@ export default class TaskDescription {
 
             let currentStep = instance.program.currentStep
             let selectedChapter = instance.world.selectedChapter
-            
+
             instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
             instance.text = selectedChapter.program[currentStep].description
 

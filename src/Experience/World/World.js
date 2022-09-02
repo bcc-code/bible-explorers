@@ -12,6 +12,9 @@ import Points from './Points.js'
 import Highlight from './Highlight.js'
 import _appInsights from '../Utils/AppInsights.js'
 
+
+import SimonSaysGame from '../Games/SimonSaysGame.js'
+
 let instance = null
 
 export default class World {
@@ -24,7 +27,9 @@ export default class World {
         this.resources = this.experience.resources
         this.debug = this.experience.debug
 
+
         instance = this
+
 
         this.placeholderChapterData()
         this.chapterProgress = () => localStorage.getItem(this.getId()) || 0
@@ -95,6 +100,10 @@ export default class World {
 
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
+
+            this.simonSays = new SimonSaysGame()
+            this.simonSays.toggleSimonSays()
+
 
             setTimeout(function () {
                 instance.welcome.loading.style.display = "none"
@@ -297,7 +306,7 @@ export default class World {
 
     markChapterIfCompleted(chapter) {
         const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
-        
+
         if (chapterProgress == chapter.program.length && chapterProgress > 0)
             document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }

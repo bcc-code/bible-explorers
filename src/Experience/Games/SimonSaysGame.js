@@ -31,6 +31,58 @@ export default class SimonSays {
 
         const gameContainer = document.createElement('div')
         gameContainer.setAttribute("id", "miniGame__simon-says")
+
+        const gameContainerBox = document.createElement('div')
+        gameContainerBox.classList.add('frame')
+        const gameWatch = document.createElement('div')
+        gameWatch.classList.add('watch')
+        const gameWatchCenter = document.createElement('div')
+        gameWatchCenter.classList.add('watch-center')
+        const gameWatchTicker = document.createElement('div')
+        gameWatchTicker.classList.add('watch-ticker')
+
+        const cables = document.createElement('div')
+        cables.classList.add('watch-cables')
+
+        const heading = document.createElement('span')
+        heading.classList.add('watch-heading')
+        heading.innerText = 'Din tur'
+
+        const gameWatchTickerLeft = document.createElement('div')
+        gameWatchTickerLeft.classList.add('column', 'watch-ticker--left')
+        const gameWatchTickerRight = document.createElement('div')
+        gameWatchTickerRight.classList.add('column', 'watch-ticker--right',)
+
+
+        gameWatchTicker.appendChild(gameWatchTickerLeft)
+        gameWatchTicker.appendChild(gameWatchTickerRight)
+
+        const tickersLength = 8
+        for (let i = 0; i < tickersLength; i++) {
+            const ticker = document.createElement('div')
+            ticker.classList.add('watch-tick')
+            ticker.setAttribute('data-item', i)
+
+            const cable = document.createElement('div')
+            cable.classList.add('cable')
+            cable.setAttribute('data-item', i)
+
+            cables.appendChild(cable)
+
+            if (i < 4) {
+                gameWatchTickerLeft.appendChild(ticker)
+            } else {
+                gameWatchTickerRight.appendChild(ticker)
+            }
+        }
+
+
+        gameWatch.appendChild(gameWatchCenter)
+        gameContainerBox.appendChild(heading)
+        gameContainerBox.appendChild(cables)
+        gameContainerBox.appendChild(gameWatchTicker)
+        gameContainerBox.appendChild(gameWatch)
+        gameContainer.appendChild(gameContainerBox)
         gameWrapper.appendChild(gameContainer)
 
         const title = document.createElement('div')
@@ -46,14 +98,12 @@ export default class SimonSays {
         this.data = {
             color: {
                 name: [
-                    'darkBlue',
                     'lightBlue',
                     'yellow',
                     'pink',
                     'purple'
                 ],
                 hex: [
-                    "#373e93",
                     "#2c90cf",
                     "#f9c662",
                     "#ff6ea9",
@@ -61,11 +111,11 @@ export default class SimonSays {
                 ]
             },
             melodies: [
-                [ 0, 1, 2, 3, 4 ], // Scale up
-                [ 4, 3, 2, 1, 0 ], // Scale down
-                [ 2, 2, 2, 2, 2, 2, 1, 0, 4, 4, 1, 1, 1, 1, 4, 4, 4, 3, 2], // Fryd, fryd, fryd
-                [ 2, 4, 2, 4, 2, 4, 2, 0, 1, 3, 1, 3, 2, 1, 0, 2, 4, 2, 4, 2, 4, 2, 0, 1, 3, 1, 3, 2, 1, 0 ], // In padurea cu alune
-                [ 0, 0, 1, 2, 0, 1, 1, 2, 0, 0, 0, 1, 2, 0, 1, 1, 2, 0, 4, 4, 3, 2, 0, 1, 1, 0, 2, 4, 4, 3, 2, 0, 1, 1, 2, 1 ] // Podul de piatra
+                [0, 1, 2, 3, 4], // Scale up
+                [4, 3, 2, 1, 0], // Scale down
+                [2, 2, 2, 2, 2, 2, 1, 0, 4, 4, 1, 1, 1, 1, 4, 4, 4, 3, 2], // Fryd, fryd, fryd
+                [2, 4, 2, 4, 2, 4, 2, 0, 1, 3, 1, 3, 2, 1, 0, 2, 4, 2, 4, 2, 4, 2, 0, 1, 3, 1, 3, 2, 1, 0], // In padurea cu alune
+                [0, 0, 1, 2, 0, 1, 1, 2, 0, 0, 0, 1, 2, 0, 1, 1, 2, 0, 4, 4, 3, 2, 0, 1, 1, 0, 2, 4, 4, 3, 2, 0, 1, 1, 2, 1] // Podul de piatra
             ],
             notes: [
                 'e-4',
@@ -83,7 +133,7 @@ export default class SimonSays {
             noteColor.dataset.id = index
             noteColor.style.backgroundColor = color
             noteColor.classList.add('note')
-            gameContainer.appendChild(noteColor)
+            gameWatch.appendChild(noteColor)
         })
 
         actions.appendChild(
@@ -135,21 +185,22 @@ export default class SimonSays {
     }
 
     playPad(pad) {
-            const note = instance.data.notes[pad]
-            instance.audio.playNote(note)
-            instance.lightenPad(pad)
+        const note = instance.data.notes[pad]
+        instance.audio.playNote(note)
+        instance.lightenPad(pad)
     }
 
     lightenPad(i) {
         const note = document.querySelector("[data-id='" + i + "']")
         note.classList.add('lighten')
-        
+
         setTimeout(() => {
             note.classList.remove('lighten')
         }, 500)
     }
 
     checkMelody(i) {
+
         if (i == instance.data.melodies[instance.nrOfPlays][instance.userMelody]) {
             if (instance.userMelody++ == instance.level) {
                 if (instance.allNotesPlayed()) {
@@ -157,6 +208,8 @@ export default class SimonSays {
                         instance.finishGame()
                     }, 1000)
                 }
+
+                instance.roundTick()
 
                 instance.level++
                 instance.playMelody()
@@ -218,6 +271,12 @@ export default class SimonSays {
         button.innerHTML = "<span>" + label + "</span>"
 
         return button
+    }
+
+    roundTick() {
+        const round = document.querySelectorAll('.watch-tick')
+
+        round[instance.level].className += " done"
     }
 
     wrongNote() {
@@ -294,7 +353,7 @@ export default class SimonSays {
         instance.modal = new Modal(html)
 
         document.querySelector('.modal').classList.add('modal__congrats')
-        
+
         if (instance.allMelodiesPlayed()) {
             document.getElementById('play-another').style.display = 'none'
         }
