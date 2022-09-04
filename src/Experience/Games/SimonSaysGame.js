@@ -332,7 +332,7 @@ export default class SimonSays {
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
                 <div id="play-another" class="button button__continue">
-                    <div class="button__content"><span>${_s.miniGames.playAnother}</span></div>
+                    <div class="button__content"><span>${_s.miniGames.playAgain}</span></div>
                 </div>
                 <div id="continue-journey" class="button button__continue">
                     <div class="button__content"><span>${_s.miniGames.continue}</span></div>
