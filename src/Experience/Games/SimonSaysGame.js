@@ -116,7 +116,7 @@ export default class SimonSays {
                 'g-sharp-4',
                 'a-4'
             ],
-            max: 2
+            rounds: instance.world.selectedChapter.category == '6-8' ? 4 : 8
         }
 
         this.audio.loadMelodyNotes(this.data.notes)
@@ -352,7 +352,7 @@ export default class SimonSays {
     }
 
     allNotesPlayed() {
-        return instance.level + 1 == instance.data.max
+        return instance.level + 1 == instance.data.rounds
     }
 
     canPlay() {
