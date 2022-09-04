@@ -13,7 +13,6 @@ export default class SimonSays {
         this.debug = this.experience.debug
 
         instance = this
-        instance.nrOfPlays = 0
     }
 
     toggleSimonSays() {
@@ -46,7 +45,7 @@ export default class SimonSays {
 
         const heading = document.createElement('span')
         heading.classList.add('watch-heading')
-        heading.innerText = 'Din tur'
+        heading.innerText = _s.miniGames.yourTurn
 
         const gameWatchTickerLeft = document.createElement('div')
         gameWatchTickerLeft.classList.add('column', 'watch-ticker--left')
@@ -110,20 +109,14 @@ export default class SimonSays {
                     "#af4eaa"
                 ]
             },
-            melodies: [
-                [0, 1, 2, 3, 4], // Scale up
-                [4, 3, 2, 1, 0], // Scale down
-                [2, 2, 2, 2, 2, 2, 1, 0, 4, 4, 1, 1, 1, 1, 4, 4, 4, 3, 2], // Fryd, fryd, fryd
-                [2, 4, 2, 4, 2, 4, 2, 0, 1, 3, 1, 3, 2, 1, 0, 2, 4, 2, 4, 2, 4, 2, 0, 1, 3, 1, 3, 2, 1, 0], // In padurea cu alune
-                [0, 0, 1, 2, 0, 1, 1, 2, 0, 0, 0, 1, 2, 0, 1, 1, 2, 0, 4, 4, 3, 2, 0, 1, 1, 0, 2, 4, 4, 3, 2, 0, 1, 1, 2, 1] // Podul de piatra
-            ],
+            melody: [],
             notes: [
                 'e-4',
                 'f-sharp-4',
                 'g-sharp-4',
-                'a-4',
-                'b-4'
-            ]
+                'a-4'
+            ],
+            max: 8
         }
 
         this.audio.loadMelodyNotes(this.data.notes)
@@ -165,7 +158,8 @@ export default class SimonSays {
 
         setTimeout(() => {
             setTimeout(() => {
-                instance.playPad(instance.data.melodies[instance.nrOfPlays][instance.currentPad])
+                instance.data.melody.push(Math.floor(Math.random() * 4))
+                instance.playPad(instance.data.melody[instance.currentPad])
             }, 250)
 
             document.addEventListener(_e.ACTIONS.NOTE_PLAYED, instance.continueMelody)
@@ -175,7 +169,7 @@ export default class SimonSays {
     continueMelody() {
         if (++instance.currentPad <= instance.level) {
             setTimeout(() => {
-                instance.playPad(instance.data.melodies[instance.nrOfPlays][instance.currentPad])
+                instance.playPad(instance.data.melody[instance.currentPad])
             }, 250)
         }
         else {
@@ -200,8 +194,7 @@ export default class SimonSays {
     }
 
     checkMelody(i) {
-
-        if (i == instance.data.melodies[instance.nrOfPlays][instance.userMelody]) {
+        if (i == instance.data.melody[instance.userMelody]) {
             if (instance.userMelody++ == instance.level) {
                 if (instance.allNotesPlayed()) {
                     return setTimeout(() => {
@@ -275,7 +268,6 @@ export default class SimonSays {
 
     roundTick() {
         const round = document.querySelectorAll('.watch-tick')
-
         round[instance.level].className += " done"
     }
 
@@ -316,8 +308,6 @@ export default class SimonSays {
         document.getElementById('play-another').addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
-
-            instance.nrOfPlays++
             instance.toggleSimonSays()
         })
         document.getElementById('continue-journey').addEventListener('click', () => {
@@ -353,18 +343,10 @@ export default class SimonSays {
         instance.modal = new Modal(html)
 
         document.querySelector('.modal').classList.add('modal__congrats')
-
-        if (instance.allMelodiesPlayed()) {
-            document.getElementById('play-another').style.display = 'none'
-        }
-    }
-
-    allMelodiesPlayed() {
-        return instance.nrOfPlays + 1 == instance.data.melodies.length
     }
 
     allNotesPlayed() {
-        return instance.level + 1 == instance.data.melodies[instance.nrOfPlays].length;
+        return instance.level + 1 == instance.data.max
     }
 
     canPlay() {
