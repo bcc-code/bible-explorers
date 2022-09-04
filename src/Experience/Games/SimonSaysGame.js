@@ -116,7 +116,7 @@ export default class SimonSays {
                 'g-sharp-4',
                 'a-4'
             ],
-            max: 8
+            max: 2
         }
 
         this.audio.loadMelodyNotes(this.data.notes)
@@ -196,13 +196,13 @@ export default class SimonSays {
     checkMelody(i) {
         if (i == instance.data.melody[instance.userMelody]) {
             if (instance.userMelody++ == instance.level) {
+                instance.roundTick()
+
                 if (instance.allNotesPlayed()) {
                     return setTimeout(() => {
                         instance.finishGame()
                     }, 1000)
                 }
-
-                instance.roundTick()
 
                 instance.level++
                 instance.playMelody()
@@ -313,7 +313,7 @@ export default class SimonSays {
         document.getElementById('continue-journey').addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
-            instance.program.advance()
+            instance.world.program.advance()
             this.audio.playBgMusic()
         })
     }

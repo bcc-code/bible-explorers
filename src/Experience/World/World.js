@@ -27,9 +27,7 @@ export default class World {
         this.resources = this.experience.resources
         this.debug = this.experience.debug
 
-
         instance = this
-
 
         this.placeholderChapterData()
         this.chapterProgress = () => localStorage.getItem(this.getId()) || 0
@@ -100,10 +98,6 @@ export default class World {
 
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
-
-            this.simonSays = new SimonSaysGame()
-            this.simonSays.toggleSimonSays()
-
 
             setTimeout(function () {
                 instance.welcome.loading.style.display = "none"
