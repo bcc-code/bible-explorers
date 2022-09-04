@@ -22,7 +22,7 @@ export default class QuestionAndCode {
             instance.program = instance.world.program
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
-            instance.data = instance.selectedChapter.program[instance.currentStep].question_and_code
+            instance.data = instance.selectedChapter.program[instance.currentStep].questionAndCode
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.toggleQuestion()
         }

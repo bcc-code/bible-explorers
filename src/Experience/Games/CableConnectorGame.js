@@ -382,13 +382,12 @@ export default class CableConnector {
             })
         })
 
-
         this.stage.add(layer)
     }
 
     animateIcon(obj, fill, layer, callback = () => { }) {
-        const amplitude = 5;
-        const period = 100;
+        const amplitude = 5
+        const period = 100
         const centerX = 0
 
         const animation = new Konva.Animation((frame) => {
@@ -446,7 +445,6 @@ export default class CableConnector {
         instance.cables.forEach(cable => {
             cable.item.find('.plug').forEach(plug => plug.stopDrag())
         })
-
     }
 
     toggleTryAgain() {
@@ -656,8 +654,8 @@ export default class CableConnector {
         // let scaleX = containerWidth / instance.data.canvas.width
         // let scaleY = containerHeight / instance.data.canvas.height
 
-        // console.log(containerWidth + " x " + containerHeight);
-        // scaleX = scaleY = Math.min(scaleX, scaleY);
+        // console.log(containerWidth + " x " + containerHeight)
+        // scaleX = scaleY = Math.min(scaleX, scaleY)
 
         // // Set stage dimension
         // instance.stage.width(containerWidth)

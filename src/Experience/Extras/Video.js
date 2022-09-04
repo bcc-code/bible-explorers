@@ -29,11 +29,7 @@ export default class Video {
         }
 
         this.videoJsEl = () => {
-            let id = instance.playingVideoId
-
-            if (this.resources.mediaItems.hasOwnProperty(id))
-                id = 'videojs-' + id
-
+            let id = 'videojs-' + instance.playingVideoId
             return document.getElementById(id)
         }
 
@@ -41,7 +37,6 @@ export default class Video {
     }
 
     load(id) {
-
         this.playingVideoId = id
 
         this.video().currentTime(0)
@@ -119,7 +114,7 @@ export default class Video {
     }
 
     defocus() {
-        if (instance.texture) {
+        if (instance.video()) {
             instance.pause()
             instance.tablet.material.map.image.pause()
 
@@ -160,7 +155,7 @@ export default class Video {
     }
 
     showSkipBtn() {
-        const secondsToSkip = 25
+        const secondsToSkip = 15
         const currentTime = instance.video().currentTime()
         const duration = instance.video().duration()
 
