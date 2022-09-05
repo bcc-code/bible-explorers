@@ -118,7 +118,7 @@ export default class Settings {
                 settings.modal.destroy()
             }
 
-            const questions =  Object.values(_s.faq.questions)
+            const questions = Object.values(_s.faq.questions)
             const answers = Object.values(_s.faq.answers)
 
             let html = `
