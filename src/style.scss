@@ -2944,6 +2944,136 @@ button,
     }
 }
 
+
+.quiz {
+    .question {
+        &.visible {
+            display: flex;
+            gap: 16px;
+        }
+
+        &__heading {
+            background-image: url("../static/assets/question-mark.png"), $gradient;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center, top left;
+            background-size: 50%, auto;
+            border: 3px solid $accent;
+            width: 20rem;
+            min-height: 20rem;
+            border-radius: 1rem 2rem 3rem 1rem;
+            padding: 2rem;
+        }
+
+        &__form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            counter-reset: questions;
+
+            &:hover label {
+                opacity: 0.5;
+            }
+        }
+
+        &__input {
+            counter-increment: questions;
+        }
+
+        p,
+        span {
+            color: #fff;
+            letter-spacing: normal;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+
+        input {
+            display: none;
+            height: 0;
+            width: 0;
+        }
+
+        label,
+        textarea {
+            color: #fff;
+            background: $gradient;
+            border: 3px solid $accent;
+            border-radius: 1rem 1rem;
+            padding: 2rem;
+            width: 40rem;
+            font-size: 1.5rem;
+        }
+
+        label {
+            cursor: pointer;
+            display: flex;
+            gap: 16px;
+            transition: opacity .4s ease;
+            margin-bottom: 1rem;
+        }
+
+
+        textarea:focus-within {
+            outline: 0;
+        }
+
+        label:hover {
+            opacity: 1;
+        }
+
+        label span {
+            position: relative;
+            padding: 5px;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: $gradient2;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        label span::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            top: 5px;
+            background: $gradient;
+            border-radius: 50%;
+        }
+
+        label span::after {
+            content: counter(questions, upper-latin);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input:checked~label {
+            border: 3px solid greenyellow;
+        }
+    }
+}
+
+.modal__quiz {
+
+    .modal__footer {
+        justify-content: space-between;
+    }
+
+    .modal__footer .button__prev {
+        margin-right: 0;
+    }
+}
+
 @media (min-width: 1601px) {
     #miniGame__connector {
         width: 1400px;

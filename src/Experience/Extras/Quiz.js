@@ -26,23 +26,28 @@ export default class Quiz {
             let html = `<div class="modal__content quiz">
                 <div class="quiz__header heading"><h2>${_s.task.questions}</h2></div>
                 <div class="quiz__content">`
-                    questions.forEach((q, qIdx) => {
-                        html += `<div class="question">
-                            <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
-                            <div class="question__title">${q.question}</div>`
+            questions.forEach((q, qIdx) => {
+                html += `<div class="question">
+                            <div class="question__heading">
+                                <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                                <p class="question__title">${q.question}</p>
+                            </div>
+                            <div class="question__form">`
 
-                            if (q.answers.length) {
-                                q.answers.forEach((a, aIdx) => {
-                                    html += `<input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" data-correct="${a.correct_wrong}" />
-                                    <label for="question-${qIdx}_answer-${aIdx}">${a.answer}</label>`
-                                })
-                            }
-                            else {
-                                html += `<textarea class="question__textarea" rows="8" placeholder="åpent spørsmål; ikke noe riktig eller feil"></textarea>`
-                            }
-                        html += `</div>`
+                if (q.answers.length) {
+                    q.answers.forEach((a, aIdx) => {
+                        html += `<div class="question__input">
+                                    <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" data-correct="${a.correct_wrong}" />
+                                    <label for="question-${qIdx}_answer-${aIdx}"><span></span>${a.answer}</label>
+                                </div>`
                     })
-                html += `</div>
+                }
+                else {
+                    html += `<div class="question__input"><textarea class="question__textarea" rows="8" placeholder="åpent spørsmål; ikke noe riktig eller feil"></textarea></div>`
+                }
+                html += `</div></div>`
+            })
+            html += `</div>
             </div>
 
             <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">

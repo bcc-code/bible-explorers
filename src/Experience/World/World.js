@@ -12,9 +12,6 @@ import Points from './Points.js'
 import Highlight from './Highlight.js'
 import _appInsights from '../Utils/AppInsights.js'
 
-
-import SimonSaysGame from '../Games/SimonSaysGame.js'
-
 let instance = null
 
 export default class World {
