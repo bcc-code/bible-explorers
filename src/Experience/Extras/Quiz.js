@@ -20,47 +20,49 @@ export default class Quiz {
             let currentStep = program.currentStep
             let selectedChapter = world.selectedChapter
 
-            console.log(selectedChapter.program[currentStep])
+            // console.log(selectedChapter.program[currentStep])
             const questions = selectedChapter.program[currentStep].quiz
+
 
             let html = `<div class="modal__content quiz">
                 <div class="quiz__header heading"><h2>${_s.task.questions}</h2></div>
                 <div class="quiz__content">`
-                    questions.forEach((q, qIdx) => {
-                        html += `<div class="question">
-                                    <div class="question__heading">
-                                        <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
-                                        <p class="question__title">${q.question}</p>
-                                    </div>
-                                    <div class="question__form">`
+            questions.forEach((q, qIdx) => {
 
-                        if (q.answers.length) {
-                            q.answers.forEach((a, aIdx) => {
-                                html += `<div class="question__input">
-                                            <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" data-correct="${a.correct_wrong}" />
-                                            <label for="question-${qIdx}_answer-${aIdx}"><span></span>${a.answer}</label>
-                                        </div>`
-                            })
-                        }
-                        else {
-                            html += `<div class="question__input"><textarea class="question__textarea" rows="8" placeholder="åpent spørsmål; ikke noe riktig eller feil"></textarea></div>`
-                        }
-                        html += `</div>`
-                        
-                        if (q.picture) {
-                            html += `<div class="question__picture"><img src="${q.picture}"></div>`
-                        }
-                        
-                        html += `</div>`
+                html += `<div class="question" data-index="${qIdx + 1}">
+                            <div class="question__heading">
+                                <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                                <p class="question__title">${q.question}</p>
+                            </div>
+                            <div class="question__form">`
+
+                if (q.answers.length) {
+                    q.answers.forEach((a, aIdx) => {
+                        html += `<div class="question__input">
+                                    <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" />
+                                    <label for="question-${qIdx}_answer-${aIdx}"><span></span>${a.answer}</label>
+                                </div>`
                     })
-                html += `</div>
-            </div>
+                }
+                else {
+                    html += `<div class="question__input"><textarea class="question__textarea" rows="8" placeholder="åpent spørsmål; ikke noe riktig eller feil"></textarea></div>`
+                }
+                html += `</div>`
 
-            <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">
-                <div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>
-                <div id="submit-task" class="button button__submit button__default"><span>${_s.task.submit}</span></div>
-                <div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>
-            </div>`
+                if (q.picture) {
+                    html += `<div class="question__picture"><img src="${q.picture}"></div>`
+                }
+
+                html += `</div>`
+            })
+            html += `</div>`
+            html += `</div>`
+
+            html += `<div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">`
+            html += `<div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>`
+            html += `<div id="submit-task" class="button button__submit button__default"><span>${_s.task.submit}</span></div>`
+            html += `<div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>`
+            html += `</div>`
 
             quiz.modal = new Modal(html)
 
@@ -70,13 +72,11 @@ export default class Quiz {
             const prevButton = document.querySelector('.button__prev')
             const submitButton = document.querySelector('.button__submit')
 
-            document.querySelectorAll('.question')[0].classList.add('visible')
+            const htmlQuestions = document.querySelectorAll('.question')
 
+            htmlQuestions[0].classList.add('visible')
             prevButton.classList.add('disabled')
-
-            if (questions.length > 1) {
-                submitButton.classList.add('disabled')
-            }
+            submitButton.classList.add('hidden')
 
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
@@ -85,10 +85,11 @@ export default class Quiz {
 
                 if (current.nextElementSibling.matches(':last-child')) {
                     nextButton.classList.add('disabled')
-                    submitButton.classList.remove('disabled')
+                    submitButton.classList.remove('hidden')
                 } else {
                     prevButton.classList.remove('disabled')
                 }
+
             })
 
             prevButton.addEventListener("click", () => {
@@ -100,6 +101,7 @@ export default class Quiz {
                     prevButton.classList.add('disabled')
                 } else {
                     nextButton.classList.remove('disabled')
+                    submitButton.classList.add('hidden')
                 }
             })
 
@@ -107,6 +109,34 @@ export default class Quiz {
                 quiz.modal.destroy()
                 program.advance()
             })
+
+
+            htmlQuestions.forEach((q, i) => {
+
+                const htmlAnswers = q.querySelectorAll('label')
+                const objAnswers = questions[i].answers
+
+                htmlAnswers.forEach((a, i) => {
+                    a.addEventListener('click', () => {
+
+                        htmlAnswers.forEach(a => {
+                            a.parentNode.classList.remove('wrong')
+                            a.style.pointerEvents = 'none'
+                        })
+
+                        const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
+                        htmlAnswers[correctIndex].parentNode.classList.add('correct')
+
+                        if (!objAnswers[i].correct_wrong) {
+                            a.parentNode.classList.add('wrong')
+                        }
+                    })
+
+                })
+
+            })
+
+
         }
     }
 }
