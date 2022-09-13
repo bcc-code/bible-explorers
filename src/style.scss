@@ -2947,12 +2947,19 @@ button,
 }
 
 .quiz {
+
+    &__content {
+        display: grid;
+    }
+
     .question {
         position: relative;
+        display: none;
 
         &.visible {
-            display: flex;
-            gap: 16px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
         }
 
         &__heading {
@@ -2987,6 +2994,7 @@ button,
         }
 
         &__picture {
+            display: none;
             position: absolute;
             width: 200px;
             left: 120px;
@@ -3016,7 +3024,6 @@ button,
             border: 3px solid $accent;
             border-radius: 1rem 1rem;
             padding: 2rem;
-            width: 40rem;
             font-size: 1.5rem;
         }
 
@@ -3072,13 +3079,58 @@ button,
             align-items: center;
         }
 
+        label div {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 100em;
+            display: none;
+            margin-left: auto;
+            background: $gradient;
+            border: 4px solid $dark;
+
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            &::after {
+                content: '';
+                position: relative;
+                width: 2rem;
+                height: 2rem;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center;
+            }
+        }
+
 
         &__input.wrong label {
             border: 3px solid red;
+
+            div {
+                border: 3px solid red;
+                background: rgba(red, 0.2);
+                display: flex;
+            }
+
+            div::after {
+                background-image: url('../static/assets/x.svg');
+            }
         }
 
         &__input.correct label {
             border: 3px solid greenyellow;
+            animation: glow 1s 1 linear;
+
+            div {
+                border: 3px solid greenyellow;
+                background: rgba(greenyellow, 0.2);
+                display: flex;
+            }
+
+            div::after {
+                background-image: url('../static/assets/check.svg');
+            }
         }
 
 
@@ -3102,16 +3154,33 @@ button,
             background: rgba(greenyellow, 0.2);
 
         }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px -5px greenyellow;
+            }
+
+            to {
+                box-shadow: 0 0 5px 5px greenyellow;
+            }
+        }
     }
 }
 
 .modal__quiz {
-    .modal__footer {
-        justify-content: space-between;
+
+    .modal__container {
+        width: 100%;
+        max-width: 1000px;
+    }
+
+
+    .modal__footer .button__next {
+        margin-left: auto;
     }
 
     .modal__footer .button__prev {
-        margin-right: 0;
+        margin-right: auto
     }
 }
 
@@ -3517,4 +3586,14 @@ button,
     .divider {
         display: none;
     }
+
+    .quiz .question.visible {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz .question__heading {
+        min-height: auto;
+        width: auto;
+    }
+
 }
