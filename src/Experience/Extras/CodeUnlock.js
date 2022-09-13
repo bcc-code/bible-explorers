@@ -9,6 +9,7 @@ export default class CodeUnlock {
         instance = this
         this.experience = new Experience()
         this.world = this.experience.world
+        this.debug = this.experience.debug
     }
 
     toggleCodeUnlock(code) {
@@ -41,9 +42,13 @@ export default class CodeUnlock {
                 </div>
 
                 <div class="modal__actions">
-                    <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                </div>
-            </div>`;
+                    <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>`
+
+                    if (instance.debug.active) {
+                        html += `<div id="skipBTN" class="button button__default button__skip"><span>${_s.miniGames.skip}</span></div>`
+                    }
+                html += `</div>
+            </div>`
 
             instance.modal = new Modal(html)
 
@@ -53,6 +58,12 @@ export default class CodeUnlock {
             backBtn.addEventListener('click', (e) => {
                 instance.modal.destroy()
                 instance.world.program.taskDescription.toggleTaskDescription()
+            })
+
+            const skipBtn = document.getElementById("skipBTN")
+            skipBtn.addEventListener('click', (e) => {
+                instance.world.program.advance()
+                instance.destroy()
             })
 
             instance.el = {

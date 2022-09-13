@@ -829,7 +829,6 @@ button,
     }
 
     .modal-on & {
-
         #settings,
         #sound {
             display: none;
@@ -1471,7 +1470,6 @@ button,
         }
 
         &.hide-nav {
-
             .button__prev,
             .button__continue {
                 display: none;
@@ -1551,7 +1549,6 @@ button,
             background: $accent;
             border-radius: 0 1.5rem 1.5rem 0;
         }
-
     }
 
     &__task,
@@ -2457,11 +2454,14 @@ button,
             background: rgba(#1DBC60, .5);
 
         }
-
     }
 
     .modal__actions {
         justify-content: center;
+
+        .button__default {
+            margin: 0 1rem;
+        }
     }
 
     .heading .icon {
@@ -2486,7 +2486,6 @@ button,
     }
 
     @keyframes shake {
-
         10%,
         90% {
             border-color: #C5516E;
@@ -3104,7 +3103,6 @@ button,
 }
 
 .modal__quiz {
-
     .modal__footer {
         justify-content: space-between;
     }
