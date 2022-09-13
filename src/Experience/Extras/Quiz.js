@@ -20,33 +20,32 @@ export default class Quiz {
             let currentStep = program.currentStep
             let selectedChapter = world.selectedChapter
 
-            // console.log(selectedChapter.program[currentStep])
             const questions = selectedChapter.program[currentStep].quiz
-
 
             let html = `<div class="modal__content quiz">
                 <div class="quiz__header heading"><h2>${_s.task.questions}</h2></div>
                 <div class="quiz__content">`
-            questions.forEach((q, qIdx) => {
 
+            questions.forEach((q, qIdx) => {
                 html += `<div class="question" data-index="${qIdx + 1}">
-                            <div class="question__heading">
-                                <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
-                                <p class="question__title">${q.question}</p>
-                            </div>
-                            <div class="question__form">`
+                    <div class="question__heading">
+                        <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                        <p class="question__title">${q.question}</p>
+                    </div>
+                    <div class="question__form">`
 
                 if (q.answers.length) {
                     q.answers.forEach((a, aIdx) => {
                         html += `<div class="question__input">
-                                    <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" />
-                                    <label for="question-${qIdx}_answer-${aIdx}"><span></span>${a.answer}</label>
-                                </div>`
+                            <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" />
+                            <label for="question-${qIdx}_answer-${aIdx}"><span></span>${a.answer}</label>
+                        </div>`
                     })
                 }
                 else {
                     html += `<div class="question__input"><textarea class="question__textarea" rows="8" placeholder="åpent spørsmål; ikke noe riktig eller feil"></textarea></div>`
                 }
+
                 html += `</div>`
 
                 if (q.picture) {
@@ -55,8 +54,8 @@ export default class Quiz {
 
                 html += `</div>`
             })
-            html += `</div>`
-            html += `</div>`
+
+            html += `</div></div>`
 
             html += `<div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">`
             html += `<div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>`
@@ -89,7 +88,6 @@ export default class Quiz {
                 } else {
                     prevButton.classList.remove('disabled')
                 }
-
             })
 
             prevButton.addEventListener("click", () => {
@@ -99,7 +97,8 @@ export default class Quiz {
 
                 if (current.previousElementSibling.matches(':first-child')) {
                     prevButton.classList.add('disabled')
-                } else {
+                }
+                else {
                     nextButton.classList.remove('disabled')
                     submitButton.classList.add('hidden')
                 }
@@ -110,15 +109,12 @@ export default class Quiz {
                 program.advance()
             })
 
-
             htmlQuestions.forEach((q, i) => {
-
                 const htmlAnswers = q.querySelectorAll('label')
                 const objAnswers = questions[i].answers
 
                 htmlAnswers.forEach((a, i) => {
                     a.addEventListener('click', () => {
-
                         htmlAnswers.forEach(a => {
                             a.parentNode.classList.remove('wrong')
                             a.style.pointerEvents = 'none'
@@ -131,12 +127,8 @@ export default class Quiz {
                             a.parentNode.classList.add('wrong')
                         }
                     })
-
                 })
-
             })
-
-
         }
     }
 }
