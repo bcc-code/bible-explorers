@@ -77,7 +77,6 @@ export default class SimonSays {
 
 
         gameWatch.appendChild(gameWatchCenter)
-        gameContainerBox.appendChild(heading)
         gameContainerBox.appendChild(cables)
         gameContainerBox.appendChild(gameWatchTicker)
         gameContainerBox.appendChild(gameWatch)

@@ -829,6 +829,7 @@ button,
     }
 
     .modal-on & {
+
         #settings,
         #sound {
             display: none;
@@ -1470,6 +1471,7 @@ button,
         }
 
         &.hide-nav {
+
             .button__prev,
             .button__continue {
                 display: none;
@@ -2486,6 +2488,7 @@ button,
     }
 
     @keyframes shake {
+
         10%,
         90% {
             border-color: #C5516E;
@@ -2674,7 +2677,7 @@ button,
         position: relative;
         border: 10px solid #0396e3;
         border-radius: 2rem;
-        padding: 3rem 8rem 4rem;
+        padding: 4rem 8rem;
         background: linear-gradient(#1f2141, #1f2141);
     }
 
@@ -3324,6 +3327,45 @@ button,
 
     .chapters__wrapper {
         margin-top: 2rem;
+    }
+
+    #simon-says {
+        .note {
+            width: 140px;
+            height: 140px;
+        }
+
+        .cable[data-item="0"] {
+            top: 8%;
+        }
+
+        .cable[data-item="1"] {
+            top: 28%;
+        }
+
+        .cable[data-item="2"] {
+            top: 49%;
+        }
+
+        .cable[data-item="3"] {
+            top: 72%;
+        }
+
+        .cable[data-item="4"] {
+            top: 17%;
+        }
+
+        .cable[data-item="5"] {
+            top: 38%;
+        }
+
+        .cable[data-item="6"] {
+            top: 55%;
+        }
+
+        .cable[data-item="7"] {
+            top: 69%;
+        }
     }
 }
 
