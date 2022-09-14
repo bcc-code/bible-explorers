@@ -68,12 +68,13 @@ export default class TaskDescription {
                     instance.program.codeUnlock.toggleCodeUnlock(code)
                 }
 
-                else if (instance.currentStepTaskType == 'picture_and_code') {
-                    instance.program.pictureAndCode.togglePictureAndCode()
+                else if (instance.currentStepTaskType == 'code_and_iris') {
+                    const code = selectedChapter.program[currentStep].codeAndIris.code
+                    instance.program.codeUnlock.toggleCodeUnlock(code, true)
                 }
 
-                else if (instance.currentStepTaskType == 'iris_and_code') {
-                    instance.program.irisAndCode.toggleIrisAndCode()
+                else if (instance.currentStepTaskType == 'picture_and_code') {
+                    instance.program.pictureAndCode.togglePictureAndCode()
                 }
 
                 else if (instance.currentStepTaskType == 'question_and_code') {

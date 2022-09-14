@@ -6,13 +6,13 @@ import _api from '../Utils/Api.js'
 
 let instance = null
 
-export default class IrisAndCode {
+export default class CodeAndIris {
     constructor() {
         this.experience = new Experience()
         instance = this
     }
 
-    toggleIrisAndCode() {
+    toggleCodeAndIris() {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         }
@@ -21,8 +21,9 @@ export default class IrisAndCode {
             instance.program = instance.world.program
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
-            instance.data = instance.selectedChapter.program[instance.currentStep].irisAndCode
+            instance.data = instance.selectedChapter.program[instance.currentStep].codeAndIris
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
+
             instance.toggleIris()
         }
     }
@@ -41,18 +42,12 @@ export default class IrisAndCode {
         backBtn.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
-            instance.program.taskDescription.toggleTaskDescription()
+            instance.program.codeUnlock.toggleCodeUnlock(instance.data.code, true)
         })
 
         getTaskBtn.addEventListener("click", () => {
             instance.modal.destroy()
-            instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
-
-            const backBtn = document.getElementById("backBTN")
-            backBtn.addEventListener('click', (e) => {
-                instance.modal.destroy()
-                instance.toggleIris()
-            })
+            instance.world.program.advance()
         })
     }
 }

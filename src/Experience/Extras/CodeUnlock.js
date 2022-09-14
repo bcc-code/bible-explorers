@@ -12,7 +12,9 @@ export default class CodeUnlock {
         this.debug = this.experience.debug
     }
 
-    toggleCodeUnlock(code) {
+    toggleCodeUnlock(code, irisMessage = false) {
+        this.irisMessage = irisMessage
+
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         }
@@ -123,9 +125,15 @@ export default class CodeUnlock {
         const wrapper = document.querySelector('.code-unlock')
 
         if (instance.el.code.textContent == instance.secretCode) {
-            instance.world.audio.playTaskCompleted()
-            instance.world.program.advance()
-            instance.destroy()
+            if (this.irisMessage == false) {
+                instance.world.audio.playTaskCompleted()
+                instance.world.program.advance()
+                instance.destroy()
+            }
+            else {
+                instance.destroy()
+                instance.world.program.codeAndIris.toggleCodeAndIris()
+            }
         } else {
             wrapper.classList.add('wrong-code')
             setTimeout(() => {

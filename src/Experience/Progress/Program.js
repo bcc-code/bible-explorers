@@ -2,8 +2,8 @@ import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
+import CodeAndIris from '../Extras/CodeAndIris.js'
 import PictureAndCode from '../Extras/PictureAndCode.js'
-import IrisAndCode from '../Extras/IrisAndCode.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Questions from '../Extras/Questions.js'
 import Video from '../Extras/Video.js'
@@ -34,8 +34,8 @@ export default class Program {
         this.taskDescription = new TaskDescription()
         this.video = new Video()
         this.codeUnlock = new CodeUnlock()
+        this.codeAndIris = new CodeAndIris()
         this.pictureAndCode = new PictureAndCode()
-        this.irisAndCode = new IrisAndCode()
         this.questionAndCode = new QuestionAndCode()
         this.questions = new Questions()
         this.sortingGame = new SortingGame()
