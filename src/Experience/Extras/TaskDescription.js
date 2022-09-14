@@ -63,33 +63,37 @@ export default class TaskDescription {
             getTaskBtn.addEventListener("click", () => {
                 instance.destroy()
 
-                if (instance.currentStepTaskType == 'questions') {
-                    instance.program.questions.toggleQuestions()
-                }
-
-                else if (instance.currentStepTaskType == 'code') {
+                if (instance.currentStepTaskType == 'code') {
                     const code = selectedChapter.program[currentStep].codeToUnlock
                     instance.program.codeUnlock.toggleCodeUnlock(code)
                 }
 
-                else if (instance.currentStepTaskType == 'sorting') {
-                    instance.program.sortingGame.toggleSortingGame()
+                else if (instance.currentStepTaskType == 'picture_and_code') {
+                    instance.program.pictureAndCode.togglePictureAndCode()
                 }
 
-                else if (instance.currentStepTaskType == 'cables') {
-                    instance.program.cableConnectorGame.toggleCableConnector()
-                }
-
-                else if (instance.currentStepTaskType == 'simon_says') {
-                    instance.program.simonSays.toggleSimonSays()
+                else if (instance.currentStepTaskType == 'iris_and_code') {
+                    instance.program.irisAndCode.toggleIrisAndCode()
                 }
 
                 else if (instance.currentStepTaskType == 'question_and_code') {
                     instance.program.questionAndCode.toggleQuestionAndCode()
                 }
 
-                else if (instance.currentStepTaskType == 'picture_and_code') {
-                    instance.program.pictureAndCode.togglePictureAndCode()
+                else if (instance.currentStepTaskType == 'questions') {
+                    instance.program.questions.toggleQuestions()
+                }
+
+                else if (instance.currentStepTaskType == 'cables') {
+                    instance.program.cableConnectorGame.toggleCableConnector()
+                }
+
+                else if (instance.currentStepTaskType == 'sorting') {
+                    instance.program.sortingGame.toggleSortingGame()
+                }
+
+                else if (instance.currentStepTaskType == 'simon_says') {
+                    instance.program.simonSays.toggleSimonSays()
                 }
 
                 else if (instance.currentStepTaskType == 'quiz') {

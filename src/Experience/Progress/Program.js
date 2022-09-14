@@ -1,14 +1,15 @@
 import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
-import CodeUnlock from '../Extras/CodeUnlock.js'
-import Questions from '../Extras/Questions.js'
 import TaskDescription from '../Extras/TaskDescription.js'
+import CodeUnlock from '../Extras/CodeUnlock.js'
+import PictureAndCode from '../Extras/PictureAndCode.js'
+import IrisAndCode from '../Extras/IrisAndCode.js'
+import QuestionAndCode from '../Extras/QuestionAndCode.js'
+import Questions from '../Extras/Questions.js'
 import Video from '../Extras/Video.js'
 import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
-import QuestionAndCode from '../Extras/QuestionAndCode.js'
-import PictureAndCode from '../Extras/PictureAndCode.js'
 import Quiz from '../Extras/Quiz.js'
 import Congrats from '../Extras/Congrats.js'
 
@@ -30,15 +31,16 @@ export default class Program {
         this.debug = this.experience.debug
 
         this.archive = new Archive()
-        this.codeUnlock = new CodeUnlock()
-        this.questions = new Questions()
         this.taskDescription = new TaskDescription()
         this.video = new Video()
+        this.codeUnlock = new CodeUnlock()
+        this.pictureAndCode = new PictureAndCode()
+        this.irisAndCode = new IrisAndCode()
+        this.questionAndCode = new QuestionAndCode()
+        this.questions = new Questions()
         this.sortingGame = new SortingGame()
         this.cableConnectorGame = new CableConnectorGame()
         this.simonSays = new SimonSaysGame()
-        this.questionAndCode = new QuestionAndCode()
-        this.pictureAndCode = new PictureAndCode()
         this.quiz = new Quiz()
         this.congrats = new Congrats()
 

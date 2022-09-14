@@ -61,10 +61,12 @@ export default class CodeUnlock {
             })
 
             const skipBtn = document.getElementById("skipBTN")
-            skipBtn.addEventListener('click', (e) => {
-                instance.world.program.advance()
-                instance.destroy()
-            })
+            if (skipBtn) {
+                skipBtn.addEventListener('click', (e) => {
+                    instance.world.program.advance()
+                    instance.destroy()
+                })
+            }
 
             instance.el = {
                 code: document.querySelector(".code-unlock__input"),
