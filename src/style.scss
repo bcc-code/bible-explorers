@@ -261,7 +261,7 @@ ul {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 h1 {
@@ -3163,6 +3163,34 @@ button,
             to {
                 box-shadow: 0 0 5px 5px greenyellow;
             }
+        }
+    }
+
+    &__summary {
+        background: $gradient;
+        border: 3px solid $accent;
+        border-radius: 1rem 2rem 3rem 1rem;
+        padding: 2rem;
+        max-width: 30rem;
+        margin-inline: auto;
+
+        display: grid;
+        gap: 2rem;
+        text-align: center;
+
+        h2 {
+            font-size: 2rem;
+            color: $accent2;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: #fff;
+        }
+
+        button {
+            width: 200px;
+            margin-inline: auto;
         }
     }
 }
