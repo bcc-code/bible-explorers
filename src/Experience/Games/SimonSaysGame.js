@@ -96,16 +96,16 @@ export default class SimonSays {
         this.data = {
             color: {
                 name: [
-                    'lightBlue',
-                    'yellow',
                     'pink',
-                    'purple'
+                    'yellow',
+                    'green',
+                    'lightBlue'
                 ],
                 hex: [
-                    "#2c90cf",
-                    "#f9c662",
                     "#ff6ea9",
-                    "#af4eaa"
+                    "#f9c662",
+                    "#67BD53",
+                    "#2c90cf"
                 ]
             },
             melody: [],
@@ -115,7 +115,7 @@ export default class SimonSays {
                 'g-sharp-4',
                 'a-4'
             ],
-            rounds: instance.world.selectedChapter.category == '6-8' ? 4 : 8
+            rounds: instance.world.selectedChapter.category == '6-8' ? 6 : 8
         }
 
         this.audio.loadMelodyNotes(this.data.notes)
