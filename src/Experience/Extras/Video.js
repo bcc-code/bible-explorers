@@ -58,7 +58,7 @@ export default class Video {
                     bg.classList.add('button__content')
 
                     let span = document.createElement('span')
-                    span.innerText = _s.miniGames.skip
+                    span.innerText = _s.miniGames.continue
                     skipVideo.appendChild(bg)
                     bg.appendChild(span)
 
@@ -155,7 +155,7 @@ export default class Video {
     }
 
     showSkipBtn() {
-        const secondsToSkip = 15
+        const secondsToSkip = 10
         const currentTime = instance.video().currentTime()
         const duration = instance.video().duration()
 
