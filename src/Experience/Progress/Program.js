@@ -99,6 +99,13 @@ export default class Program {
         this.camera.updateCameraTo(this.currentLocation(), instance.points.add(this.interactiveObjects()[0], instance.stepType()))
         this.highlight.add(this.interactiveObjects()[0])
 
+
+        document.addEventListener('click', (event) => {
+            if (event.target.getAttribute('class') == 'label') {
+                this.control(instance.points.currentLabel)
+            }
+        })
+
         if (this.stepType() == 'video') {
             setTimeout(function () {
                 instance.video.load(currentVideo)

@@ -8,10 +8,12 @@ export default class Points {
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+        this.world = this.experience.world
 
         this.objects = this.experience.world.controlRoom.clickableObjects
         this.currentLabel = null
         this.currentObject = null
+
         this.render()
     }
 
@@ -21,9 +23,11 @@ export default class Points {
 
         this.objects.filter(child => {
             if (child.name === name) {
+
                 // First step is a task description from Iris
                 if (type == 'task') type = 'iris'
                 this.create(child, _s.tooltips[type])
+
             }
         })
     }
@@ -40,6 +44,7 @@ export default class Points {
 
         this.currentLabel = new CSS2DObject(div)
         this.currentLabel.position.set(0, object.geometry.boundingBox.min.y, 0)
+        this.currentLabel.name = object.name
         this.currentObject = object
         this.currentObject.add(this.currentLabel)
     }
@@ -53,6 +58,7 @@ export default class Points {
 
     render() {
         this.labelRenderer = new CSS2DRenderer()
+        this.labelRenderer.domElement.classList.add('points')
         this.labelRenderer.setSize(this.sizes.width, this.sizes.height)
         document.body.appendChild(this.labelRenderer.domElement)
     }
@@ -63,5 +69,6 @@ export default class Points {
 
     update() {
         this.labelRenderer.render(this.scene, this.camera.instance)
+
     }
 }

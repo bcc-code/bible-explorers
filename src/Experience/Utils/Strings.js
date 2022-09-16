@@ -46,7 +46,7 @@ const strings = {
             "logOut": "Log out",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -98,7 +98,7 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Start over",
             "continue": "Continue the journey",
-            "skip": "Skip"
+            "skip": "Skip",
         }
     },
     "no": {
@@ -190,7 +190,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -247,7 +247,7 @@ const strings = {
             "logOut": "Ausloggen",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -291,7 +291,7 @@ const strings = {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -348,7 +348,7 @@ const strings = {
             "logOut": "Log uit",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -392,7 +392,7 @@ const strings = {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -449,7 +449,7 @@ const strings = {
             "logOut": "Se déconnecter",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -493,7 +493,7 @@ const strings = {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -550,7 +550,7 @@ const strings = {
             "logOut": "Wyloguj",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -594,7 +594,7 @@ const strings = {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -651,7 +651,7 @@ const strings = {
             "logOut": "Delogare",
             "noAccess": "Nu ai acces pentru a viziona filmele. Pentru a primi acces, trimite un email la <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -695,7 +695,7 @@ const strings = {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -752,7 +752,7 @@ const strings = {
             "logOut": "Cerrar sección",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -796,7 +796,7 @@ const strings = {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -853,7 +853,7 @@ const strings = {
             "logOut": "Sair",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -897,7 +897,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -954,7 +954,7 @@ const strings = {
             "logOut": "Esci",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -998,7 +998,7 @@ const strings = {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -1055,7 +1055,7 @@ const strings = {
             "logOut": "Выйти",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -1099,7 +1099,7 @@ const strings = {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -1156,7 +1156,7 @@ const strings = {
             "logOut": "Kirjaudu ulos",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -1200,7 +1200,7 @@ const strings = {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
-            
+
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -1257,7 +1257,7 @@ const strings = {
             "logOut": "Kijelentkezés",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
@@ -1356,7 +1356,7 @@ const strings = {
             "logOut": "Log ud",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
-         "faq": {
+        "faq": {
             "questions": [
                 "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
                 "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",

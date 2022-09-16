@@ -35,9 +35,11 @@ export default class ControlRoom {
 
         // Events
         window.addEventListener('click', () => {
-            if (this.experience.world.program)
+            if (this.experience.world.program) {
                 this.clickedObject()
+            }
         })
+
     }
 
     // Set scene
@@ -189,7 +191,9 @@ export default class ControlRoom {
     }
 
     update() {
-        this.checkObjectIntersection()
+        if (this.clickableObjects)
+            this.checkObjectIntersection()
+
         this.animation.mixer.update(this.time.delta * 0.001)
     }
 }
