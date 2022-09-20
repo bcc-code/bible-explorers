@@ -7,6 +7,7 @@ let quiz = null
 export default class Quiz {
     constructor() {
         this.experience = new Experience()
+
         quiz = this
     }
 
@@ -15,6 +16,9 @@ export default class Quiz {
             quiz.modal.destroy()
         }
         else {
+
+            let correctAnswers = 0
+
             let world = this.experience.world
             let program = world.program
             let currentStep = program.currentStep
@@ -70,7 +74,7 @@ export default class Quiz {
                                 <i class="icon icon-arrow-left-long-solid"></i>
                             </span>
                         </div>
-                        <div id = "submit-task" class="button button__submit button__default">
+                        <div id="submit-task" class="button button__submit button__default">
                             <span>${_s.task.submit}</span>
                         </div>
                         <div class="button button__next button__round">
@@ -137,8 +141,14 @@ export default class Quiz {
             })
 
             submitButton.addEventListener("click", () => {
-                quiz.modal.destroy()
-                program.advance()
+                prevButton.classList.add('hidden')
+                submitButton.classList.add('hidden')
+
+                htmlQuestions.forEach(q => {
+                    q.classList.add('hidden')
+                })
+
+                this.summary(program, htmlQuestions.length - 1, correctAnswers)
             })
 
             htmlQuestions.forEach((q, i) => {
@@ -157,6 +167,8 @@ export default class Quiz {
 
                         if (!objAnswers[i].correct_wrong) {
                             a.parentNode.classList.add('wrong')
+                        } else {
+                            correctAnswers += 1
                         }
 
                         nextButton.classList.remove('hidden')
@@ -165,6 +177,35 @@ export default class Quiz {
 
 
             })
+
         }
     }
+
+    summary(program, numberOfQuestions, correctAnswers) {
+        const parent = document.querySelector('.quiz')
+        const container = document.createElement('div')
+        container.classList.add('quiz__summary')
+
+        const heading = document.createElement('h2')
+        heading.innerText = 'Congratulations'
+
+        const phrase = document.createElement('p')
+        phrase.innerHTML = 'You have completed the quiz. <br>' + correctAnswers + ' / ' + numberOfQuestions + ' correct answers'
+
+        const continueButton = document.createElement('button')
+        continueButton.classList.add('button', 'button__default')
+        continueButton.innerText = 'Continue'
+
+        continueButton.addEventListener('click', () => {
+            quiz.modal.destroy()
+            program.advance()
+        })
+
+        container.appendChild(heading)
+        container.appendChild(phrase)
+        container.appendChild(continueButton)
+        parent.appendChild(container)
+    }
+
+
 }
