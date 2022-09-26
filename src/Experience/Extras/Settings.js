@@ -12,6 +12,9 @@ export default class Settings {
         settings = this
 
         settings.soundOn = true
+
+        const defaultVideoQuality = 'high'
+        settings.videoQuality = localStorage.getItem('videoQuality') || defaultVideoQuality
         settings.logInLogOut = {
             login: false,
             logout: false
@@ -38,13 +41,6 @@ export default class Settings {
                             <span class="bottomLeft"></span>
                             <span class="bottomLeftSmall"></span>
                         </div>
-                        <div class="sound settings__item">
-                            <p>${_s.settings.soundEffects}</p>
-                            <label class="switch">
-                                <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
                         <div class="language settings__item">
                             <p>${_s.settings.language}</p>
                             <div class="language__picker">
@@ -52,13 +48,31 @@ export default class Settings {
                                 <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
                             </div>
                         </div>
+                        <div class="video-quality settings__item">
+                            <p>${_s.settings.videoQuality.title}</p>
+                            <div class="video-quality__picker">
+                                <div class="video-quality__current">${_s.settings.videoQuality[settings.videoQuality]}</div>
+                                <ul class="video-quality__list hide">
+                                    <li data-id="low">${_s.settings.videoQuality.low}</li>
+                                    <li data-id="medium">${_s.settings.videoQuality.medium}</li>
+                                    <li data-id="high">${_s.settings.videoQuality.high}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="sound settings__item">
+                            <p>${_s.settings.soundEffects}</p>
+                            <label class="switch">
+                                <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="faq__button settings__item">
+                            <p>${_s.settings.faq}</p>
+                        </div>
                         <a class="feedback settings__item" href="mailto:hello@biblekids.io" target="blank">
                             <p>${_s.settings.feedback}</p>
                             <i class="icon icon-envelope-solid"></i>
                         </a>
-                        <div class="faq__button settings__item">
-                            <p>${_s.settings.faq}</p>
-                        </div>
                         <div class="login settings__footer">
                             <p><span id="loggedIn"></span> <span id="userName"></span> <span id="userRole"></span></p>
                             <div class="button__actions">
@@ -79,6 +93,9 @@ export default class Settings {
                 currentLang: document.querySelector(".language .language__current"),
                 languageList: document.querySelector(".language .language__list"),
                 languages: document.querySelectorAll(".language .language__list li"),
+                currentVideoQuality: document.querySelector(".video-quality .video-quality__current"),
+                videoQualityList: document.querySelector(".video-quality .video-quality__list"),
+                videoQualities: document.querySelectorAll(".video-quality .video-quality__list li"),
                 login: document.getElementById("button__login"),
                 logout: document.getElementById("button__logout"),
                 loggedIn: document.getElementById("loggedIn"),
@@ -86,8 +103,9 @@ export default class Settings {
                 userRole: document.getElementById("userRole"),
             }
 
-            settings.el.soundToggle.addEventListener("change", settings.toggleSound)
             settings.el.currentLang.addEventListener("click", settings.toggleLanguageList)
+            settings.el.currentVideoQuality.addEventListener("click", settings.toggleVideoQualityList)
+            settings.el.soundToggle.addEventListener("change", settings.toggleSound)
             settings.el.login.addEventListener("click", settings.login)
             settings.el.logout.addEventListener("click", settings.logout)
 
@@ -97,17 +115,32 @@ export default class Settings {
                 })
             })
 
+            settings.el.videoQualities.forEach(function (videoQuality) {
+                videoQuality.addEventListener("click", () => {
+                    settings.videoQuality = videoQuality.getAttribute('data-id')
+                    settings.el.currentVideoQuality.textContent = _s.settings.videoQuality[settings.videoQuality]
+                    localStorage.setItem('videoQuality', settings.videoQuality)
+                    settings.el.videoQualityList.classList.toggle("hide")
+                })
+            })
+
             settings.toggleFaq()
             settings.updateUI()
         }
     }
 
-    toggleSound() {
-        settings.soundOn = this.checked
+    toggleLanguageList() {
+        settings.el.videoQualityList.classList.add("hide")
+        settings.el.languageList.classList.toggle("hide")
     }
 
-    toggleLanguageList() {
-        settings.el.languageList.classList.toggle("hide")
+    toggleVideoQualityList() {
+        settings.el.languageList.classList.add("hide")
+        settings.el.videoQualityList.classList.toggle("hide")
+    }
+
+    toggleSound() {
+        settings.soundOn = this.checked
     }
 
     toggleFaq() {

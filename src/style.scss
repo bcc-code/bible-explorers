@@ -383,33 +383,16 @@ button,
     justify-content: center;
     flex-direction: column;
 
+    &.visible {
+        display: flex;
+    }
+
     p {
         max-width: 40rem;
         color: $accent2;
         font-size: 1.5rem;
         font-weight: bold;
         margin: 3rem 0;
-    }
-
-    .container__scroll {
-        justify-content: center;
-    }
-}
-
-#landing-screen {
-    @include fixed();
-
-    &::before {
-        content: '';
-        @include overlay()
-    }
-
-    body:not(.freeze) & {
-        display: none;
-    }
-
-    &.visible {
-        @include alignCenterVH($direction: true)
     }
 
     .container__scroll {
@@ -1624,7 +1607,7 @@ button,
 
 .settings {
     &__content {
-        width: 28rem;
+        width: 32rem;
         display: flex;
         flex-direction: column;
     }
@@ -1687,6 +1670,98 @@ button,
         }
     }
 
+    .video-quality {
+        &__picker {
+            position: relative;
+        }
+
+        &__current {
+            font-size: 1.2rem;
+            height: 2.5rem;
+            padding: 0.25rem 1rem;
+            line-height: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        &__list {
+            position: absolute;
+            top: 3rem;
+            right: 0;
+            z-index: 2;
+            border-radius: 8px;
+            background-color: #fff;
+            padding: 6px 4px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
+            min-width: 10rem;
+        }
+
+        &__list.hide {
+            display: none;
+        }
+
+        &__list li {
+            padding: 0.25rem 1rem;
+            color: $dark;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .3s ease;
+
+            &:hover {
+                background-color: #0396e3;
+                color: #fff;
+            }
+        }
+    }
+
+    .language {
+        .language__picker {
+            position: relative;
+        }
+
+        .language__current {
+            font-size: 1.2rem;
+            height: 2.5rem;
+            padding: 0.25rem 1rem;
+            line-height: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .language__list {
+            position: absolute;
+            top: 3rem;
+            right: 0;
+            z-index: 2;
+            border-radius: 8px;
+            background-color: #fff;
+            padding: 6px 4px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
+            min-width: 10rem;
+        }
+
+        .language__list.hide {
+            display: none;
+        }
+
+        .language__list li {
+            padding: 0.25rem 1rem;
+            color: $dark;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .3s ease;
+
+            &:hover {
+                background-color: #0396e3;
+                color: #fff;
+            }
+        }
+    }
+
     .switch {
         position: relative;
         display: inline-block;
@@ -1743,51 +1818,6 @@ button,
 
         .slider.round:before {
             border-radius: 50%;
-        }
-    }
-
-    .language {
-        .language__picker {
-            position: relative;
-        }
-
-        .language__current {
-            font-size: 1.2rem;
-            height: 2.5rem;
-            padding: 0.25rem 1rem;
-            line-height: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .language__list {
-            position: absolute;
-            top: 3rem;
-            right: 0;
-            z-index: 2;
-            border-radius: 8px;
-            background-color: #fff;
-            padding: 6px 4px;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .language__list.hide {
-            display: none;
-        }
-
-        .language__list li {
-            padding: 0.25rem 2rem;
-            color: $dark;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: .3s ease;
-
-            &:hover {
-                background-color: #0396e3;
-                color: #fff;
-            }
         }
     }
 
@@ -2070,7 +2100,6 @@ button,
 }
 
 .archive {
-
     &__sidebar {
         position: relative;
         padding: 2rem;

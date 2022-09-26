@@ -44,14 +44,6 @@ export default class World {
             loadingScreen: document.getElementById("loading-screen"),
             conceptDescription: document.getElementById("concept-description"),
             loading: document.getElementById("page-loader"),
-            quality: {
-                container: document.querySelector("#quality"),
-                title: document.querySelector(".quality__title"),
-                low: document.querySelector(".quality[data-name='low'] span"),
-                medium: document.querySelector(".quality[data-name='medium'] span"),
-                high: document.querySelector(".quality[data-name='high'] span")
-            },
-            landingScreen: document.getElementById("landing-screen"),
             chaptersScreen: document.getElementById("chapters-screen"),
             introduction: document.getElementById("introduction"),
             topBar: document.getElementById("topBar")
@@ -65,22 +57,7 @@ export default class World {
         this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
 
-        // Quality
-        this.welcome.quality.title.innerText = _s.qualities.title
-        this.welcome.quality.low.innerText = _s.qualities.low
-        this.welcome.quality.medium.innerText = _s.qualities.medium
-        this.welcome.quality.high.innerText = _s.qualities.high
-
-        document.querySelectorAll(".qualities.list .quality.button").forEach(function (quality) {
-            quality.addEventListener("click", () => {
-                quality.classList.add('selected')
-                instance.selectedQuality = quality.getAttribute('data-name')
-                instance.goToAllChapters()
-
-                setFullscreen()
-                instance.audio.changeBgMusic()
-            })
-        })
+        instance.selectedQuality = instance.experience.settings.videoQuality
 
         this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
 
@@ -98,9 +75,8 @@ export default class World {
 
             setTimeout(function () {
                 instance.welcome.loading.style.display = "none"
-                instance.welcome.quality.container.style.display = "block"
                 instance.welcome.topBar.style.display = "flex"
-                instance.welcome.loadingScreen.style.display = "flex"
+                instance.welcome.loadingScreen.classList.add('visible')
             }, 1000)
         })
 
@@ -118,11 +94,6 @@ export default class World {
 
         this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
         this.menu.backBtn.children[0].innerText = _s.journey.back
-    }
-
-    goToAllChapters() {
-        instance.welcome.loadingScreen.style.display = "none"
-        instance.welcome.landingScreen.classList.add('visible')
     }
 
     placeholderChapterData() {
@@ -207,6 +178,11 @@ export default class World {
             category.addEventListener("click", () => {
                 const categorySlug = category.getAttribute('data-slug')
                 instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
+
+                setFullscreen()
+                instance.audio.changeBgMusic()
+
+                instance.welcome.loadingScreen.classList.remove('visible')
             })
         })
     }
@@ -217,14 +193,14 @@ export default class World {
         instance.removeDescriptionHtml()
 
         instance.menu.chapters.innerHTML = ''
-        instance.welcome.landingScreen.classList.add('visible')
+        instance.welcome.loadingScreen.classList.add('visible')
         instance.welcome.chaptersScreen.classList.remove('visible')
     }
 
     setChapters(data) {
         data.forEach((chapter, index) => {
             instance.setChapterHtml(chapter, index)
-            instance.welcome.landingScreen.classList.remove('visible')
+            instance.welcome.loadingScreen.classList.remove('visible')
             instance.welcome.chaptersScreen.classList.add('visible')
         })
 

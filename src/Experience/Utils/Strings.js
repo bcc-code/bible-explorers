@@ -3,12 +3,6 @@ import _lang from '../Utils/Lang.js'
 const strings = {
     "en": {
         "loading": "Loading",
-        "qualities": {
-            "title": "Choose video quality",
-            "low": "Low (270p)",
-            "medium": "Medium (540p)",
-            "high": "High (1080p)"
-        },
         "conceptDescription": "Join time travels and explore the book that can answer every question",
         "introduction": "Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -35,6 +29,12 @@ const strings = {
         "settings": {
             "title": "Settings",
             "soundEffects": "Sound effects",
+            "videoQuality": {
+                "title": "Video quality",
+                "low": "Low (270p)",
+                "medium": "Medium (540p)",
+                "high": "High (1080p)"
+            },
             "language": "Language",
             "feedback": "Feedback",
             "faq": "FAQ",
@@ -103,12 +103,6 @@ const strings = {
     },
     "no": {
         "loading": "Laster",
-        "qualities": {
-            "title": "Velg videokvalitet",
-            "low": "Lav (270p)",
-            "medium": "Medium (540p)",
-            "high": "Høy (1080p)"
-        },
         "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
         "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
@@ -135,6 +129,12 @@ const strings = {
         "settings": {
             "title": "Innstillinger",
             "soundEffects": "Lydeffekter",
+            "videoQuality": {
+                "title": "Videokvalitet",
+                "low": "Lav (270p)",
+                "medium": "Medium (540p)",
+                "high": "Høy (1080p)"
+            },
             "language": "Språk",
             "feedback": "Tilbakemelding",
             "faq": "FAQ",
@@ -190,7 +190,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -204,12 +203,6 @@ const strings = {
     },
     "de": {
         "loading": "Wird geladen",
-        "qualities": {
-            "title": "Videoqualität auswählen",
-            "low": "Niedrig (270p)",
-            "medium": "Mittel (540p)",
-            "high": "Hoch (1080p)"
-        },
         "conceptDescription": "Komm mit auf Zeitreise und erforsche das Buch, das alle Fragen beantworten kann",
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -236,6 +229,12 @@ const strings = {
         "settings": {
             "title": "Einstellungen",
             "soundEffects": "Sound-Effekte",
+            "videoQuality": {
+                "title": "Videoqualität",
+                "low": "Niedrig (270p)",
+                "medium": "Mittel (540p)",
+                "high": "Hoch (1080p)"
+            },
             "language": "Sprache",
             "feedback": "Rückmeldung",
             "faq": "FAQ",
@@ -291,7 +290,6 @@ const strings = {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -305,12 +303,6 @@ const strings = {
     },
     "nl": {
         "loading": "Laden",
-        "qualities": {
-            "title": "Kies videokwaliteit",
-            "low": "Laag (270p)",
-            "medium": "Gemiddeld (540p)",
-            "high": "Hoog (1080p)"
-        },
         "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -337,6 +329,12 @@ const strings = {
         "settings": {
             "title": "Instellingen",
             "soundEffects": "Geluidseffecten",
+            "videoQuality": {
+                "title": "Videokwaliteit",
+                "low": "Laag (270p)",
+                "medium": "Gemiddeld (540p)",
+                "high": "Hoog (1080p)"
+            },
             "language": "Taal",
             "feedback": "Feedback",
             "faq": "FAQ",
@@ -392,7 +390,6 @@ const strings = {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -406,12 +403,6 @@ const strings = {
     },
     "fr": {
         "loading": "Chargement",
-        "qualities": {
-            "title": "Choisir la qualité vidéo",
-            "low": "Basse (270p)",
-            "medium": "Moyenne (540p)",
-            "high": "Haute (1080p)"
-        },
         "conceptDescription": "Rejoins les voyages dans le temps et explore le livre qui peut répondre à toutes les questions",
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -438,6 +429,12 @@ const strings = {
         "settings": {
             "title": "Paramètres",
             "soundEffects": "Effets sonores",
+            "videoQuality": {
+                "title": "Qualité vidéo",
+                "low": "Basse (270p)",
+                "medium": "Moyenne (540p)",
+                "high": "Haute (1080p)"
+            },
             "language": "Langue",
             "feedback": "Commentaires",
             "faq": "FAQ",
@@ -493,7 +490,6 @@ const strings = {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -507,12 +503,6 @@ const strings = {
     },
     "pl": {
         "loading": "Ładowanie",
-        "qualities": {
-            "title": "Wybierz jakość filmu",
-            "low": "Niska (270p)",
-            "medium": "Średnia (540p)",
-            "high": "Wysoka (1080p)"
-        },
         "conceptDescription": "Dołącz do podróży w czasie i odkryj książkę, która odpowie na każde pytanie",
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -539,6 +529,12 @@ const strings = {
         "settings": {
             "title": "Ustawienia",
             "soundEffects": "Efekty dźwiękowe",
+            "videoQuality": {
+                "title": "Jakość filmu",
+                "low": "Niska (270p)",
+                "medium": "Średnia (540p)",
+                "high": "Wysoka (1080p)"
+            },
             "language": "Język",
             "feedback": "Feedback",
             "faq": "FAQ",
@@ -594,7 +590,6 @@ const strings = {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -608,12 +603,6 @@ const strings = {
     },
     "ro": {
         "loading": "Se încarcă",
-        "qualities": {
-            "title": "Alege calitatea video",
-            "low": "Redus (270p)",
-            "medium": "Mediu (540p)",
-            "high": "Înalt (1080p)"
-        },
         "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
         "notAvailable": "Nici un capitol disponibil în limba selectată",
@@ -640,6 +629,12 @@ const strings = {
         "settings": {
             "title": "Setări",
             "soundEffects": "Efecte sonore",
+            "videoQuality": {
+                "title": "Calitate video",
+                "low": "Redus (270p)",
+                "medium": "Mediu (540p)",
+                "high": "Înalt (1080p)"
+            },
             "language": "Limbă",
             "feedback": "Feedback",
             "faq": "FAQ",
@@ -695,7 +690,6 @@ const strings = {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -709,12 +703,6 @@ const strings = {
     },
     "es": {
         "loading": "Cargando",
-        "qualities": {
-            "title": "Seleccionar Calidad del Video",
-            "low": "Baja (270p)",
-            "medium": "Media (540p)",
-            "high": "Alta (1080p)"
-        },
         "conceptDescription": "Unete a un viaje en el tiempo y explora el libro que puede responder todas las preguntas",
         "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
         "notAvailable": "No chapter available in the selected language",
@@ -741,6 +729,12 @@ const strings = {
         "settings": {
             "title": "Configuración",
             "soundEffects": "Efectos de sonidos",
+            "videoQuality": {
+                "title": "Calidad del Video",
+                "low": "Baja (270p)",
+                "medium": "Media (540p)",
+                "high": "Alta (1080p)"
+            },
             "language": "Idioma",
             "feedback": "Retroalimentación",
             "faq": "FAQ",
@@ -796,7 +790,6 @@ const strings = {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -810,12 +803,6 @@ const strings = {
     },
     "pt-pt": {
         "loading": "Carregando",
-        "qualities": {
-            "title": "Escolha a qualidade",
-            "low": "Baixo (270p)",
-            "medium": "Médio (540p)",
-            "high": "Alto (1080p)"
-        },
         "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
         "notAvailable": "No chapter available in the selected language",
@@ -842,6 +829,12 @@ const strings = {
         "settings": {
             "title": "Configurações",
             "soundEffects": "Efeitos sonoros",
+            "videoQuality": {
+                "title": "Qualidade",
+                "low": "Baixo (270p)",
+                "medium": "Médio (540p)",
+                "high": "Alto (1080p)"
+            },
             "language": "Idioma",
             "feedback": "Comentários",
             "faq": "FAQ",
@@ -897,7 +890,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -911,12 +903,6 @@ const strings = {
     },
     "it": {
         "loading": "Caricamento",
-        "qualities": {
-            "title": "Scegli la qualità del video",
-            "low": "Bassa (270p)",
-            "medium": "Media (540p)",
-            "high": "Alta (1080p)"
-        },
         "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -943,6 +929,12 @@ const strings = {
         "settings": {
             "title": "Impostazioni",
             "soundEffects": "Effetti sonori",
+            "videoQuality": {
+                "title": "Qualità del video",
+                "low": "Bassa (270p)",
+                "medium": "Media (540p)",
+                "high": "Alta (1080p)"
+            },
             "language": "Lingua",
             "feedback": "Feedback",
             "faq": "FAQ",
@@ -998,7 +990,6 @@ const strings = {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -1012,12 +1003,6 @@ const strings = {
     },
     "ru": {
         "loading": "Загрузка",
-        "qualities": {
-            "title": "Выберите качество видео",
-            "low": "Низкое (270p)",
-            "medium": "Среднее (540p)",
-            "high": "Высокое (1080p)"
-        },
         "conceptDescription": "Присоединяйтесь к путешествию во времени и исследуйте книгу, способную ответить на все вопросы",
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -1044,6 +1029,12 @@ const strings = {
         "settings": {
             "title": "Настройки",
             "soundEffects": "Звуковые эффекты",
+            "videoQuality": {
+                "title": "Качество видео",
+                "low": "Низкое (270p)",
+                "medium": "Среднее (540p)",
+                "high": "Высокое (1080p)"
+            },
             "language": "Язык",
             "feedback": "Обратная связь",
             "faq": "FAQ",
@@ -1099,7 +1090,6 @@ const strings = {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -1113,12 +1103,6 @@ const strings = {
     },
     "fi": {
         "loading": "Ladataan",
-        "qualities": {
-            "title": "Valitse videon laatu",
-            "low": "Matala (270p)",
-            "medium": "Keskitaso (540p)",
-            "high": "Korkea (1080p)"
-        },
         "conceptDescription": "Liity aikamatkalle ja tutki kirjaa josta saat vastaukset kaikkiin kysymyksiin",
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
         "notAvailable": "No chapter available in the selected language",
@@ -1145,6 +1129,12 @@ const strings = {
         "settings": {
             "title": "Asetukset",
             "soundEffects": "Ääniefektit",
+            "videoQuality": {
+                "title": "Videon laatuо",
+                "low": "Matala (270p)",
+                "medium": "Keskitaso (540p)",
+                "high": "Korkea (1080p)"
+            },
             "language": "Kieli",
             "feedback": "Palaute",
             "faq": "FAQ",
@@ -1200,7 +1190,6 @@ const strings = {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
-
             "failed": {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
@@ -1214,12 +1203,6 @@ const strings = {
     },
     "hu": {
         "loading": "Betöltés",
-        "qualities": {
-            "title": "Videó minőség választása",
-            "low": "Alacsony (270p)",
-            "medium": "Közepes (540p)",
-            "high": "Magas (1080p)"
-        },
         "conceptDescription": "Csatlakozz az időutazáshoz és fedezd fel a könyvet, amely minden kérdésre választ ad!",
         "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
         "notAvailable": "No chapter available in the selected language",
@@ -1246,6 +1229,12 @@ const strings = {
         "settings": {
             "title": "Beállítások",
             "soundEffects": "Hanghatások",
+            "videoQuality": {
+                "title": "Videó minőség",
+                "low": "Alacsony (270p)",
+                "medium": "Közepes (540p)",
+                "high": "Magas (1080p)"
+            },
             "language": "Nyelv",
             "feedback": "Visszajelzés",
             "faq": "FAQ",
@@ -1313,12 +1302,6 @@ const strings = {
     },
     "da": {
         "loading": "Loading",
-        "qualities": {
-            "title": "Vælg kvalitet",
-            "low": "Lav (270p)",
-            "medium": "Medium (540p)",
-            "high": "Høj (1080p)"
-        },
         "conceptDescription": "Kom med på tidsrejsen og udforsk bogen, som kan besvare alle spørgsmål",
         "introduction": "Nu kan børnene i alderen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -1345,6 +1328,12 @@ const strings = {
         "settings": {
             "title": "Indstillinger",
             "soundEffects": "Lydeffekter",
+            "videoQuality": {
+                "title": "Videokvalitet",
+                "low": "Lav (270p)",
+                "medium": "Medium (540p)",
+                "high": "Høj (1080p)"
+            },
             "language": "Sprog",
             "feedback": "Tilbagemelding",
             "faq": "FAQ",
