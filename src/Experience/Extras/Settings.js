@@ -82,6 +82,8 @@ export default class Settings {
                         </div>
                     </div>
                 </div>
+            
+                <div class="copyright">Copyright 2022 © <a href="https://bcc.media" target="_blank">bcc.media</a> foundation</div>
             `;
 
             settings.modal = new Modal(html)
