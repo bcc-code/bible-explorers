@@ -4,9 +4,15 @@ import Experience from '../Experience'
 
 class Debug {
     constructor() {
-        this.active = window.location.hash === '#debug'
+        this.experience = new Experience()
 
-        if (this.active) {
+        this.developer = window.location.hash === '#debug'
+        this.isMentor = () => window.location.hash === '#mentor'
+            && this.experience.auth0?.isAuthenticated
+                ? document.body.classList.contains("ak_leder")
+                : false
+
+        if (this.developer) {
             this.ui = new GUI()
             this.ui.close()
         }
@@ -18,7 +24,7 @@ class StatsModule {
         this.experience = new Experience()
         this.stats = new Stats()
 
-        if (this.experience.debug.active) {
+        if (this.experience.debug.developer) {
             document.body.classList.add('debug')
             document.body.appendChild(this.stats.domElement)
         }
@@ -28,7 +34,7 @@ class StatsModule {
     }
 
     update() {
-        if (this.experience.debug.active) {
+        if (this.experience.debug.developer) {
             this.stats.update()
         }
     }

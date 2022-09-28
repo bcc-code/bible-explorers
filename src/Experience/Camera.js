@@ -90,7 +90,7 @@ export default class Camera {
         this.setOrbitControls()
         this.autoRotateControls()
 
-        if (this.debug.active) {
+        if (this.debug.developer) {
             this.resources.on('ready', () => {
                 this.resources = this.resources.items
                 this.model = this.resources.controlRoom.scene
@@ -118,8 +118,8 @@ export default class Camera {
     autoRotateControls() {
         this.counter = 0
         this.controls.enableDamping = true
-        this.controls.enablePan = this.debug.active
-        this.controls.enableZoom = this.debug.active
+        this.controls.enablePan = this.debug.developer
+        this.controls.enableZoom = this.debug.developer
         this.controls.autoRotate = true
         this.controls.autoRotateSpeed = 0.1
     }
@@ -156,7 +156,7 @@ export default class Camera {
             cameraLookAt: lookAt
         }
 
-        if (!this.debug.active)
+        if (!this.debug.developer)
             this.setDefaultAngleControls()
 
         this.updateCameraTween = new TWEEN.Tween(from)
@@ -175,7 +175,7 @@ export default class Camera {
                 )
             })
             .onComplete(() => {
-                if (controls && !this.debug.active) {
+                if (controls && !this.debug.developer) {
                     camera.controls.minPolarAngle = controls.minPolarAngle
                     camera.controls.maxPolarAngle = controls.maxPolarAngle
                     camera.controls.minAzimuthAngle = controls.minAzimuthAngle

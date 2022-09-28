@@ -46,7 +46,7 @@ export default class CodeUnlock {
                 <div class="modal__actions">
                     <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>`
 
-                    if (instance.debug.active) {
+                    if (instance.debug.developer || instance.debug.isMentor()) {
                         html += `<div id="skipBTN" class="button button__default button__skip"><span>${_s.miniGames.skip}</span></div>`
                     }
                 html += `</div>

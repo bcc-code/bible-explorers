@@ -12,7 +12,7 @@ export default class Renderer {
 
         this.setInstance()
 
-        if (this.debug.active) {
+        if (this.debug.developer) {
             this.addGUIControls()
         }
     }

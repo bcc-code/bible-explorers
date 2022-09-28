@@ -13,6 +13,7 @@ export default class Video {
 
         this.experience = new Experience()
         this.world = this.experience.world
+        this.debug = this.experience.debug
         this.resources = this.experience.resources
         this.camera = this.experience.camera
         this.audio = this.experience.world.audio
@@ -155,6 +156,9 @@ export default class Video {
     }
 
     showSkipBtn() {
+        if (instance.debug.developer || instance.debug.isMentor())
+            return true
+
         const secondsToSkip = 10
         const currentTime = instance.video().currentTime()
         const duration = instance.video().duration()
