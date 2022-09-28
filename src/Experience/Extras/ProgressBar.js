@@ -23,7 +23,7 @@ export default class ProgressBar {
         instance.el.steps.forEach(function(step) {
             step.addEventListener("click", () => {
                 let clickedStep = step.innerText - 1
-                if (instance.debug.active || clickedStep <= instance.program.chapterProgress())
+                if (instance.debug.developer || instance.debug.isMentor() || clickedStep <= instance.program.chapterProgress())
                     instance.program.advance(clickedStep)
             })
         });
