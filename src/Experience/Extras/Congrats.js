@@ -13,6 +13,30 @@ export default class Congrats {
         instance = this
     }
 
+    toggleBibleCardsReminder() {
+        let html = `
+            <div class="modal__content congrats congrats__journey">
+                <div class="congrats__sidebar">
+                    <div class="congrats__container">
+                        <h1 class="congrats__title">Bible Kids Explorers - Cards</h1>
+                        <div class="congrats__chapter-completed">You can now give the Bible Cards to all the children so that they can remember what they've learned today.</div>
+                        <div id="homescreen" class="button button__continue">
+                            <div class="button__content"><span>${_s.task.next}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        instance.modal = new Modal(html, instance.world.finishJourney)
+        document.querySelector('.modal').classList.add('modal__congrats')
+
+        document.getElementById("homescreen").addEventListener('click', () => {
+            instance.modal.destroy()
+            instance.toggleCongrats()
+        })
+    }
+
     toggleCongrats() {
         let html = `
             <div class="modal__content congrats congrats__journey">
@@ -36,12 +60,9 @@ export default class Congrats {
         `;
 
         instance.modal = new Modal(html, instance.world.finishJourney)
-
         document.querySelector('.modal').classList.add('modal__congrats')
 
-        const button = document.getElementById("homescreen")
-
-        button.addEventListener('click', () => {
+        document.getElementById("homescreen").addEventListener('click', () => {
             instance.modal.destroy()
         })
 
