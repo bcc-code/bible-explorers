@@ -246,7 +246,7 @@ export default class World {
                     <span>${_s.offline.download}</span>
                 </div>
                 <div class="chapter__downloading">
-                    <span>${_s.offline.downloading}</span>
+                    <span class="title">${_s.offline.downloading}</span>
                     <span class="downloading-progress">
                         <span class="progress-line"></span>
                     </span>

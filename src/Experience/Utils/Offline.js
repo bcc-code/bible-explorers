@@ -116,7 +116,9 @@ export default class Offline {
         var xhr = new XMLHttpRequest()
         xhr.responseType = "blob"
         xhr.open("GET", currentEpisode.downloadUrl, true)
+        xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener("progress", (event) => { offline.onVideoDownloadProgress(currentEpisode.data.chapterId, event) })
+        xhr.addEventListener("timeout", () => { offline.onRequestTimeout(currentEpisode.data.chapterId) })
         xhr.addEventListener("load", () => { offline.onVideoDownloadComplete(currentEpisode, xhr) }, false)
         xhr.send()
     }
@@ -131,6 +133,14 @@ export default class Offline {
                 chapterEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + "%"
                 chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
             }
+        }
+    }
+
+    onRequestTimeout = function (chapterId) {
+        console.log('Timeout exceeded')
+        let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
+        if (chapterEl) {
+            chapterEl.querySelector('span.title').innerText = "Error!"
         }
     }
 
