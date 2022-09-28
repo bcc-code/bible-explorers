@@ -20,6 +20,7 @@ export default class Quiz {
             let correctAnswers = 0
 
             let world = this.experience.world
+            let debug = this.experience.debug
             let program = world.program
             let currentStep = program.currentStep
             let selectedChapter = world.selectedChapter
@@ -74,6 +75,9 @@ export default class Quiz {
                                 <i class="icon icon-arrow-left-long-solid"></i>
                             </span>
                         </div>
+                        <div id="skipBTN" class="button button__default button__skip" style="margin-left: auto">
+                            <span>${_s.miniGames.skip}</span>
+                        </div>
                         <div id="submit-task" class="button button__submit button__default">
                             <span>${_s.task.submit}</span>
                         </div>
@@ -91,6 +95,7 @@ export default class Quiz {
             const nextButton = document.querySelector('.button__next')
             const prevButton = document.querySelector('.button__prev')
             const submitButton = document.querySelector('.button__submit')
+            const skipBTN = document.getElementById('skipBTN')
 
             const htmlQuestions = document.querySelectorAll('.question')
 
@@ -98,6 +103,9 @@ export default class Quiz {
             nextButton.classList.add('hidden')
             prevButton.classList.add('hidden')
             submitButton.classList.add('hidden')
+            if (!debug.developer && !debug.isMentor()) {
+                skipBTN.classList.add('hidden')
+            }
 
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
@@ -122,14 +130,11 @@ export default class Quiz {
                 current.classList.remove('visible')
                 current.previousElementSibling?.classList.add('visible')
 
-                console.log(current.previousElementSibling.querySelector('input:checked'));
-
                 if (current.previousElementSibling.querySelector('input:checked')) {
                     nextButton.classList.remove('hidden')
                 }
 
                 if (current.getAttribute('data-index') == 2) {
-                    console.log('has', current.getAttribute('data-index') == 2);
                     prevButton.classList.add('hidden')
                 }
 
@@ -140,9 +145,15 @@ export default class Quiz {
                 }
             })
 
+            skipBTN.addEventListener("click", () => {
+                quiz.modal.destroy()
+                program.advance()
+            })
+
             submitButton.addEventListener("click", () => {
                 prevButton.classList.add('hidden')
                 submitButton.classList.add('hidden')
+                skipBTN.classList.add('hidden')
 
                 htmlQuestions.forEach(q => {
                     q.classList.add('hidden')

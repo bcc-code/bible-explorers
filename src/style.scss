@@ -3225,19 +3225,22 @@ button,
 }
 
 .modal__quiz {
-
     .modal__container {
         width: 100%;
         max-width: 1000px;
     }
 
-
-    .modal__footer .button__next {
+    #skipBTN {
         margin-left: auto;
     }
 
     .modal__footer .button__prev {
         margin-right: auto
+    }
+
+    .modal__footer .button__next,
+    #submit-task {
+        margin-left: 1rem;
     }
 }
 
