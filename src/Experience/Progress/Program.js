@@ -121,8 +121,7 @@ export default class Program {
 
         if (this.currentStep == this.totalSteps) {
             setTimeout(() => {
-                instance.congrats.toggleCongrats()
-
+                instance.congrats.toggleBibleCardsReminder()
 
             }, instance.camera.data.moveDuration)
         }

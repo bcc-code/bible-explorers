@@ -174,10 +174,7 @@ export default class Quiz {
                         nextButton.classList.remove('hidden')
                     })
                 })
-
-
             })
-
         }
     }
 
@@ -187,14 +184,14 @@ export default class Quiz {
         container.classList.add('quiz__summary')
 
         const heading = document.createElement('h2')
-        heading.innerText = 'Congratulations'
+        heading.innerText = _s.miniGames.completed.title
 
         const phrase = document.createElement('p')
-        phrase.innerHTML = 'You have completed the quiz. <br>' + correctAnswers + ' / ' + numberOfQuestions + ' correct answers'
+        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
 
         const continueButton = document.createElement('button')
         continueButton.classList.add('button', 'button__default')
-        continueButton.innerText = 'Continue'
+        continueButton.innerText = _s.miniGames.continue
 
         continueButton.addEventListener('click', () => {
             quiz.modal.destroy()
@@ -206,6 +203,4 @@ export default class Quiz {
         container.appendChild(continueButton)
         parent.appendChild(container)
     }
-
-
 }
