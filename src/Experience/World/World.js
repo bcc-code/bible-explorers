@@ -565,8 +565,6 @@ export default class World {
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
 
-        document.querySelector('.copyright').classList.add('hidden')
-
         _appInsights.trackEvent({
             name: "Start chapter",
             properties: {
@@ -618,7 +616,6 @@ export default class World {
     showMenu() {
         document.body.classList.add('freeze')
         instance.welcome.chaptersScreen.classList.add('visible')
-        document.querySelector('.copyright').classList.remove('hidden')
         instance.points.delete()
     }
 
