@@ -10,6 +10,7 @@ import _appInsights from './Experience/Utils/AppInsights.js'
 _appInsights.loadAppInsights()
 _appInsights.trackPageView({ name: "Home" })
 
+
 // Start 3D experience
 const experience = new Experience(document.querySelector('.webgl'))
 

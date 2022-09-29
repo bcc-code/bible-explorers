@@ -8,9 +8,9 @@ const strings = {
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
-            "start": "Start the time travel",
-            "continue": "Continue the time travel",
-            "restart": "Restart the journey",
+            "start": "Start",
+            "continue": "Continue",
+            "restart": "Restart",
             "congrats": "Congratulations!",
             "completed": "You have completed",
             "back": "Back",

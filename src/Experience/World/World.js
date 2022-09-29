@@ -11,6 +11,7 @@ import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
 import _appInsights from '../Utils/AppInsights.js'
+import { gsap } from "gsap";
 
 let instance = null
 
@@ -29,12 +30,15 @@ export default class World {
         this.placeholderChapterData()
         this.chapterProgress = () => localStorage.getItem(this.getId()) || 0
 
+
         // Chapters
         this.menu = {
             categories: document.querySelector(".categories.list"),
-            chapters: document.querySelector(".chapters.list"),
-            chapterItems: document.querySelector(".chapter__items"),
-            chapterContent: document.querySelector(".chapter__content"),
+            chaptersWrapper: document.querySelector(".chapter__items"),
+            currentSelectedChapter: (chapters, index) => {
+                return Array.from(chapters).filter(chapter => chapter.getAttribute('data-index') == index)
+            },
+            numbers: document.querySelector(".chapter__number"),
             backBtn: document.querySelector(".back_to"),
             chaptersData: []
         }
@@ -50,8 +54,8 @@ export default class World {
         }
 
         this.buttons = {
-            start: document.getElementById("start-chapter"),
-            restart: document.getElementById("restart-chapter")
+            start: document.getElementById("start"),
+            back: document.getElementById("back"),
         }
 
         this.welcome.loading.querySelector('span').innerText = _s.loading
@@ -71,7 +75,6 @@ export default class World {
             this.audio = new Audio()
 
             this.buttons.start.addEventListener('click', this.startChapter)
-            this.buttons.restart.addEventListener('click', this.restartChapter)
 
             setTimeout(function () {
                 instance.welcome.loading.style.display = "none"
@@ -82,18 +85,16 @@ export default class World {
 
         this.start = document.createElement('span')
         this.start.innerText = _s.journey.start
-        this.restart = document.createElement('span')
-        this.restart.innerText = _s.journey.restart
 
         this.welcome.introduction.innerText = _s.introduction
         this.buttons.start.children[0].appendChild(this.start)
-        this.buttons.restart.appendChild(this.restart)
 
         this.homeButton = document.getElementById('go-home')
         this.homeButton.addEventListener("click", this.goHome)
 
-        this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
-        this.menu.backBtn.children[0].innerText = _s.journey.back
+        this.buttons.back.addEventListener("click", this.goToLandingScreen)
+        this.buttons.back.innerText = _s.journey.back
+
     }
 
     placeholderChapterData() {
@@ -105,7 +106,7 @@ export default class World {
     }
 
     goHome() {
-        instance.showMenuButtons()
+        instance.changeTextStartButton()
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
@@ -113,21 +114,7 @@ export default class World {
         instance.audio.changeBgMusic()
     }
 
-    showMenuButtons() {
-        if (this.chapterProgress() == 0) {
-            instance.buttons.restart.classList.remove('visible')
-        }
-        else {
-            instance.buttons.restart.classList.add('visible')
-        }
-
-        if (this.chapterProgress() == this.selectedChapter.program.length) {
-            instance.buttons.start.classList.remove('visible')
-        }
-        else {
-            instance.buttons.start.classList.add('visible')
-        }
-
+    changeTextStartButton() {
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
             this.start.innerText = _s.journey.continue
         }
@@ -190,9 +177,9 @@ export default class World {
     goToLandingScreen() {
         instance.unselectAllChapters()
         instance.placeholderChapterData()
-        instance.removeDescriptionHtml()
 
-        instance.menu.chapters.innerHTML = ''
+        instance.menu.chaptersWrapper.innerHTML = ''
+        instance.menu.numbers.innerHTML = ''
         instance.welcome.loadingScreen.classList.add('visible')
         instance.welcome.chaptersScreen.classList.remove('visible')
     }
@@ -204,71 +191,165 @@ export default class World {
             instance.welcome.chaptersScreen.classList.add('visible')
         })
 
+        const chapters = document.querySelectorAll(".chapter")
+        chapters.forEach(chapter => {
+            gsap.set(chapter, { autoAlpha: 0 })
+        })
+        const chaptersPublished = document.querySelectorAll(".chapter:not(.locked)")
+        const lastPubished = chaptersPublished[chaptersPublished.length - 1]
+        gsap.set(lastPubished, { autoAlpha: 1 })
+
+        const chaptersNumber = document.querySelectorAll(".chapter__number button")
+        const activeNumber = Array.from(chaptersNumber)[chaptersPublished.length - 1]
+        activeNumber.classList.add('active')
+
+        instance.updateSelectedChapterData(lastPubished)
+        instance.changeTextStartButton()
+
         instance.selectChapterListeners()
+
+        document.querySelectorAll('.chapter__wrapper-content').forEach(chapter => {
+            gsap.set(chapter, { autoAlpha: 0, height: 0 })
+        })
     }
 
     setChapterHtml(chapter, index) {
         let chapterHtml = document.createElement("div")
-
         let chapterClasses = "chapter"
         chapterClasses += chapter.status == "future" ? " locked" : ""
         chapterHtml.className = chapterClasses
-
         chapterHtml.setAttribute("data-id", chapter.id)
         chapterHtml.setAttribute("data-slug", chapter.category)
 
-        chapterHtml.innerHTML = `
-            <div class="chapter__box">
-                <div class="chapter__extras">
-                    <span class="bottomLeft"></span>
-                    <span class="bottomLeftSmall"></span>
-                    <span class="right"></span>
-                    <span class="rightOutside"></span>
-                </div>
-                <div class="chapter__background"></div>
-                <div class="chapter__number">
-                    <i class="icon icon-lock-solid"></i>
-                    <span>${index + 1}</span>
-                    <div class="stars">
-                        <i class="icon icon-star-solid"></i>
-                        <i class="icon icon-star-solid"></i>
-                        <i class="icon icon-star-solid"></i>
-                    </div>
-                </div>
-                <div class="chapter__heading">
-                    <h2 class="chapter__title">${chapter.title}</h2>
-                    <span class="chapter__date">${chapter.date}</span>
-                </div>
-            </div>
-            <div class="chapter__states">
-                <div class="chapter__offline">
-                    <i class="icon icon-download-solid"></i>
-                    <span>${_s.offline.download}</span>
-                </div>
-                <div class="chapter__downloading">
-                    <span class="title">${_s.offline.downloading}</span>
-                    <span class="downloading-progress">
-                        <span class="progress-line"></span>
-                    </span>
-                    <span class="downloading-label"></span>
-                </div>
-                <div class="chapter__download-failed">
-                    <span>${_s.offline.downloadFailed}</span>
-                    <span class="separator">/</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.tryAgain}"></span>
-                </div>
-                <div class="chapter__downloaded">
-                    <span>${_s.offline.availableOffline}</span>
-                    <span class="separator">/</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
-                </div>
-            </div>
-        `
-        instance.menu.chapters.appendChild(chapterHtml)
+        let numberHTML = document.createElement('button')
+        let numberClasses = "chapter_no"
+        numberClasses += chapter.status == "future" ? " locked" : ""
+        numberHTML.className = numberClasses
+        numberHTML.setAttribute('data-id', chapter.id)
+        numberHTML.setAttribute("data-slug", chapter.category)
+
+        let number = document.createElement('span')
+
+        console.log(numberHTML.classList.contains("locked"));
+
+        if (!numberHTML.classList.contains("locked")) {
+            number.innerText = index + 1
+        } else {
+            number.classList.add('icon-lock-solid')
+        }
+        numberHTML.appendChild(number)
+
+        const chapterContainer = document.createElement('div')
+        chapterContainer.classList.add('chapter__wrapper')
+
+        const chapterHeading = document.createElement('div')
+        chapterHeading.classList.add('chapter__heading')
+
+        const chapterTitle = document.createElement('h2')
+        chapterTitle.classList.add('chapter__title')
+        chapterTitle.innerText = chapter.title
+        chapterHeading.appendChild(chapterTitle)
+        chapterContainer.appendChild(chapterHeading)
+
+        const chapterDiv = document.createElement('div')
+        chapterDiv.classList.add('chapter__wrapper-content')
+
+        const chapterAttachments = document.createElement('div')
+        chapterAttachments.classList.add('chapter__attachments')
+
+        if (chapter.attachments.length) {
+            chapter.attachments.forEach(a => {
+                const attachment = document.createElement('div')
+                attachment.classList.add('attachment')
+
+                const link = document.createElement('a')
+                link.setAttribute('href', a.url)
+                link.setAttribute('target', '_blank')
+
+                const name = document.createElement('span')
+                name.classList.add('attachment__name')
+                name.innerText = a.title
+
+                link.appendChild(name)
+                attachment.appendChild(link)
+                chapterAttachments.appendChild(attachment)
+                chapterDiv.appendChild(chapterAttachments)
+            })
+        }
+
+        const chapterContent = document.createElement('div')
+        chapterContent.classList.add('chapter__content')
+        chapterContent.innerHTML = chapter.content
+        chapterDiv.appendChild(chapterContent)
+
+        chapterContainer.appendChild(chapterDiv)
+
+        const chapterStates = document.createElement('div')
+        chapterStates.classList.add('chapter__states')
+
+        const chapterOffline = document.createElement('div')
+        const chapterOfflineText = document.createElement('span')
+        chapterOffline.classList.add('chapter__offline')
+        chapterOfflineText.innerText = _s.offline.download
+        chapterOffline.appendChild(chapterOfflineText)
+
+        const chapterDownloading = document.createElement('div')
+        const chapterDownloadingText = document.createElement('span')
+        const chapterDownloadingProgress = document.createElement('span')
+        const chapterDownloadingProgressLine = document.createElement('span')
+        const chapterDownloadingLabel = document.createElement('span')
+        chapterDownloading.classList.add('chapter__downloading')
+        chapterDownloadingProgress.classList.add('downloading-progress')
+        chapterDownloadingProgressLine.classList.add('progress-line')
+        chapterDownloadingLabel.classList.add('downloading-label')
+        chapterDownloadingText.innerText = _s.offline.downloading
+        chapterDownloadingProgress.appendChild(chapterDownloadingProgressLine)
+        chapterDownloading.appendChild(chapterDownloadingText)
+        chapterDownloading.appendChild(chapterDownloadingProgress)
+        chapterDownloading.appendChild(chapterDownloadingLabel)
+
+        const chapterDownloadFailed = document.createElement('div')
+        const chapterDownloadFailedText = document.createElement('span')
+        const chapterDownloadFailedSeparator = document.createElement('span')
+        const chapterDownloadFailedIcon = document.createElement('span')
+        chapterDownloadFailed.classList.add('chapter__download-failed')
+        chapterDownloadFailedSeparator.classList.add('separator')
+        chapterDownloadFailedText.innerText = _s.offline.downloadFailed
+        chapterDownloadFailedIcon.setAttribute('title', _s.offline.tryAgain)
+        chapterDownloadFailed.appendChild(chapterDownloadFailedText)
+        chapterDownloadFailed.appendChild(chapterDownloadFailedSeparator)
+        chapterDownloadFailed.appendChild(chapterDownloadFailedIcon)
+
+        const chapterdownloaded = document.createElement('div')
+        const chapterdownloadedText = document.createElement('span')
+        const chapterdownloadedSeparator = document.createElement('span')
+        const chapterdownloadedIcon = document.createElement('span')
+        chapterdownloaded.classList.add('chapter__downloaded')
+        chapterdownloadedSeparator.classList.add('separator')
+        chapterdownloadedText.innerText = _s.offline.availableOffline
+        chapterdownloadedIcon.setAttribute('title', _s.offline.update)
+        chapterdownloaded.appendChild(chapterdownloadedText)
+        chapterdownloaded.appendChild(chapterdownloadedSeparator)
+        chapterdownloaded.appendChild(chapterdownloadedIcon)
+
+        chapterStates.appendChild(chapterOffline)
+        chapterStates.appendChild(chapterDownloading)
+        chapterStates.appendChild(chapterDownloadFailed)
+        chapterStates.appendChild(chapterdownloaded)
+
+        gsap.fromTo(chapterStates, { height: 0 }, { height: 'auto' })
+
+        chapterHtml.appendChild(chapterContainer)
+        chapterHtml.appendChild(chapterStates)
+
+        instance.menu.chaptersWrapper.appendChild(chapterHtml)
+        instance.menu.numbers.appendChild(numberHTML)
         instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
 
         instance.markChapterIfCompleted(chapter)
         instance.offline.markChapterIfAvailableOffline(chapter)
+
+
     }
 
     markChapterIfCompleted(chapter) {
@@ -279,47 +360,38 @@ export default class World {
     }
 
     setChapterBgImage(chapter) {
-        document.querySelector('.chapter[data-id="' + chapter.id + '"] .chapter__background').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
-    }
-
-    setDescriptionHtml() {
-        let chapter = instance.selectedChapter
-        let chapterDescription = instance.menu.chapterContent.querySelector('.chapter__description')
-        let chapterAttachments = instance.menu.chapterContent.querySelector('.chapter__attachments')
-
-        chapterDescription.setAttribute('data-id', chapter.id)
-        chapterDescription.setAttribute('data-slug', chapter.category)
-        instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
-        instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
-
-        chapterAttachments.querySelector('.attachments').innerHTML = ''
-
-        if (chapter.attachments.length) {
-            chapter.attachments.forEach((attachment) => {
-                chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
-                    <a href="${attachment.url}" target="_blank">
-                        <span class="icon icon-download-solid"></span>
-                        <span class="attachment__name">${attachment.title}</span>
-                    </a>
-                </div>`
-            })
-        }
-
-        instance.menu.chapterItems.classList.add('chapter-selected')
-    }
-
-    removeDescriptionHtml() {
-        instance.menu.chapterItems.classList.remove('chapter-selected')
+        document.querySelector('.chapter[data-id="' + chapter.id + '"] .chapter__heading').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
     }
 
     selectChapterListeners() {
+
+        const chaptersNumber = document.querySelectorAll('.chapter__number button')
+        const chapters = document.querySelectorAll(".chapter")
+
+        chaptersNumber.forEach(number => {
+            number.addEventListener('click', () => {
+                chapters.forEach(chapter => {
+                    gsap.to(chapter.querySelector('.chapter__wrapper-content'), { autoAlpha: 0, height: '0', duration: 0.3 })
+                    gsap.to(chapter, { autoAlpha: 0, duration: 0.3 })
+                })
+                chaptersNumber.forEach(number => number.classList.remove('active'))
+
+                number.classList.add('active')
+
+                const chapterId = number.getAttribute('data-id')
+                const selectedChapter = Array.from(chapters).find(c => c.getAttribute('data-id') == chapterId)
+                gsap.to(selectedChapter, { autoAlpha: 1, duration: 0.3 })
+
+                instance.updateSelectedChapterData(selectedChapter)
+                instance.loadChapterTextures()
+                instance.changeTextStartButton()
+            })
+        })
+
+
         document.querySelectorAll(".chapter:not(.locked), body.admin .chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
-                instance.addClassToSelectedChapter(chapter)
-                instance.updateSelectedChapterData(chapter)
-                instance.loadChapterTextures()
-                instance.showMenuButtons()
-                instance.setDescriptionHtml()
+                gsap.to(chapter.querySelector('.chapter__wrapper-content'), { autoAlpha: 1, height: 'auto', duration: 0.3 })
             })
         })
 
@@ -376,9 +448,8 @@ export default class World {
         instance.downloadChapter(chapter)
     }
 
-    addClassToSelectedChapter(chapter) {
+    addClassToSelectedChapter() {
         instance.unselectAllChapters()
-        chapter.classList.add('selected')
     }
 
     unselectAllChapters() {
@@ -413,6 +484,8 @@ export default class World {
         const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
 
         instance.cacheChapterAssets(selectedChapter)
+
+        document.querySelector('.chapter__states').classList.add('downloading')
 
         chapterEl.classList.remove('download')
         chapterEl.classList.remove('failed')
@@ -562,6 +635,8 @@ export default class World {
 
     startChapter() {
         instance.hideMenu()
+        instance.loadChapterTextures()
+
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
 
@@ -575,6 +650,7 @@ export default class World {
             }
         })
 
+
         if (instance.selectedChapter.background_music) {
             instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
                 instance.audio.changeBgMusic(chapter.background_music)
@@ -586,6 +662,7 @@ export default class World {
                 fact.image = data
             })
         })
+
     }
 
     restartChapter() {

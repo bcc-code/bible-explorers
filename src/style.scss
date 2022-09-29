@@ -402,18 +402,36 @@ button,
 
 #chapters-screen {
     @include fixed();
+    padding: 1rem;
 
     &::before {
         content: '';
-        @include overlay()
+        @include overlay();
     }
 
     &.visible {
-        display: block;
+        display: flex;
+        align-items: center;
     }
 
     .button__continue {
         margin-right: 5px;
+    }
+}
+
+.chapters__wrapper {
+    position: relative;
+    width: 700px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    >h2 {
+        position: relative;
+        color: #fff;
+        padding: 0.5rem 2rem;
+        display: inline-block;
     }
 }
 
@@ -882,123 +900,73 @@ button,
     font-weight: bold;
 }
 
-.chapters__wrapper {
-    max-width: 1920px;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    margin-top: 4rem;
-
-    >div {
-        flex: 1;
-    }
-
-    &:hover .chapter:not(.locked):hover,
-    body.admin &:hover .chapter:hover {
-        opacity: 1;
-        transform: scale(1.02);
-    }
-
-    .list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-}
-
 .chapter {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     cursor: pointer;
-    transition: opacity .3s ease, transform .3s ease;
     margin-bottom: 2rem;
+    transition: opacity .3s ease, transform .3s ease;
 
-    &__box {
-        display: flex;
+    &:first-child {
         position: relative;
-        min-height: 9rem;
-        border: 5px solid $accent;
-        border-radius: 1rem 2rem 3rem 1rem;
     }
 
-    &__extras {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        pointer-events: none;
+    &__wrapper {
+        position: relative;
+        border: 5px solid $accent;
+        border-radius: 1rem 1rem 2rem 2rem;
+        width: 100%;
+        background: $gradient;
+        cursor: pointer;
+        overflow: hidden;
 
-        .bottomLeft {
+        &::after,
+        &::before {
+            content: '';
             position: absolute;
-            bottom: -2px;
-            left: -2px;
-            height: 1.5rem;
-            width: 20rem;
-            border-bottom-left-radius: 1rem;
-            overflow: hidden;
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: $accent;
-                transform: skew(20deg);
-                transform-origin: left bottom;
-                border-top-right-radius: 1rem;
-            }
-        }
-
-        .bottomLeftSmall {
-            position: absolute;
-            bottom: -2px;
-            left: 21rem;
-            height: 1.5rem;
             width: 1.5rem;
+            height: 50%;
             background: $accent;
-            border-radius: 1rem 1rem 0 0;
-            transform: skew(20deg);
-            transform-origin: left bottom;
-            box-shadow: 2.5rem 0 0 $accent, 5rem 0 0 $accent;
-        }
-
-        .right {
-            position: absolute;
-            right: -2px;
-            top: 1.5rem;
-            width: 1.25rem;
-            height: 4.5rem;
-            background: $accent;
-            border-radius: 1.5rem 0 0 1.5rem;
-        }
-
-        .rightOutside {
-            position: absolute;
-            right: -1.5rem;
-            top: 3.5rem;
-            width: 0.75rem;
-            height: 3rem;
-            background: $accent;
-            border-radius: 2rem 0.5rem;
+            top: 25%;
             display: none;
         }
 
-        .left {
-            position: absolute;
-            left: -2px;
-            top: 1.5rem;
-            width: 1.25rem;
-            height: 6rem;
-            background: $accent;
-            border-radius: 0 1.5rem 1.5rem 0;
+        &::after {
+            right: 0;
+            border-radius: 1rem 0 0 1rem;
         }
 
+        &::before {
+            left: 0;
+            border-radius: 0 1rem 1rem 0;
+        }
+
+        h2 {
+            color: #fff;
+        }
+
+    }
+
+    &__heading {
+        padding: 4rem 3rem;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+    }
+
+    &__content {
+        padding: 1rem 3rem;
+
+        p {
+            color: #fff;
+        }
+
+        a {
+            color: $accent2;
+        }
     }
 
     &__background {
@@ -1008,77 +976,106 @@ button,
         right: 0;
         bottom: 0;
         background: $gradient;
-        border-radius: 1rem 2rem 3rem 1rem;
-
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-    }
-
-    &__number {
-        position: relative;
-        width: 8rem;
-        border-right: 5px solid $accent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        background: $gradient;
-        padding: 1.5rem 0 3rem;
-        border-radius: 1rem 0 0 1rem;
-
-        color: #fff;
-        font-size: 2.125rem;
-
-        .icon-lock-solid {
-            display: none;
-        }
-
-        span {
-            font-family: $secondary-font;
-            letter-spacing: 0.25rem;
-        }
-
-        .stars {
-            display: none;
-            color: $accent2;
-            font-size: 1rem;
-            align-items: center;
-            justify-content: center;
-
-            i {
-                margin: 0.15rem;
-            }
-        }
-    }
-
-    &__heading {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex: 1;
-        padding: 1.5rem 3rem 3rem;
+        border-radius: 1rem 1rem 2rem 2rem;
     }
 
     &__title {
         font-family: $secondary-font;
         line-height: 1.25;
         color: #fff;
+        pointer-events: none;
     }
 
-    &__date {
-        font-family: $secondary-font;
-        font-size: 1.25rem;
-        opacity: 0.6;
-        color: #fff;
+    &__selection {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__number {
+        position: relative;
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 4rem;
+
+        button {
+            width: 5rem;
+            height: 5rem;
+            background: $gradient2;
+            color: #fff;
+            border: none;
+            border-radius: 1rem;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: .3s ease;
+        }
+
+        button.locked {
+            filter: grayscale(1);
+            font-size: 2.5rem;
+            pointer-events: none;
+        }
+
+        button.active {
+            opacity: 1;
+        }
+    }
+
+    &__items {
+        width: 700px;
+        position: relative;
+    }
+
+    &__attachments {
+        display: flex;
+        gap: 2rem;
+        padding: 1rem 3rem;
+        background: rgba(255, 255, 255, 0.1);
+
+        h3,
+        li,
+        a {
+            color: #fff;
+        }
+
+        .attachments {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 1rem 1rem 0.5rem 1rem;
+        }
+
+        a {
+            color: $accent2;
+            font-family: $secondary-font;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+
+            .icon {
+                margin-right: 4px;
+            }
+
+            &:hover .attachment__name {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 5;
     }
 
     &__states {
         position: relative;
+        width: 100%;
+        padding: 0 2rem;
         height: 2rem;
-        margin-left: 8rem;
-        margin-right: 4rem;
         flex: 1;
 
         overflow: hidden;
@@ -1158,152 +1155,10 @@ button,
         }
     }
 
-    &__items {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-right: 2rem;
-    }
-
-    &__content {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        opacity: 0;
-    }
-
-    &-selected+&__content {
-        opacity: 1;
-    }
-
-    &__description {
-        position: relative;
-        width: 100%;
-        padding: 3rem 6rem 5rem;
-        background: $gradient;
-        border-radius: 1rem;
-        border: 5px solid $accent;
-
-        h2 {
-            color: #fff;
-            padding-bottom: 1rem;
-            border-bottom: 5px solid $accent;
-            border-radius: 2px;
-        }
-
-        p {
-            color: #fff;
-            font-size: 1.25rem;
-            margin: 1.5rem 0;
-        }
-
-        p:first-of-type {
-            margin-top: 0;
-        }
-
-        p a {
-            color: $accent2;
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
-
-    &__text {
-        max-height: 30vh;
-        overflow-x: hidden;
-        overflow-y: auto;
-        padding-right: 1rem;
-    }
-
-    &__attachments {
-        background: rgba(255, 255, 255, 0.1);
-        margin-bottom: 2rem;
-        border-radius: 0 0 1rem 1rem;
-
-        h3,
-        li,
-        a {
-            color: #fff;
-        }
-
-        .attachments {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 1rem 1rem 0.5rem 1rem;
-        }
-
-        .attachment {
-            margin-right: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        a {
-            color: $accent2;
-            font-family: $secondary-font;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-decoration: none;
-
-            .icon {
-                margin-right: 4px;
-            }
-
-            &:hover .attachment__name {
-                text-decoration: underline;
-            }
-        }
-    }
-
-    &__actions {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        margin-top: 2rem;
-        z-index: 5;
-
-        .button {
-            display: none;
-        }
-
-        .button:not(:first-child) {
-            margin-left: 2rem;
-        }
-
-        .button.visible {
-            display: inline-block;
-        }
-    }
-
-    .button {
-        display: none;
-        pointer-events: none;
-        margin-right: 4rem;
-        top: 50%;
-
-        .icon-play-solid {
-            margin-left: 2px;
-        }
-
-        .icon-lock-solid {
-            display: none;
-        }
-
-        @media (min-width: 1601px) {
-            width: 5rem;
-            height: 5rem;
-            margin-top: -2.5rem;
-        }
-    }
-
     body.admin &,
     body.ak_leder &:not(.locked) {
         .chapter__states {
-            display: block;
+            display: inline-block;
         }
     }
 
@@ -1392,10 +1247,27 @@ button,
         }
     }
 
-    .chapter-selected &:not(.selected) {
-        opacity: 0.25;
+    &.selected {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &.locked {
+        pointer-events: none;
+        filter: grayscale(1);
+    }
+
+}
+
+
+body.admin {
+
+    .chapter__number button.locked,
+    .chapter.locked {
+        pointer-events: all
     }
 }
+
 
 .modal {
     position: fixed;
@@ -2920,6 +2792,7 @@ button,
     color: #fff;
     z-index: 10;
     pointer-events: none;
+    display: none;
 
     a {
         pointer-events: all;
@@ -3252,21 +3125,6 @@ button,
 }
 
 @media (max-width: 1600px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    h3 {
-        font-size: 1.25rem;
-    }
-
-    h4 {
-        font-size: 1.15rem;
-    }
 
     .logo {
         width: 320px;
@@ -3322,7 +3180,6 @@ button,
     }
 
     .button {
-        font-size: 1rem;
 
         &__default {
             padding: 0.75rem 2rem;
@@ -3410,7 +3267,6 @@ button,
     }
 
     #loading-screen p {
-        font-size: 1.25rem;
         margin: 2rem 0;
     }
 
