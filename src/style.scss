@@ -2637,7 +2637,6 @@ button,
             2px -2px 0 #ff7bac,
             -2px 2px 0 #ff7bac,
             2px 2px 0 #ff7bac;
-
     }
 
     .note {
@@ -2903,8 +2902,6 @@ button,
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
-
-
 }
 
 // #endregion
@@ -2968,7 +2965,6 @@ button,
         }
     }
 
-
     svg {
         width: 2rem;
         margin-right: 1rem;
@@ -2976,7 +2972,6 @@ button,
 }
 
 .quiz {
-
     &__content {
         display: grid;
     }
@@ -3220,6 +3215,28 @@ button,
         button {
             width: 200px;
             margin-inline: auto;
+        }
+    }
+}
+
+.modal__content.simon-says {
+    .modal__actions {
+        justify-content: center;
+        margin-top: 0;
+
+        .button {
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
+        }
+        .button:first-child {
+            margin-left: 0;
+        }
+        .button:last-child {
+            margin-right: 0;
+        }
+        
+        .button__continue, .button__default {
+            min-width: auto;
         }
     }
 }
