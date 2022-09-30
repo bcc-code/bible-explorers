@@ -303,6 +303,7 @@ export default class World {
         chapterAttachments.querySelector('.attachments').innerHTML = ''
 
         if (chapter.attachments.length) {
+            chapterAttachments.querySelector('.attachments').classList.remove('hidden')
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
                     <a href="${attachment.url}" target="_blank">
@@ -311,6 +312,9 @@ export default class World {
                     </a>
                 </div>`
             })
+        }
+        else {
+            chapterAttachments.querySelector('.attachments').classList.add('hidden')
         }
 
         instance.menu.chapterItems.classList.add('chapter-selected')
