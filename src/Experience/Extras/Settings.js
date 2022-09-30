@@ -32,10 +32,12 @@ export default class Settings {
         else {
             _appInsights.trackPageView({ name: "Settings" })
 
+            // <div class="settings__header heading"><h2>${_s.settings.title}</h2></div>
+
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><h2>${_s.settings.title}</h2></div>
                     <div class="settings__content">
+                        <h2>${_s.settings.title}</h2>
                         <div class="modal__extras">
                             <span class="left"></span>
                             <span class="bottomLeft"></span>
@@ -156,10 +158,12 @@ export default class Settings {
             const questions = Object.values(_s.faq.questions)
             const answers = Object.values(_s.faq.answers)
 
+            // <div class="faq__header heading"><h2>${_s.settings.faq}</h2></div>
+
             let html = `
                 <div class="modal__content faq">
-                    <div class="faq__header heading"><h2>${_s.settings.faq}</h2></div>
                     <div class="faq__content">
+                        <h2>${_s.settings.faq}</h2>
                         <div class="modal__extras">
                             <span class="left"></span>
                             <span class="bottomLeft"></span>
@@ -167,12 +171,12 @@ export default class Settings {
                         </div>
                         
                         <ol class="faq__list">`
-                        for (let i=0; i<questions.length; i++) {
-                            html +=  `<li class="faq__item">
+            for (let i = 0; i < questions.length; i++) {
+                html += `<li class="faq__item">
                                 <p class="faq__question">${questions[i]}</p>
                                 <p class="faq__answer">${answers[i]}</p>`
-                            }
-                            html += `</li>
+            }
+            html += `</li>
                         </ol>
                     </div>
                 </div>`

@@ -1243,7 +1243,6 @@ body.admin {
     }
 }
 
-
 .modal {
     position: fixed;
     top: 0;
@@ -1453,6 +1452,10 @@ body.admin {
 }
 
 .settings {
+    h2 {
+        margin-bottom: 3rem;
+    }
+
     &__content {
         width: 32rem;
         display: flex;
@@ -1991,6 +1994,10 @@ body.admin {
 }
 
 .faq {
+
+    h2 {
+        margin-bottom: 3rem;
+    }
 
     &__content {
         min-width: 30rem;
