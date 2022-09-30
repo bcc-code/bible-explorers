@@ -3,13 +3,16 @@ import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 
 let instance = null
+const showSkipAfterNoOfTries = 3
 
 export default class CodeUnlock {
     constructor() {
-        instance = this
         this.experience = new Experience()
         this.world = this.experience.world
         this.debug = this.experience.debug
+
+        instance = this
+        instance.fails = 0
     }
 
     toggleCodeUnlock(code, irisMessage = false) {
@@ -44,16 +47,12 @@ export default class CodeUnlock {
                 </div>
 
                 <div class="modal__actions">
-                    <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>`
-
-                    if (instance.debug.developer || instance.debug.isMentor()) {
-                        html += `<div id="skipBTN" class="button button__default button__skip"><span>${_s.miniGames.skip}</span></div>`
-                    }
-                html += `</div>
+                    <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
+                    <div id="skipBTN" class="button button__default button__skip hidden"><span>${_s.miniGames.skip}</span></div>
+                </div>
             </div>`
 
             instance.modal = new Modal(html)
-
             document.querySelector('.modal').classList.add('modal__code-unlock')
 
             const backBtn = document.getElementById("backBTN")
@@ -63,11 +62,14 @@ export default class CodeUnlock {
             })
 
             const skipBtn = document.getElementById("skipBTN")
-            if (skipBtn) {
-                skipBtn.addEventListener('click', (e) => {
-                    instance.world.program.advance()
-                    instance.destroy()
-                })
+            skipBtn.addEventListener('click', (e) => {
+                instance.fails = 0
+                instance.world.program.advance()
+                instance.destroy()
+            })
+
+            if (instance.debug.developer || instance.debug.isMentor()) {
+                skipBtn.classList.remove('hidden')
             }
 
             instance.el = {
@@ -126,6 +128,7 @@ export default class CodeUnlock {
 
         if (instance.el.code.textContent == instance.secretCode) {
             if (this.irisMessage == false) {
+                instance.fails = 0
                 instance.world.audio.playTaskCompleted()
                 instance.world.program.advance()
                 instance.destroy()
@@ -135,6 +138,10 @@ export default class CodeUnlock {
                 instance.world.program.codeAndIris.toggleCodeAndIris()
             }
         } else {
+            instance.fails++
+            if (instance.fails >= showSkipAfterNoOfTries)
+                document.getElementById("skipBTN").classList.remove('hidden')
+
             wrapper.classList.add('wrong-code')
             setTimeout(() => {
                 wrapper.classList.remove('wrong-code')
