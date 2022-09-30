@@ -3252,14 +3252,17 @@ button,
             margin-right: 0.5rem;
             margin-left: 0.5rem;
         }
+
         .button:first-child {
             margin-left: 0;
         }
+
         .button:last-child {
             margin-right: 0;
         }
-        
-        .button__continue, .button__default {
+
+        .button__continue,
+        .button__default {
             min-width: auto;
         }
     }
