@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - develop
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
@@ -31,6 +32,7 @@ jobs:
           action: "upload"
           app_location: "/" # App source code path
           output_location: "/dist" # Built app content directory - optional
+          production_branch: "master"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -43,3 +45,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_GROUND_0C9103F03 }}
           action: "close"
+          production_branch: "master"
