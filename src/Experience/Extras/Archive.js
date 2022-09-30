@@ -55,9 +55,12 @@ export default class Archive {
                         html += `<div class="fact ${index == 0 ? 'visible' : ''}" data-id="${index}">
                                     <div class="fact__content">
                                         <h2 class="fact__title">${fact.title}</h2>
-                                        <div class="fact__description">      
-                                            <img src="${image.url}"/> 
-                                            ${fact.description}
+                                        <div class="fact__description">`
+                                            if (image.url) {
+                                                html += '<img src="${image.url}" />'
+                                            }
+
+                                            html += `${fact.description}
                                         </div>
                                     </div>
                                 </div>`
