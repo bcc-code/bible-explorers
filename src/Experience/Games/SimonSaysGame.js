@@ -138,7 +138,7 @@ export default class SimonSays {
             this.addButton('button__reset', 'button__default', _s.miniGames.reset)
         )
 
-        if (instance.debug.developer || instance.debug.isMentor()) {
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
                 this.addButton('button__skip', 'button__default', _s.miniGames.skip)
             )

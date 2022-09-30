@@ -1397,6 +1397,30 @@ button,
     }
 }
 
+.quick-look {
+    display: flex;
+    position: relative;
+    top: 2rem;
+
+    &__button {
+        margin-right: 2rem;
+        margin-left: auto;
+        cursor: pointer;
+        background: linear-gradient(90deg, #C5516E, #EB9159);
+        padding: 0.5rem 1rem;
+        font-family: "Archivo", sans-serif;
+        font-weight: bold;
+        font-size: 1.15rem;
+        color: #fff;
+        border-radius: 1rem;
+        transition: .3s ease;
+
+        &:hover {
+            opacity: 0.75;
+        }
+    }
+}
+
 .modal {
     position: fixed;
     top: 0;
