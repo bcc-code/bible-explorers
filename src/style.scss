@@ -979,31 +979,21 @@ button,
     &__number {
         position: relative;
         display: flex;
-        gap: 2rem;
-        margin-bottom: 4rem;
 
         button {
             position: relative;
-            width: 5rem;
-            height: 5rem;
             background: $gradient2;
             color: #fff;
             border: none;
-            border-radius: 1rem;
-            font-size: 3rem;
+            border-radius: 1rem 1rem 0 0;
+            padding: 1rem 2rem;
             font-weight: bold;
             cursor: pointer;
-            filter: grayscale(0.8);
             transition: filter .5s ease;
         }
 
-        button.locked {
-            font-size: 2.5rem;
-            pointer-events: none;
-        }
-
         button.active {
-            filter: grayscale(0);
+            background: $accent;
 
         }
     }
@@ -1200,7 +1190,21 @@ button,
 
     &.locked {
         pointer-events: none;
-        filter: grayscale(0.8);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            z-index: 1;
+            border-radius: 1rem;
+            background: $gradient;
+            filter: grayscale(1);
+            opacity: .4;
+        }
+
 
         .chapter__more {
             display: none;
@@ -3083,14 +3087,17 @@ body.admin {
             margin-right: 0.5rem;
             margin-left: 0.5rem;
         }
+
         .button:first-child {
             margin-left: 0;
         }
+
         .button:last-child {
             margin-right: 0;
         }
-        
-        .button__continue, .button__default {
+
+        .button__continue,
+        .button__default {
             min-width: auto;
         }
     }

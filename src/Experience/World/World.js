@@ -235,11 +235,12 @@ export default class World {
 
         let number = document.createElement('span')
 
-        if (!numberHTML.classList.contains("locked")) {
-            number.innerText = index + 1
-        } else {
-            number.classList.add('icon-lock-solid')
-        }
+        number.innerText = 'Chapter ' + (index + 1)
+
+        // if (!numberHTML.classList.contains("locked")) {
+        // } else {
+        //     number.classList.add('icon-lock-solid')
+        // }
         numberHTML.appendChild(number)
 
         const chapterContainer = document.createElement('div')
