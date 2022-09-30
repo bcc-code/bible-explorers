@@ -518,7 +518,7 @@ export default class World {
         chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
-        await this.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
+        this.offline.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
     }
 
     removeChapter(chapter) {
@@ -575,89 +575,6 @@ export default class World {
                     cache.put(url, fetchedResponse)
                 })
         })
-    }
-
-    async downloadEpisodes(episodes, data) {
-        let episodesDownloadUrls = []
-
-        episodes.forEach(async (episode) => {
-            const episodeUrls = await this.getEpisodeDownloadUrls(episode.id, data.chapterId)
-            if (!episodeUrls) return
-
-            episodesDownloadUrls.push({
-                downloadUrl: episodeUrls.downloadUrl,
-                data: {
-                    name: episode.type + '-' + episode.id,
-                    thumbnail: episodeUrls.thumbnail,
-                    chapterId: data.chapterId,
-                    chapterTitle: data.chapterTitle,
-                    category: data.categorySlug,
-                    language: _lang.getLanguageCode(),
-                    quality: instance.selectedQuality
-                }
-            })
-
-            if (episodesDownloadUrls.length == episodes.length) {
-                this.offline.downloadFromWeb(episodesDownloadUrls)
-            }
-        })
-    }
-
-    async getEpisodeDownloadUrls(episodeId, chapterId) {
-        const claims = await this.experience.auth0.getIdTokenClaims();
-        const idToken = claims.__raw;
-        let locale = _lang.getLanguageCode()
-        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
-
-        var btvPlayer = BTVPlayer({
-            type: 'episode',
-            id: episodeId,
-            locale: locale,
-            access_token: idToken
-        })
-
-        const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
-        const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
-
-        if (!myLanguageVideos.length) {
-            _appInsights.trackException({
-                exception: "No videos found",
-                chapterId: chapterId,
-                episodeId: episodeId,
-                language: locale
-            })
-
-            // There was a problem downloading the episode
-            const chapter = document.querySelector('.chapter[data-id="' + chapterId + '"]')
-            chapter.classList.remove('downloading')
-            chapter.classList.add('failed')
-
-            return
-        }
-
-        const selectedQualityVideo = instance.getSelectedQualityVideo(myLanguageVideos)
-        const episode = {
-            downloadUrl: await btvPlayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id),
-            info: await btvPlayer.api.getEpisodeInfo('episode', episodeId)
-        }
-
-        return {
-            downloadUrl: episode.downloadUrl,
-            thumbnail: episode.info.image
-        }
-    }
-
-    getSelectedQualityVideo(arr) {
-        switch (instance.selectedQuality) {
-            case 'low':
-                return arr.reduce((prev, current) => (prev.sizeInMB < current.sizeInMB) ? prev : current)
-
-            case 'medium':
-                return median(arr)
-
-            case 'high':
-                return arr.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
-        }
     }
 
     startChapter() {

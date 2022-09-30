@@ -4,7 +4,9 @@ import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 
 let instance = null
-
+const showSkipAfterNoOfTries = 3
+const explorersOneNoOfRounds = 6
+const explorersTwoNoOfRounds = 8
 export default class SimonSays {
     constructor() {
         this.experience = new Experience()
@@ -13,6 +15,7 @@ export default class SimonSays {
         this.debug = this.experience.debug
 
         instance = this
+        instance.fails = 0
     }
 
     toggleSimonSays() {
@@ -115,7 +118,7 @@ export default class SimonSays {
                 'g-sharp-4',
                 'a-4'
             ],
-            rounds: instance.world.selectedChapter.category == '6-8' ? 6 : 8
+            rounds: instance.world.selectedChapter.category == '6-8' ? explorersOneNoOfRounds : explorersTwoNoOfRounds
         }
 
         this.audio.loadMelodyNotes(this.data.notes)
@@ -278,35 +281,55 @@ export default class SimonSays {
         if (existingModal.length) return
 
         instance.toggleTryAgain()
-
-        document.getElementById('try-again').addEventListener('click', () => {
-            instance.modal.destroy()
-            instance.destroy()
-            instance.toggleSimonSays()
-        })
     }
 
     toggleTryAgain() {
         instance.blockPlaying()
 
-        let html = `<div class="modal__content congrats congrats__miniGame">
+        let html = `<div class="modal__content congrats congrats__miniGame simon-says">
             <div class="congrats__container">
                 <div class="congrats__title">
                     <h1>${_s.miniGames.failed.title}</h1>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
-                <div id="try-again" class="button button__continue">
-                    <div class="button__content"><span>${_s.miniGames.reset}</span></div>
-                </div>
+                <div class="modal__actions">
+                    <div id="try-again" class="button button__continue">
+                        <div class="button__content"><span>${_s.miniGames.reset}</span></div>
+                    </div>`
+
+                    if (instance.fails >= showSkipAfterNoOfTries-1) {
+                        html += `<div id="skipBTN" class="button button__skip button__default">
+                                <div class="button__content"><span>${_s.miniGames.skip}</span></div>
+                            </div>
+                        `
+                    }
+                html += `</div>
             </div>
         </div>`
 
         instance.modal = new Modal(html)
-
         document.querySelector('.modal').classList.add('modal__congrats')
+
+        document.getElementById('try-again').addEventListener('click', () => {
+            instance.fails++
+            instance.destroy()
+            instance.modal.destroy()
+            instance.toggleSimonSays()
+        })
+
+        const skipBTN = document.getElementById('skipBTN')
+        if (skipBTN) {
+            skipBTN.addEventListener('click', () => {
+                instance.fails = 0
+                instance.destroy()
+                instance.modal.destroy()
+                instance.world.program.advance()
+            })
+        }
     }
 
     finishGame() {
+        instance.fails = 0
         instance.toggleGameComplete()
         instance.audio.playTaskCompleted()
 

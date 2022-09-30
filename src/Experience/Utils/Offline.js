@@ -69,10 +69,33 @@ export default class Offline {
         }
     }
 
-    downloadFromWeb = function (episodes) {
-        let chapterId = episodes[0].data.chapterId
+    downloadEpisodes(episodes, data) {
+        let episodesData = []
 
-        offline.getDownloadedEpisodesFromChapter(chapterId, (downloadedEpisodes) => {
+        episodes.forEach(async (episode) => {
+            episodesData.push({
+                id: episode.id,
+                data: {
+                    name: episode.type + '-' + episode.id,
+                    chapterId: data.chapterId,
+                    chapterTitle: data.chapterTitle,
+                    category: data.categorySlug,
+                    language: _lang.getLanguageCode(),
+                    quality: this.experience.settings.videoQuality
+                }
+            })
+
+            if (episodesData.length == episodes.length) {
+                offline.downloadFromWeb(episodesData)
+            }
+        })
+    }
+
+    downloadFromWeb = function (episodes) {
+        const episodeId = episodes[0].id
+        const chapterId = episodes[0].data.chapterId
+
+        offline.getDownloadedEpisodesFromChapter(chapterId, async (downloadedEpisodes) => {
             offline.data[chapterId] = episodes
 
             if (episodes.length == downloadedEpisodes.length) {
@@ -84,7 +107,12 @@ export default class Offline {
                 offline.downloaded[chapterId] = downloadedEpisodes
             }
 
-            const notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+            let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+
+            const episodeUrls = await offline.getEpisodeDownloadUrls(episodeId, chapterId)
+            notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
+            notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
+
             offline.startDownloading(notDownloadedEpisodes[0])
         })
     }
@@ -95,6 +123,63 @@ export default class Offline {
                 return allEp.data.name === dwEp.name
             })
         })
+    }
+
+    getEpisodeDownloadUrls = async function (episodeId, chapterId) {
+        const claims = await this.experience.auth0.getIdTokenClaims()
+        const idToken = claims.__raw
+        let locale = _lang.getLanguageCode()
+        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
+
+        var btvPlayer = BTVPlayer({
+            type: 'episode',
+            id: episodeId,
+            locale: locale,
+            access_token: idToken
+        })
+
+        const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
+        const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
+
+        if (!myLanguageVideos.length) {
+            _appInsights.trackException({
+                exception: "No videos found",
+                chapterId: chapterId,
+                episodeId: episodeId,
+                language: locale
+            })
+
+            // There was a problem downloading the episode
+            const chapter = document.querySelector('.chapter[data-id="' + chapterId + '"]')
+            chapter.classList.remove('downloading')
+            chapter.classList.add('failed')
+
+            return
+        }
+
+        const selectedQualityVideo = offline.getSelectedQualityVideo(myLanguageVideos)
+        const episode = {
+            downloadUrl: await btvPlayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id),
+            info: await btvPlayer.api.getEpisodeInfo('episode', episodeId)
+        }
+
+        return {
+            downloadUrl: episode.downloadUrl,
+            thumbnail: episode.info.image
+        }
+    }
+
+    getSelectedQualityVideo = function (arr) {
+        switch (this.experience.settings.videoQuality) {
+            case 'low':
+                return arr.reduce((prev, current) => (prev.sizeInMB < current.sizeInMB) ? prev : current)
+
+            case 'medium':
+                return median(arr)
+
+            case 'high':
+                return arr.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+        }
     }
 
     startDownloading = function (currentEpisode) {
@@ -144,12 +229,14 @@ export default class Offline {
         }
     }
 
-    onVideoDownloadComplete = function (currentEpisode, xhr) {
+    onVideoDownloadComplete = async function (currentEpisode, xhr) {
         if (xhr.status === 200) {
             currentEpisode.data.video = xhr.response
             offline.putFileInDb(currentEpisode.data)
 
+            const episodeId = currentEpisode.id
             const chapterId = currentEpisode.data.chapterId
+
             offline.downloaded[chapterId].push(currentEpisode.data)
 
             if (offline.data[chapterId].length == offline.downloaded[chapterId].length) {
@@ -171,7 +258,12 @@ export default class Offline {
             }
             else {
                 // Next episode to download
-                const notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+                let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+
+                const episodeUrls = await offline.getEpisodeDownloadUrls(episodeId, chapterId)
+                notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
+                notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
+    
                 offline.startDownloading(notDownloadedEpisodes[0])
             }
         }
