@@ -55,7 +55,7 @@ export default class Quiz {
                 }
                 else {
                     html += `<div class="question__input">
-                                <textarea class="question__textarea" rows="8" placeholder="åpent spørsmål; ikke noe riktig eller feil"></textarea>
+                                <textarea class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
                             </div>`
                 }
 
