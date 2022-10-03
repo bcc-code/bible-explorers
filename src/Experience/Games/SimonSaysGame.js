@@ -253,7 +253,7 @@ export default class SimonSays {
             instance.toggleSimonSays()
         })
 
-        if (instance.debug.developer || instance.debug.isMentor()) {
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
             const skip = document.getElementById('skip')
 
             skip.addEventListener('click', () => {
@@ -298,7 +298,7 @@ export default class SimonSays {
         let html = `<div class="modal__content congrats congrats__miniGame simon-says">
             <div class="congrats__container">
                 <div class="congrats__title">
-                    <h1>${_s.miniGames.failed.title}</h1>
+                    <h2>${_s.miniGames.failed.title}</h2>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
                 <div class="modal__actions">
@@ -366,7 +366,7 @@ export default class SimonSays {
                 <div class="congrats__title">
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
-                    <h1>${_s.miniGames.completed.title}</h1>
+                    <h2>${_s.miniGames.completed.title}</h2>
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
@@ -395,12 +395,14 @@ export default class SimonSays {
 
         return miniGame.classList.contains('active')
     }
+
     allowPlaying() {
         const miniGame = document.getElementById('miniGame__simon-says')
         if (!miniGame) return
 
         miniGame.classList.add('active')
     }
+
     blockPlaying() {
         const miniGame = document.getElementById('miniGame__simon-says')
         if (!miniGame) return

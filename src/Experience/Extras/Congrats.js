@@ -20,9 +20,7 @@ export default class Congrats {
                     <div class="congrats__container">
                         <h1 class="congrats__title">Bible Kids Explorers - Cards</h1>
                         <div class="congrats__chapter-completed">You can now give the Bible Cards to all the children so that they can remember what they've learned today.</div>
-                        <div id="homescreen" class="button button__continue">
-                            <div class="button__content"><span>${_s.task.next}</span></div>
-                        </div>
+                        <button id="homescreen" class="button button__secondary">${_s.task.next}</button>
                     </div>
                 </div>
             </div>
@@ -50,9 +48,7 @@ export default class Congrats {
                         </div>
                         <h1 class="congrats__title">${_s.journey.congrats}</h1>
                         <div class="congrats__chapter-completed">${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong>!</div>
-                        <div id="homescreen" class="button button__continue">
-                            <div class="button__content"><span>${_s.journey.homescreen}</span></div>
-                        </div>
+                        <button id="homescreen" class="button button__secondary">${_s.journey.homescreen}</button>
                     </div>
                     <div class="splash splash__right"></div>
                 </div>

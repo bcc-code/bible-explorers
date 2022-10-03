@@ -22,6 +22,7 @@ export default class PictureAndCode {
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
+
             instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
 
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
@@ -31,7 +32,7 @@ export default class PictureAndCode {
 
     setPicture(url) {
         instance.data.picture = url
-        document.getElementById('bg-image').src = url
+        document.querySelector('.picture-and-code').style.backgroundImage = 'url("' + url + '")'
     }
 
     togglePicture() {

@@ -35,7 +35,6 @@ export default class Modal {
 
     static generateHtml(html) {
         return `
-            <div class="modal__overlay"></div>
             <button class="modal__close button button__round | icon-xmark-solid"></button>
             <div class="modal__wrapper">
                 <div class="modal__container">${html}</div>

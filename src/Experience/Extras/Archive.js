@@ -14,8 +14,8 @@ export default class Archive {
 
         archive.facts = this.experience.world.selectedChapter.archive
 
-        archive.htmlEl = document.getElementById("archive")
-        archive.htmlEl.addEventListener("click", this.toggleArchive)
+        archive.button = document.getElementById("archive")
+        archive.button.addEventListener("click", this.toggleArchive)
     }
 
     switchTab(id) {
@@ -26,56 +26,43 @@ export default class Archive {
     }
 
     toggleArchive() {
-        let image = null
-
-        archive.facts.forEach(fact => {
-            image = fact.image
-        })
-
         if (document.querySelector('.modal')) {
             archive.modal.destroy()
         }
         else {
             _appInsights.trackPageView({ name: "Archive" })
 
-            let html = `<div class="modal__content archive">
-                <ul class="archive__sidebar">`;
-            archive.facts.forEach((fact, index) => {
-                html += `<li class="${index == 0 ? 'visible' : ''}" data-id="${index}">${fact.title}</li>`
-            })
-            html += `</ul>
-                <div class="archive__content">`
-            archive.facts.forEach((fact, index) => {
-                html += `< div class="fact ${index == 0 ? 'visible' : ''}" data - id="${index}" >
-                <div class="fact__content">
-                    <h2 class="fact__title">${fact.title}</h2>
-                    <div class="fact__description">`
-                if (image.url) {
-                    html += '<img src="${image.url}" />'
+            const archiveModal = document.createElement('div')
+            archiveModal.classList.add('modal__content', 'archive')
+
+            const archiveWrapper = document.createElement('div')
+            archiveWrapper.classList.add('archive__wrapper')
+
+            archive.facts.forEach(fact => {
+                const heading = document.createElement('h2')
+                heading.classList.add('modal__heading')
+                heading.innerText = fact.title
+
+                const content = document.createElement('div')
+                content.classList.add('archive__content')
+                content.innerHTML = fact.description
+
+                if (fact.image.url) {
+                    const image = document.createElement('img')
+                    image.setAttribute('src', fact.image.url)
+                    content.appendChild(image)
                 }
 
-                html += `${fact.description}
-                    </div>
-                </div>
-                                </ > `
+                archiveWrapper.appendChild(heading)
+                archiveWrapper.appendChild(content)
             })
-            html += `</div >
-            </div > `
 
-            archive.modal = new Modal(html)
+            archiveModal.appendChild(archiveWrapper)
 
+            console.log(archiveModal);
+
+            archive.modal = new Modal(archiveModal.outerHTML)
             document.querySelector('.modal').classList.add('modal__archive')
-
-            archive.el = {
-                list: document.querySelector(".archive__sidebar"),
-                content: document.querySelector(".archive__content")
-            }
-
-            archive.el.list.querySelectorAll("li").forEach(function (item) {
-                item.addEventListener("click", () => {
-                    archive.switchTab(item.dataset.id)
-                })
-            })
         }
     }
 }

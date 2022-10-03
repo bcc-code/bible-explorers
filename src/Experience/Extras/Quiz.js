@@ -28,9 +28,6 @@ export default class Quiz {
             const questions = selectedChapter.program[currentStep].quiz
 
             let html = `<div class="modal__content quiz">
-                            <div class="quiz__header heading">
-                                <h2>${_s.task.questions}</h2>
-                            </div>
                             <div class="quiz__content">`
 
             questions.forEach((q, qIdx) => {
@@ -68,23 +65,10 @@ export default class Quiz {
                 html += `</div>`
             })
 
-            html += `</div></div>`
-            html += `<div class="modal__footer ${questions.length == 1 ? "hide - nav" : ""}">
-                        <div class="button button__prev button__round">
-                            <span class="button__content">
-                                <i class="icon icon-arrow-left-long-solid"></i>
-                            </span>
-                        </div>
-                        <div id="skipBTN" class="button button__default button__skip" style="margin-left: auto">
-                            <span>${_s.miniGames.skip}</span>
-                        </div>
-                        <div id="submit-task" class="button button__submit button__default">
-                            <span>${_s.task.submit}</span>
-                        </div>
-                        <div class="button button__next button__round">
-                            <span class="button__content">
-                                <i class="icon icon-arrow-right-long-solid"></i>
-                            </span>
+            html += `</div>
+                        <div class="quiz__footer ${questions.length == 1 ? "hide - nav" : ""}">
+                            <button id="prev" class="button button__round | icon-arrow-left-long-solid"></button>
+                            <button id="next" class="button button__round | icon-arrow-right-long-solid"></button>
                         </div>
                     </div>`
 
@@ -92,36 +76,53 @@ export default class Quiz {
 
             document.querySelector('.modal').classList.add('modal__quiz')
 
-            const nextButton = document.querySelector('.button__next')
-            const prevButton = document.querySelector('.button__prev')
-            const submitButton = document.querySelector('.button__submit')
-            const skipBTN = document.getElementById('skipBTN')
-
             const htmlQuestions = document.querySelectorAll('.question')
-
             htmlQuestions[0].classList.add('visible')
-            nextButton.classList.add('hidden')
-            prevButton.classList.add('hidden')
-            submitButton.classList.add('hidden')
-            if (!debug.developer && !debug.onQuickLook()) {
-                skipBTN.classList.add('hidden')
+
+            if (debug.developer || debug.onQuickLook()) {
+                const skip = document.getElementById('skip')
+                skip.style.display = 'block'
+                skip.innerText = _s.miniGames.skip
+                skip.addEventListener("click", () => {
+                    quiz.modal.destroy()
+                    program.advance()
+                })
             }
+
+            const back = document.getElementById("back")
+            back.style.display = 'block'
+            back.innerText = _s.journey.back
+            back.addEventListener('click', (e) => {
+                quiz.modal.destroy()
+                world.program.taskDescription.toggleTaskDescription()
+            })
+
+
+            const nextButton = document.getElementById('next')
+            const prevButton = document.getElementById('prev')
+            prevButton.setAttribute('disabled', '')
+            nextButton.setAttribute('disabled', '')
+
+            const submitButton = document.getElementById('continue')
+            submitButton.innerText = _s.task.submit
 
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
+
                 current.classList.remove('visible')
                 current.nextElementSibling?.classList.add('visible')
 
                 if (current.nextElementSibling.querySelector('input:checked')) {
-                    nextButton.classList.remove('hidden')
+                    nextButton.removeAttribute('disabled')
                 } else {
-                    nextButton.classList.add('hidden')
+                    nextButton.setAttribute('disabled', '')
                 }
 
-                prevButton.classList.remove('hidden')
+                prevButton.removeAttribute('disabled')
 
                 if (current.nextElementSibling.matches(':last-child')) {
-                    submitButton.classList.remove('hidden')
+                    submitButton.style.display = "block"
+                    skip.style.display = "none"
                 }
             })
 
@@ -131,29 +132,27 @@ export default class Quiz {
                 current.previousElementSibling?.classList.add('visible')
 
                 if (current.previousElementSibling.querySelector('input:checked')) {
-                    nextButton.classList.remove('hidden')
+                    nextButton.removeAttribute('disabled')
                 }
 
                 if (current.getAttribute('data-index') == 2) {
-                    prevButton.classList.add('hidden')
+                    prevButton.setAttribute('disabled', '')
                 }
 
                 if (current.previousElementSibling.matches(':last-child')) {
-                    submitButton.classList.remove('hidden')
+                    submitButton.style.display = "block"
+                    skip.style.display = "none"
                 } else {
-                    submitButton.classList.add('hidden')
+                    submitButton.style.display = "none"
+                    skip.style.display = "block"
                 }
             })
 
-            skipBTN.addEventListener("click", () => {
-                quiz.modal.destroy()
-                program.advance()
-            })
-
             submitButton.addEventListener("click", () => {
-                prevButton.classList.add('hidden')
-                submitButton.classList.add('hidden')
-                skipBTN.classList.add('hidden')
+                document.querySelector('.quiz__content').style.display = 'none'
+                document.querySelector('.quiz__footer').style.display = 'none'
+                document.querySelector('.modal__actions').style.display = 'none'
+                skip.style.display = 'none'
 
                 htmlQuestions.forEach(q => {
                     q.classList.add('hidden')
@@ -182,7 +181,7 @@ export default class Quiz {
                             correctAnswers += 1
                         }
 
-                        nextButton.classList.remove('hidden')
+                        nextButton.removeAttribute('disabled')
                     })
                 })
             })
@@ -201,7 +200,7 @@ export default class Quiz {
         phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
 
         const continueButton = document.createElement('button')
-        continueButton.classList.add('button', 'button__default')
+        continueButton.classList.add('button', 'button__secondary')
         continueButton.innerText = _s.miniGames.continue
 
         continueButton.addEventListener('click', () => {

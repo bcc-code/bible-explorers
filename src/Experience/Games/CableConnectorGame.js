@@ -455,7 +455,7 @@ export default class CableConnector {
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
                 <div class="congrats__title">
-                    <h1>${_s.miniGames.timeElapsed.title}</h1>
+                    <h2>${_s.miniGames.timeElapsed.title}</h2>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}</div>
                 <button class="button button__primary" id="reset">${_s.miniGames.reset}</button>
@@ -585,7 +585,7 @@ export default class CableConnector {
         })
 
 
-        if (instance.debug.developer || instance.debug.isMentor()) {
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
             const skip = document.getElementById('skip')
 
             skip.addEventListener('click', () => {
@@ -625,7 +625,7 @@ export default class CableConnector {
                 <div class="congrats__title">
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
-                    <h1>${_s.miniGames.completed.title}</h1>
+                    <h2>${_s.miniGames.completed.title}</h2>
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>

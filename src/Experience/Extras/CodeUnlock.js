@@ -24,38 +24,29 @@ export default class CodeUnlock {
         else {
             instance.secretCode = code
 
-            let html = `<div class="modal__content code-unlock">
-                <div class="code-unlock__header heading"><h2>${_s.task.codeUnlock}</h2></div>
-                <div class="code-unlock__container">
-                    <div class="code-unlock__screen">
-                        <span class="code-unlock__input"></span>
-                    </div>
-                    <div class="code-unlock__grid">
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">7</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">8</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">9</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--backspace"><i class="icon icon-arrow-left-long-to-line-solid"></i></button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
-                        <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
+            let html = `
+                <div class="modal__content code-unlock">
+                    <h2>${_s.task.codeUnlock}</h2>
+                    <div class="code-unlock__container">
+                        <div class="code-unlock__screen">
+                            <span class="code-unlock__input"></span>
+                        </div>
+                        <div class="code-unlock__grid">
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">7</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">8</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">9</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">4</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">5</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">6</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">1</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">2</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">3</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--backspace"><i class="icon icon-arrow-left-long-to-line-solid"></i></button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
+                            <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
+                        </div>
                     </div>
                 </div>`
-
-            //     <div class="modal__actions">
-            //         <button id="back" class="button button__primary">${_s.journey.back}</button>`
-
-            // if (instance.debug.developer || instance.debug.isMentor()) {
-            //     html += `<button id="skip" class="button button__secondary">${_s.miniGames.skip}</button>`
-            // }
-
-
-            html += `</div>
-            </div>`
 
             instance.modal = new Modal(html)
             document.querySelector('.modal').classList.add('modal__code-unlock')
@@ -69,7 +60,7 @@ export default class CodeUnlock {
             })
 
 
-            if (instance.debug.developer || instance.debug.isMentor()) {
+            if (instance.debug.developer || instance.debug.onQuickLook()) {
                 const skip = document.getElementById("skip")
                 if (skip) {
                     skip.style.display = 'block'
