@@ -17,20 +17,28 @@ export default class PictureAndCode {
         }
         else {
             instance.world = instance.experience.world
+            instance.offline = instance.world.offline
             instance.program = instance.world.program
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
+            instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
+
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.togglePicture()
         }
+    }
+
+    setPicture(url) {
+        instance.data.picture = url
+        document.getElementById('bg-image').src = url
     }
 
     togglePicture() {
         let pictureEl = document.createElement("div")
         pictureEl.className = "picture-and-code"
         pictureEl.innerHTML = `
-            <img src='${instance.data.picture}' />
+            <img id="bg-image" src="" />
             <div class="modal__actions">
                 <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
                 <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>

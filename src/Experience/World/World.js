@@ -449,6 +449,7 @@ export default class World {
         instance.cacheChapterArchiveImages(chapter.archive)
         instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
         instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
+        instance.cachePictureAndCodeImage(chapter['program'].filter(step => step.taskType == "picture_and_code"))
     }
 
     cacheChapterThumbnail(url) {
@@ -462,6 +463,7 @@ export default class World {
     }
 
     cacheChapterArchiveImages(facts) {
+        if (facts.length == 0) return
         facts.forEach(fact => instance.fetchAndCacheAsset(fact.image.url))
     }
 
@@ -472,10 +474,14 @@ export default class World {
 
     cacheSortingGameIcons(sortingTasks) {
         if (sortingTasks.length == 0) return
-
         sortingTasks.forEach(task => task.sorting.forEach(s => {
             instance.fetchAndCacheAsset(s.icon)
         }))
+    }
+
+    cachePictureAndCodeImage(pictureAndCodeTasks) {
+        if (pictureAndCodeTasks.length == 0) return
+        pictureAndCodeTasks.forEach(task => instance.fetchAndCacheAsset(task.pictureAndCode.picture))
     }
 
     fetchAndCacheAsset(url) {
