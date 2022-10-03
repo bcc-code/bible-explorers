@@ -322,6 +322,8 @@ export default class Audio {
     playNote(note) {
         this.initialize()
 
+        if (!audio.notes[note]) return
+
         if (audio.notes[note].isPlaying) {
             audio.notes[note].stop()
             audio.notes[note].play()

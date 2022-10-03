@@ -68,7 +68,7 @@ export default class CodeUnlock {
                 instance.destroy()
             })
 
-            if (instance.debug.developer || instance.debug.isMentor()) {
+            if (instance.debug.developer || instance.debug.onQuickLook()) {
                 skipBtn.classList.remove('hidden')
             }
 
@@ -127,11 +127,12 @@ export default class CodeUnlock {
         const wrapper = document.querySelector('.code-unlock')
 
         if (instance.el.code.textContent == instance.secretCode) {
+            instance.fails = 0
+            instance.world.audio.playTaskCompleted()
+
             if (this.irisMessage == false) {
-                instance.fails = 0
-                instance.world.audio.playTaskCompleted()
-                instance.world.program.advance()
                 instance.destroy()
+                instance.world.program.advance()
             }
             else {
                 instance.destroy()

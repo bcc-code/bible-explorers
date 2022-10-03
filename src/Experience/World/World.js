@@ -293,11 +293,11 @@ export default class World {
         instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
         instance.menu.chapterContent.querySelector('.quick-look__button').addEventListener("click", () => {
-            document.querySelector('body').classList.add('quick-look-mode')
-
             this.chapterProgress() == this.selectedChapter.program.length
                 ? instance.restartChapter()
                 : instance.startChapter()
+
+            document.querySelector('body').classList.add('quick-look-mode')
         })
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
@@ -515,6 +515,8 @@ export default class World {
                 fact.image = data
             })
         })
+
+        document.querySelector('body').classList.remove('quick-look-mode')
     }
 
     restartChapter() {
