@@ -17,13 +17,21 @@ export default class PictureAndCode {
         }
         else {
             instance.world = instance.experience.world
+            instance.offline = instance.world.offline
             instance.program = instance.world.program
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
+            instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
+
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.togglePicture()
         }
+    }
+
+    setPicture(url) {
+        instance.data.picture = url
+        document.getElementById('bg-image').src = url
     }
 
     togglePicture() {

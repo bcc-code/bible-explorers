@@ -10,6 +10,7 @@ import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
+import _e from '../Utils/Events.js'
 import _appInsights from '../Utils/AppInsights.js'
 
 let instance = null
@@ -74,11 +75,8 @@ export default class World {
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
-            setTimeout(function () {
-                instance.welcome.loading.style.display = "none"
-                instance.welcome.topBar.style.display = "flex"
-                instance.welcome.loadingScreen.classList.add('visible')
-            }, 1000)
+            this.welcome.loading.querySelector('span').innerText = 'Initializing'
+            document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
         })
 
         this.buttons.start.innerText = _s.journey.start
@@ -93,6 +91,12 @@ export default class World {
 
         this.welcome.introduction.innerText = _s.introduction
 
+    }
+
+    hideLoading() {
+        instance.welcome.loading.style.display = "none"
+        instance.welcome.topBar.style.display = "flex"
+        instance.welcome.loadingScreen.classList.add('visible')
     }
 
     placeholderChapterData() {
@@ -443,6 +447,7 @@ export default class World {
         instance.cacheChapterArchiveImages(chapter.archive)
         instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
         instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
+        instance.cachePictureAndCodeImage(chapter['program'].filter(step => step.taskType == "picture_and_code"))
     }
 
     cacheChapterThumbnail(url) {
@@ -456,6 +461,7 @@ export default class World {
     }
 
     cacheChapterArchiveImages(facts) {
+        if (facts.length == 0) return
         facts.forEach(fact => instance.fetchAndCacheAsset(fact.image.url))
     }
 
@@ -466,10 +472,14 @@ export default class World {
 
     cacheSortingGameIcons(sortingTasks) {
         if (sortingTasks.length == 0) return
-
         sortingTasks.forEach(task => task.sorting.forEach(s => {
             instance.fetchAndCacheAsset(s.icon)
         }))
+    }
+
+    cachePictureAndCodeImage(pictureAndCodeTasks) {
+        if (pictureAndCodeTasks.length == 0) return
+        pictureAndCodeTasks.forEach(task => instance.fetchAndCacheAsset(task.pictureAndCode.picture))
     }
 
     fetchAndCacheAsset(url) {
