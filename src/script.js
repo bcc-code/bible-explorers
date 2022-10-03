@@ -4,6 +4,7 @@ import Notification from './Experience/Utils/Notification.js';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import _api from './Experience/Utils/Api.js'
 import _s from './Experience/Utils/Strings.js'
+import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 
 // Application Insights
@@ -44,7 +45,6 @@ if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification, chromeIcon)
 }
 
-
 window.onload = async () => {
     await configureClient()
 
@@ -72,10 +72,13 @@ window.onload = async () => {
             }
 
             experience.settings.updateUI()
+            document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
         })
     }
-
-    experience.settings.updateUI()
+    else {
+        experience.settings.updateUI()
+        document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+    }
 }
 
 // Register Service Worker

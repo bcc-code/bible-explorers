@@ -10,6 +10,7 @@ import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 import Points from './Points.js'
 import Highlight from './Highlight.js'
+import _e from '../Utils/Events.js'
 import _appInsights from '../Utils/AppInsights.js'
 
 let instance = null
@@ -73,11 +74,8 @@ export default class World {
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
-            setTimeout(function () {
-                instance.welcome.loading.style.display = "none"
-                instance.welcome.topBar.style.display = "flex"
-                instance.welcome.loadingScreen.classList.add('visible')
-            }, 1000)
+            this.welcome.loading.querySelector('span').innerText = 'Initializing'
+            document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
         })
 
         this.start = document.createElement('span')
@@ -94,6 +92,12 @@ export default class World {
 
         this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
         this.menu.backBtn.children[0].innerText = _s.journey.back
+    }
+
+    hideLoading() {
+        instance.welcome.loading.style.display = "none"
+        instance.welcome.topBar.style.display = "flex"
+        instance.welcome.loadingScreen.classList.add('visible')
     }
 
     placeholderChapterData() {
