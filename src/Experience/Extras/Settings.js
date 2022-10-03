@@ -32,52 +32,57 @@ export default class Settings {
         else {
             _appInsights.trackPageView({ name: "Settings" })
 
+            //     <div class="modal__extras">
+            //     <span class="left"></span>
+            //     <span class="bottomLeft"></span>
+            //     <span class="bottomLeftSmall"></span>
+            // </div>
+
             let html = `
                 <div class="modal__content settings">
-                    <div class="settings__header heading"><h2>${_s.settings.title}</h2></div>
-                    <div class="settings__content">
-                        <div class="modal__extras">
-                            <span class="left"></span>
-                            <span class="bottomLeft"></span>
-                            <span class="bottomLeftSmall"></span>
-                        </div>
-                        <div class="language settings__item">
-                            <p>${_s.settings.language}</p>
-                            <div class="language__picker">
-                                <div class="language__current">${_lang.getLanguageName()}</div>
-                                <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
+                    <div class="settings__wrapper">
+                        <h2 class="modal__heading">${_s.settings.title}</h2>
+                        <div class="settings__content">
+                            <div class="language settings__item">
+                                <span>${_s.settings.language}</span>
+                                <div class="language__picker">
+                                    <div class="language__current">${_lang.getLanguageName()}</div>
+                                    <ul class="language__list hide">${_lang.getLanguagesList()}</ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="video-quality settings__item">
-                            <p>${_s.settings.videoQuality.title}</p>
-                            <div class="video-quality__picker">
-                                <div class="video-quality__current">${_s.settings.videoQuality[settings.videoQuality]}</div>
-                                <ul class="video-quality__list hide">
-                                    <li data-id="low">${_s.settings.videoQuality.low}</li>
-                                    <li data-id="medium">${_s.settings.videoQuality.medium}</li>
-                                    <li data-id="high">${_s.settings.videoQuality.high}</li>
-                                </ul>
+                            <div class="video-quality settings__item">
+                                <span>${_s.settings.videoQuality.title}</span>
+                                <div class="video-quality__picker">
+                                    <div class="video-quality__current">${_s.settings.videoQuality[settings.videoQuality]}</div>
+                                    <ul class="video-quality__list hide">
+                                        <li data-id="low">${_s.settings.videoQuality.low}</li>
+                                        <li data-id="medium">${_s.settings.videoQuality.medium}</li>
+                                        <li data-id="high">${_s.settings.videoQuality.high}</li>
+                                    </ul>
+                                </div>
                             </div>
+                            <div class="sound settings__item">
+                                <span>${_s.settings.soundEffects}</span>
+                                <label class="switch">
+                                    <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="faq__button settings__item">${_s.settings.faq}</div>
+                            <a class="feedback settings__item" href="mailto:hello@biblekids.io" target="blank">
+                                <span>${_s.settings.feedback}</span>
+                                <i class="icon icon-envelope-solid"></i>
+                            </a>
                         </div>
-                        <div class="sound settings__item">
-                            <p>${_s.settings.soundEffects}</p>
-                            <label class="switch">
-                                <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                        <div class="faq__button settings__item">
-                            <p>${_s.settings.faq}</p>
-                        </div>
-                        <a class="feedback settings__item" href="mailto:hello@biblekids.io" target="blank">
-                            <p>${_s.settings.feedback}</p>
-                            <i class="icon icon-envelope-solid"></i>
-                        </a>
                         <div class="login settings__footer">
-                            <p><span id="loggedIn"></span> <span id="userName"></span> <span id="userRole"></span></p>
+                            <span>
+                                <span id="loggedIn"></span> 
+                                <span id="userName"></span> 
+                                <span id="userRole"></span>
+                            </span>
                             <div class="button__actions">
-                                <button id="button__login" class="button" disabled="${!settings.logInLogOut.login}"><span>${_s.settings.logIn}</span></button>
-                                <button id="button__logout" class="button" disabled="${!settings.logInLogOut.logout}"><span>${_s.settings.logOut}</span></button>
+                                <button id="login" class="button button__secondary--fill" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
+                                <button id="logout" class="button button__secondary--fill" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
                             </div>
                         </div>
                     </div>
@@ -98,8 +103,8 @@ export default class Settings {
                 currentVideoQuality: document.querySelector(".video-quality .video-quality__current"),
                 videoQualityList: document.querySelector(".video-quality .video-quality__list"),
                 videoQualities: document.querySelectorAll(".video-quality .video-quality__list li"),
-                login: document.getElementById("button__login"),
-                logout: document.getElementById("button__logout"),
+                login: document.getElementById("login"),
+                logout: document.getElementById("logout"),
                 loggedIn: document.getElementById("loggedIn"),
                 userName: document.getElementById("userName"),
                 userRole: document.getElementById("userRole"),
@@ -158,21 +163,15 @@ export default class Settings {
 
             let html = `
                 <div class="modal__content faq">
-                    <div class="faq__header heading"><h2>${_s.settings.faq}</h2></div>
-                    <div class="faq__content">
-                        <div class="modal__extras">
-                            <span class="left"></span>
-                            <span class="bottomLeft"></span>
-                            <span class="bottomLeftSmall"></span>
-                        </div>
-                        
+                    <div class="faq__wrapper">
+                        <h2 class="modal__heading">${_s.settings.faq}</h2>
                         <ol class="faq__list">`
-                        for (let i=0; i<questions.length; i++) {
-                            html +=  `<li class="faq__item">
+            for (let i = 0; i < questions.length; i++) {
+                html += `<li class="faq__item">
                                 <p class="faq__question">${questions[i]}</p>
                                 <p class="faq__answer">${answers[i]}</p>`
-                            }
-                            html += `</li>
+            }
+            html += `</li>
                         </ol>
                     </div>
                 </div>`

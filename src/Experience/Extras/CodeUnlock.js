@@ -41,33 +41,42 @@ export default class CodeUnlock {
                         <button type="button" class="code-unlock__btn code-unlock__btn--number">0</button>
                         <button type="button" class="code-unlock__btn code-unlock__btn--confirm"><i class="icon icon-check-solid"></i></button>
                     </div>
-                </div>
+                </div>`
 
-                <div class="modal__actions">
-                    <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>`
+            //     <div class="modal__actions">
+            //         <button id="back" class="button button__primary">${_s.journey.back}</button>`
 
-                    if (instance.debug.developer || instance.debug.isMentor()) {
-                        html += `<div id="skipBTN" class="button button__default button__skip"><span>${_s.miniGames.skip}</span></div>`
-                    }
-                html += `</div>
+            // if (instance.debug.developer || instance.debug.isMentor()) {
+            //     html += `<button id="skip" class="button button__secondary">${_s.miniGames.skip}</button>`
+            // }
+
+
+            html += `</div>
             </div>`
 
             instance.modal = new Modal(html)
 
             document.querySelector('.modal').classList.add('modal__code-unlock')
 
-            const backBtn = document.getElementById("backBTN")
-            backBtn.addEventListener('click', (e) => {
+            const back = document.getElementById("back")
+            back.style.display = 'block'
+            back.innerText = _s.journey.back
+            back.addEventListener('click', (e) => {
                 instance.modal.destroy()
                 instance.world.program.taskDescription.toggleTaskDescription()
             })
 
-            const skipBtn = document.getElementById("skipBTN")
-            if (skipBtn) {
-                skipBtn.addEventListener('click', (e) => {
-                    instance.world.program.advance()
-                    instance.destroy()
-                })
+
+            if (instance.debug.developer || instance.debug.isMentor()) {
+                const skip = document.getElementById("skip")
+                if (skip) {
+                    skip.style.display = 'block'
+                    skip.innerText = _s.miniGames.skip
+                    skip.addEventListener('click', (e) => {
+                        instance.world.program.advance()
+                        instance.destroy()
+                    })
+                }
             }
 
             instance.el = {

@@ -20,27 +20,11 @@
 
     <main>
         <div class="topbar" id="topBar">
-            <div id="go-home" class="button button__round">
-                <div class="button__content">
-                    <i class="icon icon-house-solid"></i>
-                </div>
-            </div>
-            <div id="archive" class="button button__round">
-                <div class="button__content">
-                    <i class="icon icon-folder-solid"></i>
-                </div>
-            </div>
-            <div id="sound" class="button button__round">
-                <div class="button__content">
-                    <i class="icon icon-volume-solid"></i>
-                    <i class="icon icon-volume-slash-solid"></i>
-                </div>
-            </div>
-            <div id="settings" class="button button__round">
-                <div class="button__content">
-                    <i class="icon icon-gear-solid"></i>
-                </div>
-            </div>
+            <button id="home" class="button button__round | icon-house-solid"></button>
+            <button id="archive" class="button button__round | icon-folder-solid"></button>
+            <button id="sound-on" class="button button__round | icon-volume-solid"></button>
+            <button id="sound-off" class="button button__round | icon-volume-slash-solid"></button>
+            <button id="settings" class="button button__round | icon-gear-solid"></button>
         </div>
 
         <div id="page-loader" class="loader">
@@ -67,7 +51,7 @@
         </div>
 
         <div id="loading-screen" class="container">
-            <div class="container__scroll">
+            <div class="container__wrapper">
                 <div class="logo" aria-label="bible kids explorers logo"></div>
                 <div id="introduction"></div>
                 <p id="concept-description"></p>
@@ -76,12 +60,11 @@
         </div>
 
         <div id="chapters-screen" class="container">
-            <div class="container__scroll">
+            <div class="container__wrapper">
                 <div class="logo" aria-label="bible kids explorers logo"></div>
                 <div class="chapters__wrapper">
                     <div class="chapter__items">
                         <div class="chapters list"></div>
-                        <div class="back_to button button__default"><span></span></div>
                     </div>
                     <div class="chapter__content">
                         <div class="chapter__description">
@@ -96,15 +79,16 @@
                             </div>
                             <div class="chapter__text"></div>
                         </div>
-                        <div class="chapter__actions">
-                            <div class="button button__default" id="restart-chapter"></div>
-                            <div class="button button__continue" id="start-chapter">
-                                <div class="button__content"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="container__footer">
+                <button class="button button__primary" id="back-to-landing"></button>
+                <button class="button button__primary" id="restart-chapter"></button>
+                <button class="button button__secondary" id="start-chapter"></button>
+            </div>
+
         </div>
 
         <div id="progress-bar" class="progress-bar"></div>

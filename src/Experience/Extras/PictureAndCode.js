@@ -28,26 +28,33 @@ export default class PictureAndCode {
 
     togglePicture() {
         let pictureEl = document.createElement("div")
-        pictureEl.className = "picture-and-code"
+        pictureEl.classList.add('picture-and-code', 'container')
         pictureEl.innerHTML = `
-            <img src='${instance.data.picture}' />
-            <div class="modal__actions">
-                <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>
+            <div class="container__wrapper"></div>
+            <div class="container__footer">
+                <button id="back" class="button button__primary">${_s.journey.back}</button>
+                <button id="continue" class="button button__secondary">${_s.task.next}</button>
             </div>    
         `
         document.body.appendChild(pictureEl)
 
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        pictureEl.style.backgroundImage = "url('" + instance.data.picture + "')"
+        pictureEl.style.backgroundRepeat = 'no-repeat'
+        pictureEl.style.backgroundSize = 'cover'
 
-        backBtn.addEventListener('click', (e) => {
+        const back = document.getElementById("back")
+        const next = document.getElementById('continue')
+
+        back.style.display = 'block'
+        next.style.display = 'block'
+
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
             document.querySelector('.picture-and-code').remove()
             instance.program.taskDescription.toggleTaskDescription()
         })
 
-        getTaskBtn.addEventListener("click", () => {
+        next.addEventListener("click", () => {
             document.querySelector('.picture-and-code').remove()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
         })
