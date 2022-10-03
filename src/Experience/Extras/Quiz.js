@@ -103,7 +103,7 @@ export default class Quiz {
             nextButton.classList.add('hidden')
             prevButton.classList.add('hidden')
             submitButton.classList.add('hidden')
-            if (!debug.developer && !debug.isMentor()) {
+            if (!debug.developer && !debug.onQuickLook()) {
                 skipBTN.classList.add('hidden')
             }
 

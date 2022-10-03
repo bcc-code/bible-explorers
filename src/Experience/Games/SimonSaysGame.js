@@ -5,8 +5,14 @@ import _e from '../Utils/Events.js'
 
 let instance = null
 const showSkipAfterNoOfTries = 3
-const explorersOneNoOfRounds = 6
-const explorersTwoNoOfRounds = 8
+const explorersOne = {
+    noOfRounds: 6,
+    msBetweenNotes: 250
+}
+const explorersTwo = {
+    noOfRounds: 8,
+    msBetweenNotes: 150
+}
 export default class SimonSays {
     constructor() {
         this.experience = new Experience()
@@ -121,7 +127,8 @@ export default class SimonSays {
                 'g-sharp-4',
                 'a-4'
             ],
-            rounds: instance.world.selectedChapter.category == '6-8' ? explorersOneNoOfRounds : explorersTwoNoOfRounds
+            rounds: instance.world.selectedChapter.category == '6-8' ? explorersOne.noOfRounds : explorersTwo.noOfRounds,
+            msBetweenNotes: instance.world.selectedChapter.category == '6-8' ? explorersOne.msBetweenNotes : explorersTwo.msBetweenNotes
         }
 
         this.audio.loadMelodyNotes(this.data.notes)
@@ -141,7 +148,7 @@ export default class SimonSays {
             this.addButton('reset', 'button__primary', _s.miniGames.reset)
         )
 
-        if (instance.debug.developer || instance.debug.isMentor()) {
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
                 this.addButton('skip', 'button__secondary', _s.miniGames.skip)
             )
@@ -175,7 +182,7 @@ export default class SimonSays {
         if (++instance.currentPad <= instance.level) {
             setTimeout(() => {
                 instance.playPad(instance.data.melody[instance.currentPad])
-            }, 250)
+            }, instance.data.msBetweenNotes)
         }
         else {
             document.removeEventListener(_e.ACTIONS.NOTE_PLAYED, instance.continueMelody)

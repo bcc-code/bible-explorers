@@ -7,10 +7,7 @@ class Debug {
         this.experience = new Experience()
 
         this.developer = window.location.hash === '#debug'
-        this.isMentor = () => window.location.hash === '#mentor'
-            && this.experience.auth0?.isAuthenticated
-                ? document.body.classList.contains("ak_leder")
-                : false
+        this.onQuickLook = () => document.querySelector('body').classList.contains('quick-look-mode')
 
         if (this.developer) {
             this.ui = new GUI()

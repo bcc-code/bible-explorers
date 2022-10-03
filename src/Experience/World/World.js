@@ -286,9 +286,18 @@ export default class World {
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
         instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
+        instance.menu.chapterContent.querySelector('.quick-look__button').addEventListener("click", () => {
+            this.chapterProgress() == this.selectedChapter.program.length
+                ? instance.restartChapter()
+                : instance.startChapter()
+
+            document.querySelector('body').classList.add('quick-look-mode')
+        })
+
         chapterAttachments.querySelector('.attachments').innerHTML = ''
 
         if (chapter.attachments.length) {
+            chapterAttachments.querySelector('.attachments').classList.remove('hidden')
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
                     <a href="${attachment.url}" target="_blank">
@@ -297,6 +306,9 @@ export default class World {
                     </a>
                 </div>`
             })
+        }
+        else {
+            chapterAttachments.querySelector('.attachments').classList.add('hidden')
         }
 
         instance.menu.chapterItems.classList.add('chapter-selected')
@@ -497,6 +509,8 @@ export default class World {
                 fact.image = data
             })
         })
+
+        document.querySelector('body').classList.remove('quick-look-mode')
     }
 
     restartChapter() {

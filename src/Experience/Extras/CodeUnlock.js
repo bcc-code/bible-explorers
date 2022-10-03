@@ -3,13 +3,16 @@ import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 
 let instance = null
+const showSkipAfterNoOfTries = 3
 
 export default class CodeUnlock {
     constructor() {
-        instance = this
         this.experience = new Experience()
         this.world = this.experience.world
         this.debug = this.experience.debug
+
+        instance = this
+        instance.fails = 0
     }
 
     toggleCodeUnlock(code, irisMessage = false) {
@@ -55,7 +58,6 @@ export default class CodeUnlock {
             </div>`
 
             instance.modal = new Modal(html)
-
             document.querySelector('.modal').classList.add('modal__code-unlock')
 
             const back = document.getElementById("back")
@@ -73,6 +75,7 @@ export default class CodeUnlock {
                     skip.style.display = 'block'
                     skip.innerText = _s.miniGames.skip
                     skip.addEventListener('click', (e) => {
+                        instance.fails = 0
                         instance.world.program.advance()
                         instance.destroy()
                     })
@@ -134,16 +137,22 @@ export default class CodeUnlock {
         const wrapper = document.querySelector('.code-unlock')
 
         if (instance.el.code.textContent == instance.secretCode) {
+            instance.fails = 0
+            instance.world.audio.playTaskCompleted()
+
             if (this.irisMessage == false) {
-                instance.world.audio.playTaskCompleted()
-                instance.world.program.advance()
                 instance.destroy()
+                instance.world.program.advance()
             }
             else {
                 instance.destroy()
                 instance.world.program.codeAndIris.toggleCodeAndIris()
             }
         } else {
+            instance.fails++
+            if (instance.fails >= showSkipAfterNoOfTries)
+                document.getElementById("skipBTN").classList.remove('hidden')
+
             wrapper.classList.add('wrong-code')
             setTimeout(() => {
                 wrapper.classList.remove('wrong-code')

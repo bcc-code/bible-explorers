@@ -146,7 +146,7 @@ export default class CableConnector {
             this.addButton('reset', 'button__primary', _s.miniGames.reset)
         )
 
-        if (instance.debug.developer || instance.debug.isMentor()) {
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
                 this.addButton('skip', 'button__secondary', _s.miniGames.skip)
             )

@@ -44,20 +44,23 @@ export default class Archive {
                 html += `<li class="${index == 0 ? 'visible' : ''}" data-id="${index}">${fact.title}</li>`
             })
             html += `</ul>
-                <div class="archive__wrapper">`
+                <div class="archive__content">`
             archive.facts.forEach((fact, index) => {
-                html += `<h2 class="modal__heading">${fact.title}</h2>
-                        <div class="fact ${index == 0 ? 'visible' : ''}" data-id="${index}">
-                            <div class="fact__content">
-                                <div class="fact__description">      
-                                    <img src="${image.url}"/> 
-                                    ${fact.description}
-                                </div>
-                            </div>
-                        </div>`
+                html += `< div class="fact ${index == 0 ? 'visible' : ''}" data - id="${index}" >
+                <div class="fact__content">
+                    <h2 class="fact__title">${fact.title}</h2>
+                    <div class="fact__description">`
+                if (image.url) {
+                    html += '<img src="${image.url}" />'
+                }
+
+                html += `${fact.description}
+                    </div>
+                </div>
+                                </ > `
             })
-            html += `</div>
-            </div>`
+            html += `</div >
+            </div > `
 
             archive.modal = new Modal(html)
 
