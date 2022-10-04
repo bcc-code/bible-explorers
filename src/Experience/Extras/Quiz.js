@@ -97,7 +97,6 @@ export default class Quiz {
                 world.program.taskDescription.toggleTaskDescription()
             })
 
-
             const nextButton = document.getElementById('next')
             const prevButton = document.getElementById('prev')
             prevButton.setAttribute('disabled', '')
@@ -158,7 +157,7 @@ export default class Quiz {
                     q.classList.add('hidden')
                 })
 
-                this.summary(program, htmlQuestions.length - 1, correctAnswers)
+                this.summary(program, correctAnswers+1, htmlQuestions.length)
             })
 
             htmlQuestions.forEach((q, i) => {
@@ -188,7 +187,7 @@ export default class Quiz {
         }
     }
 
-    summary(program, numberOfQuestions, correctAnswers) {
+    summary(program, correctAnswers, numberOfQuestions) {
         const parent = document.querySelector('.quiz')
         const container = document.createElement('div')
         container.classList.add('quiz__summary')
