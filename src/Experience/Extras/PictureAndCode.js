@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -36,33 +37,30 @@ export default class PictureAndCode {
     }
 
     togglePicture() {
-        let pictureEl = document.createElement("div")
-        pictureEl.classList.add('picture-and-code', 'container')
-        pictureEl.innerHTML = `
-            <div class="container__wrapper">
+        let html = `<div class="modal__content picture-and-code">
+            <div class="picture-and-code__content">
                 <img src="">
             </div>
-            <div class="container__footer">
-                <button id="back" class="button button__primary">${_s.journey.back}</button>
-                <button id="continue" class="button button__secondary">${_s.task.next}</button>
-            </div>    
-        `
-        document.body.appendChild(pictureEl)
+        </div>`
+
+        instance.modal = new Modal(html)
+
+        document.querySelector('.modal').classList.add('modal__picture-and-code')
 
         const back = document.getElementById("back")
-        const next = document.getElementById('continue')
-
         back.style.display = 'block'
-        next.style.display = 'block'
-
+        back.innerText = _s.journey.back
         back.addEventListener('click', (e) => {
             e.stopPropagation()
-            document.querySelector('.picture-and-code').remove()
+            instance.modal.destroy()
             instance.program.taskDescription.toggleTaskDescription()
         })
 
+        const next = document.getElementById("continue")
+        next.style.display = 'block'
+        next.innerText = _s.task.next
         next.addEventListener("click", () => {
-            document.querySelector('.picture-and-code').remove()
+            instance.modal.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
         })
     }
