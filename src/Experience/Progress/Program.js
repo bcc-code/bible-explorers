@@ -80,6 +80,7 @@ export default class Program {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
         this.startInteractivity()
+
     }
 
     updateCurrentStep(newStep) {

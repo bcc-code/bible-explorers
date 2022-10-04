@@ -1,6 +1,7 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
+import _e from '../Utils/Events.js'
 import _s from '../Utils/Strings.js'
 
 let instance = null
@@ -38,6 +39,7 @@ export default class TaskDescription {
             const backBTN = document.getElementById("back")
             const continueBTN = document.getElementById("continue")
             const playBTN = document.getElementById("play")
+            const irisPlaying = document.querySelector('.iris-playing')
 
             backBTN.innerText = _s.journey.back
             continueBTN.innerText = _s.task.next
@@ -45,21 +47,30 @@ export default class TaskDescription {
             backBTN.style.display = "block"
             continueBTN.style.display = "block"
 
+            document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.irisAudioEnded)
+
             instance.currentStepData = selectedChapter.program[currentStep]
             if (instance.currentStepData.audio) {
                 // Fetch audio from blob or url
+
                 instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
                     instance.taskAudio = data.audio
                 })
 
-                playBTN.addEventListener("click", () => {
-                    if (!instance.taskAudio) return
-                    instance.audio.togglePlayTaskDescription(instance.taskAudio)
-                    playBTN.classList.toggle("is-playing")
-                })
+                if (!playBTN.hasAttribute('playing'))
+                    playBTN.addEventListener("click", () => {
+                        if (!instance.taskAudio) return
+                        instance.audio.togglePlayTaskDescription(instance.taskAudio)
+                        playBTN.setAttribute("playing", '')
+
+                        playBTN.classList.remove('icon-play-solid')
+                        playBTN.classList.add('icon-pause-solid')
+                        irisPlaying.style.display = 'flex'
+                    })
             }
             else {
                 playBTN.remove()
+
             }
 
             backBTN.addEventListener('click', (e) => {
@@ -142,11 +153,28 @@ export default class TaskDescription {
         }
     }
 
+    irisAudioEnded() {
+        const irisPlaying = document.querySelector('.iris-playing')
+        const playBTN = document.getElementById("play")
+        // console.log('audio ended')
+        irisPlaying.style.display = 'none'
+        playBTN.removeAttribute("playing")
+        playBTN.classList.add('icon-play-solid')
+        playBTN.classList.remove('icon-pause-solid')
+    }
+
     getModalHtml(type, title, additionalContent = '') {
         return `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
                 <button id="play" class="button button__round | icon-play-solid"></button>
+                <div class="iris-playing">
+                    <div class="line line1"></div>
+                    <div class="line line2"></div>
+                    <div class="line line3"></div>
+                    <div class="line line4"></div>
+                    <div class="line line5"></div>
+                </div>
             </div>
             <div class="task__wrapper">
                 <div class="task__content">
