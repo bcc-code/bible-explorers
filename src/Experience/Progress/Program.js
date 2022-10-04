@@ -102,7 +102,7 @@ export default class Program {
             instance.highlight.add(this.interactiveObjects()[0])
 
             document.addEventListener('click', (event) => {
-                if (event.target.getAttribute('class') == 'label') {
+                if (event.target.classList.contains('label')) {
                     this.control(instance.points.currentLabel)
                 }
             })
@@ -150,7 +150,6 @@ export default class Program {
         if (this.clickedObject == 'tv_16x9_screen') {
             this.taskDescription.toggleTaskDescription()
         }
-
         else if (this.clickedObject == 'panel_screen') {
             this.video.play()
         }

@@ -88,7 +88,6 @@ export default class Video {
     //#region Actions
 
     play() {
-        console.log(instance.video());
         instance.video().play()
         instance.video().requestFullscreen()
     }
