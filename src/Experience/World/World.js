@@ -366,9 +366,7 @@ export default class World {
     }
 
     setDownloadHtml(button) {
-        button.innerHTML = `<span>${_s.offline.availableOffline}</span>
-            <span class="separator">/</span>
-            <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>`
+        button.innerHTML = `<span>${_s.offline.availableOffline}</span>`
         button.addEventListener("click", instance.confirmRedownload)
     }
 
