@@ -59,20 +59,17 @@ export default class CodeUnlock {
                 instance.world.program.taskDescription.toggleTaskDescription()
             })
 
+            const skip = document.getElementById("skip")
+            skip.innerText = _s.miniGames.skip
+            skip.style.display = instance.debug.developer || instance.debug.onQuickLook() || instance.fails >= showSkipAfterNoOfTries
+                ? 'block'
+                : 'none'
 
-            if (instance.debug.developer || instance.debug.onQuickLook()) {
-                const skip = document.getElementById("skip")
-
-                if (skip) {
-                    skip.style.display = 'block'
-                    skip.innerText = _s.miniGames.skip
-                    skip.addEventListener('click', (e) => {
-                        instance.fails = 0
-                        instance.world.program.advance()
-                        instance.destroy()
-                    })
-                }
-            }
+            skip.addEventListener('click', (e) => {
+                instance.fails = 0
+                instance.world.program.advance()
+                instance.destroy()
+            })
 
             instance.el = {
                 code: document.querySelector(".code-unlock__input"),
@@ -140,7 +137,7 @@ export default class CodeUnlock {
         else {
             instance.fails++
             if (instance.fails >= showSkipAfterNoOfTries)
-                document.getElementById("skipBTN").classList.remove('hidden')
+                document.getElementById("skip").style.display = 'block'
 
             wrapper.classList.add('wrong-code')
             setTimeout(() => {
