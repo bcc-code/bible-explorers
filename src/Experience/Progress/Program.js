@@ -56,7 +56,6 @@ export default class Program {
             else if (this.stepType() == 'iris' || this.stepType() == 'task') { return 'screens' }
             else { return 'default' }
         }
-        this.customInteractiveObjs = []
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
         this.totalSteps = Object.keys(this.programData).length
         this.clickedObject = null
@@ -80,7 +79,6 @@ export default class Program {
     advance(step = ++this.currentStep) {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
-        this.resetCustomInteractiveObjs()
         this.startInteractivity()
     }
 
@@ -122,7 +120,6 @@ export default class Program {
         if (this.currentStep == this.totalSteps) {
             setTimeout(() => {
                 instance.congrats.toggleBibleCardsReminder()
-
             }, instance.camera.data.moveDuration)
         }
     }
@@ -142,17 +139,7 @@ export default class Program {
             interactiveObjects.push("tv_16x9_screen")
         }
 
-        if (this.customInteractiveObjs.length)
-            return this.customInteractiveObjs
-
         return interactiveObjects
-    }
-
-    addCustomInteractiveObj(objectName) {
-        this.customInteractiveObjs.push(objectName)
-    }
-    resetCustomInteractiveObjs() {
-        this.customInteractiveObjs = []
     }
 
     startAction() {
