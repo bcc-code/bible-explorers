@@ -578,6 +578,11 @@ button,
             transform: scale(1.05);
             background-color: $accent;
         }
+
+        &[currentStep] {
+            background: $gradient2 padding-box, $gradient2 border-box;
+            border-color: transparent;
+        }
     }
 
     &__step:not(:last-child) {
