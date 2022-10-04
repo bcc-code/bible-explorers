@@ -32,11 +32,18 @@ export default class TaskDescription {
 
             let html = instance.getModalHtml(instance.currentStepTaskType, instance.text)
             instance.modal = new Modal(html)
+
             document.querySelector('.modal').classList.add('modal__task')
 
-            const backBtn = document.getElementById("backBTN")
-            const getTaskBtn = document.getElementById("get-task")
-            const playBTN = document.getElementById("playBTN")
+            const backBTN = document.getElementById("back")
+            const continueBTN = document.getElementById("continue")
+            const playBTN = document.getElementById("play")
+
+            backBTN.innerText = _s.journey.back
+            continueBTN.innerText = _s.task.next
+
+            backBTN.style.display = "block"
+            continueBTN.style.display = "block"
 
             instance.currentStepData = selectedChapter.program[currentStep]
             if (instance.currentStepData.audio) {
@@ -55,12 +62,12 @@ export default class TaskDescription {
                 playBTN.remove()
             }
 
-            backBtn.addEventListener('click', (e) => {
+            backBTN.addEventListener('click', (e) => {
                 e.stopPropagation()
                 instance.destroy()
             })
 
-            getTaskBtn.addEventListener("click", () => {
+            continueBTN.addEventListener("click", () => {
                 instance.destroy()
 
                 if (instance.currentStepTaskType == 'code') {
@@ -123,12 +130,12 @@ export default class TaskDescription {
                 document.querySelector('.task__content').appendChild(div)
                 input.focus()
 
-                getTaskBtn.classList.add('disabled')
+                continueBTN.classList.add('disabled')
                 input.addEventListener("input", (event) => {
                     if (event.target.value == noOfCorrectIcons) {
-                        getTaskBtn.classList.remove('disabled')
+                        continueBTN.classList.remove('disabled')
                     } else {
-                        getTaskBtn.classList.add('disabled')
+                        continueBTN.classList.add('disabled')
                     }
                 })
             }
@@ -139,25 +146,16 @@ export default class TaskDescription {
         return `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                <div id="playBTN"><i class="icon icon-play-solid"></i></div>
+                <button id="play" class="button button__round | icon-play-solid"></button>
             </div>
             <div class="task__wrapper">
                 <div class="task__content">
-                    <div class="modal__extras">
-                        <span class="left"></span>
-                        <span class="bottomLeft"></span>
-                        <span class="bottomLeftSmall"></span>
-                    </div>
                     ${title}
                     ${additionalContent}
                     <div class="task__tips">
                         <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
                     </div>
                 </div>
-            </div>
-            <div class="modal__actions">
-                <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>
             </div>
         </div>`
     }

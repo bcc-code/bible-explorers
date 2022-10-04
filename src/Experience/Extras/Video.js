@@ -48,20 +48,15 @@ export default class Video {
 
         this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
+
         // Event listener on video update
         this.video().on('timeupdate', function () {
             if (instance.showSkipBtn()) {
-                if (!instance.videoJsEl().querySelector('.skip-video__btn')) {
+                if (!document.getElementById('skip-video')) {
                     let skipVideo = document.createElement('div')
-                    skipVideo.classList.add("button", "button__continue", "skip-video__btn")
-
-                    const bg = document.createElement('div')
-                    bg.classList.add('button__content')
-
-                    let span = document.createElement('span')
-                    span.innerText = _s.miniGames.continue
-                    skipVideo.appendChild(bg)
-                    bg.appendChild(span)
+                    skipVideo.classList.add("button", "button__secondary")
+                    skipVideo.setAttribute('id', 'skip-video')
+                    skipVideo.innerText = _s.miniGames.continue
 
                     skipVideo.addEventListener('click', instance.finish)
                     instance.videoJsEl().appendChild(skipVideo)
@@ -93,12 +88,13 @@ export default class Video {
     //#region Actions
 
     play() {
+        console.log(instance.video());
         instance.video().play()
         instance.video().requestFullscreen()
     }
 
     pause() {
-        instance.video().pause()
+        instance.video().pause();
     }
 
     focus() {
@@ -121,6 +117,7 @@ export default class Video {
 
             if (this.video().isFullscreen_) {
                 instance.video().exitFullscreen()
+                // document.getElementById('videos-container').style.zIndex = '-1'
             }
 
             new TWEEN.Tween(instance.portalScreen.material)

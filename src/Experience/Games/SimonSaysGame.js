@@ -35,13 +35,23 @@ export default class SimonSays {
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "simon-says")
         gameWrapper.classList.add('miniGame')
+        gameWrapper.classList.add('container')
         document.body.appendChild(gameWrapper)
 
-        const gameContainer = document.createElement('div')
-        gameContainer.setAttribute("id", "miniGame__simon-says")
+        const title = document.createElement('div')
+        title.classList.add('container__heading')
+        title.innerHTML = "<h2>" + _s.miniGames.simonSays + "</h2>"
+        gameWrapper.appendChild(title)
 
-        const gameContainerBox = document.createElement('div')
-        gameContainerBox.classList.add('frame')
+        const gameContainer = document.createElement('div')
+        gameContainer.classList.add('container__wrapper')
+        gameWrapper.appendChild(gameContainer)
+
+        const gameContent = document.createElement('div')
+        gameContent.setAttribute("id", "miniGame__simon-says")
+
+        const gameContentBox = document.createElement('div')
+        gameContentBox.classList.add('frame')
         const gameWatch = document.createElement('div')
         gameWatch.classList.add('watch')
         const gameWatchCenter = document.createElement('div')
@@ -60,7 +70,6 @@ export default class SimonSays {
         gameWatchTickerLeft.classList.add('column', 'watch-ticker--left')
         const gameWatchTickerRight = document.createElement('div')
         gameWatchTickerRight.classList.add('column', 'watch-ticker--right',)
-
 
         gameWatchTicker.appendChild(gameWatchTickerLeft)
         gameWatchTicker.appendChild(gameWatchTickerRight)
@@ -84,22 +93,16 @@ export default class SimonSays {
             }
         }
 
-
         gameWatch.appendChild(gameWatchCenter)
-        gameContainerBox.appendChild(cables)
-        gameContainerBox.appendChild(gameWatchTicker)
-        gameContainerBox.appendChild(gameWatch)
-        gameContainer.appendChild(gameContainerBox)
-        gameWrapper.appendChild(gameContainer)
-
-        const title = document.createElement('div')
-        title.classList.add('heading')
-        title.innerHTML = "<h2>" + _s.miniGames.simonSays + "</h2>"
+        gameContentBox.appendChild(cables)
+        gameContentBox.appendChild(gameWatchTicker)
+        gameContentBox.appendChild(gameWatch)
+        gameContent.appendChild(gameContentBox)
+        gameContainer.appendChild(gameContent)
 
         const actions = document.createElement('div')
-        actions.classList.add('miniGame__actions')
+        actions.classList.add('container__footer')
 
-        gameWrapper.appendChild(title)
         gameWrapper.appendChild(actions)
 
         this.data = {
@@ -139,15 +142,15 @@ export default class SimonSays {
         })
 
         actions.appendChild(
-            this.addButton('button__back', 'button__default', _s.journey.back)
+            this.addButton('back', 'button__primary', _s.journey.back)
         )
         actions.appendChild(
-            this.addButton('button__reset', 'button__default', _s.miniGames.reset)
+            this.addButton('reset', 'button__primary', _s.miniGames.reset)
         )
 
         if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
-                this.addButton('button__skip', 'button__default', _s.miniGames.skip)
+                this.addButton('skip', 'button__secondary', _s.miniGames.skip)
             )
         }
 
@@ -237,29 +240,27 @@ export default class SimonSays {
             })
         })
 
-        const buttons = document.querySelectorAll('.miniGame .button')
-        buttons.forEach(button => {
-            if (button.classList.contains('button__back')) {
-                button.addEventListener('click', () => {
-                    instance.destroy()
-                    instance.world.program.taskDescription.toggleTaskDescription()
-                })
-            }
+        const back = document.getElementById('back')
+        const reset = document.getElementById('reset')
 
-            if (button.classList.contains('button__reset')) {
-                button.addEventListener('click', () => {
-                    instance.destroy()
-                    instance.toggleSimonSays()
-                })
-            }
-
-            if (button.classList.contains('button__skip')) {
-                button.addEventListener('click', () => {
-                    instance.destroy()
-                    instance.world.program.advance()
-                })
-            }
+        back.addEventListener('click', () => {
+            instance.destroy()
+            instance.world.program.taskDescription.toggleTaskDescription()
         })
+
+        reset.addEventListener('click', () => {
+            instance.destroy()
+            instance.toggleSimonSays()
+        })
+
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
+            const skip = document.getElementById('skip')
+
+            skip.addEventListener('click', () => {
+                instance.destroy()
+                instance.world.program.advance()
+            })
+        }
 
         window.addEventListener('keydown', instance.keyEvents)
     }
@@ -271,9 +272,10 @@ export default class SimonSays {
     }
 
     addButton(name, background, label) {
-        const button = document.createElement('div')
-        button.className = "button " + background + ' ' + name
-        button.innerHTML = "<span>" + label + "</span>"
+        const button = document.createElement('button')
+        button.className = "button " + background
+        button.innerHTML = label
+        button.setAttribute('id', name)
 
         return button
     }
@@ -296,26 +298,29 @@ export default class SimonSays {
         let html = `<div class="modal__content congrats congrats__miniGame simon-says">
             <div class="congrats__container">
                 <div class="congrats__title">
-                    <h1>${_s.miniGames.failed.title}</h1>
+                    <h2>${_s.miniGames.failed.title}</h2>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
                 <div class="modal__actions">
-                    <div id="try-again" class="button button__continue">
-                        <div class="button__content"><span>${_s.miniGames.reset}</span></div>
-                    </div>`
+                    <button id="try-again" class="button button__primary">${_s.miniGames.reset}</button>`
 
-                    if (instance.fails >= showSkipAfterNoOfTries-1) {
-                        html += `<div id="skipBTN" class="button button__skip button__default">
-                                <div class="button__content"><span>${_s.miniGames.skip}</span></div>
-                            </div>
-                        `
-                    }
-                html += `</div>
+
+        if (instance.fails >= showSkipAfterNoOfTries - 1) {
+            html += `<button id="skipBTN" class="button button__secondary">${_s.miniGames.skip}</button>`
+        }
+        html += `</div>
             </div>
         </div>`
 
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__congrats')
+
+        document.getElementById('try-again').style.display = 'block'
+
+
+        if (instance.fails >= showSkipAfterNoOfTries - 1) {
+            document.getElementById('skipBTN').style.display = 'block'
+        }
 
         document.getElementById('try-again').addEventListener('click', () => {
             instance.fails++
@@ -361,7 +366,7 @@ export default class SimonSays {
                 <div class="congrats__title">
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
-                    <h1>${_s.miniGames.completed.title}</h1>
+                    <h2>${_s.miniGames.completed.title}</h2>
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
@@ -390,12 +395,14 @@ export default class SimonSays {
 
         return miniGame.classList.contains('active')
     }
+
     allowPlaying() {
         const miniGame = document.getElementById('miniGame__simon-says')
         if (!miniGame) return
 
         miniGame.classList.add('active')
     }
+
     blockPlaying() {
         const miniGame = document.getElementById('miniGame__simon-says')
         if (!miniGame) return

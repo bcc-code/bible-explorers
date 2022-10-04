@@ -36,7 +36,6 @@ export default class World {
             chapters: document.querySelector(".chapters.list"),
             chapterItems: document.querySelector(".chapter__items"),
             chapterContent: document.querySelector(".chapter__content"),
-            backBtn: document.querySelector(".back_to"),
             chaptersData: []
         }
 
@@ -51,8 +50,10 @@ export default class World {
         }
 
         this.buttons = {
+            back: document.getElementById("back-to-landing"),
             start: document.getElementById("start-chapter"),
-            restart: document.getElementById("restart-chapter")
+            restart: document.getElementById("restart-chapter"),
+            home: document.getElementById("home")
         }
 
         this.welcome.loading.querySelector('span').innerText = _s.loading
@@ -78,20 +79,18 @@ export default class World {
             document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
         })
 
-        this.start = document.createElement('span')
-        this.start.innerText = _s.journey.start
-        this.restart = document.createElement('span')
-        this.restart.innerText = _s.journey.restart
+        this.buttons.start.innerText = _s.journey.start
+        this.buttons.restart.innerText = _s.journey.restart
+        this.buttons.back.innerText = _s.journey.back
+
+        this.buttons.start.style.display = 'none'
+        this.buttons.restart.style.display = 'none'
+
+        this.buttons.home.addEventListener("click", this.goHome)
+        this.buttons.back.addEventListener("click", this.goToLandingScreen)
 
         this.welcome.introduction.innerText = _s.introduction
-        this.buttons.start.children[0].appendChild(this.start)
-        this.buttons.restart.appendChild(this.restart)
 
-        this.homeButton = document.getElementById('go-home')
-        this.homeButton.addEventListener("click", this.goHome)
-
-        this.menu.backBtn.addEventListener("click", this.goToLandingScreen)
-        this.menu.backBtn.children[0].innerText = _s.journey.back
     }
 
     hideLoading() {
@@ -119,21 +118,19 @@ export default class World {
 
     showMenuButtons() {
         if (this.chapterProgress() == 0) {
-            instance.buttons.restart.classList.remove('visible')
-        }
-        else {
-            instance.buttons.restart.classList.add('visible')
+            instance.buttons.restart.style.display = 'none'
+        } else {
+            instance.buttons.restart.style.display = 'inline-block'
         }
 
         if (this.chapterProgress() == this.selectedChapter.program.length) {
-            instance.buttons.start.classList.remove('visible')
-        }
-        else {
-            instance.buttons.start.classList.add('visible')
+            instance.buttons.start.style.display = 'none'
+        } else {
+            instance.buttons.start.style.display = 'inline-block'
         }
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
-            this.start.innerText = _s.journey.continue
+            instance.buttons.start.innerText = _s.journey.continue
         }
     }
 
@@ -158,15 +155,12 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryHtml = document.createElement("div")
-        categoryHtml.className = "category button button__default"
+        const categoryHtml = document.createElement("button")
+        categoryHtml.className = "category button button__primary"
         categoryHtml.setAttribute("data-slug", category.slug)
-
-        const span = document.createElement('span')
-        span.innerText = category.name
+        categoryHtml.innerText = category.name
 
         instance.menu.categories.appendChild(categoryHtml)
-        categoryHtml.appendChild(span)
 
         const getDivider = document.querySelector('.categories .divider')
 
@@ -246,7 +240,6 @@ export default class World {
             </div>
             <div class="chapter__states">
                 <div class="chapter__offline">
-                    <i class="icon icon-download-solid"></i>
                     <span>${_s.offline.download}</span>
                 </div>
                 <div class="chapter__downloading">
@@ -258,13 +251,9 @@ export default class World {
                 </div>
                 <div class="chapter__download-failed">
                     <span>${_s.offline.downloadFailed}</span>
-                    <span class="separator">/</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.tryAgain}"></span>
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
-                    <span class="separator">/</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
                 </div>
             </div>
         `

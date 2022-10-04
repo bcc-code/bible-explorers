@@ -31,20 +31,24 @@ export default class CableConnector {
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "cable-connector")
         gameWrapper.classList.add('miniGame')
+        gameWrapper.classList.add('container')
         document.body.appendChild(gameWrapper)
 
+        const title = document.createElement('div')
+        title.classList.add('container__heading')
+        title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
+        gameWrapper.appendChild(title)
+
         const gameContainer = document.createElement('div')
-        gameContainer.setAttribute("id", "miniGame__connector")
+        gameContainer.classList.add('container__wrapper')
         gameWrapper.appendChild(gameContainer)
 
-        const title = document.createElement('div')
-        title.classList.add('heading')
-        title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
+        const gameContent = document.createElement('div')
+        gameContent.setAttribute("id", "miniGame__connector")
+        gameContainer.appendChild(gameContent)
 
         const actions = document.createElement('div')
-        actions.classList.add('miniGame__actions')
-
-        gameWrapper.appendChild(title)
+        actions.classList.add('container__footer')
         gameWrapper.appendChild(actions)
 
         const spriteW = 180
@@ -52,8 +56,8 @@ export default class CableConnector {
 
         this.data = {
             canvas: {
-                width: gameContainer.offsetWidth,
-                height: gameContainer.offsetHeight,
+                width: gameContent.offsetWidth,
+                height: gameContent.offsetHeight,
             },
             cable: {
                 width: 0,
@@ -127,8 +131,8 @@ export default class CableConnector {
 
         this.stage = new Konva.Stage({
             container: 'miniGame__connector',
-            width: gameContainer.offsetWidth,
-            height: gameContainer.offsetHeight
+            width: gameContent.offsetWidth,
+            height: gameContent.offsetHeight
         })
 
         this.correspondingOutlet = null
@@ -136,15 +140,15 @@ export default class CableConnector {
         instance.program = instance.world.program
 
         actions.appendChild(
-            this.addButton('button__back', 'button__default', _s.journey.back)
+            this.addButton('back', 'button__primary', _s.journey.back)
         )
         actions.appendChild(
-            this.addButton('button__reset', 'button__default', _s.miniGames.reset)
+            this.addButton('reset', 'button__primary', _s.miniGames.reset)
         )
 
         if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
-                this.addButton('button__skip', 'button__default', _s.miniGames.skip)
+                this.addButton('skip', 'button__secondary', _s.miniGames.skip)
             )
         }
 
@@ -451,20 +455,17 @@ export default class CableConnector {
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
                 <div class="congrats__title">
-                    <h1>${_s.miniGames.timeElapsed.title}</h1>
+                    <h2>${_s.miniGames.timeElapsed.title}</h2>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}</div>
-                <div class="button button__continue">
-                    <div class="button__content"><span>${_s.miniGames.reset}</span></div>
-                </div>
+                <button class="button button__primary" id="reset">${_s.miniGames.reset}</button>
             </div>
         </div>`
 
         instance.modal = new Modal(html)
 
         document.querySelector('.modal').classList.add('modal__congrats')
-
-        document.querySelector('.congrats .button__continue').addEventListener('click', () => {
+        document.getElementById('reset').addEventListener('click', () => {
             instance.modal.destroy()
             instance.destroy()
             instance.toggleCableConnector()
@@ -570,38 +571,39 @@ export default class CableConnector {
     }
 
     addEventListeners() {
-        const buttons = document.querySelectorAll('.miniGame .button')
-        buttons.forEach(button => {
-            if (button.classList.contains('button__back')) {
-                button.addEventListener('click', () => {
-                    instance.destroy()
-                    instance.world.program.taskDescription.toggleTaskDescription()
-                })
-            }
+        const back = document.getElementById('back')
+        const reset = document.getElementById('reset')
 
-            if (button.classList.contains('button__reset')) {
-                button.addEventListener('click', () => {
-                    instance.destroy()
-                    instance.toggleCableConnector()
-                })
-            }
-
-            if (button.classList.contains('button__skip')) {
-                button.addEventListener('click', () => {
-                    instance.destroy()
-                    instance.program.advance()
-                })
-            }
+        back.addEventListener('click', () => {
+            instance.destroy()
+            instance.world.program.taskDescription.toggleTaskDescription()
         })
+
+        reset.addEventListener('click', () => {
+            instance.destroy()
+            instance.toggleCableConnector()
+        })
+
+
+        if (instance.debug.developer || instance.debug.onQuickLook()) {
+            const skip = document.getElementById('skip')
+
+            skip.addEventListener('click', () => {
+                instance.destroy()
+                instance.program.advance()
+            })
+        }
+
 
         this.resize()
         window.addEventListener('resize', this.resize)
     }
 
     addButton(name, background, label) {
-        const button = document.createElement('div')
-        button.className = "button " + background + ' ' + name
-        button.innerHTML = "<span>" + label + "</span>"
+        const button = document.createElement('button')
+        button.className = "button " + background
+        button.innerText = label
+        button.setAttribute('id', name)
 
         return button
     }
@@ -623,14 +625,12 @@ export default class CableConnector {
                 <div class="congrats__title">
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
-                    <h1>${_s.miniGames.completed.title}</h1>
+                    <h2>${_s.miniGames.completed.title}</h2>
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
-                <div id="continue_journey" class="button button__continue">
-                    <div class="button__content"><span>${_s.miniGames.continue}</span></div>
-                </div>
+                <button id="continue_journey" class="button button__secondary">${_s.miniGames.continue}</button>
             </div>
         </div>`
 

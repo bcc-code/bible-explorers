@@ -22,6 +22,7 @@ export default class PictureAndCode {
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
+
             instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
 
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
@@ -31,31 +32,36 @@ export default class PictureAndCode {
 
     setPicture(url) {
         instance.data.picture = url
-        document.getElementById('bg-image').src = url
+        document.querySelector('.picture-and-code img').setAttribute('src', instance.data.picture)
     }
 
     togglePicture() {
         let pictureEl = document.createElement("div")
-        pictureEl.className = "picture-and-code"
+        pictureEl.classList.add('picture-and-code', 'container')
         pictureEl.innerHTML = `
-            <img id="bg-image" src="" />
-            <div class="modal__actions">
-                <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>
+            <div class="container__wrapper">
+                <img src="">
+            </div>
+            <div class="container__footer">
+                <button id="back" class="button button__primary">${_s.journey.back}</button>
+                <button id="continue" class="button button__secondary">${_s.task.next}</button>
             </div>    
         `
         document.body.appendChild(pictureEl)
 
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        const back = document.getElementById("back")
+        const next = document.getElementById('continue')
 
-        backBtn.addEventListener('click', (e) => {
+        back.style.display = 'block'
+        next.style.display = 'block'
+
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
             document.querySelector('.picture-and-code').remove()
             instance.program.taskDescription.toggleTaskDescription()
         })
 
-        getTaskBtn.addEventListener("click", () => {
+        next.addEventListener("click", () => {
             document.querySelector('.picture-and-code').remove()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
         })
