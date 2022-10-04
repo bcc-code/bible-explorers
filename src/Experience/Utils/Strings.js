@@ -8,9 +8,9 @@ const strings = {
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
         "journey": {
-            "start": "Start",
-            "continue": "Continue",
-            "restart": "Restart",
+            "start": "Start the time travel",
+            "continue": "Continue the time travel",
+            "restart": "Restart the journey",
             "congrats": "Congratulations!",
             "bibleCards": {
                 "title": "Bible cards",
