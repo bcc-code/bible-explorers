@@ -713,40 +713,6 @@ button,
     }
 }
 
-#get-task {
-    margin-left: auto;
-}
-
-#playBTN {
-    width: 80px;
-    height: 100px;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #0396e3;
-    font-size: 5rem;
-    opacity: 0.8;
-    transition: 0.3s ease;
-    margin: 0 auto;
-    top: 50%;
-    transform: translateY(-50%);
-
-    &.is-playing {
-        opacity: 0;
-
-        i:before {
-            content: "\e904";
-        }
-    }
-
-    &:hover {
-        transform: translateY(-50%) scale(1.05);
-        opacity: 0.8;
-    }
-}
-
 #skip-video {
     right: 2rem;
     bottom: 7rem;
@@ -1786,17 +1752,6 @@ button,
         width: 20rem;
         aspect-ratio: 1/1;
 
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            background: $accent;
-            width: 40%;
-            height: 1rem;
-            border-radius: 0 1rem;
-        }
-
         #irisVideoBg {
             position: absolute;
             display: block;
@@ -1807,14 +1762,108 @@ button,
             border-radius: 3rem 1rem;
         }
 
+        @keyframes quiet {
+            25% {
+                transform: scaleY(.6);
+            }
+
+            50% {
+                transform: scaleY(.4);
+            }
+
+            75% {
+                transform: scaleY(.8);
+            }
+        }
+
+        @keyframes normal {
+            25% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(.4);
+            }
+
+            75% {
+                transform: scaleY(.6);
+            }
+        }
+
+        @keyframes loud {
+            25% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(.4);
+            }
+
+            75% {
+                transform: scaleY(1.2);
+            }
+        }
+
+        .iris-playing {
+            position: absolute;
+            left: 1rem;
+            bottom: 1rem;
+            display: none;
+            justify-content: space-between;
+            height: 2rem;
+            --boxSize: 8px;
+            --gutter: 4px;
+            width: calc((var(--boxSize) + var(--gutter)) * 5);
+
+            .line {
+                transform: scaleY(.4);
+                height: 100%;
+                width: var(--boxSize);
+                background: #fff;
+                animation-duration: 1.2s;
+                animation-timing-function: ease-in-out;
+                animation-iteration-count: infinite;
+                border-radius: 8px;
+            }
+
+            .line1 {
+                animation-name: quiet;
+            }
+
+            .line2 {
+                animation-name: normal;
+            }
+
+            .line3 {
+                animation-name: quiet;
+            }
+
+            .line4 {
+                animation-name: loud;
+            }
+
+            .line5 {
+                animation-name: quiet;
+            }
+        }
+
         #play {
             position: absolute;
             right: 1rem;
             bottom: 1rem;
+            transition: .4s ease;
         }
 
         #play::before {
             margin-left: 3px;
+        }
+
+        #play[playing] {
+            opacity: 0;
+        }
+
+        &:hover #play[playing] {
+            opacity: 1;
         }
     }
 
