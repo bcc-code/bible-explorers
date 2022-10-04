@@ -329,14 +329,13 @@ button,
         flex-direction: column;
         align-items: center
     }
-
 }
 
 #concept-description {
     max-width: 50rem;
     color: $accent2;
     font-weight: bold;
-    margin-bottom: 2rem;
+    margin: 1rem 0 4rem;
 }
 
 .copyright {
@@ -948,7 +947,7 @@ button,
     }
 
     &__offline {
-        display: inline-block;
+        display: inline-flex;
 
         i,
         span {
@@ -1135,7 +1134,7 @@ button,
     body.admin &,
     body.ak_leder &:not(.locked) {
         .chapter__states {
-            display: block;
+            display: flex;
         }
     }
 
@@ -1206,7 +1205,7 @@ button,
         }
 
         .chapter__download-failed {
-            display: inline-block;
+            display: inline-flex;
 
             span {
                 font-size: 1rem;
@@ -1301,10 +1300,9 @@ button,
 .quick-look {
     display: flex;
     position: relative;
-    top: 2rem;
+    top: 1.5rem;
 
     &__button {
-        margin-right: 2rem;
         margin-left: auto;
         cursor: pointer;
         background: linear-gradient(90deg, #C5516E, #EB9159);
