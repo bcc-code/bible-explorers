@@ -131,16 +131,13 @@ export default class CodeUnlock {
         if (instance.el.code.textContent == instance.secretCode) {
             instance.fails = 0
             instance.world.audio.playTaskCompleted()
+            instance.destroy()
 
-            if (this.irisMessage == false) {
-                instance.destroy()
-                instance.world.program.advance()
-            }
-            else {
-                instance.destroy()
-                instance.world.program.codeAndIris.toggleCodeAndIris()
-            }
-        } else {
+            this.irisMessage == true
+                ? instance.world.program.codeAndIris.toggleCodeAndIris()
+                : instance.world.program.advance()
+        }
+        else {
             instance.fails++
             if (instance.fails >= showSkipAfterNoOfTries)
                 document.getElementById("skipBTN").classList.remove('hidden')
