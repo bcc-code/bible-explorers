@@ -45,7 +45,6 @@ export default class World {
             conceptDescription: document.getElementById("concept-description"),
             loading: document.getElementById("page-loader"),
             chaptersScreen: document.getElementById("chapters-screen"),
-            introduction: document.getElementById("introduction"),
             topBar: document.getElementById("topBar")
         }
 
@@ -88,9 +87,6 @@ export default class World {
 
         this.buttons.home.addEventListener("click", this.goHome)
         this.buttons.back.addEventListener("click", this.goToLandingScreen)
-
-        this.welcome.introduction.innerText = _s.introduction
-
     }
 
     hideLoading() {
