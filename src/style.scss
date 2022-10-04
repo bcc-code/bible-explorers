@@ -746,6 +746,13 @@ button,
     align-items: center;
 }
 
+#restart-chapter,
+#restart,
+#reset {
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
 .chapter {
     position: relative;
     display: flex;
@@ -1892,18 +1899,15 @@ button,
     top: 0;
     width: 100%;
     height: 100%;
+    background: $gradient;
 
     img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        margin-inline: auto;
+        max-height: 100%;
+        border-radius: 1rem;
+        border: 5px solid $accent;
     }
 
-    .modal__actions {
-        position: absolute;
-        bottom: 0;
-        padding: 50px;
-    }
 }
 
 .answers__wrapper {
@@ -2376,11 +2380,6 @@ button,
     &__actions {
         display: flex;
         justify-content: space-between;
-    }
-
-    .button {
-        margin: 0 1rem;
-        pointer-events: all;
     }
 
     .container__wrapper {

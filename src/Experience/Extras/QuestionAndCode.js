@@ -10,7 +10,6 @@ export default class QuestionAndCode {
     constructor() {
         this.experience = new Experience()
         instance = this
-
     }
 
     toggleQuestionAndCode() {
@@ -44,13 +43,19 @@ export default class QuestionAndCode {
         document.querySelector('.modal').classList.add('modal__task')
 
         const inputs = document.querySelectorAll('.answers__input')
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        const back = document.getElementById("back")
+        const next = document.getElementById('continue')
+
+        back.innerText = _s.journey.back
+        next.innerText = _s.task.next
+
+        back.style.display = 'block'
+        next.style.display = 'block'
 
         if (!instance.currentStepData.audio)
             playBTN.remove()
 
-        backBtn.addEventListener('click', (e) => {
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.program.taskDescription.toggleTaskDescription()
@@ -65,17 +70,17 @@ export default class QuestionAndCode {
 
             input.addEventListener("input", () => {
                 [...inputs].filter(input => input.value.length == 0).length == 0
-                    ? getTaskBtn.classList.remove('disabled')
-                    : getTaskBtn.classList.add('disabled')
+                    ? next.classList.remove('disabled')
+                    : next.classList.add('disabled')
             })
 
         })
 
         if (allInputsEmpty) {
-            getTaskBtn.classList.add('disabled')
+            next.classList.add('disabled')
         }
 
-        getTaskBtn.addEventListener("click", () => {
+        next.addEventListener("click", () => {
             const initialAnswers = allAnswersFromTheme[instance.currentStep]
 
             // Save answers to Local Storage
@@ -109,19 +114,19 @@ export default class QuestionAndCode {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        const back = document.getElementById("back")
+        const next = document.getElementById('continue')
 
         if (!instance.currentStepData.audio)
             playBTN.remove()
 
-        backBtn.addEventListener('click', (e) => {
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.toggleQuestion()
         })
 
-        getTaskBtn.addEventListener("click", () => {
+        next.addEventListener("click", () => {
             instance.modal.destroy()
             instance.toggleCodeDescription()
         })
@@ -132,24 +137,24 @@ export default class QuestionAndCode {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        const back = document.getElementById("back")
+        const next = document.getElementById('continue')
 
         if (!instance.currentStepData.audio)
             playBTN.remove()
 
-        backBtn.addEventListener('click', (e) => {
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.toggleSubmitMessage()
         })
 
-        getTaskBtn.addEventListener("click", () => {
+        next.addEventListener("click", () => {
             instance.modal.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
 
-            const backBtn = document.getElementById("backBTN")
-            backBtn.addEventListener('click', (e) => {
+            const back = document.getElementById("back")
+            back.addEventListener('click', (e) => {
                 instance.modal.destroy()
                 instance.toggleCodeDescription()
             })

@@ -240,7 +240,6 @@ export default class World {
             </div>
             <div class="chapter__states">
                 <div class="chapter__offline">
-                    <i class="icon icon-download-solid"></i>
                     <span>${_s.offline.download}</span>
                 </div>
                 <div class="chapter__downloading">
@@ -252,13 +251,9 @@ export default class World {
                 </div>
                 <div class="chapter__download-failed">
                     <span>${_s.offline.downloadFailed}</span>
-                    <span class="separator">/</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.tryAgain}"></span>
                 </div>
                 <div class="chapter__downloaded">
                     <span>${_s.offline.availableOffline}</span>
-                    <span class="separator">/</span>
-                    <span class="icon icon-arrows-rotate-solid" title="${_s.offline.update}"></span>
                 </div>
             </div>
         `

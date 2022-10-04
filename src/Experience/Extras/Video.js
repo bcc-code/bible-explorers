@@ -88,14 +88,9 @@ export default class Video {
     //#region Actions
 
     play() {
+        console.log(instance.video());
         instance.video().play()
         instance.video().requestFullscreen()
-
-        new TWEEN.Tween(document.getElementById('videos-container'))
-            .start()
-            .onStart(() => {
-                // document.getElementById('videos-container').style.zIndex = '1'
-            })
     }
 
     pause() {

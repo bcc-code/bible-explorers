@@ -32,24 +32,22 @@ export default class PictureAndCode {
 
     setPicture(url) {
         instance.data.picture = url
-        document.querySelector('.picture-and-code').style.backgroundImage = 'url("' + url + '")'
+        document.querySelector('.picture-and-code img').setAttribute('src', instance.data.picture)
     }
 
     togglePicture() {
         let pictureEl = document.createElement("div")
         pictureEl.classList.add('picture-and-code', 'container')
         pictureEl.innerHTML = `
-            <div class="container__wrapper"></div>
+            <div class="container__wrapper">
+                <img src="">
+            </div>
             <div class="container__footer">
                 <button id="back" class="button button__primary">${_s.journey.back}</button>
                 <button id="continue" class="button button__secondary">${_s.task.next}</button>
             </div>    
         `
         document.body.appendChild(pictureEl)
-
-        pictureEl.style.backgroundImage = "url('" + instance.data.picture + "')"
-        pictureEl.style.backgroundRepeat = 'no-repeat'
-        pictureEl.style.backgroundSize = 'cover'
 
         const back = document.getElementById("back")
         const next = document.getElementById('continue')

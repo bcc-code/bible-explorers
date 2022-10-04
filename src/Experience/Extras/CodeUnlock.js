@@ -62,6 +62,7 @@ export default class CodeUnlock {
 
             if (instance.debug.developer || instance.debug.onQuickLook()) {
                 const skip = document.getElementById("skip")
+
                 if (skip) {
                     skip.style.display = 'block'
                     skip.innerText = _s.miniGames.skip

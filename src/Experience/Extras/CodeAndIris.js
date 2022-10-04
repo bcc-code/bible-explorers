@@ -33,8 +33,8 @@ export default class CodeAndIris {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        const backBtn = document.getElementById("back")
+        const getTaskBtn = document.getElementById('continue')
 
         if (!instance.currentStepData.audio)
             playBTN.remove()
