@@ -94,14 +94,18 @@ export default class Program {
         let currentVideo = this.currentVideo()
         let nextVideo = this.nextVideo()
 
-        this.camera.updateCameraTo(this.currentLocation(), instance.points.add(this.interactiveObjects()[0], instance.stepType()))
-        this.highlight.add(this.interactiveObjects()[0])
+        this.points.fadeOut()
+        this.highlight.fadeOut()
 
+        this.camera.updateCameraTo(this.currentLocation(), () => {
+            instance.points.add(this.interactiveObjects()[0], instance.stepType())
+            instance.highlight.add(this.interactiveObjects()[0])
 
-        document.addEventListener('click', (event) => {
-            if (event.target.getAttribute('class') == 'label') {
-                this.control(instance.points.currentLabel)
-            }
+            document.addEventListener('click', (event) => {
+                if (event.target.getAttribute('class') == 'label') {
+                    this.control(instance.points.currentLabel)
+                }
+            })
         })
 
         if (this.stepType() == 'video') {

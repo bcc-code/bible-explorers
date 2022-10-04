@@ -227,7 +227,6 @@ export default class Camera {
         if (this.controls.autoRotate) {
             this.changeRotateDirection()
         }
-
     }
 
     addGUIControls() {
@@ -247,7 +246,6 @@ export default class Camera {
             })
             .name('Location')
             .listen()
-
 
         const cameraPosition = camera.addFolder('Position')
         cameraPosition.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()
