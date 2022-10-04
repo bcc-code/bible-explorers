@@ -12,6 +12,10 @@ const strings = {
             "continue": "Continue the time travel",
             "restart": "Restart the journey",
             "congrats": "Congratulations!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "You have completed",
             "back": "Back",
             "attachments": "Attachments",
@@ -112,6 +116,10 @@ const strings = {
             "continue": "Fortsett tidsreisen",
             "restart": "Start reisen på nytt",
             "congrats": "Gratulerer!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "Nå er det tiden at dere får bibelkortene."
+            },
             "completed": "Du har fullført",
             "back": "Tilbake",
             "attachments": "Vedlegg",
@@ -212,6 +220,10 @@ const strings = {
             "continue": "Zeitreise fortsetzen",
             "restart": "Zeitreise neu starten",
             "congrats": "Glückwunsch!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Du hast es geschafft",
             "back": "Zurück",
             "attachments": "Anhang",
@@ -312,6 +324,10 @@ const strings = {
             "continue": "Ga door met de tijdreis",
             "restart": "Start de reis opnieuw",
             "congrats": "Gefeliciteerd!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Je hebt het gehaald",
             "back": "Terug",
             "attachments": "Bijlagen",
@@ -412,6 +428,10 @@ const strings = {
             "continue": "Continuer le voyage dans le temps",
             "restart": "Recommencer le voyage",
             "congrats": "Félicitations !",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Tu as terminé",
             "back": "Retour",
             "attachments": "Pièces jointes",
@@ -512,6 +532,10 @@ const strings = {
             "continue": "Kontynuuj podróż",
             "restart": "Rozpocznij podróż od nowa",
             "congrats": "Gratulacje!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Ukończyłeś",
             "back": "Powrót",
             "attachments": "Załączniki",
@@ -612,6 +636,10 @@ const strings = {
             "continue": "Continuă călătoria în timp",
             "restart": "Începe călătoria din nou",
             "congrats": "Felicitări!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Ai terminat",
             "back": "Înapoi",
             "attachments": "Fișiere",
@@ -712,6 +740,10 @@ const strings = {
             "continue": "Continuar con el viaje en el tiempo",
             "restart": "Empezar el viaje de nuevo",
             "congrats": "Felicitaciones!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Tu has terminado",
             "back": "Regresar",
             "attachments": "Adjunto",
@@ -812,6 +844,10 @@ const strings = {
             "continue": "Continue a viajem no tempo",
             "restart": "Reinicie a jornada",
             "congrats": "Parabéns!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Você concluiu",
             "back": "Voltar",
             "attachments": "Attachments",
@@ -912,6 +948,10 @@ const strings = {
             "continue": "Continua il viaggio nel tempo",
             "restart": "Ricomincia il viaggio",
             "congrats": "Complimenti!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Hai finito",
             "back": "Indietro",
             "attachments": "Allegati",
@@ -1012,6 +1052,10 @@ const strings = {
             "continue": "Продолжить путешествие во времени",
             "restart": "Перезапустить путешествие",
             "congrats": "Поздравляем!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Вы завершили",
             "back": "Назад",
             "attachments": "Вложения",
@@ -1112,6 +1156,10 @@ const strings = {
             "continue": "Jatka aikamatkaa",
             "restart": "Aloita matka alusta",
             "congrats": "Onnittelut!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Olet suorittanut",
             "back": "Takaisin",
             "attachments": "Liitteet",
@@ -1212,6 +1260,10 @@ const strings = {
             "continue": "Időutazás folytatása ",
             "restart": "Utazás újrakezdése",
             "congrats": "Gratulálunk!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Befejezted",
             "back": "Vissza",
             "attachments": "Csatolmányok",
@@ -1311,6 +1363,10 @@ const strings = {
             "continue": "Fortsæt tidsrejsen",
             "restart": "Start tidsrejsen forfra",
             "congrats": "Tillykke!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Du har gennemført",
             "back": "Tilbage",
             "attachments": "Attachments",
