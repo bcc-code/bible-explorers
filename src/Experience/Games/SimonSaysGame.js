@@ -261,14 +261,6 @@ export default class SimonSays {
                 instance.world.program.advance()
             })
         }
-
-        window.addEventListener('keydown', instance.keyEvents)
-    }
-
-    keyEvents(event) {
-        if (event.key === '1' || event.key === '2' || event.key === '3' || event.key === '4' || event.key === '5') {
-            document.querySelector('#miniGame__simon-says .note[data-id="' + (parseInt(event.key) - 1).toString() + '"]').dispatchEvent(new Event('click'));
-        }
     }
 
     addButton(name, background, label) {
@@ -316,7 +308,6 @@ export default class SimonSays {
         document.querySelector('.modal').classList.add('modal__congrats')
 
         document.getElementById('try-again').style.display = 'block'
-
 
         if (instance.fails >= showSkipAfterNoOfTries - 1) {
             document.getElementById('skipBTN').style.display = 'block'
@@ -411,7 +402,6 @@ export default class SimonSays {
     }
 
     destroy() {
-        window.removeEventListener('keydown', instance.keyEvents)
         document.getElementById('simon-says').remove()
         document.body.classList.remove('freeze')
     }
