@@ -1473,7 +1473,9 @@ button,
     &__task,
     &__congrats,
     &__code-unlock,
-    &__picture-and-code {
+    &__picture-and-code,
+    &__quiz,
+    &__simon-says {
         .modal__close {
             display: none;
         }
@@ -2455,8 +2457,7 @@ button,
 }
 
 #sort-game,
-#cable-connector,
-#simon-says {
+#cable-connector {
     position: fixed;
     top: 0;
     left: 0;
@@ -2491,7 +2492,7 @@ button,
     }
 }
 
-#simon-says {
+.modal__simon-says {
     #miniGame__simon-says {
         display: flex;
 
@@ -2816,10 +2817,6 @@ button,
 .modal__quiz {
     .modal__container {
         flex-direction: column;
-    }
-
-    .modal__close {
-        display: none;
     }
 }
 
@@ -3352,7 +3349,7 @@ button,
 //         margin-top: 2rem;
 //     }
 
-//     #simon-says {
+//     .modal__simon-says {
 //         .note {
 //             width: 140px;
 //             height: 140px;
