@@ -54,7 +54,7 @@ export default class Video {
             if (instance.showSkipBtn()) {
                 if (!document.getElementById('skip-video')) {
                     let skipVideo = document.createElement('div')
-                    skipVideo.className = 'button bg--secondary h-5 px-3 border--5 border--solid border--transparent rounded--forward'
+                    skipVideo.className = 'button bg--secondary height px border--5 border--solid border--transparent rounded--forward'
                     skipVideo.setAttribute('id', 'skip-video')
                     skipVideo.innerText = _s.miniGames.continue
 

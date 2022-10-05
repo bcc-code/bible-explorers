@@ -90,15 +90,15 @@ $secondary-font: 'PT Sans', sans-serif;
         opacity: 0.4;
     }
 
-    &.px-3 {
+    &.px {
         padding-inline: 3rem;
     }
 
-    &.w-5 {
+    &.width {
         width: 5rem;
     }
 
-    &.h-5 {
+    &.height {
         height: 5rem;
     }
 
@@ -475,6 +475,7 @@ button,
         color: #fff;
         font-family: $secondary-font;
         font-weight: bold;
+        font-size: 1.5rem;
     }
 
     &__flame {
@@ -594,7 +595,7 @@ button,
         font-weight: bold;
 
         background-color: $dark;
-        border: 4px solid $accent;
+        border: 5px solid $accent;
         @include alignCenterVH();
         transition: .3s ease;
 
@@ -631,7 +632,7 @@ button,
         height: 1.25rem;
         width: 100%;
         background-color: #fff;
-        border: 4px solid $accent;
+        border: 5px solid $accent;
         position: relative;
         z-index: 2;
 
@@ -778,6 +779,7 @@ button,
     &__box {
         display: flex;
         position: relative;
+        background: $gradient;
         border: 5px solid $accent;
         border-radius: 1rem 2rem 3rem 1rem;
     }
@@ -1062,10 +1064,10 @@ button,
     }
 
     &__text {
-        max-height: 40vh;
-        overflow-x: hidden;
-        overflow-y: auto;
+        max-height: 36vh;
+        overflow: auto;
         padding-right: 1rem;
+        margin-bottom: 1rem;
     }
 
     &__attachments {
@@ -1368,15 +1370,12 @@ button,
     }
 
     &__content {
-        max-width: 90rem;
+        max-width: 120rem;
         width: 100%;
 
-        &.code-unlock {
-            max-width: 50rem;
-        }
-
-        &.picture-and-code {
-            max-width: none;
+        &.code-unlock,
+        &.congrats {
+            max-width: 40rem;
         }
     }
 
@@ -1494,8 +1493,6 @@ button,
             margin-left: auto;
         }
     }
-
-
 
 }
 
@@ -1808,7 +1805,7 @@ button,
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border: 4px solid $accent;
+            border: 5px solid $accent;
             border-radius: 3rem 1rem;
         }
 
@@ -2094,7 +2091,6 @@ button,
 
 .congrats {
     position: relative;
-    max-width: 40rem;
     width: 100%;
 
     &__container {
@@ -2135,6 +2131,7 @@ button,
 
     &__chapter-completed {
         color: #fff;
+        font-size: 2rem;
     }
 
     @keyframes bounce-right {
@@ -3058,7 +3055,7 @@ button,
             display: none;
             margin-left: auto;
             background: $gradient;
-            border: 4px solid $dark;
+            border: 5px solid $dark;
 
             align-items: center;
             justify-content: center;
@@ -3140,7 +3137,91 @@ button,
 }
 
 //#region
-@media (max-width: 1920px) {}
+@media (max-width: 1920px) {
+
+    :root {
+        --heading--size: 2.25rem;
+        --heading2--size: 2rem;
+        --text-size: 1.25rem;
+        --text-size--task: 1.5rem;
+    }
+
+    h2 {
+        font-size: var(--heading--size);
+    }
+
+    h3 {
+        font-size: var(--heading2--size);
+    }
+
+    p {
+        font-size: var(--text-size);
+    }
+
+    .button {
+        font-size: var(--text-size);
+
+        &.px {
+            padding-inline: 2rem;
+        }
+
+        &.height {
+            height: 4rem;
+        }
+
+        &.width {
+            width: 4rem;
+        }
+    }
+
+    .logo {
+        width: 30rem;
+    }
+
+    .loader {
+        &__text {
+            font-size: var(--text-size);
+        }
+    }
+
+    .chapter {
+        &__number {
+            font-size: var(--heading--size);
+        }
+
+        &__content--preview span {
+            font-size: var(--text-size);
+        }
+
+        &__text {
+            max-height: 30vh;
+        }
+    }
+
+    .settings {
+        &__item {
+            font-size: var(--text-size);
+        }
+
+        &__footer span {
+            font-size: var(--text-size);
+        }
+    }
+
+    .modal {
+        &__content {
+            max-width: 90rem;
+        }
+    }
+
+    .task {
+        &__content p {
+            font-size: var(--text-size--task);
+        }
+    }
+}
+
+@media (max-width: 1680px) {}
 
 // @media (min-width: 1601px) {
 //     #miniGame__connector {
@@ -3225,7 +3306,7 @@ button,
 //         &__default {
 //             padding: 0.75rem 2rem;
 //             min-width: 12rem;
-//             border: 4px solid $accent;
+//             border: 5px solid $accent;
 //             border-radius: 0.5rem 0.75rem 1rem 1rem;
 //         }
 
@@ -3250,7 +3331,7 @@ button,
 
 //     .chapter {
 //         &__box {
-//             border: 4px solid $accent;
+//             border: 5px solid $accent;
 //         }
 
 //         &__extras {
@@ -3276,7 +3357,7 @@ button,
 //         &__number {
 //             font-size: 1.5rem;
 //             width: 5rem;
-//             border-right: 4px solid $accent;
+//             border-right: 5px solid $accent;
 //         }
 
 //         &__states {
@@ -3288,7 +3369,7 @@ button,
 //         }
 
 //         &__description {
-//             border: 4px solid $accent;
+//             border: 5px solid $accent;
 //         }
 
 //         &__description::before {

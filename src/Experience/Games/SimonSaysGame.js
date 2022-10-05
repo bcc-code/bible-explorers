@@ -143,16 +143,16 @@ export default class SimonSays {
 
 
         actions.appendChild(
-            this.addButton('back', 'bg--primary border--5 border--solid border--primary rounded--back h-5 px-3', _s.journey.back)
+            this.addButton('back', 'bg--primary border--5 border--solid border--primary rounded--back height px', _s.journey.back)
         )
 
         actions.appendChild(
-            this.addButton('reset', 'bg--primary border--5 border--solid border--primary rounded h-5 px-3', _s.miniGames.reset)
+            this.addButton('reset', 'bg--primary border--5 border--solid border--primary rounded height px', _s.miniGames.reset)
         )
 
         if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
-                this.addButton('skip', 'bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward', _s.miniGames.skip)
+                this.addButton('skip', 'bg--secondary border--5 border--solid border--transparent height px rounded--forward', _s.miniGames.skip)
             )
         }
 
@@ -297,11 +297,11 @@ export default class SimonSays {
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
                 <div class="modal__actions">
-                    <button id="try-again" class="button bg--primary border--5 border--solid border--primary rounded h-5 px-3">${_s.miniGames.reset}</button>`
+                    <button id="try-again" class="button bg--primary border--5 border--solid border--primary rounded height px">${_s.miniGames.reset}</button>`
 
 
         if (instance.fails >= showSkipAfterNoOfTries - 1) {
-            html += `<button id="skipBTN" class="button bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward">${_s.miniGames.skip}</button>`
+            html += `<button id="skipBTN" class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward">${_s.miniGames.skip}</button>`
         }
         html += `</div>
             </div>

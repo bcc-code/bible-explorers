@@ -153,7 +153,7 @@ export default class World {
 
     setCategoryHtml(category) {
         const categoryHtml = document.createElement("button")
-        categoryHtml.className = "category | button bg--primary px-3 h-5 border--5 border--solid border--primary rounded"
+        categoryHtml.className = "category | button bg--primary px height border--5 border--solid border--primary rounded"
         categoryHtml.setAttribute("data-slug", category.slug)
         categoryHtml.innerText = category.name
 

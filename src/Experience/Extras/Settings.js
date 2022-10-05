@@ -75,8 +75,8 @@ export default class Settings {
                                 <span id="userRole"></span>
                             </span>
                             <div class="button__actions">
-                                <button id="login" class="button bg--fill px-5 h-5 rounded" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
-                                <button id="logout" class="button bg--fill px-5 h-5 rounded" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
+                                <button id="login" class="button bg--fill px-5 height rounded" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
+                                <button id="logout" class="button bg--fill px-5 height rounded" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
                             </div>
                         </div>
                     </div>

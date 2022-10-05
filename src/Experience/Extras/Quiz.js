@@ -68,8 +68,8 @@ export default class Quiz {
 
             html += `</div>
                         <div class="quiz__footer ${questions.length == 1 ? "hide - nav" : ""}">
-                            <button id="prev" class="button w-5 h-5 border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-left-long-solid"></button>
-                            <button id="next" class="button w-5 h-5 border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-right-long-solid"></button>
+                            <button id="prev" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-left-long-solid"></button>
+                            <button id="next" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-right-long-solid"></button>
                         </div>
                     </div>`
 
@@ -240,7 +240,7 @@ export default class Quiz {
         phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
 
         const continueButton = document.createElement('button')
-        continueButton.className = 'button bg--secondary px-3 h-5 border--5 border--solid border--transparent rounded--forward'
+        continueButton.className = 'button bg--secondary px height border--5 border--solid border--transparent rounded--forward'
         continueButton.innerText = _s.miniGames.continue
 
         continueButton.addEventListener('click', () => {

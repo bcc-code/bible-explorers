@@ -35,15 +35,15 @@ export default class Modal {
 
     static generateHtml(html) {
         return `
-            <button class="modal__close | button bg--secondary w-5 h-5 border--5 border--solid border--transparent rounded--full | icon-xmark-solid"></button>
+            <button class="modal__close | button bg--secondary width height border--5 border--solid border--transparent rounded--full | icon-xmark-solid"></button>
             <div class="modal__wrapper">
                 <div class="modal__container">${html}</div>
             </div>
             <div class="modal__actions">
-                <button class="button bg--primary border--5 border--solid border--primary h-5 px-3 rounded--back" id="back"></button>
-                <button class="button bg--primary border--5 border--solid border--primary h-5 px-3 rounded" id="restart"></button>
-                <button class="button bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward" id="skip"></button>
-                <button class="button bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward" id="continue"></button>
+                <button class="button bg--primary border--5 border--solid border--primary height px rounded--back" id="back"></button>
+                <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="restart"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="skip"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="continue"></button>
             </div>
         `
     }
