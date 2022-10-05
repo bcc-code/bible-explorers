@@ -1491,6 +1491,10 @@ button,
     }
 
     &__congrats {
+        #restart {
+            margin-left: 0;
+        }
+
         #continue {
             margin-left: auto;
         }
