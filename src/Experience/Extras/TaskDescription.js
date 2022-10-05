@@ -38,8 +38,8 @@ export default class TaskDescription {
 
             const backBTN = document.getElementById("back")
             const continueBTN = document.getElementById("continue")
-            const playBTN = document.getElementById("play")
-            const irisPlaying = document.querySelector('.iris-playing')
+            instance.playBTN = document.getElementById("play")
+            instance.irisPlaying = document.querySelector('.iris-playing')
 
             backBTN.innerText = _s.journey.back
             continueBTN.innerText = _s.task.next
@@ -47,30 +47,24 @@ export default class TaskDescription {
             backBTN.style.display = "block"
             continueBTN.style.display = "block"
 
-            document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.irisAudioEnded)
+            document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
 
             instance.currentStepData = selectedChapter.program[currentStep]
             if (instance.currentStepData.audio) {
                 // Fetch audio from blob or url
-
                 instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
                     instance.taskAudio = data.audio
                 })
 
-                if (!playBTN.hasAttribute('playing'))
-                    playBTN.addEventListener("click", () => {
-                        if (!instance.taskAudio) return
-                        instance.audio.togglePlayTaskDescription(instance.taskAudio)
-                        playBTN.setAttribute("playing", '')
-
-                        playBTN.classList.remove('icon-play-solid')
-                        playBTN.classList.add('icon-pause-solid')
-                        irisPlaying.style.display = 'flex'
-                    })
+                instance.playBTN.addEventListener("click", () => {
+                    instance.audio.togglePlayTaskDescription(instance.taskAudio)
+                    instance.playBTN.hasAttribute('playing')
+                        ? instance.changePauseBtnToPlay()
+                        : instance.changePlayBtnToPause()
+                })
             }
             else {
-                playBTN.remove()
-
+                instance.playBTN.remove()
             }
 
             backBTN.addEventListener('click', (e) => {
@@ -152,15 +146,18 @@ export default class TaskDescription {
             }
         }
     }
-
-    irisAudioEnded() {
-        const irisPlaying = document.querySelector('.iris-playing')
-        const playBTN = document.getElementById("play")
-        // console.log('audio ended')
-        irisPlaying.style.display = 'none'
-        playBTN.removeAttribute("playing")
-        playBTN.classList.add('icon-play-solid')
-        playBTN.classList.remove('icon-pause-solid')
+    
+    changePauseBtnToPlay() {
+        instance.playBTN.removeAttribute("playing")
+        instance.playBTN.classList.add('icon-play-solid')
+        instance.playBTN.classList.remove('icon-pause-solid')
+        instance.irisPlaying.style.display = 'none'
+    }
+    changePlayBtnToPause() {
+        instance.playBTN.setAttribute("playing", '')
+        instance.playBTN.classList.remove('icon-play-solid')
+        instance.playBTN.classList.add('icon-pause-solid')
+        instance.irisPlaying.style.display = 'flex'
     }
 
     getModalHtml(type, title, additionalContent = '') {

@@ -120,11 +120,6 @@ export default class Audio {
     }
 
     fadeInBgMusic() {
-        console.log(audio.bgMusic);
-        console.log(audio.bgMusicAudios.otherAudioIsPlaying);
-        console.log(audio.bgMusicAudios.state);
-
-
         if (!audio.bgMusic) return
         if (audio.bgMusicAudios.otherAudioIsPlaying) return
         if (audio.bgMusicAudios.state != _STATE.PLAYING) return
@@ -191,7 +186,7 @@ export default class Audio {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
                 audio.taskDescriptionAudios[url].onEnded = () => {
                     document.dispatchEvent(_e.EVENTS.AUDIO_TASK_DESCRIPTION_ENDED)
-                    audio.fadeInBgMusic()
+                    audio.stopTaskDescription(url)
                 }
                 audio.taskDescriptionAudios[url].setBuffer(buffer)
                 audio.playTaskDescription(url)
