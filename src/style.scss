@@ -220,7 +220,6 @@ $secondary-font: 'PT Sans', sans-serif;
     box-sizing: border-box;
 }
 
-
 html,
 body {
     overflow: hidden;
@@ -230,7 +229,6 @@ body {
     font-family: $primary-font;
     font-weight: normal;
     font-size: 16px;
-    font-size: 1.5em;
     line-height: 1.5;
     letter-spacing: 0.5px;
 }
@@ -1035,8 +1033,6 @@ button,
         opacity: 0;
     }
 
-
-
     &-selected+&__content {
         opacity: 1;
     }
@@ -1108,6 +1104,10 @@ button,
 
         p {
             margin-bottom: 0;
+        }
+
+        span {
+            font-size: 1.5rem;
         }
 
         [class^='icon-'] {
@@ -1567,6 +1567,7 @@ button,
         padding: 1rem 2rem;
         margin-bottom: 1rem;
         color: #fff;
+        font-size: 1.5rem;
 
         &:nth-child(2n+1) {
             margin-right: 1rem;
@@ -1579,6 +1580,7 @@ button,
         text-align: center;
 
         span {
+            font-size: 1.5rem;
             display: inline-block;
             margin-bottom: 1rem;
         }
@@ -2178,7 +2180,7 @@ button,
     }
 
     // Mini Games
-    
+
     &__journey {
         .congrats__container {
             padding-top: 0;
@@ -3138,6 +3140,8 @@ button,
 }
 
 //#region
+@media (max-width: 1920px) {}
+
 // @media (min-width: 1601px) {
 //     #miniGame__connector {
 //         width: 1400px;

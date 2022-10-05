@@ -32,12 +32,6 @@ export default class Settings {
         else {
             _appInsights.trackPageView({ name: "Settings" })
 
-            //     <div class="modal__extras">
-            //     <span class="left"></span>
-            //     <span class="bottomLeft"></span>
-            //     <span class="bottomLeftSmall"></span>
-            // </div>
-
             let html = `
                 <div class="modal__content settings">
                     <div class="settings__wrapper">
@@ -81,8 +75,8 @@ export default class Settings {
                                 <span id="userRole"></span>
                             </span>
                             <div class="button__actions">
-                                <button id="login" class="button button__secondary--fill" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
-                                <button id="logout" class="button button__secondary--fill" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
+                                <button id="login" class="button bg--fill px-5 h-5 rounded" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
+                                <button id="logout" class="button bg--fill px-5 h-5 rounded" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
                             </div>
                         </div>
                     </div>
