@@ -71,7 +71,6 @@ $secondary-font: 'PT Sans', sans-serif;
 }
 
 .button {
-    height: 5rem;
     color: #fff;
     display: inline-block;
     font-size: 1.5rem;
@@ -80,7 +79,7 @@ $secondary-font: 'PT Sans', sans-serif;
     letter-spacing: 0.1rem;
     text-align: center;
     text-transform: uppercase;
-    border: 5px solid transparent;
+    border: none;
     transition: .3s ease;
     cursor: pointer;
 
@@ -91,24 +90,46 @@ $secondary-font: 'PT Sans', sans-serif;
         opacity: 0.4;
     }
 
-    &__primary {
-        background: $gradient;
-        border-color: $accent;
-        border-radius: 1rem 1rem 2rem 2rem;
+    &.px-3 {
         padding-inline: 3rem;
+    }
+
+    &.w-5 {
+        width: 5rem;
+    }
+
+    &.h-5 {
+        height: 5rem;
+    }
+
+    &.border--5 {
+        border-width: 5px;
+    }
+
+    &.border--solid {
+        border-style: solid;
+    }
+
+    &.border--transparent {
+        border-color: transparent;
+    }
+
+    &.border--primary {
+        border-color: $accent;
+    }
+
+    &.bg--primary {
+        background: $gradient;
 
         &:hover {
             background: $accent;
         }
     }
 
-    &__secondary {
-        padding-inline: 3rem;
+    &.bg--secondary {
         background:
             $gradient padding-box,
             $gradient2 border-box;
-        border-radius: 1rem 5rem 5rem 1rem;
-
 
         &:hover {
             background:
@@ -117,25 +138,48 @@ $secondary-font: 'PT Sans', sans-serif;
         }
     }
 
-    &__secondary--fill {
+    &.bg--fill {
         background: $gradient2;
-        border-radius: 1rem 1rem;
-        border: none;
     }
 
-    &__round {
-        width: 5rem;
-        background:
-            $gradient padding-box,
-            $gradient2 border-box;
+    &.rounded--full {
         border-radius: 5rem;
+    }
 
-        &:hover {
-            background:
-                $gradient2 padding-box,
-                $gradient2 border-box;
+    &.rounded--back {
+        border-radius: 5rem 1rem 1rem 5rem;
+    }
+
+    &.rounded {
+        border-radius: 1rem;
+    }
+
+    &.rounded--forward {
+        border-radius: 1rem 5rem 5rem 1rem;
+    }
+
+    &.button__link {
+        color: $accent2;
+        letter-spacing: normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: 0.5px;
+
+        &:hover span {
+            text-decoration: underline;
         }
     }
+
+    &.button__icon {
+        display: inline-flex;
+        align-items: center;
+
+        i {
+            margin-left: 1rem;
+        }
+
+    }
+
 }
 
 .container {
@@ -160,6 +204,10 @@ $secondary-font: 'PT Sans', sans-serif;
         display: flex;
         justify-content: space-between;
         padding: 2rem;
+
+        button {
+            display: none;
+        }
     }
 }
 
@@ -405,8 +453,6 @@ button,
         border-radius: 1rem;
     }
 }
-
-
 
 .loader {
     display: flex;
@@ -691,12 +737,6 @@ button,
     align-items: center;
 }
 
-#get-task,
-#submit-task {
-    cursor: pointer;
-    transition: 0.3s;
-}
-
 #quality {
     display: none;
     width: 100%;
@@ -722,6 +762,10 @@ button,
 #reset {
     margin-left: auto;
     margin-right: 2rem;
+}
+
+#quick-look {
+    float: right;
 }
 
 .chapter {
@@ -991,6 +1035,8 @@ button,
         opacity: 0;
     }
 
+
+
     &-selected+&__content {
         opacity: 1;
     }
@@ -1007,7 +1053,6 @@ button,
         h2 {
             padding-bottom: 1rem;
             border-bottom: 5px solid $accent;
-            border-radius: 2px;
         }
 
         p a {
@@ -1030,33 +1075,51 @@ button,
     &__attachments {
         background: rgba(255, 255, 255, 0.1);
         margin-bottom: 2rem;
-        border-radius: 0 0 1rem 1rem;
+        display: flex;
+
+        [class^='icon-'] {
+            background: $accent;
+            width: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         .attachments {
             display: flex;
             flex-wrap: wrap;
-            padding: 1rem 1rem 0.5rem 1rem;
+            padding: 0.5rem 1rem;
         }
 
-        .attachment {
-            margin-right: 2rem;
-            margin-bottom: 0.5rem;
+        .button {
+            margin-right: 3rem;
+        }
+    }
+
+    &__content--preview {
+        margin-bottom: 2rem;
+        display: flex;
+
+        .column {
+            margin-right: 3rem;
+            display: flex;
+            align-items: center;
         }
 
-        a {
-            color: $accent2;
-            font-family: $secondary-font;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-decoration: none;
+        p {
+            margin-bottom: 0;
+        }
 
-            .icon {
-                margin-right: 4px;
-            }
-
-            &:hover .attachment__name {
-                text-decoration: underline;
-            }
+        [class^='icon-'] {
+            background: $accent;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border-radius: 0.25rem;
+            margin-right: 0.5rem;
         }
     }
 
@@ -1268,28 +1331,6 @@ button,
     font-weight: bold;
 }
 
-.quick-look {
-    display: flex;
-    position: relative;
-    top: 1.5rem;
-
-    &__button {
-        margin-left: auto;
-        cursor: pointer;
-        background: linear-gradient(90deg, #C5516E, #EB9159);
-        padding: 0.5rem 1rem;
-        font-family: "Archivo", sans-serif;
-        font-weight: bold;
-        color: #fff;
-        border-radius: 1rem;
-        transition: .3s ease;
-
-        &:hover {
-            opacity: 0.75;
-        }
-    }
-}
-
 .modal {
     position: fixed;
     top: 0;
@@ -1329,6 +1370,10 @@ button,
     &__content {
         max-width: 90rem;
         width: 100%;
+
+        &.code-unlock {
+            max-width: 50rem;
+        }
 
         &.picture-and-code {
             max-width: none;
@@ -1444,9 +1489,14 @@ button,
         }
     }
 
-    &__task .modal__scrool {
-        align-items: flex-end;
+    &__congrats {
+        #continue {
+            margin-left: auto;
+        }
     }
+
+
+
 }
 
 .heading {
@@ -1922,7 +1972,7 @@ button,
     }
 }
 
-.question {
+.test .question {
     display: none;
 
     .question__label {
@@ -2042,7 +2092,7 @@ button,
 
 .congrats {
     position: relative;
-    max-width: 32rem;
+    max-width: 40rem;
     width: 100%;
 
     &__container {
@@ -2128,11 +2178,7 @@ button,
     }
 
     // Mini Games
-
-    .button {
-        margin-top: 2rem;
-    }
-
+    
     &__journey {
         .congrats__container {
             padding-top: 0;
@@ -2806,11 +2852,73 @@ button,
 
     &__footer {
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+
+        .button {
+            flex-shrink: 0;
+        }
+
+        #prev {
+            margin-right: 2rem;
+            margin-left: auto;
+        }
+    }
+
+    &__step {
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $accent;
+        color: #fff;
+        border-radius: 50%;
+        z-index: 1;
+
+        &[disabled] {
+            filter: grayscale(1);
+        }
+    }
+
+    &__progressBar {
+        flex: 1;
+        max-width: 30rem;
+        height: 1.5rem;
+        border: 2px solid transparent;
+        border-radius: 1rem;
+        background:
+            $gradient padding-box,
+            $gradient2 border-box;
+        overflow: hidden;
+        margin-right: 6rem;
+    }
+
+    [quiz-progress] {
+        position: relative;
+    }
+
+    [quiz-progress]::after {
+        content: attr(quiz-progress);
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 4px;
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    &__progressLine {
+        width: 0;
+        height: 100%;
+        background: $gradient2;
+        transition: .4s ease;
     }
 
     .question {
         position: relative;
+        color: #fff;
         display: none;
 
         &.visible {
@@ -2823,12 +2931,18 @@ button,
             background-image: url("../static/assets/question-mark.png"), $gradient;
             background-repeat: no-repeat, no-repeat;
             background-position: center, top left;
-            background-size: 50%, auto;
+            background-size: auto 50%, auto;
             border: 3px solid $accent;
-            width: 20rem;
+            width: 30rem;
             min-height: 20rem;
             border-radius: 1rem 2rem 3rem 1rem;
             padding: 2rem;
+
+            span {
+                display: inline-block;
+                margin-bottom: 1rem;
+                opacity: .6;
+            }
         }
 
         &__form {
@@ -2850,6 +2964,11 @@ button,
             counter-increment: questions;
         }
 
+        &__textarea {
+            width: 100%;
+            color: #fff;
+        }
+
         &__picture {
             display: none;
             position: absolute;
@@ -2858,10 +2977,9 @@ button,
             bottom: -100px;
         }
 
-        p,
-        span {
-            color: #fff;
-            letter-spacing: normal;
+        &__title {
+            font-size: 2rem;
+            font-weight: bold;
         }
 
         input {
@@ -2872,11 +2990,11 @@ button,
 
         label,
         textarea {
-            color: #fff;
             background: $gradient;
             border: 3px solid $accent;
             border-radius: 1rem 1rem;
             padding: 2rem;
+            font-size: 2rem;
         }
 
         label {
@@ -2954,7 +3072,6 @@ button,
                 background-position: center;
             }
         }
-
 
         &__input.wrong label {
             border: 3px solid red;

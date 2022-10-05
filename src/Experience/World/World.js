@@ -76,14 +76,15 @@ export default class World {
 
             this.welcome.loading.querySelector('span').innerText = 'Initializing'
             document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
+
+
         })
 
         this.buttons.start.innerText = _s.journey.start
         this.buttons.restart.innerText = _s.journey.restart
         this.buttons.back.innerText = _s.journey.back
 
-        this.buttons.start.style.display = 'none'
-        this.buttons.restart.style.display = 'none'
+        this.buttons.back.style.display = 'block'
 
         this.buttons.home.addEventListener("click", this.goHome)
         this.buttons.back.addEventListener("click", this.goToLandingScreen)
@@ -152,7 +153,7 @@ export default class World {
 
     setCategoryHtml(category) {
         const categoryHtml = document.createElement("button")
-        categoryHtml.className = "category button button__primary"
+        categoryHtml.className = "category | button bg--primary px-3 h-5 border--5 border--solid border--primary rounded"
         categoryHtml.setAttribute("data-slug", category.slug)
         categoryHtml.innerText = category.name
 
@@ -213,12 +214,6 @@ export default class World {
 
         chapterHtml.innerHTML = `
             <div class="chapter__box">
-                <div class="chapter__extras">
-                    <span class="bottomLeft"></span>
-                    <span class="bottomLeftSmall"></span>
-                    <span class="right"></span>
-                    <span class="rightOutside"></span>
-                </div>
                 <div class="chapter__background"></div>
                 <div class="chapter__number">
                     <i class="icon icon-lock-solid"></i>
@@ -281,7 +276,7 @@ export default class World {
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
         instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
-        instance.menu.chapterContent.querySelector('.quick-look__button').addEventListener("click", () => {
+        document.getElementById('quick-look').addEventListener("click", () => {
             this.chapterProgress() == this.selectedChapter.program.length
                 ? instance.restartChapter()
                 : instance.startChapter()
@@ -294,12 +289,8 @@ export default class World {
         if (chapter.attachments.length) {
             chapterAttachments.querySelector('.attachments').classList.remove('hidden')
             chapter.attachments.forEach((attachment) => {
-                chapterAttachments.querySelector('.attachments').innerHTML += `<div class="attachment">
-                    <a href="${attachment.url}" target="_blank">
-                        <span class="icon icon-download-solid"></span>
-                        <span class="attachment__name">${attachment.title}</span>
-                    </a>
-                </div>`
+                chapterAttachments.querySelector('.attachments').innerHTML +=
+                    `<a href="${attachment.url}" target="_blank" class="button button__link"><span>${attachment.title}</span></a>`
             })
         }
         else {
@@ -307,6 +298,38 @@ export default class World {
         }
 
         instance.menu.chapterItems.classList.add('chapter-selected')
+    }
+
+    setChapterContentPreviewHTML() {
+        const chapter = instance.selectedChapter
+
+        const numberOfEpisodes = chapter.program.filter(item => item.type == 'video').length
+        const numberOfTasks = chapter.program.filter(item => item.type == 'task' && item.taskType != 'quiz').length
+        const numberOfQuizes = chapter.program.filter(item => item.taskType == 'quiz').length
+
+        console.log(numberOfQuizes > 0);
+
+        let itemHTMLString =
+            `<div class="chapter__content--preview">
+                <div class="column">
+                    <i class="icon-film-solid"></i>
+                    <span>${numberOfEpisodes} films</span>
+                </div>
+                <div class="column">
+                    <i class="icon-pen-to-square-solid"></i>
+                    <span>${numberOfTasks} tasks</span>
+                </div>`
+        if (numberOfQuizes > 0) {
+            itemHTMLString +=
+                ` <div class="column">
+                    <i class="icon-question-solid"></i>
+                    <span>${numberOfQuizes} quiz</span>
+                </div>`
+        }
+        `</div>`
+
+        document.querySelector('.chapter__task--content').innerHTML = itemHTMLString
+
     }
 
     removeDescriptionHtml() {
@@ -321,6 +344,7 @@ export default class World {
                 instance.loadChapterTextures()
                 instance.showMenuButtons()
                 instance.setDescriptionHtml()
+                instance.setChapterContentPreviewHTML()
             })
         })
 

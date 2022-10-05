@@ -27,6 +27,7 @@ export default class Quiz {
 
             const questions = selectedChapter.program[currentStep].quiz
 
+
             let html = `<div class="modal__content quiz">
                             <div class="quiz__content">`
 
@@ -52,7 +53,7 @@ export default class Quiz {
                 }
                 else {
                     html += `<div class="question__input">
-                                <textarea class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
+                                <textarea id="quizTextarea" class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
                             </div>`
                 }
 
@@ -67,14 +68,25 @@ export default class Quiz {
 
             html += `</div>
                         <div class="quiz__footer ${questions.length == 1 ? "hide - nav" : ""}">
-                            <button id="prev" class="button button__round | icon-arrow-left-long-solid"></button>
-                            <button id="next" class="button button__round | icon-arrow-right-long-solid"></button>
+                            <button id="prev" class="button w-5 h-5 border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-left-long-solid"></button>
+                            <button id="next" class="button w-5 h-5 border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-right-long-solid"></button>
                         </div>
                     </div>`
 
             quiz.modal = new Modal(html)
 
             document.querySelector('.modal').classList.add('modal__quiz')
+
+            const quizProgressContainer = document.querySelector('.quiz__footer')
+            const quizProgressBar = document.createElement('div')
+            quizProgressBar.className = 'quiz__progressBar'
+            quizProgressBar.setAttribute('quiz-progress', '0%')
+            const quizProgressBarLine = document.createElement('div')
+            quizProgressBarLine.className = 'quiz__progressLine'
+            quizProgressBar.append(quizProgressBarLine)
+            quizProgressContainer.prepend(quizProgressBar)
+
+            const quizStepWidth = 100 / questions.length
 
             const htmlQuestions = document.querySelectorAll('.question')
             htmlQuestions[0].classList.add('visible')
@@ -116,13 +128,9 @@ export default class Quiz {
                 } else {
                     nextButton.setAttribute('disabled', '')
                 }
-
                 prevButton.removeAttribute('disabled')
 
-                if (current.nextElementSibling.matches(':last-child')) {
-                    submitButton.style.display = "block"
-                    skip.style.display = "none"
-                }
+
             })
 
             prevButton.addEventListener("click", () => {
@@ -138,13 +146,6 @@ export default class Quiz {
                     prevButton.setAttribute('disabled', '')
                 }
 
-                if (current.previousElementSibling.matches(':last-child')) {
-                    submitButton.style.display = "block"
-                    skip.style.display = "none"
-                } else {
-                    submitButton.style.display = "none"
-                    skip.style.display = "block"
-                }
             })
 
             submitButton.addEventListener("click", () => {
@@ -157,8 +158,12 @@ export default class Quiz {
                     q.classList.add('hidden')
                 })
 
-                this.summary(program, correctAnswers+1, htmlQuestions.length)
+                this.summary(program, correctAnswers + 1, htmlQuestions.length)
             })
+
+
+            let questionsAnswered = 0
+            let quizProgress = 0
 
             htmlQuestions.forEach((q, i) => {
                 const htmlAnswers = q.querySelectorAll('label')
@@ -171,6 +176,11 @@ export default class Quiz {
                             a.style.pointerEvents = 'none'
                         })
 
+                        questionsAnswered += 1
+                        quizProgress = quizStepWidth * questionsAnswered + '%'
+                        quizProgressBar.setAttribute('quiz-progress', quizProgress)
+                        quizProgressBarLine.style.width = quizProgress
+
                         const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
@@ -182,8 +192,39 @@ export default class Quiz {
 
                         nextButton.removeAttribute('disabled')
                     })
+
                 })
+
             })
+
+            const textarea = document.getElementById('quizTextarea')
+
+            textarea.addEventListener('input', (e) => {
+
+                if (e.target.value.length > 1) return
+
+                if (e.target.value.length > 0) {
+                    questionsAnswered = questions.length
+                    quizProgress = quizStepWidth * questionsAnswered + '%'
+                    quizProgressBar.setAttribute('quiz-progress', quizProgress)
+                    quizProgressBarLine.style.width = quizProgress
+
+                    skip.style.display = "none"
+                    submitButton.style.display = "block"
+                }
+                else {
+                    questionsAnswered = questions.length - 1
+                    quizProgress = quizStepWidth * questionsAnswered + '%'
+                    quizProgressBar.setAttribute('quiz-progress', quizProgress)
+                    quizProgressBarLine.style.width = quizProgress
+
+                    skip.style.display = "block"
+                    submitButton.style.display = "none"
+                }
+
+            })
+
+
         }
     }
 
@@ -199,7 +240,7 @@ export default class Quiz {
         phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
 
         const continueButton = document.createElement('button')
-        continueButton.classList.add('button', 'button__secondary')
+        continueButton.className = 'button bg--secondary px-3 h-5 border--5 border--solid border--transparent rounded--forward'
         continueButton.innerText = _s.miniGames.continue
 
         continueButton.addEventListener('click', () => {

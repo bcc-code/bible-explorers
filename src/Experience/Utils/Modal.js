@@ -40,10 +40,10 @@ export default class Modal {
                 <div class="modal__container">${html}</div>
             </div>
             <div class="modal__actions">
-                <button class="button button__primary" id="back"></button>
-                <button class="button button__primary" id="restart"></button>
-                <button class="button button__secondary" id="skip"></button>
-                <button class="button button__secondary" id="continue"></button>
+                <button class="button bg--primary border--5 border--solid border--primary h-5 px-3 rounded--back" id="back"></button>
+                <button class="button bg--primary border--5 border--solid border--primary h-5 px-3 rounded" id="restart"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward" id="skip"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward" id="continue"></button>
             </div>
         `
     }

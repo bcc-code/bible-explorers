@@ -10,7 +10,7 @@ const explorersOne = {
     msBetweenNotes: 250
 }
 const explorersTwo = {
-    noOfRounds: 8,
+    noOfRounds: 1,
     msBetweenNotes: 150
 }
 export default class SimonSays {
@@ -141,16 +141,18 @@ export default class SimonSays {
             gameWatch.appendChild(noteColor)
         })
 
+
         actions.appendChild(
-            this.addButton('back', 'button__primary', _s.journey.back)
+            this.addButton('back', 'bg--primary border--5 border--solid border--primary rounded--back h-5 px-3', _s.journey.back)
         )
+
         actions.appendChild(
-            this.addButton('reset', 'button__primary', _s.miniGames.reset)
+            this.addButton('reset', 'bg--primary border--5 border--solid border--primary rounded h-5 px-3', _s.miniGames.reset)
         )
 
         if (instance.debug.developer || instance.debug.onQuickLook()) {
             actions.appendChild(
-                this.addButton('skip', 'button__secondary', _s.miniGames.skip)
+                this.addButton('skip', 'bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward', _s.miniGames.skip)
             )
         }
 
@@ -268,6 +270,7 @@ export default class SimonSays {
         button.className = "button " + background
         button.innerHTML = label
         button.setAttribute('id', name)
+        button.style.display = 'block'
 
         return button
     }
@@ -294,11 +297,11 @@ export default class SimonSays {
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
                 <div class="modal__actions">
-                    <button id="try-again" class="button button__primary">${_s.miniGames.reset}</button>`
+                    <button id="try-again" class="button bg--primary border--5 border--solid border--primary rounded h-5 px-3">${_s.miniGames.reset}</button>`
 
 
         if (instance.fails >= showSkipAfterNoOfTries - 1) {
-            html += `<button id="skipBTN" class="button button__secondary">${_s.miniGames.skip}</button>`
+            html += `<button id="skipBTN" class="button bg--secondary border--5 border--solid border--transparent h-5 px-3 rounded--forward">${_s.miniGames.skip}</button>`
         }
         html += `</div>
             </div>
@@ -336,12 +339,23 @@ export default class SimonSays {
         instance.toggleGameComplete()
         instance.audio.playTaskCompleted()
 
-        document.getElementById('play-another').addEventListener('click', () => {
+        console.log('complete');
+
+        const next = document.getElementById('continue')
+        next.innerText = _s.miniGames.continue
+        next.style.block = 'block'
+
+        const restart = document.getElementById('restart')
+        restart.innerText = _s.miniGames.playAgain
+        restart.style.block = 'block'
+
+        restart.addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
             instance.toggleSimonSays()
         })
-        document.getElementById('continue-journey').addEventListener('click', () => {
+
+        next.addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
             instance.world.program.advance()
@@ -360,13 +374,6 @@ export default class SimonSays {
                     <h2>${_s.miniGames.completed.title}</h2>
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
-                </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
-                <div id="play-another" class="button button__continue">
-                    <div class="button__content"><span>${_s.miniGames.playAgain}</span></div>
-                </div>
-                <div id="continue-journey" class="button button__continue">
-                    <div class="button__content"><span>${_s.miniGames.continue}</span></div>
                 </div>
             </div>
         </div>`
