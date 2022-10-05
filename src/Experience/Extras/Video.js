@@ -97,7 +97,7 @@ export default class Video {
     }
 
     focus() {
-        instance.camera.zoomIn(1500)
+        instance.camera.zoomIn(2000)
         instance.tablet.material.map.image.play()
 
         instance.audio.setOtherAudioIsPlaying(true)

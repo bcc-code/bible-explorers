@@ -61,7 +61,8 @@ export default class Program {
         this.clickedObject = null
         this.canClick = () =>
             !document.body.classList.contains('freeze') &&
-            !document.body.classList.contains('modal-on')
+            !document.body.classList.contains('modal-on') &&
+            !document.body.classList.contains('camera-is-moving')
 
         this.startInteractivity()
     }
