@@ -34,6 +34,9 @@ export default class Video {
             return document.getElementById(id)
         }
 
+        this.hasSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video') != null
+        }
         this.playingVideoId = null
     }
 
@@ -48,19 +51,21 @@ export default class Video {
 
         this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
-
         // Event listener on video update
         this.video().on('timeupdate', function () {
             if (instance.showSkipBtn()) {
-                if (!document.getElementById('skip-video')) {
-                    let skipVideo = document.createElement('div')
-                    skipVideo.className = 'button bg--secondary height px border--5 border--solid border--transparent rounded--forward'
-                    skipVideo.setAttribute('id', 'skip-video')
-                    skipVideo.innerText = _s.miniGames.continue
+                if (instance.hasSkipBtn()) return
 
-                    skipVideo.addEventListener('click', instance.finish)
-                    instance.videoJsEl().appendChild(skipVideo)
-                }
+                const skipVideo = document.createElement('div')
+                skipVideo.className = 'skip-video button bg--secondary height px border--5 border--solid border--transparent rounded--forward'
+                skipVideo.innerText = _s.miniGames.continue
+
+                skipVideo.addEventListener('click', instance.finish)
+                instance.videoJsEl().appendChild(skipVideo)
+            }
+            else {
+                if (!instance.hasSkipBtn()) return
+                instance.videoJsEl().querySelector('.skip-video').remove()
             }
         })
 
