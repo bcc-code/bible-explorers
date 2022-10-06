@@ -70,6 +70,51 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
+@mixin wrapper() {
+    color: #fff;
+    background: $gradient;
+    border: 5px solid $accent;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+@mixin extras() {
+
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        @include setBackground('../static/svgs/description_left.svg');
+        height: 120px;
+        width: 40px;
+    }
+
+    &::after {
+        right: 0;
+        transform: scaleX(-1) translateY(-50%);
+    }
+
+    &::before {
+        left: 0;
+    }
+}
+
+@mixin extras-bottom($width) {
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: $accent;
+        height: 1.5rem;
+        width: $width;
+        border-radius: 0 1.5rem 0 0;
+    }
+}
+
 .button {
     color: #fff;
     display: inline-block;
@@ -412,7 +457,10 @@ button,
     &:hover .chapter:not(.locked):hover,
     body.admin &:hover .chapter:hover {
         opacity: 1;
-        transform: scale(1.02);
+
+        .chapter__box {
+            box-shadow: 0 0 1rem $accent;
+        }
     }
 
     .list {
@@ -842,7 +890,7 @@ button,
     flex-direction: column;
     width: 100%;
     cursor: pointer;
-    transition: opacity .3s ease, transform .3s ease;
+    transition: opacity .3s ease;
     margin-bottom: 2rem;
 
     &__box {
@@ -851,84 +899,8 @@ button,
         background: $gradient;
         border: 5px solid $accent;
         border-radius: 1rem 2rem 3rem 1rem;
-    }
-
-    &__extras {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        pointer-events: none;
-
-        .bottomLeft {
-            position: absolute;
-            bottom: -2px;
-            left: -2px;
-            height: 1.5rem;
-            width: 20rem;
-            border-bottom-left-radius: 1rem;
-            overflow: hidden;
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: $accent;
-                transform: skew(20deg);
-                transform-origin: left bottom;
-                border-top-right-radius: 1rem;
-            }
-        }
-
-        .bottomLeftSmall {
-            position: absolute;
-            bottom: -2px;
-            left: 21rem;
-            height: 1.5rem;
-            width: 1.5rem;
-            background: $accent;
-            border-radius: 1rem 1rem 0 0;
-            transform: skew(20deg);
-            transform-origin: left bottom;
-            box-shadow: 2.5rem 0 0 $accent, 5rem 0 0 $accent;
-        }
-
-        .right {
-            position: absolute;
-            right: -2px;
-            top: 1.5rem;
-            width: 1.25rem;
-            height: 4.5rem;
-            background: $accent;
-            border-radius: 1.5rem 0 0 1.5rem;
-        }
-
-        .rightOutside {
-            position: absolute;
-            right: -1.5rem;
-            top: 3.5rem;
-            width: 0.75rem;
-            height: 3rem;
-            background: $accent;
-            border-radius: 2rem 0.5rem;
-            display: none;
-        }
-
-        .left {
-            position: absolute;
-            left: -2px;
-            top: 1.5rem;
-            width: 1.25rem;
-            height: 6rem;
-            background: $accent;
-            border-radius: 0 1.5rem 1.5rem 0;
-        }
-
+        @include extras-bottom(320px);
+        transition: .3s ease;
     }
 
     &__background {
@@ -984,11 +956,11 @@ button,
     }
 
     &__heading {
-        position: relative;
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        flex: 1;
+        position: relative;
         padding: 3rem;
     }
 
@@ -1110,12 +1082,8 @@ button,
 
     &__description {
         position: relative;
-        width: 100%;
-        padding: 3rem;
-        background: $gradient;
-        border-radius: 1rem;
-        border: 5px solid $accent;
-        color: #fff;
+        @include wrapper();
+        @include extras-bottom(50%);
 
         h2 {
             padding-bottom: 1rem;
@@ -1729,11 +1697,7 @@ button,
 .settings {
 
     &__wrapper {
-        background: $gradient;
-        border: 5px solid $accent;
-        border-radius: 1rem;
-        padding: 2rem;
-        color: #fff;
+        @include wrapper();
     }
 
     &__content {
@@ -2149,11 +2113,7 @@ button,
 .faq {
 
     &__wrapper {
-        color: #fff;
-        background: $gradient;
-        border: 5px solid $accent;
-        border-radius: 1rem;
-        padding: 2rem;
+        @include wrapper()
     }
 
     &__content {
@@ -2207,31 +2167,10 @@ button,
 
     &__container {
         position: relative;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        border: 6px solid $accent;
-        background: $gradient;
+        @include wrapper();
+        @include extras();
         text-align: center;
         z-index: 2;
-
-        &::after,
-        &::before {
-            content: '';
-            position: absolute;
-            top: 3rem;
-            @include setBackground('../static/svgs/description_left.svg');
-            height: 120px;
-            width: 40px;
-        }
-
-        &::after {
-            right: 0;
-            transform: scaleX(-1);
-        }
-
-        &::before {
-            left: 0;
-        }
     }
 
     &__title {
@@ -2242,7 +2181,6 @@ button,
     }
 
     &__chapter-completed {
-        color: #fff;
         font-size: 2rem;
     }
 
@@ -2373,6 +2311,12 @@ button,
         .icon:last-of-type {
             right: -5rem;
         }
+    }
+}
+
+.archive {
+    &__wrapper {
+        @include wrapper()
     }
 }
 
