@@ -1344,16 +1344,23 @@ button,
     flex-direction: column;
     background: $gradient-with-opacity;
 
+    &__close {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+
     &__heading {
         padding-bottom: 1rem;
         border-bottom: 5px solid $accent;
         margin-bottom: 2rem;
     }
 
-    &__close {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
+    &__heading--minigame {
+        color: #fff;
+        padding: 1rem;
+        background: $accent;
+        text-align: center;
     }
 
     &__wrapper {
@@ -1370,114 +1377,18 @@ button,
     }
 
     &__content {
-        max-width: 120rem;
+        max-width: 90rem;
         width: 100%;
 
         &.code-unlock,
         &.congrats {
             max-width: 40rem;
         }
-    }
 
-    &__footer {
-        margin-top: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .button.disable {
-            pointer-events: none;
-            opacity: 0.2;
-            filter: grayscale(1);
+        &.picture-and-code {
+            max-width: 120rem;
         }
 
-        .button__prev {
-            margin-right: auto;
-        }
-
-        .button__continue {
-            margin-left: auto;
-        }
-
-        &.hide-nav {
-
-            .button__prev,
-            .button__continue {
-                display: none;
-            }
-
-            .button__submit {
-                display: block;
-            }
-        }
-    }
-
-    &__extras {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 1;
-
-        .bottomLeft {
-            position: absolute;
-            bottom: -2px;
-            left: -2px;
-            height: 1.5rem;
-            width: 10rem;
-            border-bottom-left-radius: 1rem;
-            overflow: hidden;
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: $accent;
-                transform: skew(20deg);
-                transform-origin: left bottom;
-                border-top-right-radius: 1rem;
-            }
-        }
-
-        .bottomLeftSmall {
-            position: absolute;
-            bottom: -2px;
-            left: 11.5rem;
-            margin-left: -0.75rem;
-            height: 1.5rem;
-            width: 1.5rem;
-            background: $accent;
-            border-radius: 1rem 1rem 0 0;
-            transform: skew(20deg);
-            transform-origin: left bottom;
-            box-shadow: 2.5rem 0 0 $accent, 5rem 0 0 $accent;
-        }
-
-        .left {
-            position: absolute;
-            left: -2px;
-            top: 3rem;
-            width: 1.25rem;
-            height: 6rem;
-            background: $accent;
-            border-radius: 0 1.5rem 1.5rem 0;
-        }
-    }
-
-    &__task,
-    &__congrats,
-    &__code-unlock,
-    &__picture-and-code,
-    &__quiz,
-    &__simon-says {
-        .modal__close {
-            display: none;
-        }
     }
 
     &__actions {
@@ -1490,48 +1401,37 @@ button,
         }
     }
 
-    &__congrats {
-        #restart {
-            margin-left: 0;
-        }
-
-        #continue {
-            margin-left: auto;
-        }
-    }
-
 }
 
-.heading {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 2rem;
-    text-align: center;
-    pointer-events: none;
-    z-index: 10;
+.modal__task {
+    .modal__content {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
 
-    h2 {
-        position: relative;
-        display: inline-block;
-        color: #fff;
-        min-width: 20rem;
-        padding: 1.5rem 4rem 0.75rem;
-        background: $gradient;
-        border: 5px solid $accent;
-        border-radius: 1rem 1rem 4rem 4rem;
+    .modal__close {
+        display: none;
+    }
+}
 
-        &::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 50%;
-            margin-left: -5rem;
-            width: 10rem;
-            height: 1rem;
-            background: $accent;
-            border-radius: 0 0 4rem 4rem;
-        }
+.modal__congrats,
+.modal__code-unlock,
+.modal__picture-and-code,
+.modal__quiz,
+.modal__simon-says {
+    .modal__close {
+        display: none;
+    }
+}
+
+.modal__congrats {
+    #restart {
+        margin-left: 0;
+    }
+
+    #continue {
+        margin-left: auto;
     }
 }
 
@@ -1763,41 +1663,29 @@ button,
 
 }
 
-.task,
-.questions,
-.settings,
-.archive,
-.faq {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-
-    &__wrapper {
+.task {
+    &__content {
         flex: 1;
+        color: #fff;
         background: $gradient;
         border: 5px solid $accent;
-        border-radius: 1rem 2rem;
+        border-radius: 1rem;
         padding: 2rem;
-        color: #fff;
+        margin-left: 2rem;
+
+        p {
+            font-size: 2rem;
+        }
+
+        .code_and_iris & p img {
+            width: 300px;
+        }
     }
-
-}
-
-.task {
 
     &__wrapper {
         flex: 1;
         width: auto;
         margin-left: 2rem;
-    }
-
-    &__content {
-        flex: 1;
-        width: auto;
-
-        .code_and_iris & p img {
-            width: 300px;
-        }
     }
 
     &__video {
@@ -1925,17 +1813,6 @@ button,
         width: 24rem;
     }
 
-    &.cables {
-        .task__tips {
-            display: inline-block;
-        }
-
-        video {
-            width: 100%;
-            display: block;
-        }
-    }
-
     .numberOfIcons {
         margin-top: 2rem;
         display: flex;
@@ -1974,6 +1851,17 @@ button,
 
     input:focus::-webkit-input-placeholder {
         opacity: 0.1;
+    }
+}
+
+.task.cables {
+    .task__tips {
+        display: inline-block;
+    }
+
+    video {
+        width: 100%;
+        display: block;
     }
 }
 
@@ -2821,6 +2709,12 @@ button,
     .modal__container {
         flex-direction: column;
     }
+
+    &.completed {
+        #continue {
+            margin-left: auto;
+        }
+    }
 }
 
 .quiz {
@@ -2845,7 +2739,7 @@ button,
             color: $accent2;
         }
 
-        p {
+        h3 {
             color: #fff;
         }
     }
@@ -2864,49 +2758,28 @@ button,
         }
     }
 
-    &__step {
-        position: relative;
-        width: 2rem;
-        height: 2rem;
+    &__progressContainer {
+        padding: 2rem;
         display: flex;
         align-items: center;
-        justify-content: center;
-        background: $accent;
-        color: #fff;
-        border-radius: 50%;
-        z-index: 1;
 
-        &[disabled] {
-            filter: grayscale(1);
+        span {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
     }
 
     &__progressBar {
         flex: 1;
-        max-width: 30rem;
-        height: 1.5rem;
+        margin-inline: 1rem;
+        height: 1rem;
         border: 2px solid transparent;
         border-radius: 1rem;
         background:
             $gradient padding-box,
             $gradient2 border-box;
         overflow: hidden;
-        margin-right: 6rem;
-    }
-
-    [quiz-progress] {
-        position: relative;
-    }
-
-    [quiz-progress]::after {
-        content: attr(quiz-progress);
-        position: absolute;
-        display: block;
-        top: 0;
-        right: 4px;
-        color: #fff;
-        font-size: 0.9rem;
-        font-weight: bold;
     }
 
     &__progressLine {

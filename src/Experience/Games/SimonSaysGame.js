@@ -64,10 +64,6 @@ export default class SimonSays {
             const gameWrapper = document.createElement('div')
             gameWrapper.classList.add('model__content', 'simon-says')
 
-            const title = document.createElement('h2')
-            title.innerText = _s.miniGames.simonSays
-            gameWrapper.appendChild(title)
-
             const gameContent = document.createElement('div')
             gameContent.setAttribute("id", "miniGame__simon-says")
 
@@ -127,6 +123,11 @@ export default class SimonSays {
 
             instance.modal = new Modal(gameWrapper.outerHTML)
             document.querySelector('.modal').classList.add('modal__simon-says')
+
+            const title = document.createElement('h3')
+            title.className = 'modal__heading--minigame'
+            title.innerText = _s.miniGames.simonSays
+            document.querySelector('.modal__simon-says').prepend(title)
 
             // Add event listeners
 

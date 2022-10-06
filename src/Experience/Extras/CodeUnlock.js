@@ -26,7 +26,6 @@ export default class CodeUnlock {
 
             let html = `
                 <div class="modal__content code-unlock">
-                    <h2>${_s.task.codeUnlock}</h2>
                     <div class="code-unlock__container">
                         <div class="code-unlock__screen">
                             <span class="code-unlock__input"></span>
@@ -50,6 +49,11 @@ export default class CodeUnlock {
 
             instance.modal = new Modal(html)
             document.querySelector('.modal').classList.add('modal__code-unlock')
+
+            const title = document.createElement('h3')
+            title.className = 'modal__heading--minigame'
+            title.innerText = _s.task.codeUnlock
+            document.querySelector('.modal__code-unlock').prepend(title)
 
             const back = document.getElementById("back")
             back.style.display = 'block'

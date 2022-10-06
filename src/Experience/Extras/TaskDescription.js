@@ -173,13 +173,12 @@ export default class TaskDescription {
                     <div class="line line5"></div>
                 </div>
             </div>
-            <div class="task__wrapper">
-                <div class="task__content">
-                    ${title}
-                    ${additionalContent}
-                    <div class="task__tips">
-                        <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
-                    </div>
+
+            <div class="task__content">
+                ${title}
+                ${additionalContent}
+                <div class="task__tips">
+                    <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
                 </div>
             </div>
         </div>`

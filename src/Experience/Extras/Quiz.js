@@ -77,14 +77,27 @@ export default class Quiz {
 
             document.querySelector('.modal').classList.add('modal__quiz')
 
-            const quizProgressContainer = document.querySelector('.quiz__footer')
+            const quizProgressContainer = document.createElement('div')
+            quizProgressContainer.className = 'quiz__progressContainer'
+            const quizProgressLabel = document.createElement('span')
+            quizProgressLabel.innerText = 'Progress'
+            const quizProgressPercent = document.createElement('span')
+            quizProgressPercent.innerText = '0%'
             const quizProgressBar = document.createElement('div')
             quizProgressBar.className = 'quiz__progressBar'
             quizProgressBar.setAttribute('quiz-progress', '0%')
             const quizProgressBarLine = document.createElement('div')
             quizProgressBarLine.className = 'quiz__progressLine'
             quizProgressBar.append(quizProgressBarLine)
-            quizProgressContainer.prepend(quizProgressBar)
+            quizProgressContainer.append(quizProgressLabel)
+            quizProgressContainer.append(quizProgressBar)
+            quizProgressContainer.append(quizProgressPercent)
+            document.querySelector('.modal__quiz').prepend(quizProgressContainer)
+
+            const title = document.createElement('h3')
+            title.className = 'modal__heading--minigame'
+            title.innerText = 'Quiz'
+            document.querySelector('.modal__quiz').prepend(title)
 
             const quizStepWidth = 100 / questions.length
 
@@ -130,7 +143,6 @@ export default class Quiz {
                 }
                 prevButton.removeAttribute('disabled')
 
-
             })
 
             prevButton.addEventListener("click", () => {
@@ -149,21 +161,18 @@ export default class Quiz {
             })
 
             submitButton.addEventListener("click", () => {
-                document.querySelector('.quiz__content').style.display = 'none'
-                document.querySelector('.quiz__footer').style.display = 'none'
-                document.querySelector('.modal__actions').style.display = 'none'
-                skip.style.display = 'none'
-
-                htmlQuestions.forEach(q => {
-                    q.classList.add('hidden')
-                })
-
                 this.summary(program, correctAnswers + 1, htmlQuestions.length)
             })
 
-
             let questionsAnswered = 0
             let quizProgress = 0
+
+            let quizUpdate = (questionsAnswered) => {
+                quizProgress = quizStepWidth * questionsAnswered + '%'
+                quizProgressBar.setAttribute('quiz-progress', quizProgress)
+                quizProgressBarLine.style.width = quizProgress
+                quizProgressPercent.innerText = quizProgress
+            }
 
             htmlQuestions.forEach((q, i) => {
                 const htmlAnswers = q.querySelectorAll('label')
@@ -177,9 +186,7 @@ export default class Quiz {
                         })
 
                         questionsAnswered += 1
-                        quizProgress = quizStepWidth * questionsAnswered + '%'
-                        quizProgressBar.setAttribute('quiz-progress', quizProgress)
-                        quizProgressBarLine.style.width = quizProgress
+                        quizUpdate(questionsAnswered)
 
                         const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
@@ -197,38 +204,36 @@ export default class Quiz {
 
             })
 
-            const textarea = document.getElementById('quizTextarea')
-
-            textarea.addEventListener('input', (e) => {
+            document.getElementById('quizTextarea').addEventListener('input', (e) => {
 
                 if (e.target.value.length > 1) return
 
                 if (e.target.value.length > 0) {
                     questionsAnswered = questions.length
-                    quizProgress = quizStepWidth * questionsAnswered + '%'
-                    quizProgressBar.setAttribute('quiz-progress', quizProgress)
-                    quizProgressBarLine.style.width = quizProgress
+                    quizUpdate(questionsAnswered)
 
                     skip.style.display = "none"
                     submitButton.style.display = "block"
                 }
                 else {
                     questionsAnswered = questions.length - 1
-                    quizProgress = quizStepWidth * questionsAnswered + '%'
-                    quizProgressBar.setAttribute('quiz-progress', quizProgress)
-                    quizProgressBarLine.style.width = quizProgress
-
+                    quizUpdate(questionsAnswered)
                     skip.style.display = "block"
                     submitButton.style.display = "none"
                 }
 
             })
 
-
         }
     }
 
     summary(program, correctAnswers, numberOfQuestions) {
+        document.querySelector('.modal').classList.add('completed')
+        document.querySelector('.quiz__content').style.display = 'none'
+        document.querySelector('.quiz__footer').style.display = 'none'
+        document.querySelector('.quiz__progressContainer').style.display = 'none'
+        back.style.display = 'none'
+
         const parent = document.querySelector('.quiz')
         const container = document.createElement('div')
         container.classList.add('quiz__summary')
@@ -236,21 +241,19 @@ export default class Quiz {
         const heading = document.createElement('h2')
         heading.innerText = _s.miniGames.completed.title
 
-        const phrase = document.createElement('p')
-        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
-
-        const continueButton = document.createElement('button')
-        continueButton.className = 'button bg--secondary px height border--5 border--solid border--transparent rounded--forward'
-        continueButton.innerText = _s.miniGames.continue
-
-        continueButton.addEventListener('click', () => {
-            quiz.modal.destroy()
-            program.advance()
-        })
+        const phrase = document.createElement('h3')
+        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions + ' correct answers'
 
         container.appendChild(heading)
         container.appendChild(phrase)
-        container.appendChild(continueButton)
         parent.appendChild(container)
+
+        const submitButton = document.getElementById('continue')
+        submitButton.innerText = _s.miniGames.continue
+
+        submitButton.addEventListener('click', () => {
+            quiz.modal.destroy()
+            program.advance()
+        })
     }
 }
