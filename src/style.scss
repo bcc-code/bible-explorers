@@ -89,6 +89,8 @@ $secondary-font: 'PT Sans', sans-serif;
         @include setBackground('../static/svgs/description_left.svg');
         height: 120px;
         width: 40px;
+        pointer-events: none;
+        z-index: 1;
     }
 
     &::after {
@@ -111,7 +113,9 @@ $secondary-font: 'PT Sans', sans-serif;
         background: $accent;
         height: 1.5rem;
         width: $width;
-        border-radius: 0 1.5rem 0 0;
+        border-top-right-radius: 1.5rem;
+        pointer-events: none;
+        z-index: 1;
     }
 }
 
@@ -1697,7 +1701,9 @@ button,
 .settings {
 
     &__wrapper {
+        position: relative;
         @include wrapper();
+        @include extras();
     }
 
     &__content {
@@ -1910,13 +1916,11 @@ button,
 
 .task {
     &__content {
+        position: relative;
         flex: 1;
-        color: #fff;
-        background: $gradient;
-        border: 5px solid $accent;
-        border-radius: 1rem;
-        padding: 2rem;
         margin-left: 2rem;
+        @include wrapper();
+        @include extras-bottom(20%);
 
         p {
             font-size: 2rem;
@@ -1937,6 +1941,7 @@ button,
         position: relative;
         width: 20rem;
         aspect-ratio: 1/1;
+        @include extras();
 
         #irisVideoBg {
             position: absolute;
@@ -2113,7 +2118,9 @@ button,
 .faq {
 
     &__wrapper {
-        @include wrapper()
+        position: relative;
+        @include wrapper();
+        @include extras-bottom(20%);
     }
 
     &__content {
@@ -2316,7 +2323,9 @@ button,
 
 .archive {
     &__wrapper {
-        @include wrapper()
+        position: relative;
+        @include wrapper();
+        @include extras-bottom(20%);
     }
 }
 
