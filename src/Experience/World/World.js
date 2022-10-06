@@ -307,8 +307,6 @@ export default class World {
         const numberOfTasks = chapter.program.filter(item => item.type == 'task' && item.taskType != 'quiz').length
         const numberOfQuizes = chapter.program.filter(item => item.taskType == 'quiz').length
 
-        console.log(numberOfQuizes > 0);
-
         let itemHTMLString =
             `<div class="chapter__content--preview">
                 <div class="column">
