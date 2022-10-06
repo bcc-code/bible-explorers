@@ -46,6 +46,13 @@ export default class Program {
 
         instance = this
 
+        instance.gamesData = {
+            pictureAndCode: {
+                circles: []
+            }
+        }
+
+
         // Get instance variables
         this.chapterProgress = () => localStorage.getItem(this.world.getId())
         this.currentStep = this.chapterProgress() || 0

@@ -60,6 +60,8 @@ export default class CodeUnlock {
             back.innerText = _s.journey.back
             back.addEventListener('click', (e) => {
                 instance.modal.destroy()
+                console.log('code unlock back');
+
                 instance.world.program.taskDescription.toggleTaskDescription()
             })
 

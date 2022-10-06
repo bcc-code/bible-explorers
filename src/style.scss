@@ -3044,6 +3044,24 @@ button,
     display: none !important;
 }
 
+.circle {
+    position: fixed;
+    width: 6rem;
+    height: 6rem;
+    margin-top: -3rem;
+    margin-left: -3rem;
+    border: 10px solid $dark;
+    background: rgba($accent2, .2);
+    border-radius: 50%;
+    z-index: 9999;
+    cursor: grab;
+    transition: .4s ease;
+
+    &:hover {
+        border: 10px solid $accent;
+    }
+}
+
 // #region Old code
 // .answers__wrapper {
 //     display: grid;

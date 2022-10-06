@@ -5,7 +5,7 @@ import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
 
 let instance = null
-
+const circleSize = 96
 export default class PictureAndCode {
     constructor() {
         this.experience = new Experience()
@@ -23,11 +23,13 @@ export default class PictureAndCode {
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
+            instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
 
             instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
 
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.togglePicture()
+            instance.mouseEvent()
         }
     }
 
@@ -44,7 +46,6 @@ export default class PictureAndCode {
         </div>`
 
         instance.modal = new Modal(html)
-
         document.querySelector('.modal').classList.add('modal__picture-and-code')
 
         const back = document.getElementById("back")
@@ -63,5 +64,49 @@ export default class PictureAndCode {
             instance.modal.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
         })
+
+        instance.addExistingCircles()
+    }
+
+    addExistingCircles() {
+        instance.program.gamesData.pictureAndCode.circles.forEach(circle => instance.addCircle(circle.x, circle.y))
+    }
+
+    mouseEvent() {
+        const maxCirclesToAdd = 4
+        document.querySelector('.picture-and-code').addEventListener('click', (event) => {
+            if (event.target.classList.contains('circle')) {
+                instance.removeCircle(event)
+                instance.circlesVisible--
+            }
+            else if (instance.circlesVisible < maxCirclesToAdd) {
+                instance.addCircle(event.x, event.y)
+                instance.program.gamesData.pictureAndCode.circles.push({ x: event.x, y: event.y })
+                instance.circlesVisible++
+            }
+        })
+    }
+
+    addCircle = (x, y) => {
+        const el = document.createElement('div')
+        el.classList.add('circle')
+        el.style.left = `${x}px`
+        el.style.top = `${y}px`
+        document.querySelector('.picture-and-code').appendChild(el)
+    }
+
+    removeCircle = (mouseClick) => {
+        mouseClick.target.remove()
+        const index = instance.program.gamesData.pictureAndCode.circles.findIndex(circle => instance.intersected(mouseClick, circle))
+        instance.program.gamesData.pictureAndCode.circles.splice(index, 1)
+    }
+
+    intersected(r1, r2) {
+        return !(
+            r2.x > r1.x + circleSize ||
+            r2.x + circleSize < r1.x ||
+            r2.y > r1.y + circleSize ||
+            r2.y + circleSize < r1.y
+        )
     }
 }

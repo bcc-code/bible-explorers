@@ -77,7 +77,6 @@ export default class World {
             this.welcome.loading.querySelector('span').innerText = 'Initializing'
             document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
 
-
         })
 
         this.buttons.start.innerText = _s.journey.start
