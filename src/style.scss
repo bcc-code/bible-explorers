@@ -2951,7 +2951,7 @@ button,
 
 // #endregion
 
-//#region
+// #region Responsive
 @media (max-width: 1920px) {
 
     :root {
@@ -3037,6 +3037,74 @@ button,
 }
 
 @media (max-width: 1680px) {}
+
+// #endregion
+
+#webpack-dev-server-client-overlay {
+    display: none !important;
+}
+
+// #region Old code
+// .answers__wrapper {
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     counter-reset: count;
+
+//     .answers__field {
+//         margin: 2rem;
+//         counter-increment: count;
+//         color: #fff;
+
+//         &::before {
+//             content: counter(count) ". ";
+//             font-weight: bold;
+//         }
+//     }
+
+//     input {
+//         background: transparent;
+//         padding: 0.75rem 1rem;
+//         border: none;
+//         color: inherit;
+//         letter-spacing: 0.1rem;
+//         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+//         transition: .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+//     }
+
+//     input:focus {
+//         border-bottom: 1px solid $accent2;
+//     }
+// }
+
+// .question {
+//     display: none;
+
+//     .question__label {
+//         font-weight: bold;
+//         display: block;
+//         margin-bottom: 1rem;
+//         opacity: 0.4;
+//     }
+
+//     &__title {
+//         font-weight: 300;
+//         margin-bottom: 1rem;
+//     }
+
+//     &__textarea {
+//         color: #fff;
+//         border-radius: 1rem;
+//         width: 100%;
+//         padding: 1rem;
+//         background: transparent;
+//         resize: vertical;
+//     }
+
+//     &.visible {
+//         display: block;
+//     }
+// }
+
 
 // @media (min-width: 1601px) {
 //     #miniGame__connector {
@@ -3453,67 +3521,3 @@ button,
 // }
 
 // #endregion
-
-#webpack-dev-server-client-overlay {
-    display: none !important;
-}
-
-// .answers__wrapper {
-//     display: grid;
-//     grid-template-columns: 1fr 1fr;
-//     counter-reset: count;
-
-//     .answers__field {
-//         margin: 2rem;
-//         counter-increment: count;
-//         color: #fff;
-
-//         &::before {
-//             content: counter(count) ". ";
-//             font-weight: bold;
-//         }
-//     }
-
-//     input {
-//         background: transparent;
-//         padding: 0.75rem 1rem;
-//         border: none;
-//         color: inherit;
-//         letter-spacing: 0.1rem;
-//         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-//         transition: .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-//     }
-
-//     input:focus {
-//         border-bottom: 1px solid $accent2;
-//     }
-// }
-
-// .question {
-//     display: none;
-
-//     .question__label {
-//         font-weight: bold;
-//         display: block;
-//         margin-bottom: 1rem;
-//         opacity: 0.4;
-//     }
-
-//     &__title {
-//         font-weight: 300;
-//         margin-bottom: 1rem;
-//     }
-
-//     &__textarea {
-//         color: #fff;
-//         border-radius: 1rem;
-//         width: 100%;
-//         padding: 1rem;
-//         background: transparent;
-//         resize: vertical;
-//     }
-
-//     &.visible {
-//         display: block;
-//     }
-// }
