@@ -125,16 +125,14 @@ export default class CodeUnlock {
         const wrapper = document.querySelector('.code-unlock')
 
         if (instance.el.code.textContent == instance.secretCode) {
-            if (this.irisMessage == false) {
-                instance.world.audio.playTaskCompleted()
-                instance.world.program.advance()
-                instance.destroy()
-            }
-            else {
-                instance.destroy()
-                instance.world.program.codeAndIris.toggleCodeAndIris()
-            }
-        } else {
+            instance.world.audio.playTaskCompleted()
+            instance.destroy()
+
+            this.irisMessage == true
+                ? instance.world.program.codeAndIris.toggleCodeAndIris()
+                : instance.world.program.advance()
+        }
+        else {
             wrapper.classList.add('wrong-code')
             setTimeout(() => {
                 wrapper.classList.remove('wrong-code')
