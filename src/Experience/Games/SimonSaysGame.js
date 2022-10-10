@@ -10,7 +10,7 @@ const explorersOne = {
     msBetweenNotes: 250
 }
 const explorersTwo = {
-    noOfRounds: 1,
+    noOfRounds: 8,
     msBetweenNotes: 150
 }
 export default class SimonSays {
