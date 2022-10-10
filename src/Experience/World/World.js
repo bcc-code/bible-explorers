@@ -61,6 +61,7 @@ export default class World {
         instance.selectedQuality = instance.experience.settings.videoQuality
 
         this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
+        document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -75,8 +76,6 @@ export default class World {
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
             this.welcome.loading.querySelector('span').innerText = 'Initializing'
-            document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
-
         })
 
         this.buttons.start.innerText = _s.journey.start
