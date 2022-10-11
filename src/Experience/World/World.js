@@ -52,6 +52,7 @@ export default class World {
             back: document.getElementById("back-to-landing"),
             start: document.getElementById("start-chapter"),
             restart: document.getElementById("restart-chapter"),
+            archive: document.getElementById("archive"),
             home: document.getElementById("home"),
             howTo: document.getElementById("how-to")
         }
@@ -111,6 +112,7 @@ export default class World {
 
         instance.buttons.home.style.display = 'none'
         instance.buttons.howTo.style.display = 'block'
+        instance.buttons.archive.style.display = 'none'
     }
 
     showMenuButtons() {
@@ -519,6 +521,7 @@ export default class World {
         instance.progressBar = new ProgressBar()
         instance.buttons.howTo.style.display = 'none'
         instance.buttons.home.style.display = 'block'
+        instance.buttons.archive.style.display = 'block'
 
         _appInsights.trackEvent({
             name: "Start chapter",
