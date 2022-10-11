@@ -57,7 +57,7 @@ export default class Video {
                 if (instance.hasSkipBtn()) return
 
                 const skipVideo = document.createElement('div')
-                skipVideo.className = 'skip-video button bg--secondary height px border--5 border--solid border--transparent rounded--forward'
+                skipVideo.className = 'skip-video button bg--secondary height px border--5 border--solid border--transparent rounded--forward pulsate'
                 skipVideo.innerText = _s.miniGames.skip
 
                 skipVideo.addEventListener('click', instance.finish)
@@ -121,7 +121,6 @@ export default class Video {
 
             if (this.video().isFullscreen_) {
                 instance.video().exitFullscreen()
-                // document.getElementById('videos-container').style.zIndex = '-1'
             }
 
             new TWEEN.Tween(instance.portalScreen.material)

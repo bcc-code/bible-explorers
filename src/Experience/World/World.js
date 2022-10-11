@@ -52,7 +52,9 @@ export default class World {
             back: document.getElementById("back-to-landing"),
             start: document.getElementById("start-chapter"),
             restart: document.getElementById("restart-chapter"),
-            home: document.getElementById("home")
+            archive: document.getElementById("archive"),
+            home: document.getElementById("home"),
+            howTo: document.getElementById("how-to")
         }
 
         this.welcome.loading.querySelector('span').innerText = _s.loading
@@ -82,8 +84,6 @@ export default class World {
         this.buttons.restart.innerText = _s.journey.restart
         this.buttons.back.innerText = _s.journey.back
 
-        this.buttons.back.style.display = 'block'
-
         this.buttons.home.addEventListener("click", this.goHome)
         this.buttons.back.addEventListener("click", this.goToLandingScreen)
     }
@@ -103,25 +103,36 @@ export default class World {
     }
 
     goHome() {
+        if (!instance.experience.settings.fullScreen) {
+            document.exitFullscreen()
+        }
+
         instance.showMenuButtons()
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
+
+        instance.buttons.home.style.display = 'none'
+        instance.buttons.howTo.style.display = 'block'
+        instance.buttons.archive.style.display = 'none'
+
+
     }
 
     showMenuButtons() {
+
         if (this.chapterProgress() == 0) {
             instance.buttons.restart.style.display = 'none'
         } else {
-            instance.buttons.restart.style.display = 'inline-block'
+            instance.buttons.restart.style.display = 'block'
         }
 
         if (this.chapterProgress() == this.selectedChapter.program.length) {
             instance.buttons.start.style.display = 'none'
         } else {
-            instance.buttons.start.style.display = 'inline-block'
+            instance.buttons.start.style.display = 'block'
         }
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
@@ -172,7 +183,6 @@ export default class World {
                 const categorySlug = category.getAttribute('data-slug')
                 instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
 
-                setFullscreen()
                 instance.audio.changeBgMusic()
 
                 instance.welcome.loadingScreen.classList.remove('visible')
@@ -188,6 +198,11 @@ export default class World {
         instance.menu.chapters.innerHTML = ''
         instance.welcome.loadingScreen.classList.add('visible')
         instance.welcome.chaptersScreen.classList.remove('visible')
+
+        instance.buttons.back.style.display = 'none'
+        instance.buttons.restart.style.display = 'none'
+        instance.buttons.start.style.display = 'none'
+        instance.buttons.howTo.style.display = 'none'
     }
 
     setChapters(data) {
@@ -251,6 +266,9 @@ export default class World {
 
         instance.markChapterIfCompleted(chapter)
         instance.offline.markChapterIfAvailableOffline(chapter)
+
+        instance.buttons.back.style.display = 'block'
+        instance.buttons.howTo.style.display = 'block'
     }
 
     markChapterIfCompleted(chapter) {
@@ -506,6 +524,9 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
+        instance.buttons.howTo.style.display = 'none'
+        instance.buttons.home.style.display = 'block'
+        instance.buttons.archive.style.display = 'block'
 
         _appInsights.trackEvent({
             name: "Start chapter",
@@ -530,7 +551,13 @@ export default class World {
         })
 
         document.querySelector('body').classList.remove('quick-look-mode')
+
+        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen()
+        }
+
     }
+
 
     restartChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
@@ -540,8 +567,6 @@ export default class World {
 
     finishJourney() {
         instance.showMenu()
-        instance.buttons.start.classList.remove('visible')
-        instance.buttons.restart.classList.add('visible')
         instance.audio.changeBgMusic()
 
         _appInsights.trackEvent({
@@ -561,6 +586,7 @@ export default class World {
         document.body.classList.add('freeze')
         instance.welcome.chaptersScreen.classList.add('visible')
         instance.points.delete()
+        instance.buttons.home.style.display = 'block'
     }
 
     hideMenu() {
@@ -586,16 +612,6 @@ export default class World {
         if (this.points) {
             this.points.update()
         }
-    }
-}
-
-function setFullscreen() {
-    if (document.body.requestFullscreen) {
-        document.body.requestFullscreen()
-    } else if (document.body.webkitRequestFullscreen) { /* Safari */
-        document.body.webkitRequestFullscreen()
-    } else if (document.body.msRequestFullscreen) { /* IE11 */
-        document.body.msRequestFullscreen()
     }
 }
 

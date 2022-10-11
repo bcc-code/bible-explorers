@@ -164,7 +164,7 @@ export default class TaskDescription {
         return `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent | icon-play-solid"></button>
+                <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
                 <div class="iris-playing">
                     <div class="line line1"></div>
                     <div class="line line2"></div>
