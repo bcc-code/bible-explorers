@@ -43,7 +43,7 @@ export default class Modal {
                 <button class="button bg--primary border--5 border--solid border--primary height px rounded--back" id="back"></button>
                 <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="restart"></button>
                 <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="skip"></button>
-                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="continue"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate" id="continue"></button>
             </div>
         `
     }

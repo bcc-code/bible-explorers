@@ -69,7 +69,7 @@ export default class Quiz {
             html += `</div>
                         <div class="quiz__footer ${questions.length == 1 ? "hide - nav" : ""}">
                             <button id="prev" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-left-long-solid"></button>
-                            <button id="next" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-right-long-solid"></button>
+                            <button id="next" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full pulsate | icon-arrow-right-long-solid"></button>
                         </div>
                     </div>`
 
