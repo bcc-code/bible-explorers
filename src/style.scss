@@ -355,6 +355,15 @@ $secondary-font: 'PT Sans', sans-serif;
             display: none;
             pointer-events: all;
         }
+
+        .col {
+            display: flex;
+            flex: 1;
+        }
+
+        .col:nth-child(2) {
+            justify-content: right;
+        }
     }
 }
 
@@ -863,9 +872,8 @@ button,
 #restart,
 #reset {
     margin-right: 2rem;
+    margin-left: auto;
 }
-
-
 
 .skip-video {
     right: 2rem;
