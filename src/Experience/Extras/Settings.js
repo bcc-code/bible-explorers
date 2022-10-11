@@ -75,8 +75,8 @@ export default class Settings {
                                 <span id="userRole"></span>
                             </span>
                             <div class="button__actions">
-                                <button id="login" class="button bg--fill px-5 height rounded" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
-                                <button id="logout" class="button bg--fill px-5 height rounded" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
+                                <button id="login" class="button bg--fill px height rounded" disabled="${!settings.logInLogOut.login}">${_s.settings.logIn}</button>
+                                <button id="logout" class="button bg--fill px height rounded" disabled="${!settings.logInLogOut.logout}">${_s.settings.logOut}</button>
                             </div>
                         </div>
                     </div>
@@ -162,8 +162,8 @@ export default class Settings {
                         <ol class="faq__list">`
             for (let i = 0; i < questions.length; i++) {
                 html += `<li class="faq__item">
-                                <p class="faq__question">${questions[i]}</p>
-                                <p class="faq__answer">${answers[i]}</p>`
+                            <p class="faq__question">${questions[i]}</p>
+                            <p class="faq__answer">${answers[i]}</p>`
             }
             html += `</li>
                         </ol>

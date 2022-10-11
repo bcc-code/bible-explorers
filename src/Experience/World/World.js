@@ -188,6 +188,9 @@ export default class World {
         instance.menu.chapters.innerHTML = ''
         instance.welcome.loadingScreen.classList.add('visible')
         instance.welcome.chaptersScreen.classList.remove('visible')
+
+        instance.buttons.restart.style.display = 'none'
+        instance.buttons.start.style.display = 'none'
     }
 
     setChapters(data) {

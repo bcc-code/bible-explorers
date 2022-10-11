@@ -267,6 +267,10 @@ $secondary-font: 'PT Sans', sans-serif;
 
     &.bg--fill {
         background: $gradient2;
+
+        &:hover {
+            background: linear-gradient(90deg, darken(#C5516E, 10%), darken(#EB9159, 10%));
+        }
     }
 
     &.rounded--full {
@@ -314,8 +318,6 @@ $secondary-font: 'PT Sans', sans-serif;
             animation-duration: 0ms;
         }
     }
-
-
 
 }
 
@@ -1045,7 +1047,7 @@ button,
             pointer-events: all;
 
             &:hover {
-                opacity: 0.8;
+                background: linear-gradient(90deg, darken(#C5516E, 10%), darken(#EB9159, 10%));
             }
         }
     }
@@ -1194,15 +1196,15 @@ button,
         }
 
         [class^='icon-'] {
-            background: $accent;
             width: 2rem;
             height: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 1.5rem;
             border-radius: 0.25rem;
             margin-right: 0.5rem;
+            color: $accent2;
         }
     }
 
@@ -1921,10 +1923,7 @@ button,
 
     .button__actions {
         display: flex;
-
-        button {
-            flex: 1;
-        }
+        justify-content: center;
 
         button:first-child {
             margin-right: 1rem;
