@@ -558,7 +558,6 @@ export default class World {
 
     }
 
-
     restartChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
         localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
@@ -580,6 +579,7 @@ export default class World {
         })
 
         document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
+
     }
 
     showMenu() {

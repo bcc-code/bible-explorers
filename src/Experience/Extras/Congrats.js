@@ -67,6 +67,10 @@ export default class Congrats {
 
         homescreen.addEventListener('click', () => {
             instance.modal.destroy()
+
+            if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
+                document.exitFullscreen()
+            }
         })
 
         instance.world.audio.playCongratsSound()

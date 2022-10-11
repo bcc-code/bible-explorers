@@ -728,6 +728,8 @@ button,
     right: 4rem;
     bottom: 4rem;
 
+
+
     .modal-on &,
     .freeze & {
         display: none;
@@ -740,6 +742,7 @@ button,
         z-index: 3;
         display: flex;
         justify-content: space-between;
+
     }
 
     &__step {
@@ -758,6 +761,8 @@ button,
         background: $gradient padding-box, $gradient2 border-box;
         @include alignCenterVH();
         transition: .3s ease;
+
+
 
         &.locked {
             @include icon(icon-lock-solid);
@@ -804,6 +809,34 @@ button,
 
         position: relative;
         z-index: 2;
+
+        &::before {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(-45deg, #C5516E 0%, #EB9159 100%);
+            transform: translate3d(0, 20px, 0);
+            filter: blur(20px);
+            opacity: var(0.7);
+            transition: opacity 0.3s;
+            border-radius: inherit;
+        }
+
+        &::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: inherit;
+            border-radius: inherit;
+        }
 
         .passed {
             float: left;
