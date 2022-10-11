@@ -58,7 +58,7 @@ export default class Video {
 
                 const skipVideo = document.createElement('div')
                 skipVideo.className = 'skip-video button bg--secondary height px border--5 border--solid border--transparent rounded--forward'
-                skipVideo.innerText = _s.miniGames.continue
+                skipVideo.innerText = _s.miniGames.skip
 
                 skipVideo.addEventListener('click', instance.finish)
                 instance.videoJsEl().appendChild(skipVideo)
