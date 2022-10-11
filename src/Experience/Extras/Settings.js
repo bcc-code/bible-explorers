@@ -12,6 +12,7 @@ export default class Settings {
         settings = this
 
         settings.soundOn = true
+        settings.fullScreen = false
 
         const defaultVideoQuality = 'high'
         settings.videoQuality = localStorage.getItem('videoQuality') || defaultVideoQuality
@@ -57,7 +58,7 @@ export default class Settings {
                             </div>
                             <div class="sound settings__item">
                                 <span>${_s.settings.soundEffects}</span>
-                                <label class="switch">
+                                <label id="sound-mode" class="switch">
                                     <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
                                     <span class="slider round"></span>
                                 </label>
@@ -67,6 +68,13 @@ export default class Settings {
                                 <span>${_s.settings.feedback}</span>
                                 <i class="icon icon-envelope-solid"></i>
                             </a>
+                            <div class="settings__item">
+                                <span>Full screen mode</span>
+                                <label id="full-screen-mode" class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
                         </div>
                         <div class="login settings__footer">
                             <span>
@@ -102,6 +110,7 @@ export default class Settings {
                 loggedIn: document.getElementById("loggedIn"),
                 userName: document.getElementById("userName"),
                 userRole: document.getElementById("userRole"),
+                fullScreen: document.getElementById("full-screen-mode")
             }
 
             settings.el.currentLang.addEventListener("click", settings.toggleLanguageList)
@@ -125,8 +134,28 @@ export default class Settings {
                 })
             })
 
+
             settings.toggleFaq()
             settings.updateUI()
+
+
+            const fullScreenSwitch = settings.el.fullScreen.querySelector('input')
+            const fullScreenLabel = settings.el.fullScreen.querySelector('span')
+
+            fullScreenSwitch.checked = document.fullscreenElement !== null
+            fullScreenLabel.innerText = !document.fullscreenElement ? 'Off' : 'On'
+
+            fullScreenLabel.addEventListener('click', (e) => {
+                if (!document.fullscreenElement) {
+                    settings.fullScreen = true
+                    document.documentElement.requestFullscreen()
+                } else if (document.exitFullscreen) {
+                    document.exitFullscreen()
+                    settings.fullScreen = false
+                }
+                fullScreenLabel.innerText = settings.fullScreen ? 'On' : 'Off'
+            })
+
         }
     }
 

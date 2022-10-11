@@ -103,6 +103,10 @@ export default class World {
     }
 
     goHome() {
+        if (!instance.experience.settings.fullScreen) {
+            document.exitFullscreen()
+        }
+
         instance.showMenuButtons()
         instance.showMenu()
         instance.program.video.defocus()
@@ -113,6 +117,8 @@ export default class World {
         instance.buttons.home.style.display = 'none'
         instance.buttons.howTo.style.display = 'block'
         instance.buttons.archive.style.display = 'none'
+
+
     }
 
     showMenuButtons() {
@@ -177,7 +183,6 @@ export default class World {
                 const categorySlug = category.getAttribute('data-slug')
                 instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
 
-                setFullscreen()
                 instance.audio.changeBgMusic()
 
                 instance.welcome.loadingScreen.classList.remove('visible')
@@ -546,7 +551,13 @@ export default class World {
         })
 
         document.querySelector('body').classList.remove('quick-look-mode')
+
+        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen()
+        }
+
     }
+
 
     restartChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
@@ -601,16 +612,6 @@ export default class World {
         if (this.points) {
             this.points.update()
         }
-    }
-}
-
-function setFullscreen() {
-    if (document.body.requestFullscreen) {
-        document.body.requestFullscreen()
-    } else if (document.body.webkitRequestFullscreen) { /* Safari */
-        document.body.webkitRequestFullscreen()
-    } else if (document.body.msRequestFullscreen) { /* IE11 */
-        document.body.msRequestFullscreen()
     }
 }
 
