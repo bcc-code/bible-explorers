@@ -1757,11 +1757,11 @@ button,
         margin-bottom: 1rem;
         color: #fff;
         font-size: 1.5rem;
-        font-size: 1rem;
 
         &:nth-child(2n+1) {
             margin-right: 1rem;
         }
+
 
     }
 
@@ -1786,6 +1786,7 @@ button,
 
         &__picker {
             position: relative;
+            font-size: 1.25rem;
         }
 
         &__current {
@@ -1837,6 +1838,7 @@ button,
 
         .language__picker {
             position: relative;
+            font-size: 1.25rem;
         }
 
         .language__current {
