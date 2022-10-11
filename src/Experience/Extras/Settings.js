@@ -60,7 +60,7 @@ export default class Settings {
                                 <span>${_s.settings.soundEffects}</span>
                                 <label id="sound-mode" class="switch">
                                     <input type="checkbox" ${settings.soundOn ? 'checked' : ''}>
-                                    <span class="slider round"></span>
+                                    <span class="slider round">${settings.soundOn ? 'On' : 'Off'}</span>
                                 </label>
                             </div>
                             <div class="faq__button settings__item">${_s.settings.faq}</div>
@@ -145,7 +145,7 @@ export default class Settings {
             fullScreenSwitch.checked = document.fullscreenElement !== null
             fullScreenLabel.innerText = !document.fullscreenElement ? 'Off' : 'On'
 
-            fullScreenLabel.addEventListener('click', (e) => {
+            fullScreenLabel.addEventListener('click', () => {
                 if (!document.fullscreenElement) {
                     settings.fullScreen = true
                     document.documentElement.requestFullscreen()
@@ -171,6 +171,8 @@ export default class Settings {
 
     toggleSound() {
         settings.soundOn = this.checked
+        const label = settings.el.soundToggle.nextElementSibling
+        settings.soundOn ? label.innerText = 'On' : label.innerText = 'Off'
     }
 
     toggleFaq() {
