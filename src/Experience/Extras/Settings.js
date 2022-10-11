@@ -63,17 +63,17 @@ export default class Settings {
                                     <span class="slider round">${settings.soundOn ? 'On' : 'Off'}</span>
                                 </label>
                             </div>
-                            <div class="faq__button settings__item">${_s.settings.faq}</div>
-                            <a class="feedback settings__item" href="mailto:hello@biblekids.io" target="blank">
-                                <span>${_s.settings.feedback}</span>
-                                <i class="icon icon-envelope-solid"></i>
-                            </a>
+                            
                             <div class="settings__item">
                                 <span>Full screen mode</span>
                                 <label id="full-screen-mode" class="switch">
                                     <input type="checkbox">
                                     <span class="slider round"></span>
                                 </label>
+                            </div>
+                            <div class="settings__item">
+                                <span>${_s.settings.faq}</span>
+                                <button class="faq__button | button bg--secondary rounded--full | icon-question-solid"></button>
                             </div>
                         </div>
                         <div class="login settings__footer">
