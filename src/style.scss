@@ -1753,7 +1753,7 @@ button,
         width: calc(50% - 0.5rem);
         background: $dark;
         border-radius: 1rem;
-        padding: 1rem 2rem;
+        padding: 1rem;
         margin-bottom: 1rem;
         color: #fff;
         font-size: 1.5rem;
@@ -1762,6 +1762,13 @@ button,
             margin-right: 1rem;
         }
 
+
+    }
+
+    .faq__button {
+        height: 2.5rem;
+        width: 2.5rem;
+        border: 2px solid transparent;
     }
 
     &__footer {
@@ -1776,18 +1783,25 @@ button,
     }
 
     .video-quality {
+
         &__picker {
             position: relative;
+            font-size: 1.25rem;
         }
 
         &__current {
             height: 2.5rem;
             padding: 0.25rem 1rem;
             line-height: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            background: $gradient padding-box, $gradient2 border-box;
             border-radius: 8px;
             color: #fff;
             cursor: pointer;
+
+            &:hover {
+                background: $gradient2 padding-box, $gradient2 border-box;
+            }
         }
 
         &__list {
@@ -1814,25 +1828,32 @@ button,
             transition: .3s ease;
 
             &:hover {
-                background-color: #0396e3;
+                background: $accent2;
                 color: #fff;
             }
         }
     }
 
     .language {
+
         .language__picker {
             position: relative;
+            font-size: 1.25rem;
         }
 
         .language__current {
             height: 2.5rem;
             padding: 0.25rem 1rem;
             line-height: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            background: $gradient padding-box, $gradient2 border-box;
             border-radius: 8px;
             color: #fff;
             cursor: pointer;
+
+            &:hover {
+                background: $gradient2 padding-box, $gradient2 border-box;
+            }
         }
 
         .language__list {
@@ -1855,11 +1876,11 @@ button,
             padding: 0.25rem 1rem;
             color: $dark;
             border-radius: 8px;
-            cursor: pointer;
             transition: .3s ease;
+            cursor: pointer;
 
             &:hover {
-                background-color: #0396e3;
+                background: $accent2;
                 color: #fff;
             }
         }
@@ -1868,8 +1889,8 @@ button,
     .switch {
         position: relative;
         display: inline-block;
-        width: 100px;
-        height: 48px;
+        width: 80px;
+        height: 40px;
 
         input {
             opacity: 0;
@@ -1884,19 +1905,23 @@ button,
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background: #fff;
             -webkit-transition: 0.4s;
             transition: 0.4s;
+
+            &:hover {
+                filter: grayscale(0.4);
+            }
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 40px;
-            width: 40px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
+            height: 36px;
+            width: 36px;
+            left: 2px;
+            bottom: 2px;
+            background: $gradient2;
             -webkit-transition: 0.4s;
             transition: 0.4s;
         }
@@ -1912,15 +1937,17 @@ button,
         }
 
         input:checked+.slider:before {
-            transform: translateX(52px);
+            background: #fff;
+            transform: translateX(40px);
         }
 
         .slider.round {
-            padding-inline: 12px;
-            border-radius: 34px;
             color: $dark;
+            padding-inline: 12px;
+            border-radius: 100px;
+            font-size: 1rem;
             font-weight: bold;
-            line-height: 48px;
+            line-height: 40px;
             text-align: right;
         }
 
@@ -1929,22 +1956,15 @@ button,
         }
     }
 
-    .feedback,
-    .faq__button {
-        cursor: pointer;
-        text-decoration: none;
-        transition: background .3s ease;
-
-        &:hover {
-            background: rgba($primary, .5);
-        }
-    }
-
     .button__actions {
         display: flex;
         justify-content: center;
 
-        button:first-child {
+        .button {
+            min-width: 10rem;
+        }
+
+        .button:first-child {
             margin-right: 1rem;
         }
     }
@@ -2955,8 +2975,6 @@ button,
 
 // #region Responsive
 
-
-
 @media (max-width: 1920px) {
     :root {
         --heading--size: 2.25rem;
@@ -3035,6 +3053,12 @@ button,
     .task {
         &__content p {
             font-size: var(--text-size--task);
+        }
+    }
+
+    .modal__content {
+        &.settings {
+            max-width: 60rem;
         }
     }
 
