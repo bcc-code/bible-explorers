@@ -1916,7 +1916,7 @@ button,
         }
 
         .slider.round {
-            padding-inline: 10px;
+            padding-inline: 12px;
             border-radius: 34px;
             color: $dark;
             font-weight: bold;
@@ -2992,6 +2992,10 @@ button,
         &.width {
             width: 4rem;
         }
+    }
+
+    #how-to {
+        line-height: calc(4rem - 10px);
     }
 
     .logo {
