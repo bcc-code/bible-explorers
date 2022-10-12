@@ -3019,6 +3019,21 @@ button,
     }
 }
 
+#deskWidgetMain {
+    top: calc(3rem + 4rem);
+    left: 2rem;
+
+    .widget-toggle-row {
+        display: none;
+    }
+    .widget-iframe-hold {
+        top: 0;
+
+        &::after {
+            display: none;
+        }
+    }
+}
 
 // #endregion
 
@@ -3217,7 +3232,6 @@ button,
     }
 
     .settings {
-
         .video-quality__picker,
         .language__picker {
             font-size: 1rem;
@@ -3244,18 +3258,21 @@ button,
         .switch input:checked+.slider:before {
             transform: translateX(44px);
         }
-
     }
 }
 
 @media (max-width: 1280px) {
-
     .button.height {
         height: 3rem;
     }
 
     .button.width {
         width: 3rem;
+    }
+
+    #deskWidgetMain {
+        top: calc(2rem + 3rem);
+        left: 1rem;
     }
 
     #how-to {
@@ -3370,9 +3387,4 @@ button,
     &:hover {
         border: 10px solid $accent;
     }
-}
-
-#deskWidgetMain {
-    bottom: 6rem;
-    right: 2rem;
 }

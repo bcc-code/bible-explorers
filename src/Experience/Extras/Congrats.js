@@ -74,9 +74,6 @@ export default class Congrats {
             if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
                 document.exitFullscreen()
             }
-
-            // Show Support button
-            document.getElementById('deskWidgetMain').style.display = 'block'
         })
     }
 

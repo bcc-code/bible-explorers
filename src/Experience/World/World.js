@@ -55,11 +55,17 @@ export default class World {
             restart: document.getElementById("restart-chapter"),
             archive: document.getElementById("archive"),
             home: document.getElementById("home"),
+            support: document.getElementById("support-chat"),
             howTo: document.getElementById("how-to")
         }
 
         this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
+
+        this.buttons.support.style.display = 'block'
+        this.buttons.support.addEventListener('click', function() {
+            document.getElementById('deskWidgetMain').classList.toggle('widget-open')
+        })
         this.buttons.howTo.querySelector('span').innerText = _s.howTo
 
         this.selectedQuality = this.experience.settings.videoQuality
@@ -118,8 +124,6 @@ export default class World {
         if (!instance.experience.settings.fullScreen) {
             document.exitFullscreen()
         }
-        // Show Support button
-        document.getElementById('deskWidgetMain').style.display = 'block'
     }
 
     showMenuButtons() {
@@ -556,9 +560,6 @@ export default class World {
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
             document.documentElement.requestFullscreen()
         }
-
-        // Hide Support button
-        document.getElementById('deskWidgetMain').style.display = 'none'
     }
 
     restartChapter() {
