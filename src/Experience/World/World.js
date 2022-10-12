@@ -105,7 +105,6 @@ export default class World {
     }
 
     goHome() {
-        instance.showMenuButtons()
         instance.showMenu()
         instance.program.video.defocus()
         instance.camera.updateCameraTo()
@@ -589,6 +588,7 @@ export default class World {
         instance.welcome.chaptersScreen.classList.add('visible')
         instance.points.delete()
         instance.buttons.home.style.display = 'block'
+        instance.showMenuButtons()
     }
 
     hideMenu() {
