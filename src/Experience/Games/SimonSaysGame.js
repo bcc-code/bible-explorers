@@ -87,8 +87,7 @@ export default class SimonSays {
             gameWatchTicker.appendChild(gameWatchTickerLeft)
             gameWatchTicker.appendChild(gameWatchTickerRight)
 
-            const tickersLength = 8
-            for (let i = 0; i < tickersLength; i++) {
+            for (let i = 0; i < instance.data.rounds; i++) {
                 const ticker = document.createElement('div')
                 ticker.classList.add('watch-tick')
                 ticker.setAttribute('data-item', i)
@@ -99,7 +98,7 @@ export default class SimonSays {
 
                 cables.appendChild(cable)
 
-                i < 4
+                i < instance.data.rounds / 2
                     ? gameWatchTickerLeft.appendChild(ticker)
                     : gameWatchTickerRight.appendChild(ticker)
             }
