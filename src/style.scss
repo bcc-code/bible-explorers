@@ -3095,7 +3095,6 @@ button,
 }
 
 @media (max-width: 1680px) {
-
     :root {
         --heading--size: 2rem;
         --heading2--size: 1.7rem;
@@ -3119,8 +3118,6 @@ button,
         right: 3rem;
         bottom: 3rem;
     }
-
-
 }
 
 // #endregion
@@ -3148,6 +3145,6 @@ button,
 }
 
 #deskWidgetMain {
-    bottom: 2rem;
+    bottom: 2.25rem;
     right: 2rem;
 }

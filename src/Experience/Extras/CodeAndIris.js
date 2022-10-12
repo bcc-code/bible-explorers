@@ -33,19 +33,22 @@ export default class CodeAndIris {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const backBtn = document.getElementById("back")
-        const getTaskBtn = document.getElementById('continue')
-
         if (!instance.currentStepData.audio)
             playBTN.remove()
 
-        backBtn.addEventListener('click', (e) => {
+        const back = document.getElementById("back")
+        back.style.display = 'block'
+        back.innerText = _s.journey.back
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code, true)
         })
 
-        getTaskBtn.addEventListener("click", () => {
+        const next = document.getElementById('continue')
+        next.style.display = 'block'
+        next.innerText = _s.task.next
+        next.addEventListener("click", () => {
             instance.modal.destroy()
             instance.world.program.advance()
         })
