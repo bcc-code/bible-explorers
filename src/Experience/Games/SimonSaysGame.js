@@ -73,6 +73,8 @@ export default class SimonSays {
             gameWatch.classList.add('watch')
             const gameWatchCenter = document.createElement('div')
             gameWatchCenter.classList.add('watch-center')
+            const gameWatchMiddle = document.createElement('div')
+            gameWatchMiddle.classList.add('watch-middle')
             const gameWatchTicker = document.createElement('div')
             gameWatchTicker.classList.add('watch-ticker')
 
@@ -84,8 +86,8 @@ export default class SimonSays {
             const gameWatchTickerRight = document.createElement('div')
             gameWatchTickerRight.classList.add('column', 'watch-ticker--right')
 
-            gameWatchTicker.appendChild(gameWatchTickerLeft)
-            gameWatchTicker.appendChild(gameWatchTickerRight)
+            gameWatchTicker.append(gameWatchTickerLeft)
+            gameWatchTicker.append(gameWatchTickerRight)
 
             for (let i = 0; i < instance.data.rounds; i++) {
                 const ticker = document.createElement('div')
@@ -96,16 +98,17 @@ export default class SimonSays {
                 cable.classList.add('cable')
                 cable.setAttribute('data-item', i)
 
-                cables.appendChild(cable)
+                cables.append(cable)
 
-                i < instance.data.rounds / 2
-                    ? gameWatchTickerLeft.appendChild(ticker)
-                    : gameWatchTickerRight.appendChild(ticker)
+                i < 4
+                    ? gameWatchTickerLeft.append(ticker)
+                    : gameWatchTickerRight.append(ticker)
             }
 
             gameWatch.appendChild(gameWatchCenter)
-            gameContentBox.appendChild(cables)
-            gameContentBox.appendChild(gameWatchTicker)
+            gameWatchMiddle.appendChild(cables)
+            gameWatchMiddle.appendChild(gameWatchTicker)
+            gameContentBox.appendChild(gameWatchMiddle)
             gameContentBox.appendChild(gameWatch)
             gameContent.appendChild(gameContentBox)
             gameWrapper.appendChild(gameContent)
