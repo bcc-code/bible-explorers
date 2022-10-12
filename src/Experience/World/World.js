@@ -36,7 +36,8 @@ export default class World {
             chapters: document.querySelector(".chapters.list"),
             chapterItems: document.querySelector(".chapter__items"),
             chapterContent: document.querySelector(".chapter__content"),
-            chaptersData: []
+            chaptersData: [],
+            quickLook: document.getElementById("quick-look")
         }
 
         // Welcome screen
@@ -59,8 +60,9 @@ export default class World {
 
         this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
+        this.buttons.howTo.querySelector('span').innerText = _s.howTo
 
-        instance.selectedQuality = instance.experience.settings.videoQuality
+        this.selectedQuality = this.experience.settings.videoQuality
 
         this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
         document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
@@ -185,6 +187,7 @@ export default class World {
                 instance.audio.changeBgMusic()
 
                 instance.welcome.loadingScreen.classList.remove('visible')
+                instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook
             })
         })
     }

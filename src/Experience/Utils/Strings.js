@@ -7,6 +7,7 @@ const strings = {
         "introduction": "Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start the time travel",
             "continue": "Continue the time travel",
@@ -19,7 +20,8 @@ const strings = {
             "completed": "You have completed",
             "back": "Back",
             "attachments": "Attachments",
-            "homescreen": "Done"
+            "homescreen": "Done",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Enter the correct number",
@@ -111,6 +113,7 @@ const strings = {
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
         "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
         "browserNotification": "Anbefalt nettleser for dette konseptet er Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start tidsreisen",
             "continue": "Fortsett tidsreisen",
@@ -123,7 +126,8 @@ const strings = {
             "completed": "Du har fullført",
             "back": "Tilbake",
             "attachments": "Vedlegg",
-            "homescreen": "Ferdig"
+            "homescreen": "Ferdig",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Skriv riktig tall",
@@ -215,6 +219,7 @@ const strings = {
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Zeitreise starten",
             "continue": "Zeitreise fortsetzen",
@@ -227,7 +232,8 @@ const strings = {
             "completed": "Du hast es geschafft",
             "back": "Zurück",
             "attachments": "Anhang",
-            "homescreen": "Fertig"
+            "homescreen": "Fertig",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Korrekte Zahl eingeben",
@@ -319,6 +325,7 @@ const strings = {
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start de tijdreis",
             "continue": "Ga door met de tijdreis",
@@ -331,7 +338,8 @@ const strings = {
             "completed": "Je hebt het gehaald",
             "back": "Terug",
             "attachments": "Bijlagen",
-            "homescreen": "Klaar"
+            "homescreen": "Klaar",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Voer het juiste getal in",
@@ -423,6 +431,7 @@ const strings = {
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Commencer le voyage dans le temps",
             "continue": "Continuer le voyage dans le temps",
@@ -435,7 +444,8 @@ const strings = {
             "completed": "Tu as terminé",
             "back": "Retour",
             "attachments": "Pièces jointes",
-            "homescreen": "Terminé"
+            "homescreen": "Terminé",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Saisir le bon numéro",
@@ -527,6 +537,7 @@ const strings = {
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Rozpocznij podróż w czasie",
             "continue": "Kontynuuj podróż",
@@ -539,7 +550,8 @@ const strings = {
             "completed": "Ukończyłeś",
             "back": "Powrót",
             "attachments": "Załączniki",
-            "homescreen": "Gotowe"
+            "homescreen": "Gotowe",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Wpisz poprawny numer",
@@ -631,19 +643,21 @@ const strings = {
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
         "notAvailable": "Nici un capitol disponibil în limba selectată",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "Cum funcționează?",
         "journey": {
             "start": "Începe călătoria în timp",
             "continue": "Continuă călătoria în timp",
             "restart": "Începe călătoria din nou",
             "congrats": "Felicitări!",
             "bibleCards": {
-                "title": "Bible cards",
-                "message": "It is now time to receive the bible cards."
+                "title": "Carduri biblice",
+                "message": "Acum este momentul să primiți cardurile biblice."
             },
             "completed": "Ai terminat",
             "back": "Înapoi",
             "attachments": "Fișiere",
-            "homescreen": "Finalizare"
+            "homescreen": "Finalizare",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Scrie numărul corect",
@@ -735,6 +749,7 @@ const strings = {
         "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Comenzar el viaje en el tiempo",
             "continue": "Continuar con el viaje en el tiempo",
@@ -747,7 +762,8 @@ const strings = {
             "completed": "Tu has terminado",
             "back": "Regresar",
             "attachments": "Adjunto",
-            "homescreen": "Listo"
+            "homescreen": "Listo",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Escribe el numero correcto",
@@ -839,6 +855,7 @@ const strings = {
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Comece a viajem no tempo",
             "continue": "Continue a viajem no tempo",
@@ -851,7 +868,8 @@ const strings = {
             "completed": "Você concluiu",
             "back": "Voltar",
             "attachments": "Attachments",
-            "homescreen": "Done"
+            "homescreen": "Done",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Digite o número correto",
@@ -943,6 +961,7 @@ const strings = {
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Inizia il viaggio nel tempo",
             "continue": "Continua il viaggio nel tempo",
@@ -955,7 +974,8 @@ const strings = {
             "completed": "Hai finito",
             "back": "Indietro",
             "attachments": "Allegati",
-            "homescreen": "Fatto"
+            "homescreen": "Fatto",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Inserisci il numero corretto",
@@ -1047,6 +1067,7 @@ const strings = {
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Начать путешествие во времени",
             "continue": "Продолжить путешествие во времени",
@@ -1059,7 +1080,8 @@ const strings = {
             "completed": "Вы завершили",
             "back": "Назад",
             "attachments": "Вложения",
-            "homescreen": "Готово"
+            "homescreen": "Готово",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Введите правильный номер",
@@ -1151,6 +1173,7 @@ const strings = {
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Aloita aikamatka",
             "continue": "Jatka aikamatkaa",
@@ -1163,7 +1186,8 @@ const strings = {
             "completed": "Olet suorittanut",
             "back": "Takaisin",
             "attachments": "Liitteet",
-            "homescreen": "Valmis"
+            "homescreen": "Valmis",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Kirjoita oikea numero",
@@ -1255,6 +1279,7 @@ const strings = {
         "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Időutazás elkezdése",
             "continue": "Időutazás folytatása ",
@@ -1267,7 +1292,8 @@ const strings = {
             "completed": "Befejezted",
             "back": "Vissza",
             "attachments": "Csatolmányok",
-            "homescreen": "Kész"
+            "homescreen": "Kész",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Add meg a helyes számot",
@@ -1358,6 +1384,7 @@ const strings = {
         "introduction": "Nu kan børnene i alderen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start tidsrejsen",
             "continue": "Fortsæt tidsrejsen",
@@ -1370,7 +1397,8 @@ const strings = {
             "completed": "Du har gennemført",
             "back": "Tilbage",
             "attachments": "Attachments",
-            "homescreen": "Done"
+            "homescreen": "Done",
+            "quickLook": "Quick look"
         },
         "task": {
             "codeUnlock": "Skriv det rigtige antal",
