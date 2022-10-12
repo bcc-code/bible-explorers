@@ -61,20 +61,22 @@ export default class Congrats {
         instance.modal = new Modal(html, instance.world.finishJourney)
         document.querySelector('.modal').classList.add('modal__congrats')
 
+        instance.world.audio.playCongratsSound()
+        instance.animateStars(500)
+
         const homescreen = document.getElementById('continue')
         homescreen.innerText = _s.journey.homescreen
         homescreen.style.display = 'block'
-
         homescreen.addEventListener('click', () => {
             instance.modal.destroy()
 
             if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
                 document.exitFullscreen()
             }
-        })
 
-        instance.world.audio.playCongratsSound()
-        instance.animateStars(500)
+            // Show Support button
+            document.getElementById('deskWidgetMain').style.display = 'block'
+        })
     }
 
     animateStars(timeout) {

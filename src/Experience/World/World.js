@@ -103,10 +103,6 @@ export default class World {
     }
 
     goHome() {
-        if (!instance.experience.settings.fullScreen) {
-            document.exitFullscreen()
-        }
-
         instance.showMenuButtons()
         instance.showMenu()
         instance.program.video.defocus()
@@ -118,11 +114,14 @@ export default class World {
         instance.buttons.howTo.style.display = 'block'
         instance.buttons.archive.style.display = 'none'
 
-
+        if (!instance.experience.settings.fullScreen) {
+            document.exitFullscreen()
+        }
+        // Show Support button
+        document.getElementById('deskWidgetMain').style.display = 'block'
     }
 
     showMenuButtons() {
-
         if (this.chapterProgress() == 0) {
             instance.buttons.restart.style.display = 'none'
         } else {
@@ -556,6 +555,8 @@ export default class World {
             document.documentElement.requestFullscreen()
         }
 
+        // Hide Support button
+        document.getElementById('deskWidgetMain').style.display = 'none'
     }
 
     restartChapter() {
@@ -579,7 +580,6 @@ export default class World {
         })
 
         document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
-
     }
 
     showMenu() {
