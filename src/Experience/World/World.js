@@ -566,7 +566,6 @@ export default class World {
     }
 
     finishJourney() {
-        instance.showMenu()
         instance.audio.changeBgMusic()
 
         _appInsights.trackEvent({
