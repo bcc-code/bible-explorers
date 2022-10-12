@@ -730,8 +730,6 @@ button,
     right: 4rem;
     bottom: 4rem;
 
-
-
     .modal-on &,
     .freeze & {
         display: none;
@@ -744,7 +742,6 @@ button,
         z-index: 3;
         display: flex;
         justify-content: space-between;
-
     }
 
     &__step {
@@ -764,10 +761,7 @@ button,
         @include alignCenterVH();
         transition: .3s ease;
 
-
-
         &.locked {
-            @include icon(icon-lock-solid);
             filter: grayscale(1);
         }
 
@@ -788,15 +782,6 @@ button,
             background: $gradient2 padding-box, $gradient2 border-box;
             border-color: transparent;
         }
-    }
-
-    .quick-look-mode & .progress-bar__step.locked {
-        font-size: 1.5rem;
-        font-family: $primary-font !important;
-    }
-
-    .quick-look-mode & .progress-bar__step.locked::before {
-        display: none;
     }
 
     &__step:not(:last-child) {
@@ -3026,6 +3011,7 @@ button,
     .widget-toggle-row {
         display: none;
     }
+
     .widget-iframe-hold {
         top: 0;
 
@@ -3232,6 +3218,7 @@ button,
     }
 
     .settings {
+
         .video-quality__picker,
         .language__picker {
             font-size: 1rem;

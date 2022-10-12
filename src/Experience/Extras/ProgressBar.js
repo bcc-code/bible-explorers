@@ -8,7 +8,6 @@ export default class ProgressBar {
         this.debug = this.experience.debug
         instance = this
 
-        this.experience = new Experience()
         this.program = this.experience.world.program
         this.stepWidth = 100 / this.program.totalSteps;
 
@@ -22,7 +21,7 @@ export default class ProgressBar {
 
         instance.el.steps.forEach(function (step, index) {
             step.addEventListener("click", () => {
-                let clickedStep = step.innerText - 1
+                let clickedStep = step.getAttribute('data-index')
                 if (instance.debug.developer || instance.debug.onQuickLook() || clickedStep <= instance.program.chapterProgress())
                     instance.program.advance(clickedStep)
             })
@@ -48,9 +47,12 @@ export default class ProgressBar {
     }
 
     static generateHtml() {
+
+
         let html = '<div class="progress-bar__steps">'
         for (let i = 0; i < instance.program.totalSteps; i++) {
-            html += `<div class="progress-bar__step ${i > instance.program.chapterProgress() ? 'locked' : ''}">${i + 1}</div>`
+
+            html += `<div class="progress-bar__step ${i > instance.program.chapterProgress() ? 'locked' : ''} ${instance.program.programData[i].type === 'video' ? 'icon-film-solid' : instance.program.programData[i].taskType === "quiz" ? 'icon-question-solid' : 'icon-pen-to-square-solid'}" data-index="${i}" ></div>`
         }
         html += `<div class="progress-bar__step">#</div>`
 
