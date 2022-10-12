@@ -52,9 +52,8 @@ export default class Program {
             }
         }
 
-
         // Get instance variables
-        this.chapterProgress = () => localStorage.getItem(this.world.getId())
+        this.chapterProgress = () => parseInt(localStorage.getItem(this.world.getId())) || 0
         this.currentStep = this.chapterProgress() || 0
         this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
@@ -88,14 +87,14 @@ export default class Program {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
         this.startInteractivity()
-
     }
 
     updateCurrentStep(newStep) {
         this.currentStep = newStep
 
-        if (newStep > this.chapterProgress())
+        if (newStep > this.chapterProgress() && !document.body.classList.contains('quick-look-mode')) {
             this.updateLocalStorage()
+        }
     }
 
     startInteractivity() {
