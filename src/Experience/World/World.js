@@ -97,7 +97,6 @@ export default class World {
             this.welcome.loading.querySelector('span').innerText = 'Initializing'
         })
 
-        this.buttons.start.innerText = _s.journey.start
         this.buttons.restart.innerText = _s.journey.restart
         this.buttons.back.innerText = _s.journey.back
 
@@ -150,6 +149,8 @@ export default class World {
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
             instance.buttons.start.innerText = _s.journey.continue
+        } else {
+            instance.buttons.start.innerText = _s.journey.start
         }
     }
 

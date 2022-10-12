@@ -34,7 +34,7 @@ export default class CodeAndIris {
         document.querySelector('.modal').classList.add('modal__task')
 
         if (!instance.currentStepData.audio)
-            playBTN.remove()
+            document.getElementById("play").remove()
 
         const back = document.getElementById("back")
         back.style.display = 'block'

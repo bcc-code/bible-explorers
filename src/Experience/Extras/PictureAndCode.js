@@ -24,21 +24,15 @@ export default class PictureAndCode {
             instance.selectedChapter = instance.world.selectedChapter
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
-
-            instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
-
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.togglePicture()
             instance.mouseEvent()
         }
     }
 
-    setPicture(url) {
-        instance.data.picture = url
-        document.querySelector('.picture-and-code img').setAttribute('src', instance.data.picture)
-    }
-
     togglePicture() {
+        instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
+
         let html = `<div class="modal__content picture-and-code">
             <div class="picture-and-code__content">
                 <img src="">
@@ -63,11 +57,22 @@ export default class PictureAndCode {
         next.addEventListener("click", () => {
             instance.modal.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
+
+            const back = document.getElementById("back")
+            back.addEventListener('click', (e) => {
+                instance.modal.destroy()
+                instance.togglePicture()
+            })
         })
 
         instance.addExistingCircles()
     }
 
+    setPicture(url) {
+        instance.data.picture = url
+        document.querySelector('.picture-and-code img').setAttribute('src', instance.data.picture)
+    }
+    
     addExistingCircles() {
         instance.program.gamesData.pictureAndCode.circles.forEach(circle => instance.addCircle(circle.x, circle.y))
     }

@@ -42,44 +42,21 @@ export default class QuestionAndCode {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const inputs = document.querySelectorAll('.answers__input')
-        const back = document.getElementById("back")
-        const next = document.getElementById('continue')
-
-        back.innerText = _s.journey.back
-        next.innerText = _s.task.next
-
-        back.style.display = 'block'
-        next.style.display = 'block'
-
         if (!instance.currentStepData.audio)
-            playBTN.remove()
+            document.getElementById("play").remove()
 
+        const back = document.getElementById("back")
+        back.innerText = _s.journey.back
+        back.style.display = 'block'
         back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.program.taskDescription.toggleTaskDescription()
         })
 
-        let allInputsEmpty = true
-        inputs.forEach((input, index) => {
-            input.value = allAnswersFromTheme.hasOwnProperty(instance.currentStep) ? allAnswersFromTheme[instance.currentStep][index] : ''
-
-            if (index == 0) input.focus()
-            if (input.value.length != 0) allInputsEmpty = false
-
-            input.addEventListener("input", () => {
-                [...inputs].filter(input => input.value.length == 0).length == 0
-                    ? next.classList.remove('disabled')
-                    : next.classList.add('disabled')
-            })
-
-        })
-
-        if (allInputsEmpty) {
-            next.classList.add('disabled')
-        }
-
+        const next = document.getElementById('continue')
+        next.innerText = _s.task.next
+        next.style.display = 'block'
         next.addEventListener("click", () => {
             const initialAnswers = allAnswersFromTheme[instance.currentStep]
 
@@ -107,6 +84,26 @@ export default class QuestionAndCode {
             instance.modal.destroy()
             instance.toggleSubmitMessage()
         })
+
+        let allInputsEmpty = true
+
+        const inputs = document.querySelectorAll('.answers__input')
+        inputs.forEach((input, index) => {
+            input.value = allAnswersFromTheme.hasOwnProperty(instance.currentStep) ? allAnswersFromTheme[instance.currentStep][index] : ''
+
+            if (index == 0) input.focus()
+            if (input.value.length != 0) allInputsEmpty = false
+
+            input.addEventListener("input", () => {
+                [...inputs].filter(input => input.value.length == 0).length == 0
+                    ? next.classList.remove('disabled')
+                    : next.classList.add('disabled')
+            })
+        })
+
+        if (allInputsEmpty) {
+            next.classList.add('disabled')
+        }
     }
 
     toggleSubmitMessage() {
@@ -114,18 +111,21 @@ export default class QuestionAndCode {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const back = document.getElementById("back")
-        const next = document.getElementById('continue')
-
         if (!instance.currentStepData.audio)
-            playBTN.remove()
+            document.getElementById("play").remove()
 
+        const back = document.getElementById("back")
+        back.innerText = _s.journey.back
+        back.style.display = 'block'
         back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.toggleQuestion()
         })
 
+        const next = document.getElementById('continue')
+        next.innerText = _s.task.next
+        next.style.display = 'block'
         next.addEventListener("click", () => {
             instance.modal.destroy()
             instance.toggleCodeDescription()
@@ -137,18 +137,21 @@ export default class QuestionAndCode {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        const back = document.getElementById("back")
-        const next = document.getElementById('continue')
-
         if (!instance.currentStepData.audio)
-            playBTN.remove()
+            document.getElementById("play").remove()
 
+        const back = document.getElementById("back")
+        back.innerText = _s.journey.back
+        back.style.display = 'block'
         back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
             instance.toggleSubmitMessage()
         })
 
+        const next = document.getElementById('continue')
+        next.innerText = _s.task.next
+        next.style.display = 'block'
         next.addEventListener("click", () => {
             instance.modal.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
