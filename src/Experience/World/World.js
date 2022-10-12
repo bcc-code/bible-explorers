@@ -28,7 +28,7 @@ export default class World {
         instance = this
 
         this.placeholderChapterData()
-        this.chapterProgress = () => localStorage.getItem(this.getId()) || 0
+        this.chapterProgress = () => parseInt(localStorage.getItem(this.getId())) || 0
 
         // Chapters
         this.menu = {
