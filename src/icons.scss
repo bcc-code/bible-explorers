@@ -24,6 +24,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-stop-solid:before {
+    content: "\e918";
+}
 
 .icon-message-lines-solid:before {
     content: "\e917";
