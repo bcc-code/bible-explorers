@@ -64,16 +64,15 @@ export default class World {
 
         this.buttons.support.style.display = 'block'
         this.buttons.support.addEventListener('click', function () {
+            document.getElementById('deskWidgetMain').classList.toggle('widget-open')
 
-            if (instance.buttons.support.classList.contains('icon-question-solid')) {
-                instance.buttons.support.classList.remove('icon-question-solid')
+            if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
+                instance.buttons.support.classList.remove('icon-message-lines-solid')
                 instance.buttons.support.classList.add('icon-xmark-solid')
             } else {
-                instance.buttons.support.classList.add('icon-question-solid')
+                instance.buttons.support.classList.add('icon-message-lines-solid')
                 instance.buttons.support.classList.remove('icon-xmark-solid')
             }
-
-            document.getElementById('deskWidgetMain').classList.toggle('widget-open')
         })
         this.buttons.howTo.querySelector('span').innerText = _s.howTo
 
@@ -125,16 +124,18 @@ export default class World {
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
 
-        instance.buttons.home.style.display = 'none'
-        instance.buttons.howTo.style.display = 'block'
-        instance.buttons.archive.style.display = 'none'
-
         if (!instance.experience.settings.fullScreen) {
             document.exitFullscreen()
         }
     }
 
-    showMenuButtons() {
+    showStateButtons() {
+        instance.buttons.home.style.display = 'none'
+        instance.buttons.howTo.style.display = 'block'
+        instance.buttons.archive.style.display = 'none'
+    }
+
+    showActionButtons() {
         if (this.chapterProgress() == 0) {
             instance.buttons.restart.style.display = 'none'
         } else {
@@ -371,7 +372,7 @@ export default class World {
                 instance.addClassToSelectedChapter(chapter)
                 instance.updateSelectedChapterData(chapter)
                 instance.loadChapterTextures()
-                instance.showMenuButtons()
+                instance.showActionButtons()
                 instance.setDescriptionHtml()
                 instance.setChapterContentPreviewHTML()
             })
@@ -580,6 +581,7 @@ export default class World {
 
     finishJourney() {
         instance.audio.changeBgMusic()
+        document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
 
         _appInsights.trackEvent({
             name: "Finish chapter",
@@ -590,16 +592,14 @@ export default class World {
                 quality: instance.selectedQuality
             }
         })
-
-        document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
     }
 
     showMenu() {
         document.body.classList.add('freeze')
         instance.welcome.chaptersScreen.classList.add('visible')
         instance.points.delete()
-        instance.buttons.home.style.display = 'block'
-        instance.showMenuButtons()
+        instance.showStateButtons()
+        instance.showActionButtons()
     }
 
     hideMenu() {

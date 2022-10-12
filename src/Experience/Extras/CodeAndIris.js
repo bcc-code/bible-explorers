@@ -33,8 +33,7 @@ export default class CodeAndIris {
         instance.modal = new Modal(html)
         document.querySelector('.modal').classList.add('modal__task')
 
-        if (!instance.currentStepData.audio)
-            document.getElementById("play").remove()
+        document.getElementById("play").remove()
 
         const back = document.getElementById("back")
         back.style.display = 'block'

@@ -59,8 +59,6 @@ export default class Archive {
 
             archiveModal.appendChild(archiveWrapper)
 
-            console.log(archiveModal);
-
             archive.modal = new Modal(archiveModal.outerHTML)
             document.querySelector('.modal').classList.add('modal__archive')
         }

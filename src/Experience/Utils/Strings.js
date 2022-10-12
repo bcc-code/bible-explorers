@@ -105,6 +105,7 @@ const strings = {
             "reset": "Start over",
             "continue": "Continue the journey",
             "skip": "Skip",
+            "correctAnswers": "correct answers"
         }
     },
     "no": {
@@ -210,7 +211,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
-            "skip": "Hopp over"
+            "skip": "Hopp over",
+            "correctAnswers": "riktige svar"
         }
     },
     "de": {
@@ -316,7 +318,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
-            "skip": "Überspringen"
+            "skip": "Überspringen",
+            "correctAnswers": "richtige Antworten"
         }
     },
     "nl": {
@@ -422,7 +425,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
-            "skip": "Overslaan"
+            "skip": "Overslaan",
+            "correctAnswers": "correct answers"
         }
     },
     "fr": {
@@ -528,7 +532,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
-            "skip": "Sauter"
+            "skip": "Sauter",
+            "correctAnswers": "correct answers"
         }
     },
     "pl": {
@@ -634,7 +639,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
-            "skip": "Pomiń"
+            "skip": "Pomiń",
+            "correctAnswers": "correct answers"
         }
     },
     "ro": {
@@ -740,7 +746,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
-            "skip": "Mergi mai departe"
+            "skip": "Mergi mai departe",
+            "correctAnswers": "răspunsuri corecte"
         }
     },
     "es": {
@@ -846,7 +853,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
-            "skip": "Saltar"
+            "skip": "Saltar",
+            "correctAnswers": "correct answers"
         }
     },
     "pt-pt": {
@@ -952,7 +960,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
-            "skip": "Skip"
+            "skip": "Skip",
+            "correctAnswers": "correct answers"
         }
     },
     "it": {
@@ -1058,7 +1067,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
-            "skip": "Salta"
+            "skip": "Salta",
+            "correctAnswers": "correct answers"
         }
     },
     "ru": {
@@ -1164,7 +1174,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
-            "skip": "Пропустить"
+            "skip": "Пропустить",
+            "correctAnswers": "correct answers"
         }
     },
     "fi": {
@@ -1270,7 +1281,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
-            "skip": "Ohita"
+            "skip": "Ohita",
+            "correctAnswers": "correct answers"
         }
     },
     "hu": {
@@ -1375,7 +1387,8 @@ const strings = {
             "playAnother": "Play another melody",
             "reset": "Újrakezdés",
             "continue": "Utazás folytatása",
-            "skip": "Átugrás"
+            "skip": "Átugrás",
+            "correctAnswers": "correct answers"
         }
     },
     "da": {
@@ -1480,7 +1493,8 @@ const strings = {
             "playAnother": "Play another melody",
             "reset": "Start spillet forfra",
             "continue": "Fortsæt rejsen",
-            "skip": "Skip"
+            "skip": "Skip",
+            "correctAnswers": "correct answers"
         }
     },
 }
