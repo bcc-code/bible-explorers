@@ -63,7 +63,16 @@ export default class World {
         this.welcome.conceptDescription.innerText = _s.conceptDescription
 
         this.buttons.support.style.display = 'block'
-        this.buttons.support.addEventListener('click', function() {
+        this.buttons.support.addEventListener('click', function () {
+
+            if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
+                instance.buttons.support.classList.remove('icon-message-lines-solid')
+                instance.buttons.support.classList.add('icon-xmark-solid')
+            } else {
+                instance.buttons.support.classList.add('icon-message-lines-solid')
+                instance.buttons.support.classList.remove('icon-xmark-solid')
+            }
+
             document.getElementById('deskWidgetMain').classList.toggle('widget-open')
         })
         this.buttons.howTo.querySelector('span').innerText = _s.howTo

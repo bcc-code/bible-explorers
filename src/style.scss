@@ -905,6 +905,12 @@ button,
     margin-left: auto;
 }
 
+#support-chat::before {
+    position: relative;
+    top: 2px;
+    left: 1px;
+}
+
 #how-to {
     line-height: 3.5rem;
     text-decoration: none;
