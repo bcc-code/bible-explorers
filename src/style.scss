@@ -214,6 +214,10 @@ $secondary-font: 'PT Sans', sans-serif;
     transition: .3s ease;
     cursor: pointer;
 
+    &::before {
+        margin-left: 2px;
+    }
+
     &.disabled,
     &:disabled {
         pointer-events: none;
@@ -903,12 +907,6 @@ button,
 #reset {
     margin-right: 2rem;
     margin-left: auto;
-}
-
-#support-chat::before {
-    position: relative;
-    top: 2px;
-    left: 1px;
 }
 
 #how-to {
