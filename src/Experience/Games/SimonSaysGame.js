@@ -51,9 +51,11 @@ export default class SimonSays {
     }
 
     toggleSimonSays() {
-        this.audio.pauseBgMusic()
         this.toggleInit()
         this.startGame()
+
+        this.audio.setOtherAudioIsPlaying(true)
+        this.audio.fadeOutBgMusic()
     }
 
     toggleInit() {
@@ -165,10 +167,7 @@ export default class SimonSays {
                 ? 'block'
                 : 'none'
 
-            skip.addEventListener('click', (e) => {
-                instance.modal.destroy()
-                instance.world.program.advance()
-            })
+            skip.addEventListener('click', instance.advanceToNextStep)
         }
     }
 
@@ -289,11 +288,7 @@ export default class SimonSays {
             ? 'block'
             : 'none'
 
-        skip.addEventListener('click', (e) => {
-            instance.fails = 0
-            instance.modal.destroy()
-            instance.world.program.advance()
-        })
+        skip.addEventListener('click', instance.advanceToNextStep)
     }
 
     finishGame() {
@@ -324,11 +319,7 @@ export default class SimonSays {
         const next = document.getElementById('continue')
         next.style.display = 'block'
         next.innerText = _s.miniGames.continue
-        next.addEventListener('click', () => {
-            instance.modal.destroy()
-            instance.world.program.advance()
-            this.audio.playBgMusic()
-        })
+        next.addEventListener('click', instance.advanceToNextStep)
 
         const restart = document.getElementById('restart')
         restart.style.display = 'block'
@@ -337,6 +328,15 @@ export default class SimonSays {
             instance.modal.destroy()
             instance.toggleSimonSays()
         })
+    }
+
+    advanceToNextStep() {
+        instance.fails = 0
+        instance.modal.destroy()
+        instance.world.program.advance()
+
+        instance.audio.setOtherAudioIsPlaying(false)
+        instance.audio.fadeInBgMusic()
     }
 
     allNotesPlayed() {

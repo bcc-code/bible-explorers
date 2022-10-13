@@ -205,7 +205,6 @@ export default class Quiz {
             })
 
             document.getElementById('quizTextarea').addEventListener('input', (e) => {
-
                 if (e.target.value.length > 1) return
 
                 if (e.target.value.length > 0) {
@@ -221,9 +220,7 @@ export default class Quiz {
                     skip.style.display = "block"
                     submitButton.style.display = "none"
                 }
-
             })
-
         }
     }
 

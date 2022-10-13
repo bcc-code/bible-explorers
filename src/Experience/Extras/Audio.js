@@ -143,10 +143,10 @@ export default class Audio {
 
         const fadeOutAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() - 0.1
+                audio.bgMusic.getVolume() - 0.05
             )
 
-            if (audio.bgMusic.getVolume() < 0.1) {
+            if (audio.bgMusic.getVolume() < 0.05) {
                 clearInterval(fadeOutAudio)
                 audio.enableToggleBtn()
                 audio.bgMusic.setVolume(0)
