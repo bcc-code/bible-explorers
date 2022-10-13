@@ -242,7 +242,7 @@ export default class Quiz {
         heading.innerText = _s.miniGames.completed.title
 
         const phrase = document.createElement('h3')
-        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions + ' correct answers'
+        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions + ' ' + _s.miniGames.correctAnswers
 
         container.appendChild(heading)
         container.appendChild(phrase)
