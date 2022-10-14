@@ -2,6 +2,8 @@ import Experience from "../Experience.js";
 import _s from '../Utils/Strings.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 
+let instance = null
+
 export default class Points {
     constructor() {
         this.experience = new Experience()
@@ -14,6 +16,8 @@ export default class Points {
         this.currentLabel = null
         this.currentObject = null
 
+        instance = this
+
         this.render()
     }
 
@@ -23,11 +27,10 @@ export default class Points {
 
         this.objects.filter(child => {
             if (child.name === name) {
-
                 // First step is a task description from Iris
                 if (type == 'task') type = 'iris'
                 this.create(child, _s.tooltips[type])
-
+                setTimeout(function() { instance.fadeIn() }, 50)
             }
         })
     }
@@ -54,6 +57,15 @@ export default class Points {
         this.currentObject.remove(this.currentLabel)
         this.currentObject = null
         this.currentLabel = null
+    }
+
+    fadeIn() {
+        if (!this.currentLabel) return
+        this.currentLabel.element.classList.add('fade-in')
+    }
+    fadeOut() {
+        if (!this.currentLabel) return
+        this.currentLabel.element.classList.remove('fade-in')
     }
 
     render() {

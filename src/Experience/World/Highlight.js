@@ -17,8 +17,7 @@ export default class Highlight {
     }
 
     add(name) {
-        if (this.currentHighlight)
-            this.remove()
+        this.remove()
 
         if (name == 'tv_16x9_screen') {
             this.set(this.tv_16x9_frame)
@@ -63,8 +62,21 @@ export default class Highlight {
     }
 
     remove() {
+        if (!this.currentHighlight) return
         this.currentHighlight.remove(this.outline)
         this.currentHighlight = null
+    }
+
+    fadeOut() {
+        if (!this.outline) return
+        this.instance = new TWEEN.Tween(this.outline.material)
+            .to({ opacity: 0 }, 1500)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .yoyo(true)
+            .onComplete(() => {
+                this.remove()
+            })
+            .start()
     }
 
     pulse() {

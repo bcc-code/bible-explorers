@@ -3,7 +3,7 @@ import Experience from "../Experience.js";
 let modal = null
 
 export default class Modal {
-    constructor(html, callback = () => {}) {
+    constructor(html, callback = () => { }) {
         this.experience = new Experience()
         this.program = this.experience.world.program
         this.callback = callback
@@ -35,12 +35,15 @@ export default class Modal {
 
     static generateHtml(html) {
         return `
-            <div class="modal__overlay"></div>
-            <div class="modal__close button button__round"><div class="button__content"><i class="icon icon-xmark-solid"></i></div></div>
-            <div class="modal__scroll">
-                <div class="modal__container">
-                    ${ html }
-                </div>
+            <button class="modal__close | button bg--secondary width height border--5 border--solid border--transparent rounded--full | icon-xmark-solid"></button>
+            <div class="modal__wrapper">
+                <div class="modal__container">${html}</div>
+            </div>
+            <div class="modal__actions">
+                <button class="button bg--primary border--5 border--solid border--primary height px rounded--back" id="back"></button>
+                <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="restart"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="skip"></button>
+                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate" id="continue"></button>
             </div>
         `
     }

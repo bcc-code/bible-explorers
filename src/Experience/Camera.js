@@ -20,7 +20,7 @@ export default class Camera {
         this.updateCameraTween = null
         this.zoomInTween = null
         this.data = {
-            moveDuration: 2500,
+            moveDuration: 2000,
             zoom: 1.15,
             location: 0,
             debug: false,
@@ -140,11 +140,13 @@ export default class Camera {
     }
 
     updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }, callback) {
+        document.body.classList.add('camera-is-moving')
+
         if (this.updateCameraTween)
             this.updateCameraTween.stop()
 
         if (this.zoomInTween)
-            this.zoomOut(1500)
+            this.zoomOut(2000)
 
         const from = {
             cameraPosition: new THREE.Vector3().copy(this.instance.position),
@@ -182,6 +184,7 @@ export default class Camera {
                     camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
                 }
                 callback()
+                document.body.classList.remove('camera-is-moving')
             })
             .start()
 
@@ -227,7 +230,6 @@ export default class Camera {
         if (this.controls.autoRotate) {
             this.changeRotateDirection()
         }
-
     }
 
     addGUIControls() {
@@ -247,7 +249,6 @@ export default class Camera {
             })
             .name('Location')
             .listen()
-
 
         const cameraPosition = camera.addFolder('Position')
         cameraPosition.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()

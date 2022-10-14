@@ -1,6 +1,7 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
+import _e from '../Utils/Events.js'
 import _s from '../Utils/Strings.js'
 
 let instance = null
@@ -32,11 +33,21 @@ export default class TaskDescription {
 
             let html = instance.getModalHtml(instance.currentStepTaskType, instance.text)
             instance.modal = new Modal(html)
+
             document.querySelector('.modal').classList.add('modal__task')
 
-            const backBtn = document.getElementById("backBTN")
-            const getTaskBtn = document.getElementById("get-task")
-            const playBTN = document.getElementById("playBTN")
+            const backBTN = document.getElementById("back")
+            const continueBTN = document.getElementById("continue")
+            instance.playBTN = document.getElementById("play")
+            instance.irisPlaying = document.querySelector('.iris-playing')
+
+            backBTN.innerText = _s.journey.back
+            continueBTN.innerText = _s.task.next
+
+            backBTN.style.display = "block"
+            continueBTN.style.display = "block"
+
+            document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
 
             instance.currentStepData = selectedChapter.program[currentStep]
             if (instance.currentStepData.audio) {
@@ -45,22 +56,23 @@ export default class TaskDescription {
                     instance.taskAudio = data.audio
                 })
 
-                playBTN.addEventListener("click", () => {
-                    if (!instance.taskAudio) return
+                instance.playBTN.addEventListener("click", () => {
                     instance.audio.togglePlayTaskDescription(instance.taskAudio)
-                    playBTN.classList.toggle("is-playing")
+                    instance.playBTN.hasAttribute('playing')
+                        ? instance.changePauseBtnToPlay()
+                        : instance.changePlayBtnToPause()
                 })
             }
             else {
-                playBTN.remove()
+                instance.playBTN.remove()
             }
 
-            backBtn.addEventListener('click', (e) => {
+            backBTN.addEventListener('click', (e) => {
                 e.stopPropagation()
                 instance.destroy()
             })
 
-            getTaskBtn.addEventListener("click", () => {
+            continueBTN.addEventListener("click", () => {
                 instance.destroy()
 
                 if (instance.currentStepTaskType == 'code') {
@@ -123,41 +135,51 @@ export default class TaskDescription {
                 document.querySelector('.task__content').appendChild(div)
                 input.focus()
 
-                getTaskBtn.classList.add('disabled')
+                continueBTN.classList.add('disabled')
                 input.addEventListener("input", (event) => {
                     if (event.target.value == noOfCorrectIcons) {
-                        getTaskBtn.classList.remove('disabled')
+                        continueBTN.classList.remove('disabled')
                     } else {
-                        getTaskBtn.classList.add('disabled')
+                        continueBTN.classList.add('disabled')
                     }
                 })
             }
         }
     }
 
+    changePauseBtnToPlay() {
+        instance.playBTN.removeAttribute("playing")
+        instance.playBTN.classList.add('icon-play-solid')
+        instance.playBTN.classList.remove('icon-stop-solid')
+        instance.irisPlaying.style.display = 'none'
+    }
+    changePlayBtnToPause() {
+        instance.playBTN.setAttribute("playing", '')
+        instance.playBTN.classList.remove('icon-play-solid')
+        instance.playBTN.classList.add('icon-stop-solid')
+        instance.irisPlaying.style.display = 'flex'
+    }
+
     getModalHtml(type, title, additionalContent = '') {
         return `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                <div id="playBTN"><i class="icon icon-play-solid"></i></div>
-            </div>
-            <div class="task__wrapper">
-                <div class="task__content">
-                    <div class="modal__extras">
-                        <span class="left"></span>
-                        <span class="bottomLeft"></span>
-                        <span class="bottomLeftSmall"></span>
-                    </div>
-                    ${title}
-                    ${additionalContent}
-                    <div class="task__tips">
-                        <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
-                    </div>
+                <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
+                <div class="iris-playing">
+                    <div class="line line1"></div>
+                    <div class="line line2"></div>
+                    <div class="line line3"></div>
+                    <div class="line line4"></div>
+                    <div class="line line5"></div>
                 </div>
             </div>
-            <div class="modal__actions">
-                <div id="backBTN" class="button button__default"><span>${_s.journey.back}</span></div>
-                <div id="get-task" class="button button__continue"><div class="button__content"><span>${_s.task.next}</span></div></div>
+
+            <div class="task__content">
+                ${title}
+                ${additionalContent}
+                <div class="task__tips">
+                    <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
+                </div>
             </div>
         </div>`
     }

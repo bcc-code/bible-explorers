@@ -27,10 +27,8 @@ export default class Quiz {
 
             const questions = selectedChapter.program[currentStep].quiz
 
+
             let html = `<div class="modal__content quiz">
-                            <div class="quiz__header heading">
-                                <h2>${_s.task.questions}</h2>
-                            </div>
                             <div class="quiz__content">`
 
             questions.forEach((q, qIdx) => {
@@ -55,7 +53,7 @@ export default class Quiz {
                 }
                 else {
                     html += `<div class="question__input">
-                                <textarea class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
+                                <textarea id="quizTextarea" class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
                             </div>`
                 }
 
@@ -68,23 +66,10 @@ export default class Quiz {
                 html += `</div>`
             })
 
-            html += `</div></div>`
-            html += `<div class="modal__footer ${questions.length == 1 ? "hide - nav" : ""}">
-                        <div class="button button__prev button__round">
-                            <span class="button__content">
-                                <i class="icon icon-arrow-left-long-solid"></i>
-                            </span>
-                        </div>
-                        <div id="skipBTN" class="button button__default button__skip" style="margin-left: auto">
-                            <span>${_s.miniGames.skip}</span>
-                        </div>
-                        <div id="submit-task" class="button button__submit button__default">
-                            <span>${_s.task.submit}</span>
-                        </div>
-                        <div class="button button__next button__round">
-                            <span class="button__content">
-                                <i class="icon icon-arrow-right-long-solid"></i>
-                            </span>
+            html += `</div>
+                        <div class="quiz__footer ${questions.length == 1 ? "hide - nav" : ""}">
+                            <button id="prev" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-left-long-solid"></button>
+                            <button id="next" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full pulsate | icon-arrow-right-long-solid"></button>
                         </div>
                     </div>`
 
@@ -92,37 +77,72 @@ export default class Quiz {
 
             document.querySelector('.modal').classList.add('modal__quiz')
 
-            const nextButton = document.querySelector('.button__next')
-            const prevButton = document.querySelector('.button__prev')
-            const submitButton = document.querySelector('.button__submit')
-            const skipBTN = document.getElementById('skipBTN')
+            const quizProgressContainer = document.createElement('div')
+            quizProgressContainer.className = 'quiz__progressContainer'
+            const quizProgressLabel = document.createElement('span')
+            quizProgressLabel.innerText = 'Progress'
+            const quizProgressPercent = document.createElement('span')
+            quizProgressPercent.innerText = '0%'
+            const quizProgressBar = document.createElement('div')
+            quizProgressBar.className = 'quiz__progressBar'
+            quizProgressBar.setAttribute('quiz-progress', '0%')
+            const quizProgressBarLine = document.createElement('div')
+            quizProgressBarLine.className = 'quiz__progressLine'
+            quizProgressBar.append(quizProgressBarLine)
+            quizProgressContainer.append(quizProgressLabel)
+            quizProgressContainer.append(quizProgressBar)
+            quizProgressContainer.append(quizProgressPercent)
+            document.querySelector('.modal__quiz').prepend(quizProgressContainer)
+
+            const title = document.createElement('h3')
+            title.className = 'modal__heading--minigame'
+            title.innerText = 'Quiz'
+            document.querySelector('.modal__quiz').prepend(title)
+
+            const quizStepWidth = 100 / questions.length
 
             const htmlQuestions = document.querySelectorAll('.question')
-
             htmlQuestions[0].classList.add('visible')
-            nextButton.classList.add('hidden')
-            prevButton.classList.add('hidden')
-            submitButton.classList.add('hidden')
-            if (!debug.developer && !debug.onQuickLook()) {
-                skipBTN.classList.add('hidden')
+
+            if (debug.developer || debug.onQuickLook()) {
+                const skip = document.getElementById('skip')
+                skip.style.display = 'block'
+                skip.innerText = _s.miniGames.skip
+                skip.addEventListener("click", () => {
+                    quiz.modal.destroy()
+                    program.advance()
+                })
             }
+
+            const back = document.getElementById("back")
+            back.style.display = 'block'
+            back.innerText = _s.journey.back
+            back.addEventListener('click', (e) => {
+                quiz.modal.destroy()
+                world.program.taskDescription.toggleTaskDescription()
+            })
+
+            const nextButton = document.getElementById('next')
+            const prevButton = document.getElementById('prev')
+            prevButton.setAttribute('disabled', '')
+            nextButton.setAttribute('disabled', '')
+
+            const submitButton = document.getElementById('continue')
+            submitButton.innerText = _s.task.submit
 
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
+
                 current.classList.remove('visible')
                 current.nextElementSibling?.classList.add('visible')
 
                 if (current.nextElementSibling.querySelector('input:checked')) {
-                    nextButton.classList.remove('hidden')
+                    nextButton.removeAttribute('disabled')
                 } else {
-                    nextButton.classList.add('hidden')
+                    nextButton.setAttribute('disabled', '')
                 }
+                prevButton.removeAttribute('disabled')
 
-                prevButton.classList.remove('hidden')
-
-                if (current.nextElementSibling.matches(':last-child')) {
-                    submitButton.classList.remove('hidden')
-                }
             })
 
             prevButton.addEventListener("click", () => {
@@ -131,36 +151,28 @@ export default class Quiz {
                 current.previousElementSibling?.classList.add('visible')
 
                 if (current.previousElementSibling.querySelector('input:checked')) {
-                    nextButton.classList.remove('hidden')
+                    nextButton.removeAttribute('disabled')
                 }
 
                 if (current.getAttribute('data-index') == 2) {
-                    prevButton.classList.add('hidden')
+                    prevButton.setAttribute('disabled', '')
                 }
 
-                if (current.previousElementSibling.matches(':last-child')) {
-                    submitButton.classList.remove('hidden')
-                } else {
-                    submitButton.classList.add('hidden')
-                }
-            })
-
-            skipBTN.addEventListener("click", () => {
-                quiz.modal.destroy()
-                program.advance()
             })
 
             submitButton.addEventListener("click", () => {
-                prevButton.classList.add('hidden')
-                submitButton.classList.add('hidden')
-                skipBTN.classList.add('hidden')
-
-                htmlQuestions.forEach(q => {
-                    q.classList.add('hidden')
-                })
-
-                this.summary(program, htmlQuestions.length - 1, correctAnswers)
+                this.summary(program, correctAnswers + 1, htmlQuestions.length)
             })
+
+            let questionsAnswered = 0
+            let quizProgress = 0
+
+            let quizUpdate = (questionsAnswered) => {
+                quizProgress = quizStepWidth * questionsAnswered + '%'
+                quizProgressBar.setAttribute('quiz-progress', quizProgress)
+                quizProgressBarLine.style.width = quizProgress
+                quizProgressPercent.innerText = quizProgress
+            }
 
             htmlQuestions.forEach((q, i) => {
                 const htmlAnswers = q.querySelectorAll('label')
@@ -173,6 +185,9 @@ export default class Quiz {
                             a.style.pointerEvents = 'none'
                         })
 
+                        questionsAnswered += 1
+                        quizUpdate(questionsAnswered)
+
                         const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
@@ -182,14 +197,40 @@ export default class Quiz {
                             correctAnswers += 1
                         }
 
-                        nextButton.classList.remove('hidden')
+                        nextButton.removeAttribute('disabled')
                     })
+
                 })
+
+            })
+
+            document.getElementById('quizTextarea').addEventListener('input', (e) => {
+                if (e.target.value.length > 1) return
+
+                if (e.target.value.length > 0) {
+                    questionsAnswered = questions.length
+                    quizUpdate(questionsAnswered)
+
+                    skip.style.display = "none"
+                    submitButton.style.display = "block"
+                }
+                else {
+                    questionsAnswered = questions.length - 1
+                    quizUpdate(questionsAnswered)
+                    skip.style.display = "block"
+                    submitButton.style.display = "none"
+                }
             })
         }
     }
 
-    summary(program, numberOfQuestions, correctAnswers) {
+    summary(program, correctAnswers, numberOfQuestions) {
+        document.querySelector('.modal').classList.add('completed')
+        document.querySelector('.quiz__content').style.display = 'none'
+        document.querySelector('.quiz__footer').style.display = 'none'
+        document.querySelector('.quiz__progressContainer').style.display = 'none'
+        back.style.display = 'none'
+
         const parent = document.querySelector('.quiz')
         const container = document.createElement('div')
         container.classList.add('quiz__summary')
@@ -197,21 +238,19 @@ export default class Quiz {
         const heading = document.createElement('h2')
         heading.innerText = _s.miniGames.completed.title
 
-        const phrase = document.createElement('p')
-        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
-
-        const continueButton = document.createElement('button')
-        continueButton.classList.add('button', 'button__default')
-        continueButton.innerText = _s.miniGames.continue
-
-        continueButton.addEventListener('click', () => {
-            quiz.modal.destroy()
-            program.advance()
-        })
+        const phrase = document.createElement('h3')
+        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions + ' ' + _s.miniGames.correctAnswers
 
         container.appendChild(heading)
         container.appendChild(phrase)
-        container.appendChild(continueButton)
         parent.appendChild(container)
+
+        const submitButton = document.getElementById('continue')
+        submitButton.innerText = _s.miniGames.continue
+
+        submitButton.addEventListener('click', () => {
+            quiz.modal.destroy()
+            program.advance()
+        })
     }
 }

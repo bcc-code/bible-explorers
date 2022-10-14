@@ -7,15 +7,24 @@ const strings = {
         "introduction": "Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start the time travel",
             "continue": "Continue the time travel",
             "restart": "Restart the journey",
             "congrats": "Congratulations!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "You have completed",
             "back": "Back",
             "attachments": "Attachments",
-            "homescreen": "Done"
+            "homescreen": "Done",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Enter the correct number",
@@ -65,9 +74,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Available offline",
-            "download": "Download",
+            "download": {
+                "title": "Get offline version",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Downloading",
+            "availableOffline": {
+                "title": "Available offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -99,6 +114,7 @@ const strings = {
             "reset": "Start over",
             "continue": "Continue the journey",
             "skip": "Skip",
+            "correctAnswers": "correct answers"
         }
     },
     "no": {
@@ -107,15 +123,24 @@ const strings = {
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
         "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
         "browserNotification": "Anbefalt nettleser for dette konseptet er Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start tidsreisen",
             "continue": "Fortsett tidsreisen",
             "restart": "Start reisen på nytt",
             "congrats": "Gratulerer!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "Det er nå tid for å få bibelkortene."
+            },
             "completed": "Du har fullført",
             "back": "Tilbake",
             "attachments": "Vedlegg",
-            "homescreen": "Ferdig"
+            "homescreen": "Ferdig",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Bruk denne knappen for en rask gjennomgang av kapitlet. Her kan du hoppe over oppgavene og skaffe deg oversikt over innholdet."
+            } 
         },
         "task": {
             "codeUnlock": "Skriv riktig tall",
@@ -166,7 +191,7 @@ const strings = {
         },
         "offline": {
             "availableOffline": "Tilgjengelig offline",
-            "download": "Last ned",
+            "download": "Få offline-versjon",
             "downloading": "Laster ned",
             "update": "Oppdater offline-versjonen",
             "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?",
@@ -198,7 +223,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
-            "skip": "Hopp over"
+            "skip": "Hopp over",
+            "correctAnswers": "riktige svar"
         }
     },
     "de": {
@@ -207,15 +233,24 @@ const strings = {
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Zeitreise starten",
             "continue": "Zeitreise fortsetzen",
             "restart": "Zeitreise neu starten",
             "congrats": "Glückwunsch!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Du hast es geschafft",
             "back": "Zurück",
             "attachments": "Anhang",
-            "homescreen": "Fertig"
+            "homescreen": "Fertig",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Korrekte Zahl eingeben",
@@ -298,7 +333,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
-            "skip": "Überspringen"
+            "skip": "Überspringen",
+            "correctAnswers": "richtige Antworten"
         }
     },
     "nl": {
@@ -307,15 +343,24 @@ const strings = {
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start de tijdreis",
             "continue": "Ga door met de tijdreis",
             "restart": "Start de reis opnieuw",
             "congrats": "Gefeliciteerd!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Je hebt het gehaald",
             "back": "Terug",
             "attachments": "Bijlagen",
-            "homescreen": "Klaar"
+            "homescreen": "Klaar",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Voer het juiste getal in",
@@ -398,7 +443,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
-            "skip": "Overslaan"
+            "skip": "Overslaan",
+            "correctAnswers": "correct answers"
         }
     },
     "fr": {
@@ -407,15 +453,24 @@ const strings = {
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Commencer le voyage dans le temps",
             "continue": "Continuer le voyage dans le temps",
             "restart": "Recommencer le voyage",
             "congrats": "Félicitations !",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Tu as terminé",
             "back": "Retour",
             "attachments": "Pièces jointes",
-            "homescreen": "Terminé"
+            "homescreen": "Terminé",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Saisir le bon numéro",
@@ -498,7 +553,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
-            "skip": "Sauter"
+            "skip": "Sauter",
+            "correctAnswers": "correct answers"
         }
     },
     "pl": {
@@ -507,15 +563,24 @@ const strings = {
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Rozpocznij podróż w czasie",
             "continue": "Kontynuuj podróż",
             "restart": "Rozpocznij podróż od nowa",
             "congrats": "Gratulacje!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Ukończyłeś",
             "back": "Powrót",
             "attachments": "Załączniki",
-            "homescreen": "Gotowe"
+            "homescreen": "Gotowe",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Wpisz poprawny numer",
@@ -598,7 +663,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
-            "skip": "Pomiń"
+            "skip": "Pomiń",
+            "correctAnswers": "correct answers"
         }
     },
     "ro": {
@@ -607,15 +673,24 @@ const strings = {
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
         "notAvailable": "Nici un capitol disponibil în limba selectată",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "Cum funcționează?",
         "journey": {
             "start": "Începe călătoria în timp",
             "continue": "Continuă călătoria în timp",
             "restart": "Începe călătoria din nou",
             "congrats": "Felicitări!",
+            "bibleCards": {
+                "title": "Carduri biblice",
+                "message": "Acum este momentul să primiți cardurile biblice."
+            },
             "completed": "Ai terminat",
             "back": "Înapoi",
             "attachments": "Fișiere",
-            "homescreen": "Finalizare"
+            "homescreen": "Finalizare",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Scrie numărul corect",
@@ -698,7 +773,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
-            "skip": "Mergi mai departe"
+            "skip": "Mergi mai departe",
+            "correctAnswers": "răspunsuri corecte"
         }
     },
     "es": {
@@ -707,15 +783,24 @@ const strings = {
         "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Comenzar el viaje en el tiempo",
             "continue": "Continuar con el viaje en el tiempo",
             "restart": "Empezar el viaje de nuevo",
             "congrats": "Felicitaciones!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Tu has terminado",
             "back": "Regresar",
             "attachments": "Adjunto",
-            "homescreen": "Listo"
+            "homescreen": "Listo",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Escribe el numero correcto",
@@ -798,7 +883,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
-            "skip": "Saltar"
+            "skip": "Saltar",
+            "correctAnswers": "correct answers"
         }
     },
     "pt-pt": {
@@ -807,15 +893,24 @@ const strings = {
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Comece a viajem no tempo",
             "continue": "Continue a viajem no tempo",
             "restart": "Reinicie a jornada",
             "congrats": "Parabéns!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Você concluiu",
             "back": "Voltar",
             "attachments": "Attachments",
-            "homescreen": "Done"
+            "homescreen": "Done",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Digite o número correto",
@@ -898,7 +993,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
-            "skip": "Skip"
+            "skip": "Skip",
+            "correctAnswers": "correct answers"
         }
     },
     "it": {
@@ -907,15 +1003,24 @@ const strings = {
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Inizia il viaggio nel tempo",
             "continue": "Continua il viaggio nel tempo",
             "restart": "Ricomincia il viaggio",
             "congrats": "Complimenti!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Hai finito",
             "back": "Indietro",
             "attachments": "Allegati",
-            "homescreen": "Fatto"
+            "homescreen": "Fatto",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Inserisci il numero corretto",
@@ -998,7 +1103,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
-            "skip": "Salta"
+            "skip": "Salta",
+            "correctAnswers": "correct answers"
         }
     },
     "ru": {
@@ -1007,15 +1113,24 @@ const strings = {
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Начать путешествие во времени",
             "continue": "Продолжить путешествие во времени",
             "restart": "Перезапустить путешествие",
             "congrats": "Поздравляем!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Вы завершили",
             "back": "Назад",
             "attachments": "Вложения",
-            "homescreen": "Готово"
+            "homescreen": "Готово",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Введите правильный номер",
@@ -1098,7 +1213,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
-            "skip": "Пропустить"
+            "skip": "Пропустить",
+            "correctAnswers": "correct answers"
         }
     },
     "fi": {
@@ -1107,15 +1223,24 @@ const strings = {
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Aloita aikamatka",
             "continue": "Jatka aikamatkaa",
             "restart": "Aloita matka alusta",
             "congrats": "Onnittelut!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Olet suorittanut",
             "back": "Takaisin",
             "attachments": "Liitteet",
-            "homescreen": "Valmis"
+            "homescreen": "Valmis",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Kirjoita oikea numero",
@@ -1198,7 +1323,8 @@ const strings = {
             "playAgain": "Play again",
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
-            "skip": "Ohita"
+            "skip": "Ohita",
+            "correctAnswers": "correct answers"
         }
     },
     "hu": {
@@ -1207,15 +1333,24 @@ const strings = {
         "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Időutazás elkezdése",
             "continue": "Időutazás folytatása ",
             "restart": "Utazás újrakezdése",
             "congrats": "Gratulálunk!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Befejezted",
             "back": "Vissza",
             "attachments": "Csatolmányok",
-            "homescreen": "Kész"
+            "homescreen": "Kész",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Add meg a helyes számot",
@@ -1297,7 +1432,8 @@ const strings = {
             "playAnother": "Play another melody",
             "reset": "Újrakezdés",
             "continue": "Utazás folytatása",
-            "skip": "Átugrás"
+            "skip": "Átugrás",
+            "correctAnswers": "correct answers"
         }
     },
     "da": {
@@ -1306,15 +1442,24 @@ const strings = {
         "introduction": "Nu kan børnene i alderen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers",
         "notAvailable": "No chapter available in the selected language",
         "browserNotification": "Recommended browser for this concept is Chrome",
+        "howTo": "How to guide",
         "journey": {
             "start": "Start tidsrejsen",
             "continue": "Fortsæt tidsrejsen",
             "restart": "Start tidsrejsen forfra",
             "congrats": "Tillykke!",
+            "bibleCards": {
+                "title": "Bible cards",
+                "message": "It is now time to receive the bible cards."
+            },
             "completed": "Du har gennemført",
             "back": "Tilbage",
             "attachments": "Attachments",
-            "homescreen": "Done"
+            "homescreen": "Done",
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Skriv det rigtige antal",
@@ -1396,7 +1541,8 @@ const strings = {
             "playAnother": "Play another melody",
             "reset": "Start spillet forfra",
             "continue": "Fortsæt rejsen",
-            "skip": "Skip"
+            "skip": "Skip",
+            "correctAnswers": "correct answers"
         }
     },
 }

@@ -34,6 +34,9 @@ export default class Video {
             return document.getElementById(id)
         }
 
+        this.hasSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video') != null
+        }
         this.playingVideoId = null
     }
 
@@ -51,21 +54,18 @@ export default class Video {
         // Event listener on video update
         this.video().on('timeupdate', function () {
             if (instance.showSkipBtn()) {
-                if (!instance.videoJsEl().querySelector('.skip-video__btn')) {
-                    let skipVideo = document.createElement('div')
-                    skipVideo.classList.add("button", "button__continue", "skip-video__btn")
+                if (instance.hasSkipBtn()) return
 
-                    const bg = document.createElement('div')
-                    bg.classList.add('button__content')
+                const skipVideo = document.createElement('div')
+                skipVideo.className = 'skip-video button bg--secondary height px border--5 border--solid border--transparent rounded--forward pulsate'
+                skipVideo.innerText = _s.miniGames.skip
 
-                    let span = document.createElement('span')
-                    span.innerText = _s.miniGames.continue
-                    skipVideo.appendChild(bg)
-                    bg.appendChild(span)
-
-                    skipVideo.addEventListener('click', instance.finish)
-                    instance.videoJsEl().appendChild(skipVideo)
-                }
+                skipVideo.addEventListener('click', instance.finish)
+                instance.videoJsEl().appendChild(skipVideo)
+            }
+            else {
+                if (!instance.hasSkipBtn()) return
+                instance.videoJsEl().querySelector('.skip-video').remove()
             }
         })
 
@@ -98,11 +98,11 @@ export default class Video {
     }
 
     pause() {
-        instance.video().pause()
+        instance.video().pause();
     }
 
     focus() {
-        instance.camera.zoomIn(1500)
+        instance.camera.zoomIn(2000)
         instance.tablet.material.map.image.play()
 
         instance.audio.setOtherAudioIsPlaying(true)
