@@ -13,6 +13,10 @@ import Highlight from './Highlight.js'
 import _e from '../Utils/Events.js'
 import _appInsights from '../Utils/AppInsights.js'
 
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/dist/backdrop.css';
+
 let instance = null
 
 export default class World {
@@ -201,7 +205,11 @@ export default class World {
                 instance.audio.changeBgMusic()
 
                 instance.welcome.loadingScreen.classList.remove('visible')
-                instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook
+                instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook.title
+                tippy('#quick-look', {
+                    theme: 'explorers',
+                    content: _s.journey.quickLook.info
+                })
             })
         })
     }
@@ -260,7 +268,8 @@ export default class World {
             </div>
             <div class="chapter__states">
                 <div class="chapter__offline">
-                    <span>${_s.offline.download}</span>
+                    <i class="icon-question-solid"></i>
+                    <span>${_s.offline.download.title}</span>
                 </div>
                 <div class="chapter__downloading">
                     <span class="title">${_s.offline.downloading}</span>
@@ -273,10 +282,12 @@ export default class World {
                     <span>${_s.offline.downloadFailed}</span>
                 </div>
                 <div class="chapter__downloaded">
-                    <span>${_s.offline.availableOffline}</span>
+                    <i class="icon-question-solid"></i>
+                    <span>${_s.offline.availableOffline.title}</span>
                 </div>
             </div>
         `
+
         instance.menu.chapters.appendChild(chapterHtml)
         instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
 
@@ -285,6 +296,16 @@ export default class World {
 
         instance.buttons.back.style.display = 'block'
         instance.buttons.howTo.style.display = 'block'
+
+        tippy('.chapter__offline', {
+            theme: 'explorers',
+            content: _s.offline.download.info
+        })
+
+        tippy('.chapter__downloaded', {
+            theme: 'explorers',
+            content: _s.offline.availableOffline.info
+        })
     }
 
     markChapterIfCompleted(chapter) {
@@ -420,7 +441,7 @@ export default class World {
     }
 
     setDownloadHtml(button) {
-        button.innerHTML = `<span>${_s.offline.availableOffline}</span>`
+        button.innerHTML = `<i class="icon-question-solid"></i><span>${_s.offline.availableOffline.title}</span>`
         button.addEventListener("click", instance.confirmRedownload)
     }
 

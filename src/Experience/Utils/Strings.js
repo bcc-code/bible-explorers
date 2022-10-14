@@ -21,7 +21,10 @@ const strings = {
             "back": "Back",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Enter the correct number",
@@ -71,9 +74,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Available offline",
-            "download": "Download",
+            "download": {
+                "title": "Get offline version",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Downloading",
+            "availableOffline": {
+                "title": "Available offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -122,13 +131,16 @@ const strings = {
             "congrats": "Gratulerer!",
             "bibleCards": {
                 "title": "Bible cards",
-                "message": "Nå er det tiden at dere får bibelkortene."
+                "message": "Det er nå tid for å få bibelkortene."
             },
             "completed": "Du har fullført",
             "back": "Tilbake",
             "attachments": "Vedlegg",
             "homescreen": "Ferdig",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Bruk denne knappen for en rask gjennomgang av kapitlet. Her kan du hoppe over oppgavene og skaffe deg oversikt over innholdet."
+            } 
         },
         "task": {
             "codeUnlock": "Skriv riktig tall",
@@ -179,7 +191,7 @@ const strings = {
         },
         "offline": {
             "availableOffline": "Tilgjengelig offline",
-            "download": "Last ned",
+            "download": "Få offline-versjon",
             "downloading": "Laster ned",
             "update": "Oppdater offline-versjonen",
             "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?",
@@ -235,7 +247,10 @@ const strings = {
             "back": "Zurück",
             "attachments": "Anhang",
             "homescreen": "Fertig",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Korrekte Zahl eingeben",
@@ -342,7 +357,10 @@ const strings = {
             "back": "Terug",
             "attachments": "Bijlagen",
             "homescreen": "Klaar",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Voer het juiste getal in",
@@ -449,7 +467,10 @@ const strings = {
             "back": "Retour",
             "attachments": "Pièces jointes",
             "homescreen": "Terminé",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Saisir le bon numéro",
@@ -556,7 +577,10 @@ const strings = {
             "back": "Powrót",
             "attachments": "Załączniki",
             "homescreen": "Gotowe",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Wpisz poprawny numer",
@@ -663,7 +687,10 @@ const strings = {
             "back": "Înapoi",
             "attachments": "Fișiere",
             "homescreen": "Finalizare",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Scrie numărul corect",
@@ -770,7 +797,10 @@ const strings = {
             "back": "Regresar",
             "attachments": "Adjunto",
             "homescreen": "Listo",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Escribe el numero correcto",
@@ -877,7 +907,10 @@ const strings = {
             "back": "Voltar",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Digite o número correto",
@@ -984,7 +1017,10 @@ const strings = {
             "back": "Indietro",
             "attachments": "Allegati",
             "homescreen": "Fatto",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Inserisci il numero corretto",
@@ -1091,7 +1127,10 @@ const strings = {
             "back": "Назад",
             "attachments": "Вложения",
             "homescreen": "Готово",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Введите правильный номер",
@@ -1198,7 +1237,10 @@ const strings = {
             "back": "Takaisin",
             "attachments": "Liitteet",
             "homescreen": "Valmis",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Kirjoita oikea numero",
@@ -1305,7 +1347,10 @@ const strings = {
             "back": "Vissza",
             "attachments": "Csatolmányok",
             "homescreen": "Kész",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Add meg a helyes számot",
@@ -1411,7 +1456,10 @@ const strings = {
             "back": "Tilbage",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "quickLook": "Quick look"
+            "quickLook": {
+                "title": "Quick look",
+                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+            } 
         },
         "task": {
             "codeUnlock": "Skriv det rigtige antal",
