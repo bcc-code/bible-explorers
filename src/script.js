@@ -46,42 +46,42 @@ if (browserName !== 'Chrome') {
 }
 
 window.onload = async () => {
-    if (window.navigator.onLine) {
-        await configureClient()
+    // Work-around
+    setTimeout(() => {
+        document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+    }, 2500)
 
-        const query = window.location.search
-        if (query.includes("code=") && query.includes("state=")) {
-            await experience.auth0.handleRedirectCallback()
-            window.history.replaceState({}, document.title, "/")
-        }
-    
-        experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+    await configureClient()
 
-        if (experience.auth0.isAuthenticated) {
-            experience.auth0.userData = await experience.auth0.getUser()
-            let personId = experience.auth0.userData['https://login.bcc.no/claims/personId']
-    
-            experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
-                if (roles.includes("administrator") || roles.includes("editor")) {
-                    document.body.classList.add("admin", "ak_leder")
-                }
-                else if (roles.includes("ak_leder")) {
-                    document.body.classList.add("ak_leder")
-                }
-                else {
-                    new Notification(_s.settings.noAccess)
-                }
-    
-                experience.settings.updateUI()
-                document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
-            })
-        }
-        else {
+    const query = window.location.search
+    if (query.includes("code=") && query.includes("state=")) {
+        await experience.auth0.handleRedirectCallback()
+        window.history.replaceState({}, document.title, "/")
+    }
+
+    experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+
+    if (experience.auth0.isAuthenticated) {
+        experience.auth0.userData = await experience.auth0.getUser()
+        let personId = experience.auth0.userData['https://login.bcc.no/claims/personId']
+
+        experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
+            if (roles.includes("administrator") || roles.includes("editor")) {
+                document.body.classList.add("admin", "ak_leder")
+            }
+            else if (roles.includes("ak_leder")) {
+                document.body.classList.add("ak_leder")
+            }
+            else {
+                new Notification(_s.settings.noAccess)
+            }
+
             experience.settings.updateUI()
             document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
-        }
+        })
     }
     else {
+        experience.settings.updateUI()
         document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
     }
 }
