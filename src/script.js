@@ -46,11 +46,6 @@ if (browserName !== 'Chrome') {
 }
 
 window.onload = async () => {
-    // Work-around
-    setTimeout(() => {
-        document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
-    }, 2500)
-
     await configureClient()
 
     const query = window.location.search
