@@ -190,9 +190,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Tilgjengelig offline",
-            "download": "Få offline-versjon",
+            "download": {
+                "title": "Få offline-versjon",
+                "info": "Er du logget inn? Da kan du gjennomføre kapitlet uten internett. Trykk her for å gjøre kapitlet tilgjengelig offline."
+            },
             "downloading": "Laster ned",
+            "availableOffline": {
+                "title": "Tilgjengelig offline",
+                "info": "Kapitlet er nå tilgjengelig offline med oppgaver og filmer. Du kan nå spille det av på en lokasjon uten internett."
+            },
             "update": "Oppdater offline-versjonen",
             "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?",
             "downloadFailed": "Det har oppstått et problem ved nedlastingen av kapitelet!",
@@ -300,9 +306,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Offline verfügbar",
-            "download": "Herunterladen",
+            "download": {
+                "title": "Herunterladen",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Wird heruntergeladen",
+            "availableOffline": {
+                "title": "Offline verfügbar",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -410,9 +422,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Online beschikbaar",
-            "download": "Download",
+            "download": {
+                "title": "Download",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Downloaden",
+            "availableOffline": {
+                "title": "Online beschikbaar",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -520,9 +538,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Disponible hors connexion",
-            "download": "Télécharger",
+            "download": {
+                "title": "Télécharger",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Téléchargement",
+            "availableOffline": {
+                "title": "Disponible hors connexion",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -630,9 +654,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Dostępne offline",
-            "download": "Pobierz",
+            "download": {
+                "title": "Pobierz",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Pobieranie",
+            "availableOffline": {
+                "title": "Dostępne offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -740,9 +770,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Disponibil offline",
-            "download": "Descărcare",
+            "download": {
+                "title": "Descărcare",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Se descarcă",
+            "availableOffline": {
+                "title": "Disponibil offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Actualizează versiunea offline",
             "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?",
             "downloadFailed": "A apărut o problemă la descărcarea capitolului!",
@@ -850,9 +886,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Disponible sin conexión",
-            "download": "Descargar",
+            "download": {
+                "title": "Descargar",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Descargando",
+            "availableOffline": {
+                "title": "Disponible sin conexión",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -960,9 +1002,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Disponível off-line",
-            "download": "Download",
+            "download": {
+                "title": "Download",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Baixando",
+            "availableOffline": {
+                "title": "Disponível off-line",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -1070,9 +1118,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Disponibile offline",
-            "download": "Download",
+            "download": {
+                "title": "Download",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Download in corso",
+            "availableOffline": {
+                "title": "Disponibile offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -1180,9 +1234,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Доступно офлайн",
-            "download": "Скачать",
+            "download": {
+                "title": "Скачать",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Скачивание",
+            "availableOffline": {
+                "title": "Доступно офлайн",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -1290,9 +1350,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Saatavilla offline-tilassa",
-            "download": "Lataa",
+            "download": {
+                "title": "Lataa",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Ladataan tiedostoa",
+            "availableOffline": {
+                "title": "Saatavilla offline-tilassa",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -1400,9 +1466,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Elérhető offline",
-            "download": "Letöltés",
+            "download": {
+                "title": "Letöltés",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Letöltés folyamatban",
+            "availableOffline": {
+                "title": "Elérhető offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",
@@ -1509,9 +1581,15 @@ const strings = {
             ]
         },
         "offline": {
-            "availableOffline": "Tilgængelig offline",
-            "download": "Download",
+            "download": {
+                "title": "Download",
+                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+            },
             "downloading": "Downloader",
+            "availableOffline": {
+                "title": "Tilgængelig offline",
+                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+            },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
             "downloadFailed": "There was a problem with downloading the chapter!",

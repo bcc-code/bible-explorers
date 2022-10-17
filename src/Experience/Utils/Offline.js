@@ -92,7 +92,6 @@ export default class Offline {
     }
 
     downloadFromWeb = function (episodes) {
-        const episodeId = episodes[0].id
         const chapterId = episodes[0].data.chapterId
 
         offline.getDownloadedEpisodesFromChapter(chapterId, async (downloadedEpisodes) => {
@@ -107,14 +106,19 @@ export default class Offline {
                 offline.downloaded[chapterId] = downloadedEpisodes
             }
 
-            let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+            await offline.downloadEpisodeFromChapter(chapterId)
+        })
+    }
 
-            const episodeUrls = await offline.getEpisodeDownloadUrls(episodeId, chapterId)
+    downloadEpisodeFromChapter = async function (chapterId) {
+        let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
+        const episodeUrls = await offline.getEpisodeDownloadUrls(notDownloadedEpisodes[0].id, chapterId)
+        if (episodeUrls) {
             notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
             notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
 
             offline.startDownloading(notDownloadedEpisodes[0])
-        })
+        }
     }
 
     getNotDownloadedEpisodes = function (allEpisodes, downloadedEpisodes) {
@@ -138,7 +142,13 @@ export default class Offline {
             access_token: idToken
         })
 
-        const allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
+        let allLanguagesVideos = []
+        try {
+            allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
+        }
+        catch (e) {
+            offline.setErrorMessage(chapterId)
+        }
         const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
 
         if (!myLanguageVideos.length) {
@@ -204,6 +214,7 @@ export default class Offline {
         xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener("progress", (event) => { offline.onVideoDownloadProgress(currentEpisode.data.chapterId, event) })
         xhr.addEventListener("timeout", () => { offline.onRequestTimeout(currentEpisode.data.chapterId) })
+        xhr.addEventListener("error", () => { offline.onRequestError(currentEpisode.data.chapterId) })
         xhr.addEventListener("load", () => { offline.onVideoDownloadComplete(currentEpisode, xhr) }, false)
         xhr.send()
     }
@@ -222,7 +233,16 @@ export default class Offline {
     }
 
     onRequestTimeout = function (chapterId) {
-        console.log('Timeout exceeded')
+        console.log('Timeout exceeded!')
+        offline.setErrorMessage(chapterId)
+    }
+
+    onRequestError = function (chapterId) {
+        console.log('Unknown error!')
+        offline.setErrorMessage(chapterId)
+    }
+
+    setErrorMessage = function (chapterId) {
         let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
         if (chapterEl) {
             chapterEl.querySelector('span.title').innerText = "Error!"
@@ -234,7 +254,6 @@ export default class Offline {
             currentEpisode.data.video = xhr.response
             offline.putFileInDb(currentEpisode.data)
 
-            const episodeId = currentEpisode.id
             const chapterId = currentEpisode.data.chapterId
 
             offline.downloaded[chapterId].push(currentEpisode.data)
@@ -256,15 +275,8 @@ export default class Offline {
 
                 offline.experience.resources.updateBtvStreamWithDownloadedVersion(currentEpisode.data.name)
             }
-            else {
-                // Next episode to download
-                let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
-
-                const episodeUrls = await offline.getEpisodeDownloadUrls(episodeId, chapterId)
-                notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
-                notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
-    
-                offline.startDownloading(notDownloadedEpisodes[0])
+            else { // Next episode to download
+                await offline.downloadEpisodeFromChapter(chapterId)
             }
         }
     }
