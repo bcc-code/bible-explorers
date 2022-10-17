@@ -1,36 +1,38 @@
 import Experience from "../Experience.js";
 
-let modal = null
+let modal = []
 
 export default class Modal {
-    constructor(html, callback = () => { }) {
+    constructor(html, cssClass, callback = () => { }) {
         this.experience = new Experience()
         this.program = this.experience.world.program
         this.callback = callback
 
-        modal = this
+        this.htmlEl = document.createElement("div")
+        this.htmlEl.className = "modal" + " " + cssClass
+        this.htmlEl.innerHTML = Modal.generateHtml(html)
+        document.body.appendChild(this.htmlEl)
 
-        modal.htmlEl = document.createElement("div")
-        modal.htmlEl.className = "modal"
-        modal.htmlEl.innerHTML = Modal.generateHtml(html)
-        document.body.appendChild(modal.htmlEl)
-
-        modal.el = {
-            overlay: modal.htmlEl.querySelector(".modal__overlay"),
-            close: modal.htmlEl.querySelector(".modal__close")
+        this.el = {
+            overlay: this.htmlEl.querySelector(".modal__overlay"),
+            close: this.htmlEl.querySelector(".modal__close")
         }
 
-        // modal.el.overlay.addEventListener("click", modal.destroy)
-        modal.el.close.addEventListener("click", modal.destroy)
+        this.el.close.addEventListener("click", this.destroy)
+
+        modal.push(this)
 
         document.body.classList.add('modal-on')
     }
 
     destroy() {
-        modal.htmlEl.remove()
-        document.body.classList.remove('modal-on')
-        modal.callback()
-        modal = null
+        modal[modal.length-1].htmlEl.remove()
+        modal[modal.length-1].callback()
+        modal.pop()
+
+        if (!modal.length) {
+            document.body.classList.remove('modal-on')
+        }
     }
 
     static generateHtml(html) {

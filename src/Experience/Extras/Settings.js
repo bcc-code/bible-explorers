@@ -93,9 +93,7 @@ export default class Settings {
                 <div class="copyright">Copyright 2022 © <a href="https://bcc.media" target="_blank">bcc.media</a> foundation</div>
             `;
 
-            settings.modal = new Modal(html)
-
-            document.querySelector('.modal').classList.add('modal__settings')
+            settings.modal = new Modal(html, 'modal__settings')
 
             settings.el = {
                 soundToggle: document.querySelector(".sound input[type=checkbox]"),
@@ -201,9 +199,7 @@ export default class Settings {
                     </div>
                 </div>`
 
-            const faq = new Modal(html)
-            document.querySelector('.modal').classList.add('modal__faq')
-
+            new Modal(html, 'modal__faq')
         })
 
     }

@@ -32,9 +32,7 @@ export default class TaskDescription {
             instance.text = selectedChapter.program[currentStep].description
 
             let html = instance.getModalHtml(instance.currentStepTaskType, instance.text)
-            instance.modal = new Modal(html)
-
-            document.querySelector('.modal').classList.add('modal__task')
+            instance.modal = new Modal(html, 'modal__task')
 
             const backBTN = document.getElementById("back")
             const continueBTN = document.getElementById("continue")

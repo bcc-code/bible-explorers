@@ -45,9 +45,7 @@ export default class Questions {
                 <div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>
             </div>`
 
-            questions.modal = new Modal(html)
-
-            document.querySelector('.modal').classList.add('modal__questions')
+            questions.modal = new Modal(html, 'modal__questions')
 
             const nextButton = document.querySelector('.button__next')
             const prevButton = document.querySelector('.button__prev')

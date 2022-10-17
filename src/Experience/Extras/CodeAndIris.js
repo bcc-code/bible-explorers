@@ -30,8 +30,7 @@ export default class CodeAndIris {
 
     toggleIris() {
         const html = instance.program.taskDescription.getModalHtml('iris-and-code', instance.data.iris)
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__task')
+        instance.modal = new Modal(html, 'modal__task')
 
         document.getElementById("play").remove()
 

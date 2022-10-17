@@ -26,7 +26,7 @@ export default class Archive {
     }
 
     toggleArchive() {
-        if (document.querySelector('.modal')) {
+        if (document.querySelector('.modal__archive')) {
             archive.modal.destroy()
         }
         else {
@@ -59,8 +59,7 @@ export default class Archive {
 
             archiveModal.appendChild(archiveWrapper)
 
-            archive.modal = new Modal(archiveModal.outerHTML)
-            document.querySelector('.modal').classList.add('modal__archive')
+            archive.modal = new Modal(archiveModal.outerHTML, 'modal__archive')
         }
     }
 }

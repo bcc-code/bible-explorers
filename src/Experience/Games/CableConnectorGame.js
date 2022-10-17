@@ -462,9 +462,8 @@ export default class CableConnector {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
+        instance.modal = new Modal(html, 'modal__congrats')
 
-        document.querySelector('.modal').classList.add('modal__congrats')
         document.getElementById('reset').addEventListener('click', () => {
             instance.modal.destroy()
             instance.destroy()
@@ -634,9 +633,7 @@ export default class CableConnector {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
-
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats')
     }
 
     resizeBreakpoint(x, callback, callback2) {
