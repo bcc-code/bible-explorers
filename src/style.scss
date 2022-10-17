@@ -399,6 +399,7 @@ main {
 }
 
 @supports (-webkit-touch-callout: none) {
+
     body,
     html {
         /* The hack for Safari */
@@ -469,6 +470,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
+    appearance: none;
     -webkit-appearance: none;
     background-color: transparent;
 }
@@ -944,18 +946,23 @@ button,
     float: right;
 
     .icon-question-solid {
-        background-color: $accent2;
-        color: #fff;
-        border-radius: 100%;
         margin-right: 0.5rem;
-        font-size: 0.75rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        top: 1px;
+        // background-color: $accent2;
+        // color: #fff;
+        // border-radius: 100%;
+        // margin-right: 0.5rem;
+        // font-size: 0.75rem;
+        // width: 1.25rem;
+        // height: 1.25rem;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // position: relative;
+        // top: 1px;
+    }
+
+    .icon-arrow-right-long-solid {
+        margin-left: 0.5rem;
     }
 }
 
@@ -1242,11 +1249,7 @@ button,
         display: flex;
 
         [class^='icon-'] {
-            background: $accent;
-            width: 5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-right: 0.5rem;
         }
 
         .attachments {

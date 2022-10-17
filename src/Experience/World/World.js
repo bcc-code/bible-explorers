@@ -343,7 +343,7 @@ export default class World {
             chapterAttachments.querySelector('.attachments').classList.remove('hidden')
             chapter.attachments.forEach((attachment) => {
                 chapterAttachments.querySelector('.attachments').innerHTML +=
-                    `<a href="${attachment.url}" target="_blank" class="button button__link"><span>${attachment.title}</span></a>`
+                    `<a href="${attachment.url}" target="_blank" class="button button__link"><i class="icon-download-solid"></i><span>${attachment.title}</span></a>`
             })
         }
         else {
