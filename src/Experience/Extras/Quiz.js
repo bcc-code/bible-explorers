@@ -177,7 +177,7 @@ export default class Quiz {
 
             prevButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
-                const currentStep = document.querySelector('.question.active')
+                const currentStep = document.querySelector('.quiz__step.active')
 
                 current.classList.remove('visible')
                 currentStep.classList.remove('active')
