@@ -2266,6 +2266,7 @@ button,
     pointer-events: none;
     display: flex;
     justify-content: center;
+    z-index: 102;
 
     &__container {
         padding: 1rem 3rem;
@@ -2444,8 +2445,7 @@ button,
     }
 }
 
-#sort-game,
-#cable-connector {
+#sort-game {
     position: fixed;
     top: 0;
     left: 0;
@@ -2455,7 +2455,7 @@ button,
     z-index: 99;
 }
 
-#miniGame__connector {
+#cable-connect {
     width: 1000px;
     height: 500px;
 }

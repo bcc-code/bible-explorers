@@ -17,6 +17,7 @@ export default class CableConnector {
         this.debug = this.experience.debug
 
         instance = this
+        instance.fails = 0
     }
 
     toggleCableConnector() {
@@ -24,40 +25,27 @@ export default class CableConnector {
         this.startTimerIfNecessary()
         this.setup()
         this.addEventListeners()
-        window.addEventListener('resize', instance.resize)
+        // window.addEventListener('resize', instance.resize)
     }
 
     init() {
         const gameWrapper = document.createElement('div')
-        gameWrapper.setAttribute("id", "cable-connector")
-        gameWrapper.classList.add('miniGame')
-        gameWrapper.classList.add('container')
-        document.body.appendChild(gameWrapper)
+        gameWrapper.setAttribute("id", "cable-connect")
 
-        const title = document.createElement('div')
-        title.classList.add('container__heading')
-        title.innerHTML = "<h2>" + _s.miniGames.cableConnect + "</h2>"
-        gameWrapper.appendChild(title)
+        instance.modal = new Modal(gameWrapper.outerHTML, 'modal__cable-connector')
 
-        const gameContainer = document.createElement('div')
-        gameContainer.classList.add('container__wrapper')
-        gameWrapper.appendChild(gameContainer)
-
-        const gameContent = document.createElement('div')
-        gameContent.setAttribute("id", "miniGame__connector")
-        gameContainer.appendChild(gameContent)
-
-        const actions = document.createElement('div')
-        actions.classList.add('container__footer')
-        gameWrapper.appendChild(actions)
+        const title = document.createElement('h3')
+        title.className = 'modal__heading--minigame'
+        title.innerText = _s.miniGames.cableConnect
+        document.querySelector('.modal__cable-connector').prepend(title)
 
         const spriteW = 180
         const spriteH = 100
 
         this.data = {
             canvas: {
-                width: gameContent.offsetWidth,
-                height: gameContent.offsetHeight,
+                width: 1000,
+                height: 500,
             },
             cable: {
                 width: 0,
@@ -130,29 +118,13 @@ export default class CableConnector {
         }
 
         this.stage = new Konva.Stage({
-            container: 'miniGame__connector',
-            width: gameContent.offsetWidth,
-            height: gameContent.offsetHeight
+            container: 'cable-connect',
+            width: instance.data.canvas.width,
+            height: instance.data.canvas.height
         })
-
         this.correspondingOutlet = null
 
         instance.program = instance.world.program
-
-        actions.appendChild(
-            this.addButton('back', 'button__primary', _s.journey.back)
-        )
-        actions.appendChild(
-            this.addButton('reset', 'button__primary', _s.miniGames.reset)
-        )
-
-        if (instance.debug.developer || instance.debug.onQuickLook()) {
-            actions.appendChild(
-                this.addButton('skip', 'button__secondary', _s.miniGames.skip)
-            )
-        }
-
-        document.body.classList.add('freeze')
     }
 
     setup() {
@@ -570,52 +542,52 @@ export default class CableConnector {
     }
 
     addEventListeners() {
-        const back = document.getElementById('back')
-        const reset = document.getElementById('reset')
 
+        const back = document.getElementById('back')
+        back.style.display = 'block'
+        back.innerText = _s.journey.back
         back.addEventListener('click', () => {
             instance.destroy()
+            instance.modal.destroy()
             instance.world.program.taskDescription.toggleTaskDescription()
         })
 
-        reset.addEventListener('click', () => {
+        const restart = document.getElementById('restart')
+        restart.style.display = 'block'
+        restart.innerText = _s.miniGames.reset
+        restart.addEventListener('click', () => {
+            instance.fails++
             instance.destroy()
+            instance.modal.destroy()
             instance.toggleCableConnector()
         })
 
+        const skip = document.getElementById("skip")
+        skip.innerText = _s.miniGames.skip
+        skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
+            ? 'block'
+            : 'none'
 
-        if (instance.debug.developer || instance.debug.onQuickLook()) {
-            const skip = document.getElementById('skip')
+        skip.addEventListener('click', instance.advanceToNextStep)
 
-            skip.addEventListener('click', () => {
-                instance.destroy()
-                instance.program.advance()
-            })
-        }
-
-
-        this.resize()
-        window.addEventListener('resize', this.resize)
     }
 
-    addButton(name, background, label) {
-        const button = document.createElement('button')
-        button.className = "button " + background
-        button.innerText = label
-        button.setAttribute('id', name)
+    advanceToNextStep() {
+        instance.fails = 0
+        instance.destroy()
+        instance.modal.destroy()
+        instance.world.program.advance()
 
-        return button
+        instance.audio.setOtherAudioIsPlaying(false)
+        instance.audio.fadeInBgMusic()
     }
 
     finishGame() {
+        instance.fails = 0
+        instance.destroy()
+        instance.modal.destroy()
         instance.toggleGameComplete()
         instance.audio.playTaskCompleted()
-
-        document.getElementById('continue_journey').addEventListener('click', () => {
-            instance.destroy()
-            instance.modal.destroy()
-            instance.program.advance()
-        })
     }
 
     toggleGameComplete() {
@@ -629,11 +601,23 @@ export default class CableConnector {
                     <i class="icon icon-star-solid"></i>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
-                <button id="continue_journey" class="button button__secondary">${_s.miniGames.continue}</button>
             </div>
         </div>`
 
         instance.modal = new Modal(html, 'modal__congrats')
+
+        const next = document.getElementById('continue')
+        next.style.display = 'block'
+        next.innerText = _s.miniGames.continue
+        next.addEventListener('click', instance.advanceToNextStep)
+
+        const restart = document.getElementById('restart')
+        restart.style.display = 'block'
+        restart.innerText = _s.miniGames.playAgain
+        restart.addEventListener('click', () => {
+            instance.modal.destroy()
+            instance.toggleSimonSays()
+        })
     }
 
     resizeBreakpoint(x, callback, callback2) {
@@ -644,28 +628,7 @@ export default class CableConnector {
         }
     }
 
-    resize() {
-        const container = document.querySelector('#miniGame__connector')
-        const containerWidth = container.offsetWidth
-        const containerHeight = container.offsetHeight
-        // let scaleX = containerWidth / instance.data.canvas.width
-        // let scaleY = containerHeight / instance.data.canvas.height
-
-        // console.log(containerWidth + " x " + containerHeight)
-        // scaleX = scaleY = Math.min(scaleX, scaleY)
-
-        // // Set stage dimension
-        // instance.stage.width(containerWidth)
-        // instance.stage.height(containerHeight)
-        // instance.stage.scale({ x: 1, y: 1 })
-
-    }
-
     destroy() {
-        document.getElementById('cable-connector').remove()
-        document.body.classList.remove('freeze')
-        window.removeEventListener('resize', instance.resize)
-
         if (instance.timer)
             instance.timer.destroy()
     }
