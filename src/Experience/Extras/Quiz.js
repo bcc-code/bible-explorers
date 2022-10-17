@@ -16,7 +16,6 @@ export default class Quiz {
             quiz.modal.destroy()
         }
         else {
-
             let correctAnswers = 0
 
             let world = this.experience.world
@@ -143,6 +142,9 @@ export default class Quiz {
                 }
                 prevButton.removeAttribute('disabled')
 
+                if (current.nextElementSibling.getAttribute('data-index') == questions.length) {
+                    nextButton.setAttribute('disabled', '')
+                }
             })
 
             prevButton.addEventListener("click", () => {
@@ -157,11 +159,10 @@ export default class Quiz {
                 if (current.getAttribute('data-index') == 2) {
                     prevButton.setAttribute('disabled', '')
                 }
-
             })
 
             submitButton.addEventListener("click", () => {
-                this.summary(program, correctAnswers + 1, htmlQuestions.length)
+                this.summary(program, correctAnswers + (document.getElementById('quizTextarea') ? 1 : 0), htmlQuestions.length)
             })
 
             let questionsAnswered = 0
@@ -185,7 +186,7 @@ export default class Quiz {
                             a.style.pointerEvents = 'none'
                         })
 
-                        questionsAnswered += 1
+                        questionsAnswered++
                         quizUpdate(questionsAnswered)
 
                         const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
@@ -194,33 +195,40 @@ export default class Quiz {
                         if (!objAnswers[i].correct_wrong) {
                             a.parentNode.classList.add('wrong')
                         } else {
-                            correctAnswers += 1
+                            correctAnswers++
                         }
 
-                        nextButton.removeAttribute('disabled')
+                        if (q.getAttribute('data-index') == questions.length) {
+                            skip.style.display = "none"
+                            submitButton.style.display = "block"
+                        }
+                        else {
+                            nextButton.removeAttribute('disabled')
+                        }
                     })
 
                 })
-
             })
 
-            document.getElementById('quizTextarea').addEventListener('input', (e) => {
-                if (e.target.value.length > 1) return
+            const textArea = document.getElementById('quizTextarea')
+            if (textArea) {
+                textArea.addEventListener('input', (e) => {
+                    if (e.target.value.length > 1) return
 
-                if (e.target.value.length > 0) {
-                    questionsAnswered = questions.length
-                    quizUpdate(questionsAnswered)
-
-                    skip.style.display = "none"
-                    submitButton.style.display = "block"
-                }
-                else {
-                    questionsAnswered = questions.length - 1
-                    quizUpdate(questionsAnswered)
-                    skip.style.display = "block"
-                    submitButton.style.display = "none"
-                }
-            })
+                    if (e.target.value.length > 0) {
+                        questionsAnswered = questions.length
+                        quizUpdate(questionsAnswered)
+                        skip.style.display = "none"
+                        submitButton.style.display = "block"
+                    }
+                    else {
+                        questionsAnswered = questions.length - 1
+                        quizUpdate(questionsAnswered)
+                        skip.style.display = "block"
+                        submitButton.style.display = "none"
+                    }
+                })
+            }
         }
     }
 
