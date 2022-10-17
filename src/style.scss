@@ -2524,22 +2524,10 @@ button,
         }
     }
 
-    &__progressContainer {
-        padding: 2rem;
-        display: flex;
-        align-items: center;
-
-        span {
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-    }
-
     &__progressBar {
         flex: 1;
-        margin-inline: 1rem;
-        height: 1rem;
+        margin-left: 1rem;
+        height: 0.5rem;
         border: 2px solid transparent;
         border-radius: 1rem;
         background:
@@ -2553,6 +2541,50 @@ button,
         height: 100%;
         background: $gradient2;
         transition: .4s ease;
+    }
+
+    &__steps {
+        position: relative;
+        margin-inline: auto;
+        width: 30rem;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 1.5rem;
+            right: 1.5rem;
+            top: 1.3rem;
+            height: 0.4rem;
+            background: $accent;
+        }
+    }
+
+    &__step {
+        position: relative;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border: 2px solid $accent;
+        background: $gradient;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.active {
+            border: 2px solid $accent2;
+            background: $gradient2;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 
     .question {
@@ -2582,6 +2614,12 @@ button,
                 margin-bottom: 1rem;
                 opacity: .6;
             }
+        }
+
+        &__headingTop {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
         .openArchive {
@@ -3112,6 +3150,10 @@ button,
 
     .logo {
         width: 30rem;
+
+        &::after {
+            font-size: 1.15rem;
+        }
     }
 
     .loader__text {
@@ -3197,6 +3239,10 @@ button,
 
     .logo {
         width: 20rem;
+
+        &::after {
+            font-size: 1rem;
+        }
     }
 
     .chapter__heading {
@@ -3331,7 +3377,8 @@ button,
         top: 1rem;
     }
 
-    .topbar, .quiz__topbar {
+    .topbar,
+    .quiz__topbar {
         padding: 1rem;
     }
 
@@ -3397,6 +3444,12 @@ button,
 @media (max-height: 800px) {
     .logo {
         width: 15rem;
+        padding-bottom: 1.5rem;
+
+        &::after {
+            padding: 0.15rem 0.7rem;
+            font-size: 0.7rem;
+        }
     }
 
     .chapter__description {

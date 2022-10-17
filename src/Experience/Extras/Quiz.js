@@ -28,11 +28,15 @@ export default class Quiz {
 
             let html = `<div class="modal__content quiz">
                             <div class="quiz__content">`
-
             questions.forEach((q, qIdx) => {
                 html += `<div class="question" data-index="${qIdx + 1}">
                             <div class="question__heading">
-                                <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                                <div class="question__headingTop">
+                                    <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                                    <div class="quiz__progressBar">
+                                        <div class="quiz__progressLine"></div>
+                                    </div>
+                                </div>
                                 <p class="question__title">${q.question}</p>
                             </div>
                             <div class="question__form">`
@@ -73,23 +77,6 @@ export default class Quiz {
 
             quiz.modal = new Modal(html, 'modal__quiz')
 
-            const quizProgressContainer = document.createElement('div')
-            quizProgressContainer.className = 'quiz__progressContainer'
-            const quizProgressLabel = document.createElement('span')
-            quizProgressLabel.innerText = 'Progress'
-            const quizProgressPercent = document.createElement('span')
-            quizProgressPercent.innerText = '0%'
-            const quizProgressBar = document.createElement('div')
-            quizProgressBar.className = 'quiz__progressBar'
-            quizProgressBar.setAttribute('quiz-progress', '0%')
-            const quizProgressBarLine = document.createElement('div')
-            quizProgressBarLine.className = 'quiz__progressLine'
-            quizProgressBar.append(quizProgressBarLine)
-            quizProgressContainer.append(quizProgressLabel)
-            quizProgressContainer.append(quizProgressBar)
-            quizProgressContainer.append(quizProgressPercent)
-            document.querySelector('.modal__quiz').prepend(quizProgressContainer)
-
             const title = document.createElement('h3')
             title.className = 'modal__heading--minigame'
             title.innerText = 'Quiz'
@@ -100,10 +87,31 @@ export default class Quiz {
             topbar.innerHTML = '<button class="archive button width height bg--secondary border--5 border--solid border--transparent rounded--full pulsate | icon-folder-solid"></button>'
             document.querySelector('.modal__quiz').prepend(topbar)
 
+
+            const quizProgressBar = document.querySelectorAll('.quiz__progressLine')
             const quizStepWidth = 100 / questions.length
 
             const htmlQuestions = document.querySelectorAll('.question')
             htmlQuestions[0].classList.add('visible')
+
+
+
+            const quizContent = document.querySelector('.quiz__content')
+            const quizStepsContainer = document.createElement('div')
+            quizStepsContainer.className = 'quiz__steps'
+
+            questions.forEach((q, i) => {
+                const quizStep = document.createElement('div')
+                quizStep.className = 'quiz__step'
+                quizStep.innerText = i + 1
+                quizStep.setAttribute('step-index', i + 1)
+                quizStepsContainer.append(quizStep)
+            })
+
+            quizContent.prepend(quizStepsContainer)
+
+            const quizSteps = document.querySelectorAll('.quiz__step')
+            quizSteps[0].classList.add('active')
 
             if (debug.developer || debug.onQuickLook()) {
                 const skip = document.getElementById('skip')
@@ -145,9 +153,13 @@ export default class Quiz {
 
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
+                const currentStep = document.querySelector('.quiz__step.active')
 
                 current.classList.remove('visible')
+                currentStep.classList.remove('active')
+
                 current.nextElementSibling?.classList.add('visible')
+                currentStep.nextElementSibling?.classList.add('active')
 
                 if (current.nextElementSibling.querySelector('input:checked')) {
                     nextButton.removeAttribute('disabled')
@@ -165,8 +177,12 @@ export default class Quiz {
 
             prevButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
+                const currentStep = document.querySelector('.question.active')
+
                 current.classList.remove('visible')
+                currentStep.classList.remove('active')
                 current.previousElementSibling?.classList.add('visible')
+                currentStep.previousElementSibling?.classList.add('active')
 
                 if (current.previousElementSibling.querySelector('input:checked')) {
                     nextButton.removeAttribute('disabled')
@@ -188,9 +204,7 @@ export default class Quiz {
 
             let quizUpdate = (questionsAnswered) => {
                 quizProgress = quizStepWidth * questionsAnswered + '%'
-                quizProgressBar.setAttribute('quiz-progress', quizProgress)
-                quizProgressBarLine.style.width = quizProgress
-                quizProgressPercent.innerText = quizProgress
+                quizProgressBar.forEach(bar => bar.style.width = quizProgress)
             }
 
             htmlQuestions.forEach((q, i) => {
