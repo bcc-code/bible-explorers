@@ -937,7 +937,7 @@ button,
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: $radius;
-    font-size: 0.85rem;
+    font-size: 1rem;
 }
 
 #quick-look {
@@ -1447,9 +1447,9 @@ button,
 
     &__heading--minigame {
         color: #fff;
-        padding: 1rem;
-        background: $accent;
+        padding: 2rem;
         text-align: center;
+        line-height: 4rem;
     }
 
     &__wrapper {
@@ -1543,7 +1543,6 @@ button,
 }
 
 .settings {
-
     &__wrapper {
         position: relative;
         @include wrapper();
@@ -1596,7 +1595,6 @@ button,
     }
 
     .video-quality {
-
         &__picker {
             position: relative;
             font-size: 1.25rem;
@@ -1647,7 +1645,6 @@ button,
     }
 
     .language {
-
         &__picker {
             position: relative;
             font-size: 1.25rem;
@@ -1779,7 +1776,6 @@ button,
             margin-right: 1rem;
         }
     }
-
 }
 
 .task {
@@ -1992,7 +1988,6 @@ button,
 }
 
 .faq {
-
     &__wrapper {
         position: relative;
         @include wrapper();
@@ -2579,11 +2574,16 @@ button,
             border-radius: 1rem 2rem 3rem 1rem;
             padding: 2rem;
 
-            span {
+            .question__label span {
                 display: inline-block;
                 margin-bottom: 1rem;
                 opacity: .6;
             }
+        }
+
+        .openArchive {
+            color: #fcb04e;
+            cursor: pointer;
         }
 
         &__form {
@@ -2776,6 +2776,22 @@ button,
         }
     }
 
+}
+
+.quiz__topbar {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    z-index: 3;
+
+    .button.archive {
+        margin-left: auto;
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 .picture-and-code {
@@ -3127,6 +3143,9 @@ button,
         max-width: 60rem;
     }
 
+    .tippy-box[data-theme=explorers] {
+        font-size: 0.85rem;
+    }
 }
 
 @media (max-width: 1680px) {
@@ -3309,8 +3328,13 @@ button,
         top: 1rem;
     }
 
-    .topbar {
+    .topbar, .quiz__topbar {
         padding: 1rem;
+    }
+
+    .modal__heading--minigame {
+        padding: 1rem;
+        line-height: 3rem;
     }
 
     .container__wrapper,

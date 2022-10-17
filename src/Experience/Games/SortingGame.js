@@ -331,9 +331,7 @@ export default class SortingGame {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
-
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats')
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {

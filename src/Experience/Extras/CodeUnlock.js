@@ -47,8 +47,7 @@ export default class CodeUnlock {
                     </div>
                 </div>`
 
-            instance.modal = new Modal(html)
-            document.querySelector('.modal').classList.add('modal__code-unlock')
+            instance.modal = new Modal(html, 'modal__code-unlock')
 
             const title = document.createElement('h3')
             title.className = 'modal__heading--minigame'

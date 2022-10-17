@@ -39,8 +39,7 @@ export default class PictureAndCode {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__picture-and-code')
+        instance.modal = new Modal(html, 'modal__picture-and-code')
 
         const back = document.getElementById("back")
         back.style.display = 'block'

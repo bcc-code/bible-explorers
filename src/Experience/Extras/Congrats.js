@@ -26,8 +26,7 @@ export default class Congrats {
             </div>
         `;
 
-        instance.modal = new Modal(html, instance.world.finishJourney)
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats', instance.world.finishJourney)
 
         const homescreen = document.getElementById("continue")
         homescreen.innerText = _s.task.next
@@ -58,8 +57,7 @@ export default class Congrats {
             </div>
         `;
 
-        instance.modal = new Modal(html, instance.world.finishJourney)
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats', instance.world.finishJourney)
 
         instance.world.audio.playCongratsSound()
         instance.animateStars(500)

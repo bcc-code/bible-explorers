@@ -125,8 +125,7 @@ export default class SimonSays {
                 gameWatch.appendChild(noteColor)
             })
 
-            instance.modal = new Modal(gameWrapper.outerHTML)
-            document.querySelector('.modal').classList.add('modal__simon-says')
+            instance.modal = new Modal(gameWrapper.outerHTML, 'modal__simon-says')
 
             const title = document.createElement('h3')
             title.className = 'modal__heading--minigame'
@@ -268,8 +267,7 @@ export default class SimonSays {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats')
 
         // Add event listeners
 
@@ -313,8 +311,7 @@ export default class SimonSays {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats')
 
         const next = document.getElementById('continue')
         next.style.display = 'block'

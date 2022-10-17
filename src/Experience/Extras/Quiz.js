@@ -12,7 +12,7 @@ export default class Quiz {
     }
 
     toggleQuiz() {
-        if (document.querySelector('.modal')) {
+        if (document.querySelector('.modal__quiz')) {
             quiz.modal.destroy()
         }
         else {
@@ -25,7 +25,6 @@ export default class Quiz {
             let selectedChapter = world.selectedChapter
 
             const questions = selectedChapter.program[currentStep].quiz
-
 
             let html = `<div class="modal__content quiz">
                             <div class="quiz__content">`
@@ -72,9 +71,7 @@ export default class Quiz {
                         </div>
                     </div>`
 
-            quiz.modal = new Modal(html)
-
-            document.querySelector('.modal').classList.add('modal__quiz')
+            quiz.modal = new Modal(html, 'modal__quiz')
 
             const quizProgressContainer = document.createElement('div')
             quizProgressContainer.className = 'quiz__progressContainer'
@@ -97,6 +94,11 @@ export default class Quiz {
             title.className = 'modal__heading--minigame'
             title.innerText = 'Quiz'
             document.querySelector('.modal__quiz').prepend(title)
+
+            const topbar = document.createElement('div')
+            topbar.className = 'quiz__topbar'
+            topbar.innerHTML = '<button class="archive button width height bg--secondary border--5 border--solid border--transparent rounded--full pulsate | icon-folder-solid"></button>'
+            document.querySelector('.modal__quiz').prepend(topbar)
 
             const quizStepWidth = 100 / questions.length
 
@@ -126,6 +128,18 @@ export default class Quiz {
             prevButton.setAttribute('disabled', '')
             nextButton.setAttribute('disabled', '')
 
+            quiz.archiveBtn = document.querySelector('.button.archive')
+            quiz.archiveBtn.addEventListener("click", () => {
+                document.getElementById('archive').click()
+            })
+            const openArchive = document.querySelector('.openArchive')
+            if (openArchive) {
+                openArchive.addEventListener("click", () => {
+                    document.getElementById('archive').click()
+                })
+            }
+            showArchiveBtnIfNecessary()
+
             const submitButton = document.getElementById('continue')
             submitButton.innerText = _s.task.submit
 
@@ -145,6 +159,8 @@ export default class Quiz {
                 if (current.nextElementSibling.getAttribute('data-index') == questions.length) {
                     nextButton.setAttribute('disabled', '')
                 }
+
+                showArchiveBtnIfNecessary()
             })
 
             prevButton.addEventListener("click", () => {
@@ -159,6 +175,8 @@ export default class Quiz {
                 if (current.getAttribute('data-index') == 2) {
                     prevButton.setAttribute('disabled', '')
                 }
+
+                showArchiveBtnIfNecessary()
             })
 
             submitButton.addEventListener("click", () => {
@@ -206,7 +224,6 @@ export default class Quiz {
                             nextButton.removeAttribute('disabled')
                         }
                     })
-
                 })
             })
 
@@ -228,6 +245,20 @@ export default class Quiz {
                         submitButton.style.display = "none"
                     }
                 })
+            }
+
+            function showArchiveBtnIfNecessary() {
+                const currentQuestion = document.querySelector('.question.visible')
+                const openArchive = currentQuestion.querySelector('.openArchive')
+
+                if (openArchive) {
+                    quiz.archiveBtn.style.opacity = '1'
+                    quiz.archiveBtn.style.visibility = 'visible'
+                }
+                else {
+                    quiz.archiveBtn.style.opacity = '0'
+                    quiz.archiveBtn.style.visibility = 'hidden'
+                }
             }
         }
     }

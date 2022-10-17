@@ -39,8 +39,7 @@ export default class QuestionAndCode {
             <div class="answers__field"><input type="text" class="answers__input" /></div>
         </div>`
         const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.question, answersWrapper)
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__task')
+        instance.modal = new Modal(html, 'modal__task')
 
         if (!instance.currentStepData.audio)
             document.getElementById("play").remove()
@@ -108,8 +107,7 @@ export default class QuestionAndCode {
 
     toggleSubmitMessage() {
         const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.submit_message)
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__task')
+        instance.modal = new Modal(html, 'modal__task')
 
         if (!instance.currentStepData.audio)
             document.getElementById("play").remove()
@@ -134,8 +132,7 @@ export default class QuestionAndCode {
 
     toggleCodeDescription() {
         const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.code_description)
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__task')
+        instance.modal = new Modal(html, 'modal__task')
 
         if (!instance.currentStepData.audio)
             document.getElementById("play").remove()
