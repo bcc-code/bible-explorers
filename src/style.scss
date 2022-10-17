@@ -1934,6 +1934,9 @@ button,
     }
 
     &__tips {
+        float: right;
+        margin-bottom: 1rem;
+        margin-left: 1rem;
         display: none;
         width: 24rem;
     }

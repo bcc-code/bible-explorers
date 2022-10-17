@@ -15,10 +15,10 @@ function getWpApiUrl() {
     switch (window.location.hostname) {
         case 'explorers.biblekids.io':
             return wpApiUrl_production
-    
+
         case 'zealous-ground-0c9103f03-develop.westeurope.1.azurestaticapps.net':
             return wpApiUrl_staging
-    
+
         case 'localhost':
             return wpApiUrl_staging
 
