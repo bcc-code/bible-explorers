@@ -513,6 +513,7 @@ export default class World {
         instance.cacheChapterBgMusic(chapter.background_music)
         instance.cacheChapterArchiveImages(chapter.archive)
         instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
+        instance.cacheCodeAndIrisAudios(chapter['program'].filter(step => step.taskType == "code_and_iris"))
         instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
         instance.cachePictureAndCodeImage(chapter['program'].filter(step => step.taskType == "picture_and_code"))
     }
@@ -535,6 +536,15 @@ export default class World {
     cacheTaskDescriptionAudios(tasks) {
         if (tasks.length == 0) return
         tasks.forEach(task => instance.fetchAndCacheAsset(task.audio))
+    }
+
+    cacheCodeAndIrisAudios(tasks) {
+        if (tasks.length == 0) return
+        
+        tasks.forEach(task => {
+            if (task.codeAndIris.audio)
+                instance.fetchAndCacheAsset(task.codeAndIris.audio)
+        })
     }
 
     cacheSortingGameIcons(sortingTasks) {
