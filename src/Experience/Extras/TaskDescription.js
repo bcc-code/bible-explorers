@@ -45,26 +45,6 @@ export default class TaskDescription {
             backBTN.style.display = "block"
             continueBTN.style.display = "block"
 
-            document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
-
-            instance.currentStepData = selectedChapter.program[currentStep]
-            if (instance.currentStepData.audio) {
-                // Fetch audio from blob or url
-                instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
-                    instance.taskAudio = data.audio
-                })
-
-                instance.playBTN.addEventListener("click", () => {
-                    instance.audio.togglePlayTaskDescription(instance.taskAudio)
-                    instance.playBTN.hasAttribute('playing')
-                        ? instance.changePauseBtnToPlay()
-                        : instance.changePlayBtnToPause()
-                })
-            }
-            else {
-                instance.playBTN.remove()
-            }
-
             backBTN.addEventListener('click', (e) => {
                 e.stopPropagation()
                 instance.destroy()
@@ -115,6 +95,34 @@ export default class TaskDescription {
                     instance.program.advance()
                 }
             })
+
+            document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
+
+            instance.currentStepData = selectedChapter.program[currentStep]
+            if (instance.currentStepData.audio) {
+                // Fetch audio from blob or url
+                instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
+                    instance.taskAudio = data.audio
+                })
+
+                instance.playBTN.addEventListener("click", () => {
+                    instance.audio.togglePlayTaskDescription(instance.taskAudio)
+                    instance.playBTN.hasAttribute('playing')
+                        ? instance.changePauseBtnToPlay()
+                        : instance.changePlayBtnToPause()
+                })
+            }
+            else {
+                instance.playBTN.remove()
+            }
+
+            if (selectedChapter.program[currentStep].descriptionMedia) {
+                // Fetch description media from blob or url
+                instance.offline.fetchChapterAsset(selectedChapter.program[currentStep], "descriptionMedia", (data) => {
+                    instance.world.selectedChapter.program[currentStep].descriptionMedia = data.descriptionMedia
+                    document.querySelector('.task__tips > *').src = data.descriptionMedia
+                })
+            }
 
             if (instance.currentStepTaskType == 'sorting') {
                 const noOfCorrectIcons = instance.program.getCurrentStepData().sorting.filter(i => i.correct_wrong === true).length
@@ -191,10 +199,10 @@ export default class TaskDescription {
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['jpg','jpeg','png','gif','tiff','jfif','bmp'].includes(ext)) return `<img src="${url}" />`
-        if (['mp4','mov','avi','wmv','flv','mkv','webm','mpeg','m4v','3gp'].includes(ext)) return `<video src="${url}" autoplay loop></video>`
+        if (['jpg','jpeg','png','gif','tiff','jfif','bmp'].includes(ext)) return `<img src="" />`
+        if (['mp4','mov','avi','wmv','flv','mkv','webm','mpeg','m4v','3gp'].includes(ext)) return `<video src="" autoplay loop></video>`
 
-        return `<a href="${url}">Link</a>`
+        return `<a href="">Link</a>`
     }
 
     destroy() {
