@@ -147,13 +147,13 @@ export default class TaskDescription {
 
     changePauseBtnToPlay() {
         instance.playBTN.removeAttribute("playing")
-        instance.playBTN.classList.add('icon-play-solid')
+        instance.playBTN.classList.add('icon-play-solid', 'pulsate')
         instance.playBTN.classList.remove('icon-stop-solid')
         instance.irisPlaying.style.display = 'none'
     }
     changePlayBtnToPause() {
         instance.playBTN.setAttribute("playing", '')
-        instance.playBTN.classList.remove('icon-play-solid')
+        instance.playBTN.classList.remove('icon-play-solid', 'pulsate')
         instance.playBTN.classList.add('icon-stop-solid')
         instance.irisPlaying.style.display = 'flex'
     }
