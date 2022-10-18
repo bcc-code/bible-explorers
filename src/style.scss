@@ -2839,6 +2839,38 @@ button,
     }
 }
 
+.answers__wrapper {
+    counter-reset: answers;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .answers__field {
+        width: calc(50% - 1rem);
+        counter-increment: answers;
+        margin-bottom: 2rem;
+    }
+
+    .answers__field:nth-child(2n+2) {
+        margin-left: 2rem;
+    }
+
+    .answers__field::before {
+        content: counter(answers) '.';
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    input {
+        border: none;
+        border-bottom: 1px solid $accent;
+        background: transparent;
+        font-size: 1.5rem;
+        color: #fff;
+        padding: 0.5rem 1rem;
+    }
+}
+
 .picture-and-code {
     img {
         margin-inline: auto;
