@@ -167,9 +167,6 @@ export default class TaskDescription {
     }
 
     getModalHtml(type, title, additionalContent = '') {
-        const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
-        const domEl = instance.getDomElement(mediaUrl)
-
         let html = `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
@@ -184,8 +181,9 @@ export default class TaskDescription {
             </div>
 
             <div class="task__content">`
+                const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
                 if (type != 'iris-and-code' && mediaUrl) {
-                    html += `<div class="task__tips">${domEl}</div>`
+                    html += `<div class="task__tips">${ instance.getDomElement(mediaUrl) }</div>`
                 }
 
                 html += `${title}

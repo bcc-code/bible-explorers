@@ -109,7 +109,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Start over",
             "continue": "Continue the journey",
@@ -130,7 +129,7 @@ const strings = {
             "restart": "Start reisen på nytt",
             "congrats": "Gratulerer!",
             "bibleCards": {
-                "title": "Bible cards",
+                "title": "Bibelkort",
                 "message": "Det er nå tid for å få bibelkortene."
             },
             "completed": "Du har fullført",
@@ -225,7 +224,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
@@ -341,7 +339,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
@@ -457,7 +454,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
@@ -573,7 +569,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
@@ -689,7 +684,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
@@ -805,7 +799,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
@@ -921,7 +914,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
@@ -1037,7 +1029,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
@@ -1153,7 +1144,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
@@ -1269,7 +1259,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
@@ -1385,7 +1374,6 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "yourTurn": "Your turn",
             "playAgain": "Play again",
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
