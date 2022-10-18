@@ -57,20 +57,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "I can’t download the films – what do I do?",
+                "I have logged in with my Portal user, but I still can’t download the films.",
+                "I have downloaded the chapter, but I can’t find the files – why?",
+                "I want to show the films at our church hall without Internet access – what must I do?",
+                "The page is unstable when I push buttons – what do I do?",
+                "I have a question that hasn’t been answered above – what do I do?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "You must log in with your Portal user to be able to download the films.",
+                "You can request access by sending an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "The files are stored in the cache on your PC, and you can play them from the website even if you aren’t online.",
+                "Open the website somewhere with Wi-Fi access, download the chapter, and keep the browser open on your PC. When you come to the place where you want to run the website, open your PC again, use the same browser, and the films will be played on the website.",
+                "Have you opened the page in Chrome? That is the recommended browser for Explorers.",
+                "Send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -183,7 +183,7 @@ const strings = {
                 "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
                 "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
                 "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
+                "Last inn nettsiden på et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
                 "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
                 "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
@@ -287,20 +287,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Ich kann die Filme nicht herunterladen – was soll ich machen?",
+                "Ich habe mich mit meinem Portalbenutzer angemeldet, kann die Filme aber trotzdem nicht herunterladen.",
+                "Ich habe das Kapitel heruntergeladen, kann die Dateien aber nicht finden – warum?",
+                "Ich zeige die Filme auf dem Gemeindeort ohne Internet, wie gehe ich vor?",
+                "Die Seite stürzt ab, wenn ich Tasten betätige. Was soll ich machen?",
+                "Ich habe eine Frage, die oben nicht beantwortet wurde - was soll ich machen?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Um die Filme herunterladen zu können, musst du dich mit deinem Portal-Benutzer anmelden.",
+                "Du kannst den Zugriff anfordern, indem du eine E-Mail an <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a> sendest.",
+                "Die Dateien werden im Cache auf deinem PC gespeichert. Du kannst sie von der Website aus abspielen, auch wenn du kein WLAN hast.",
+                "Öffne die Website irgendwo mit WLAN, lade das Kapitel herunter, lass den Browser auf dem PC geöffnet. Wenn du vor Ort bist, an dem du die Website abspielen willst, öffne deinen PC erneut, verwende denselben Browser, und die Filme werden auf der Website angezeigt. ",
+                "Hast du die Seite in Chrome geöffnet? Chrome ist der empfohlene Browser für Explorer.",
+                "Schicke eine E-Mail an <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -402,20 +402,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Ik krijg niet de mogelijkheid om de filmpjes te downloaden – wat doe ik?",
+                "Ik ben ingelogd met mijn portal account, maar ik kan de filmpjes nog niet downloaden.",
+                "Ik heb het hoofdstuk gedownload maar vind de bestanden niet – waarom?",
+                "Ik wil de filmpjes afspelen op de gemeentelocatie zonder internet, hoe ga ik te werk?",
+                "De website geeft storing als ik op de knoppen druk, wat doe ik?",
+                "Ik heb een vraag die hierboven niet beantwoord is – wat doe ik?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Je moet inloggen met je portal-account om de mogelijkheid te krijgen de films te downloaden.",
+                "Je kunt toegang aanvragen door een e-mail te sturen naar <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "De filmpjes zijn opgeslagen in het cachegeheugen van je computer, je krijgt de mogelijkheid ze af te spelen vanaf de website ook als je niet met WiFi verbonden bent.",
+                "Log in op de website op een plek met WiFi, download het hoofdstuk, houd de website open op de computer. Als je op de plek komt waar je de website nodig hebt, open je computer opnieuw en gebruik je dezelfde browser om de filmpjes te openen op de website.",
+                "Heb je de website geopend in Chrome? Dat is de aanbevolen browser voor Explorers.",
+                "Stuur een e-mail naar <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -517,20 +517,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Je n'arrive pas à télécharger les films - que faire ?",
+                "Je me suis connecté avec mon identifiant portail, mais je n'ai toujours pas accès au téléchargement des films.",
+                "J'ai téléchargé le chapitre mais je ne trouve pas les fichiers - pourquoi ?",
+                "Je vais montrer les films dans notre salle locale qui n'a pas d'accès internet, comment procéder ?",
+                "La page plante lorsque j'appuie sur des touches, que faire ?",
+                "J'ai une question qui n'a pas été traitée ci-dessus, que faire ?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Tu dois te connecter avec ton identifiant du portail, pour avoir accès au téléchargement des films.",
+                "Tu peux demander l'accès en envoyant un mail à <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Les fichiers sont stockés dans le cache de ton PC, tu pourras les lire depuis le site internet, même si tu n'as pas d'accès au wifi.",
+                "Télécharge la page internet à un endroit où le wifi est disponible, télécharge le chapitre, laisse le navigateur ouvert sur le PC. Lorsque tu arriveras sur le lieu non connecté, ouvre le PC, utilise le même navigateur et les films seront visibles sur la page internet.",
+                "As-tu ouvert la page dans Chrome ? C'est le navigateur recommandé pour Explorers.",
+                "Envoie un mail à <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -632,20 +632,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Nie mam możliwości pobrać filmów - co mam zrobić?",
+                "Zalogowałem się loginem z portalu, ale nadal nie mam możliwości pobrania filmików",
+                "Pobrałem rozdział, ale nie mogę znaleźć pobranych plików – dlaczego?",
+                "Filmiki będziemy odtwarzać w lokalu zborowym, gdzie nie ma internetu, jak mogę to obejść?",
+                "Strona się zacina kiedy klikam w różne przyciski, co mam zrobić?",
+                "Mam pytanie, na które nie znalazłem odpowiedzi – co mogę zrobić?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Musisz zalogować się loginem z portalu, żeby mieć możliwość pobierania filmów.",
+                "Możesz poprosić o dostęp pisząc maila do <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Rozdział został pobrany jako plik cache na twoim komputerze, możesz go odtworzyć na stronie internetowej mimo, że nie jesteś podłączony do internetu.",
+                "Wejdź na stronę internetową w miejscu, gdzie masz połączenie z internetem i pobierz rozdział. Kiedy będziesz w miejscu, gdzie będziecie przeprowadzać rozdział, włącz znów komputer i tą samą przeglądarkę, co wcześniej i będziesz mógł odtworzyć filmiki.",
+                "Czy otworzyłeś stronę w przeglądarce Chrome? Jest to zalecana przeglądarka do Explorers.",
+                "Wyślij e-mail na adres <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -747,20 +747,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Nu pot descărca filmele - ce fac?",
+                "M-am logat cu contul meu de Portal, dar tot nu pot descărca filmele.",
+                "Am descărcat capitolul dar nu găsesc fișierele - de ce?",
+                "Vom viziona filmele în adunarea locală fără internet, cum procedăm?",
+                "Pagina se blochează când apăs pe butoane, ce fac?",
+                "Am o întrebare la care nu s-a răspuns mai sus - ce fac?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Trebuie să te loghezi cu contul de Portal pentru a putea descărca filmele.",
+                "Poți cere acces trimițând un e-mail la adresa: <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Fișierele sunt stocate în memoria cache de pe calculator, le vei putea viziona de pe site chiar dacă nu ești conectat la Wifi.",
+                "Încarcă site-ul într-un loc în care ai internet, descarcă capitolul și ține browserul deschis pe calculator. Când ajungi la locul în care vei parcuge capitolul, deschide din nou calculatorul, folosește același browser iar filmele vor putea fi urmărite direct pe site.",
+                "Ai deschis pagina în Chrome? Este browserul recomandat pentru Explorers.",
+                "Trimite un e-mail la <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -862,20 +862,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "No puedo descargar los videos – ¿qué hacer?",
+                "He iniciado sesión con mi usuario del portal, pero sigo sin poder descargar los videos",
+                "He descargado el capítulo, pero no encuentro los archivos. ¿Por qué?",
+                "Voy a mostrar los videos en el local de la iglesia sin internet, ¿cómo debo hacerlo?",
+                "¿El sitio se congela cuando presiono botones, que hago?",
+                "Tengo una pregunta que no está entre las preguntas respondidas – ¿qué hago?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Tienes que iniciar sesión con los datos de usuario del portal para descargar los videos.",
+                "Puedes solicitar acceso enviado un mail a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Los archivos guardados se encuentran en el cache de tu computadora, puedes reproducirlo desde la página web, aunque no tengas conexión wifi.",
+                "Entra al sitio web en una zona con wifi, descarga el capítulo, mantén la página web abierta en tu computadora. Cuando llegues al lugar donde vas a reproducir la página web, abre tu computadora nuevamente, usa la misma página web y los videos se podrán mostrar en la página web.",
+                "¿Has abierto el sitio web en Chrome? Es el sitio recomendado para Explorers.",
+                "Envía un mail a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -977,20 +977,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Não consigo baixar os filmes - o que eu faço?",
+                "Fiz login com meu usuário do portal, mas ainda não consigo baixar os filmes.",
+                "Baixei o capítulo mas não consigo encontrar os arquivos - por quê?",
+                "Vou exibir os filmes no site da igreja sem internet, como devo proceder?",
+                "A página trava quando pressiono botões, o que faço?",
+                "Eu tenho uma pergunta sem resposta acima - o que eu faço?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Você deve fazer login com seu usuário do portal para poder baixar os filmes.",
+                "Você pode solicitar o acesso enviando um e-mail para <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Os arquivos são armazenados no cache do seu PC, você poderá reproduzi-los do site mesmo se não estiver em wifi",
+                "Carregue o site em algum lugar com wifi, baixe o capítulo, mantenha o navegador aberto no PC. Quando você chegar ao local onde vai rodar o site, abra seu PC novamente, use o mesmo navegador e os filmes aparecerão no site.",
+                "Você abriu a página no chrome?  É o navegador recomendado para Exploradores.",
+                "Envie um e-mail para <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -1092,20 +1092,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Non riesco a scaricare i film: cosa devo fare?",
+                "Ho effettuato l'accesso con il mio nome utente del portale, ma non riesco ancora a scaricare i film.",
+                "Ho scaricato il capitolo ma non riesco a trovare i file: perché?",
+                "Ho bisogno di proiettare i film nel locale della chiesa senza internet, come posso fare?",
+                "La pagina si blocca quando premo i pulsanti, cosa devo fare?",
+                "Ho una domanda che non trova risposta: cosa devo fare?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Per poter scaricare i filmati è necessario effettuare il login con il proprio nome utente del portale.",
+                "Puoi richiedere l'accesso inviando un'e-mail a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "I file vengono memorizzati nella cache del tuo PC e potrai riprodurli dal sito web anche se non sei connesso alla rete wifi.",
+                "Scarica il sito web in un luogo con wifi, scarica il capitolo, tieni aperto la pagina internet sul PC. Quando arriverai al punto in cui dovrai gestire il sito web, riapri il PC, utilizza lo stesso pagina internet e i film saranno visualizzati sul sito web.",
+                "Hai aperto la pagina in chrome? È il browser web consigliato per gli Esploratori.",
+                "Invia una mail a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -1207,20 +1207,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Не могу скачать фильмы - что делать?",
+                "Я вошел в систему под своей учетной записью, но все еще не могу скачать фильмы.",
+                "Я скачал главу, но не могу найти файлы - почему?",
+                "Я буду показывать фильмы на церковном месте, где нет интернета, как мне это сделать?",
+                "Страница вылетает при нажатии кнопок, что делать?",
+                "У меня есть вопрос, на который нет ответа выше - что мне делать?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Вы должны войти в систему под учетной записью портала, чтобы иметь возможность загружать фильмы.",
+                "Вы можете запросить доступ, отправив электронное письмо по адресу <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Файлы хранятся в кэше на вашем компьютере, вы сможете воспроизвести их с веб-сайта, даже если вы не подключены к Wi-Fi.",
+                "Загрузите веб-сайт в другом месте с помощью Wi-Fi, скачайте главу, оставьте браузер открытым на ПК. Когда вы доберетесь до места, где вы будете запускать веб-сайт без интернета, снова откройте свой компьютер, используйте тот же браузер, и фильмы появятся на веб-сайте.",
+                "Вы открывали страницу в chrome? Это рекомендуемый браузер для сайта.",
+                "Отправьте письмо на <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -1322,20 +1322,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "En saa ladatuksi filmejä – mitä teen?",
+                "Olen kirjautunut tunnuksillani sisään portaaliin, mutta en siltikään saa ladatuksi filmejä.",
+                "Olen ladannut osan, mutta en löydä tiedostoja – miksi?",
+                "Haluaisin näyttää filmejä seurakunnan tiloissa ilman internet-yhteyttä, kuinka se käy päinsä?",
+                "Sivu kaatuu, kun painan painikkeita, mitä teen?",
+                "Minulla on jokin kysymys, mihin ei ole vastattu yllä – mitä teen?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "Sinun on kirjauduttava tunnuksillasi sisään portaaliin ladataksesi filmejä.",
+                "Voit pyytää pääsyä lähettämällä sähköpostin osoitteeseen <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
+                "Tiedostot ovat tallennettuna tietokoneesi välimuistiin. Voit toistaa niitä verkkosivulla, vaikkei sinulla olisikaan wifi-yhteyttä.",
+                "Lataa verkkosivusto jonnekin wifi-yhteydellä, lataa osa, pidä selain auki PC:llä. Kun tulet paikkaan, jossa käytät verkkosivustoa, avaa tietokoneesi, käytä samaa selainta ja filmit näkyvät verkkosivustolla.",
+                "Oletko avannut sivun chromessa? Se on suositeltava selain Explorersiin.",
+                "Lähetä sähköpostia osoitteeseen <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
         },
         "offline": {
@@ -1437,20 +1437,20 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Jeg får ikke mulighet til å laste ned filmene - hva gjør jeg?",
-                "Jeg har logget på med min portal-bruker, men jeg får fortsatt ikke mulighet til å laste ned filmene.",
-                "Jeg har lastet ned kapittelet men finner ikke filene - hvorfor?",
-                "Jeg skal vise filmene på menighetsstedet uten internett, hvordan går jeg frem?",
-                "Siden hakker når jeg trykker på knapper, hva gjør jeg?",
-                "Jeg har et spørsmål som ikke er besvart over - hva gjør jeg?"
+                "Nem tudom letölteni a filmeket – mit tegyek?",
+                "Bejelentkeztem a portál felhasználómmal, de még mindig nem tudom letölteni a filmeket.",
+                "Letöltöttem a fejezetet, de nem találom a fájlokat – miért?",
+                "Internet nélkül mutatom be a filmeket a közösségben, hogyan tovább?",
+                "Az oldal összeomlik, ha megnyomom a gombokat, mit tegyek?",
+                "Van egy kérdésem, amelyre fent nem kaptam választ – mit tegyek?"
             ],
             "answers": [
-                "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
-                "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
-                "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
-                "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
-                "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+                "A filmek letöltéséhez be kell jelentkezned a portál felhasználóval.",
+                "Hozzáférést a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a> címre írt levélben kérheted",
+                "A fájlok a számítógép gyorsítótárában vannak tárolva, és akkor is le tudod játszani őket a webhelyről, ha nem csatlakozol a wifi-hez.",
+                "Töltsd be valahol wifin keresztül a weboldalt, töltsd le a fejezetet, tartsd nyitva a böngészőt a PC-n. Amikor eljutsz arra a helyre, ahol a webhelyet futtatni akarod, nyisd meg újra a számítógépét, használd ugyanazt a böngészőt, és a filmek megjelennek a webhelyen.",
+                "Chrome-ban nyitottad meg az oldalt? Ez az ajánlott böngésző.",
+                "Küldj levelet a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a> címre"
             ]
         },
         "offline": {
@@ -1563,7 +1563,7 @@ const strings = {
                 "Du må logge inn med din portal-bruker for å få mulighet til å laste ned filmene.",
                 "Du kan be om tilgang ved å sende mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>",
                 "Filene ligger lagret i cachen på PC-en din, du får mulighet til å spille dem av fra nettsiden selv om du ikke er på wifi",
-                "Last inn nettsidenpå et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
+                "Last inn nettsiden på et sted med wifi, last ned kapittelet, behold nettleseren åpen på pc-en. Når du kommer til stedet hvor du skal kjøre nettsiden, åpne PC-en igjen, bruk samme nettleser og filmene vil vises på nettsiden.",
                 "Har du åpnet siden i chrome? Det er den anbefalte nettleseren for Explorers.",
                 "Send mail til <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
             ]
