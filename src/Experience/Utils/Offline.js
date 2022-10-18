@@ -390,8 +390,9 @@ export default class Offline {
 
     setConnection(mode) {
         offline.isOnline = mode
-        offline.experience.world.hideLoading()
-        offline.addConnectionToBodyClasses(mode)
+
+        if (offline.isOnline == false)
+            offline.experience.world.hideLoading()
     }
 }
 

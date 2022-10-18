@@ -59,7 +59,7 @@ const handleRedirectCallback = async () => {
     }
 }
 
-// Detect browser 
+// Detect browser
 var browserName = (function (agent) {
     switch (true) {
         case agent.indexOf("edge") > -1: return "MS Edge";
