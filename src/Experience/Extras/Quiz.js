@@ -281,7 +281,6 @@ export default class Quiz {
         document.querySelector('.modal').classList.add('completed')
         document.querySelector('.quiz__content').style.display = 'none'
         document.querySelector('.quiz__footer').style.display = 'none'
-        document.querySelector('.quiz__progressContainer').style.display = 'none'
         back.style.display = 'none'
 
         const parent = document.querySelector('.quiz')
