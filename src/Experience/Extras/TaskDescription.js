@@ -183,7 +183,6 @@ export default class TaskDescription {
     }
 
     destroy() {
-        document.onkeydown = null
         instance.modal.destroy()
         instance.audio.stopTaskDescription(instance.taskAudio)
     }

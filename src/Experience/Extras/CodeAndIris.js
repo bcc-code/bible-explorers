@@ -17,7 +17,7 @@ export default class CodeAndIris {
 
     toggleCodeAndIris() {
         if (document.querySelector('.modal')) {
-            instance.modal.destroy()
+            instance.destroy()
         }
         else {
             instance.world = instance.experience.world
@@ -63,7 +63,7 @@ export default class CodeAndIris {
         back.innerText = _s.journey.back
         back.addEventListener('click', (e) => {
             e.stopPropagation()
-            instance.modal.destroy()
+            instance.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code, true)
         })
 
@@ -71,7 +71,7 @@ export default class CodeAndIris {
         next.style.display = 'block'
         next.innerText = _s.task.next
         next.addEventListener("click", () => {
-            instance.modal.destroy()
+            instance.destroy()
             instance.world.program.advance()
         })
     }
@@ -87,5 +87,10 @@ export default class CodeAndIris {
         instance.playBTN.classList.remove('icon-play-solid', 'pulsate')
         instance.playBTN.classList.add('icon-stop-solid')
         instance.irisPlaying.style.display = 'flex'
+    }
+
+    destroy() {
+        instance.modal.destroy()
+        instance.audio.stopTaskDescription(instance.taskAudio)
     }
 }
