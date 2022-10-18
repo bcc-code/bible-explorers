@@ -79,6 +79,7 @@ export default class World {
             }
         })
         this.buttons.howTo.querySelector('span').innerText = _s.howTo
+        this.buttons.howTo.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
         this.selectedQuality = this.experience.settings.videoQuality
 
