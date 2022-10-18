@@ -297,26 +297,7 @@ export default class World {
         instance.buttons.back.style.display = 'block'
         instance.buttons.howTo.style.display = 'block'
 
-        tippy('.chapter__offline', {
-            theme: 'explorers',
-            content: _s.offline.download.info
-        })
-
-        tippy('.chapter__downloaded', {
-            theme: 'explorers',
-            content: _s.offline.availableOffline.info
-        })
-    }
-
-    markChapterIfCompleted(chapter) {
-        const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
-
-        if (chapterProgress == chapter.program.length && chapterProgress > 0)
-            document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
-    }
-
-    setChapterBgImage(chapter) {
-        document.querySelector('.chapter[data-id="' + chapter.id + '"] .chapter__background').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
+        instance.setStatesTooltips()
     }
 
     setDescriptionHtml() {
@@ -380,7 +361,6 @@ export default class World {
         `</div>`
 
         document.querySelector('.chapter__task--content').innerHTML = itemHTMLString
-
     }
 
     removeDescriptionHtml() {
@@ -416,6 +396,29 @@ export default class World {
                 event.stopPropagation()
             })
         })
+    }
+
+    setStatesTooltips() {
+        tippy('.chapter__offline', {
+            theme: 'explorers',
+            content: _s.offline.download.info
+        })
+
+        tippy('.chapter__downloaded', {
+            theme: 'explorers',
+            content: _s.offline.availableOffline.info
+        })
+    }
+
+    setChapterBgImage(chapter) {
+        document.querySelector('.chapter[data-id="' + chapter.id + '"] .chapter__background').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
+    }
+
+    markChapterIfCompleted(chapter) {
+        const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
+
+        if (chapterProgress == chapter.program.length && chapterProgress > 0)
+            document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }
 
     confirmRedownload(event) {

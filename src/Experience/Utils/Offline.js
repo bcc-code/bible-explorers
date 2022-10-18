@@ -12,6 +12,7 @@ export default class Offline {
         this.experience = new Experience()
         offline = this
 
+        offline.isOnline = false
         offline.data = []
         offline.downloaded = []
 
@@ -385,6 +386,12 @@ export default class Offline {
                     }
                 })
         })
+    }
+
+    setConnection(mode) {
+        offline.isOnline = mode
+        offline.experience.world.hideLoading()
+        offline.addConnectionToBodyClasses(mode)
     }
 }
 

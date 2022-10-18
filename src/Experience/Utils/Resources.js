@@ -3,8 +3,9 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
-import _lang from '../Utils/Lang.js'
 import Offline from '../Utils/Offline.js'
+import _c from '../Utils/Connection.js'
+import _lang from '../Utils/Lang.js'
 
 let resources = null
 
@@ -237,6 +238,7 @@ export default class Resources extends EventEmitter {
                 var responseClone = response.clone()
 
                 response.json().then(function (apiData) {
+                    resources.offline.setConnection(_c.ONLINE)
                     callback(apiData)
                 })
 
@@ -246,6 +248,7 @@ export default class Resources extends EventEmitter {
                 })
             })
             .catch(function () {
+                resources.offline.setConnection(_c.OFFLINE)
                 caches.open('apiResponses').then(function (cache) {
                     cache.match(theUrl).then(response => {
                         response.json().then(function (cachedData) {
