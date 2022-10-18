@@ -50,7 +50,7 @@ export default class Archive {
                 if (fact.image.url) {
                     const image = document.createElement('img')
                     image.setAttribute('src', fact.image.url)
-                    content.appendChild(image)
+                    content.prepend(image)
                 }
 
                 archiveWrapper.appendChild(heading)

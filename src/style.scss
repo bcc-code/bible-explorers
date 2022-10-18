@@ -1524,9 +1524,9 @@ button,
 }
 
 .modal__congrats {
-    #restart {
-        margin-left: 0;
-    }
+    // #restart {
+    //     margin-left: 0;
+    // }
 
     #continue {
         margin-left: auto;
@@ -1997,17 +1997,15 @@ button,
     &__wrapper {
         position: relative;
         @include wrapper();
-        @include extras-bottom(20%);
-    }
-
-    &__content {
-        min-width: 30rem;
-        padding: 3rem 6rem;
+        @include extras();
     }
 
     &__list {
         list-style: none;
         counter-reset: faq-list;
+        padding-inline: 2rem;
+        max-height: 40vh;
+        overflow: auto;
     }
 
     &__item {
@@ -2032,7 +2030,7 @@ button,
     }
 
     &__question {
-        display: inline-block;
+        display: inline;
         font-weight: bold;
         margin-bottom: 1rem;
     }
@@ -2043,6 +2041,8 @@ button,
         font-weight: lighter;
         opacity: 0.8;
     }
+
+
 }
 
 .congrats {
@@ -2207,6 +2207,22 @@ button,
     position: relative;
     @include wrapper();
     @include extras();
+
+    .archive__content {
+        padding-inline: 2rem;
+    }
+
+    .archive__content img {
+        float: right;
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .archive__content::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
 }
 
 .notification {
@@ -3176,6 +3192,10 @@ button,
         font-size: var(--text-size);
     }
 
+    .faq__item::before {
+        font-size: var(--text-size);
+    }
+
     .button {
         font-size: var(--text-size);
     }
@@ -3220,7 +3240,8 @@ button,
         font-size: var(--text-size--task);
     }
 
-    .modal__content.settings {
+    .modal__content.settings,
+    .modal__content.faq {
         max-width: 60rem;
     }
 
@@ -3454,7 +3475,8 @@ button,
 
     .modal__congrats .modal__container,
     .modal__settings .modal__container,
-    .modal__archive .modal__container {
+    .modal__archive .modal__container,
+    .modal__faq .modal__container {
         align-items: center;
     }
 
