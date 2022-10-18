@@ -2213,6 +2213,7 @@ button,
     }
 
     .archive__content img {
+        max-width: 320px;
         float: right;
         margin-left: 1rem;
         margin-bottom: 1rem;
@@ -2285,6 +2286,7 @@ button,
     z-index: 102;
 
     &__container {
+        font-size: 1.5rem;
         padding: 1rem 3rem;
         color: #fff;
         background: $gradient2;
@@ -3189,6 +3191,10 @@ button,
     }
 
     p {
+        font-size: var(--text-size);
+    }
+
+    .timer__container {
         font-size: var(--text-size);
     }
 
