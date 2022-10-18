@@ -1214,6 +1214,7 @@ button,
         display: flex;
         flex-direction: column;
         opacity: 0;
+        visibility: hidden;
     }
 
     &__description {
@@ -1405,8 +1406,9 @@ button,
         display: none;
     }
 
-    &-selected+&__content {
+    &-selected + &__content {
         opacity: 1;
+        visibility: visible;
     }
 
     .chapter-selected &:not(.selected) {
