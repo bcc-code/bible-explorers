@@ -159,7 +159,10 @@ export default class TaskDescription {
     }
 
     getModalHtml(type, title, additionalContent = '') {
-        return `<div class="modal__content task ${type}">
+        const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
+        const domEl = instance.getDomElement(mediaUrl)
+
+        let html = `<div class="modal__content task ${type}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
                 <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
@@ -172,14 +175,26 @@ export default class TaskDescription {
                 </div>
             </div>
 
-            <div class="task__content">
-                <div class="task__tips">
-                    <video id="irisVideoBg" src="games/tutorial_connecting_2.mp4" autoplay loop></video>
-                </div>
-                ${title}
+            <div class="task__content">`
+                if (type != 'iris-and-code' && mediaUrl) {
+                    html += `<div class="task__tips">${domEl}</div>`
+                }
+
+                html += `${title}
                 ${additionalContent}
             </div>
         </div>`
+
+        return html
+    }
+
+    getDomElement(url) {
+        const ext = url.split('.').pop().toLowerCase()
+
+        if (['jpg','jpeg','png','gif','tiff','jfif','bmp'].includes(ext)) return `<img src="${url}" />`
+        if (['mp4','mov','avi','wmv','flv','mkv','webm','mpeg','m4v','3gp'].includes(ext)) return `<video src="${url}" autoplay loop></video>`
+
+        return `<a href="${url}">Link</a>`
     }
 
     destroy() {
