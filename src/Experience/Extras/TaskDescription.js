@@ -183,7 +183,10 @@ export default class TaskDescription {
             <div class="task__content">`
                 const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
                 if (type != 'iris-and-code' && mediaUrl) {
-                    html += `<div class="task__tips">${ instance.getDomElement(mediaUrl) }</div>`
+                    const domEl = instance.getDomElement(mediaUrl)
+                    if (domEl) {
+                        html += `<div class="task__tips">${ domEl }</div>`
+                    }
                 }
 
                 html += `${title}
@@ -199,8 +202,6 @@ export default class TaskDescription {
 
         if (['jpg','jpeg','png','gif','tiff','jfif','bmp'].includes(ext)) return `<img src="" />`
         if (['mp4','mov','avi','wmv','flv','mkv','webm','mpeg','m4v','3gp'].includes(ext)) return `<video src="" autoplay loop></video>`
-
-        return `<a href="">Link</a>`
     }
 
     destroy() {
