@@ -74,15 +74,16 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
-@mixin wrapper() {
+@mixin wrapper($spacing-sides: 2rem) {
     color: #fff;
     background: $gradient;
     border: 4px solid $accent;
     border-radius: 1rem;
-    padding: 2rem;
+    padding-block: 2rem;
+    padding-inline: $spacing-sides;
 }
 
-@mixin extras() {
+@mixin extras($spacing: 18rem) {
 
     &::after,
     &::before {
@@ -90,7 +91,7 @@ $secondary-font: 'PT Sans', sans-serif;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        height: calc(100% - 10rem);
+        height: calc(100% - #{$spacing});
         min-height: 96px;
         width: 1rem;
         background: $accent;
@@ -202,6 +203,125 @@ $secondary-font: 'PT Sans', sans-serif;
         box-shadow: 0 0 0 0 rgba($accent2, 0);
     }
 }
+
+// #endregion
+
+// #region General 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+body {
+    font-family: $primary-font;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+}
+
+main {
+    position: fixed;
+}
+
+@supports (-webkit-touch-callout: none) {
+
+    body,
+    html {
+        /* The hack for Safari */
+        height: -webkit-fill-available;
+    }
+}
+
+ul {
+    list-style: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    font-family: $secondary-font;
+    letter-spacing: 0.15rem;
+    font-size: 3.5rem;
+}
+
+h2 {
+    font-family: $secondary-font;
+    letter-spacing: 0.1rem;
+    font-size: 2.75rem;
+}
+
+h3 {
+    font-family: $secondary-font;
+    letter-spacing: 0.1rem;
+    font-size: 2.25rem;
+}
+
+p {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+button,
+input {
+    /* 1 */
+    overflow: visible;
+}
+
+button,
+select {
+    /* 1 */
+    text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+
+
+// #endregion
+
+// #region Canvas
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    cursor: grab;
+}
+
+// #endregion
+
+// #region Interface
 
 .button {
     position: relative;
@@ -385,124 +505,6 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
-// #endregion
-
-// #region General 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    overflow: hidden;
-}
-
-body {
-    font-family: $primary-font;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: 0.5px;
-}
-
-main {
-    position: fixed;
-}
-
-@supports (-webkit-touch-callout: none) {
-
-    body,
-    html {
-        /* The hack for Safari */
-        height: -webkit-fill-available;
-    }
-}
-
-ul {
-    list-style: none;
-}
-
-.hidden {
-    display: none !important;
-}
-
-h1 {
-    font-family: $secondary-font;
-    letter-spacing: 0.15rem;
-    font-size: 3.5rem;
-}
-
-h2 {
-    font-family: $secondary-font;
-    letter-spacing: 0.1rem;
-    font-size: 2.75rem;
-}
-
-h3 {
-    font-family: $secondary-font;
-    letter-spacing: 0.1rem;
-    font-size: 2.25rem;
-}
-
-p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-img {
-    display: block;
-    max-width: 100%;
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0;
-}
-
-button,
-input {
-    /* 1 */
-    overflow: visible;
-}
-
-button,
-select {
-    /* 1 */
-    text-transform: none;
-}
-
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: transparent;
-}
-
-
-// #endregion
-
-// #region Canvas
-.webgl {
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-    cursor: grab;
-}
-
-// #endregion
-
-// #region Interface
 #videos-container {
     position: absolute;
     left: 0;
@@ -1536,7 +1538,7 @@ button,
 .settings {
     &__wrapper {
         position: relative;
-        @include wrapper();
+        @include wrapper($spacing-sides: 4rem);
         @include extras();
     }
 
@@ -1796,7 +1798,7 @@ button,
         position: relative;
         width: 20rem;
         aspect-ratio: 1/1;
-        @include extras();
+        @include extras($spacing: 10rem);
 
         &::before {
             left: 0;
@@ -1990,7 +1992,6 @@ button,
     &__list {
         list-style: none;
         counter-reset: faq-list;
-        padding-inline: 2rem;
         max-height: 40vh;
         overflow: auto;
     }
@@ -2039,7 +2040,7 @@ button,
     &__container {
         position: relative;
         @include wrapper();
-        @include extras();
+        @include extras($spacing: 10rem);
         text-align: center;
         z-index: 2;
     }
@@ -2194,10 +2195,6 @@ button,
     position: relative;
     @include wrapper();
     @include extras();
-
-    .archive__content {
-        padding-inline: 2rem;
-    }
 
     .archive__content img {
         max-width: 320px;
@@ -3241,6 +3238,10 @@ button,
     .tippy-box[data-theme=explorers] {
         font-size: 0.85rem;
     }
+
+    .progress-bar__step {
+        font-size: var(--text-size);
+    }
 }
 
 @media (max-width: 1680px) {
@@ -3298,10 +3299,6 @@ button,
     .chapter__heading {
         padding: 2rem 1rem;
     }
-
-    // .chapter__text {
-    //     max-height: 23vh;
-    // }
 
     .congrats__title {
         font-size: 2rem;
@@ -3362,7 +3359,7 @@ button,
     }
 
     .settings__wrapper {
-        padding: 1rem 2rem;
+        padding-inline: 2rem;
     }
 
     .settings__item {
@@ -3445,6 +3442,11 @@ button,
     .modal__wrapper,
     .modal__actions {
         padding: 1rem;
+    }
+
+    .chapter__description {
+        padding-block: 1rem;
+        padding-inline: 1rem
     }
 
     .chapter__items,
