@@ -20,7 +20,7 @@ function getWpApiUrl() {
             return wpApiUrl_staging
 
         case 'localhost':
-            return wpApiUrl_staging
+            return wpApiUrl_production
 
         default:
             return wpApiUrl_staging
