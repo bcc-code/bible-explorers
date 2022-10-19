@@ -41,10 +41,13 @@ export default class PictureAndCode {
         instance.modal = new Modal(html, 'modal__picture-and-code')
         instance.el = document.querySelector('.picture-and-code')
 
-        const title = document.createElement('h3')
-        title.className = 'modal__heading--minigame'
-        title.innerText = instance.data.title
-        document.querySelector('.modal__picture-and-code').prepend(title)
+        if (instance.data.title) {
+            const title = document.createElement('h3')
+            title.className = 'modal__heading--minigame'
+            title.innerText = instance.data.title
+            document.querySelector('.modal__picture-and-code').prepend(title)
+        }
+
 
         const back = document.getElementById("back")
         back.style.display = 'block'
@@ -77,7 +80,7 @@ export default class PictureAndCode {
         instance.data.picture = url
         instance.el.querySelector('img').setAttribute('src', instance.data.picture)
     }
-    
+
     addExistingCircles() {
         instance.program.gamesData.pictureAndCode.circles.forEach(circle => instance.addCircle(circle.x, circle.y))
     }

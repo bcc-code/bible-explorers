@@ -26,8 +26,8 @@ export default class Modal {
     }
 
     destroy() {
-        modal[modal.length-1].htmlEl.remove()
-        modal[modal.length-1].callback()
+        modal[modal.length - 1].htmlEl.remove()
+        modal[modal.length - 1].callback()
         modal.pop()
 
         if (!modal.length) {
@@ -43,9 +43,11 @@ export default class Modal {
             </div>
             <div class="modal__actions">
                 <button class="button bg--primary border--5 border--solid border--primary height px rounded--back" id="back"></button>
-                <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="restart"></button>
-                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="skip"></button>
-                <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate" id="continue"></button>
+                <div>
+                    <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="restart"></button>
+                    <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="skip"></button>
+                    <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate" id="continue"></button>
+                </div>
             </div>
         `
     }

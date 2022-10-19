@@ -78,6 +78,7 @@ if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification, chromeIcon)
 }
 
+
 window.onload = async () => {
     await configureClient()
     await handleRedirectCallback()

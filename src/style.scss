@@ -74,15 +74,16 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
-@mixin wrapper() {
+@mixin wrapper($spacing-sides: 2rem) {
     color: #fff;
     background: $gradient;
     border: 4px solid $accent;
     border-radius: 1rem;
-    padding: 2rem;
+    padding-block: 2rem;
+    padding-inline: $spacing-sides;
 }
 
-@mixin extras() {
+@mixin extras($spacing: 18rem) {
 
     &::after,
     &::before {
@@ -90,7 +91,7 @@ $secondary-font: 'PT Sans', sans-serif;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        height: calc(100% - 10rem);
+        height: calc(100% - #{$spacing});
         min-height: 96px;
         width: 1rem;
         background: $accent;
@@ -202,6 +203,125 @@ $secondary-font: 'PT Sans', sans-serif;
         box-shadow: 0 0 0 0 rgba($accent2, 0);
     }
 }
+
+// #endregion
+
+// #region General 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+body {
+    font-family: $primary-font;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+}
+
+main {
+    position: fixed;
+}
+
+@supports (-webkit-touch-callout: none) {
+
+    body,
+    html {
+        /* The hack for Safari */
+        height: -webkit-fill-available;
+    }
+}
+
+ul {
+    list-style: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    font-family: $secondary-font;
+    letter-spacing: 0.15rem;
+    font-size: 3.5rem;
+}
+
+h2 {
+    font-family: $secondary-font;
+    letter-spacing: 0.1rem;
+    font-size: 2.75rem;
+}
+
+h3 {
+    font-family: $secondary-font;
+    letter-spacing: 0.1rem;
+    font-size: 2.25rem;
+}
+
+p {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+button,
+input {
+    /* 1 */
+    overflow: visible;
+}
+
+button,
+select {
+    /* 1 */
+    text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+
+
+// #endregion
+
+// #region Canvas
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    cursor: grab;
+}
+
+// #endregion
+
+// #region Interface
 
 .button {
     position: relative;
@@ -385,124 +505,6 @@ $secondary-font: 'PT Sans', sans-serif;
     }
 }
 
-// #endregion
-
-// #region General 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    overflow: hidden;
-}
-
-body {
-    font-family: $primary-font;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: 0.5px;
-}
-
-main {
-    position: fixed;
-}
-
-@supports (-webkit-touch-callout: none) {
-
-    body,
-    html {
-        /* The hack for Safari */
-        height: -webkit-fill-available;
-    }
-}
-
-ul {
-    list-style: none;
-}
-
-.hidden {
-    display: none !important;
-}
-
-h1 {
-    font-family: $secondary-font;
-    letter-spacing: 0.15rem;
-    font-size: 3.5rem;
-}
-
-h2 {
-    font-family: $secondary-font;
-    letter-spacing: 0.1rem;
-    font-size: 2.75rem;
-}
-
-h3 {
-    font-family: $secondary-font;
-    letter-spacing: 0.1rem;
-    font-size: 2.25rem;
-}
-
-p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-img {
-    display: block;
-    max-width: 100%;
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0;
-}
-
-button,
-input {
-    /* 1 */
-    overflow: visible;
-}
-
-button,
-select {
-    /* 1 */
-    text-transform: none;
-}
-
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: transparent;
-}
-
-
-// #endregion
-
-// #region Canvas
-.webgl {
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-    cursor: grab;
-}
-
-// #endregion
-
-// #region Interface
 #videos-container {
     position: absolute;
     left: 0;
@@ -887,11 +889,8 @@ button,
     margin-right: 0;
 }
 
-#restart-chapter,
-#restart,
-#reset {
+#restart-chapter {
     margin-right: 2rem;
-    margin-left: auto;
 }
 
 #how-to {
@@ -1223,15 +1222,11 @@ button,
     }
 
     &__text {
-        // max-height: 36vh;
-        // overflow: auto;
-        padding-right: 1rem;
-        margin-bottom: 1rem;
+        margin-block: 1rem;
     }
 
     &__attachments {
         background: rgba(255, 255, 255, 0.1);
-        margin-bottom: 2rem;
         display: flex;
 
         [class^='icon-'] {
@@ -1313,6 +1308,7 @@ button,
     }
 
     &.downloaded {
+
         .chapter__offline,
         .chapter__downloading {
             display: none;
@@ -1320,6 +1316,7 @@ button,
 
         .chapter__downloaded {
             display: inline-flex;
+            align-items: center;
 
             .icon,
             .separator {
@@ -1392,7 +1389,7 @@ button,
         display: none;
     }
 
-    &-selected + &__content {
+    &-selected+&__content {
         opacity: 1;
         visibility: visible;
     }
@@ -1423,7 +1420,7 @@ button,
     background: $gradient-with-opacity;
 
     &__close {
-        position: absolute;
+        position: fixed;
         top: 2rem;
         right: 2rem;
         z-index: 99;
@@ -1432,7 +1429,6 @@ button,
     &__heading {
         padding-bottom: 1rem;
         border-bottom: 4px solid $accent;
-        margin-bottom: 2rem;
     }
 
     &__heading--minigame {
@@ -1480,6 +1476,12 @@ button,
         justify-content: space-between;
         pointer-events: none;
 
+        div {
+            display: flex;
+            margin-left: auto;
+            gap: 1rem;
+        }
+
         button {
             display: none;
             pointer-events: all;
@@ -1511,9 +1513,17 @@ button,
     }
 }
 
-.modal__congrats {
-    #continue {
-        margin-left: auto;
+.modal__faq,
+.modal__settings,
+.modal__archive {
+    overflow: auto;
+
+    .modal__wrapper {
+        overflow: initial;
+    }
+
+    .modal__actions {
+        display: none;
     }
 }
 
@@ -1532,13 +1542,14 @@ button,
 .settings {
     &__wrapper {
         position: relative;
-        @include wrapper();
+        @include wrapper($spacing-sides: 4rem);
         @include extras();
     }
 
     &__content {
         display: flex;
         flex-wrap: wrap;
+        margin-top: 1rem;
     }
 
     &__item {
@@ -1610,7 +1621,8 @@ button,
             background-color: #fff;
             padding: 6px 4px;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
-            min-width: 10rem;
+            min-width: 12rem;
+            text-align: right;
         }
 
         &__list.hide {
@@ -1661,6 +1673,7 @@ button,
             padding: 6px 4px;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
             min-width: 10rem;
+            text-align: right;
         }
 
         &__list.hide {
@@ -1792,7 +1805,7 @@ button,
         position: relative;
         width: 20rem;
         aspect-ratio: 1/1;
-        @include extras();
+        @include extras($spacing: 10rem);
 
         &::before {
             left: 0;
@@ -1986,14 +1999,10 @@ button,
     &__list {
         list-style: none;
         counter-reset: faq-list;
-        padding-inline: 2rem;
-        max-height: 40vh;
-        overflow: auto;
     }
 
     &__item {
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
+        margin-block: 1rem;
         border-bottom: 1px solid rgba(#fff, .1);
         counter-increment: faq-list;
 
@@ -2035,7 +2044,7 @@ button,
     &__container {
         position: relative;
         @include wrapper();
-        @include extras();
+        @include extras($spacing: 10rem);
         text-align: center;
         z-index: 2;
     }
@@ -2043,7 +2052,6 @@ button,
     &__title {
         position: relative;
         display: inline-block;
-        margin: 2rem 0;
         color: $accent2;
         font-size: 3rem;
 
@@ -2101,9 +2109,6 @@ button,
     // Mini Games
 
     &__journey {
-        .congrats__container {
-            padding-top: 0;
-        }
 
         #bibleCards {
             width: 100%;
@@ -2190,10 +2195,6 @@ button,
     position: relative;
     @include wrapper();
     @include extras();
-
-    .archive__content {
-        padding-inline: 2rem;
-    }
 
     .archive__content img {
         max-width: 320px;
@@ -3213,10 +3214,6 @@ button,
         font-size: var(--text-size);
     }
 
-    // .chapter__text {
-    //     max-height: 30vh;
-    // }
-
     .settings__item {
         font-size: var(--text-size);
     }
@@ -3230,12 +3227,17 @@ button,
     }
 
     .modal__content.settings,
-    .modal__content.faq {
+    .modal__content.faq,
+    .modal__content.archive {
         max-width: 60rem;
     }
 
     .tippy-box[data-theme=explorers] {
         font-size: 0.85rem;
+    }
+
+    .progress-bar__step {
+        font-size: var(--text-size);
     }
 }
 
@@ -3294,10 +3296,6 @@ button,
     .chapter__heading {
         padding: 2rem 1rem;
     }
-
-    // .chapter__text {
-    //     max-height: 23vh;
-    // }
 
     .congrats__title {
         font-size: 2rem;
@@ -3358,7 +3356,7 @@ button,
     }
 
     .settings__wrapper {
-        padding: 1rem 2rem;
+        padding-inline: 2rem;
     }
 
     .settings__item {
@@ -3370,6 +3368,10 @@ button,
     }
 
     .settings {
+
+        .video-quality__list {
+            min-width: 10rem;
+        }
 
         .video-quality__picker,
         .language__picker {
@@ -3395,7 +3397,7 @@ button,
         }
 
         .switch input:checked+.slider:before {
-            transform: translateX(44px);
+            transform: translateX(48px);
         }
     }
 }
@@ -3443,6 +3445,11 @@ button,
         padding: 1rem;
     }
 
+    .chapter__description {
+        padding-block: 1rem;
+        padding-inline: 1rem
+    }
+
     .chapter__items,
     .chapter__attachments .button,
     .chapter__content--preview .column {
@@ -3480,10 +3487,11 @@ button,
     .progress-bar__step {
         width: 3rem;
         height: 3rem;
+        margin-top: -1rem;
     }
 
     .progress-bar__percentage {
-        height: 0.5rem;
+        height: 1rem;
     }
 
 }
