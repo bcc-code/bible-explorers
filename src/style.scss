@@ -3487,10 +3487,11 @@ button,
     .progress-bar__step {
         width: 3rem;
         height: 3rem;
+        margin-top: -1rem;
     }
 
     .progress-bar__percentage {
-        height: 0.5rem;
+        height: 1rem;
     }
 
 }
