@@ -1,6 +1,8 @@
 @import "./icons.scss";
 @import "./fonts.scss";
 
+@use 'sass:math';
+
 :root {
     color-scheme: only light !important;
 }
@@ -1316,6 +1318,7 @@ button,
 
         .chapter__downloaded {
             display: inline-flex;
+            align-items: center;
 
             .icon,
             .separator {
@@ -1679,6 +1682,7 @@ button,
             padding: 6px 4px;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
             min-width: 10rem;
+            text-align: right;
         }
 
         &__list.hide {
