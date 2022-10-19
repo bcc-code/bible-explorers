@@ -7,6 +7,7 @@ import _s from './Experience/Utils/Strings.js'
 import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 
+
 // Application Insights
 _appInsights.loadAppInsights()
 _appInsights.trackPageView({ name: "Home" })

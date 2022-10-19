@@ -13,12 +13,12 @@ import Highlight from './Highlight.js'
 import _e from '../Utils/Events.js'
 import _appInsights from '../Utils/AppInsights.js'
 
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/dist/backdrop.css';
+
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/animations/shift-away.css'
 
 let instance = null
-
 export default class World {
     constructor() {
         this.offline = new Offline()
@@ -207,12 +207,19 @@ export default class World {
 
                 instance.welcome.loadingScreen.classList.remove('visible')
                 instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook.title
+
                 tippy('#quick-look', {
                     theme: 'explorers',
-                    content: _s.journey.quickLook.info
+                    content: _s.journey.quickLook.info,
+                    duration: [500, 200],
+                    animation: 'shift-away',
+                    arrow: false
                 })
+
             })
         })
+
+
     }
 
     goToLandingScreen() {
@@ -402,12 +409,18 @@ export default class World {
     setStatesTooltips() {
         tippy('.chapter__offline', {
             theme: 'explorers',
-            content: _s.offline.download.info
+            content: _s.offline.download.info,
+            duration: [500, 200],
+            animation: 'shift-away',
+            arrow: false
         })
 
         tippy('.chapter__downloaded', {
             theme: 'explorers',
-            content: _s.offline.availableOffline.info
+            content: _s.offline.availableOffline.info,
+            duration: [500, 200],
+            animation: 'shift-away',
+            arrow: false
         })
     }
 
@@ -547,7 +560,7 @@ export default class World {
 
     cacheCodeAndIrisAudios(tasks) {
         if (tasks.length == 0) return
-        
+
         tasks.forEach(task => {
             if (task.codeAndIris.audio)
                 instance.fetchAndCacheAsset(task.codeAndIris.audio)
