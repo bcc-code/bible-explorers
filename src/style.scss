@@ -887,11 +887,8 @@ button,
     margin-right: 0;
 }
 
-#restart-chapter,
-#restart,
-#reset {
+#restart-chapter {
     margin-right: 2rem;
-    margin-left: auto;
 }
 
 #how-to {
@@ -1480,6 +1477,12 @@ button,
         display: flex;
         justify-content: space-between;
         pointer-events: none;
+
+        div {
+            display: flex;
+            margin-left: auto;
+            gap: 1rem;
+        }
 
         button {
             display: none;
