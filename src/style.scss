@@ -785,6 +785,7 @@ button,
         &[currentStep] {
             background: $gradient2 padding-box, $gradient2 border-box;
             border-color: transparent;
+            pointer-events: none;
         }
     }
 

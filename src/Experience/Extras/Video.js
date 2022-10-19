@@ -43,6 +43,10 @@ export default class Video {
     load(id) {
         this.playingVideoId = id
 
+        // Remove all event listeners - if any
+        this.video().off()
+
+        // Always start new loaded videos from the beginning
         this.video().currentTime(0)
 
         // Set texture when starting directly on a video task type
@@ -51,7 +55,7 @@ export default class Video {
 
         this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
-        // Event listener on video update
+        // Add event listener on video update
         this.video().on('timeupdate', function () {
             if (instance.showSkipBtn()) {
                 if (instance.hasSkipBtn()) return
@@ -69,15 +73,15 @@ export default class Video {
             }
         })
 
-        // Event listener on fullscreen change
+        // Add event listener on fullscreen change
         this.video().on('fullscreenchange', function () {
             if (!this.isFullscreen_) {
                 instance.pause()
             }
         })
 
-        // Event listener on video end
-        this.video().on('ended', instance.finish)
+        // Add event listener on video end
+        this.video().on('ended', () => { setTimeout(() => { instance.finish()}, 1000) })
 
         this.focus()
     }
@@ -98,7 +102,7 @@ export default class Video {
     }
 
     pause() {
-        instance.video().pause();
+        instance.video().pause()
     }
 
     focus() {
