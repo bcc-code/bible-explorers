@@ -1222,15 +1222,11 @@ button,
     }
 
     &__text {
-        // max-height: 36vh;
-        // overflow: auto;
-        padding-right: 1rem;
-        margin-bottom: 1rem;
+        margin-block: 1rem;
     }
 
     &__attachments {
         background: rgba(255, 255, 255, 0.1);
-        margin-bottom: 2rem;
         display: flex;
 
         [class^='icon-'] {
@@ -1631,7 +1627,8 @@ button,
             background-color: #fff;
             padding: 6px 4px;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.2);
-            min-width: 10rem;
+            min-width: 12rem;
+            text-align: right;
         }
 
         &__list.hide {
@@ -3381,6 +3378,10 @@ button,
 
     .settings {
 
+        .video-quality__list {
+            min-width: 10rem;
+        }
+
         .video-quality__picker,
         .language__picker {
             font-size: 1rem;
@@ -3405,7 +3406,7 @@ button,
         }
 
         .switch input:checked+.slider:before {
-            transform: translateX(44px);
+            transform: translateX(48px);
         }
     }
 }
