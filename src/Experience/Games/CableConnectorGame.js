@@ -542,7 +542,6 @@ export default class CableConnector {
     }
 
     addEventListeners() {
-
         const back = document.getElementById('back')
         back.style.display = 'block'
         back.innerText = _s.journey.back
@@ -569,7 +568,6 @@ export default class CableConnector {
             : 'none'
 
         skip.addEventListener('click', instance.advanceToNextStep)
-
     }
 
     advanceToNextStep() {
