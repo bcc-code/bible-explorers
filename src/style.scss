@@ -1,8 +1,6 @@
 @import "./icons.scss";
 @import "./fonts.scss";
 
-@use 'sass:math';
-
 :root {
     color-scheme: only light !important;
 }
@@ -1515,7 +1513,6 @@ button,
     }
 }
 
-
 .modal__faq,
 .modal__settings,
 .modal__archive {
@@ -1527,12 +1524,6 @@ button,
 
     .modal__actions {
         display: none;
-    }
-}
-
-.modal__congrats {
-    #continue {
-        margin-left: auto;
     }
 }
 
@@ -2061,7 +2052,6 @@ button,
     &__title {
         position: relative;
         display: inline-block;
-        margin: 2rem 0;
         color: $accent2;
         font-size: 3rem;
 
@@ -2119,9 +2109,6 @@ button,
     // Mini Games
 
     &__journey {
-        .congrats__container {
-            padding-top: 0;
-        }
 
         #bibleCards {
             width: 100%;
