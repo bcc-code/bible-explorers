@@ -1313,6 +1313,7 @@ button,
     }
 
     &.downloaded {
+
         .chapter__offline,
         .chapter__downloading {
             display: none;
@@ -1392,7 +1393,7 @@ button,
         display: none;
     }
 
-    &-selected + &__content {
+    &-selected+&__content {
         opacity: 1;
         visibility: visible;
     }
