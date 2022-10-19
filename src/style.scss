@@ -1423,7 +1423,7 @@ button,
     background: $gradient-with-opacity;
 
     &__close {
-        position: absolute;
+        position: fixed;
         top: 2rem;
         right: 2rem;
         z-index: 99;
@@ -1432,7 +1432,6 @@ button,
     &__heading {
         padding-bottom: 1rem;
         border-bottom: 4px solid $accent;
-        margin-bottom: 2rem;
     }
 
     &__heading--minigame {
@@ -1517,6 +1516,21 @@ button,
     }
 }
 
+
+.modal__faq,
+.modal__settings,
+.modal__archive {
+    overflow: auto;
+
+    .modal__wrapper {
+        overflow: initial;
+    }
+
+    .modal__actions {
+        display: none;
+    }
+}
+
 .modal__congrats {
     #continue {
         margin-left: auto;
@@ -1545,6 +1559,7 @@ button,
     &__content {
         display: flex;
         flex-wrap: wrap;
+        margin-top: 1rem;
     }
 
     &__item {
@@ -1992,13 +2007,10 @@ button,
     &__list {
         list-style: none;
         counter-reset: faq-list;
-        max-height: 40vh;
-        overflow: auto;
     }
 
     &__item {
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
+        margin-block: 1rem;
         border-bottom: 1px solid rgba(#fff, .1);
         counter-increment: faq-list;
 
@@ -3214,10 +3226,6 @@ button,
         font-size: var(--text-size);
     }
 
-    // .chapter__text {
-    //     max-height: 30vh;
-    // }
-
     .settings__item {
         font-size: var(--text-size);
     }
@@ -3231,7 +3239,8 @@ button,
     }
 
     .modal__content.settings,
-    .modal__content.faq {
+    .modal__content.faq,
+    .modal__content.archive {
         max-width: 60rem;
     }
 
