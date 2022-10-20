@@ -132,10 +132,8 @@ export default class Settings {
                 })
             })
 
-
             settings.toggleFaq()
             settings.updateUI()
-
 
             const fullScreenSwitch = settings.el.fullScreen.querySelector('input')
             const fullScreenLabel = settings.el.fullScreen.querySelector('span')
@@ -176,11 +174,6 @@ export default class Settings {
     toggleFaq() {
         const button = document.querySelector('.faq__button')
         button.addEventListener('click', () => {
-
-            if (document.querySelector(".modal")) {
-                settings.modal.destroy()
-            }
-
             const questions = Object.values(_s.faq.questions)
             const answers = Object.values(_s.faq.answers)
 
