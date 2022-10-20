@@ -466,7 +466,6 @@ button,
 }
 
 .container {
-    display: none;
     @include fixed();
     @include overlay();
 
@@ -3514,7 +3513,7 @@ button,
 }
 
 .circle {
-    position: fixed;
+    position: absolute;
     width: 6rem;
     height: 6rem;
     margin-top: -3rem;
