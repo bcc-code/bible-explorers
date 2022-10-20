@@ -1489,7 +1489,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "playAnother": "Play another melody",
+            "playAgain": "Play again",
             "reset": "Újrakezdés",
             "continue": "Utazás folytatása",
             "skip": "Átugrás",
@@ -1604,7 +1604,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "You've played the wrong note of the melody!"
             },
-            "playAnother": "Play another melody",
+            "playAgain": "Play again",
             "reset": "Start spillet forfra",
             "continue": "Fortsæt rejsen",
             "skip": "Skip",

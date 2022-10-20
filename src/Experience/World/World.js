@@ -456,7 +456,7 @@ export default class World {
     }
 
     setDownloadHtml(button) {
-        button.innerHTML = `<i class="icon-question-solid"></i><span>${_s.offline.availableOffline.title}</span>`
+        button.innerHTML = `<span>${_s.offline.availableOffline.title}</span>`
         button.addEventListener("click", instance.confirmRedownload)
     }
 
