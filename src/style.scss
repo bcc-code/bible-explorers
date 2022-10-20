@@ -943,22 +943,6 @@ button,
 #quick-look {
     float: right;
 
-    .icon-question-solid {
-        margin-right: 0.5rem;
-        // background-color: $accent2;
-        // color: #fff;
-        // border-radius: 100%;
-        // margin-right: 0.5rem;
-        // font-size: 0.75rem;
-        // width: 1.25rem;
-        // height: 1.25rem;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // position: relative;
-        // top: 1px;
-    }
-
     .icon-arrow-right-long-solid {
         margin-left: 0.5rem;
     }
@@ -1182,21 +1166,6 @@ button,
             color: #fff;
             font-size: 1rem;
         }
-    }
-
-    .icon-question-solid {
-        background-color: #fff;
-        color: #b7526e;
-        border-radius: 100%;
-        margin-right: 7px;
-        font-size: 0.75rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        top: 1.5px;
     }
 
     &__items {
