@@ -940,30 +940,6 @@ button,
     font-size: 1rem;
 }
 
-#quick-look {
-    float: right;
-
-    .icon-question-solid {
-        margin-right: 0.5rem;
-        // background-color: $accent2;
-        // color: #fff;
-        // border-radius: 100%;
-        // margin-right: 0.5rem;
-        // font-size: 0.75rem;
-        // width: 1.25rem;
-        // height: 1.25rem;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // position: relative;
-        // top: 1px;
-    }
-
-    .icon-arrow-right-long-solid {
-        margin-left: 0.5rem;
-    }
-}
-
 .divider {
     display: inline-block;
     width: 0.5rem;
@@ -1087,10 +1063,19 @@ button,
         padding: 3rem;
     }
 
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+        border-bottom: 4px solid $accent;
+    }
+
     &__title {
         font-family: $secondary-font;
         line-height: 1.25;
         color: #fff;
+
     }
 
     &__date {
@@ -1184,21 +1169,6 @@ button,
         }
     }
 
-    .icon-question-solid {
-        background-color: #fff;
-        color: #b7526e;
-        border-radius: 100%;
-        margin-right: 7px;
-        font-size: 0.75rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        top: 1.5px;
-    }
-
     &__items {
         position: relative;
         display: flex;
@@ -1218,11 +1188,19 @@ button,
     &__description {
         position: relative;
         @include wrapper();
-        @include extras-bottom(50%);
 
-        h2 {
-            padding-bottom: 1rem;
-            border-bottom: 4px solid $accent;
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
+            background: $accent;
+            height: 1.5rem;
+            width: 40%;
+            border-top-left-radius: 1.5rem;
+            border-bottom-right-radius: 0.5rem;
+            pointer-events: none;
+            z-index: 1;
         }
 
         p a {

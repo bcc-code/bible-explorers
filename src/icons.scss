@@ -24,6 +24,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-eye-solid:before {
+    content: "\e919";
+}
+
 .icon-stop-solid:before {
     content: "\e918";
 }

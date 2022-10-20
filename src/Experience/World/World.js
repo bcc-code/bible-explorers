@@ -206,7 +206,7 @@ export default class World {
                 instance.audio.changeBgMusic()
 
                 instance.welcome.loadingScreen.classList.remove('visible')
-                instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook.title
+                // instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook.title
 
                 tippy('#quick-look', {
                     theme: 'explorers',
@@ -276,7 +276,6 @@ export default class World {
             </div>
             <div class="chapter__states">
                 <div class="chapter__offline">
-                    <i class="icon-question-solid"></i>
                     <span>${_s.offline.download.title}</span>
                 </div>
                 <div class="chapter__downloading">
@@ -290,7 +289,6 @@ export default class World {
                     <span>${_s.offline.downloadFailed}</span>
                 </div>
                 <div class="chapter__downloaded">
-                    <i class="icon-question-solid"></i>
                     <span>${_s.offline.availableOffline.title}</span>
                 </div>
             </div>
