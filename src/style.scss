@@ -2207,6 +2207,10 @@ button,
     @include wrapper();
     @include extras();
 
+    .archive__content {
+        margin-top: 1rem;
+    }
+
     .archive__content img {
         max-width: 320px;
         float: right;
