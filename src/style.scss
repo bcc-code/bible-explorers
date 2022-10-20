@@ -2151,6 +2151,7 @@ button,
 
 .archive__wrapper {
     position: relative;
+    @include wrapper($spacing-sides: 4rem);
     @include extras();
 
     .archive__content {
@@ -3327,6 +3328,8 @@ button,
         font-size: 1.25rem;
     }
 
+    .settings__wrapper,
+    .archive__wrapper {
         padding-inline: 2rem;
     }
 
