@@ -1,9 +1,6 @@
 @import "./icons.scss";
 @import "./fonts.scss";
 
-// @import "../node_modules/tippy.js/dist/tippy.css";
-// @import "../node_modules/tippy.js/animations/shift-away.css";
-
 :root {
     color-scheme: only light !important;
 }
@@ -325,17 +322,6 @@ button,
 // #endregion
 
 // #region Interface
-
-#test {
-    position: fixed;
-    z-index: 9999;
-    left: 10rem;
-    top: 10rem;
-    background: #fff;
-    padding: 1rem;
-    width: 100px;
-    height: 50px;
-}
 
 .button {
     position: relative;

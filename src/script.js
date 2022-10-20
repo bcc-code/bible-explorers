@@ -7,7 +7,6 @@ import _s from './Experience/Utils/Strings.js'
 import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 
-
 // Application Insights
 _appInsights.loadAppInsights()
 _appInsights.trackPageView({ name: "Home" })
@@ -79,12 +78,6 @@ if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification, chromeIcon)
 }
 
-
-window.onload = async () => {
-    await configureClient()
-    await handleRedirectCallback()
-}
-
 // Register Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -92,4 +85,9 @@ if ('serviceWorker' in navigator) {
             registration.update()
         })
     })
+}
+
+window.onload = async () => {
+    await configureClient()
+    await handleRedirectCallback()
 }
