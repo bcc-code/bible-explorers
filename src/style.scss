@@ -1418,6 +1418,7 @@ button,
     display: flex;
     flex-direction: column;
     background: $gradient-with-opacity;
+    overflow: auto;
 
     &__close {
         position: fixed;
@@ -1440,7 +1441,7 @@ button,
 
     &__wrapper {
         flex: 1;
-        overflow: auto;
+        // overflow: auto;
         padding: 2rem;
     }
 
@@ -1460,14 +1461,10 @@ button,
             max-width: 40rem;
         }
 
-        &.picture-and-code {
-            max-width: 120rem;
-        }
-
     }
 
     &__actions {
-        position: absolute;
+        position: relative;
         bottom: 0;
         left: 0;
         right: 0;
@@ -2195,6 +2192,10 @@ button,
     position: relative;
     @include wrapper();
     @include extras();
+
+    .archive__content {
+        margin-top: 1rem;
+    }
 
     .archive__content img {
         max-width: 320px;
