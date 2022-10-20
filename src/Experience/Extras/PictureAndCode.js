@@ -3,6 +3,7 @@ import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
+import { domainToASCII } from 'url'
 
 let instance = null
 const circleSize = 96
@@ -25,6 +26,7 @@ export default class PictureAndCode {
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
+            instance.lastKnownScrollPosition = 0
             instance.togglePicture()
         }
     }
@@ -73,6 +75,12 @@ export default class PictureAndCode {
         })
 
         instance.addExistingCircles()
+
+        document.querySelector('.modal__picture-and-code').addEventListener('scroll', (e) => {
+            instance.lastKnownScrollPosition = e.target.scrollTop;
+        })
+
+
         instance.el.addEventListener('click', instance.addCirclesOnClick)
     }
 
@@ -85,6 +93,10 @@ export default class PictureAndCode {
         instance.program.gamesData.pictureAndCode.circles.forEach(circle => instance.addCircle(circle.x, circle.y))
     }
 
+    newScrollPosition(scrollPos) {
+        return scrollPos
+    }
+
     addCirclesOnClick(event) {
         const maxCirclesToAdd = 4
 
@@ -93,8 +105,8 @@ export default class PictureAndCode {
             instance.circlesVisible--
         }
         else if (instance.circlesVisible < maxCirclesToAdd) {
-            instance.addCircle(event.x, event.y)
-            instance.program.gamesData.pictureAndCode.circles.push({ x: event.x, y: event.y })
+            instance.addCircle(event.x, event.y + instance.lastKnownScrollPosition)
+            instance.program.gamesData.pictureAndCode.circles.push({ x: event.x, y: event.y + instance.lastKnownScrollPosition })
             instance.circlesVisible++
         }
     }
