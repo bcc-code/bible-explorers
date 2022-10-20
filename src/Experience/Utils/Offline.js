@@ -258,6 +258,7 @@ export default class Offline {
             const chapterId = currentEpisode.data.chapterId
 
             offline.downloaded[chapterId].push(currentEpisode.data)
+            offline.experience.resources.updateBtvStreamWithDownloadedVersion(currentEpisode.data.name)
 
             if (offline.data[chapterId].length == offline.downloaded[chapterId].length) {
                 let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
@@ -273,8 +274,6 @@ export default class Offline {
                         quality: currentEpisode.data.quality
                     }
                 })
-
-                offline.experience.resources.updateBtvStreamWithDownloadedVersion(currentEpisode.data.name)
             }
             else { // Next episode to download
                 await offline.downloadEpisodeFromChapter(chapterId)

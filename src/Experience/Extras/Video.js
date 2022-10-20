@@ -44,7 +44,7 @@ export default class Video {
         this.playingVideoId = id
 
         // Remove all event listeners - if any
-        this.video().off()
+        this.video().off('ended', instance.waitAndFinish)
 
         // Always start new loaded videos from the beginning
         this.video().currentTime(0)
@@ -81,7 +81,7 @@ export default class Video {
         })
 
         // Add event listener on video end
-        this.video().on('ended', () => { setTimeout(() => { instance.finish()}, 1000) })
+        this.video().on('ended', instance.waitAndFinish)
 
         this.focus()
     }
@@ -136,6 +136,10 @@ export default class Video {
                     instance.audio.fadeInBgMusic()
                 })
         }
+    }
+
+    waitAndFinish() {
+        setTimeout(() => { instance.finish() }, 1000)
     }
 
     finish() {

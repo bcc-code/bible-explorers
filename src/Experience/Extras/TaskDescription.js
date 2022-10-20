@@ -197,10 +197,8 @@ export default class TaskDescription {
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['jpg','jpeg','png','gif','tiff','jfif','bmp'].includes(ext)) return `<img src="" />`
-        if (['mp4','mov','avi','wmv','flv','mkv','webm','mpeg','m4v','3gp'].includes(ext)) return `<video src="" autoplay loop></video>`
-
-        return `<a href="">Link</a>`
+        if (['mp4','mov','webm'].includes(ext)) return `<video src="" autoplay loop></video>`
+        else return `<img src="" />`
     }
 
     destroy() {
