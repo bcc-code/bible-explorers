@@ -487,13 +487,9 @@ button,
             pointer-events: all;
         }
 
-        .col {
+        div {
             display: flex;
-            flex: 1;
-        }
-
-        .col:nth-child(2) {
-            justify-content: right;
+            margin-left: auto;
         }
     }
 
@@ -887,8 +883,8 @@ button,
     margin-right: 0;
 }
 
-#restart-chapter {
-    margin-right: 2rem;
+#start-chapter {
+    margin-left: 2rem;
 }
 
 #how-to {
