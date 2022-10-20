@@ -14,8 +14,8 @@ export default class Archive {
 
         archive.facts = this.experience.world.selectedChapter.archive
 
-        archive.htmlEl = document.getElementById("archive")
-        archive.htmlEl.addEventListener("click", this.toggleArchive)
+        archive.button = document.getElementById("archive")
+        archive.button.addEventListener("click", this.toggleArchive)
     }
 
     switchTab(id) {
@@ -26,59 +26,40 @@ export default class Archive {
     }
 
     toggleArchive() {
-        let image = null
-
-        archive.facts.forEach(fact => {
-            image = fact.image
-        })
-
-        if (document.querySelector('.modal')) {
+        if (document.querySelector('.modal__archive')) {
             archive.modal.destroy()
         }
         else {
             _appInsights.trackPageView({ name: "Archive" })
 
-            let html = `<div class="modal__content archive">
-                <div class="archive__header heading"><h2>${_s.archive}</h2></div>
-                <ul class="archive__sidebar">`;
-                    archive.facts.forEach((fact, index) => {
-                        html += `<li class="${index == 0 ? 'visible' : ''}" data-id="${index}">${fact.title}</li>`
-                    })
-                html += `</ul>
-                <div class="archive__content">
-                    <div class="modal__extras">
-                        <span class="left"></span>
-                        <span class="bottomLeft"></span>
-                        <span class="bottomLeftSmall"></span>
-                    </div>`;
-                    archive.facts.forEach((fact, index) => {
-                        html += `<div class="fact ${index == 0 ? 'visible' : ''}" data-id="${index}">
-                                    <div class="fact__content">
-                                        <h2 class="fact__title">${fact.title}</h2>
-                                        <div class="fact__description">      
-                                            <img src="${image.url}"/> 
-                                            ${fact.description}
-                                        </div>
-                                    </div>
-                                </div>`
-                    })
-                html += `</div>
-            </div>`
+            const archiveModal = document.createElement('div')
+            archiveModal.classList.add('modal__content', 'archive')
 
-            archive.modal = new Modal(html)
+            const archiveWrapper = document.createElement('div')
+            archiveWrapper.classList.add('archive__wrapper')
 
-            document.querySelector('.modal').classList.add('modal__archive')
+            archive.facts.forEach(fact => {
+                const heading = document.createElement('h2')
+                heading.classList.add('modal__heading')
+                heading.innerText = fact.title
 
-            archive.el = {
-                list: document.querySelector(".archive__sidebar"),
-                content: document.querySelector(".archive__content")
-            }
+                const content = document.createElement('div')
+                content.classList.add('archive__content')
+                content.innerHTML = fact.description
 
-            archive.el.list.querySelectorAll("li").forEach(function (item) {
-                item.addEventListener("click", () => {
-                    archive.switchTab(item.dataset.id)
-                })
+                if (fact.image.url) {
+                    const image = document.createElement('img')
+                    image.setAttribute('src', fact.image.url)
+                    content.prepend(image)
+                }
+
+                archiveWrapper.appendChild(heading)
+                archiveWrapper.appendChild(content)
             })
+
+            archiveModal.appendChild(archiveWrapper)
+
+            archive.modal = new Modal(archiveModal.outerHTML, 'modal__archive')
         }
     }
 }

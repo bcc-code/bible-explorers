@@ -7,17 +7,15 @@ let quiz = null
 export default class Quiz {
     constructor() {
         this.experience = new Experience()
-
         quiz = this
     }
 
     toggleQuiz() {
-        if (document.querySelector('.modal')) {
+        if (document.querySelector('.modal__quiz')) {
             quiz.modal.destroy()
         }
         else {
-
-            let correctAnswers = 0
+            quiz.correctAnswers = 0
 
             let world = this.experience.world
             let debug = this.experience.debug
@@ -28,15 +26,16 @@ export default class Quiz {
             const questions = selectedChapter.program[currentStep].quiz
 
             let html = `<div class="modal__content quiz">
-                            <div class="quiz__header heading">
-                                <h2>${_s.task.questions}</h2>
-                            </div>
                             <div class="quiz__content">`
-
             questions.forEach((q, qIdx) => {
                 html += `<div class="question" data-index="${qIdx + 1}">
                             <div class="question__heading">
-                                <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                                <div class="question__headingTop">
+                                    <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
+                                    <div class="quiz__progressBar">
+                                        <div class="quiz__progressLine"></div>
+                                    </div>
+                                </div>
                                 <p class="question__title">${q.question}</p>
                             </div>
                             <div class="question__form">`
@@ -55,7 +54,7 @@ export default class Quiz {
                 }
                 else {
                     html += `<div class="question__input">
-                                <textarea class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
+                                <textarea id="quizTextarea" class="question__textarea" rows="8" placeholder="${q.placeholder}"></textarea>
                             </div>`
                 }
 
@@ -68,101 +67,139 @@ export default class Quiz {
                 html += `</div>`
             })
 
-            html += `</div></div>`
-            html += `<div class="modal__footer ${questions.length == 1 ? "hide - nav" : ""}">
-                        <div class="button button__prev button__round">
-                            <span class="button__content">
-                                <i class="icon icon-arrow-left-long-solid"></i>
-                            </span>
-                        </div>
-                        <div id="skipBTN" class="button button__default button__skip" style="margin-left: auto">
-                            <span>${_s.miniGames.skip}</span>
-                        </div>
-                        <div id="submit-task" class="button button__submit button__default">
-                            <span>${_s.task.submit}</span>
-                        </div>
-                        <div class="button button__next button__round">
-                            <span class="button__content">
-                                <i class="icon icon-arrow-right-long-solid"></i>
-                            </span>
+            html += `</div>
+                        <div class="quiz__footer ${questions.length == 1 ? "hide - nav" : ""}">
+                            <button id="prev" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full | icon-arrow-left-long-solid"></button>
+                            <button id="next" class="button width height border--5 border--solid border--transparent bg--secondary rounded--full pulsate | icon-arrow-right-long-solid"></button>
                         </div>
                     </div>`
 
-            quiz.modal = new Modal(html)
+            quiz.modal = new Modal(html, 'modal__quiz')
 
-            document.querySelector('.modal').classList.add('modal__quiz')
+            const title = document.createElement('h3')
+            title.className = 'modal__heading--minigame'
+            title.innerText = 'Quiz'
+            document.querySelector('.modal__quiz').prepend(title)
 
-            const nextButton = document.querySelector('.button__next')
-            const prevButton = document.querySelector('.button__prev')
-            const submitButton = document.querySelector('.button__submit')
-            const skipBTN = document.getElementById('skipBTN')
+            const topbar = document.createElement('div')
+            topbar.className = 'quiz__topbar'
+            topbar.innerHTML = '<button class="archive button width height bg--secondary border--5 border--solid border--transparent rounded--full pulsate | icon-folder-solid"></button>'
+            document.querySelector('.modal__quiz').prepend(topbar)
 
-            const htmlQuestions = document.querySelectorAll('.question')
+            const quizProgressBar = document.querySelectorAll('.quiz__progressLine')
+            const quizStepWidth = 100 / questions.length
 
-            htmlQuestions[0].classList.add('visible')
-            nextButton.classList.add('hidden')
-            prevButton.classList.add('hidden')
-            submitButton.classList.add('hidden')
-            if (!debug.developer && !debug.onQuickLook()) {
-                skipBTN.classList.add('hidden')
-            }
+            quiz.htmlQuestions = document.querySelectorAll('.question')
+            quiz.htmlQuestions[0].classList.add('visible')
 
-            nextButton.addEventListener("click", () => {
-                const current = document.querySelector('.question.visible')
-                current.classList.remove('visible')
-                current.nextElementSibling?.classList.add('visible')
+            const quizContent = document.querySelector('.quiz__content')
+            const quizStepsContainer = document.createElement('div')
+            quizStepsContainer.className = 'quiz__steps'
 
-                if (current.nextElementSibling.querySelector('input:checked')) {
-                    nextButton.classList.remove('hidden')
-                } else {
-                    nextButton.classList.add('hidden')
-                }
-
-                prevButton.classList.remove('hidden')
-
-                if (current.nextElementSibling.matches(':last-child')) {
-                    submitButton.classList.remove('hidden')
-                }
+            questions.forEach((q, i) => {
+                const quizStep = document.createElement('div')
+                quizStep.className = 'quiz__step'
+                quizStep.innerText = i + 1
+                quizStep.setAttribute('step-index', i + 1)
+                quizStepsContainer.append(quizStep)
             })
 
+            quizContent.prepend(quizStepsContainer)
+
+            const quizSteps = document.querySelectorAll('.quiz__step')
+            quizSteps[0].classList.add('active')
+
+            quiz.archiveBtn = document.querySelector('.button.archive')
+            quiz.archiveBtn.addEventListener("click", () => {
+                document.getElementById('archive').click()
+            })
+            const openArchive = document.querySelector('.openArchive')
+            if (openArchive) {
+                openArchive.addEventListener("click", () => {
+                    document.getElementById('archive').click()
+                })
+            }
+            showArchiveBtnIfNecessary()
+
+            const back = document.getElementById("back")
+            back.style.display = 'block'
+            back.innerText = _s.journey.back
+            back.addEventListener('click', (e) => {
+                quiz.modal.destroy()
+                world.program.taskDescription.toggleTaskDescription()
+            })
+
+            const prevButton = document.getElementById('prev')
+            prevButton.setAttribute('disabled', '')
             prevButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
+                const currentStep = document.querySelector('.quiz__step.active')
+
                 current.classList.remove('visible')
+                currentStep.classList.remove('active')
                 current.previousElementSibling?.classList.add('visible')
+                currentStep.previousElementSibling?.classList.add('active')
 
                 if (current.previousElementSibling.querySelector('input:checked')) {
-                    nextButton.classList.remove('hidden')
+                    nextButton.removeAttribute('disabled')
                 }
 
                 if (current.getAttribute('data-index') == 2) {
-                    prevButton.classList.add('hidden')
+                    prevButton.setAttribute('disabled', '')
                 }
 
-                if (current.previousElementSibling.matches(':last-child')) {
-                    submitButton.classList.remove('hidden')
+                showArchiveBtnIfNecessary()
+            })
+
+            const nextButton = document.getElementById('next')
+            nextButton.setAttribute('disabled', '')
+            nextButton.addEventListener("click", () => {
+                const current = document.querySelector('.question.visible')
+                const currentStep = document.querySelector('.quiz__step.active')
+
+                current.classList.remove('visible')
+                currentStep.classList.remove('active')
+
+                current.nextElementSibling?.classList.add('visible')
+                currentStep.nextElementSibling?.classList.add('active')
+
+                if (current.nextElementSibling.querySelector('input:checked')) {
+                    nextButton.removeAttribute('disabled')
                 } else {
-                    submitButton.classList.add('hidden')
+                    nextButton.setAttribute('disabled', '')
                 }
+                prevButton.removeAttribute('disabled')
+
+                if (current.nextElementSibling.getAttribute('data-index') == questions.length) {
+                    nextButton.setAttribute('disabled', '')
+                }
+
+                showArchiveBtnIfNecessary()
             })
 
-            skipBTN.addEventListener("click", () => {
-                quiz.modal.destroy()
-                program.advance()
-            })
-
-            submitButton.addEventListener("click", () => {
-                prevButton.classList.add('hidden')
-                submitButton.classList.add('hidden')
-                skipBTN.classList.add('hidden')
-
-                htmlQuestions.forEach(q => {
-                    q.classList.add('hidden')
+            if (debug.developer || debug.onQuickLook()) {
+                const skip = document.getElementById('skip')
+                skip.style.display = 'block'
+                skip.innerText = _s.miniGames.skip
+                skip.addEventListener("click", () => {
+                    quiz.modal.destroy()
+                    program.advance()
                 })
+            }
 
-                this.summary(program, htmlQuestions.length - 1, correctAnswers)
-            })
+            const submitButton = document.getElementById('continue')
+            submitButton.innerText = _s.task.submit
+            submitButton.addEventListener("click", quiz.completeQuiz)
 
-            htmlQuestions.forEach((q, i) => {
+            let questionsAnswered = 0
+            let quizProgress = 0
+
+            let quizUpdate = (questionsAnswered) => {
+                quizProgress = quizStepWidth * questionsAnswered + '%'
+                quizProgressBar.forEach(bar => bar.style.width = quizProgress)
+            }
+
+            quiz.htmlQuestions.forEach((q, i) => {
                 const htmlAnswers = q.querySelectorAll('label')
                 const objAnswers = questions[i].answers
 
@@ -173,23 +210,76 @@ export default class Quiz {
                             a.style.pointerEvents = 'none'
                         })
 
+                        questionsAnswered++
+                        quizUpdate(questionsAnswered)
+
                         const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
                         if (!objAnswers[i].correct_wrong) {
                             a.parentNode.classList.add('wrong')
                         } else {
-                            correctAnswers += 1
+                            quiz.correctAnswers++
                         }
 
-                        nextButton.classList.remove('hidden')
+                        if (q.getAttribute('data-index') == questions.length) {
+                            skip.style.display = "none"
+                            submitButton.style.display = "block"
+                        }
+                        else {
+                            nextButton.removeAttribute('disabled')
+                        }
                     })
                 })
             })
+
+            const textArea = document.getElementById('quizTextarea')
+            if (textArea) {
+                textArea.addEventListener('input', (e) => {
+                    if (e.target.value.length > 1) return
+
+                    if (e.target.value.length > 0) {
+                        questionsAnswered = questions.length
+                        quizUpdate(questionsAnswered)
+                        skip.style.display = "none"
+                        submitButton.style.display = "block"
+                    }
+                    else {
+                        questionsAnswered = questions.length - 1
+                        quizUpdate(questionsAnswered)
+                        skip.style.display = "block"
+                        submitButton.style.display = "none"
+                    }
+                })
+            }
+
+            function showArchiveBtnIfNecessary() {
+                const currentQuestion = document.querySelector('.question.visible')
+                const openArchive = currentQuestion.querySelector('.openArchive')
+
+                if (openArchive) {
+                    quiz.archiveBtn.style.opacity = '1'
+                    quiz.archiveBtn.style.visibility = 'visible'
+                }
+                else {
+                    quiz.archiveBtn.style.opacity = '0'
+                    quiz.archiveBtn.style.visibility = 'hidden'
+                }
+            }
         }
     }
 
-    summary(program, numberOfQuestions, correctAnswers) {
+    completeQuiz() {
+        quiz.experience.world.audio.playTaskCompleted()
+        quiz.summary(quiz.correctAnswers + (document.getElementById('quizTextarea') ? 1 : 0), quiz.htmlQuestions.length)
+    }
+
+    summary(correctAnswers, numberOfQuestions) {
+        document.querySelector('.modal').classList.add('completed')
+        document.querySelector('.quiz__content').style.display = 'none'
+        document.querySelector('.quiz__footer').style.display = 'none'
+        back.style.display = 'none'
+
         const parent = document.querySelector('.quiz')
         const container = document.createElement('div')
         container.classList.add('quiz__summary')
@@ -197,21 +287,20 @@ export default class Quiz {
         const heading = document.createElement('h2')
         heading.innerText = _s.miniGames.completed.title
 
-        const phrase = document.createElement('p')
-        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions
-
-        const continueButton = document.createElement('button')
-        continueButton.classList.add('button', 'button__default')
-        continueButton.innerText = _s.miniGames.continue
-
-        continueButton.addEventListener('click', () => {
-            quiz.modal.destroy()
-            program.advance()
-        })
+        const phrase = document.createElement('h3')
+        phrase.innerHTML = correctAnswers + ' / ' + numberOfQuestions + ' ' + _s.miniGames.correctAnswers
 
         container.appendChild(heading)
         container.appendChild(phrase)
-        container.appendChild(continueButton)
         parent.appendChild(container)
+
+        const submitButton = document.getElementById('continue')
+        submitButton.innerText = _s.miniGames.continue
+
+        submitButton.removeEventListener("click", quiz.completeQuiz)
+        submitButton.addEventListener('click', () => {
+            quiz.modal.destroy()
+            quiz.experience.world.program.advance()
+        })
     }
 }

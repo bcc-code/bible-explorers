@@ -20,8 +20,14 @@ export default class Audio {
 
         audio.notes = []
 
-        audio.el = document.getElementById("sound")
-        audio.el.addEventListener("click", audio.togglePlayBgMusic)
+        audio.onBTN = document.getElementById("sound-on")
+        audio.offBTN = document.getElementById("sound-off")
+
+        audio.onBTN.style.display = "none"
+
+        audio.onBTN.addEventListener("click", audio.togglePlayBgMusic)
+        audio.offBTN.addEventListener("click", audio.togglePlayBgMusic)
+
     }
 
     initialize() {
@@ -76,11 +82,11 @@ export default class Audio {
         )
     }
 
-    loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => {}) {
+    loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => { }) {
         if (audio.notFetchedYet(soundtrack)) {
             audio.disableToggleBtn()
 
-            audio.audioLoader.load(soundtrack, function(buffer) {
+            audio.audioLoader.load(soundtrack, function (buffer) {
                 audio.bgMusicAudios.state = _STATE.PLAYING
                 audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
                 audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
@@ -103,7 +109,7 @@ export default class Audio {
         audio.fadeInBgMusic()
         audio.setSoundIconOn()
     }
-    
+
     pauseBgMusic() {
         audio.fadeOutBgMusic()
         audio.setSoundIconOff()
@@ -122,25 +128,25 @@ export default class Audio {
 
         const fadeInAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() + 0.05
+                audio.bgMusic.getVolume() + 0.025
             )
 
-            if (audio.bgMusic.getVolume() > 0.5) {
+            if (audio.bgMusic.getVolume() > 0.25) {
                 clearInterval(fadeInAudio)
                 audio.enableToggleBtn()
             }
         }, 100)
     }
 
-    fadeOutBgMusic(callback = () => {}) {
+    fadeOutBgMusic(callback = () => { }) {
         if (!audio.bgMusic) return
 
         const fadeOutAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() - 0.1
+                audio.bgMusic.getVolume() - 0.025
             )
 
-            if (audio.bgMusic.getVolume() < 0.1) {
+            if (audio.bgMusic.getVolume() < 0.025) {
                 clearInterval(fadeOutAudio)
                 audio.enableToggleBtn()
                 audio.bgMusic.setVolume(0)
@@ -151,17 +157,21 @@ export default class Audio {
     }
 
     setSoundIconOn() {
-        audio.el.classList.add('sound-on')
+        audio.onBTN.style.display = 'inline-block'
+        audio.offBTN.style.display = 'none'
+        // audio.el.classList.add('sound-on')
     }
     setSoundIconOff() {
-        audio.el.classList.remove('sound-on')
+        audio.offBTN.style.display = 'inline-block'
+        audio.onBTN.style.display = 'none'
+        // audio.el.classList.remove('sound-on')
     }
 
     disableToggleBtn() {
-        audio.el.classList.add('pointer-events-none')
+        // audio.el.classList.add('pointer-events-none')
     }
     enableToggleBtn() {
-        audio.el.classList.remove('pointer-events-none')
+        // audio.el.classList.remove('pointer-events-none')
     }
 
     notFetchedYet(soundtrack) {
@@ -172,25 +182,28 @@ export default class Audio {
         audio.initialize()
 
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
-            audio.audioLoader.load(url, function(buffer) {
+            audio.audioLoader.load(url, function (buffer) {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
-                audio.taskDescriptionAudios[url].onEnded = () => audio.fadeInBgMusic()
+                audio.taskDescriptionAudios[url].onEnded = () => {
+                    document.dispatchEvent(_e.EVENTS.AUDIO_TASK_DESCRIPTION_ENDED)
+                    audio.stopTaskDescription(url)
+                }
                 audio.taskDescriptionAudios[url].setBuffer(buffer)
-                audio.taskDescriptionAudios[url].play()
-                audio.setOtherAudioIsPlaying(true)
-                audio.fadeOutBgMusic()
+                audio.playTaskDescription(url)
             })
         }
         else if (audio.taskDescriptionAudios[url].isPlaying) {
-            audio.taskDescriptionAudios[url].stop()
-            audio.setOtherAudioIsPlaying(false)
-            audio.fadeInBgMusic()
+            audio.stopTaskDescription(url)
         }
         else {
-            audio.taskDescriptionAudios[url].play()
-            audio.setOtherAudioIsPlaying(true)
-            audio.fadeOutBgMusic()
+            audio.playTaskDescription(url)
         }
+    }
+
+    playTaskDescription(url) {
+        audio.taskDescriptionAudios[url].play()
+        audio.setOtherAudioIsPlaying(true)
+        audio.fadeOutBgMusic()
     }
 
     stopTaskDescription(url) {
@@ -321,6 +334,8 @@ export default class Audio {
 
     playNote(note) {
         this.initialize()
+
+        if (!audio.notes[note]) return
 
         if (audio.notes[note].isPlaying) {
             audio.notes[note].stop()

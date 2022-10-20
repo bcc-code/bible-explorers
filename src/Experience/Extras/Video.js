@@ -34,12 +34,19 @@ export default class Video {
             return document.getElementById(id)
         }
 
+        this.hasSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video') != null
+        }
         this.playingVideoId = null
     }
 
     load(id) {
         this.playingVideoId = id
 
+        // Remove all event listeners - if any
+        this.video().off('ended', instance.waitAndFinish)
+
+        // Always start new loaded videos from the beginning
         this.video().currentTime(0)
 
         // Set texture when starting directly on a video task type
@@ -48,36 +55,33 @@ export default class Video {
 
         this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
-        // Event listener on video update
+        // Add event listener on video update
         this.video().on('timeupdate', function () {
             if (instance.showSkipBtn()) {
-                if (!instance.videoJsEl().querySelector('.skip-video__btn')) {
-                    let skipVideo = document.createElement('div')
-                    skipVideo.classList.add("button", "button__continue", "skip-video__btn")
+                if (instance.hasSkipBtn()) return
 
-                    const bg = document.createElement('div')
-                    bg.classList.add('button__content')
+                const skipVideo = document.createElement('div')
+                skipVideo.className = 'skip-video button bg--secondary height px border--5 border--solid border--transparent rounded--forward pulsate'
+                skipVideo.innerText = _s.miniGames.skip
 
-                    let span = document.createElement('span')
-                    span.innerText = _s.miniGames.continue
-                    skipVideo.appendChild(bg)
-                    bg.appendChild(span)
-
-                    skipVideo.addEventListener('click', instance.finish)
-                    instance.videoJsEl().appendChild(skipVideo)
-                }
+                skipVideo.addEventListener('click', instance.finish)
+                instance.videoJsEl().appendChild(skipVideo)
+            }
+            else {
+                if (!instance.hasSkipBtn()) return
+                instance.videoJsEl().querySelector('.skip-video').remove()
             }
         })
 
-        // Event listener on fullscreen change
+        // Add event listener on fullscreen change
         this.video().on('fullscreenchange', function () {
             if (!this.isFullscreen_) {
                 instance.pause()
             }
         })
 
-        // Event listener on video end
-        this.video().on('ended', instance.finish)
+        // Add event listener on video end
+        this.video().on('ended', instance.waitAndFinish)
 
         this.focus()
     }
@@ -102,7 +106,7 @@ export default class Video {
     }
 
     focus() {
-        instance.camera.zoomIn(1500)
+        instance.camera.zoomIn(2000)
         instance.tablet.material.map.image.play()
 
         instance.audio.setOtherAudioIsPlaying(true)
@@ -132,6 +136,10 @@ export default class Video {
                     instance.audio.fadeInBgMusic()
                 })
         }
+    }
+
+    waitAndFinish() {
+        setTimeout(() => { instance.finish() }, 1000)
     }
 
     finish() {

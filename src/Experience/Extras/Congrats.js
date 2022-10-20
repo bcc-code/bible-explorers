@@ -18,20 +18,21 @@ export default class Congrats {
             <div class="modal__content congrats congrats__journey">
                 <div class="congrats__sidebar">
                     <div class="congrats__container">
-                        <h1 class="congrats__title">Bible Kids Explorers - Cards</h1>
-                        <div class="congrats__chapter-completed">You can now give the Bible Cards to all the children so that they can remember what they've learned today.</div>
-                        <div id="homescreen" class="button button__continue">
-                            <div class="button__content"><span>${_s.task.next}</span></div>
-                        </div>
+                        <h1 class="congrats__title">${_s.journey.bibleCards.title}</h1>
+                        <video id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
+                        <div class="congrats__chapter-completed">${_s.journey.bibleCards.message}</div>
                     </div>
                 </div>
             </div>
         `;
 
-        instance.modal = new Modal(html, instance.world.finishJourney)
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats', instance.world.finishJourney)
 
-        document.getElementById("homescreen").addEventListener('click', () => {
+        const homescreen = document.getElementById("continue")
+        homescreen.innerText = _s.task.next
+        homescreen.style.display = 'block'
+
+        homescreen.addEventListener('click', () => {
             instance.modal.destroy()
             instance.toggleCongrats()
         })
@@ -50,24 +51,28 @@ export default class Congrats {
                         </div>
                         <h1 class="congrats__title">${_s.journey.congrats}</h1>
                         <div class="congrats__chapter-completed">${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong>!</div>
-                        <div id="homescreen" class="button button__continue">
-                            <div class="button__content"><span>${_s.journey.homescreen}</span></div>
-                        </div>
                     </div>
                     <div class="splash splash__right"></div>
                 </div>
             </div>
         `;
 
-        instance.modal = new Modal(html, instance.world.finishJourney)
-        document.querySelector('.modal').classList.add('modal__congrats')
-
-        document.getElementById("homescreen").addEventListener('click', () => {
-            instance.modal.destroy()
-        })
+        instance.modal = new Modal(html, 'modal__congrats', instance.world.finishJourney)
 
         instance.world.audio.playCongratsSound()
         instance.animateStars(500)
+
+        const homescreen = document.getElementById('continue')
+        homescreen.innerText = _s.journey.homescreen
+        homescreen.style.display = 'block'
+        homescreen.addEventListener('click', () => {
+            instance.modal.destroy()
+            instance.world.showMenu()
+
+            if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
+                document.exitFullscreen()
+            }
+        })
     }
 
     animateStars(timeout) {

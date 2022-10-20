@@ -46,8 +46,14 @@ export default class Program {
 
         instance = this
 
+        instance.gamesData = {
+            pictureAndCode: {
+                circles: []
+            }
+        }
+
         // Get instance variables
-        this.chapterProgress = () => localStorage.getItem(this.world.getId())
+        this.chapterProgress = () => parseInt(localStorage.getItem(this.world.getId())) || 0
         this.currentStep = this.chapterProgress() || 0
         this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
@@ -56,13 +62,13 @@ export default class Program {
             else if (this.stepType() == 'iris' || this.stepType() == 'task') { return 'screens' }
             else { return 'default' }
         }
-        this.customInteractiveObjs = []
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
         this.totalSteps = Object.keys(this.programData).length
         this.clickedObject = null
         this.canClick = () =>
             !document.body.classList.contains('freeze') &&
-            !document.body.classList.contains('modal-on')
+            !document.body.classList.contains('modal-on') &&
+            !document.body.classList.contains('camera-is-moving')
 
         this.startInteractivity()
     }
@@ -80,15 +86,15 @@ export default class Program {
     advance(step = ++this.currentStep) {
         this.updateCurrentStep(step)
         this.world.progressBar.refresh()
-        this.resetCustomInteractiveObjs()
         this.startInteractivity()
     }
 
     updateCurrentStep(newStep) {
         this.currentStep = newStep
 
-        if (newStep > this.chapterProgress())
+        if (newStep > this.chapterProgress() && !document.body.classList.contains('quick-look-mode')) {
             this.updateLocalStorage()
+        }
     }
 
     startInteractivity() {
@@ -96,14 +102,18 @@ export default class Program {
         let currentVideo = this.currentVideo()
         let nextVideo = this.nextVideo()
 
-        this.camera.updateCameraTo(this.currentLocation(), instance.points.add(this.interactiveObjects()[0], instance.stepType()))
-        this.highlight.add(this.interactiveObjects()[0])
+        this.points.fadeOut()
+        this.highlight.fadeOut()
 
+        this.camera.updateCameraTo(this.currentLocation(), () => {
+            instance.points.add(this.interactiveObjects()[0], instance.stepType())
+            instance.highlight.add(this.interactiveObjects()[0])
 
-        document.addEventListener('click', (event) => {
-            if (event.target.getAttribute('class') == 'label') {
-                this.control(instance.points.currentLabel)
-            }
+            document.addEventListener('click', (event) => {
+                if (event.target.classList.contains('label')) {
+                    this.control(instance.points.currentLabel)
+                }
+            })
         })
 
         if (this.stepType() == 'video') {
@@ -122,7 +132,6 @@ export default class Program {
         if (this.currentStep == this.totalSteps) {
             setTimeout(() => {
                 instance.congrats.toggleBibleCardsReminder()
-
             }, instance.camera.data.moveDuration)
         }
     }
@@ -142,24 +151,13 @@ export default class Program {
             interactiveObjects.push("tv_16x9_screen")
         }
 
-        if (this.customInteractiveObjs.length)
-            return this.customInteractiveObjs
-
         return interactiveObjects
-    }
-
-    addCustomInteractiveObj(objectName) {
-        this.customInteractiveObjs.push(objectName)
-    }
-    resetCustomInteractiveObjs() {
-        this.customInteractiveObjs = []
     }
 
     startAction() {
         if (this.clickedObject == 'tv_16x9_screen') {
             this.taskDescription.toggleTaskDescription()
         }
-
         else if (this.clickedObject == 'panel_screen') {
             this.video.play()
         }

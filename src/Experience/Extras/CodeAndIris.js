@@ -1,5 +1,7 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
+import _e from '../Utils/Events.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -8,16 +10,18 @@ let instance = null
 
 export default class CodeAndIris {
     constructor() {
+        this.offline = new Offline()
         this.experience = new Experience()
         instance = this
     }
 
     toggleCodeAndIris() {
         if (document.querySelector('.modal')) {
-            instance.modal.destroy()
+            instance.destroy()
         }
         else {
             instance.world = instance.experience.world
+            instance.audio = instance.world.audio
             instance.program = instance.world.program
             instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
@@ -30,24 +34,63 @@ export default class CodeAndIris {
 
     toggleIris() {
         const html = instance.program.taskDescription.getModalHtml('iris-and-code', instance.data.iris)
-        instance.modal = new Modal(html)
-        document.querySelector('.modal').classList.add('modal__task')
+        instance.modal = new Modal(html, 'modal__task')
 
-        const backBtn = document.getElementById("backBTN")
-        const getTaskBtn = document.getElementById('get-task')
+        instance.playBTN = document.getElementById("play")
+        instance.irisPlaying = document.querySelector('.iris-playing')
 
-        if (!instance.currentStepData.audio)
-            playBTN.remove()
+        if (instance.data.audio) {
+            // Fetch audio from blob or url
+            instance.offline.fetchChapterAsset(instance.data, "audio", (data) => {
+                instance.taskAudio = data.audio
+            })
 
-        backBtn.addEventListener('click', (e) => {
+            instance.playBTN.addEventListener("click", () => {
+                instance.audio.togglePlayTaskDescription(instance.taskAudio)
+                instance.playBTN.hasAttribute('playing')
+                    ? instance.changePauseBtnToPlay()
+                    : instance.changePlayBtnToPause()
+            })
+        }
+        else {
+            instance.playBTN.remove()
+        }
+
+        document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
+
+        const back = document.getElementById("back")
+        back.style.display = 'block'
+        back.innerText = _s.journey.back
+        back.addEventListener('click', (e) => {
             e.stopPropagation()
-            instance.modal.destroy()
+            instance.destroy()
             instance.program.codeUnlock.toggleCodeUnlock(instance.data.code, true)
         })
 
-        getTaskBtn.addEventListener("click", () => {
-            instance.modal.destroy()
+        const next = document.getElementById('continue')
+        next.style.display = 'block'
+        next.innerText = _s.task.next
+        next.addEventListener("click", () => {
+            instance.destroy()
             instance.world.program.advance()
         })
+    }
+
+    changePauseBtnToPlay() {
+        instance.playBTN.removeAttribute("playing")
+        instance.playBTN.classList.add('icon-play-solid', 'pulsate')
+        instance.playBTN.classList.remove('icon-stop-solid')
+        instance.irisPlaying.style.display = 'none'
+    }
+    changePlayBtnToPause() {
+        instance.playBTN.setAttribute("playing", '')
+        instance.playBTN.classList.remove('icon-play-solid', 'pulsate')
+        instance.playBTN.classList.add('icon-stop-solid')
+        instance.irisPlaying.style.display = 'flex'
+    }
+
+    destroy() {
+        instance.modal.destroy()
+        instance.audio.stopTaskDescription(instance.taskAudio)
     }
 }

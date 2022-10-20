@@ -323,7 +323,7 @@ export default class SortingGame {
     toggleGameComplete() {
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
-                <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h1>${_s.miniGames.completed.title}</h1><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
+                <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h2>${_s.miniGames.completed.title}</h2><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
                 <div id="continue_journey" class="button button__continue">
                     <div class="button__content"> <span>${_s.miniGames.continue}</span></div>
@@ -331,9 +331,7 @@ export default class SortingGame {
             </div>
         </div>`
 
-        instance.modal = new Modal(html)
-
-        document.querySelector('.modal').classList.add('modal__congrats')
+        instance.modal = new Modal(html, 'modal__congrats')
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
