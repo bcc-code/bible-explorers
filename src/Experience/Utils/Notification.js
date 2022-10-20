@@ -13,7 +13,7 @@ export default class Notification {
         document.body.appendChild(this.htmlEl)
 
         this.el = {
-            close: this.htmlEl.querySelector(".notification__close")
+            close: this.htmlEl.querySelector('.close-alert')
         }
 
         this.el.close.addEventListener("click", this.destroy)
@@ -28,10 +28,12 @@ export default class Notification {
 
     static generateHtml(text, icon) {
         return `
-            <div class="notification__close button button__round"><div class="button__content"><i class="icon icon-xmark-solid"></i></div></div>
             <div class="notification__container">
                 ${icon}
-                <span>${text}</span>
+                <div>
+                    <p>${text}</p>
+                    <button class="close-alert | button button__link | icon-xmark-solid"></button>
+                </div>
             </div>
         `
     }

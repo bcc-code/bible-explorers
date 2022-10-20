@@ -2151,7 +2151,6 @@ button,
 
 .archive__wrapper {
     position: relative;
-    @include wrapper();
     @include extras();
 
     .archive__content {
@@ -2174,9 +2173,10 @@ button,
 
 .notification {
     position: fixed;
-    top: 3rem;
-    left: 2rem;
-    width: 28rem;
+    top: 8rem;
+    left: -2px;
+    max-width: 40ch;
+    overflow: hidden;
     z-index: 100;
 
     display: flex;
@@ -2188,34 +2188,44 @@ button,
         pointer-events: all;
     }
 
-    &__close {
-        position: absolute;
-        top: -1.25rem;
-        right: -1.25rem;
-    }
-
     &__container {
-        padding: 2rem 3rem;
-        background: $gradient2;
-        border-radius: 3rem 1rem;
+        padding-block: 1rem;
+        padding-inline: 2rem;
         color: #fff;
+        background: $gradient padding-box, $gradient2 border-box;
+        border: 2px solid transparent;
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
         display: flex;
         align-items: flex-start;
 
-        span {
-            flex: 1;
+        p {
+            font-size: 1rem;
+            margin-bottom: 0;
         }
 
         a {
             color: inherit;
             font-weight: bold;
         }
+
+        .button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2rem;
+            height: 2rem;
+            font-size: 1rem;
+            text-transform: capitalize;
+        }
+
+        svg {
+            flex-shrink: 0;
+            width: 2rem;
+            margin-right: 1rem;
+        }
     }
 
-    svg {
-        width: 2rem;
-        margin-right: 1rem;
-    }
 }
 
 // #endregion
@@ -3317,7 +3327,6 @@ button,
         font-size: 1.25rem;
     }
 
-    .settings__wrapper {
         padding-inline: 2rem;
     }
 
@@ -3443,6 +3452,14 @@ button,
 
     .progress-bar__percentage {
         height: 1rem;
+    }
+
+    .notification {
+        top: 5rem;
+    }
+
+    .notification__container {
+        padding-inline: 1rem;
     }
 
 }
