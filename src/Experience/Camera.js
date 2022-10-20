@@ -133,6 +133,7 @@ export default class Camera {
         }
     }
 
+    updateCameraTo(location = 'default', callback = () => { }) {
         if (location == null) return
         this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
         this.updateCamera(this.cameraLocations[location], callback)
