@@ -24,6 +24,32 @@ export default class Offline {
             console.log("This browser doesn't support IndexedDB")
             return
         }
+
+        if (navigator.storage && navigator.storage.persist) {
+            navigator.storage.persist().then((persistent) => {
+                let quota = 0
+                let usage = 0
+                let message = ""
+
+                message = persistent == true
+                    ? "Storage will NOT be cleared except by explicit user action."
+                    : "Storage may be cleared by the UA under storage pressure."
+
+                navigator.storage.estimate().then((estimate) => {
+                    quota = formatBytes(estimate.quota)
+                    usage = formatBytes(estimate.usage)
+
+                    _appInsights.trackEvent({
+                        name: "Offline initialized",
+                        properties: {
+                            message: message,
+                            quota: quota,
+                            usage: usage
+                        }
+                    })
+                })
+            })
+        }
     }
 
     initialize = function () {
@@ -408,4 +434,16 @@ function median(values) {
         return values[half]
 
     return (values[half - 1] + values[half]) / 2.0
+}
+
+function formatBytes(bytes, decimals = 0) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
