@@ -1946,7 +1946,7 @@ button,
 .faq {
     &__wrapper {
         position: relative;
-        @include wrapper();
+        @include wrapper($spacing-sides: 4rem);
         @include extras();
     }
 
@@ -3325,7 +3325,8 @@ button,
     }
 
     .settings__wrapper,
-    .archive__wrapper {
+    .archive__wrapper,
+    .faq__wrapper {
         padding-inline: 2rem;
     }
 
