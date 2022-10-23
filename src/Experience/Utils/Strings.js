@@ -350,17 +350,17 @@ const strings = {
         "loading": "Laden",
         "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
-        "notAvailable": "No chapter available in the selected language",
-        "browserNotification": "Recommended browser for this concept is Chrome",
-        "howTo": "How to guide",
+        "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
+        "browserNotification": "De aanbevolen browser voor dit concept is Chrome",
+        "howTo": "Hoe bereid je je voor",
         "journey": {
             "start": "Start de tijdreis",
             "continue": "Ga door met de tijdreis",
             "restart": "Start de reis opnieuw",
             "congrats": "Gefeliciteerd!",
             "bibleCards": {
-                "title": "Bible cards",
-                "message": "Now it is time to get your bible cards."
+                "title": "Bijbelkaarten",
+                "message": "Het is nu tijd voor de bijbelkaarten."
             },
             "completed": "Je hebt het gehaald",
             "back": "Terug",
@@ -368,7 +368,7 @@ const strings = {
             "homescreen": "Klaar",
             "quickLook": {
                 "title": "Quick look",
-                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+                "info": "Gebruik deze knop om snel door het hoofdstuk te gaan. Hiermee kan je opdrachten overslaan en een overzicht krijgen van de inhoud."
             } 
         },
         "task": {
@@ -392,13 +392,13 @@ const strings = {
             "language": "Taal",
             "feedback": "Feedback",
             "faq": "FAQ",
-            "notLoggedIn": "You are not logged in!",
-            "loggedInAs": "You are logged in as:",
+            "notLoggedIn": "Je bent niet ingelogd!",
+            "loggedInAs": "Je bent ingelogd als:",
             "mentor": "mentor",
-            "noRole": "no role",
+            "noRole": "geen rol",
             "logIn": "Log in",
             "logOut": "Log uit",
-            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+            "noAccess": "Je hebt geen rechten om deze film te bekijken. Stuur een e-mail naar <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a> om toegang aan te vragen."
         },
         "faq": {
             "questions": [
@@ -421,16 +421,16 @@ const strings = {
         "offline": {
             "download": {
                 "title": "Download",
-                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+                "info": "Ben je ingelogd? Dan kan je het hoofdstuk doorlopen zonder internet. Druk hier om het hoofdstuk offline toegankelijk te maken. "
             },
             "downloading": "Downloaden",
             "availableOffline": {
-                "title": "Online beschikbaar",
-                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+                "title": "Offline beschikbaar",
+                "info": "Het hoofdstuk is nu beschikbaar offline inclusief opdrachten en filmclips. Je kan het afspelen op een locatie zonder internet."
             },
-            "update": "Update offline version",
-            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!",
+            "update": "Update de offline versie",
+            "redownloadConfirmation": "Weet je zeker dat je het hoofdstuk opnieuw wilt downloaden?",
+            "downloadFailed": "Er is een probleem opgestaan met het downloaden van het hoofdstuk!",
             "tryAgain": "Try again"
         },
         "tooltips": {
@@ -452,13 +452,13 @@ const strings = {
             },
             "failed": {
                 "title": "Oeps!",
-                "message": "You've played the wrong note of the melody!"
+                "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
             },
-            "playAgain": "Play again",
+            "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
             "skip": "Overslaan",
-            "correctAnswers": "correct answers"
+            "correctAnswers": "antwoorden juist"
         }
     },
     "fr": {
@@ -696,7 +696,7 @@ const strings = {
         "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
         "notAvailable": "Nici un capitol disponibil în limba selectată",
-        "browserNotification": "Recommended browser for this concept is Chrome",
+        "browserNotification": "Browserul recomandat pentru acest concept este Chrome",
         "howTo": "Cum funcționează?",
         "journey": {
             "start": "Începe călătoria în timp",
@@ -797,9 +797,9 @@ const strings = {
             },
             "failed": {
                 "title": "Ups!",
-                "message": "You've played the wrong note of the melody!"
+                "message": "Ai cântat o notă greșită în melodie!"
             },
-            "playAgain": "Play again",
+            "playAgain": "O nouă rundă",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
             "skip": "Mergi mai departe",
