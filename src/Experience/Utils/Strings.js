@@ -336,7 +336,7 @@ const strings = {
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Uuups!",
                 "message": "You've played the wrong note of the melody!"
             },
             "playAgain": "Play again",
@@ -451,7 +451,7 @@ const strings = {
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Oeps!",
                 "message": "You've played the wrong note of the melody!"
             },
             "playAgain": "Play again",
@@ -566,7 +566,7 @@ const strings = {
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Oups!",
                 "message": "Tu as joué la mauvaise note de la mélodie !"
             },
             "playAgain": "Rejouer",
@@ -681,7 +681,7 @@ const strings = {
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Ups!",
                 "message": "Wybrałeś złą nutę"
             },
             "playAgain": "Odtwórz ponownie",
@@ -796,7 +796,7 @@ const strings = {
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Ups!",
                 "message": "You've played the wrong note of the melody!"
             },
             "playAgain": "Play again",
@@ -1040,17 +1040,17 @@ const strings = {
         "loading": "Caricamento",
         "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
-        "notAvailable": "No chapter available in the selected language",
-        "browserNotification": "Recommended browser for this concept is Chrome",
-        "howTo": "How to guide",
+        "notAvailable": "Nessun capitolo disponibile nella lingua selezionata",
+        "browserNotification": "Il browser consigliato per questo concetto è Chrome",
+        "howTo": "Come prepararsi",
         "journey": {
             "start": "Inizia il viaggio nel tempo",
             "continue": "Continua il viaggio nel tempo",
             "restart": "Ricomincia il viaggio",
             "congrats": "Complimenti!",
             "bibleCards": {
-                "title": "Bible cards",
-                "message": "Now it is time to get your bible cards."
+                "title": "Schede della Bibbia",
+                "message": "Ora è il momento delle schede della Bibbia."
             },
             "completed": "Hai finito",
             "back": "Indietro",
@@ -1058,7 +1058,7 @@ const strings = {
             "homescreen": "Fatto",
             "quickLook": {
                 "title": "Quick look",
-                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+                "info": "Utilizzate questo pulsante per una rapida lettura del capitolo. È possibile saltare le attività e ottenere una panoramica dei contenuti."
             } 
         },
         "task": {
@@ -1082,13 +1082,13 @@ const strings = {
             "language": "Lingua",
             "feedback": "Feedback",
             "faq": "FAQ",
-            "notLoggedIn": "You are not logged in!",
-            "loggedInAs": "You are logged in as:",
-            "mentor": "mentor",
-            "noRole": "no role",
+            "notLoggedIn": "Non hai effettuato l'accesso!",
+            "loggedInAs": "Hai effettuato l'accesso come:",
+            "mentor": "mentore",
+            "noRole": "nessun ruolo",
             "logIn": "Accedi",
             "logOut": "Esci",
-            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+            "noAccess": "Non hai accesso alla visione dei film. Per ottenere l'accesso invia un'e-mail a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "faq": {
             "questions": [
@@ -1111,16 +1111,16 @@ const strings = {
         "offline": {
             "download": {
                 "title": "Download",
-                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+                "info": "Hai effettuato il login? Se sì, puoi completare il capitolo senza internet. Clicca qui per rendere il capitolo disponibile offline."
             },
             "downloading": "Download in corso",
             "availableOffline": {
                 "title": "Disponibile offline",
-                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+                "info": "Il capitolo è ora disponibile offline con le attività e i filmati. Ora puoi giocarci in un luogo senza internet."
             },
-            "update": "Update offline version",
-            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!",
+            "update": "Aggiorna la versione offline",
+            "redownloadConfirmation": "Sei sicuro di voler riscaricare il capitolo?",
+            "downloadFailed": "C'è stato un problema nel download del capitolo!",
             "tryAgain": "Try again"
         },
         "tooltips": {
@@ -1141,14 +1141,14 @@ const strings = {
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
             "failed": {
-                "title": "Oops!",
-                "message": "You've played the wrong note of the melody!"
+                "title": "Ops!",
+                "message": "Hai suonato la nota sbagliata della melodia!"
             },
-            "playAgain": "Play again",
+            "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
             "skip": "Salta",
-            "correctAnswers": "correct answers"
+            "correctAnswers": "risposte corrette"
         }
     },
     "ru": {
@@ -1256,7 +1256,7 @@ const strings = {
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Ой!",
                 "message": "Вы сыграли не ту ноту в мелодии!"
             },
             "playAgain": "Играть снова",
@@ -1371,7 +1371,7 @@ const strings = {
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Hups!",
                 "message": "Olet soittanut väärän nuotin melodiasta!"
             },
             "playAgain": "Pelaa uudelleen",
@@ -1482,11 +1482,11 @@ const strings = {
                 "message": "Teljesítetted a feladatot! Folytathatod az utazást"
             },
             "timeElapsed": {
-                "title": "Oops!",
-                "message": "Hoppá! Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
+                "title": "Hoppá!",
+                "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Hoppá!",
                 "message": "You've played the wrong note of the melody!"
             },
             "playAgain": "Play again",
@@ -1598,7 +1598,7 @@ const strings = {
             },
             "timeElapsed": {
                 "title": "Oops!",
-                "message": "Oops! Time is up; try to attach all the wires before time is up."
+                "message": "Time is up; try to attach all the wires before time is up."
             },
             "failed": {
                 "title": "Oops!",
