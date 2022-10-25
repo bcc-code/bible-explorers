@@ -192,6 +192,5 @@ export default class ControlRoom {
     update() {
         if (this.clickableObjects)
             this.checkObjectIntersection()
-
     }
 }

@@ -37,6 +37,10 @@ export default class Video {
         this.hasSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video') != null
         }
+        this.getSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video')
+        }
+
         this.playingVideoId = null
     }
 
@@ -69,7 +73,7 @@ export default class Video {
             }
             else {
                 if (!instance.hasSkipBtn()) return
-                instance.videoJsEl().querySelector('.skip-video').remove()
+                instance.getSkipBtn().remove()
             }
         })
 
@@ -139,6 +143,9 @@ export default class Video {
     }
 
     waitAndFinish() {
+        if (instance.hasSkipBtn())
+            instance.getSkipBtn().remove()
+
         setTimeout(() => { instance.finish() }, 1000)
     }
 
