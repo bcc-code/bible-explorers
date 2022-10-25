@@ -98,7 +98,7 @@ export default class World {
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
-            this.welcome.loading.querySelector('span').innerText = 'Initializing'
+            this.welcome.loading.querySelector('span').innerText = _s.initializing
         })
 
         this.buttons.restart.innerText = _s.journey.restart
