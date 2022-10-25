@@ -765,7 +765,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Descărcare",
+                "title": "Obține varianta offline",
                 "info": "Te-ai autentificat? Astfel poți parcurge capitolul fără o conexiune la internet. Apasă aici pentru a face capitolul disponibil offline."
             },
             "downloading": "Se descarcă",
@@ -810,17 +810,17 @@ const strings = {
         "loading": "Cargando",
         "conceptDescription": "Unete a un viaje en el tiempo y explora el libro que puede responder todas las preguntas",
         "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
-        "notAvailable": "No chapter available in the selected language",
-        "browserNotification": "Recommended browser for this concept is Chrome",
-        "howTo": "How to guide",
+        "notAvailable": "No hay capítulos disponibles en el idioma seleccionado",
+        "browserNotification": "El navegador recomendado para este concepto es Chrome",
+        "howTo": "Cómo prepararse",
         "journey": {
             "start": "Comenzar el viaje en el tiempo",
             "continue": "Continuar con el viaje en el tiempo",
             "restart": "Empezar el viaje de nuevo",
             "congrats": "Felicitaciones!",
             "bibleCards": {
-                "title": "Bible cards",
-                "message": "Now it is time to get your bible cards."
+                "title": "Tarjetas bíblicas",
+                "message": "Ahora es el momento de obtener las tarjetas bíblicas."
             },
             "completed": "Tu has terminado",
             "back": "Regresar",
@@ -828,7 +828,7 @@ const strings = {
             "homescreen": "Listo",
             "quickLook": {
                 "title": "Quick look",
-                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
+                "info": "Usa este botón para una revisión rápida del capítulo. Aquí puedes omitir las tareas y obtener una descripción general del contenido."
             } 
         },
         "task": {
@@ -852,13 +852,13 @@ const strings = {
             "language": "Idioma",
             "feedback": "Retroalimentación",
             "faq": "FAQ",
-            "notLoggedIn": "You are not logged in!",
-            "loggedInAs": "You are logged in as:",
+            "notLoggedIn": "Usted no se ha identificado!",
+            "loggedInAs": "Has iniciado sesión como:",
             "mentor": "mentor",
-            "noRole": "no role",
+            "noRole": "sin rol",
             "logIn": "Iniciar sección",
             "logOut": "Cerrar sección",
-            "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
+            "noAccess": "No tienes acceso para ver esta película. Para obtener acceso, envíe un correo electrónico a <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a>"
         },
         "faq": {
             "questions": [
@@ -880,17 +880,17 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Descargar",
-                "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
+                "title": "Obtener versión sin conexión",
+                "info": "¿Estás conectado? Entonces puedes completar el capítulo sin internet. Haz clic aquí para que el capítulo esté disponible sin conexión."
             },
             "downloading": "Descargando",
             "availableOffline": {
                 "title": "Disponible sin conexión",
-                "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
+                "info": "El capítulo ahora está disponible sin conexión con ejercicios y películas. Ahora puedes jugarlo en una ubicación sin internet."
             },
-            "update": "Update offline version",
-            "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!",
+            "update": "Actualizar la versión sin conexión",
+            "redownloadConfirmation": "¿Seguro que quieres descargar el capítulo nuevamente?",
+            "downloadFailed": "¡Ha habido un problema al descargar el capítulo!",
             "tryAgain": "Try again"
         },
         "tooltips": {
@@ -912,13 +912,13 @@ const strings = {
             },
             "failed": {
                 "title": "Oops!",
-                "message": "You've played the wrong note of the melody!"
+                "message": "Has tocado la nota equivocada en la melodía."
             },
-            "playAgain": "Play again",
+            "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
             "skip": "Saltar",
-            "correctAnswers": "correct answers"
+            "correctAnswers": "respuestas correctas"
         }
     },
     "pt-pt": {
