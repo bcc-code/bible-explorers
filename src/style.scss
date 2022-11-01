@@ -1467,7 +1467,8 @@ button,
 .modal__picture-and-code,
 .modal__quiz,
 .modal__simon-says,
-.modal__cable-connector {
+.modal__cable-connector,
+.modal__sort-game {
     .modal__close {
         display: none;
     }
@@ -1915,6 +1916,7 @@ button,
         font-family: $secondary-font;
         text-align: center;
         color: #fff;
+        font-size: 2rem;
     }
 
     input::-webkit-input-placeholder {
@@ -2414,27 +2416,6 @@ button,
             background: $accent;
         }
     }
-}
-
-#sort-game {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: $gradient-with-opacity;
-    z-index: 99;
-}
-
-#cable-connect {
-    width: 1000px;
-    height: 500px;
-}
-
-#miniGame__sorting {
-    max-width: 1600px;
-    width: 100%;
-    height: 800px;
 }
 
 .miniGame {
@@ -3123,6 +3104,11 @@ button,
     }
 }
 
+#sort-game {
+    width: 1600px;
+    height: 800px;
+}
+
 // #endregion
 
 // #region Responsive
@@ -3244,6 +3230,11 @@ button,
 
     #concept-description {
         max-width: 40rem;
+    }
+
+    #sort-game {
+        width: 1400px;
+        height: 700px;
     }
 }
 
@@ -3371,6 +3362,11 @@ button,
             transform: translateX(48px);
         }
     }
+
+    #sort-game {
+        width: 1200px;
+        height: 600px;
+    }
 }
 
 @media (max-width: 1280px) {
@@ -3460,6 +3456,11 @@ button,
 
     .notification__container {
         padding-inline: 1rem;
+    }
+
+    #sort-game {
+        width: 1000px;
+        height: 500px;
     }
 
 }
