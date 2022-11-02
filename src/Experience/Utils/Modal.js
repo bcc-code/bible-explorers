@@ -11,18 +11,18 @@ export default class Modal {
         this.htmlEl = document.createElement("div")
         this.htmlEl.className = "modal" + " " + cssClass
         this.htmlEl.innerHTML = Modal.generateHtml(html)
+
         document.body.appendChild(this.htmlEl)
+        document.body.classList.add('modal-on')
 
-        this.el = {
-            overlay: this.htmlEl.querySelector(".modal__overlay"),
-            close: this.htmlEl.querySelector(".modal__close")
-        }
-
-        this.el.close.addEventListener("click", this.destroy)
+        this.close()
 
         modal.push(this)
+    }
 
-        document.body.classList.add('modal-on')
+    close() {
+        const closeModal = this.htmlEl.querySelector(".modal__close")
+        closeModal.addEventListener("click", this.destroy)
     }
 
     destroy() {
