@@ -66,18 +66,21 @@ export default class World {
         this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
 
-        this.buttons.support.style.display = 'block'
-        this.buttons.support.addEventListener('click', function () {
-            document.getElementById('deskWidgetMain').classList.toggle('widget-open')
+        if (window.location.hostname == 'explorers.biblekids.io') {
+            this.buttons.support.style.display = 'block'
+            this.buttons.support.addEventListener('click', function () {
+                document.getElementById('deskWidgetMain').classList.toggle('widget-open')
 
-            if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
-                instance.buttons.support.classList.remove('icon-message-lines-solid')
-                instance.buttons.support.classList.add('icon-xmark-solid')
-            } else {
-                instance.buttons.support.classList.add('icon-message-lines-solid')
-                instance.buttons.support.classList.remove('icon-xmark-solid')
-            }
-        })
+                if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
+                    instance.buttons.support.classList.remove('icon-message-lines-solid')
+                    instance.buttons.support.classList.add('icon-xmark-solid')
+                } else {
+                    instance.buttons.support.classList.add('icon-message-lines-solid')
+                    instance.buttons.support.classList.remove('icon-xmark-solid')
+                }
+            })
+        }
+
         this.buttons.howTo.querySelector('span').innerText = _s.howTo
         this.buttons.howTo.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
