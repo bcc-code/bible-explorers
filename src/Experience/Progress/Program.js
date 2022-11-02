@@ -54,7 +54,7 @@ export default class Program {
 
         // Get instance variables
         this.chapterProgress = () => parseInt(localStorage.getItem(this.world.getId())) || 0
-        this.currentStep = this.chapterProgress() || 0
+        this.currentStep = instance.debug.onQuickLook() ? 0 : (this.chapterProgress() || 0)
         this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
         this.currentLocation = () => {
@@ -92,7 +92,7 @@ export default class Program {
     updateCurrentStep(newStep) {
         this.currentStep = newStep
 
-        if (newStep > this.chapterProgress() && !document.body.classList.contains('quick-look-mode')) {
+        if (newStep > this.chapterProgress() && !instance.debug.onQuickLook()) {
             this.updateLocalStorage()
         }
     }

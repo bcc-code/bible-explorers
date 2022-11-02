@@ -131,6 +131,7 @@ export default class World {
         instance.camera.updateCameraTo()
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
+        instance.debug.removeQuickLookMode()
 
         if (!instance.experience.settings.fullScreen) {
             document.exitFullscreen()
@@ -319,12 +320,12 @@ export default class World {
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
         instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
-        document.getElementById('quick-look').addEventListener("click", () => {
+        instance.menu.quickLook.addEventListener("click", () => {
+            instance.debug.addQuickLookMode()
+
             this.chapterProgress() == this.selectedChapter.program.length
                 ? instance.restartChapter()
                 : instance.startChapter()
-
-            document.querySelector('body').classList.add('quick-look-mode')
         })
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
@@ -621,8 +622,6 @@ export default class World {
             })
         })
 
-        document.querySelector('body').classList.remove('quick-look-mode')
-
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
             document.documentElement.requestFullscreen()
         }
@@ -636,17 +635,20 @@ export default class World {
 
     finishJourney() {
         instance.audio.changeBgMusic()
-        document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
 
-        _appInsights.trackEvent({
-            name: "Finish chapter",
-            properties: {
-                title: instance.selectedChapter.title,
-                category: instance.selectedChapter.category,
-                language: _lang.getLanguageCode(),
-                quality: instance.selectedQuality
-            }
-        })
+        if (!instance.debug.onQuickLook()) {
+            document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
+
+            _appInsights.trackEvent({
+                name: "Finish chapter",
+                properties: {
+                    title: instance.selectedChapter.title,
+                    category: instance.selectedChapter.category,
+                    language: _lang.getLanguageCode(),
+                    quality: instance.selectedQuality
+                }
+            })
+        }
     }
 
     showMenu() {
