@@ -510,7 +510,7 @@ export default class World {
         chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
-        this.offline.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
+        this.offline.downloadEpisodes(chapterId, selectedChapter['episodes'])
     }
 
     removeChapter(chapter) {
