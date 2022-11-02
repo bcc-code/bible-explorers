@@ -3,7 +3,6 @@ import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
-import { domainToASCII } from 'url'
 
 let instance = null
 const circleSize = 96
@@ -27,6 +26,7 @@ export default class PictureAndCode {
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.lastKnownScrollPosition = 0
+
             instance.togglePicture()
         }
     }
@@ -36,7 +36,8 @@ export default class PictureAndCode {
 
         let html = `<div class="modal__content picture-and-code">
             <div class="picture-and-code__content">
-                <img src="">
+                <img data-src="" class="lazyload">
+                <div class="img-loader"></div>
             </div>
         </div>`
 
@@ -86,7 +87,7 @@ export default class PictureAndCode {
 
     setPicture(url) {
         instance.data.picture = url
-        instance.el.querySelector('img').setAttribute('src', instance.data.picture)
+        instance.el.querySelector('img').setAttribute('data-src', instance.data.picture)
     }
 
     addExistingCircles() {

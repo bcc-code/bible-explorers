@@ -2007,7 +2007,6 @@ button,
 
     &__title {
         position: relative;
-        display: inline-block;
         color: $accent2;
         font-size: 3rem;
 
@@ -2118,31 +2117,9 @@ button,
     }
 
     &__miniGame {
-        .icon {
-            position: absolute;
-            font-size: 2rem;
-            bottom: 1.25rem;
-        }
 
         .icon:first-of-type,
         .icon:last-of-type {
-            font-size: 1.5rem;
-        }
-
-        .icon:first-of-type {
-            left: -5rem;
-        }
-
-        .icon:nth-of-type(2) {
-            left: -3rem;
-        }
-
-        .icon:nth-of-type(3) {
-            right: -3rem;
-        }
-
-        .icon:last-of-type {
-            right: -5rem;
         }
     }
 }
@@ -2824,9 +2801,18 @@ button,
 }
 
 .picture-and-code {
+
+    &__content {
+        display: grid;
+        place-items: center;
+    }
+
+    &__content>* {
+        grid-column: 1/-1;
+        grid-row: 1/-1;
+    }
+
     img {
-        margin-inline: auto;
-        max-height: 100%;
         border-radius: 1rem;
         border: 4px solid $accent;
     }
@@ -3265,10 +3251,6 @@ button,
         font-size: 1.5rem;
     }
 
-    .congrats__miniGame .icon {
-        bottom: 0.5rem;
-    }
-
     .modal__content.code-unlock {
         max-width: 36rem;
     }
@@ -3367,6 +3349,7 @@ button,
         width: 1200px;
         height: 600px;
     }
+
 }
 
 @media (max-width: 1280px) {
@@ -3506,5 +3489,47 @@ button,
 
     &:hover {
         border: 10px solid $accent;
+    }
+}
+
+.lazyload,
+.lazyloading {
+    opacity: 0;
+}
+
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.img-loader {
+    display: inline-block;
+    z-index: -1;
+
+    &:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: #fff transparent #fff transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+}
+
+img.lazyloaded~div.img-loader {
+    display: none;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
