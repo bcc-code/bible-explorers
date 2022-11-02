@@ -118,7 +118,7 @@ export default class Offline {
         offline.getDownloadedEpisodes(episodes.map(e => e.data.name), async (downloadedEpisodes) => {
             offline.data[chapterId] = episodes
 
-            if (episodes.length == downloadedEpisodes) {
+            if (episodes.length == downloadedEpisodes.length) {
                 // The user wants to redownload the chapter
                 offline.downloaded[chapterId] = []
             }
@@ -127,11 +127,11 @@ export default class Offline {
                 offline.downloaded[chapterId] = downloadedEpisodes
             }
 
-            await offline.downloadEpisodeFromChapter(chapterId)
+            await offline.downloadEpisodesFromChapter(chapterId)
         })
     }
 
-    downloadEpisodeFromChapter = async function (chapterId) {
+    downloadEpisodesFromChapter = async function (chapterId) {
         let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
         const episodeUrls = await offline.getEpisodeDownloadUrls(notDownloadedEpisodes[0].id, chapterId)
         if (episodeUrls) {
@@ -143,9 +143,9 @@ export default class Offline {
     }
 
     getNotDownloadedEpisodes = function (allEpisodes, downloadedEpisodes) {
-        return allEpisodes.filter(allEp => {
-            return !downloadedEpisodes.some(dwEp => {
-                return allEp.data.name === dwEp.name
+        return allEpisodes.filter(episode => {
+            return !downloadedEpisodes.some(downloadedEpisodeName => {
+                return episode.data.name === downloadedEpisodeName
             })
         })
     }
@@ -292,7 +292,7 @@ export default class Offline {
                 })
             }
             else { // Next episode to download
-                await offline.downloadEpisodeFromChapter(chapterId)
+                await offline.downloadEpisodesFromChapter(chapterId)
             }
         }
     }
@@ -382,7 +382,7 @@ export default class Offline {
     
             getItem.onsuccess = function () {
                 if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
-                    downloadedEpisodes.push(getItem.result)
+                    downloadedEpisodes.push(getItem.result.name)
                 }
 
                 if ((index+1) == episodes.length)
