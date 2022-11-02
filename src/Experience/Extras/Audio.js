@@ -21,13 +21,13 @@ export default class Audio {
         audio.notes = []
 
         audio.onBTN = document.getElementById("sound-on")
-        audio.offBTN = document.getElementById("sound-off")
-
+        audio.onBTN.addEventListener("click", audio.togglePlayBgMusic)
         audio.onBTN.style.display = "none"
 
-        audio.onBTN.addEventListener("click", audio.togglePlayBgMusic)
+        audio.offBTN = document.getElementById("sound-off")
         audio.offBTN.addEventListener("click", audio.togglePlayBgMusic)
 
+        audio.initialize()
     }
 
     initialize() {
@@ -39,7 +39,6 @@ export default class Audio {
 
     changeBgMusic(soundtrack = audio.bgMusicAudios.default) {
         if (!audio.experience.settings.soundOn) return
-        audio.initialize()
 
         if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
             audio.loadAndPlay(soundtrack)
@@ -57,7 +56,6 @@ export default class Audio {
     togglePlayBgMusic() {
         if (!audio.experience.settings.soundOn) return
 
-        audio.initialize()
         audio.disableToggleBtn()
 
         if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
@@ -86,13 +84,14 @@ export default class Audio {
         if (audio.notFetchedYet(soundtrack)) {
             audio.disableToggleBtn()
 
-            audio.audioLoader.load(soundtrack, function (buffer) {
-                audio.bgMusicAudios.state = _STATE.PLAYING
-                audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
-                audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
-                audio.bgMusicAudios.objs[soundtrack].setLoop(true)
-                audio.bgMusicAudios.objs[soundtrack].setVolume(0)
+            audio.bgMusicAudios.state = _STATE.PLAYING
+            audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
+            audio.bgMusicAudios.objs[soundtrack].setLoop(true)
+            audio.bgMusicAudios.objs[soundtrack].setVolume(0)
+            audio.bgMusicAudios.objs[soundtrack].pause()
 
+            audio.audioLoader.load(soundtrack, function (buffer) {
+                audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
                 audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
                 audio.enableToggleBtn()
 
@@ -159,19 +158,19 @@ export default class Audio {
     setSoundIconOn() {
         audio.onBTN.style.display = 'inline-block'
         audio.offBTN.style.display = 'none'
-        // audio.el.classList.add('sound-on')
     }
     setSoundIconOff() {
         audio.offBTN.style.display = 'inline-block'
         audio.onBTN.style.display = 'none'
-        // audio.el.classList.remove('sound-on')
     }
 
     disableToggleBtn() {
-        // audio.el.classList.add('pointer-events-none')
+        audio.onBTN.classList.add('pointer-events-none')
+        audio.offBTN.classList.add('pointer-events-none')
     }
     enableToggleBtn() {
-        // audio.el.classList.remove('pointer-events-none')
+        audio.onBTN.classList.remove('pointer-events-none')
+        audio.offBTN.classList.remove('pointer-events-none')
     }
 
     notFetchedYet(soundtrack) {
@@ -179,8 +178,6 @@ export default class Audio {
     }
 
     togglePlayTaskDescription(url) {
-        audio.initialize()
-
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.audioLoader.load(url, function (buffer) {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)

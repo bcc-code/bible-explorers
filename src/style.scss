@@ -323,6 +323,10 @@ button,
 
 // #region Interface
 
+.pointer-events-none {
+    pointer-events: none;
+}
+
 .button {
     position: relative;
     color: #fff;
