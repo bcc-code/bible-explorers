@@ -119,7 +119,7 @@ const strings = {
     },
     "no": {
         "loading": "Laster",
-        "initializing": "Initializing",
+        "initializing": "Initialiserer",
         "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
         "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
@@ -235,7 +235,7 @@ const strings = {
     },
     "de": {
         "loading": "Wird geladen",
-        "initializing": "Initializing",
+        "initializing": "Inizialisieren",
         "conceptDescription": "Komm mit auf Zeitreise und erforsche das Buch, das alle Fragen beantworten kann",
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
         "notAvailable": "Kein Kapitel in der gewählten Sprache verfügbar",
@@ -308,7 +308,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Herunterladen",
+                "title": "Offline Version erhalten",
                 "info": "Bist du angemeldet? Dann kannst du das Kapitel ohne Internetverbindung durchführen. Klicke hier, um das Kapitel offline verfügbar zu machen."
             },
             "downloading": "Wird heruntergeladen",
@@ -351,7 +351,7 @@ const strings = {
     },
     "nl": {
         "loading": "Laden",
-        "initializing": "Initializing",
+        "initializing": "Initialiseren",
         "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
         "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
@@ -424,7 +424,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Download",
+                "title": "Download offline-versie",
                 "info": "Ben je ingelogd? Dan kan je het hoofdstuk doorlopen zonder internet. Druk hier om het hoofdstuk offline toegankelijk te maken. "
             },
             "downloading": "Downloaden",
@@ -467,7 +467,7 @@ const strings = {
     },
     "fr": {
         "loading": "Chargement",
-        "initializing": "Initializing",
+        "initializing": "Initialisation",
         "conceptDescription": "Rejoins les voyages dans le temps et explore le livre qui peut répondre à toutes les questions",
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
         "notAvailable": "Aucun chapitre disponible dans la langue sélectionnée",
@@ -540,7 +540,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Télécharger",
+                "title": "Obtenir la version hors connexion",
                 "info": "Es-tu connecté ? Si c'est le cas, tu peux compléter le chapitre sans internet. Clique ici pour que le chapitre soit disponible hors connexion."
             },
             "downloading": "Téléchargement",
@@ -583,7 +583,7 @@ const strings = {
     },
     "pl": {
         "loading": "Ładowanie",
-        "initializing": "Initializing",
+        "initializing": "Inicjuję",
         "conceptDescription": "Dołącz do podróży w czasie i odkryj książkę, która odpowie na każde pytanie",
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
         "notAvailable": "Żaden rozdział nie jest dostępny w wybranym języku",
@@ -656,7 +656,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Pobierz",
+                "title": "Uzyskaj dostęp offline",
                 "info": "Czy jesteś zalogowany? Jeśli tak, możesz przejść rozdział bez połączenia z internetem. Klliknij tutaj aby pobrać rozdział."
             },
             "downloading": "Pobieranie",
@@ -815,7 +815,7 @@ const strings = {
     },
     "es": {
         "loading": "Cargando",
-        "initializing": "Initializing",
+        "initializing": "Inicializando",
         "conceptDescription": "Unete a un viaje en el tiempo y explora el libro que puede responder todas las preguntas",
         "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
         "notAvailable": "No hay capítulos disponibles en el idioma seleccionado",
@@ -919,7 +919,7 @@ const strings = {
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
             "failed": {
-                "title": "Oops!",
+                "title": "Ups!",
                 "message": "Has tocado la nota equivocada en la melodía."
             },
             "playAgain": "Juega de nuevo",
@@ -931,7 +931,7 @@ const strings = {
     },
     "pt-pt": {
         "loading": "Carregando",
-        "initializing": "Initializing",
+        "initializing": "Inicialização",
         "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
         "notAvailable": "Nenhum capítulo disponível no idioma selecionado",
@@ -1004,7 +1004,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Download",
+                "title": "Obtenha a versão offline",
                 "info": "Você está logado? Então você pode completar o capítulo sem acesso a internet. Clique aqui para tornar o capítulo disponível offline."
             },
             "downloading": "Baixando",
@@ -1047,7 +1047,7 @@ const strings = {
     },
     "it": {
         "loading": "Caricamento",
-        "initializing": "Initializing",
+        "initializing": "Inizializzazione",
         "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
         "notAvailable": "Nessun capitolo disponibile nella lingua selezionata",
@@ -1120,7 +1120,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Download",
+                "title": "Ottieni la versione offline",
                 "info": "Hai effettuato il login? Se sì, puoi completare il capitolo senza internet. Clicca qui per rendere il capitolo disponibile offline."
             },
             "downloading": "Download in corso",
@@ -1163,7 +1163,7 @@ const strings = {
     },
     "ru": {
         "loading": "Загрузка",
-        "initializing": "Initializing",
+        "initializing": "Инициализация",
         "conceptDescription": "Присоединяйтесь к путешествию во времени и исследуйте книгу, способную ответить на все вопросы",
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
         "notAvailable": "Ни одна глава недоступна на выбранном языке",
@@ -1236,7 +1236,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Скачать",
+                "title": "Получить офлайн-версию",
                 "info": "Вы вошли в учетную запись? Вы можете пройти главу без интернета. Нажмите здесь, чтобы глава стала доступной офлайн."
             },
             "downloading": "Скачивание",
@@ -1279,7 +1279,7 @@ const strings = {
     },
     "fi": {
         "loading": "Ladataan",
-        "initializing": "Initializing",
+        "initializing": "Alustaa",
         "conceptDescription": "Liity aikamatkalle ja tutki kirjaa josta saat vastaukset kaikkiin kysymyksiin",
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
         "notAvailable": "Valitsemallasi kielellä ei ole tarjolla yhtään jaksoa",
@@ -1352,7 +1352,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Lataa",
+                "title": "Lataa offline-versio",
                 "info": "Oletko kirjautunut sisään? Jos olet, voit suorittaa jakson ilman internet yhteyttä. Paina tästä suorittaaksesi jakso offline tilassa."
             },
             "downloading": "Ladataan tiedostoa",
@@ -1395,7 +1395,7 @@ const strings = {
     },
     "hu": {
         "loading": "Betöltés",
-        "initializing": "Initializing",
+        "initializing": "Inicializálás",
         "conceptDescription": "Csatlakozz az időutazáshoz és fedezd fel a könyvet, amely minden kérdésre választ ad!",
         "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
         "notAvailable": "No chapter available in the selected language",
@@ -1511,7 +1511,7 @@ const strings = {
     },
     "da": {
         "loading": "Loader",
-        "initializing": "Initializing",
+        "initializing": "Initialiserer",
         "conceptDescription": "Kom med på tidsrejsen og udforsk bogen, som kan besvare alle spørgsmål",
         "introduction": "Nu kan børnene i alderen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers",
         "notAvailable": "Intet tilgængeligt kapitel i det valgte sprog",
@@ -1584,7 +1584,7 @@ const strings = {
         },
         "offline": {
             "download": {
-                "title": "Download",
+                "title": "Få ofline version",
                 "info": "Er du logget ind? Så kan du færdiggøre kapitlet uden internet. Tryk her for at gøre kapitlet tilgængeligt offline."
             },
             "downloading": "Downloader",

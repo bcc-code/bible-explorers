@@ -25,7 +25,6 @@ export default class CableConnector {
         this.startTimerIfNecessary()
         this.setup()
         this.addEventListeners()
-        // window.addEventListener('resize', instance.resize)
     }
 
     init() {
