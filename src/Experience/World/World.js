@@ -320,13 +320,7 @@ export default class World {
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
         instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
-        instance.menu.quickLook.addEventListener("click", () => {
-            instance.debug.addQuickLookMode()
-
-            this.chapterProgress() == this.selectedChapter.program.length
-                ? instance.restartChapter()
-                : instance.startChapter()
-        })
+        instance.menu.quickLook.addEventListener("click", instance.quickLookOnChapter)
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
 
@@ -593,12 +587,9 @@ export default class World {
     }
 
     startChapter() {
-        instance.hideMenu()
-        instance.program = new Program()
-        instance.progressBar = new ProgressBar()
-        instance.buttons.howTo.style.display = 'none'
-        instance.buttons.home.style.display = 'block'
-        instance.buttons.archive.style.display = 'block'
+        instance.setUpChapter()
+        instance.fetchBgMusic()        
+        instance.fetchArchiveImage()
 
         _appInsights.trackEvent({
             name: "Start chapter",
@@ -610,17 +601,16 @@ export default class World {
             }
         })
 
-        if (instance.selectedChapter.background_music) {
-            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
-                instance.audio.changeBgMusic(chapter.background_music)
-            })
+        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen()
         }
+    }
 
-        instance.selectedChapter.archive.forEach(fact => {
-            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
-                fact.image = data
-            })
-        })
+    quickLookOnChapter() {
+        instance.setUpChapter()
+        instance.fetchBgMusic()        
+        instance.fetchArchiveImage()
+        instance.debug.addQuickLookMode()
 
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
             document.documentElement.requestFullscreen()
@@ -662,6 +652,31 @@ export default class World {
     hideMenu() {
         document.body.classList.remove('freeze')
         instance.welcome.chaptersScreen.classList.remove('visible')
+    }
+
+    setUpChapter() {
+        instance.hideMenu()
+        instance.program = new Program()
+        instance.progressBar = new ProgressBar()
+        instance.buttons.howTo.style.display = 'none'
+        instance.buttons.home.style.display = 'block'
+        instance.buttons.archive.style.display = 'block'
+    }
+
+    fetchBgMusic() {
+        if (instance.selectedChapter.background_music) {
+            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
+                instance.audio.changeBgMusic(chapter.background_music)
+            })
+        }
+    }
+
+    fetchArchiveImage() {
+        instance.selectedChapter.archive.forEach(fact => {
+            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
+                fact.image = data
+            })
+        })
     }
 
     getId() {
