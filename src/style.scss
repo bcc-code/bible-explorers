@@ -2007,11 +2007,21 @@ button,
 
     &__title {
         position: relative;
+        display: grid;
+        grid-template-columns: auto;
+        grid-auto-flow: column;
+        place-content: center;
+        place-items: center;
+        gap: 0.5rem;
         color: $accent2;
         font-size: 3rem;
 
         h2 {
             font-size: inherit;
+        }
+
+        .icon {
+            font-size: 0.75em;
         }
     }
 
@@ -2120,6 +2130,8 @@ button,
 
         .icon:first-of-type,
         .icon:last-of-type {
+            margin-top: 0.35em;
+            font-size: 0.6em;
         }
     }
 }
