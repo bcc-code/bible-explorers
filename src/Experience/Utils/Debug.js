@@ -7,6 +7,8 @@ class Debug {
         this.experience = new Experience()
 
         this.developer = window.location.hash === '#debug'
+        this.addQuickLookMode = () => document.querySelector('body').classList.add('quick-look-mode')
+        this.removeQuickLookMode = () => document.querySelector('body').classList.remove('quick-look-mode')
         this.onQuickLook = () => document.querySelector('body').classList.contains('quick-look-mode')
 
         if (this.developer) {

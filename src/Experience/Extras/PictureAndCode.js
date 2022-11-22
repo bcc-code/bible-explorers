@@ -25,6 +25,8 @@ export default class PictureAndCode {
             instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
             instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
+            instance.lastKnownScrollPosition = 0
+
             instance.togglePicture()
         }
     }
@@ -34,7 +36,8 @@ export default class PictureAndCode {
 
         let html = `<div class="modal__content picture-and-code">
             <div class="picture-and-code__content">
-                <img src="">
+                <img data-src="" class="lazyload">
+                <div class="img-loader"></div>
             </div>
         </div>`
 
@@ -73,16 +76,26 @@ export default class PictureAndCode {
         })
 
         instance.addExistingCircles()
+
+        document.querySelector('.modal__picture-and-code').addEventListener('scroll', (e) => {
+            instance.lastKnownScrollPosition = e.target.scrollTop;
+        })
+
+
         instance.el.addEventListener('click', instance.addCirclesOnClick)
     }
 
     setPicture(url) {
         instance.data.picture = url
-        instance.el.querySelector('img').setAttribute('src', instance.data.picture)
+        instance.el.querySelector('img').setAttribute('data-src', instance.data.picture)
     }
 
     addExistingCircles() {
         instance.program.gamesData.pictureAndCode.circles.forEach(circle => instance.addCircle(circle.x, circle.y))
+    }
+
+    newScrollPosition(scrollPos) {
+        return scrollPos
     }
 
     addCirclesOnClick(event) {
@@ -93,8 +106,8 @@ export default class PictureAndCode {
             instance.circlesVisible--
         }
         else if (instance.circlesVisible < maxCirclesToAdd) {
-            instance.addCircle(event.x, event.y)
-            instance.program.gamesData.pictureAndCode.circles.push({ x: event.x, y: event.y })
+            instance.addCircle(event.x, event.y + instance.lastKnownScrollPosition)
+            instance.program.gamesData.pictureAndCode.circles.push({ x: event.x, y: event.y + instance.lastKnownScrollPosition })
             instance.circlesVisible++
         }
     }

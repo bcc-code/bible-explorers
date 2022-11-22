@@ -9,6 +9,7 @@ export default class Congrats {
         this.experience = new Experience()
         this.world = this.experience.world
         this.camera = this.experience.camera
+        this.debug = this.experience.debug
 
         instance = this
     }
@@ -68,6 +69,7 @@ export default class Congrats {
         homescreen.addEventListener('click', () => {
             instance.modal.destroy()
             instance.world.showMenu()
+            instance.debug.removeQuickLookMode()
 
             if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
                 document.exitFullscreen()

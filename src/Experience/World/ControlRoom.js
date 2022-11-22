@@ -192,7 +192,5 @@ export default class ControlRoom {
     update() {
         if (this.clickableObjects)
             this.checkObjectIntersection()
-
-        this.animation.mixer.update(this.time.delta * 0.001)
     }
 }

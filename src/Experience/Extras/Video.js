@@ -37,13 +37,17 @@ export default class Video {
         this.hasSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video') != null
         }
+        this.getSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video')
+        }
+
         this.playingVideoId = null
     }
 
     load(id) {
         this.playingVideoId = id
 
-        // Remove all event listeners - if any
+        // First, remove all previous event listeners - if any
         this.video().off('ended', instance.waitAndFinish)
 
         // Always start new loaded videos from the beginning
@@ -55,8 +59,13 @@ export default class Video {
 
         this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
+        // Add event listener on play
+        this.video().on('play', function() {
+            this.requestFullscreen()
+        })
+
         // Add event listener on video update
-        this.video().on('timeupdate', function () {
+        this.video().on('timeupdate', function() {
             if (instance.showSkipBtn()) {
                 if (instance.hasSkipBtn()) return
 
@@ -69,12 +78,12 @@ export default class Video {
             }
             else {
                 if (!instance.hasSkipBtn()) return
-                instance.videoJsEl().querySelector('.skip-video').remove()
+                instance.getSkipBtn().remove()
             }
         })
 
         // Add event listener on fullscreen change
-        this.video().on('fullscreenchange', function () {
+        this.video().on('fullscreenchange', function() {
             if (!this.isFullscreen_) {
                 instance.pause()
             }
@@ -98,7 +107,6 @@ export default class Video {
 
     play() {
         instance.video().play()
-        instance.video().requestFullscreen()
     }
 
     pause() {
@@ -139,6 +147,9 @@ export default class Video {
     }
 
     waitAndFinish() {
+        if (instance.hasSkipBtn())
+            instance.getSkipBtn().remove()
+
         setTimeout(() => { instance.finish() }, 1000)
     }
 

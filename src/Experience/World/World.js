@@ -66,18 +66,21 @@ export default class World {
         this.welcome.loading.querySelector('span').innerText = _s.loading
         this.welcome.conceptDescription.innerText = _s.conceptDescription
 
-        this.buttons.support.style.display = 'block'
-        this.buttons.support.addEventListener('click', function () {
-            document.getElementById('deskWidgetMain').classList.toggle('widget-open')
+        if (window.location.hostname == 'explorers.biblekids.io') {
+            this.buttons.support.style.display = 'block'
+            this.buttons.support.addEventListener('click', function () {
+                document.getElementById('deskWidgetMain').classList.toggle('widget-open')
 
-            if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
-                instance.buttons.support.classList.remove('icon-message-lines-solid')
-                instance.buttons.support.classList.add('icon-xmark-solid')
-            } else {
-                instance.buttons.support.classList.add('icon-message-lines-solid')
-                instance.buttons.support.classList.remove('icon-xmark-solid')
-            }
-        })
+                if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
+                    instance.buttons.support.classList.remove('icon-message-lines-solid')
+                    instance.buttons.support.classList.add('icon-xmark-solid')
+                } else {
+                    instance.buttons.support.classList.add('icon-message-lines-solid')
+                    instance.buttons.support.classList.remove('icon-xmark-solid')
+                }
+            })
+        }
+
         this.buttons.howTo.querySelector('span').innerText = _s.howTo
         this.buttons.howTo.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
@@ -98,7 +101,7 @@ export default class World {
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
-            this.welcome.loading.querySelector('span').innerText = 'Initializing'
+            this.welcome.loading.querySelector('span').innerText = _s.initializing
         })
 
         this.buttons.restart.innerText = _s.journey.restart
@@ -128,6 +131,7 @@ export default class World {
         instance.camera.updateCameraTo()
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
+        instance.debug.removeQuickLookMode()
 
         if (!instance.experience.settings.fullScreen) {
             document.exitFullscreen()
@@ -316,13 +320,7 @@ export default class World {
         instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
         instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
 
-        document.getElementById('quick-look').addEventListener("click", () => {
-            this.chapterProgress() == this.selectedChapter.program.length
-                ? instance.restartChapter()
-                : instance.startChapter()
-
-            document.querySelector('body').classList.add('quick-look-mode')
-        })
+        instance.menu.quickLook.addEventListener("click", instance.quickLookOnChapter)
 
         chapterAttachments.querySelector('.attachments').innerHTML = ''
 
@@ -456,7 +454,7 @@ export default class World {
     }
 
     setDownloadHtml(button) {
-        button.innerHTML = `<i class="icon-question-solid"></i><span>${_s.offline.availableOffline.title}</span>`
+        button.innerHTML = `<span>${_s.offline.availableOffline.title}</span>`
         button.addEventListener("click", instance.confirmRedownload)
     }
 
@@ -507,7 +505,7 @@ export default class World {
         chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
-        this.offline.downloadEpisodes(selectedChapter['episodes'], { chapterId, chapterTitle: selectedChapter.title, categorySlug })
+        this.offline.downloadEpisodes(chapterId, selectedChapter['episodes'])
     }
 
     removeChapter(chapter) {
@@ -589,12 +587,9 @@ export default class World {
     }
 
     startChapter() {
-        instance.hideMenu()
-        instance.program = new Program()
-        instance.progressBar = new ProgressBar()
-        instance.buttons.howTo.style.display = 'none'
-        instance.buttons.home.style.display = 'block'
-        instance.buttons.archive.style.display = 'block'
+        instance.setUpChapter()
+        instance.fetchBgMusic()        
+        instance.fetchArchiveImage()
 
         _appInsights.trackEvent({
             name: "Start chapter",
@@ -606,19 +601,16 @@ export default class World {
             }
         })
 
-        if (instance.selectedChapter.background_music) {
-            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
-                instance.audio.changeBgMusic(chapter.background_music)
-            })
+        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen()
         }
+    }
 
-        instance.selectedChapter.archive.forEach(fact => {
-            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
-                fact.image = data
-            })
-        })
-
-        document.querySelector('body').classList.remove('quick-look-mode')
+    quickLookOnChapter() {
+        instance.setUpChapter()
+        instance.fetchBgMusic()        
+        instance.fetchArchiveImage()
+        instance.debug.addQuickLookMode()
 
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
             document.documentElement.requestFullscreen()
@@ -633,17 +625,20 @@ export default class World {
 
     finishJourney() {
         instance.audio.changeBgMusic()
-        document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
 
-        _appInsights.trackEvent({
-            name: "Finish chapter",
-            properties: {
-                title: instance.selectedChapter.title,
-                category: instance.selectedChapter.category,
-                language: _lang.getLanguageCode(),
-                quality: instance.selectedQuality
-            }
-        })
+        if (!instance.debug.onQuickLook()) {
+            document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
+
+            _appInsights.trackEvent({
+                name: "Finish chapter",
+                properties: {
+                    title: instance.selectedChapter.title,
+                    category: instance.selectedChapter.category,
+                    language: _lang.getLanguageCode(),
+                    quality: instance.selectedQuality
+                }
+            })
+        }
     }
 
     showMenu() {
@@ -657,6 +652,31 @@ export default class World {
     hideMenu() {
         document.body.classList.remove('freeze')
         instance.welcome.chaptersScreen.classList.remove('visible')
+    }
+
+    setUpChapter() {
+        instance.hideMenu()
+        instance.program = new Program()
+        instance.progressBar = new ProgressBar()
+        instance.buttons.howTo.style.display = 'none'
+        instance.buttons.home.style.display = 'block'
+        instance.buttons.archive.style.display = 'block'
+    }
+
+    fetchBgMusic() {
+        if (instance.selectedChapter.background_music) {
+            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
+                instance.audio.changeBgMusic(chapter.background_music)
+            })
+        }
+    }
+
+    fetchArchiveImage() {
+        instance.selectedChapter.archive.forEach(fact => {
+            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
+                fact.image = data
+            })
+        })
     }
 
     getId() {
