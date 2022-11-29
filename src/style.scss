@@ -3128,6 +3128,88 @@ button,
     height: 800px;
 }
 
+#flipCardGame {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    perspective: 800px;
+
+    .card {
+        position: relative;
+    }
+
+    .card img {
+        object-fit: cover;
+    }
+
+    .card__picture {
+        position: relative;
+        width: 200px;
+        aspect-ratio: 2/3;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+    }
+
+    .card__face {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        backface-visibility: hidden;
+    }
+
+    .card__back {
+        transform: rotateY(180deg);
+    }
+
+    .card__picture.is-flipped {
+        transform: rotateY(180deg);
+    }
+
+    .card__footer {
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .card__footer input {
+        width: 60px;
+        line-height: 40px;
+        background: transparent;
+        border: none;
+        box-shadow: 0 2px 0 0 white;
+        color: #fff;
+        text-align: center;
+    }
+
+    .card__footer input::placeholder {
+        color: white;
+        transition: .3s ease-in-out;
+    }
+
+    .card__footer input:focus-visible {
+        outline: none;
+        color: $accent2;
+        box-shadow: 0 2px 0 0 $accent2;
+    }
+
+    .card__footer input:focus-visible::placeholder {
+        color: transparent;
+    }
+
+    .card__audio {
+        position: absolute;
+        z-index: 2;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background: red;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+}
+
 // #endregion
 
 // #region Responsive
