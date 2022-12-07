@@ -55,15 +55,12 @@ export default class Experience {
             this.resize()
         })
 
-
         // Time animation event
         this.videoIsPlaying = false
 
         this.time.on('animation', () => {
-
             if (!this.videoIsPlaying)
                 this.update()
-
         })
     }
 

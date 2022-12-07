@@ -108,17 +108,13 @@ export default class Video {
     //#region Actions
 
     play() {
-        this.experience.videoIsPlaying = true
-        console.log(this.experience.videoIsPlaying, 'video is playing --- render off');
-
         instance.video().play()
+        this.experience.videoIsPlaying = true
     }
 
     pause() {
-        this.experience.videoIsPlaying = false
-        console.log(this.experience.videoIsPlaying, 'video not playing --- render on');
-
         instance.video().pause()
+        this.experience.videoIsPlaying = false
     }
 
     focus() {
