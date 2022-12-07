@@ -133,7 +133,7 @@ export default class Video {
     defocus() {
         if (instance.video()) {
 
-            // instance.pause()
+            instance.pause()
             instance.tablet.material.map.image.pause()
 
             if (this.video().isFullscreen_) {
