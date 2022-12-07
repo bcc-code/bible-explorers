@@ -61,12 +61,8 @@ export default class Experience {
 
         this.time.on('animation', () => {
 
-            if (!this.videoIsPlaying) {
-                console.log('render on');
+            if (!this.videoIsPlaying)
                 this.update()
-            } else {
-                console.log('render off');
-            }
 
         })
     }

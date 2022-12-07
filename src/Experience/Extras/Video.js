@@ -109,14 +109,14 @@ export default class Video {
 
     play() {
         this.experience.videoIsPlaying = true
-        console.log(this.experience.videoIsPlaying, 'video is playing');
+        console.log(this.experience.videoIsPlaying, 'video is playing --- render off');
 
         instance.video().play()
     }
 
     pause() {
         this.experience.videoIsPlaying = false
-        console.log(this.experience.videoIsPlaying, 'video not playing');
+        console.log(this.experience.videoIsPlaying, 'video not playing --- render on');
 
         instance.video().pause()
     }
