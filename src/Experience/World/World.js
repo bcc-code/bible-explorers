@@ -588,7 +588,7 @@ export default class World {
 
     startChapter() {
         instance.setUpChapter()
-        instance.fetchBgMusic()        
+        instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
         _appInsights.trackEvent({
@@ -608,7 +608,7 @@ export default class World {
 
     quickLookOnChapter() {
         instance.setUpChapter()
-        instance.fetchBgMusic()        
+        instance.fetchBgMusic()
         instance.fetchArchiveImage()
         instance.debug.addQuickLookMode()
 
