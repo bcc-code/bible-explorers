@@ -15,9 +15,45 @@ export default class Chapter3Game2 {
 
         this.experience = new Experience()
         this.world = this.experience.world
+        this.debug = this.experience.debug
+
+        this.data = {
+            images: {
+                front: [
+                    'games/en-konge/front/A.jpeg',
+                    'games/en-konge/front/B.jpeg',
+                    'games/en-konge/front/C.jpeg',
+                    'games/en-konge/front/D.jpeg',
+                    'games/en-konge/front/E.jpeg',
+                    'games/en-konge/front/F.jpeg',
+                ],
+                back: [
+                    'games/en-konge/back/A.jpeg',
+                    'games/en-konge/back/B.jpeg',
+                    'games/en-konge/back/C.jpeg',
+                    'games/en-konge/back/D.jpeg',
+                    'games/en-konge/back/E.jpeg',
+                    'games/en-konge/back/F.jpeg',
+                ]
+            },
+            audio: [
+                'https://audio.code.org/goal1.mp3'
+            ],
+            codes: [
+                '22',
+                '33',
+                '44',
+                '55',
+                '66',
+                '77'
+            ]
+        }
 
         this.init()
+    }
 
+    toggleGame() {
+        this.init()
     }
 
     init() {
@@ -28,11 +64,15 @@ export default class Chapter3Game2 {
             gameWrapper.classList.add('model__content')
             gameWrapper.setAttribute("id", "flipCardGame")
 
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < 6; i++) {
 
-                const card = new Card(`https://picsum.photos/id/56/200/300?grayscale`, `https://picsum.photos/id/${i}/200/300`).create()
+                const card = this.card(
+                    this.data.images.back[i],
+                    this.data.images.front[i],
+                    this.data.audio[0])
 
                 gameWrapper.append(card)
+
             }
 
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__flipCardGame')
@@ -43,88 +83,109 @@ export default class Chapter3Game2 {
 
             const title = document.createElement('h3')
             title.className = 'modal__heading--minigame'
-            title.innerText = 'Game 2 title'
+            title.innerText = 'En konge'
             document.querySelector('.modal__flipCardGame').prepend(title)
 
-            document.querySelectorAll('.card').forEach((c) => {
-                const cAudio = c.querySelector('.card__audio')
-                const cAudioFile = c.querySelector('.card__audio audio')
-                const cImage = c.querySelector('.card__picture')
-                const cInput = c.querySelector('.card__footer input')
 
-                cAudio.addEventListener('click', () => {
-                    cAudioFile.play()
+            document.querySelectorAll('.card').forEach((card, index) => {
+                const picture = card.querySelector('.card__picture')
+                const audio = card.querySelector('.card__audio')
+                const input = card.querySelector('.card__input')
+
+                picture.addEventListener('click', () => {
+                    audio.play()
                 })
 
-                cInput.addEventListener('input', (e) => {
-
-                    if (e.target.value === '2') {
-                        cImage.classList.add('is-flipped')
-                    } else {
-                        cImage.classList.remove('is-flipped')
+                input.addEventListener('input', (e) => {
+                    if (e.target.value === this.data.codes[index]) {
+                        e.target.disabled = true
+                        card.classList.add('is-flipped');
                     }
                 })
 
             })
+
+            document.addEventListener('click', (e) => {
+
+                const targetEl = e.target.closest('.card')
+
+                if (!targetEl.classList.contains('is-flipped')) return
+
+                const selectedCard = document.querySelector('.card.selected')
+                if (selectedCard !== null)
+                    selectedCard.classList.remove('selected')
+
+                targetEl.classList.add('selected')
+
+            })
+
+            const back = document.getElementById('back')
+            back.style.display = 'block'
+            back.innerText = _s.journey.back
+            back.addEventListener('click', () => {
+                instance.modal.destroy()
+                instance.world.program.taskDescription.toggleTaskDescription()
+            })
+
+            const skip = document.getElementById("skip")
+            skip.innerText = _s.miniGames.skip
+            skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
+                ? 'block'
+                : 'none'
+
+            skip.addEventListener('click', instance.advanceToNextStep)
+
         }
 
     }
-}
 
-class Card {
-    constructor(src, srcBack, callback) {
-        this.src = src
-        this.srcBack = srcBack
-    }
-
-    create() {
+    card(imgSrc, imgSrc2, voice) {
         const card = document.createElement('div')
         card.className = 'card'
-
-        const cardPicture = document.createElement('div')
-        cardPicture.className = 'card__picture'
-
-
-        const cardFront = document.createElement('div')
-        cardFront.className = 'card__face card__front'
-        cardFront.appendChild(this.picture(this.src))
-
-        const cardBack = document.createElement('div')
-        cardBack.className = 'card__face card__back'
-        cardBack.appendChild(this.picture(this.srcBack))
-
-        cardPicture.append(cardFront, cardBack)
-
-        const cardFooter = document.createElement('div')
-        cardFooter.className = 'card__footer'
-
-        const cardFooterInput = document.createElement('input')
-        cardFooterInput.setAttribute('placeholder', 'code')
-        cardFooter.appendChild(cardFooterInput)
-
-
-        const cardAudio = document.createElement('div')
-        cardAudio.className = 'card__audio'
-        cardAudio.appendChild(this.audio('https://audio.code.org/goal1.mp3'))
-
-        cardFront.append(cardAudio)
-
-        card.append(cardPicture, cardFooter)
+        card.innerHTML = `
+            <div class="card__picture">
+                <div class="card__face card--front">
+                    <image data-src="${imgSrc}" class="lazyload">
+                </div>
+                <div class="card__face card--back">
+                    <image data-src="${imgSrc2}" class="lazyload">
+                </div>
+            </div>
+            <audio class="card__audio">
+                <source src="${voice}" type="audio/mp3">
+            </audio>
+            <input type="text" placeholder="code" class="card__input" />
+        `
 
         return card
     }
 
-    audio(src) {
-        const audio = new Audio(src)
-
-        return audio
+    advanceToNextStep() {
+        instance.modal.destroy()
+        instance.world.program.advance()
     }
 
-    picture(src) {
-        const image = new Image(200, 300)
-        image.setAttribute('data-src', src)
-        image.className = 'lazyload'
+    toggleGameComplete() {
 
-        return image
+        let html = `<div class="modal__content congrats congrats__miniGame">
+            <div class="congrats__container">
+                <div class="congrats__title">
+                    <i class="icon icon-star-solid"></i>
+                    <i class="icon icon-star-solid"></i>
+                    <h2>${_s.miniGames.completed.title}</h2>
+                    <i class="icon icon-star-solid"></i>
+                    <i class="icon icon-star-solid"></i>
+                </div>
+            </div>
+        </div>`
+
+        instance.modal = new Modal(html, 'modal__congrats')
+
+        const next = document.getElementById('continue')
+        next.style.display = 'block'
+        next.innerText = _s.miniGames.continue
+        next.addEventListener('click', instance.advanceToNextStep)
     }
+
 }
+

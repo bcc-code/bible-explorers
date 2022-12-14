@@ -3130,12 +3130,14 @@ button,
 
 #flipCardGame {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 2rem;
     perspective: 800px;
 
     .card {
         position: relative;
+        display: grid;
+        place-items: center;
     }
 
     .card img {
@@ -3145,9 +3147,10 @@ button,
     .card__picture {
         position: relative;
         width: 200px;
-        aspect-ratio: 2/3;
-        transition: transform 1s;
+        aspect-ratio: 2/3.54;
+        transition: transform 1s, box-shadow .4s ease;
         transform-style: preserve-3d;
+        cursor: pointer;
     }
 
     .card__face {
@@ -3157,22 +3160,14 @@ button,
         backface-visibility: hidden;
     }
 
-    .card__back {
+    .card--back {
         transform: rotateY(180deg);
     }
 
-    .card__picture.is-flipped {
-        transform: rotateY(180deg);
-    }
-
-    .card__footer {
+    .card input {
         margin-top: 16px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .card__footer input {
         width: 60px;
+        font-size: 24px;
         line-height: 40px;
         background: transparent;
         border: none;
@@ -3181,32 +3176,45 @@ button,
         text-align: center;
     }
 
-    .card__footer input::placeholder {
+    .card input::placeholder {
         color: white;
         transition: .3s ease-in-out;
     }
 
-    .card__footer input:focus-visible {
+    .card input:focus-visible {
         outline: none;
         color: $accent2;
         box-shadow: 0 2px 0 0 $accent2;
     }
 
-    .card__footer input:focus-visible::placeholder {
+    .card input:focus-visible::placeholder {
         color: transparent;
     }
 
     .card__audio {
         position: absolute;
-        z-index: 2;
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-        background: red;
-        border-radius: 50%;
-        cursor: pointer;
+        top: 0;
+        left: 0;
+        visibility: hidden;
     }
+
+    .card:not(.is-flipped):hover {
+        .card__picture {
+            box-shadow: 0 0 20px lightsalmon;
+        }
+
+    }
+
+    .is-flipped .card__picture {
+        transform: rotateY(180deg);
+    }
+
+    .selected {
+        .card__picture {
+            box-shadow: 0 0 0 8px red;
+        }
+    }
+
 
 }
 
