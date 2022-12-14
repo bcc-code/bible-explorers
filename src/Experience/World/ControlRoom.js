@@ -171,6 +171,7 @@ export default class ControlRoom {
     clickedObject() {
         if (this.currentIntersect != null) {
             this.world.program.control(this.currentIntersect)
+            this.currentIntersect = null
         }
     }
 

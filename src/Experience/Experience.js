@@ -56,8 +56,11 @@ export default class Experience {
         })
 
         // Time animation event
+        this.videoIsPlaying = false
+
         this.time.on('animation', () => {
-            this.update()
+            if (!this.videoIsPlaying)
+                this.update()
         })
     }
 

@@ -37,6 +37,7 @@ export default class Video {
         this.hasSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video') != null
         }
+
         this.getSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video')
         }
@@ -60,12 +61,12 @@ export default class Video {
         this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
 
         // Add event listener on play
-        this.video().on('play', function() {
+        this.video().on('play', function () {
             this.requestFullscreen()
         })
 
         // Add event listener on video update
-        this.video().on('timeupdate', function() {
+        this.video().on('timeupdate', function () {
             if (instance.showSkipBtn()) {
                 if (instance.hasSkipBtn()) return
 
@@ -83,7 +84,8 @@ export default class Video {
         })
 
         // Add event listener on fullscreen change
-        this.video().on('fullscreenchange', function() {
+        this.video().on('fullscreenchange', function () {
+
             if (!this.isFullscreen_) {
                 instance.pause()
             }
@@ -107,10 +109,12 @@ export default class Video {
 
     play() {
         instance.video().play()
+        this.experience.videoIsPlaying = true
     }
 
     pause() {
         instance.video().pause()
+        this.experience.videoIsPlaying = false
     }
 
     focus() {
@@ -128,6 +132,7 @@ export default class Video {
 
     defocus() {
         if (instance.video()) {
+
             instance.pause()
             instance.tablet.material.map.image.pause()
 
