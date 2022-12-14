@@ -94,6 +94,10 @@ export default class TaskDescription {
                 else if (instance.program.stepType() == 'iris') {
                     instance.program.advance()
                 }
+
+                else if (instance.currentStepTaskType == 'flip_cards') {
+                    instance.program.chapter3game2.toggleGame()
+                }
             })
 
             document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
@@ -181,12 +185,12 @@ export default class TaskDescription {
             </div>
 
             <div class="task__content">`
-                const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
-                if (type != 'iris-and-code' && mediaUrl) {
-                    html += `<div class="task__tips">${ instance.getDomElement(mediaUrl) }</div>`
-                }
+        const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
+        if (type != 'iris-and-code' && mediaUrl) {
+            html += `<div class="task__tips">${instance.getDomElement(mediaUrl)}</div>`
+        }
 
-                html += `${title}
+        html += `${title}
                 ${additionalContent}
             </div>
         </div>`
@@ -197,7 +201,7 @@ export default class TaskDescription {
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['mp4','mov','webm'].includes(ext)) return `<video src="" autoplay loop></video>`
+        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" autoplay loop></video>`
         else return `<img src="" />`
     }
 

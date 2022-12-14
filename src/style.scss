@@ -3147,7 +3147,7 @@ button,
     .card__picture {
         position: relative;
         width: 200px;
-        aspect-ratio: 2/3.54;
+        aspect-ratio: 2/3.5;
         transition: transform 1s, box-shadow .4s ease;
         transform-style: preserve-3d;
         cursor: pointer;
@@ -3158,10 +3158,12 @@ button,
         height: 100%;
         width: 100%;
         backface-visibility: hidden;
+        overflow: hidden;
     }
 
-    .card--back {
+    .card--front {
         transform: rotateY(180deg);
+        visibility: hidden;
     }
 
     .card input {
@@ -3205,9 +3207,16 @@ button,
 
     }
 
-    .is-flipped .card__picture {
-        transform: rotateY(180deg);
+    .is-flipped {
+        .card__picture {
+            transform: rotateY(180deg);
+        }
+
+        .card--front {
+            visibility: visible;
+        }
     }
+
 
     .selected {
         .card__picture {

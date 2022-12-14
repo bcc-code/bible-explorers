@@ -1,6 +1,7 @@
 import Experience from '../Experience.js';
 import Modal from '../Utils/Modal.js';
 import _s from '../Utils/Strings.js';
+import gsap from 'gsap';
 
 let instance = null;
 
@@ -15,45 +16,35 @@ export default class Chapter3Game2 {
 
         this.experience = new Experience()
         this.world = this.experience.world
+        this.audio = this.world.audio
         this.debug = this.experience.debug
 
-        this.data = {
-            images: {
-                front: [
-                    'games/en-konge/front/A.jpeg',
-                    'games/en-konge/front/B.jpeg',
-                    'games/en-konge/front/C.jpeg',
-                    'games/en-konge/front/D.jpeg',
-                    'games/en-konge/front/E.jpeg',
-                    'games/en-konge/front/F.jpeg',
-                ],
-                back: [
-                    'games/en-konge/back/A.jpeg',
-                    'games/en-konge/back/B.jpeg',
-                    'games/en-konge/back/C.jpeg',
-                    'games/en-konge/back/D.jpeg',
-                    'games/en-konge/back/E.jpeg',
-                    'games/en-konge/back/F.jpeg',
-                ]
-            },
-            audio: [
-                'https://audio.code.org/goal1.mp3'
-            ],
-            codes: [
-                '22',
-                '33',
-                '44',
-                '55',
-                '66',
-                '77'
-            ]
-        }
 
-        this.init()
+        let selectedChapter = instance.world.selectedChapter
+
+        this.data = selectedChapter.program.filter(program => program.taskType == "flip_cards")[0]
+
     }
 
-    toggleGame() {
-        this.init()
+    card(front, back, effect) {
+        const card = document.createElement('div')
+        card.className = 'card'
+        card.innerHTML = `
+            <div class="card__picture">
+                <div class="card__face card--back">
+                    <image data-src="${back}" class="lazyload">
+                </div>
+                <div class="card__face card--front">
+                    <image data-src="${front}" class="lazyload">
+                </div>
+            </div>
+            <audio class="card__audio">
+                <source src="${effect}" type="audio/ogg">
+            </audio>
+            <input type="text" placeholder="code" class="card__input" />
+        `
+
+        return card
     }
 
     init() {
@@ -64,13 +55,12 @@ export default class Chapter3Game2 {
             gameWrapper.classList.add('model__content')
             gameWrapper.setAttribute("id", "flipCardGame")
 
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < this.data.flip_cards.length; i++) {
 
                 const card = this.card(
-                    this.data.images.back[i],
-                    this.data.images.front[i],
-                    this.data.audio[0])
-
+                    this.data.flip_cards[i].image_front,
+                    this.data.flip_cards[i].image_back,
+                    this.data.flip_cards[i].sound_effect)
                 gameWrapper.append(card)
 
             }
@@ -97,7 +87,7 @@ export default class Chapter3Game2 {
                 })
 
                 input.addEventListener('input', (e) => {
-                    if (e.target.value === this.data.codes[index]) {
+                    if (e.target.value === this.data.flip_cards[index].code) {
                         e.target.disabled = true
                         card.classList.add('is-flipped');
                     }
@@ -107,16 +97,20 @@ export default class Chapter3Game2 {
 
             document.addEventListener('click', (e) => {
 
-                const targetEl = e.target.closest('.card')
-
-                if (!targetEl.classList.contains('is-flipped')) return
+                if (!e.target.closest('.is-flipped'))
+                    return
 
                 const selectedCard = document.querySelector('.card.selected')
+
                 if (selectedCard !== null)
                     selectedCard.classList.remove('selected')
 
-                targetEl.classList.add('selected')
+                e.target.closest('.card').classList.add('selected')
 
+                const next = document.getElementById('continue')
+                next.style.display = 'block'
+                next.innerText = _s.miniGames.continue
+                next.addEventListener('click', instance.advanceToNextStep)
             })
 
             const back = document.getElementById('back')
@@ -139,34 +133,29 @@ export default class Chapter3Game2 {
 
     }
 
-    card(imgSrc, imgSrc2, voice) {
-        const card = document.createElement('div')
-        card.className = 'card'
-        card.innerHTML = `
-            <div class="card__picture">
-                <div class="card__face card--front">
-                    <image data-src="${imgSrc}" class="lazyload">
-                </div>
-                <div class="card__face card--back">
-                    <image data-src="${imgSrc2}" class="lazyload">
-                </div>
-            </div>
-            <audio class="card__audio">
-                <source src="${voice}" type="audio/mp3">
-            </audio>
-            <input type="text" placeholder="code" class="card__input" />
-        `
-
-        return card
-    }
-
     advanceToNextStep() {
         instance.modal.destroy()
         instance.world.program.advance()
+
+        instance.audio.setOtherAudioIsPlaying(false)
+        instance.audio.fadeInBgMusic()
+    }
+
+    finishGame() {
+        instance.modal.destroy()
+        instance.audio.playTaskCompleted()
+        instance.toggleGameComplete()
+    }
+
+    toggleGame() {
+        this.init()
+    }
+
+    toggleGlitch() {
+
     }
 
     toggleGameComplete() {
-
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
                 <div class="congrats__title">
@@ -181,10 +170,14 @@ export default class Chapter3Game2 {
 
         instance.modal = new Modal(html, 'modal__congrats')
 
-        const next = document.getElementById('continue')
-        next.style.display = 'block'
-        next.innerText = _s.miniGames.continue
-        next.addEventListener('click', instance.advanceToNextStep)
+
+        const restart = document.getElementById('restart')
+        restart.style.display = 'block'
+        restart.innerText = _s.miniGames.playAgain
+        restart.addEventListener('click', () => {
+            instance.modal.destroy()
+            instance.toggleSimonSays()
+        })
     }
 
 }

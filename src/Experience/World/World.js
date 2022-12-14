@@ -99,8 +99,6 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
 
-            this.game2 = new Chapter3Game2()
-
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)
 
