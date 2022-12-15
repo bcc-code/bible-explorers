@@ -30,20 +30,14 @@ export default class Chapter3Game2 {
         const card = document.createElement('div')
         card.className = 'card'
         card.innerHTML = `
-            <div class="card__picture">
-                <div class="card__face card--back">
-                    <image data-src="${back}" class="lazyload">
-                </div>
-                <div class="card__face card--front">
-                    <image data-src="${front}" class="lazyload">
-                </div>
-            </div>
-            <audio class="card__audio">
+            <image data-src="${back}" class="lazyload cardBack">
+            <image data-src="${front}" class="lazyload cardFront">
+            <audio class="cardAudio">
                 <source src="${effect}" type="audio/ogg">
             </audio>
-            <input type="text" placeholder="code" class="card__input" />
+            <input type="text" placeholder="code" class="cardInput" />
+            <button class="cardSelect">Choose this hero</button>
         `
-
         return card
     }
 
@@ -56,18 +50,15 @@ export default class Chapter3Game2 {
             gameWrapper.setAttribute("id", "flipCardGame")
 
             for (let i = 0; i < this.data.flip_cards.length; i++) {
-
                 const card = this.card(
                     this.data.flip_cards[i].image_front,
                     this.data.flip_cards[i].image_back,
                     this.data.flip_cards[i].sound_effect)
                 gameWrapper.append(card)
-
             }
 
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__flipCardGame')
 
-            // Hide close
             const close = document.querySelector('.modal__close')
             close.style.display = 'none'
 
@@ -77,40 +68,84 @@ export default class Chapter3Game2 {
             document.querySelector('.modal__flipCardGame').prepend(title)
 
 
-            document.querySelectorAll('.card').forEach((card, index) => {
-                const picture = card.querySelector('.card__picture')
-                const audio = card.querySelector('.card__audio')
-                const input = card.querySelector('.card__input')
+            const next = document.getElementById('continue')
+            next.innerText = 'next'
+            next.addEventListener('click', instance.advanceToNextStep)
 
-                picture.addEventListener('click', () => {
-                    audio.play()
+            gsap.utils.toArray('.card').forEach((card, index) => {
+                gsap.set(card, {
+                    transformStyle: "preserve-3d",
+                    transformPerspective: 1000
                 })
 
-                input.addEventListener('input', (e) => {
-                    if (e.target.value === this.data.flip_cards[index].code) {
-                        e.target.disabled = true
-                        card.classList.add('is-flipped');
+                const q = gsap.utils.selector(card)
+                const front = q('.cardFront')
+                const back = q('.cardBack')
+                const input = q('.cardInput')
+                const audio = q('.cardAudio')
+                const button = q('.cardSelect')
+
+                gsap.set([front, button], { rotationY: 180 })
+                gsap.set([button], { y: -40, autoAlpha: 0 })
+
+                const flip = gsap.timeline({ paused: true })
+                    .to(input, { autoAlpha: 0, display: 'none' })
+                    .to(card, { duration: 1, rotationY: 180 })
+
+
+                input[0].addEventListener('input', () => {
+                    if (input[0].value === this.data.flip_cards[index].code) {
+                        card.setAttribute('flipped', '')
+                        flip.play()
                     }
                 })
 
-            })
+                let firstTimeClick = false
 
-            document.addEventListener('click', (e) => {
+                card.addEventListener('click', () => {
+                    audio[0].play()
 
-                if (!e.target.closest('.is-flipped'))
-                    return
 
-                const selectedCard = document.querySelector('.card.selected')
+                    const flippedCards = document.querySelectorAll('[flipped]')
+                    if (flippedCards.length == this.data.flip_cards.length) {
 
-                if (selectedCard !== null)
-                    selectedCard.classList.remove('selected')
+                        document.getElementById('flipCardGame').classList.add('cardSelection')
+                        const selectedCard = document.querySelector('[selected]')
 
-                e.target.closest('.card').classList.add('selected')
+                        if (selectedCard !== null) {
+                            selectedCard.removeAttribute('selected')
+                            gsap.set(selectedCard.querySelector('button'), { duration: 0.2, y: -40, autoAlpha: 0 })
+                        }
 
-                const next = document.getElementById('continue')
-                next.style.display = 'block'
-                next.innerText = _s.miniGames.continue
-                next.addEventListener('click', instance.advanceToNextStep)
+                        card.setAttribute('selected', '')
+                        gsap.set(button, { duration: 0.2, y: 0, autoAlpha: 1 })
+
+                        if (!firstTimeClick) {
+                            setTimeout(() => {
+                                instance.toggleGlitch()
+                            }, 1000)
+                        }
+
+                        firstTimeClick = true
+
+                    }
+
+                })
+
+                button[0].addEventListener('click', () => {
+                    card.setAttribute('choosed', '')
+                    document.getElementById('flipCardGame').classList.remove('cardSelection')
+                    document.getElementById('flipCardGame').classList.add('cardChoosed')
+
+                    button[0].innerText = 'Card selected'
+
+                    setTimeout(() => {
+                        instance.toggleGodVoice()
+                        next.style.display = 'block'
+                    }, 1000)
+
+                })
+
             })
 
             const back = document.getElementById('back')
@@ -120,14 +155,6 @@ export default class Chapter3Game2 {
                 instance.modal.destroy()
                 instance.world.program.taskDescription.toggleTaskDescription()
             })
-
-            const skip = document.getElementById("skip")
-            skip.innerText = _s.miniGames.skip
-            skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
-                ? 'block'
-                : 'none'
-
-            skip.addEventListener('click', instance.advanceToNextStep)
 
         }
 
@@ -149,35 +176,27 @@ export default class Chapter3Game2 {
 
     toggleGame() {
         this.init()
+
+        this.audio.setOtherAudioIsPlaying(true)
+        this.audio.fadeOutBgMusic()
     }
 
     toggleGlitch() {
+        // instance.modal.destroy()
+        // instance.world.program.taskDescription.toggleTaskDescription()
 
+        console.log('glitch');
     }
 
-    toggleGameComplete() {
-        let html = `<div class="modal__content congrats congrats__miniGame">
-            <div class="congrats__container">
-                <div class="congrats__title">
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                    <h2>${_s.miniGames.completed.title}</h2>
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                </div>
-            </div>
-        </div>`
+    toggleGodVoice() {
+        console.log('god voice');
+    }
 
-        instance.modal = new Modal(html, 'modal__congrats')
+    toggleIris() {
+        // instance.modal.destroy()
+        // instance.world.program.taskDescription.toggleTaskDescription()
+        console.log('iris');
 
-
-        const restart = document.getElementById('restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.playAgain
-        restart.addEventListener('click', () => {
-            instance.modal.destroy()
-            instance.toggleSimonSays()
-        })
     }
 
 }

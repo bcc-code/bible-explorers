@@ -3132,100 +3132,148 @@ button,
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 2rem;
-    perspective: 800px;
 
-    .card {
-        position: relative;
-        display: grid;
-        place-items: center;
+    &.cardSelection .card:not([selected]) .cardFront {
+        filter: grayscale(1);
     }
 
-    .card img {
-        object-fit: cover;
+    &.cardChoosed .card:not([choosed]) {
+        pointer-events: none;
     }
 
-    .card__picture {
-        position: relative;
-        width: 200px;
-        aspect-ratio: 2/3.5;
-        transition: transform 1s, box-shadow .4s ease;
-        transform-style: preserve-3d;
-        cursor: pointer;
+    &.cardChoosed .card:not([choosed]) .cardFront {
+        filter: grayscale(1);
     }
+}
 
-    .card__face {
+.card {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 200px;
+    aspect-ratio: 9/16;
+
+    button,
+    input {
         position: absolute;
-        height: 100%;
+        top: 100%;
+        left: 0;
+        height: 40px;
         width: 100%;
-        backface-visibility: hidden;
-        overflow: hidden;
+        font-size: 24px;
+        line-height: 40px;
+        background: $accent;
+        border: none;
+        color: #fff;
+        text-align: center;
+        transition: .4s ease;
     }
 
-    .card--front {
-        transform: rotateY(180deg);
+    button {
+        cursor: pointer;
+        opacity: 0;
         visibility: hidden;
     }
 
-    .card input {
-        margin-top: 16px;
-        width: 60px;
-        font-size: 24px;
-        line-height: 40px;
-        background: transparent;
-        border: none;
-        box-shadow: 0 2px 0 0 white;
-        color: #fff;
-        text-align: center;
-    }
-
-    .card input::placeholder {
+    input::placeholder {
         color: white;
         transition: .3s ease-in-out;
     }
 
-    .card input:focus-visible {
-        outline: none;
-        color: $accent2;
-        box-shadow: 0 2px 0 0 $accent2;
-    }
-
-    .card input:focus-visible::placeholder {
+    input:focus-visible::placeholder {
         color: transparent;
     }
 
-    .card__audio {
+    input:hover,
+    input:focus-visible,
+    button:hover,
+    button:focus-visible {
+        outline: none;
+        background: $accent2;
+    }
+
+    audio {
         position: absolute;
         top: 0;
         left: 0;
         visibility: hidden;
     }
 
-    .card:not(.is-flipped):hover {
-        .card__picture {
-            box-shadow: 0 0 20px lightsalmon;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        aspect-ratio: 9/16;
+        object-fit: cover;
+        backface-visibility: hidden;
+        cursor: pointer;
+        z-index: 1;
+
+        &.cardBack {
+            position: relative;
         }
 
+        &.cardFront {
+            position: absolute;
+        }
     }
 
-    .is-flipped {
-        .card__picture {
-            transform: rotateY(180deg);
-        }
+    &:not([selected]):hover {
+        box-shadow: 0 0 20px $accent2;
+    }
 
-        .card--front {
-            visibility: visible;
-        }
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        top: -10px;
+        opacity: 0;
+        transition: .4s;
+    }
+
+    &::after {
+        right: -10px;
+        border-right: 6px solid $accent;
+        border-top: 6px solid $accent;
+        border-bottom: 6px solid transparent;
+    }
+
+    &::before {
+        left: -10px;
+        border-left: 6px solid $accent;
+        border-top: 6px solid $accent;
+        border-bottom: 6px solid transparent;
     }
 
 
-    .selected {
-        .card__picture {
-            box-shadow: 0 0 0 8px red;
+    &[selected]::after,
+    &[selected]::before {
+        opacity: 1;
+    }
+
+    &[choosed] {
+        &::before {
+            border-left: 6px solid $accent2;
+            border-top: 6px solid $accent2;
+        }
+
+        &::after {
+            border-right: 6px solid $accent2;
+            border-top: 6px solid $accent2;
+        }
+
+        button {
+            background: $accent2;
         }
     }
 
 
 }
+
+
 
 // #endregion
 
@@ -3624,9 +3672,14 @@ button,
     }
 }
 
-.lazyload,
-.lazyloading {
+.lazyload {
     opacity: 0;
+}
+
+.lazyloading {
+    opacity: 1;
+    transition: opacity 300ms;
+    background: #f7f7f7 url('../static/assets/loader.gif') no-repeat center;
 }
 
 .lazyloaded {
