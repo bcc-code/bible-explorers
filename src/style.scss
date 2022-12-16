@@ -1471,18 +1471,16 @@ button,
 
 }
 
-.modal__task {
+.modal__task,
+.modal__dialog {
     .modal__content {
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
     }
-
-    .modal__close {
-        display: none;
-    }
 }
 
+.modal__task,
 .modal__congrats,
 .modal__code-unlock,
 .modal__picture-and-code,

@@ -92,7 +92,11 @@ export default class TaskDescription {
                 }
 
                 else if (instance.program.stepType() == 'iris') {
-                    instance.program.advance()
+                    console.log(instance.program.getCurrentStepData())
+
+                    instance.program.getCurrentStepData().dialog
+                        ? instance.program.dialog.toggleDialog()
+                        : instance.program.advance()
                 }
             })
 
@@ -167,7 +171,7 @@ export default class TaskDescription {
     }
 
     getModalHtml(type, title, additionalContent = '') {
-        let html = `<div class="modal__content task ${type}">
+        let html = `<div class="modal__content task ${type ? type : ''}">
             <div class="task__video">
                 <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
                 <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
