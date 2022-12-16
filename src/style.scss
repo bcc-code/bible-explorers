@@ -3130,6 +3130,11 @@ button,
 
 #flipCardGame {
     display: grid;
+    gap: 2rem;
+}
+
+#cardWrapper {
+    display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 2rem;
 
@@ -3144,6 +3149,14 @@ button,
     &.cardChoosed .card:not([choosed]) .cardFront {
         filter: grayscale(1);
     }
+}
+
+#message {
+    margin-top: 2rem;
+    color: #fff;
+    font-size: 2rem;
+    font-style: italic;
+    text-align: center;
 }
 
 .card {
@@ -3272,8 +3285,6 @@ button,
 
 
 }
-
-
 
 // #endregion
 

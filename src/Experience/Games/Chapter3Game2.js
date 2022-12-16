@@ -19,9 +19,7 @@ export default class Chapter3Game2 {
         this.audio = this.world.audio
         this.debug = this.experience.debug
 
-
         let selectedChapter = instance.world.selectedChapter
-
         this.data = selectedChapter.program.filter(program => program.taskType == "flip_cards")[0]
 
     }
@@ -49,13 +47,21 @@ export default class Chapter3Game2 {
             gameWrapper.classList.add('model__content')
             gameWrapper.setAttribute("id", "flipCardGame")
 
+            const cardWrapper = document.createElement('div')
+            cardWrapper.setAttribute("id", "cardWrapper")
+
             for (let i = 0; i < this.data.flip_cards.length; i++) {
                 const card = this.card(
                     this.data.flip_cards[i].image_front,
                     this.data.flip_cards[i].image_back,
                     this.data.flip_cards[i].sound_effect)
-                gameWrapper.append(card)
+                cardWrapper.append(card)
             }
+
+            const paragraph = document.createElement('div')
+            paragraph.setAttribute('id', 'message')
+
+            gameWrapper.append(cardWrapper, paragraph)
 
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__flipCardGame')
 
@@ -67,10 +73,18 @@ export default class Chapter3Game2 {
             title.innerText = 'En konge'
             document.querySelector('.modal__flipCardGame').prepend(title)
 
-
             const next = document.getElementById('continue')
             next.innerText = 'next'
-            next.addEventListener('click', instance.advanceToNextStep)
+
+            const back = document.getElementById('back')
+            back.style.display = 'block'
+            back.innerText = _s.journey.back
+            back.addEventListener('click', () => {
+                instance.modal.destroy()
+                instance.world.program.taskDescription.toggleTaskDescription()
+            })
+
+            let firstTimeClick = true
 
             gsap.utils.toArray('.card').forEach((card, index) => {
                 gsap.set(card, {
@@ -100,16 +114,16 @@ export default class Chapter3Game2 {
                     }
                 })
 
-                let firstTimeClick = false
+
+                back[0].addEventListener('click', () => { audio[0].play() })
+                front[0].addEventListener('click', () => { audio[0].play() })
 
                 card.addEventListener('click', () => {
-                    audio[0].play()
-
 
                     const flippedCards = document.querySelectorAll('[flipped]')
                     if (flippedCards.length == this.data.flip_cards.length) {
 
-                        document.getElementById('flipCardGame').classList.add('cardSelection')
+                        cardWrapper.classList.add('cardSelection')
                         const selectedCard = document.querySelector('[selected]')
 
                         if (selectedCard !== null) {
@@ -120,13 +134,13 @@ export default class Chapter3Game2 {
                         card.setAttribute('selected', '')
                         gsap.set(button, { duration: 0.2, y: 0, autoAlpha: 1 })
 
-                        if (!firstTimeClick) {
-                            setTimeout(() => {
+                        setTimeout(() => {
+                            if (firstTimeClick)
                                 instance.toggleGlitch()
-                            }, 1000)
-                        }
 
-                        firstTimeClick = true
+                            firstTimeClick = false
+
+                        }, 2000)
 
                     }
 
@@ -134,26 +148,19 @@ export default class Chapter3Game2 {
 
                 button[0].addEventListener('click', () => {
                     card.setAttribute('choosed', '')
-                    document.getElementById('flipCardGame').classList.remove('cardSelection')
-                    document.getElementById('flipCardGame').classList.add('cardChoosed')
+                    cardWrapper.classList.remove('cardSelection')
+                    cardWrapper.classList.add('cardChoosed')
 
-                    button[0].innerText = 'Card selected'
+                    button[0].innerText = 'Hero selected'
 
                     setTimeout(() => {
                         instance.toggleGodVoice()
                         next.style.display = 'block'
-                    }, 1000)
+                        next.addEventListener('click', instance.toggleIris)
+                    }, 2000)
 
                 })
 
-            })
-
-            const back = document.getElementById('back')
-            back.style.display = 'block'
-            back.innerText = _s.journey.back
-            back.addEventListener('click', () => {
-                instance.modal.destroy()
-                instance.world.program.taskDescription.toggleTaskDescription()
             })
 
         }
@@ -182,19 +189,21 @@ export default class Chapter3Game2 {
     }
 
     toggleGlitch() {
-        // instance.modal.destroy()
-        // instance.world.program.taskDescription.toggleTaskDescription()
+        const glitch = document.getElementById('message')
+        glitch.innerText = 'Dere burde velge den sterke, fordi styrke er sikkert den viktigste evne den nye konge bør ha.'
 
         console.log('glitch');
     }
 
     toggleGodVoice() {
+        const glitch = document.getElementById('message')
+        glitch.innerText = 'Jeg ser ikke på det mennesket ser på, for mennesket ser på det ytre, men Herren ser på hjertet.'
+
         console.log('god voice');
     }
 
     toggleIris() {
-        // instance.modal.destroy()
-        // instance.world.program.taskDescription.toggleTaskDescription()
+        instance.modal.destroy()
         console.log('iris');
 
     }
