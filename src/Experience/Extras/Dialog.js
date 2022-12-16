@@ -23,7 +23,7 @@ export default class Dialog {
             let currentStep = program.currentStep
             let selectedChapter = world.selectedChapter
 
-            const questions = selectedChapter.program[currentStep].dialog
+            const accordion = selectedChapter.program[currentStep].dialog
 
             let html = `<div class="modal__content dialog">
                 <div class="task__video">
@@ -37,16 +37,22 @@ export default class Dialog {
                         <div class="line line5"></div>
                     </div>
                 </div>
-                <div class="task__content">`
-                    questions.forEach((q, qIdx) => {
-                        html += `<div class="question" data-index="${qIdx + 1}">
-                            <div class="question__heading">
-                                <p class="question__title">${q.question}</p>
+                <div class="task__content">
+                    <div class="accordion">`
+            accordion.forEach(item => {
+                html += `<div class="accordion_item">
+                            <button class="accordion_item-section">${item.question}</button>
+                            <div class="accordion_item-panel">
+                                <p>${item.answer}<p>
+                                <div class="backToQuestions"> <i class="icon-arrow-left-long-solid"></i> all questions</div>
+                                <audio>
+                                    <source src="sounds/congrats.mp3" type="audio/mpeg">
+                                </audio>
                             </div>
-                            <div class="question__answer">${q.answer}</div>
                         </div>`
-                    })
-                html += `</div>
+            })
+            html += `</div>
+                </div>
             </div>`
 
             dialog.modal = new Modal(html, 'modal__dialog')
@@ -56,9 +62,6 @@ export default class Dialog {
             title.innerText = 'Dialog'
             document.querySelector('.modal__dialog').prepend(title)
 
-            dialog.htmlQuestions = document.querySelectorAll('.question')
-            dialog.htmlQuestions[0].classList.add('visible')
-
             const back = document.getElementById("back")
             back.style.display = 'block'
             back.innerText = _s.journey.back
@@ -67,98 +70,64 @@ export default class Dialog {
                 world.program.taskDescription.toggleTaskDescription()
             })
 
-            const prevButton = document.getElementById('prev')
-            prevButton.setAttribute('disabled', '')
-            prevButton.addEventListener("click", () => {
-                const current = document.querySelector('.question.visible')
-                const currentStep = document.querySelector('.dialog__step.active')
+            const next = document.getElementById('continue')
+            next.style.display = 'block'
+            next.innerText = _s.task.next
+            next.addEventListener('click', dialog.completeDialog)
 
-                current.classList.remove('visible')
-                currentStep.classList.remove('active')
-                current.previousElementSibling?.classList.add('visible')
-                currentStep.previousElementSibling?.classList.add('active')
 
-                if (current.previousElementSibling.querySelector('input:checked')) {
-                    nextButton.removeAttribute('disabled')
-                }
+            const accButton = document.querySelectorAll('.accordion_item-section')
 
-                if (current.getAttribute('data-index') == 2) {
-                    prevButton.setAttribute('disabled', '')
-                }
-            })
+            function showHide(item) {
+                const parent = item.parentElement
+                const panel = item.nextElementSibling
+                const audio = item.nextElementSibling.querySelector('audio')
 
-            const nextButton = document.getElementById('next')
-            nextButton.setAttribute('disabled', '')
-            nextButton.addEventListener("click", () => {
-                const current = document.querySelector('.question.visible')
-                const currentStep = document.querySelector('.dialog__step.active')
+                parent.classList.toggle('active')
 
-                current.classList.remove('visible')
-                currentStep.classList.remove('active')
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null
 
-                current.nextElementSibling?.classList.add('visible')
-                currentStep.nextElementSibling?.classList.add('active')
+                    parent.classList.add('read')
 
-                if (current.nextElementSibling.querySelector('input:checked')) {
-                    nextButton.removeAttribute('disabled')
+                    for (let sibling of item.closest('.accordion').children) {
+                        sibling.classList.remove('hide')
+                    }
+
+                    audio.pause()
+                    audio.currentTime = 0
+
                 } else {
-                    nextButton.setAttribute('disabled', '')
-                }
-                prevButton.removeAttribute('disabled')
+                    panel.style.maxHeight = panel.scrollHeight + 'px'
 
-                if (current.nextElementSibling.getAttribute('data-index') == questions.length) {
-                    nextButton.setAttribute('disabled', '')
-                }
-            })
+                    for (let sibling of item.closest('.accordion').children) {
+                        sibling.classList.add('hide')
+                    }
+                    parent.classList.remove('hide')
 
-            if (debug.developer || debug.onQuickLook()) {
-                const skip = document.getElementById('skip')
-                skip.style.display = 'block'
-                skip.innerText = _s.miniGames.skip
-                skip.addEventListener("click", () => {
-                    dialog.modal.destroy()
-                    program.advance()
-                })
+                    setTimeout(() => {
+                        audio.play()
+                    }, 1300)
+
+                }
+
             }
 
-            const submitButton = document.getElementById('continue')
-            submitButton.innerText = _s.task.submit
-            submitButton.addEventListener("click", dialog.completeDialog)
-
-            let questionsAnswered = 0
-
-            dialog.htmlQuestions.forEach((q, i) => {
-                const htmlAnswers = q.querySelectorAll('label')
-                const objAnswers = questions[i].answers
-
-                htmlAnswers.forEach((a, i) => {
-                    a.addEventListener('click', () => {
-                        htmlAnswers.forEach(a => {
-                            a.parentNode.classList.remove('wrong')
-                            a.style.pointerEvents = 'none'
-                        })
-
-                        questionsAnswered++
-
-                        const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
-                        htmlAnswers[correctIndex].parentNode.classList.add('correct')
-
-                        if (!objAnswers[i].correct_wrong) {
-                            a.parentNode.classList.add('wrong')
-                        } else {
-                            dialog.correctAnswers++
-                        }
-
-                        if (q.getAttribute('data-index') == questions.length) {
-                            skip.style.display = "none"
-                            submitButton.style.display = "block"
-                        }
-                        else {
-                            nextButton.removeAttribute('disabled')
-                        }
-                    })
+            accButton.forEach(item => {
+                item.addEventListener('click', () => {
+                    showHide(item)
                 })
+
+                const backToQuestions = item.nextElementSibling.querySelector('.backToQuestions')
+
+                backToQuestions.addEventListener('click', () => {
+                    showHide(item)
+                })
+
+
             })
+
+
         }
     }
 
