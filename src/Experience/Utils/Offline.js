@@ -395,6 +395,7 @@ export default class Offline {
         caches.open("chaptersAssets").then((cache) => {
             cache.match(data[param])
                 .then((response) => {
+                    // console.log(response)
                     if (response) {
                         response.blob().then((blob) => {
                             const url = URL.createObjectURL(blob)

@@ -19,11 +19,10 @@ export default class Dialog {
 
             let world = this.experience.world
             let debug = this.experience.debug
-            let program = world.program
-            let currentStep = program.currentStep
-            let selectedChapter = world.selectedChapter
+            dialog.program = world.program
+            let data = dialog.program.getCurrentStepData()
 
-            const accordion = selectedChapter.program[currentStep].dialog
+            const accordion = data.dialog
 
             let html = `<div class="modal__content dialog">
                 <div class="task__video">
@@ -39,19 +38,19 @@ export default class Dialog {
                 </div>
                 <div class="task__content">
                     <div class="accordion">`
-            accordion.forEach(item => {
-                html += `<div class="accordion_item">
-                            <button class="accordion_item-section">${item.question}</button>
-                            <div class="accordion_item-panel">
-                                <p>${item.answer}<p>
-                                <div class="backToQuestions"> <i class="icon-arrow-left-long-solid"></i> all questions</div>
-                                <audio>
-                                    <source src="sounds/congrats.mp3" type="audio/mpeg">
-                                </audio>
-                            </div>
-                        </div>`
-            })
-            html += `</div>
+                        accordion.forEach(item => {
+                            html += `<div class="accordion_item">
+                                        <button class="accordion_item-section">${item.question}</button>
+                                        <div class="accordion_item-panel">
+                                            <p>${item.answer}<p>
+                                            <div class="backToQuestions"> <i class="icon-arrow-left-long-solid"></i> all questions</div>
+                                            <audio>
+                                                <source src="sounds/congrats.mp3" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                    </div>`
+                        })
+                    html += `</div>
                 </div>
             </div>`
 
@@ -67,14 +66,13 @@ export default class Dialog {
             back.innerText = _s.journey.back
             back.addEventListener('click', (e) => {
                 dialog.modal.destroy()
-                world.program.taskDescription.toggleTaskDescription()
+                dialog.program.previousStep()
             })
 
             const next = document.getElementById('continue')
             next.style.display = 'block'
             next.innerText = _s.task.next
             next.addEventListener('click', dialog.completeDialog)
-
 
             const accButton = document.querySelectorAll('.accordion_item-section')
 
@@ -108,9 +106,7 @@ export default class Dialog {
                     setTimeout(() => {
                         audio.play()
                     }, 1300)
-
                 }
-
             }
 
             accButton.forEach(item => {
@@ -123,16 +119,12 @@ export default class Dialog {
                 backToQuestions.addEventListener('click', () => {
                     showHide(item)
                 })
-
-
             })
-
-
         }
     }
 
     completeDialog() {
         dialog.modal.destroy()
-        dialog.experience.world.program.advance()
+        dialog.program.nextStep()
     }
 }

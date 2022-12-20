@@ -15,14 +15,16 @@ export default class CodeUnlock {
         instance.fails = 0
     }
 
-    toggleCodeUnlock(code, irisMessage = false) {
-        this.irisMessage = irisMessage
-
+    toggleCodeUnlock() {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         }
         else {
-            instance.secretCode = code
+            instance.audio = instance.world.audio
+            instance.program = instance.world.program
+            instance.secretCode = instance.program.getCurrentStepData().code_to_unlock
+
+            console.log(instance.program.getCurrentStepData())
 
             let html = `
                 <div class="modal__content code-unlock">
@@ -59,7 +61,7 @@ export default class CodeUnlock {
             back.innerText = _s.journey.back
             back.addEventListener('click', (e) => {
                 instance.modal.destroy()
-                instance.world.program.taskDescription.toggleTaskDescription()
+                instance.program.previousStep()
             })
 
             const skip = document.getElementById("skip")
@@ -67,12 +69,7 @@ export default class CodeUnlock {
             skip.style.display = instance.debug.developer || instance.debug.onQuickLook() || instance.fails >= showSkipAfterNoOfTries
                 ? 'block'
                 : 'none'
-
-            skip.addEventListener('click', (e) => {
-                instance.fails = 0
-                instance.world.program.advance()
-                instance.destroy()
-            })
+            skip.addEventListener('click', instance.finishGame)
 
             instance.el = {
                 code: document.querySelector(".code-unlock__input"),
@@ -129,13 +126,8 @@ export default class CodeUnlock {
         const wrapper = document.querySelector('.code-unlock')
 
         if (instance.el.code.textContent == instance.secretCode) {
-            instance.fails = 0
-            instance.world.audio.playTaskCompleted()
-            instance.destroy()
-
-            this.irisMessage == true
-                ? instance.world.program.codeAndIris.toggleCodeAndIris()
-                : instance.world.program.advance()
+            instance.audio.playTaskCompleted()
+            instance.finishGame()
         }
         else {
             instance.fails++
@@ -146,8 +138,14 @@ export default class CodeUnlock {
             setTimeout(() => {
                 wrapper.classList.remove('wrong-code')
             }, 2000)
-            instance.world.audio.playWrongSound()
+            instance.audio.playWrongSound()
         }
+    }
+
+    finishGame() {
+        instance.fails = 0
+        instance.destroy()
+        instance.program.nextStep()
     }
 
     destroy() {

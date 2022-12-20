@@ -20,10 +20,7 @@ export default class Quiz {
             let world = this.experience.world
             let debug = this.experience.debug
             let program = world.program
-            let currentStep = program.currentStep
-            let selectedChapter = world.selectedChapter
-
-            const questions = selectedChapter.program[currentStep].quiz
+            const questions = program.getCurrentStepData().quiz
 
             let html = `<div class="modal__content quiz">
                             <div class="quiz__content">`
@@ -126,19 +123,19 @@ export default class Quiz {
             back.innerText = _s.journey.back
             back.addEventListener('click', (e) => {
                 quiz.modal.destroy()
-                world.program.taskDescription.toggleTaskDescription()
+                world.program.previousStep()
             })
 
             const prevButton = document.getElementById('prev')
             prevButton.setAttribute('disabled', '')
             prevButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
-                const currentStep = document.querySelector('.quiz__step.active')
+                const currentCheckpoint = document.querySelector('.quiz__step.active')
 
                 current.classList.remove('visible')
-                currentStep.classList.remove('active')
+                currentCheckpoint.classList.remove('active')
                 current.previousElementSibling?.classList.add('visible')
-                currentStep.previousElementSibling?.classList.add('active')
+                currentCheckpoint.previousElementSibling?.classList.add('active')
 
                 if (current.previousElementSibling.querySelector('input:checked')) {
                     nextButton.removeAttribute('disabled')
@@ -155,13 +152,13 @@ export default class Quiz {
             nextButton.setAttribute('disabled', '')
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
-                const currentStep = document.querySelector('.quiz__step.active')
+                const currentCheckpoint = document.querySelector('.quiz__step.active')
 
                 current.classList.remove('visible')
-                currentStep.classList.remove('active')
+                currentCheckpoint.classList.remove('active')
 
                 current.nextElementSibling?.classList.add('visible')
-                currentStep.nextElementSibling?.classList.add('active')
+                currentCheckpoint.nextElementSibling?.classList.add('active')
 
                 if (current.nextElementSibling.querySelector('input:checked')) {
                     nextButton.removeAttribute('disabled')
@@ -183,7 +180,7 @@ export default class Quiz {
                 skip.innerText = _s.miniGames.skip
                 skip.addEventListener("click", () => {
                     quiz.modal.destroy()
-                    program.advance()
+                    program.nextStep()
                 })
             }
 
@@ -300,7 +297,7 @@ export default class Quiz {
         submitButton.removeEventListener("click", quiz.completeQuiz)
         submitButton.addEventListener('click', () => {
             quiz.modal.destroy()
-            quiz.experience.world.program.advance()
+            quiz.experience.world.program.nextStep()
         })
     }
 }

@@ -7,7 +7,6 @@ let instance = null;
 
 export default class Chapter3Game2 {
     constructor() {
-
         // Singleton
         if (instance)
             return instance
@@ -18,10 +17,6 @@ export default class Chapter3Game2 {
         this.world = this.experience.world
         this.audio = this.world.audio
         this.debug = this.experience.debug
-
-        let selectedChapter = instance.world.selectedChapter
-        this.data = selectedChapter.program.filter(program => program.taskType == "flip_cards")[0]
-
     }
 
     card(front, back, effect) {
@@ -43,6 +38,8 @@ export default class Chapter3Game2 {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         } else {
+            this.data = this.world.program.getCurrentStepData()
+
             const gameWrapper = document.createElement('div')
             gameWrapper.classList.add('model__content')
             gameWrapper.setAttribute("id", "flipCardGame")
@@ -54,7 +51,8 @@ export default class Chapter3Game2 {
                 const card = this.card(
                     this.data.flip_cards[i].image_front,
                     this.data.flip_cards[i].image_back,
-                    this.data.flip_cards[i].sound_effect)
+                    this.data.flip_cards[i].sound_effect
+                )
                 cardWrapper.append(card)
             }
 
@@ -81,7 +79,7 @@ export default class Chapter3Game2 {
             back.innerText = _s.journey.back
             back.addEventListener('click', () => {
                 instance.modal.destroy()
-                instance.world.program.taskDescription.toggleTaskDescription()
+                instance.world.program.previousStep()
             })
 
             let firstTimeClick = true
@@ -106,7 +104,6 @@ export default class Chapter3Game2 {
                     .to(input, { autoAlpha: 0, display: 'none' })
                     .to(card, { duration: 1, rotationY: 180 })
 
-
                 input[0].addEventListener('input', () => {
                     if (input[0].value === this.data.flip_cards[index].code) {
                         card.setAttribute('flipped', '')
@@ -114,12 +111,10 @@ export default class Chapter3Game2 {
                     }
                 })
 
-
                 back[0].addEventListener('click', () => { audio[0].play() })
                 front[0].addEventListener('click', () => { audio[0].play() })
 
                 card.addEventListener('click', () => {
-
                     const flippedCards = document.querySelectorAll('[flipped]')
                     if (flippedCards.length == this.data.flip_cards.length) {
 
@@ -139,11 +134,8 @@ export default class Chapter3Game2 {
                                 instance.toggleGlitch()
 
                             firstTimeClick = false
-
                         }, 2000)
-
                     }
-
                 })
 
                 button[0].addEventListener('click', () => {
@@ -156,29 +148,11 @@ export default class Chapter3Game2 {
                     setTimeout(() => {
                         instance.toggleGodVoice()
                         next.style.display = 'block'
-                        next.addEventListener('click', instance.toggleIris)
+                        next.addEventListener('click', instance.finishGame)
                     }, 2000)
-
                 })
-
             })
-
         }
-
-    }
-
-    advanceToNextStep() {
-        instance.modal.destroy()
-        instance.world.program.advance()
-
-        instance.audio.setOtherAudioIsPlaying(false)
-        instance.audio.fadeInBgMusic()
-    }
-
-    finishGame() {
-        instance.modal.destroy()
-        instance.audio.playTaskCompleted()
-        instance.toggleGameComplete()
     }
 
     toggleGame() {
@@ -202,11 +176,8 @@ export default class Chapter3Game2 {
         console.log('god voice');
     }
 
-    toggleIris() {
+    finishGame() {
         instance.modal.destroy()
-        console.log('iris');
-
+        instance.world.program.nextStep()
     }
-
 }
-

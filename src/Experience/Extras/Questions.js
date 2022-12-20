@@ -17,12 +17,12 @@ export default class Questions {
         else {
             let world = this.experience.world
             let program = world.program
-            let currentStep = program.currentStep
+            let currentCheckpoint = program.currentCheckpoint
             let selectedChapter = world.selectedChapter
             let localStorageId = 'answers-theme-' + selectedChapter.id
             let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
 
-            const questions = selectedChapter.program[currentStep].questions
+            const questions = selectedChapter.program[currentCheckpoint].questions
 
             let html = `<div class="modal__content questions">
                 <div class="questions__header heading"><h2>${_s.task.questions}</h2></div>
@@ -32,7 +32,7 @@ export default class Questions {
                     html += `<div class="question">
                         <span class="question__label"> Question ${index + 1} / ${questions.length}</span>
                         <div class="question__title">${question.title}</div>
-                        <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}">${allAnswersFromTheme.hasOwnProperty(currentStep) ? allAnswersFromTheme[currentStep][index] : ''}</textarea>
+                        <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}">${allAnswersFromTheme.hasOwnProperty(currentCheckpoint) ? allAnswersFromTheme[currentCheckpoint][index] : ''}</textarea>
                     </div>`
                 })
 
@@ -91,10 +91,10 @@ export default class Questions {
                     thisThemeAnswers.push(answer.value)
                 })
 
-                allAnswersFromTheme[currentStep] = thisThemeAnswers
+                allAnswersFromTheme[currentCheckpoint] = thisThemeAnswers
                 localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
                 questions.modal.destroy()
-                program.advance()
+                program.nextStep()
             })
         }
     }

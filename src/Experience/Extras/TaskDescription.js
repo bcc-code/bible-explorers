@@ -24,14 +24,9 @@ export default class TaskDescription {
             instance.highlight = instance.world.highlight
             instance.points = instance.world.points
             instance.audio = instance.world.audio
+            instance.currentStepData = instance.program.getCurrentStepData()
 
-            let currentStep = instance.program.currentStep
-            let selectedChapter = instance.world.selectedChapter
-
-            instance.currentStepTaskType = selectedChapter.program[currentStep].taskType
-            instance.text = selectedChapter.program[currentStep].description
-
-            let html = instance.getModalHtml(instance.currentStepTaskType, instance.text)
+            let html = instance.getModalHtml(instance.program.stepType(), instance.currentStepData.description)
             instance.modal = new Modal(html, 'modal__task')
 
             const backBTN = document.getElementById("back")
@@ -52,61 +47,11 @@ export default class TaskDescription {
 
             continueBTN.addEventListener("click", () => {
                 instance.destroy()
-
-                if (instance.currentStepTaskType == 'code') {
-                    const code = selectedChapter.program[currentStep].codeToUnlock
-                    instance.program.codeUnlock.toggleCodeUnlock(code)
-                }
-
-                else if (instance.currentStepTaskType == 'code_and_iris') {
-                    const code = selectedChapter.program[currentStep].codeAndIris.code
-                    instance.program.codeUnlock.toggleCodeUnlock(code, true)
-                }
-
-                else if (instance.currentStepTaskType == 'picture_and_code') {
-                    instance.program.pictureAndCode.togglePictureAndCode()
-                }
-
-                else if (instance.currentStepTaskType == 'question_and_code') {
-                    instance.program.questionAndCode.toggleQuestionAndCode()
-                }
-
-                else if (instance.currentStepTaskType == 'questions') {
-                    instance.program.questions.toggleQuestions()
-                }
-
-                else if (instance.currentStepTaskType == 'cables') {
-                    instance.program.cableConnectorGame.toggleCableConnector()
-                }
-
-                else if (instance.currentStepTaskType == 'sorting') {
-                    instance.program.sortingGame.toggleSortingGame()
-                }
-
-                else if (instance.currentStepTaskType == 'simon_says') {
-                    instance.program.simonSays.toggleSimonSays()
-                }
-
-                else if (instance.currentStepTaskType == 'quiz') {
-                    instance.program.quiz.toggleQuiz()
-                }
-
-                else if (instance.program.stepType() == 'iris') {
-                    console.log(instance.program.getCurrentStepData())
-
-                    instance.program.getCurrentStepData().dialog
-                        ? instance.program.dialog.toggleDialog()
-                        : instance.program.advance()
-                }
-
-                else if (instance.currentStepTaskType == 'flip_cards') {
-                    instance.program.chapter3game2.toggleGame()
-                }
+                instance.program.nextStep()
             })
 
             document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
 
-            instance.currentStepData = selectedChapter.program[currentStep]
             if (instance.currentStepData.audio) {
                 // Fetch audio from blob or url
                 instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
@@ -124,16 +69,19 @@ export default class TaskDescription {
                 instance.playBTN.remove()
             }
 
-            if (selectedChapter.program[currentStep].descriptionMedia) {
+            if (instance.currentStepData.descriptionMedia) {
                 // Fetch description media from blob or url
-                instance.offline.fetchChapterAsset(selectedChapter.program[currentStep], "descriptionMedia", (data) => {
-                    instance.world.selectedChapter.program[currentStep].descriptionMedia = data.descriptionMedia
+                console.log(instance.currentStepData)
+                instance.offline.fetchChapterAsset(instance.currentStepData, "descriptionMedia", (data) => {
+                    console.log(instance.world.program.getCurrentStepData().descriptionMedia)
+                    instance.program.updateAssetInProgramData('descriptionMedia', data.descriptionMedia)
+                    console.log(instance.world.program.getCurrentStepData().descriptionMedia)
                     document.querySelector('.task__tips > *').src = data.descriptionMedia
                 })
             }
 
-            if (instance.currentStepTaskType == 'sorting') {
-                const noOfCorrectIcons = instance.program.getCurrentStepData().sorting.filter(i => i.correct_wrong === true).length
+            if (instance.program.stepType() == 'sorting') {
+                const noOfCorrectIcons = instance.currentStepData.sorting.filter(i => i.correct_wrong === true).length
 
                 var input = document.createElement("input")
                 input.classList.add("no-of-icons")
@@ -189,12 +137,12 @@ export default class TaskDescription {
             </div>
 
             <div class="task__content">`
-        const mediaUrl = instance.world.selectedChapter.program[instance.program.currentStep].descriptionMedia
-        if (type != 'iris-and-code' && mediaUrl) {
-            html += `<div class="task__tips">${instance.getDomElement(mediaUrl)}</div>`
-        }
+                const mediaUrl = instance.currentStepData.descriptionMedia
+                if (mediaUrl) {
+                    html += `<div class="task__tips">${instance.getDomElement(mediaUrl)}</div>`
+                }
 
-        html += `${title}
+                html += `${title}
                 ${additionalContent}
             </div>
         </div>`

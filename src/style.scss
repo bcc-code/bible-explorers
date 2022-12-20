@@ -723,7 +723,7 @@ button,
         display: none;
     }
 
-    &__steps {
+    &__checkpoints {
         position: absolute;
         left: 0;
         right: 0;
@@ -732,7 +732,7 @@ button,
         justify-content: space-between;
     }
 
-    &__step {
+    &__checkpoint {
         position: relative;
         width: 4rem;
         height: 4rem;
@@ -766,14 +766,14 @@ button,
             background: $gradient2 padding-box, $gradient2 border-box;
         }
 
-        &[currentStep] {
+        &[currentCheckpoint] {
             background: $gradient2 padding-box, $gradient2 border-box;
             border-color: transparent;
             pointer-events: none;
         }
     }
 
-    &__step:not(:last-child) {
+    &__checkpoint:not(:last-child) {
         cursor: pointer;
     }
 
@@ -1763,10 +1763,6 @@ button,
         p {
             font-size: 2rem;
         }
-
-        .code_and_iris & p img {
-            width: 300px;
-        }
     }
 
     &__wrapper {
@@ -1953,7 +1949,7 @@ button,
     }
 }
 
-.task.cables {
+.task.iris {
     .task__tips {
         display: inline-block;
     }
@@ -2603,7 +2599,7 @@ button,
         transition: .4s ease;
     }
 
-    &__steps {
+    &__checkpoints {
         position: relative;
         margin-inline: auto;
         width: 30rem;
@@ -2622,7 +2618,7 @@ button,
         }
     }
 
-    &__step {
+    &__checkpoint {
         position: relative;
         width: 3rem;
         height: 3rem;
@@ -3462,7 +3458,7 @@ button,
         font-size: 0.85rem;
     }
 
-    .progress-bar__step {
+    .progress-bar__checkpoint {
         font-size: var(--text-size);
     }
 }
@@ -3708,7 +3704,7 @@ button,
         width: 12rem;
     }
 
-    .progress-bar__step {
+    .progress-bar__checkpoint {
         width: 3rem;
         height: 3rem;
         margin-top: -1rem;

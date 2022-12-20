@@ -19,17 +19,17 @@ export default class QuestionAndCode {
         else {
             instance.world = instance.experience.world
             instance.program = instance.world.program
-            instance.currentStep = instance.program.currentStep
+            instance.currentCheckpoint = instance.program.currentCheckpoint
             instance.selectedChapter = instance.world.selectedChapter
-            instance.data = instance.selectedChapter.program[instance.currentStep].questionAndCode
-            instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
+            instance.currentStepData = instance.program.getCurrentStepData()
+            instance.question = instance.currentStepData.question_and_code
+            instance.localStorageId = 'answers-theme-' + instance.selectedChapter.id
             instance.toggleQuestion()
         }
     }
 
     toggleQuestion() {
-        const localStorageId = 'answers-theme-' + instance.selectedChapter.id
-        let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
+        instance.allAnswersFromTheme = JSON.parse(localStorage.getItem(instance.localStorageId)) || {}
 
         const answersWrapper = `
         <div class="answers__wrapper">
@@ -38,7 +38,7 @@ export default class QuestionAndCode {
             <div class="answers__field"><input type="text" class="answers__input" /></div>
             <div class="answers__field"><input type="text" class="answers__input" /></div>
         </div>`
-        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.question, answersWrapper)
+        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.question, answersWrapper)
         instance.modal = new Modal(html, 'modal__task')
 
         if (!instance.currentStepData.audio)
@@ -50,51 +50,30 @@ export default class QuestionAndCode {
         back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
-            instance.program.taskDescription.toggleTaskDescription()
+            instance.program.previousStep()
         })
 
         const next = document.getElementById('continue')
         next.innerText = _s.task.next
         next.style.display = 'block'
         next.addEventListener("click", () => {
-            const initialAnswers = allAnswersFromTheme[instance.currentStep]
-
-            // Save answers to Local Storage
-            let thisTaskAnswers = []
-            inputs.forEach((input) => {
-                thisTaskAnswers.push(input.value)
-            })
-
-            allAnswersFromTheme[instance.currentStep] = thisTaskAnswers
-            localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
-
-            if (JSON.stringify(initialAnswers) != JSON.stringify(thisTaskAnswers)) {
-                fetch(_api.saveAnswer(), {
-                    method: "POST",
-                    body: JSON.stringify({
-                        answer: thisTaskAnswers,
-                        chapterId: instance.selectedChapter.id,
-                        chapterTitle: instance.selectedChapter.title,
-                        language: _lang.getLanguageCode()
-                    })
-                })
-            }
-
+            instance.saveAnswers()
             instance.modal.destroy()
-            instance.toggleSubmitMessage()
+            instance.program.nextStep()
         })
 
         let allInputsEmpty = true
+        instance.el = {}
 
-        const inputs = document.querySelectorAll('.answers__input')
-        inputs.forEach((input, index) => {
-            input.value = allAnswersFromTheme.hasOwnProperty(instance.currentStep) ? allAnswersFromTheme[instance.currentStep][index] : ''
+        instance.el.inputs = document.querySelectorAll('.answers__input')
+        instance.el.inputs.forEach((input, index) => {
+            input.value = instance.allAnswersFromTheme.hasOwnProperty(instance.currentCheckpoint) ? instance.allAnswersFromTheme[instance.currentCheckpoint][index] : ''
 
             if (index == 0) input.focus()
             if (input.value.length != 0) allInputsEmpty = false
 
             input.addEventListener("input", () => {
-                [...inputs].filter(input => input.value.length == 0).length == 0
+                [...instance.el.inputs].filter(input => input.value.length == 0).length == 0
                     ? next.classList.remove('disabled')
                     : next.classList.add('disabled')
             })
@@ -105,59 +84,29 @@ export default class QuestionAndCode {
         }
     }
 
-    toggleSubmitMessage() {
-        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.submit_message)
-        instance.modal = new Modal(html, 'modal__task')
+    saveAnswers() {
+        const initialAnswers = instance.allAnswersFromTheme[instance.currentCheckpoint]
+        console.log(initialAnswers)
 
-        if (!instance.currentStepData.audio)
-            document.getElementById("play").remove()
-
-        const back = document.getElementById("back")
-        back.innerText = _s.journey.back
-        back.style.display = 'block'
-        back.addEventListener('click', (e) => {
-            e.stopPropagation()
-            instance.modal.destroy()
-            instance.toggleQuestion()
+        // Save answers to Local Storage
+        let thisTaskAnswers = []
+        instance.el.inputs.forEach((input) => {
+            thisTaskAnswers.push(input.value)
         })
 
-        const next = document.getElementById('continue')
-        next.innerText = _s.task.next
-        next.style.display = 'block'
-        next.addEventListener("click", () => {
-            instance.modal.destroy()
-            instance.toggleCodeDescription()
-        })
-    }
+        instance.allAnswersFromTheme[instance.currentCheckpoint] = thisTaskAnswers
+        localStorage.setItem(instance.localStorageId, JSON.stringify(instance.allAnswersFromTheme))
 
-    toggleCodeDescription() {
-        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.data.code_description)
-        instance.modal = new Modal(html, 'modal__task')
-
-        if (!instance.currentStepData.audio)
-            document.getElementById("play").remove()
-
-        const back = document.getElementById("back")
-        back.innerText = _s.journey.back
-        back.style.display = 'block'
-        back.addEventListener('click', (e) => {
-            e.stopPropagation()
-            instance.modal.destroy()
-            instance.toggleSubmitMessage()
-        })
-
-        const next = document.getElementById('continue')
-        next.innerText = _s.task.next
-        next.style.display = 'block'
-        next.addEventListener("click", () => {
-            instance.modal.destroy()
-            instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
-
-            const back = document.getElementById("back")
-            back.addEventListener('click', (e) => {
-                instance.modal.destroy()
-                instance.toggleCodeDescription()
+        if (JSON.stringify(initialAnswers) != JSON.stringify(thisTaskAnswers)) {
+            fetch(_api.saveAnswer(), {
+                method: "POST",
+                body: JSON.stringify({
+                    answer: thisTaskAnswers,
+                    chapterId: instance.selectedChapter.id,
+                    chapterTitle: instance.selectedChapter.title,
+                    language: _lang.getLanguageCode()
+                })
             })
-        })
+        }
     }
 }

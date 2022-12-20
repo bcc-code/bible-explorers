@@ -124,6 +124,7 @@ export default class CableConnector {
         this.correspondingOutlet = null
 
         instance.program = instance.world.program
+        instance.currentStepData = instance.program.getCurrentStepData()
     }
 
     setup() {
@@ -241,7 +242,6 @@ export default class CableConnector {
                 })
 
                 plug.on('dragend', () => {
-
                     if (instance.timerWithTimeElapsed()) return
 
                     const direction = plug.name().replace('plug_', '')
@@ -389,13 +389,11 @@ export default class CableConnector {
     }
 
     timerWithTimeElapsed() {
-        const currentStep = instance.program.currentStep
-        return instance.world.selectedChapter.program[currentStep].timer && instance.timer.remainingSeconds == 0
+        return instance.currentStepData.timer && instance.timer.remainingSeconds == 0
     }
 
     startTimerIfNecessary() {
-        const currentStep = instance.program.currentStep
-        const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
+        const timerInMinutes = instance.currentStepData.timer
 
         if (timerInMinutes > 0) {
             this.timer = new Timer()
@@ -405,8 +403,7 @@ export default class CableConnector {
     }
 
     stopTimerIfNecessary() {
-        const currentStep = instance.program.currentStep
-        const timerInMinutes = instance.world.selectedChapter.program[currentStep].timer
+        const timerInMinutes = instance.currentStepData.timer
 
         if (timerInMinutes > 0) {
             this.timer.destroy()
@@ -547,7 +544,7 @@ export default class CableConnector {
         back.addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
-            instance.world.program.taskDescription.toggleTaskDescription()
+            instance.world.program.previousStep()
         })
 
         const restart = document.getElementById('restart')
@@ -565,7 +562,6 @@ export default class CableConnector {
         skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
             ? 'block'
             : 'none'
-
         skip.addEventListener('click', instance.advanceToNextStep)
     }
 
@@ -573,7 +569,7 @@ export default class CableConnector {
         instance.fails = 0
         instance.destroy()
         instance.modal.destroy()
-        instance.world.program.advance()
+        instance.world.program.nextStep()
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
