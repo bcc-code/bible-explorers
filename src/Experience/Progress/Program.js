@@ -11,6 +11,7 @@ import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
 import Quiz from '../Extras/Quiz.js'
+import Dialog from '../Extras/Dialog.js'
 import Congrats from '../Extras/Congrats.js'
 import Chapter3Game2 from "../Games/Chapter3Game2.js"
 
@@ -43,6 +44,7 @@ export default class Program {
         this.cableConnectorGame = new CableConnectorGame()
         this.simonSays = new SimonSaysGame()
         this.quiz = new Quiz()
+        this.dialog = new Dialog()
         this.congrats = new Congrats()
         this.chapter3game2 = new Chapter3Game2()
 

@@ -1471,18 +1471,16 @@ button,
 
 }
 
-.modal__task {
+.modal__task,
+.modal__dialog {
     .modal__content {
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
     }
-
-    .modal__close {
-        display: none;
-    }
 }
 
+.modal__task,
 .modal__congrats,
 .modal__code-unlock,
 .modal__picture-and-code,
@@ -2233,6 +2231,102 @@ button,
             width: 2rem;
             margin-right: 1rem;
         }
+    }
+
+}
+
+
+.accordion {
+    counter-reset: item;
+    min-height: 260px;
+
+    &_item {
+        font-size: 1.5rem;
+        counter-increment: item;
+        overflow: hidden;
+        max-height: auto;
+
+        &:not(:last-child):not(.hide):not(.active) {
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
+        }
+
+        &:not(.hide) {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+        }
+    }
+
+    &_item-section {
+        background: transparent;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        color: #fff;
+
+        &::before {
+            content: counter(item) ". ";
+        }
+
+        &::after {
+            content: 'read';
+            font-style: italic;
+            font-size: 14px;
+            margin-left: 10px;
+            opacity: 0;
+            padding: 6px 18px;
+            color: #fff;
+            background-color: $accent2;
+            border-radius: 20px;
+            align-self: baseline;
+        }
+
+    }
+
+    &_item-panel {
+        margin-top: 1rem;
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0.8;
+
+
+        p {
+            color: #fff;
+        }
+
+        div {
+            cursor: pointer;
+            font-size: 16px;
+            color: $accent2;
+        }
+
+        i {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+    }
+
+    &_item.active {
+        .accordion_item-panel {
+            transition: max-height 0.2s ease-out;
+        }
+    }
+
+    &_item.read {
+        .accordion_item-section {
+            opacity: 0.6;
+        }
+
+        .accordion_item-section::after {
+            opacity: 1;
+        }
+    }
+
+    &_item.hide {
+        max-height: 0;
     }
 
 }
