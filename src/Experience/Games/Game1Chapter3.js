@@ -35,10 +35,15 @@ export default class Game1Chapter3 {
             playBTN.setAttribute('id', 'g1c3_play')
             playBTN.innerText = 'Play game'
 
-            wrapper.append(canvas, playBTN)
+            const pauseBTN = document.createElement('button')
+            pauseBTN.setAttribute('id', 'g1c3_pause')
+            pauseBTN.innerText = 'Pause game'
+
+            wrapper.append(canvas, playBTN, pauseBTN)
 
             instance.modal = new Modal(wrapper.outerHTML, 'g1c3')
             instance.modal.htmlEl.prepend(title)
+            instance.modal.htmlEl.querySelector('.modal__close').style.display = 'none'
 
             instance.draw()
 
@@ -100,41 +105,85 @@ export default class Game1Chapter3 {
 
         let clouds = []
 
+        const generateRandomNumber = (min, max) => {
+            return min + Math.random() * (max - min);
+        }
+
+        const isIntersectingRectangleWithCircle = (rect, width, height, circle, radius) => {
+            const distX = Math.abs(circle.x - rect.x - width / 2);
+            const distY = Math.abs(circle.y - rect.y - height / 2);
+            if (distX > (width / 2 + radius) || distY > (height / 2 + radius)) {
+                return false;
+            }
+            if (distX <= (width / 2) || distY <= (height / 2)) {
+                return true;
+            }
+            const dX = distX - width / 2;
+            const dY = distY - height / 2;
+            return dX ** 2 + dY ** 2 <= radius ** 2;
+        }
 
         // Objects
 
-        function createLetter() {
+        function createCloud() {
             if (Math.random() < cloud.probability) {
                 const cloudImage = new Image()
 
-                cloudImage.onload = () => {
+                const x = Math.random() * stage.width()
+                const y = Math.random() * stage.height()
+                const dX = center.x - x
+                const dY = center.y - y
+                const norm = Math.sqrt(dX ** 2 + dY ** 2)
+                const speed = generateRandomNumber(cloud.lowestSpeed, cloud.highestSpeed)
 
+                cloudImage.onload = () => {
                     const cloud = new Konva.Image({
-                        x: Math.random() < 0.5 ? 0 : stage.width(),
-                        y: Math.random() * stage.height(),
+                        x: x,
+                        y: y,
                         image: cloudImage,
                         width: 100,
                         height: 50,
                         name: 'cloud',
                     })
-
-                    const dX = center.x - cloud.x()
-                    const dY = center.y - cloud.y()
-                    const norm = Math.sqrt(dX ** 2 + dY ** 2)
-                    // const speed = Math.random()
-
                     layer.add(cloud)
+
+                    clouds.push({
+                        item: cloud,
+                        speedX: dX / norm * speed,
+                        speedY: dY / norm * speed,
+                    })
                 }
 
                 cloudImage.src = cloud.images[Math.floor(Math.random() * cloud.images.length)]
             }
         }
 
+        function removeCloud(frames) {
+            for (const c of clouds) {
+                // if (isIntersectingRectangleWithCircle({ x: c.item.x(), y: c.item.y() - c.item.height() }, c.item.width(), c.item.height(), center, 0)) { 
+
+                // c.item.x(c.speedX + frames)
+                // c.item.y(c.speedY + frames)
+                // }
+            }
+        }
 
 
-        const animation = new Konva.Animation(frame => {
-
+        const animation = new Konva.Animation(frames => {
+            createCloud()
+            removeCloud(frames)
         })
+
+        document.getElementById('g1c3_play').addEventListener('click', () => {
+            this.experience.gameIsOn = true
+            animation.start()
+        })
+
+        document.getElementById('g1c3_pause').addEventListener('click', () => {
+            this.experience.gameIsOn = false
+            animation.stop()
+        })
+
 
 
         // document.getElementById('g1c3_play').addEventListener('click', () => {
