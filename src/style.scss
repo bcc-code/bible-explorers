@@ -2064,6 +2064,10 @@ button,
         @include extras($spacing: 10rem);
         text-align: center;
         z-index: 2;
+
+        .button {
+            margin-top: 1rem;
+        }
     }
 
     &__title {
