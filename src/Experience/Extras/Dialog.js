@@ -38,8 +38,8 @@ export default class Dialog {
                 </div>
                 <div class="task__content">
                     <div class="accordion">`
-                        accordion.forEach(item => {
-                            html += `<div class="accordion_item">
+            accordion.forEach(item => {
+                html += `<div class="accordion_item">
                                         <button class="accordion_item-section">${item.question}</button>
                                         <div class="accordion_item-panel">
                                             <p>${item.answer}<p>
@@ -49,17 +49,17 @@ export default class Dialog {
                                             </audio>
                                         </div>
                                     </div>`
-                        })
-                    html += `</div>
+            })
+            html += `</div>
                 </div>
             </div>`
 
             dialog.modal = new Modal(html, 'modal__dialog')
 
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = 'Dialog'
-            document.querySelector('.modal__dialog').prepend(title)
+            const title = document.querySelector('.modal__heading--minigame')
+            title.innerHTML = '<h3>Dialog</h3>'
+
+            console.log(title);
 
             const back = document.getElementById("back")
             back.style.display = 'block'
