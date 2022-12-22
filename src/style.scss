@@ -1399,8 +1399,8 @@ button,
     width: 100%;
     height: 100vh;
     z-index: 101;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     background: $gradient-with-opacity;
     overflow: auto;
 
@@ -1417,10 +1417,56 @@ button,
     }
 
     &__heading--minigame {
-        color: #fff;
-        padding: 2rem;
-        text-align: center;
-        line-height: 4rem;
+        display: grid;
+        place-items: center;
+        padding-block: 2rem;
+        gap: 1rem;
+
+        h3 {
+            color: #fff;
+            line-height: 4rem;
+            display: grid;
+            place-items: center;
+            gap: 1rem;
+        }
+
+        h3::after {
+            content: '';
+            height: 1px;
+            width: 80%;
+            background-color: #fff;
+        }
+
+        p {
+            position: relative;
+            color: #fff;
+            margin-top: 2rem;
+            padding-block: 0.5rem;
+            padding-inline: 2rem;
+            border-left: 4px solid $accent;
+            border-right: 4px solid $accent;
+        }
+
+        p::after,
+        p::before {
+            content: '';
+            position: absolute;
+            height: 50%;
+            width: 100%;
+            left: 0;
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        p::before {
+            top: 0;
+            background: linear-gradient(to top, $accent, rgba($accent, 0.01));
+        }
+
+        p::after {
+            top: 50%;
+            background: linear-gradient(to bottom, $accent, rgba($accent, 0.01));
+        }
     }
 
     &__wrapper {
@@ -3220,7 +3266,12 @@ button,
 
 #flipCardGame {
     display: grid;
+    place-items: center;
     gap: 2rem;
+
+    .button {
+        width: 280px;
+    }
 }
 
 #cardWrapper {
@@ -3255,27 +3306,17 @@ button,
     place-items: center;
     width: 200px;
     aspect-ratio: 9/16;
+    transition: box-shadow 400ms ease;
 
-    button,
     input {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        height: 40px;
         width: 100%;
+        height: 40px;
         font-size: 24px;
         line-height: 40px;
         background: $accent;
         border: none;
         color: #fff;
         text-align: center;
-        transition: .4s ease;
-    }
-
-    button {
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
     }
 
     input::placeholder {
@@ -3287,12 +3328,9 @@ button,
         color: transparent;
     }
 
-    input:hover,
-    input:focus-visible,
-    button:hover,
-    button:focus-visible {
+    input:focus-visible {
         outline: none;
-        background: $accent2;
+        background: $gradient2;
     }
 
     audio {
@@ -3326,55 +3364,77 @@ button,
         box-shadow: 0 0 20px $accent2;
     }
 
-    &::after,
-    &::before {
-        content: '';
+    .cardSelect {
         position: absolute;
-        width: 60px;
-        height: 60px;
-        top: -10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('../static/games/select-tl.png') top left,
+            url('../static/games/select-tr.png') top right,
+            url('../static/games/select-bl.png') bottom left,
+            url('../static/games/select-br.png') bottom right;
+        background-repeat: no-repeat;
         opacity: 0;
-        transition: .4s;
-    }
-
-    &::after {
-        right: -10px;
-        border-right: 6px solid $accent;
-        border-top: 6px solid $accent;
-        border-bottom: 6px solid transparent;
-    }
-
-    &::before {
-        left: -10px;
-        border-left: 6px solid $accent;
-        border-top: 6px solid $accent;
-        border-bottom: 6px solid transparent;
+        pointer-events: none;
+        transition: .4s ease;
     }
 
 
-    &[selected]::after,
-    &[selected]::before {
-        opacity: 1;
-    }
-
-    &[choosed] {
-        &::before {
-            border-left: 6px solid $accent2;
-            border-top: 6px solid $accent2;
-        }
-
-        &::after {
-            border-right: 6px solid $accent2;
-            border-top: 6px solid $accent2;
-        }
-
-        button {
-            background: $accent2;
+    &[selected] {
+        .cardSelect {
+            opacity: 1;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
         }
     }
-
 
 }
+
+#dialogue {
+    position: fixed;
+    width: 600px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2rem;
+    margin-inline: auto;
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
+
+    .dialogue-content {
+        width: 100%;
+        position: relative;
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 2rem;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    img {
+        position: absolute;
+        height: 60px;
+        border-radius: 4px;
+    }
+
+    &.glitch img {
+        left: -60px;
+        top: -40px;
+    }
+
+    &.godVoice img {
+        left: -30px;
+        top: -30px;
+    }
+
+}
+
 
 // #endregion
 
