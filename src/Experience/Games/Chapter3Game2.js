@@ -7,38 +7,19 @@ let instance = null;
 
 export default class Chapter3Game2 {
     constructor() {
-        // Singleton
-        if (instance)
-            return instance
-
         instance = this
-
-        this.experience = new Experience()
-        this.world = this.experience.world
-        this.audio = this.world.audio
-        this.debug = this.experience.debug
-    }
-
-    card(front, back, effect) {
-        const card = document.createElement('div')
-        card.className = 'card'
-        card.innerHTML = `
-            <image data-src="${back}" class="lazyload cardBack">
-            <image data-src="${front}" class="lazyload cardFront">
-            <audio class="cardAudio">
-                <source src="${effect}" type="audio/ogg">
-            </audio>
-            <input type="text" placeholder="code" class="cardInput" />
-            <button class="cardSelect">Choose this hero</button>
-        `
-        return card
+        instance.experience = new Experience()
+        instance.world = instance.experience.world
+        instance.audio = instance.world.audio
+        instance.debug = instance.experience.debug
     }
 
     init() {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         } else {
-            this.data = this.world.program.getCurrentStepData()
+            instance.data = instance.world.program.getCurrentStepData()
+            console.log(instance.data)
 
             const gameWrapper = document.createElement('div')
             gameWrapper.classList.add('model__content')
@@ -47,14 +28,13 @@ export default class Chapter3Game2 {
             const cardWrapper = document.createElement('div')
             cardWrapper.setAttribute("id", "cardWrapper")
 
-            for (let i = 0; i < this.data.flip_cards.length; i++) {
-                const card = this.card(
-                    this.data.flip_cards[i].image_front,
-                    this.data.flip_cards[i].image_back,
-                    this.data.flip_cards[i].sound_effect
-                )
-                cardWrapper.append(card)
-            }
+            instance.data.flip_cards.cards.forEach(card => {
+                cardWrapper.append(instance.getCardHtml(
+                    card.image_front,
+                    card.image_back,
+                    card.sound_effect
+                ))
+            })
 
             const paragraph = document.createElement('div')
             paragraph.setAttribute('id', 'message')
@@ -105,7 +85,7 @@ export default class Chapter3Game2 {
                     .to(card, { duration: 1, rotationY: 180 })
 
                 input[0].addEventListener('input', () => {
-                    if (input[0].value === this.data.flip_cards[index].code) {
+                    if (input[0].value === instance.data.flip_cards.cards[index].code) {
                         card.setAttribute('flipped', '')
                         flip.play()
                     }
@@ -116,7 +96,7 @@ export default class Chapter3Game2 {
 
                 card.addEventListener('click', () => {
                     const flippedCards = document.querySelectorAll('[flipped]')
-                    if (flippedCards.length == this.data.flip_cards.length) {
+                    if (flippedCards.length == instance.data.flip_cards.cards.length) {
 
                         cardWrapper.classList.add('cardSelection')
                         const selectedCard = document.querySelector('[selected]')
@@ -156,24 +136,36 @@ export default class Chapter3Game2 {
     }
 
     toggleGame() {
-        this.init()
+        instance.init()
+        instance.audio.setOtherAudioIsPlaying(true)
+        instance.audio.fadeOutBgMusic()
+    }
 
-        this.audio.setOtherAudioIsPlaying(true)
-        this.audio.fadeOutBgMusic()
+    getCardHtml(front, back, effect) {
+        const card = document.createElement('div')
+        card.className = 'card'
+        card.innerHTML = `
+            <image data-src="${back}" class="lazyload cardBack">
+            <image data-src="${front}" class="lazyload cardFront">
+            <audio class="cardAudio">
+                <source src="${effect}" type="audio/ogg">
+            </audio>
+            <input type="text" placeholder="code" class="cardInput" />
+            <button class="cardSelect">Choose this hero</button>
+        `
+        return card
     }
 
     toggleGlitch() {
         const glitch = document.getElementById('message')
-        glitch.innerText = 'Dere burde velge den sterke, fordi styrke er sikkert den viktigste evne den nye konge bør ha.'
-
-        console.log('glitch');
+        glitch.innerText = instance.data.flip_cards.glitchs_voice.text
+        instance.audio.togglePlayTaskDescription(instance.data.flip_cards.glitchs_voice.audio)
     }
 
     toggleGodVoice() {
-        const glitch = document.getElementById('message')
-        glitch.innerText = 'Jeg ser ikke på det mennesket ser på, for mennesket ser på det ytre, men Herren ser på hjertet.'
-
-        console.log('god voice');
+        const god = document.getElementById('message')
+        god.innerText = instance.data.flip_cards.gods_voice.text
+        instance.audio.togglePlayTaskDescription(instance.data.flip_cards.gods_voice.audio)
     }
 
     finishGame() {
