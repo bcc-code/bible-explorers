@@ -160,7 +160,7 @@ export default class Video {
 
     finish() {
         instance.defocus()
-        instance.world.program.advance()
+        instance.world.program.nextStep()
     }
 
     //#endregion

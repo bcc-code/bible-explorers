@@ -186,7 +186,7 @@ export default class SortingGame {
         back.addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
-            instance.world.program.taskDescription.toggleTaskDescription()
+            instance.world.program.previousStep()
         })
 
         const restart = document.getElementById('restart')
@@ -204,8 +204,7 @@ export default class SortingGame {
         skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
             ? 'block'
             : 'none'
-
-        skip.addEventListener('click', instance.advanceToNextStep)
+        skip.addEventListener('click', instance.finishGame)
     }
 
     addEventListenersForIcon(icon) {
@@ -293,7 +292,7 @@ export default class SortingGame {
         document.getElementById('continue_journey').addEventListener('click', () => {
             instance.destroy()
             instance.modal.destroy()
-            instance.program.advance()
+            instance.program.nextStep()
         })
     }
 

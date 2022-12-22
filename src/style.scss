@@ -723,7 +723,7 @@ button,
         display: none;
     }
 
-    &__steps {
+    &__checkpoints {
         position: absolute;
         left: 0;
         right: 0;
@@ -732,7 +732,7 @@ button,
         justify-content: space-between;
     }
 
-    &__step {
+    &__checkpoint {
         position: relative;
         width: 4rem;
         height: 4rem;
@@ -766,14 +766,14 @@ button,
             background: $gradient2 padding-box, $gradient2 border-box;
         }
 
-        &[currentStep] {
+        &[currentCheckpoint] {
             background: $gradient2 padding-box, $gradient2 border-box;
             border-color: transparent;
             pointer-events: none;
         }
     }
 
-    &__step:not(:last-child) {
+    &__checkpoint:not(:last-child) {
         cursor: pointer;
     }
 
@@ -1471,18 +1471,16 @@ button,
 
 }
 
-.modal__task {
+.modal__task,
+.modal__dialog {
     .modal__content {
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
     }
-
-    .modal__close {
-        display: none;
-    }
 }
 
+.modal__task,
 .modal__congrats,
 .modal__code-unlock,
 .modal__picture-and-code,
@@ -1765,10 +1763,6 @@ button,
         p {
             font-size: 2rem;
         }
-
-        .code_and_iris & p img {
-            width: 300px;
-        }
     }
 
     &__wrapper {
@@ -1955,7 +1949,7 @@ button,
     }
 }
 
-.task.cables {
+.task.iris {
     .task__tips {
         display: inline-block;
     }
@@ -2237,6 +2231,102 @@ button,
 
 }
 
+
+.accordion {
+    counter-reset: item;
+    min-height: 260px;
+
+    &_item {
+        font-size: 1.5rem;
+        counter-increment: item;
+        overflow: hidden;
+        max-height: auto;
+
+        &:not(:last-child):not(.hide):not(.active) {
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
+        }
+
+        &:not(.hide) {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+        }
+    }
+
+    &_item-section {
+        background: transparent;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        color: #fff;
+
+        &::before {
+            content: counter(item) ". ";
+        }
+
+        &::after {
+            content: 'read';
+            font-style: italic;
+            font-size: 14px;
+            margin-left: 10px;
+            opacity: 0;
+            padding: 6px 18px;
+            color: #fff;
+            background-color: $accent2;
+            border-radius: 20px;
+            align-self: baseline;
+        }
+
+    }
+
+    &_item-panel {
+        margin-top: 1rem;
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0.8;
+
+
+        p {
+            color: #fff;
+        }
+
+        div {
+            cursor: pointer;
+            font-size: 16px;
+            color: $accent2;
+        }
+
+        i {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+    }
+
+    &_item.active {
+        .accordion_item-panel {
+            transition: max-height 0.2s ease-out;
+        }
+    }
+
+    &_item.read {
+        .accordion_item-section {
+            opacity: 0.6;
+        }
+
+        .accordion_item-section::after {
+            opacity: 1;
+        }
+    }
+
+    &_item.hide {
+        max-height: 0;
+    }
+
+}
+
 // #endregion
 
 // #region MiniGames
@@ -2509,7 +2599,7 @@ button,
         transition: .4s ease;
     }
 
-    &__steps {
+    &__checkpoints {
         position: relative;
         margin-inline: auto;
         width: 30rem;
@@ -2528,7 +2618,7 @@ button,
         }
     }
 
-    &__step {
+    &__checkpoint {
         position: relative;
         width: 3rem;
         height: 3rem;
@@ -3147,6 +3237,164 @@ button,
     }
 }
 
+#flipCardGame {
+    display: grid;
+    gap: 2rem;
+}
+
+#cardWrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
+
+    &.cardSelection .card:not([selected]) .cardFront {
+        filter: grayscale(1);
+    }
+
+    &.cardChoosed .card:not([choosed]) {
+        pointer-events: none;
+    }
+
+    &.cardChoosed .card:not([choosed]) .cardFront {
+        filter: grayscale(1);
+    }
+}
+
+#message {
+    margin-top: 2rem;
+    color: #fff;
+    font-size: 2rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.card {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 200px;
+    aspect-ratio: 9/16;
+
+    button,
+    input {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        height: 40px;
+        width: 100%;
+        font-size: 24px;
+        line-height: 40px;
+        background: $accent;
+        border: none;
+        color: #fff;
+        text-align: center;
+        transition: .4s ease;
+    }
+
+    button {
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    input::placeholder {
+        color: white;
+        transition: .3s ease-in-out;
+    }
+
+    input:focus-visible::placeholder {
+        color: transparent;
+    }
+
+    input:hover,
+    input:focus-visible,
+    button:hover,
+    button:focus-visible {
+        outline: none;
+        background: $accent2;
+    }
+
+    audio {
+        position: absolute;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+    }
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        aspect-ratio: 9/16;
+        object-fit: cover;
+        backface-visibility: hidden;
+        cursor: pointer;
+        z-index: 1;
+
+        &.cardBack {
+            position: relative;
+        }
+
+        &.cardFront {
+            position: absolute;
+        }
+    }
+
+    &:not([selected]):hover {
+        box-shadow: 0 0 20px $accent2;
+    }
+
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        top: -10px;
+        opacity: 0;
+        transition: .4s;
+    }
+
+    &::after {
+        right: -10px;
+        border-right: 6px solid $accent;
+        border-top: 6px solid $accent;
+        border-bottom: 6px solid transparent;
+    }
+
+    &::before {
+        left: -10px;
+        border-left: 6px solid $accent;
+        border-top: 6px solid $accent;
+        border-bottom: 6px solid transparent;
+    }
+
+
+    &[selected]::after,
+    &[selected]::before {
+        opacity: 1;
+    }
+
+    &[choosed] {
+        &::before {
+            border-left: 6px solid $accent2;
+            border-top: 6px solid $accent2;
+        }
+
+        &::after {
+            border-right: 6px solid $accent2;
+            border-top: 6px solid $accent2;
+        }
+
+        button {
+            background: $accent2;
+        }
+    }
+
+
+}
+
 // #endregion
 
 // #region Responsive
@@ -3229,7 +3477,7 @@ button,
         font-size: 0.85rem;
     }
 
-    .progress-bar__step {
+    .progress-bar__checkpoint {
         font-size: var(--text-size);
     }
 }
@@ -3475,7 +3723,7 @@ button,
         width: 12rem;
     }
 
-    .progress-bar__step {
+    .progress-bar__checkpoint {
         width: 3rem;
         height: 3rem;
         margin-top: -1rem;
@@ -3544,9 +3792,14 @@ button,
     }
 }
 
-.lazyload,
-.lazyloading {
+.lazyload {
     opacity: 0;
+}
+
+.lazyloading {
+    opacity: 1;
+    transition: opacity 300ms;
+    background: #f7f7f7 url('../static/assets/loader.gif') no-repeat center;
 }
 
 .lazyloaded {

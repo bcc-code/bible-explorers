@@ -12,8 +12,6 @@ import Points from './Points.js'
 import Highlight from './Highlight.js'
 import _e from '../Utils/Events.js'
 import _appInsights from '../Utils/AppInsights.js'
-
-
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
@@ -222,11 +220,8 @@ export default class World {
                     animation: 'shift-away',
                     arrow: false
                 })
-
             })
         })
-
-
     }
 
     goToLandingScreen() {
@@ -342,11 +337,20 @@ export default class World {
     }
 
     setChapterContentPreviewHTML() {
-        const chapter = instance.selectedChapter
+        let numberOfEpisodes = 0
+        let numberOfTasks = 0
+        let numberOfQuizes = 0
 
-        const numberOfEpisodes = chapter.program.filter(item => item.type == 'video').length
-        const numberOfTasks = chapter.program.filter(item => item.type == 'task' && item.taskType != 'quiz').length
-        const numberOfQuizes = chapter.program.filter(item => item.taskType == 'quiz').length
+        instance.selectedChapter.program.forEach(checkpoint => {
+            if (checkpoint.steps.some(step => step.type == 'video'))
+                numberOfEpisodes++
+
+            else if (checkpoint.steps.some(step => step.type == 'quiz'))
+                numberOfQuizes++
+
+            else if (checkpoint.steps.some(step => step.type == 'task'))
+                numberOfTasks++
+        })
 
         let itemHTMLString =
             `<div class="chapter__content--preview">
@@ -525,11 +529,10 @@ export default class World {
         instance.cacheChapterThumbnail(chapter.thumbnail)
         instance.cacheChapterBgMusic(chapter.background_music)
         instance.cacheChapterArchiveImages(chapter.archive)
-        instance.cacheTaskDescriptionAudios(chapter['program'].filter(step => step.audio))
-        instance.cacheTaskDescriptionMedia(chapter['program'].filter(step => step.descriptionMedia))
-        instance.cacheCodeAndIrisAudios(chapter['program'].filter(step => step.taskType == "code_and_iris"))
-        instance.cacheSortingGameIcons(chapter['program'].filter(step => step.taskType == "sorting"))
-        instance.cachePictureAndCodeImage(chapter['program'].filter(step => step.taskType == "picture_and_code"))
+        instance.cacheTaskDescriptionAudios(chapter['program'].filter(checkpoint => checkpoint.audio))
+        instance.cacheTaskDescriptionMedia(chapter['program'].filter(checkpoint => checkpoint.descriptionMedia))
+        instance.cacheSortingGameIcons(chapter['program'].filter(checkpoint => checkpoint.taskType == "sorting"))
+        instance.cachePictureAndCodeImage(chapter['program'].filter(checkpoint => checkpoint.taskType == "picture_and_code"))
     }
 
     cacheChapterThumbnail(url) {
@@ -555,15 +558,6 @@ export default class World {
     cacheTaskDescriptionMedia(tasks) {
         if (tasks.length == 0) return
         tasks.forEach(task => instance.fetchAndCacheAsset(task.descriptionMedia))
-    }
-
-    cacheCodeAndIrisAudios(tasks) {
-        if (tasks.length == 0) return
-
-        tasks.forEach(task => {
-            if (task.codeAndIris.audio)
-                instance.fetchAndCacheAsset(task.codeAndIris.audio)
-        })
     }
 
     cacheSortingGameIcons(sortingTasks) {

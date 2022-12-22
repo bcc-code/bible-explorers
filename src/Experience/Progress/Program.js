@@ -2,7 +2,6 @@ import Experience from "../Experience.js"
 import Archive from '../Extras/Archive.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
-import CodeAndIris from '../Extras/CodeAndIris.js'
 import PictureAndCode from '../Extras/PictureAndCode.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Questions from '../Extras/Questions.js'
@@ -11,7 +10,9 @@ import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
 import Quiz from '../Extras/Quiz.js'
+import Dialog from '../Extras/Dialog.js'
 import Congrats from '../Extras/Congrats.js'
+import Chapter3Game2 from "../Games/Chapter3Game2.js"
 
 let instance = null
 
@@ -34,7 +35,6 @@ export default class Program {
         this.taskDescription = new TaskDescription()
         this.video = new Video()
         this.codeUnlock = new CodeUnlock()
-        this.codeAndIris = new CodeAndIris()
         this.pictureAndCode = new PictureAndCode()
         this.questionAndCode = new QuestionAndCode()
         this.questions = new Questions()
@@ -42,7 +42,9 @@ export default class Program {
         this.cableConnectorGame = new CableConnectorGame()
         this.simonSays = new SimonSaysGame()
         this.quiz = new Quiz()
+        this.dialog = new Dialog()
         this.congrats = new Congrats()
+        this.chapter3game2 = new Chapter3Game2()
 
         instance = this
 
@@ -54,16 +56,26 @@ export default class Program {
 
         // Get instance variables
         this.chapterProgress = () => parseInt(localStorage.getItem(this.world.getId())) || 0
-        this.currentStep = instance.debug.onQuickLook() ? 0 : (this.chapterProgress() || 0)
-        this.getCurrentStepData = () => this.currentStep in this.programData ? this.programData[this.currentStep] : null
+        this.currentCheckpoint = instance.debug.onQuickLook() ? 0 : (this.chapterProgress() || 0)
+        this.getCurrentCheckpointData = () => this.currentCheckpoint in this.programData ? this.programData[this.currentCheckpoint] : null
+
+        this.currentStep = 0
+        this.getCurrentStepData = () => this.getCurrentCheckpointData() ? this.getCurrentCheckpointData().steps[this.currentStep] : null
         this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
+        this.taskType = () => this.getCurrentStepData() ? this.getCurrentStepData().taskType : null
+
+        this.updateAssetInProgramData = (field, newValue) => {
+            console.log(field, newValue)
+            this.programData[this.currentCheckpoint].steps[this.currentStep][field] = newValue
+        }
+
         this.currentLocation = () => {
             if (this.stepType() == 'video') { return 'portal' }
-            else if (this.stepType() == 'iris' || this.stepType() == 'task') { return 'screens' }
+            else if (['iris', 'task'].includes(this.stepType())) { return 'screens' }
             else { return 'default' }
         }
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
-        this.totalSteps = Object.keys(this.programData).length
+        this.totalCheckpoints = Object.keys(this.programData).length
         this.clickedObject = null
         this.canClick = () =>
             !document.body.classList.contains('freeze') &&
@@ -83,16 +95,85 @@ export default class Program {
         }
     }
 
-    advance(step = ++this.currentStep) {
-        this.updateCurrentStep(step)
+    previousStep() {
+        this.currentStep--
+        this.toggleStep()
+    }
+
+    nextStep() {
+        this.currentStep++
+        console.log('nextStep', this.currentStep)
+        this.toggleStep()
+    }
+
+    toggleStep() {
+        console.log("steptype", this.stepType())
+        console.log("tasktype", this.taskType())
+
+        if (this.currentStep == this.getCurrentCheckpointData().steps.length) {
+            console.log('currentStep', 0)
+            this.currentStep = 0
+            this.advance()
+        }
+
+        else if (this.stepType() == 'iris') {
+            this.taskDescription.toggleTaskDescription()
+        }
+
+        else if (this.stepType() == 'task') {
+            if (this.taskType() == 'code_to_unlock') {
+                this.codeUnlock.toggleCodeUnlock()
+            }
+    
+            else if (this.taskType() == 'picture_and_code') {
+                this.pictureAndCode.togglePictureAndCode()
+            }
+    
+            else if (this.taskType() == 'question_and_code') {
+                this.questionAndCode.toggleQuestionAndCode()
+            }
+    
+            else if (this.taskType() == 'questions') {
+                this.questions.toggleQuestions()
+            }
+    
+            else if (this.taskType() == 'cables') {
+                this.cableConnectorGame.toggleCableConnector()
+            }
+    
+            else if (this.taskType() == 'sorting') {
+                this.sortingGame.toggleSortingGame()
+            }
+    
+            else if (this.taskType() == 'simon_says') {
+                this.simonSays.toggleSimonSays()
+            }
+    
+            else if (this.taskType() == 'dialog') {
+                this.dialog.toggleDialog()
+            }
+    
+            else if (this.taskType() == 'flip_cards') {
+                this.chapter3game2.toggleGame()
+            }
+        }
+
+        else if (this.stepType() == 'quiz') {
+            this.quiz.toggleQuiz()
+        }
+    }
+
+    advance(checkpoint = ++this.currentCheckpoint) {
+        this.updateCurrentCheckpoint(checkpoint)
         this.world.progressBar.refresh()
         this.startInteractivity()
     }
 
-    updateCurrentStep(newStep) {
-        this.currentStep = newStep
+    updateCurrentCheckpoint(newCheckpoint) {
+        console.log('updateCurrentCheckpoint', newCheckpoint)
+        this.currentCheckpoint = newCheckpoint
 
-        if (newStep > this.chapterProgress() && !instance.debug.onQuickLook()) {
+        if (newCheckpoint > this.chapterProgress() && !instance.debug.onQuickLook()) {
             this.updateLocalStorage()
         }
     }
@@ -129,7 +210,7 @@ export default class Program {
             }, instance.camera.data.moveDuration, nextVideo)
         }
 
-        if (this.currentStep == this.totalSteps) {
+        if (this.currentCheckpoint == this.totalCheckpoints) {
             setTimeout(() => {
                 instance.congrats.toggleBibleCardsReminder()
             }, instance.camera.data.moveDuration)
@@ -137,7 +218,7 @@ export default class Program {
     }
 
     objectIsClickable() {
-        return this.currentStep in this.programData &&
+        return this.currentCheckpoint in this.programData &&
             this.interactiveObjects().includes(this.clickedObject)
     }
 
@@ -164,26 +245,28 @@ export default class Program {
     }
 
     currentVideo() {
-        let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in this.programData) || !(this.programData[localCurrentStep].type == 'video')) {
-            if (localCurrentStep == 0) return null
-            else localCurrentStep--
+        let localCurrentCheckpoint = this.currentCheckpoint
+
+        while (!(localCurrentCheckpoint in this.programData) || !(this.stepType() == 'video')) {
+            if (localCurrentCheckpoint == 0) return null
+            else localCurrentCheckpoint--
         }
 
-        return this.programData[localCurrentStep].videoId
+        return this.programData[localCurrentCheckpoint].steps[this.currentStep].videoId
     }
 
     nextVideo() {
-        let localCurrentStep = this.currentStep
-        while (!(localCurrentStep in this.programData) || !(this.programData[localCurrentStep].type == 'video')) {
-            if (localCurrentStep >= this.totalSteps) return null
-            else localCurrentStep++
+        let localCurrentCheckpoint = this.currentCheckpoint
+
+        while (!(localCurrentCheckpoint in this.programData) || !(this.stepType() == 'video')) {
+            if (localCurrentCheckpoint >= this.totalCheckpoints) return null
+            else localCurrentCheckpoint++
         }
 
-        return this.programData[localCurrentStep].videoId
+        return this.programData[localCurrentCheckpoint].steps[this.currentStep].videoId
     }
 
     updateLocalStorage() {
-        localStorage.setItem(this.world.getId(), this.currentStep)
+        localStorage.setItem(this.world.getId(), this.currentCheckpoint)
     }
 }

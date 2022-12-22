@@ -149,7 +149,7 @@ export default class SimonSays {
             back.innerText = _s.journey.back
             back.addEventListener('click', () => {
                 instance.modal.destroy()
-                instance.world.program.taskDescription.toggleTaskDescription()
+                instance.world.program.previousStep()
             })
 
             const restart = document.getElementById('restart')
@@ -330,7 +330,7 @@ export default class SimonSays {
     advanceToNextStep() {
         instance.fails = 0
         instance.modal.destroy()
-        instance.world.program.advance()
+        instance.world.program.nextStep()
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

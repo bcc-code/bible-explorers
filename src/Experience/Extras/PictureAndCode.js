@@ -20,13 +20,10 @@ export default class PictureAndCode {
             instance.world = instance.experience.world
             instance.offline = instance.world.offline
             instance.program = instance.world.program
-            instance.currentStep = instance.program.currentStep
             instance.selectedChapter = instance.world.selectedChapter
-            instance.data = instance.selectedChapter.program[instance.currentStep].pictureAndCode
+            instance.data = instance.program.getCurrentStepData().picture_and_code
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
-            instance.currentStepData = instance.selectedChapter.program[instance.currentStep]
             instance.lastKnownScrollPosition = 0
-
             instance.togglePicture()
         }
     }
@@ -51,14 +48,13 @@ export default class PictureAndCode {
             document.querySelector('.modal__picture-and-code').prepend(title)
         }
 
-
         const back = document.getElementById("back")
         back.style.display = 'block'
         back.innerText = _s.journey.back
         back.addEventListener('click', (e) => {
             e.stopPropagation()
             instance.modal.destroy()
-            instance.program.taskDescription.toggleTaskDescription()
+            instance.program.previousStep()
         })
 
         const next = document.getElementById("continue")
@@ -66,13 +62,7 @@ export default class PictureAndCode {
         next.innerText = _s.task.next
         next.addEventListener("click", () => {
             instance.modal.destroy()
-            instance.program.codeUnlock.toggleCodeUnlock(instance.data.code)
-
-            const back = document.getElementById("back")
-            back.addEventListener('click', (e) => {
-                instance.modal.destroy()
-                instance.togglePicture()
-            })
+            instance.program.nextStep()
         })
 
         instance.addExistingCircles()
@@ -80,7 +70,6 @@ export default class PictureAndCode {
         document.querySelector('.modal__picture-and-code').addEventListener('scroll', (e) => {
             instance.lastKnownScrollPosition = e.target.scrollTop;
         })
-
 
         instance.el.addEventListener('click', instance.addCirclesOnClick)
     }
