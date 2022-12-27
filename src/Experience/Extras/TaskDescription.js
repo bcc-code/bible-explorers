@@ -126,7 +126,7 @@ export default class TaskDescription {
     getModalHtml(type, title, additionalContent = '') {
         let html = `<div class="modal__content task ${type ? type : ''}">
             <div class="task__video">
-                <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
+                <video id="irisVideoBg" src="/textures/${instance.message.character}.mp4" autoplay loop></video>
                 <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
                 <div class="iris-playing">
                     <div class="line line1"></div>
