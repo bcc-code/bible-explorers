@@ -12,7 +12,7 @@ import SimonSaysGame from '../Games/SimonSaysGame.js'
 import Quiz from '../Extras/Quiz.js'
 import Dialog from '../Extras/Dialog.js'
 import Congrats from '../Extras/Congrats.js'
-import Chapter3Game2 from "../Games/Chapter3Game2.js"
+import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 
 let instance = null
@@ -45,7 +45,7 @@ export default class Program {
         this.quiz = new Quiz()
         this.dialog = new Dialog()
         this.congrats = new Congrats()
-        this.chapter3game2 = new Chapter3Game2()
+        this.flipCards = new FlipCards()
         this.heartDefense = new HeartDefense()
 
         instance = this
@@ -156,7 +156,7 @@ export default class Program {
             }
     
             else if (this.taskType() == 'flip_cards') {
-                this.chapter3game2.toggleGame()
+                this.flipCards.toggleGame()
             }
     
             else if (this.taskType() == 'heart_defense') {
