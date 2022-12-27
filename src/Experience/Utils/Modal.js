@@ -38,6 +38,7 @@ export default class Modal {
     static generateHtml(html) {
         return `
             <button class="modal__close | button bg--secondary width height border--5 border--solid border--transparent rounded--full | icon-xmark-solid"></button>
+            <div class="modal__heading--minigame"></div>
             <div class="modal__wrapper">
                 <div class="modal__container">${html}</div>
             </div>

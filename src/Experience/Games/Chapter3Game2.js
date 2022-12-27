@@ -19,7 +19,6 @@ export default class Chapter3Game2 {
             instance.modal.destroy()
         } else {
             instance.data = instance.world.program.getCurrentStepData()
-            console.log(instance.data)
 
             const gameWrapper = document.createElement('div')
             gameWrapper.classList.add('model__content')
@@ -27,6 +26,12 @@ export default class Chapter3Game2 {
 
             const cardWrapper = document.createElement('div')
             cardWrapper.setAttribute("id", "cardWrapper")
+
+            const cardSelect = document.createElement('button')
+            cardSelect.className = 'button button bg--secondary border--5 border--solid border--transparent height px rounded--full'
+            cardSelect.setAttribute('card-select', '')
+            cardSelect.innerText = 'Velg konge'
+            cardSelect.disabled = true
 
             instance.data.flip_cards.cards.forEach(card => {
                 cardWrapper.append(instance.getCardHtml(
@@ -36,22 +41,21 @@ export default class Chapter3Game2 {
                 ))
             })
 
-            const paragraph = document.createElement('div')
-            paragraph.setAttribute('id', 'message')
-
-            gameWrapper.append(cardWrapper, paragraph)
+            gameWrapper.append(cardWrapper, cardSelect)
 
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__flipCardGame')
 
             const close = document.querySelector('.modal__close')
             close.style.display = 'none'
 
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = 'En konge'
-            document.querySelector('.modal__flipCardGame').prepend(title)
+            const title = document.querySelector('.modal__heading--minigame')
+            title.innerHTML = `<h3>En konge</h3>
+                <p>Skriver inn riktig tall under en silhuett</p>
+                `
 
             const next = document.getElementById('continue')
+            next.style.display = 'block'
+            next.disabled = true
             next.innerText = 'next'
 
             const back = document.getElementById('back')
@@ -75,10 +79,8 @@ export default class Chapter3Game2 {
                 const back = q('.cardBack')
                 const input = q('.cardInput')
                 const audio = q('.cardAudio')
-                const button = q('.cardSelect')
 
-                gsap.set([front, button], { rotationY: 180 })
-                gsap.set([button], { y: -40, autoAlpha: 0 })
+                gsap.set(front, { rotationY: 180 })
 
                 const flip = gsap.timeline({ paused: true })
                     .to(input, { autoAlpha: 0, display: 'none' })
@@ -88,6 +90,13 @@ export default class Chapter3Game2 {
                     if (input[0].value === instance.data.flip_cards.cards[index].code) {
                         card.setAttribute('flipped', '')
                         flip.play()
+
+                        const flippedCards = document.querySelectorAll('[flipped]')
+
+                        if (flippedCards.length == instance.data.flip_cards.cards.length) {
+                            title.querySelector('p').innerText = 'Velge en evne som de synes er viktigst'
+
+                        }
                     }
                 })
 
@@ -98,16 +107,16 @@ export default class Chapter3Game2 {
                     const flippedCards = document.querySelectorAll('[flipped]')
                     if (flippedCards.length == instance.data.flip_cards.cards.length) {
 
-                        cardWrapper.classList.add('cardSelection')
+
+                        document.getElementById('cardWrapper').classList.add('cardSelection')
                         const selectedCard = document.querySelector('[selected]')
 
                         if (selectedCard !== null) {
                             selectedCard.removeAttribute('selected')
-                            gsap.set(selectedCard.querySelector('button'), { duration: 0.2, y: -40, autoAlpha: 0 })
                         }
 
                         card.setAttribute('selected', '')
-                        gsap.set(button, { duration: 0.2, y: 0, autoAlpha: 1 })
+                        document.querySelector('[card-select]').disabled = false
 
                         setTimeout(() => {
                             if (firstTimeClick)
@@ -118,19 +127,22 @@ export default class Chapter3Game2 {
                     }
                 })
 
-                button[0].addEventListener('click', () => {
-                    card.setAttribute('choosed', '')
-                    cardWrapper.classList.remove('cardSelection')
-                    cardWrapper.classList.add('cardChoosed')
+            })
 
-                    button[0].innerText = 'Hero selected'
+            document.querySelector('[card-select]').addEventListener('click', () => {
 
-                    setTimeout(() => {
-                        instance.toggleGodVoice()
-                        next.style.display = 'block'
-                        next.addEventListener('click', instance.finishGame)
-                    }, 2000)
-                })
+                document.getElementById('cardWrapper').classList.remove('cardSelection')
+                document.getElementById('cardWrapper').classList.add('cardChoosed')
+
+                const selectedCard = document.querySelector('[selected]')
+                selectedCard.setAttribute('choosed', '')
+                document.querySelector('[card-select]').disabled = true
+
+                setTimeout(() => {
+                    instance.toggleGodVoice()
+                    next.disabled = false
+                    next.addEventListener('click', instance.finishGame)
+                }, 1000)
             })
         }
     }
@@ -151,21 +163,53 @@ export default class Chapter3Game2 {
                 <source src="${effect}" type="audio/ogg">
             </audio>
             <input type="text" placeholder="code" class="cardInput" />
-            <button class="cardSelect">Choose this hero</button>
+            <div class="cardSelect"></div>
         `
         return card
     }
 
+    dialogueHtml(cls, text, avatar) {
+        const html = `
+            <div id="dialogue" class="dialogue ${cls}">
+                <div class="dialogue-content">
+                    <img src="${avatar}"/>
+                    <p>${text}</p>
+                </div>
+            </div>
+        `
+
+        return html
+    }
+
     toggleGlitch() {
-        const glitch = document.getElementById('message')
-        glitch.innerText = instance.data.flip_cards.glitchs_voice.text
-        instance.audio.togglePlayTaskDescription(instance.data.flip_cards.glitchs_voice.audio)
+        const imageSrc = 'games/glitch.png'
+        const glitch = instance.dialogueHtml('glitch', instance.data.flip_cards.glitchs_voice.text, imageSrc)
+
+        document.querySelector('.modal__flipCardGame').insertAdjacentHTML('beforeend', glitch)
+
+        gsap.to('.dialogue', {
+            y: 0, autoAlpha: 1, onComplete: () => {
+                instance.audio.togglePlayTaskDescription(instance.data.flip_cards.glitchs_voice.audio)
+            }
+        })
     }
 
     toggleGodVoice() {
-        const god = document.getElementById('message')
-        god.innerText = instance.data.flip_cards.gods_voice.text
-        instance.audio.togglePlayTaskDescription(instance.data.flip_cards.gods_voice.audio)
+        const imageSrc = 'games/godVoice.png'
+        const godVoice = instance.dialogueHtml('godVoice', instance.data.flip_cards.gods_voice.text, imageSrc)
+
+
+        gsap.to('.dialogue', {
+            y: '100%', autoAlpha: 0, onComplete: () => {
+                document.querySelector('.dialogue').remove()
+                document.querySelector('.modal__flipCardGame').insertAdjacentHTML('beforeend', godVoice)
+                gsap.to('.dialogue', {
+                    y: 0, autoAlpha: 1, onComplete: () => {
+                        instance.audio.togglePlayTaskDescription(instance.data.flip_cards.gods_voice.audio)
+                    }
+                })
+            }
+        })
     }
 
     finishGame() {

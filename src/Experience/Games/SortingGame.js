@@ -31,10 +31,8 @@ export default class SortingGame {
 
         this.modal = new Modal(gameWrapper.outerHTML, 'modal__sort-game')
 
-        const title = document.createElement('h3')
-        title.className = 'modal__heading--minigame'
-        title.innerText = _s.miniGames.sortingIcons
-        document.querySelector('.modal__sort-game').prepend(title)
+        const title = document.querySelector('.modal__heading--minigame')
+        title.innerHTML = `<h3>${_s.miniGames.sortingIcons}</h3>`
     }
 
     initCanvas() {
@@ -290,20 +288,21 @@ export default class SortingGame {
         instance.audio.playTaskCompleted()
 
         document.getElementById('continue_journey').addEventListener('click', () => {
-            instance.destroy()
+            document.body.classList.remove('freeze')
             instance.modal.destroy()
             instance.program.nextStep()
         })
     }
 
     toggleGameComplete() {
+        instance.modal.destroy()
+        window.removeEventListener('resize', instance.resize)
+
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
                 <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h2>${_s.miniGames.completed.title}</h2><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
-                <div id="continue_journey" class="button button__continue">
-                    <div class="button__content"> <span>${_s.miniGames.continue}</span></div>
-                </div>
+                <button id="continue_journey" class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate">${_s.miniGames.continue}</button>
             </div>
         </div>`
 
@@ -576,9 +575,4 @@ export default class SortingGame {
         })
     }
 
-    destroy() {
-        document.getElementById('sort-game').remove()
-        document.body.classList.remove('freeze')
-        window.removeEventListener('resize', instance.resize)
-    }
 }

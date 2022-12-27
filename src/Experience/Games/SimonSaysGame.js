@@ -127,10 +127,8 @@ export default class SimonSays {
 
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__simon-says')
 
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = _s.miniGames.simonSays.title
-            document.querySelector('.modal__simon-says').prepend(title)
+            const title = document.querySelector('.modal__heading--minigame')
+            title.innerHTML = `<h3>${_s.miniGames.simonSays}</h3>`
 
             // Add event listeners
 

@@ -33,10 +33,8 @@ export default class CableConnector {
 
         instance.modal = new Modal(gameWrapper.outerHTML, 'modal__cable-connector')
 
-        const title = document.createElement('h3')
-        title.className = 'modal__heading--minigame'
-        title.innerText = _s.miniGames.cableConnect
-        document.querySelector('.modal__cable-connector').prepend(title)
+        const title = document.querySelector('.modal__heading--minigame')
+        title.innerHTML = `<h3>${_s.miniGames.cableConnect}</h3>`
 
         const spriteW = 180
         const spriteH = 100
@@ -426,7 +424,7 @@ export default class CableConnector {
                     <h2>${_s.miniGames.timeElapsed.title}</h2>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}</div>
-                <button class="button button__primary" id="reset">${_s.miniGames.reset}</button>
+                <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="reset">${_s.miniGames.reset}</button>
             </div>
         </div>`
 
