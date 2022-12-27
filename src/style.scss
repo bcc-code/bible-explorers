@@ -2281,7 +2281,6 @@ button,
 
 }
 
-
 .accordion {
     counter-reset: item;
     min-height: 260px;
@@ -2335,10 +2334,10 @@ button,
         padding: 0 18px;
         max-height: 0;
         overflow: hidden;
-        opacity: 0.8;
-
+        opacity: 0;
 
         p {
+            font-size: 1.5rem;
             color: #fff;
         }
 
@@ -2357,7 +2356,8 @@ button,
 
     &_item.active {
         .accordion_item-panel {
-            transition: max-height 0.2s ease-out;
+            opacity: 1;
+            transition: max-height 0.2s ease-out, opacity 0.4s ease-in;
         }
     }
 

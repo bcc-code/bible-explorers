@@ -61,6 +61,9 @@ export default class Dialog {
 
             console.log(title);
 
+            const close = document.querySelector(".modal__close ")
+            close.style.display = 'none'
+
             const back = document.getElementById("back")
             back.style.display = 'block'
             back.innerText = _s.journey.back
