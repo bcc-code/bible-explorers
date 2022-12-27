@@ -50,8 +50,7 @@ export default class Chapter3Game2 {
 
             const title = document.querySelector('.modal__heading--minigame')
             title.innerHTML = `<h3>Velg den nye kongen</h3>
-                <p>Skriver inn riktig tall under en silhuett</p>
-                `
+                <p>Skriv inn riktig tall under hver silhuett</p>`
 
             const next = document.getElementById('continue')
             next.style.display = 'block'

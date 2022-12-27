@@ -23,7 +23,8 @@ export default class HeartDefense {
             maxLives: 3,
             path: 'games/heart-defense/',
             heartStates: ['empty', 'half', 'full'],
-            doorStates: ['open', 'closed'],
+            doorStates: ['closed', 'open'],
+            livesStates: ['active', 'lost'],
             explosionWidth: spriteW,
             explosionHeight: spriteH,
             explosion: 'games/explosion.png',
@@ -73,15 +74,17 @@ export default class HeartDefense {
             const canvas = document.createElement('div')
             canvas.setAttribute('id', 'heart-defense_canvas')
 
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = 'Heart Defense'
-
             wrapper.append(canvas)
 
             instance.modal = new Modal(wrapper.outerHTML, 'heart-defense')
-            instance.modal.htmlEl.prepend(title)
-            instance.modal.htmlEl.querySelector('.modal__close').style.display = 'none'
+
+            const title = document.querySelector('.modal__heading--minigame')
+            title.innerHTML = `<h3>Heart Defense</h3>
+                <p>Click SPACE to open/close your heart.</p>`
+
+            const close = document.querySelector('.modal__close')
+            close.style.display = 'none'
+
             instance.startGame()
         }
     }
@@ -119,15 +122,19 @@ export default class HeartDefense {
     }
 
     drawHeart() {
-        instance.heartImage = new Image()
-        instance.heartImage.onload = () => {
-            if (instance.layer.find('#heart').length) return
+        const heartGroup = new Konva.Group({
+            id: "heart",
+            x: instance.center.x,
+            y: instance.center.y
+        })
+        heartGroup.zIndex(0)
+        instance.layer.add(heartGroup)
 
-            instance.layer.add(new Konva.Image({
-                id: 'heart',
-                image: instance.heartImage,
-                x: instance.center.x,
-                y: instance.center.y,
+        instance.emptyHeartImage = new Image()
+        instance.emptyHeartImage.onload = () => {
+            instance.layer.findOne('#heart').add(new Konva.Image({
+                id: 'heart-empty',
+                image: instance.emptyHeartImage,
                 width: instance.config.heart.width,
                 height: instance.config.heart.height,
                 offset: {
@@ -135,22 +142,56 @@ export default class HeartDefense {
                     y: instance.config.heart.height / 2
                 }
             }))
-            instance.layer.findOne('#heart').zIndex(0)
-
         }
-        instance.heartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[instance.stats.points] + '.jpg'
+        instance.emptyHeartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[0] + '.jpg'
+
+        instance.halfHeartImage = new Image()
+        instance.halfHeartImage.onload = () => {
+            instance.layer.findOne('#heart').add(new Konva.Image({
+                id: 'heart-half',
+                image: instance.halfHeartImage,
+                width: instance.config.heart.width,
+                height: instance.config.heart.height,
+                offset: {
+                    x: instance.config.heart.width / 2,
+                    y: instance.config.heart.height / 2
+                },
+                visible: false
+            }))
+        }
+        instance.halfHeartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[1] + '.jpg'
+
+        instance.fullHeartImage = new Image()
+        instance.fullHeartImage.onload = () => {
+            instance.layer.findOne('#heart').add(new Konva.Image({
+                id: 'heart-full',
+                image: instance.fullHeartImage,
+                width: instance.config.heart.width,
+                height: instance.config.heart.height,
+                offset: {
+                    x: instance.config.heart.width / 2,
+                    y: instance.config.heart.height / 2
+                },
+                visible: false
+            }))
+        }
+        instance.fullHeartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[2] + '.jpg'
     }
 
     drawDoor() {
-        instance.doorImage = new Image()
-        instance.doorImage.onload = () => {
-            if (instance.layer.find('#door').length) return
+        const doorGroup = new Konva.Group({
+            id: "door",
+            x: instance.center.x,
+            y: instance.center.y
+        })
+        doorGroup.zIndex(1)
+        instance.layer.add(doorGroup)
 
-            instance.layer.add(new Konva.Image({
-                id: 'door',
-                image: instance.doorImage,
-                x: instance.center.x,
-                y: instance.center.y,
+        instance.openDoorImage = new Image()
+        instance.openDoorImage.onload = () => {
+            instance.layer.findOne('#door').add(new Konva.Image({
+                id: 'door-' + instance.config.doorStates[1],
+                image: instance.openDoorImage,
                 width: 75,
                 height: 150,
                 offset: {
@@ -158,9 +199,23 @@ export default class HeartDefense {
                     y: 75
                 }
             }))
-            instance.layer.findOne('#door').zIndex(1)
         }
-        instance.doorImage.src = instance.config.path + 'door-' + instance.config.doorStates[+instance.stats.heartClosed] + '.jpg'
+        instance.openDoorImage.src = instance.config.path + 'door-' + instance.config.doorStates[1] + '.jpg'
+
+        instance.closedDoorImage = new Image()
+        instance.closedDoorImage.onload = () => {
+            instance.layer.findOne('#door').add(new Konva.Image({
+                id: 'door-' + instance.config.doorStates[0],
+                image: instance.closedDoorImage,
+                width: 75,
+                height: 150,
+                offset: {
+                    x: 37.5,
+                    y: 75
+                }
+            }))
+        }
+        instance.closedDoorImage.src = instance.config.path + 'door-' + instance.config.doorStates[0] + '.jpg'
     }
 
     drawLives() {
@@ -172,19 +227,33 @@ export default class HeartDefense {
         })
         instance.layer.add(livesGroup)
 
-        for (let i=0; i<instance.stats.lives; i++) {
-            const lifeImage = new Image()
-            lifeImage.onload = () => {
+        for (let i=0; i<instance.config.maxLives; i++) {
+            const lostLife = new Image()
+            lostLife.onload = function() {
                 const life = new Konva.Image({
-                    id: 'life'+i,
-                    image: lifeImage,
+                    id: 'life-lost'+i,
+                    image: lostLife,
                     x: iconWidth * i,
                     width: iconWidth,
                     height: 32
                 })
                 instance.layer.findOne('#lives').add(life)
             }
-            lifeImage.src = instance.config.path + 'life.jpg'
+            lostLife.src = instance.config.path + 'life-' + instance.config.livesStates[1] + '.jpg'
+
+            const activeLife = new Image()
+            activeLife.onload = () => {
+                const life = new Konva.Image({
+                    id: 'life-active'+i,
+                    image: activeLife,
+                    x: iconWidth * i,
+                    width: iconWidth,
+                    height: 32,
+                    visible: instance.stats.lives > i
+                })
+                instance.layer.findOne('#lives').add(life)
+            }
+            activeLife.src = instance.config.path + 'life-' + instance.config.livesStates[0] + '.jpg'
         }
     }
 
@@ -251,29 +320,32 @@ export default class HeartDefense {
                     y: thought.item.y() + thought.speedY
                 })
 
-                if (instance.isIntersectingRectangleWithRectangle(thought.item.position(), 10, 10, instance.center, 10, 10)) {
-                    thought.item.destroy()
-                    instance.thoughts.splice(index, 1)
+                if (!instance.isIntersectingRectangleWithRectangle(thought.item.position(), 10, 10, instance.center, 10, 10))
+                    return
 
-                    if (!instance.stats.heartClosed) {
-                        if (thought.badThought) {
-                            --instance.stats.lives
-                                ? instance.toggleLifeLost()
-                                : instance.toggleGameOver()
-                        }
-                        else {
-                            instance.audio.playCorrectSound()
-                            instance.stats.points++
-                            instance.updateHeartStatus()
+                thought.item.destroy()
+                instance.thoughts.splice(index, 1)
 
-                            if (instance.stats.points == instance.config.pointsToCompleteLevel)
-                                instance.toggleLevelCompleted()
-                        }
+                if (!instance.stats.heartClosed) {
+                    if (thought.badThought) {
+                        instance.stats.lives--
+                        instance.updateLivesStatus()
+
+                        if (instance.stats.lives == 0)
+                            instance.toggleGameOver()
                     }
                     else {
-                        instance.audio.playWrongSound()
-                        playAnimation(thought.item, instance.explosionSprite)
+                        instance.audio.playCorrectSound()
+                        instance.stats.points++
+                        instance.updateHeartStatus()
+
+                        if (instance.stats.points == instance.config.pointsToCompleteLevel)
+                            instance.toggleLevelCompleted()
                     }
+                }
+                else {
+                    instance.audio.playWrongSound()
+                    playAnimation(thought.item, instance.explosionSprite)
                 }
             })
         }
@@ -347,7 +419,6 @@ export default class HeartDefense {
     getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * instance.stats.level
     getRndBadThoughtSrc = () => instance.config.path + 'bad-thought' + instance.getRoundedRndBetween(1, instance.config.badThoughtsVariants) + '.jpg'
     getRndGoodThoughtSrc = () => instance.config.path + 'good-thought' + instance.getRoundedRndBetween(1, instance.config.goodThoughtsVariants) + '.jpg'
-    getDoorSrc = () => instance.config.path + 'door-' + instance.config.doorStates[+instance.stats.heartClosed] + '.jpg'
     getRndBetween = (min, max) => min + Math.random() * (max - min)
     getRoundedRndBetween = (min, max) => Math.round(instance.getRndBetween(min, max))
 
@@ -364,7 +435,7 @@ export default class HeartDefense {
 
         if (e.keyCode == 32) {
             instance.stats.heartClosed = !instance.stats.heartClosed
-            instance.doorImage.src = instance.getDoorSrc()
+            instance.layer.findOne('#door-' + instance.config.doorStates[0]).visible(instance.stats.heartClosed)
         }
 
         if (e.keyCode == 27) {
@@ -374,12 +445,15 @@ export default class HeartDefense {
         }
     }
 
-    toggleLifeLost() {
-        instance.layer.findOne('#life'+instance.stats.lives).destroy()
+    updateLivesStatus() {
+        instance.layer.findOne('#life-active' + instance.stats.lives).hide()
     }
 
     updateHeartStatus() {
-        instance.heartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[instance.stats.points] + '.jpg'
+        console.log(instance.stats.points, 'instance.stats.points')
+        console.log(instance.config.heartStates, 'instance.config.heartStates')
+        console.log(instance.config.heartStates[instance.stats.points], 'instance.config.heartStates[instance.stats.points]')
+        instance.layer.findOne('#heart-' + instance.config.heartStates[instance.stats.points]).show()
     }
 
     toggleLevelCompleted() {
@@ -440,6 +514,7 @@ export default class HeartDefense {
         instance.gameIsOn = false
         instance.stats.fails++
         instance.stats.lives = instance.config.maxLives
+        instance.stats.level = 1
 
         let html = `<div class="modal__content congrats congrats__miniGame heart-defense">
             <div class="congrats__container">
