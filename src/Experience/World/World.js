@@ -15,7 +15,6 @@ import _appInsights from '../Utils/AppInsights.js'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
-import Game1Chapter3 from '../Games/Game1Chapter3.js'
 
 let instance = null
 export default class World {
@@ -96,8 +95,6 @@ export default class World {
             this.points = new Points()
             this.highlight = new Highlight()
             this.audio = new Audio()
-
-            this.game1Chapter3 = new Game1Chapter3()
 
             this.buttons.start.addEventListener('click', this.startChapter)
             this.buttons.restart.addEventListener('click', this.restartChapter)

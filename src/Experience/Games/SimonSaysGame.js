@@ -129,7 +129,7 @@ export default class SimonSays {
 
             const title = document.createElement('h3')
             title.className = 'modal__heading--minigame'
-            title.innerText = _s.miniGames.simonSays
+            title.innerText = _s.miniGames.simonSays.title
             document.querySelector('.modal__simon-says').prepend(title)
 
             // Add event listeners
@@ -261,9 +261,9 @@ export default class SimonSays {
         let html = `<div class="modal__content congrats congrats__miniGame simon-says">
             <div class="congrats__container">
                 <div class="congrats__title">
-                    <h2>${_s.miniGames.failed.title}</h2>
+                    <h2>${_s.miniGames.simonSays.failed.title}</h2>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.failed.message}</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.simonSays.failed.message}</div>
             </div>
         </div>`
 
