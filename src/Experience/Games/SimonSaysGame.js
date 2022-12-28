@@ -59,6 +59,9 @@ export default class SimonSays {
     }
 
     toggleInit() {
+        instance.program = instance.world.program
+        instance.currentStepData = instance.program.getCurrentStepData()
+
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         }
@@ -128,7 +131,7 @@ export default class SimonSays {
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__simon-says')
 
             const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>${_s.miniGames.simonSays.title}</h3>`
+            title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>`
 
             // Add event listeners
 
@@ -147,7 +150,7 @@ export default class SimonSays {
             back.innerText = _s.journey.back
             back.addEventListener('click', () => {
                 instance.modal.destroy()
-                instance.world.program.previousStep()
+                instance.program.previousStep()
             })
 
             const restart = document.getElementById('restart')
@@ -328,7 +331,7 @@ export default class SimonSays {
     advanceToNextStep() {
         instance.fails = 0
         instance.modal.destroy()
-        instance.world.program.nextStep()
+        instance.program.nextStep()
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

@@ -1,9 +1,9 @@
-import Experience from '../Experience.js';
-import Modal from '../Utils/Modal.js';
-import _s from '../Utils/Strings.js';
-import gsap from 'gsap';
+import Experience from '../Experience.js'
+import Modal from '../Utils/Modal.js'
+import _s from '../Utils/Strings.js'
+import gsap from 'gsap'
 
-let instance = null;
+let instance = null
 
 export default class Chapter3Game2 {
     constructor() {
@@ -15,11 +15,12 @@ export default class Chapter3Game2 {
     }
 
     init() {
+        instance.program = instance.world.program
+        instance.data = instance.program.getCurrentStepData()
+
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         } else {
-            instance.data = instance.world.program.getCurrentStepData()
-
             const gameWrapper = document.createElement('div')
             gameWrapper.classList.add('model__content')
             gameWrapper.setAttribute("id", "flipCardGame")
@@ -30,7 +31,7 @@ export default class Chapter3Game2 {
             const cardSelect = document.createElement('button')
             cardSelect.className = 'button button bg--secondary border--5 border--solid border--transparent height px rounded--full'
             cardSelect.setAttribute('card-select', '')
-            cardSelect.innerText = 'Velg konge'
+            cardSelect.innerText = _s.miniGames.flipCards.chooseKing
             cardSelect.disabled = true
 
             instance.data.flip_cards.cards.forEach(card => {
@@ -49,8 +50,8 @@ export default class Chapter3Game2 {
             close.style.display = 'none'
 
             const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>Velg den nye kongen</h3>
-                <p>Skriv inn riktig tall under hver silhuett</p>`
+            title.innerHTML = `<h3>${instance.data.details.title}</h3>
+                <p>${instance.data.details.prompts[0].prompt}</p>`
 
             const next = document.getElementById('continue')
             next.style.display = 'block'
@@ -62,7 +63,7 @@ export default class Chapter3Game2 {
             back.innerText = _s.journey.back
             back.addEventListener('click', () => {
                 instance.modal.destroy()
-                instance.world.program.previousStep()
+                instance.program.previousStep()
             })
 
             let firstTimeClick = true
@@ -93,7 +94,7 @@ export default class Chapter3Game2 {
                         const flippedCards = document.querySelectorAll('[flipped]')
 
                         if (flippedCards.length == instance.data.flip_cards.cards.length) {
-                            title.querySelector('p').innerText = 'Velg en evne som dere synes er viktigst for en konge å ha'
+                            title.querySelector('p').innerText = instance.data.details.prompts[1].prompt
 
                         }
                     }
@@ -122,14 +123,12 @@ export default class Chapter3Game2 {
                                 instance.toggleGlitch()
 
                             firstTimeClick = false
-                        }, 2000)
+                        }, 1000)
                     }
                 })
-
             })
 
             document.querySelector('[card-select]').addEventListener('click', () => {
-
                 document.getElementById('cardWrapper').classList.remove('cardSelection')
                 document.getElementById('cardWrapper').classList.add('cardChoosed')
 
@@ -168,7 +167,7 @@ export default class Chapter3Game2 {
     }
 
     dialogueHtml(cls, text, avatar) {
-        const html = `
+        return `
             <div id="dialogue" class="dialogue ${cls}">
                 <div class="dialogue-content">
                     <img src="${avatar}"/>
@@ -176,8 +175,6 @@ export default class Chapter3Game2 {
                 </div>
             </div>
         `
-
-        return html
     }
 
     toggleGlitch() {
@@ -197,7 +194,6 @@ export default class Chapter3Game2 {
         const imageSrc = 'games/godVoice.png'
         const godVoice = instance.dialogueHtml('godVoice', instance.data.flip_cards.gods_voice.text, imageSrc)
 
-
         gsap.to('.dialogue', {
             y: '100%', autoAlpha: 0, onComplete: () => {
                 document.querySelector('.dialogue').remove()
@@ -213,6 +209,6 @@ export default class Chapter3Game2 {
 
     finishGame() {
         instance.modal.destroy()
-        instance.world.program.nextStep()
+        instance.program.nextStep()
     }
 }

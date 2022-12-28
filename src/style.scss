@@ -2170,7 +2170,6 @@ button,
     // Mini Games
 
     &__journey {
-
         #bibleCards {
             width: 100%;
             height: auto;
@@ -2202,7 +2201,8 @@ button,
         .stars {
             position: relative;
             display: inline-block;
-            margin-top: -5rem;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
         }
 
         .icon {
@@ -2211,8 +2211,18 @@ button,
             transform: scale(0.8);
         }
 
+        .icon:nth-child(1) {
+            position: relative;
+            right: -0.5rem;
+        }
+
         .icon:nth-child(2) {
             font-size: 8rem;
+        }
+
+        .icon:nth-child(3) {
+            position: relative;
+            left: -0.5rem;
         }
 
         .icon.filled {

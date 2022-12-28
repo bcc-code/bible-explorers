@@ -73,10 +73,8 @@ export default class Quiz {
 
             quiz.modal = new Modal(html, 'modal__quiz')
 
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = 'Quiz'
-            document.querySelector('.modal__quiz').prepend(title)
+            const title = document.querySelector('.modal__heading--minigame')
+            title.innerHTML = `<h3>Quiz</h3>`
 
             const topbar = document.createElement('div')
             topbar.className = 'quiz__topbar'

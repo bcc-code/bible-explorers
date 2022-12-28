@@ -15,7 +15,6 @@ export default class SortingGame {
         this.debug = this.experience.debug
 
         instance = this
-
     }
 
     toggleSortingGame() {
@@ -26,17 +25,19 @@ export default class SortingGame {
     }
 
     generateHTML() {
+        instance.program = instance.world.program
+        instance.currentStepData = instance.program.getCurrentStepData()
+
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "sort-game")
 
         this.modal = new Modal(gameWrapper.outerHTML, 'modal__sort-game')
 
         const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${_s.miniGames.sortingIcons}</h3>`
+        title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>`
     }
 
     initCanvas() {
-
         const canvasWidth = document.getElementById('sort-game').offsetWidth
         const canvasHeight = document.getElementById('sort-game').offsetHeight
 
@@ -158,7 +159,6 @@ export default class SortingGame {
         }
         this.icons = []
 
-
         this.boxes.forEach(el => {
             this.grids.push(el.children.filter(item => item.attrs.name === "grid")[0])
             this.container.push(el.children.filter(item => item.attrs.name === "container")[0])
@@ -174,7 +174,6 @@ export default class SortingGame {
         instance.data.icons.forEach(async (data) => {
             instance.offline.fetchChapterAsset(data, "icon", instance.createIcon)
         })
-
     }
 
     addEventListeners() {

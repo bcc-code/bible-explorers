@@ -28,13 +28,16 @@ export default class CableConnector {
     }
 
     init() {
+        instance.program = instance.world.program
+        instance.currentStepData = instance.program.getCurrentStepData()
+
         const gameWrapper = document.createElement('div')
         gameWrapper.setAttribute("id", "cable-connect")
 
         instance.modal = new Modal(gameWrapper.outerHTML, 'modal__cable-connector')
 
         const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${_s.miniGames.cableConnect}</h3>`
+        title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>`
 
         const spriteW = 180
         const spriteH = 100
@@ -120,9 +123,6 @@ export default class CableConnector {
             height: instance.data.canvas.height
         })
         this.correspondingOutlet = null
-
-        instance.program = instance.world.program
-        instance.currentStepData = instance.program.getCurrentStepData()
     }
 
     setup() {

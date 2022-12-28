@@ -41,12 +41,8 @@ export default class PictureAndCode {
         instance.modal = new Modal(html, 'modal__picture-and-code')
         instance.el = document.querySelector('.picture-and-code')
 
-        if (instance.data.title) {
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = instance.data.title
-            document.querySelector('.modal__picture-and-code').prepend(title)
-        }
+        const title = document.querySelector('.modal__heading--minigame')
+        title.innerHTML = `<h3>${instance.data.details.title}</h3>`
 
         const back = document.getElementById("back")
         back.style.display = 'block'

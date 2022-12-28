@@ -96,14 +96,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Oops!",
                     "message": "You've played the wrong note of the melody!"
                 }
             },
-            "sortingIcons": "Sort the icons to the right box",
-            "cableConnect": "Join the cables to the right color",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Well done!",
                 "message": "You have successfully completed the task!"
@@ -217,14 +217,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Oops!",
                     "message": "Du har spilt av feil note i melodien!"
                 }
             },
-            "sortingIcons": "Sorter ikonene i riktig boks",
-            "cableConnect": "Fest kablene til riktig farge",
+            "flipCards": {
+                "chooseKing": "Velg som konge"
+            },
             "completed": {
                 "title": "Bra jobba!",
                 "message": "Du har fullført oppgaven!"
@@ -335,14 +335,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Uuups!",
                     "message": "Du hast den falschen Ton aus der Melodie abgespielt!"
                 }
             },
-            "sortingIcons": "Sortiere die Icons in die richtige Box",
-            "cableConnect": "Verbinde die Kabel mit der richtigen Farbe",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Gut gemacht!",
                 "message": "Du hast die Aufgabe geschafft!"
@@ -453,14 +453,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Oeps!",
                     "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
                 }
             },
-            "sortingIcons": "Zet de plaatjes in de juiste box",
-            "cableConnect": "Maak de kabels vast aan de juiste kleur",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Goed gedaan!",
                 "message": "Je hebt de opdracht voltooid!"
@@ -571,14 +571,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Oups!",
                     "message": "Tu as joué la mauvaise note de la mélodie !"
                 }
             },
-            "sortingIcons": "Trier les icônes dans la bonne boîte",
-            "cableConnect": "Relier les câbles à la bonne couleur",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Bien joué !",
                 "message": "Tu as réussi la tâche !"
@@ -689,14 +689,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Ups!",
                     "message": "Wybrałeś złą nutę"
                 }
             },
-            "sortingIcons": "Posortuj ikony w odpowiednim polu",
-            "cableConnect": "Połącz kable z odpowiednim kolorem",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Dobra robota!",
                 "message": "Wykonaliście zadanie!"
@@ -807,14 +807,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Ups!",
                     "message": "Ai cântat o notă greșită în melodie!"
                 }
             },
-            "sortingIcons": "Sortează imaginile în căsuța corectă",
-            "cableConnect": "Conectează cablurile la culoarea corectă",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Bravo!",
                 "message": "Ai terminat sarcina cu succes!"
@@ -925,14 +925,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Ups!",
                     "message": "Has tocado la nota equivocada en la melodía."
                 }
             },
-            "sortingIcons": "Ordenar los iconos en el cuadro correcto",
-            "cableConnect": "Conecte los cables al color correcto",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Buen Trabajo!",
                 "message": "Has completado tu tarea!"
@@ -1043,14 +1043,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Oops!",
                     "message": "Você tocou a nota incorreta da melodia!"
                 }
             },
-            "sortingIcons": "Classifique os icones para a caixa correta",
-            "cableConnect": "Junte os cabos para a cor certa",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Well done!",
                 "message": "You have successfully completed the task!"
@@ -1161,14 +1161,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Ops!",
                     "message": "Hai suonato la nota sbagliata della melodia!"
                 }
             },
-            "sortingIcons": "Ordina le icone nella casella giusta",
-            "cableConnect": "Unisci i cavi al colore giusto",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Ottimo lavoro!",
                 "message": "Hai completato il compito!"
@@ -1279,14 +1279,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Ой!",
                     "message": "Вы сыграли не ту ноту в мелодии!"
                 }
             },
-            "sortingIcons": "Рассортируйте иконки по правильным коробкам",
-            "cableConnect": "Соедините кабели нужного цвета",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Отличная работа!",
                 "message": "Вы выполнили задание!"
@@ -1397,14 +1397,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Hups!",
                     "message": "Olet soittanut väärän nuotin melodiasta!"
                 }
             },
-            "sortingIcons": "Järjestä kuvakkeet oikeisiin laatikoihin ",
-            "cableConnect": "Yhdistä johdot oikeisiin väreihin",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Hyvin tehty!",
                 "message": "Olet suorittanut tehtävän!"
@@ -1515,14 +1515,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Hoppá!",
                     "message": "You've played the wrong note of the melody!"
                 }
             },
-            "sortingIcons": "Válogasd az ikonokat a megfelelő dobozba",
-            "cableConnect": "Csatlakoztasd a kábeleket a megfelelő színhez",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Szép munka!",
                 "message": "Teljesítetted a feladatot! Folytathatod az utazást"
@@ -1633,14 +1633,14 @@ const strings = {
         },
         "miniGames": {
             "simonSays": {
-                "title": "Simon Says",
                 "failed": {
                     "title": "Oops!",
                     "message": "Du har spillet den forkerte tone i melodien"
                 }
             },
-            "sortingIcons": "Sortere ikonerne i de rigtige bokse",
-            "cableConnect": "Tilslut kablerne til den rigtige farve",
+            "flipCards": {
+                "chooseKing": "Choose as king"
+            },
             "completed": {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey"
