@@ -63,8 +63,8 @@ export default class Program {
 
         this.currentStep = 0
         this.getCurrentStepData = () => this.getCurrentCheckpointData() ? this.getCurrentCheckpointData().steps[this.currentStep] : null
-        this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().type : null
-        this.taskType = () => this.getCurrentStepData() ? this.getCurrentStepData().taskType : null
+        this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().details.step_type : null
+        this.taskType = () => this.getCurrentStepData() ? this.getCurrentStepData().details.task_type : null
 
         this.updateAssetInProgramData = (field, newValue) => {
             console.log(field, newValue)

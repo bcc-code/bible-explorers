@@ -339,13 +339,13 @@ export default class World {
         let numberOfQuizes = 0
 
         instance.selectedChapter.program.forEach(checkpoint => {
-            if (checkpoint.steps.some(step => step.type == 'video'))
+            if (checkpoint.steps.some(step => step.details.step_type == 'video'))
                 numberOfEpisodes++
 
-            else if (checkpoint.steps.some(step => step.type == 'quiz'))
+            else if (checkpoint.steps.some(step => step.details.step_type == 'quiz'))
                 numberOfQuizes++
 
-            else if (checkpoint.steps.some(step => step.type == 'task'))
+            else if (checkpoint.steps.some(step => step.details.step_type == 'task'))
                 numberOfTasks++
         })
 
@@ -530,8 +530,8 @@ export default class World {
         chapter['program'].forEach(checkpoint => {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter(step => step.message && step.message.audio))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
-            instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.taskType == "sorting"))
-            instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.taskType == "picture_and_code"))
+            instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
+            instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
         })
     }
 
