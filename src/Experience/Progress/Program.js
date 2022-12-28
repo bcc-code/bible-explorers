@@ -118,47 +118,49 @@ export default class Program {
             this.advance()
         }
 
+
         else if (this.stepType() == 'iris') {
             this.taskDescription.toggleTaskDescription()
+
         }
 
         else if (this.stepType() == 'task') {
             if (this.taskType() == 'code_to_unlock') {
                 this.codeUnlock.toggleCodeUnlock()
             }
-    
+
             else if (this.taskType() == 'picture_and_code') {
                 this.pictureAndCode.togglePictureAndCode()
             }
-    
+
             else if (this.taskType() == 'question_and_code') {
                 this.questionAndCode.toggleQuestionAndCode()
             }
-    
+
             else if (this.taskType() == 'questions') {
                 this.questions.toggleQuestions()
             }
-    
+
             else if (this.taskType() == 'cables') {
                 this.cableConnectorGame.toggleCableConnector()
             }
-    
+
             else if (this.taskType() == 'sorting') {
                 this.sortingGame.toggleSortingGame()
             }
-    
+
             else if (this.taskType() == 'simon_says') {
                 this.simonSays.toggleSimonSays()
             }
-    
+
             else if (this.taskType() == 'dialog') {
                 this.dialog.toggleDialog()
             }
-    
+
             else if (this.taskType() == 'flip_cards') {
                 this.flipCards.toggleGame()
             }
-    
+
             else if (this.taskType() == 'heart_defense') {
                 this.heartDefense.toggleGame()
             }
