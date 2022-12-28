@@ -14,6 +14,7 @@ import Dialog from '../Extras/Dialog.js'
 import Congrats from '../Extras/Congrats.js'
 import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
+import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 
 let instance = null
 
@@ -47,6 +48,7 @@ export default class Program {
         this.congrats = new Congrats()
         this.flipCards = new FlipCards()
         this.heartDefense = new HeartDefense()
+        this.davidsRefuge = new DavidsRefuge()
 
         instance = this
 
@@ -163,6 +165,10 @@ export default class Program {
 
             else if (this.taskType() == 'heart_defense') {
                 this.heartDefense.toggleGame()
+            }
+
+            else if (this.taskType() == 'davids_refuge') {
+                this.davidsRefuge.toggleGame()
             }
         }
 

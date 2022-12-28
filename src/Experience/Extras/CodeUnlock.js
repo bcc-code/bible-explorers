@@ -51,10 +51,8 @@ export default class CodeUnlock {
 
             instance.modal = new Modal(html, 'modal__code-unlock')
 
-            const title = document.createElement('h3')
-            title.className = 'modal__heading--minigame'
-            title.innerText = _s.task.codeUnlock
-            document.querySelector('.modal__code-unlock').prepend(title)
+            const title = document.querySelector('.modal__heading--minigame')
+            title.innerHTML = `<h3>${_s.task.codeUnlock}</h3>`
 
             const back = document.getElementById("back")
             back.style.display = 'block'
