@@ -25,8 +25,9 @@ export default class TaskDescription {
             instance.points = instance.world.points
             instance.audio = instance.world.audio
             instance.currentStepData = instance.program.getCurrentStepData()
+            instance.message = instance.currentStepData.message
 
-            let html = instance.getModalHtml(instance.program.stepType(), instance.currentStepData.description)
+            let html = instance.getModalHtml(instance.program.stepType(), instance.message.text)
             instance.modal = new Modal(html, 'modal__task')
 
             const backBTN = document.getElementById("back")
@@ -52,9 +53,9 @@ export default class TaskDescription {
 
             document.addEventListener(_e.ACTIONS.AUDIO_TASK_DESCRIPTION_ENDED, instance.changePauseBtnToPlay)
 
-            if (instance.currentStepData.audio) {
+            if (instance.message.audio) {
                 // Fetch audio from blob or url
-                instance.offline.fetchChapterAsset(instance.currentStepData, "audio", (data) => {
+                instance.offline.fetchChapterAsset(instance.message, "audio", (data) => {
                     instance.taskAudio = data.audio
                 })
 
@@ -69,14 +70,14 @@ export default class TaskDescription {
                 instance.playBTN.remove()
             }
 
-            if (instance.currentStepData.descriptionMedia) {
-                // Fetch description media from blob or url
+            if (instance.message.media) {
+                // Fetch message media from blob or url
                 console.log(instance.currentStepData)
-                instance.offline.fetchChapterAsset(instance.currentStepData, "descriptionMedia", (data) => {
-                    console.log(instance.world.program.getCurrentStepData().descriptionMedia)
-                    instance.program.updateAssetInProgramData('descriptionMedia', data.descriptionMedia)
-                    console.log(instance.world.program.getCurrentStepData().descriptionMedia)
-                    document.querySelector('.task__tips > *').src = data.descriptionMedia
+                instance.offline.fetchChapterAsset(instance.message, "media", (data) => {
+                    console.log(instance.world.program.getCurrentStepData().message.media)
+                    instance.program.updateAssetInProgramData('message', data)
+                    console.log(instance.world.program.getCurrentStepData().message.media)
+                    document.querySelector('.task__tips > *').src = data.media
                 })
             }
 
@@ -125,7 +126,7 @@ export default class TaskDescription {
     getModalHtml(type, title, additionalContent = '') {
         let html = `<div class="modal__content task ${type ? type : ''}">
             <div class="task__video">
-                <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
+                <video id="irisVideoBg" src="/textures/${instance.message.character}.mp4" autoplay loop></video>
                 <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
                 <div class="iris-playing">
                     <div class="line line1"></div>
@@ -137,7 +138,7 @@ export default class TaskDescription {
             </div>
 
             <div class="task__content">`
-                const mediaUrl = instance.currentStepData.descriptionMedia
+                const mediaUrl = instance.message.media
                 if (mediaUrl) {
                     html += `<div class="task__tips">${instance.getDomElement(mediaUrl)}</div>`
                 }

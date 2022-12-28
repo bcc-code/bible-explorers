@@ -49,9 +49,8 @@ export default class Chapter3Game2 {
             close.style.display = 'none'
 
             const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>En konge</h3>
-                <p>Skriver inn riktig tall under en silhuett</p>
-                `
+            title.innerHTML = `<h3>Velg den nye kongen</h3>
+                <p>Skriv inn riktig tall under hver silhuett</p>`
 
             const next = document.getElementById('continue')
             next.style.display = 'block'
@@ -94,7 +93,7 @@ export default class Chapter3Game2 {
                         const flippedCards = document.querySelectorAll('[flipped]')
 
                         if (flippedCards.length == instance.data.flip_cards.cards.length) {
-                            title.querySelector('p').innerText = 'Velge en evne som de synes er viktigst'
+                            title.querySelector('p').innerText = 'Velg en evne som dere synes er viktigst for en konge å ha'
 
                         }
                     }

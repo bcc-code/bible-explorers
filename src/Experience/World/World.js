@@ -15,7 +15,6 @@ import _appInsights from '../Utils/AppInsights.js'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
-import Chapter3Game2 from '../Games/Chapter3Game2.js'
 
 let instance = null
 export default class World {
@@ -527,10 +526,13 @@ export default class World {
         instance.cacheChapterThumbnail(chapter.thumbnail)
         instance.cacheChapterBgMusic(chapter.background_music)
         instance.cacheChapterArchiveImages(chapter.archive)
-        instance.cacheTaskDescriptionAudios(chapter['program'].filter(checkpoint => checkpoint.audio))
-        instance.cacheTaskDescriptionMedia(chapter['program'].filter(checkpoint => checkpoint.descriptionMedia))
-        instance.cacheSortingGameIcons(chapter['program'].filter(checkpoint => checkpoint.taskType == "sorting"))
-        instance.cachePictureAndCodeImage(chapter['program'].filter(checkpoint => checkpoint.taskType == "picture_and_code"))
+
+        chapter['program'].forEach(checkpoint => {
+            instance.cacheTaskDescriptionAudios(checkpoint.steps.filter(step => step.message && step.message.audio))
+            instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
+            instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.taskType == "sorting"))
+            instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.taskType == "picture_and_code"))
+        })
     }
 
     cacheChapterThumbnail(url) {
@@ -550,12 +552,12 @@ export default class World {
 
     cacheTaskDescriptionAudios(tasks) {
         if (tasks.length == 0) return
-        tasks.forEach(task => instance.fetchAndCacheAsset(task.audio))
+        tasks.forEach(task => instance.fetchAndCacheAsset(task.message.audio))
     }
 
     cacheTaskDescriptionMedia(tasks) {
         if (tasks.length == 0) return
-        tasks.forEach(task => instance.fetchAndCacheAsset(task.descriptionMedia))
+        tasks.forEach(task => instance.fetchAndCacheAsset(task.message.media))
     }
 
     cacheSortingGameIcons(sortingTasks) {
@@ -567,7 +569,7 @@ export default class World {
 
     cachePictureAndCodeImage(pictureAndCodeTasks) {
         if (pictureAndCodeTasks.length == 0) return
-        pictureAndCodeTasks.forEach(task => instance.fetchAndCacheAsset(task.pictureAndCode.picture))
+        pictureAndCodeTasks.forEach(task => instance.fetchAndCacheAsset(task.picture_and_code.picture))
     }
 
     fetchAndCacheAsset(url) {

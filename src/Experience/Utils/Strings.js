@@ -95,7 +95,13 @@ const strings = {
             "task": "Complete the task"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Oops!",
+                    "message": "You've played the wrong note of the melody!"
+                }
+            },
             "sortingIcons": "Sort the icons to the right box",
             "cableConnect": "Join the cables to the right color",
             "completed": {
@@ -106,10 +112,9 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
-            "failed": {
-                "title": "Oops!",
-                "message": "You've played the wrong note of the melody!"
-            },
+            "levelUp": "Level up!",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
             "playAgain": "Play again",
             "reset": "Start over",
             "continue": "Continue the journey",
@@ -211,7 +216,13 @@ const strings = {
             "task": "Fullfør oppgaven"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Oops!",
+                    "message": "Du har spilt av feil note i melodien!"
+                }
+            },
             "sortingIcons": "Sorter ikonene i riktig boks",
             "cableConnect": "Fest kablene til riktig farge",
             "completed": {
@@ -221,10 +232,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
-            },
-            "failed": {
-                "title": "Oops!",
-                "message": "Du har spilt av feil note i melodien!"
             },
             "playAgain": "Spill igjen",
             "reset": "Start spillet på nytt",
@@ -327,7 +334,13 @@ const strings = {
             "task": "Erledige die Aufgabe"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Uuups!",
+                    "message": "Du hast den falschen Ton aus der Melodie abgespielt!"
+                }
+            },
             "sortingIcons": "Sortiere die Icons in die richtige Box",
             "cableConnect": "Verbinde die Kabel mit der richtigen Farbe",
             "completed": {
@@ -337,10 +350,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
-            },
-            "failed": {
-                "title": "Uuups!",
-                "message": "Du hast den falschen Ton aus der Melodie abgespielt!"
             },
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
@@ -443,7 +452,13 @@ const strings = {
             "task": "Doe de opdracht"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Oeps!",
+                    "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
+                }
+            },
             "sortingIcons": "Zet de plaatjes in de juiste box",
             "cableConnect": "Maak de kabels vast aan de juiste kleur",
             "completed": {
@@ -453,10 +468,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
-            },
-            "failed": {
-                "title": "Oeps!",
-                "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
             },
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
@@ -559,7 +570,13 @@ const strings = {
             "task": "Effectuer la tâche"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Oups!",
+                    "message": "Tu as joué la mauvaise note de la mélodie !"
+                }
+            },
             "sortingIcons": "Trier les icônes dans la bonne boîte",
             "cableConnect": "Relier les câbles à la bonne couleur",
             "completed": {
@@ -569,10 +586,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
-            },
-            "failed": {
-                "title": "Oups!",
-                "message": "Tu as joué la mauvaise note de la mélodie !"
             },
             "playAgain": "Rejouer",
             "reset": "Redémarrer le jeu",
@@ -675,7 +688,13 @@ const strings = {
             "task": "Wykonaj zadanie"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Ups!",
+                    "message": "Wybrałeś złą nutę"
+                }
+            },
             "sortingIcons": "Posortuj ikony w odpowiednim polu",
             "cableConnect": "Połącz kable z odpowiednim kolorem",
             "completed": {
@@ -685,10 +704,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
-            },
-            "failed": {
-                "title": "Ups!",
-                "message": "Wybrałeś złą nutę"
             },
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
@@ -791,7 +806,13 @@ const strings = {
             "task": "Finalizează sarcina"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Ups!",
+                    "message": "Ai cântat o notă greșită în melodie!"
+                }
+            },
             "sortingIcons": "Sortează imaginile în căsuța corectă",
             "cableConnect": "Conectează cablurile la culoarea corectă",
             "completed": {
@@ -801,10 +822,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
-            },
-            "failed": {
-                "title": "Ups!",
-                "message": "Ai cântat o notă greșită în melodie!"
             },
             "playAgain": "O nouă rundă",
             "reset": "Începe jocul din nou",
@@ -907,7 +924,13 @@ const strings = {
             "task": "Completar la tarea"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Ups!",
+                    "message": "Has tocado la nota equivocada en la melodía."
+                }
+            },
             "sortingIcons": "Ordenar los iconos en el cuadro correcto",
             "cableConnect": "Conecte los cables al color correcto",
             "completed": {
@@ -917,10 +940,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
-            },
-            "failed": {
-                "title": "Ups!",
-                "message": "Has tocado la nota equivocada en la melodía."
             },
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
@@ -1023,7 +1042,13 @@ const strings = {
             "task": "Complete a tarefa"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Oops!",
+                    "message": "Você tocou a nota incorreta da melodia!"
+                }
+            },
             "sortingIcons": "Classifique os icones para a caixa correta",
             "cableConnect": "Junte os cabos para a cor certa",
             "completed": {
@@ -1033,10 +1058,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
-            },
-            "failed": {
-                "title": "Oops!",
-                "message": "Você tocou a nota incorreta da melodia!"
             },
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
@@ -1139,7 +1160,13 @@ const strings = {
             "task": "Completa l'attività"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Ops!",
+                    "message": "Hai suonato la nota sbagliata della melodia!"
+                }
+            },
             "sortingIcons": "Ordina le icone nella casella giusta",
             "cableConnect": "Unisci i cavi al colore giusto",
             "completed": {
@@ -1149,10 +1176,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
-            },
-            "failed": {
-                "title": "Ops!",
-                "message": "Hai suonato la nota sbagliata della melodia!"
             },
             "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
@@ -1255,7 +1278,13 @@ const strings = {
             "task": "Завершите задание"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Ой!",
+                    "message": "Вы сыграли не ту ноту в мелодии!"
+                }
+            },
             "sortingIcons": "Рассортируйте иконки по правильным коробкам",
             "cableConnect": "Соедините кабели нужного цвета",
             "completed": {
@@ -1265,10 +1294,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
-            },
-            "failed": {
-                "title": "Ой!",
-                "message": "Вы сыграли не ту ноту в мелодии!"
             },
             "playAgain": "Играть снова",
             "reset": "Начать заново",
@@ -1371,7 +1396,13 @@ const strings = {
             "task": "Suorita tehtävä loppuun"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Hups!",
+                    "message": "Olet soittanut väärän nuotin melodiasta!"
+                }
+            },
             "sortingIcons": "Järjestä kuvakkeet oikeisiin laatikoihin ",
             "cableConnect": "Yhdistä johdot oikeisiin väreihin",
             "completed": {
@@ -1381,10 +1412,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
-            },
-            "failed": {
-                "title": "Hups!",
-                "message": "Olet soittanut väärän nuotin melodiasta!"
             },
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
@@ -1487,7 +1514,13 @@ const strings = {
             "task": "Fejezd be a feladatot"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Hoppá!",
+                    "message": "You've played the wrong note of the melody!"
+                }
+            },
             "sortingIcons": "Válogasd az ikonokat a megfelelő dobozba",
             "cableConnect": "Csatlakoztasd a kábeleket a megfelelő színhez",
             "completed": {
@@ -1497,10 +1530,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Hoppá!",
                 "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
-            },
-            "failed": {
-                "title": "Hoppá!",
-                "message": "You've played the wrong note of the melody!"
             },
             "playAgain": "Play again",
             "reset": "Újrakezdés",
@@ -1603,7 +1632,13 @@ const strings = {
             "task": "Fuldfør opgaven"
         },
         "miniGames": {
-            "simonSays": "Simon Says",
+            "simonSays": {
+                "title": "Simon Says",
+                "failed": {
+                    "title": "Oops!",
+                    "message": "Du har spillet den forkerte tone i melodien"
+                }
+            },
             "sortingIcons": "Sortere ikonerne i de rigtige bokse",
             "cableConnect": "Tilslut kablerne til den rigtige farve",
             "completed": {
@@ -1613,10 +1648,6 @@ const strings = {
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
-            },
-            "failed": {
-                "title": "Oops!",
-                "message": "Du har spillet den forkerte tone i melodien"
             },
             "playAgain": "Spil igen",
             "reset": "Start spillet forfra",
