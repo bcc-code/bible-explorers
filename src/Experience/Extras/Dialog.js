@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
+import gsap from 'gsap'
 
 let dialog = null
 
@@ -15,51 +16,30 @@ export default class Dialog {
             dialog.modal.destroy()
         }
         else {
-            dialog.correctAnswers = 0
-
             let world = this.experience.world
             let debug = this.experience.debug
             dialog.program = world.program
             let data = dialog.program.getCurrentStepData()
 
-            const accordion = data.dialog
-
-            let html = `<div class="modal__content dialog">
-                <div class="task__video">
-                    <video id="irisVideoBg" src="/textures/iris.mp4" autoplay loop></video>
-                    <button id="play" class="width height button rounded--full bg--secondary border--5 border--solid border--transparent pulsate | icon-play-solid"></button>
-                    <div class="iris-playing">
-                        <div class="line line1"></div>
-                        <div class="line line2"></div>
-                        <div class="line line3"></div>
-                        <div class="line line4"></div>
-                        <div class="line line5"></div>
-                    </div>
-                </div>
-                <div class="task__content">
-                    <div class="accordion">`
-            accordion.forEach(item => {
-                html += `<div class="accordion_item">
-                                        <button class="accordion_item-section">${item.question}</button>
-                                        <div class="accordion_item-panel">
-                                            <p>${item.answer}<p>
-                                            <div class="backToQuestions"> <i class="icon-arrow-left-long-solid"></i> all questions</div>
-                                            <audio>
-                                                <source src="sounds/congrats.mp3" type="audio/mpeg">
-                                            </audio>
-                                        </div>
-                                    </div>`
+            let chatHTML =
+                `<section class="chat">
+                    <header class="chat_header">
+                        <span class="chat_online">Online</span>
+                    </header>
+                    <article class="chat_content">
+                        <div class="chat_message welcome">
+                            <img src="games/profile.png"/>
+                            <p>Hei Explorers, do you have any questions?</p>
+                        </div>
+                    </article>
+                    <footer class="chat_footer">`
+            data.dialog.forEach(item => {
+                chatHTML += `<button type="button">${item.question}</button>`
             })
-            html += `</div>
-                </div>
-            </div>`
+            chatHTML += `</footer>
+                </section>`
 
-            dialog.modal = new Modal(html, 'modal__dialog')
-
-            const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = '<h3>Dialog</h3>'
-
-            console.log(title);
+            dialog.modal = new Modal(chatHTML, 'modal_chat')
 
             const close = document.querySelector(".modal__close ")
             close.style.display = 'none'
@@ -77,52 +57,39 @@ export default class Dialog {
             next.innerText = _s.task.next
             next.addEventListener('click', dialog.completeDialog)
 
-            const accButton = document.querySelectorAll('.accordion_item-section')
+            const chatButttons = document.querySelectorAll('.chat_footer button')
+            const chatContent = document.querySelector('.chat_content')
 
-            function showHide(item) {
-                const parent = item.parentElement
-                const panel = item.nextElementSibling
-                const audio = item.nextElementSibling.querySelector('audio')
 
-                parent.classList.toggle('active')
+            chatButttons.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    const question = document.createElement('div')
+                    question.classList.add('chat_message', 'user')
+                    question.innerHTML = `<p>${data.dialog[index].question}</p>`
 
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null
+                    const reply = document.createElement('div')
+                    reply.classList.add('chat_message', 'iris')
+                    reply.innerHTML = `<img src="games/profile.png"/><p></p>`
+                    chatContent.append(question, reply)
 
-                    parent.classList.add('read')
+                    const messages = document.querySelectorAll('.chat_message.iris p')
 
-                    for (let sibling of item.closest('.accordion').children) {
-                        sibling.classList.remove('hide')
-                    }
+                    gsap.to(messages[messages.length - 1], {
+                        duration: 2,
+                        onStart() {
+                            this.targets(0)[0].innerHTML = '<div class="typing"><span></span><span></span><span></span></div>'
+                        },
+                        onComplete() {
+                            this.targets(0)[0].innerHTML = data.dialog[index].answer
+                        },
+                    })
 
-                    audio.pause()
-                    audio.currentTime = 0
+                    btn.remove()
 
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + 'px'
-
-                    for (let sibling of item.closest('.accordion').children) {
-                        sibling.classList.add('hide')
-                    }
-                    parent.classList.remove('hide')
-
-                    setTimeout(() => {
-                        audio.play()
-                    }, 1300)
-                }
-            }
-
-            accButton.forEach(item => {
-                item.addEventListener('click', () => {
-                    showHide(item)
-                })
-
-                const backToQuestions = item.nextElementSibling.querySelector('.backToQuestions')
-
-                backToQuestions.addEventListener('click', () => {
-                    showHide(item)
                 })
             })
+
+
         }
     }
 
