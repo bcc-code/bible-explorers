@@ -35,14 +35,23 @@ export default class DavidsRefuge {
         instance.program = instance.world.program
         instance.dataNew = instance.program.getCurrentStepData()
 
-        console.log(instance.dataNew);
-
         instance.data = {
             title: `Davids's Refuge`,
-            animals: [
+            goats: [
                 'games/goat-1.png',
                 'games/goat-2.png',
                 'games/goat-3.png'
+            ],
+            hints: [
+                'Hule 1 er ikke riktig',
+                'Hule 3 er riktig',
+                'Det er ikke hule 3',
+            ],
+            extraHints: [
+                'Husk at bare ett dyr sier sannheten, det betyr at det de andre to sier ikke stemmer!',
+                'Skorpionen kan ikke si sannheten, fordi det hadde betydd at kamelen juger og da kan de være både hule 1 eller 3 some er riktig',
+                'Det er reven som sier sannheten',
+                'Hvis reven sier sannheten, da juger kamelen'
             ]
         }
 
@@ -72,37 +81,83 @@ export default class DavidsRefuge {
             back.innerText = _s.journey.back
             back.addEventListener('click', instance.backOneStep)
 
-
-            instance.data.animals.forEach(src => {
+            for (let i = 0; i < instance.data.goats.length; i++) {
 
                 const box = document.createElement('div')
                 box.classList.add('davidRefuge_box')
                 const tooltip = document.createElement('div')
-                tooltip.innerHTML = '<span>Content here</span>'
+                tooltip.innerHTML = `<span>${instance.data.hints[i]}</span>`
                 tooltip.classList.add('davidRefuge_tooltip')
 
                 const image = new Image(304, 341)
-                image.src = src
-
+                image.src = instance.data.goats[i]
                 box.append(tooltip, image)
                 document.querySelector('.davidRefuge').append(box)
+            }
 
-            });
+            const hints = document.createElement('section')
+            hints.classList.add('hints')
 
-            gsap.set('.davidRefuge_tooltip', { autoAlpha: 0, scale: 0, transformOrigin: 'left center' })
+            const hintsHeader = document.createElement('h4')
+            hintsHeader.classList.add('hints_header')
+            hintsHeader.innerText = 'Hints'
 
-            gsap.utils.toArray('.davidRefuge_box').forEach(item => {
-                let tooltip = item.querySelector('.davidRefuge_tooltip'),
-                    tl = gsap.timeline({ paused: true })
+            const hintsList = document.createElement('ul')
+            hintsList.classList.add('hints_list')
 
-                tl
-                    .to(tooltip, { duration: 0.2, autoAlpha: 1, scale: 1.1 })
-                    .to(tooltip, { duration: 0.3, scale: 1 })
+            const getHints = document.createElement('button')
+            getHints.classList.add('hints_get')
+            getHints.innerText = 'Get more hints'
 
-                item.addEventListener('mouseenter', () => tl.play())
-                item.addEventListener('mouseleave', () => tl.reverse())
+            const hintVisible = document.querySelector('li')
+            hintVisible.innerText = instance.data.extraHints[0]
+            hintsList.append(hintVisible)
+
+            hints.append(hintsHeader, hintsList, getHints)
+            document.querySelector('.modal_davids').append(hints)
+
+            const listContainer = document.querySelector('.hints_list')
+            const getHint = document.querySelector('.hints_get')
+
+            let clicks = 0
+
+            getHint.addEventListener('click', () => {
+                clicks += 1
+
+                if (clicks < instance.data.extraHints.length) {
+                    const item = document.querySelector('li')
+                    item.innerText = instance.data.extraHints[clicks]
+                    listContainer.appendChild(item)
+                }
+
+                if (clicks == instance.data.extraHints.length - 1) {
+                    getHint.remove()
+                }
 
             })
+
+
+
+
+
+
+
+
+
+            // gsap.set('.davidRefuge_tooltip', { autoAlpha: 0, scale: 0, transformOrigin: 'left center' })
+
+            // gsap.utils.toArray('.davidRefuge_box').forEach(item => {
+            //     let tooltip = item.querySelector('.davidRefuge_tooltip'),
+            //         tl = gsap.timeline({ paused: true })
+
+            //     tl
+            //         .to(tooltip, { duration: 0.2, autoAlpha: 1, scale: 1.1 })
+            //         .to(tooltip, { duration: 0.3, scale: 1 })
+
+            //     item.addEventListener('mouseenter', () => tl.play())
+            //     item.addEventListener('mouseleave', () => tl.reverse())
+
+            // })
 
         }
     }

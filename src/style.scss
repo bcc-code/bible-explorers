@@ -2577,9 +2577,13 @@ button,
 .davidRefuge {
     display: flex;
     gap: 14rem;
+    counter-reset: hints;
 
     &_box {
         position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
 
         &::before {
             content: '';
@@ -2600,15 +2604,110 @@ button,
     }
 
     &_tooltip {
-        position: absolute;
-        top: 60%;
-        left: 90%;
-        width: 12rem;
+        position: relative;
         background-color: #fff;
         color: $primary;
-        border-radius: 0 2rem 2rem;
+        border-radius: 1rem;
         padding-block: 0.5rem;
         padding-inline: 1rem;
+        z-index: 2;
+        margin-bottom: 2rem;
+
+
+        span:before {
+            counter-increment: hints;
+            content: counter(hints) ". ";
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+            top: 100%;
+            right: 2rem;
+        }
+    }
+}
+
+.hints {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 280px;
+    background-color: $primary;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    box-shadow: inset 0 0 0 4px $accent;
+
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        left: 2rem;
+        width: calc(100% - 4rem);
+        height: 4px;
+        background-color: $primary;
+    }
+
+    &::before {
+        top: 0;
+    }
+
+    &::after {
+        bottom: 0;
+    }
+
+    &_header {
+        color: #fff;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-weight: bold;
+        border-bottom: 1px solid #fff;
+        opacity: 0.4;
+        padding-bottom: 1rem;
+    }
+
+    &_list {
+        counter-reset: hints;
+        color: #fff;
+
+        li {
+            counter-increment: hints;
+            padding-block: 1rem;
+            border-bottom: 1px solid rgba(#fff, .4);
+        }
+
+        li:first-of-type {
+            counter-set: hints 4;
+        }
+
+        li::before {
+            content: counter(hints) ". ";
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &_get {
+        margin-top: 1rem;
+        outline: none;
+        border: 0;
+        color: #fff;
+        background-color: $dark;
+        border-radius: 0.5rem;
+        padding-block: 0.5rem;
+        padding-inline: 1.5rem;
+        cursor: pointer;
+        transition: .4s ease-in-out;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $accent;
+        }
     }
 }
 
