@@ -38,9 +38,9 @@ export default class DavidsRefuge {
         instance.data = {
             title: `Davids's Refuge`,
             goats: [
-                'games/goat-1.png',
-                'games/goat-2.png',
-                'games/goat-3.png'
+                'games/goat-yellow.png',
+                'games/goat-blue.png',
+                'games/goat-pink.png'
             ],
             hints: [
                 'Hule 1 er ikke riktig',
@@ -81,19 +81,28 @@ export default class DavidsRefuge {
             back.innerText = _s.journey.back
             back.addEventListener('click', instance.backOneStep)
 
-            for (let i = 0; i < instance.data.goats.length; i++) {
+            instance.data.goats.forEach((goat, index) => {
+
+                const removedStr = goat.replace('games/goat-', '')
+                const color = removedStr.split('.')[0]
 
                 const box = document.createElement('div')
                 box.classList.add('davidRefuge_box')
+                box.setAttribute('data-color', color)
+
                 const tooltip = document.createElement('div')
-                tooltip.innerHTML = `<span>${instance.data.hints[i]}</span>`
+                tooltip.innerHTML = `<span>${instance.data.hints[index]}</span>`
                 tooltip.classList.add('davidRefuge_tooltip')
 
+                // if (goat.includes('yellow'))
+                //     box.setAttribute('data-color', 'yellow')
+
                 const image = new Image(304, 341)
-                image.src = instance.data.goats[i]
+                image.src = goat
                 box.append(tooltip, image)
                 document.querySelector('.davidRefuge').append(box)
-            }
+            });
+
 
             const hints = document.createElement('section')
             hints.classList.add('hints')
@@ -109,10 +118,6 @@ export default class DavidsRefuge {
             getHints.classList.add('hints_get')
             getHints.innerText = 'Get more hints'
 
-            const hintVisible = document.querySelector('li')
-            hintVisible.innerText = instance.data.extraHints[0]
-            hintsList.append(hintVisible)
-
             hints.append(hintsHeader, hintsList, getHints)
             document.querySelector('.modal_davids').append(hints)
 
@@ -122,7 +127,6 @@ export default class DavidsRefuge {
             let clicks = 0
 
             getHint.addEventListener('click', () => {
-                clicks += 1
 
                 if (clicks < instance.data.extraHints.length) {
                     const item = document.querySelector('li')
@@ -130,34 +134,13 @@ export default class DavidsRefuge {
                     listContainer.appendChild(item)
                 }
 
-                if (clicks == instance.data.extraHints.length - 1) {
+                clicks += 1
+
+                if (clicks == instance.data.extraHints.length) {
                     getHint.remove()
                 }
 
             })
-
-
-
-
-
-
-
-
-
-            // gsap.set('.davidRefuge_tooltip', { autoAlpha: 0, scale: 0, transformOrigin: 'left center' })
-
-            // gsap.utils.toArray('.davidRefuge_box').forEach(item => {
-            //     let tooltip = item.querySelector('.davidRefuge_tooltip'),
-            //         tl = gsap.timeline({ paused: true })
-
-            //     tl
-            //         .to(tooltip, { duration: 0.2, autoAlpha: 1, scale: 1.1 })
-            //         .to(tooltip, { duration: 0.3, scale: 1 })
-
-            //     item.addEventListener('mouseenter', () => tl.play())
-            //     item.addEventListener('mouseleave', () => tl.reverse())
-
-            // })
 
         }
     }

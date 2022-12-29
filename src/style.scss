@@ -2577,7 +2577,6 @@ button,
 .davidRefuge {
     display: flex;
     gap: 14rem;
-    counter-reset: hints;
 
     &_box {
         position: relative;
@@ -2605,30 +2604,67 @@ button,
 
     &_tooltip {
         position: relative;
-        background-color: #fff;
-        color: $primary;
+        color: #fff;
         border-radius: 1rem;
         padding-block: 0.5rem;
         padding-inline: 1rem;
         z-index: 2;
         margin-bottom: 2rem;
 
-
-        span:before {
-            counter-increment: hints;
-            content: counter(hints) ". ";
-        }
-
         &::after {
             content: '';
             position: absolute;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-top: 10px solid white;
             top: 100%;
             right: 2rem;
         }
     }
+
+    --yellow: #e59e35;
+    --yellow-shadow: #fcb04e;
+    --blue: #2e63b9;
+    --blue-shadow: #0396e3;
+    --pink: #cb4287;
+    --pink-shadow: #f75b99;
+
+
+    [data-color='yellow'] {
+        .davidRefuge_tooltip {
+            background-color: var(--yellow);
+            box-shadow: -2px -2px 0 2px var(--yellow-shadow);
+        }
+
+        .davidRefuge_tooltip::after {
+            border-top: 10px solid var(--yellow);
+        }
+    }
+
+    [data-color='blue'] {
+        .davidRefuge_tooltip {
+            background-color: var(--blue);
+            box-shadow: -2px -2px 0 2px var(--blue-shadow);
+
+        }
+
+        .davidRefuge_tooltip::after {
+            border-top: 10px solid var(--blue);
+        }
+    }
+
+
+    [data-color='pink'] {
+        .davidRefuge_tooltip {
+            background-color: var(--pink);
+            box-shadow: -2px -2px 0 2px var(--pink-shadow);
+        }
+
+        .davidRefuge_tooltip::after {
+            border-top: 10px solid var(--pink);
+        }
+    }
+
+
 }
 
 .hints {
@@ -2670,22 +2706,22 @@ button,
     }
 
     &_list {
-        counter-reset: hints;
+        // counter-reset: hints;
         color: #fff;
 
         li {
-            counter-increment: hints;
             padding-block: 1rem;
             border-bottom: 1px solid rgba(#fff, .4);
         }
 
-        li:first-of-type {
-            counter-set: hints 4;
-        }
+        // li:first-of-type {
+        //     counter-set: hints 4;
+        // }
 
-        li::before {
-            content: counter(hints) ". ";
-        }
+        // li::before {
+        //     counter-increment: hints;
+        //     content: counter(hints) ". ";
+        // }
 
         li:last-child {
             border-bottom: none;
@@ -2693,6 +2729,7 @@ button,
     }
 
     &_get {
+        width: 100%;
         margin-top: 1rem;
         outline: none;
         border: 0;
