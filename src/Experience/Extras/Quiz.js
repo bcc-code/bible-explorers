@@ -89,11 +89,11 @@ export default class Quiz {
 
             const quizContent = document.querySelector('.quiz__content')
             const quizStepsContainer = document.createElement('div')
-            quizStepsContainer.className = 'quiz__steps'
+            quizStepsContainer.className = 'quiz__checkpoints'
 
             questions.forEach((q, i) => {
                 const quizStep = document.createElement('div')
-                quizStep.className = 'quiz__step'
+                quizStep.className = 'quiz__checkpoint'
                 quizStep.innerText = i + 1
                 quizStep.setAttribute('step-index', i + 1)
                 quizStepsContainer.append(quizStep)
@@ -101,7 +101,7 @@ export default class Quiz {
 
             quizContent.prepend(quizStepsContainer)
 
-            const quizSteps = document.querySelectorAll('.quiz__step')
+            const quizSteps = document.querySelectorAll('.quiz__checkpoint')
             quizSteps[0].classList.add('active')
 
             quiz.archiveBtn = document.querySelector('.button.archive')
@@ -128,7 +128,7 @@ export default class Quiz {
             prevButton.setAttribute('disabled', '')
             prevButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
-                const currentCheckpoint = document.querySelector('.quiz__step.active')
+                const currentCheckpoint = document.querySelector('.quiz__checkpoint.active')
 
                 current.classList.remove('visible')
                 currentCheckpoint.classList.remove('active')
@@ -150,7 +150,7 @@ export default class Quiz {
             nextButton.setAttribute('disabled', '')
             nextButton.addEventListener("click", () => {
                 const current = document.querySelector('.question.visible')
-                const currentCheckpoint = document.querySelector('.quiz__step.active')
+                const currentCheckpoint = document.querySelector('.quiz__checkpoint.active')
 
                 current.classList.remove('visible')
                 currentCheckpoint.classList.remove('active')
