@@ -4122,6 +4122,10 @@ button,
             width: auto;
         }
     }
+
+    .chat_content {
+        min-height: 600px;
+    }
 }
 
 @media (max-width: 1280px) {
@@ -4216,6 +4220,10 @@ button,
     #sort-game {
         width: 1000px;
         height: 500px;
+    }
+
+    .chat_content {
+        min-height: 400px;
     }
 
 }
