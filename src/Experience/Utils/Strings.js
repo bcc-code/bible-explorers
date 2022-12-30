@@ -104,6 +104,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Well done!",
                 "message": "You have successfully completed the task!",
@@ -226,6 +229,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Velg som konge"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Velg geit"
             },
             "completed": {
                 "title": "Bra jobba!",
@@ -350,6 +356,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Gut gemacht!",
                 "message": "Du hast die Aufgabe geschafft!",
@@ -472,6 +481,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Choose as king"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
             },
             "completed": {
                 "title": "Goed gedaan!",
@@ -596,6 +608,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Bien joué !",
                 "message": "Tu as réussi la tâche !",
@@ -718,6 +733,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Choose as king"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
             },
             "completed": {
                 "title": "Dobra robota!",
@@ -842,6 +860,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Bravo!",
                 "message": "Ai terminat sarcina cu succes!",
@@ -964,6 +985,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Choose as king"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
             },
             "completed": {
                 "title": "Buen Trabajo!",
@@ -1088,6 +1112,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Well done!",
                 "message": "You have successfully completed the task!",
@@ -1210,6 +1237,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Choose as king"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
             },
             "completed": {
                 "title": "Ottimo lavoro!",
@@ -1334,6 +1364,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Отличная работа!",
                 "message": "Вы выполнили задание!",
@@ -1456,6 +1489,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Choose as king"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
             },
             "completed": {
                 "title": "Hyvin tehty!",
@@ -1580,6 +1616,9 @@ const strings = {
             "flipCards": {
                 "chooseKing": "Choose as king"
             },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
+            },
             "completed": {
                 "title": "Szép munka!",
                 "message": "Teljesítetted a feladatot! Folytathatod az utazást",
@@ -1702,6 +1741,9 @@ const strings = {
             },
             "flipCards": {
                 "chooseKing": "Choose as king"
+            },
+            "davidsRefuge": {
+                "chooseGoat": "Choose goat"
             },
             "completed": {
                 "title": "Well done!",
