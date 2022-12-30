@@ -224,14 +224,19 @@ export default class DavidsRefuge {
         gsap.to('#dialogue', { y: 0, autoAlpha: 1 })
     }
 
+    removeDialogue() {
+        if (document.getElementById('dialogue'))
+            document.getElementById('dialogue').remove()
+    }
+
     backOneStep() {
-        document.getElementById('dialogue').remove()
+        instance.removeDialogue()
         instance.modal.destroy()
         instance.program.previousStep()
     }
 
     finishGame() {
-        document.getElementById('dialogue').remove()
+        instance.removeDialogue()
         instance.modal.destroy()
         instance.program.nextStep()
     }
