@@ -2587,44 +2587,60 @@ button,
     }
 }
 
-
-// Davids refuge
 .davidRefuge {
-    display: flex;
-    gap: 14rem;
+    gap: 4rem;
+
+    &_content {
+        display: flex;
+        gap: 14rem;
+    }
+
+    &_footer {
+        margin-top: 3rem;
+        display: flex;
+        justify-content: center;
+    }
 
     &_box {
         position: relative;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-
-        &::before {
-            content: '';
-            position: absolute;
-            background-color: $primary;
-            bottom: -4rem;
-            left: -1.5rem;
-            border-radius: 50%;
-            width: 14rem;
-            height: 14rem;
-            padding: 2rem;
-        }
+        padding: 3rem;
 
         img {
             position: relative;
             height: auto;
+            z-index: 1;
+            pointer-events: none;
         }
+
+    }
+
+    &_circle {
+        position: absolute;
+        background-color: $primary;
+        bottom: 0;
+        left: 1.5rem;
+        border-radius: 50%;
+        width: calc(100% - 6rem);
+        aspect-ratio: 1/1;
+        cursor: pointer;
+        transition: .5s ease-in-out;
     }
 
     &_tooltip {
-        position: relative;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 100%;
         color: #fff;
         border-radius: 1rem;
         padding-block: 0.5rem;
         padding-inline: 1rem;
         z-index: 2;
         margin-bottom: 2rem;
+
+        span {
+            white-space: nowrap;
+        }
 
         &::after {
             content: '';
@@ -2653,6 +2669,10 @@ button,
         .davidRefuge_tooltip::after {
             border-top: 10px solid var(--yellow);
         }
+
+        &:hover .davidRefuge_circle {
+            box-shadow: 0 0 0 4px var(--yellow-shadow);
+        }
     }
 
     [data-color='blue'] {
@@ -2665,8 +2685,11 @@ button,
         .davidRefuge_tooltip::after {
             border-top: 10px solid var(--blue);
         }
-    }
 
+        &:hover .davidRefuge_circle {
+            box-shadow: 0 0 0 4px var(--blue-shadow);
+        }
+    }
 
     [data-color='pink'] {
         .davidRefuge_tooltip {
@@ -2677,9 +2700,11 @@ button,
         .davidRefuge_tooltip::after {
             border-top: 10px solid var(--pink);
         }
+
+        &:hover .davidRefuge_circle {
+            box-shadow: 0 0 0 4px var(--pink-shadow);
+        }
     }
-
-
 }
 
 .hints {
@@ -2687,27 +2712,27 @@ button,
     top: 2rem;
     right: 2rem;
     width: 280px;
-    background-color: $primary;
-    padding-block: 1rem;
-    padding-inline: 2rem;
-    box-shadow: inset 0 0 0 4px $accent;
+    padding: 1.5rem 2rem 1rem;
 
     &::after,
     &::before {
         content: '';
         position: absolute;
-        left: 2rem;
-        width: calc(100% - 4rem);
-        height: 4px;
-        background-color: $primary;
+        width: 2rem;
+        height: 100%;
+        top: 0;
+        border-top: 4px solid $accent;
+        border-bottom: 4px solid $accent;
     }
 
     &::before {
-        top: 0;
+        left: 0;
+        border-left: 4px solid $accent;
     }
 
     &::after {
-        bottom: 0;
+        right: 0;
+        border-right: 4px solid $accent;
     }
 
     &_header {
@@ -3660,7 +3685,7 @@ button,
     gap: 2rem;
 
     .button {
-        width: 280px;
+        white-space: nowrap;
     }
 }
 
@@ -3794,6 +3819,7 @@ button,
     transform: translateY(100%);
     opacity: 0;
     visibility: hidden;
+    z-index: 103;
 
     .dialogue-content {
         width: 100%;
@@ -3825,6 +3851,18 @@ button,
 
 }
 
+#overlay {
+    position: absolute;
+    z-index: 102;
+    inset: 0;
+    background: $gradient-with-opacity;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+}
 
 // #endregion
 
