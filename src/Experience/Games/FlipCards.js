@@ -67,8 +67,9 @@ export default class Chapter3Game2 {
             })
 
             let firstTimeClick = true
+            let cards = gsap.utils.toArray('.card')
 
-            gsap.utils.toArray('.card').forEach((card, index) => {
+            cards.forEach((card, index) => {
                 gsap.set(card, {
                     transformStyle: "preserve-3d",
                     transformPerspective: 1000

@@ -1418,7 +1418,8 @@ button,
     display: grid;
     grid-template-rows: auto 1fr auto;
     background: $gradient-with-opacity;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     &__close {
         position: fixed;
@@ -1487,7 +1488,7 @@ button,
 
     &__wrapper {
         flex: 1;
-        // overflow: auto;
+        min-width: 0;
         padding: 2rem;
     }
 
@@ -4108,6 +4109,19 @@ button,
         height: 600px;
     }
 
+    #cardWrapper {
+        overflow-x: scroll;
+        scroll-snap-type: x proximity;
+        padding-bottom: 1rem;
+        grid-auto-flow: column;
+        grid-auto-columns: calc(20% - 16px * 2);
+        grid-template-columns: unset;
+        gap: 1rem;
+
+        .card {
+            width: auto;
+        }
+    }
 }
 
 @media (max-width: 1280px) {
