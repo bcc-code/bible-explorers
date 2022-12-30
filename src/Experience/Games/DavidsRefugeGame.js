@@ -23,7 +23,6 @@ export default class DavidsRefuge {
         } else {
             instance.modalHtml()
             instance.hintsHtml()
-            gsap.set('#overlay', { filter: 'blur(50px)' })
 
             instance.toggleQuestion()
             instance.eventListeners()
@@ -54,11 +53,11 @@ export default class DavidsRefuge {
         close.style.display = 'none'
 
         const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${instance.data.details.title}</h3>`
+        title.innerHTML = `<h3>${instance.program.getCurrentStepData().details.title}</h3>`
 
         instance.data.characters.forEach(goat => {
             const url = goat.image.split('/')
-            const fileName = url[url.length-1].replace('goat-', '')
+            const fileName = url[url.length - 1].replace('goat-', '')
             const color = fileName.split('.')[0]
 
             const box = document.createElement('div')

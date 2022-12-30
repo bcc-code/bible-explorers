@@ -3857,7 +3857,7 @@ button,
     z-index: 102;
     inset: 0;
     background: $gradient-with-opacity;
-
+    filter: blur(50px);
     display: flex;
     align-items: center;
     justify-content: center;
