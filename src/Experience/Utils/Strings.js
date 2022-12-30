@@ -106,15 +106,17 @@ const strings = {
             },
             "completed": {
                 "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "message": "You have successfully completed the task!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
-            "levelUp": "Level up!",
+            "level": "Level",
             "gameOver": "Game over!",
             "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Play again",
             "reset": "Start over",
             "continue": "Continue the journey",
@@ -227,12 +229,17 @@ const strings = {
             },
             "completed": {
                 "title": "Bra jobba!",
-                "message": "Du har fullført oppgaven!"
+                "message": "Du har fullført oppgaven!",
+                "string": "fullført"
             },
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Neste runde",
+            "anotherRound": "Ny runde",
             "playAgain": "Spill igjen",
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
@@ -345,12 +352,17 @@ const strings = {
             },
             "completed": {
                 "title": "Gut gemacht!",
-                "message": "Du hast die Aufgabe geschafft!"
+                "message": "Du hast die Aufgabe geschafft!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
@@ -463,12 +475,17 @@ const strings = {
             },
             "completed": {
                 "title": "Goed gedaan!",
-                "message": "Je hebt de opdracht voltooid!"
+                "message": "Je hebt de opdracht voltooid!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
@@ -581,12 +598,17 @@ const strings = {
             },
             "completed": {
                 "title": "Bien joué !",
-                "message": "Tu as réussi la tâche !"
+                "message": "Tu as réussi la tâche !",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Rejouer",
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
@@ -699,12 +721,17 @@ const strings = {
             },
             "completed": {
                 "title": "Dobra robota!",
-                "message": "Wykonaliście zadanie!"
+                "message": "Wykonaliście zadanie!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
@@ -817,12 +844,17 @@ const strings = {
             },
             "completed": {
                 "title": "Bravo!",
-                "message": "Ai terminat sarcina cu succes!"
+                "message": "Ai terminat sarcina cu succes!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "O nouă rundă",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
@@ -935,12 +967,17 @@ const strings = {
             },
             "completed": {
                 "title": "Buen Trabajo!",
-                "message": "Has completado tu tarea!"
+                "message": "Has completado tu tarea!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
@@ -1053,12 +1090,17 @@ const strings = {
             },
             "completed": {
                 "title": "Well done!",
-                "message": "You have successfully completed the task!"
+                "message": "You have successfully completed the task!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
@@ -1171,12 +1213,17 @@ const strings = {
             },
             "completed": {
                 "title": "Ottimo lavoro!",
-                "message": "Hai completato il compito!"
+                "message": "Hai completato il compito!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
@@ -1289,12 +1336,17 @@ const strings = {
             },
             "completed": {
                 "title": "Отличная работа!",
-                "message": "Вы выполнили задание!"
+                "message": "Вы выполнили задание!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Играть снова",
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
@@ -1407,12 +1459,17 @@ const strings = {
             },
             "completed": {
                 "title": "Hyvin tehty!",
-                "message": "Olet suorittanut tehtävän!"
+                "message": "Olet suorittanut tehtävän!",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
@@ -1525,12 +1582,17 @@ const strings = {
             },
             "completed": {
                 "title": "Szép munka!",
-                "message": "Teljesítetted a feladatot! Folytathatod az utazást"
+                "message": "Teljesítetted a feladatot! Folytathatod az utazást",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Hoppá!",
                 "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Play again",
             "reset": "Újrakezdés",
             "continue": "Utazás folytatása",
@@ -1643,12 +1705,17 @@ const strings = {
             },
             "completed": {
                 "title": "Well done!",
-                "message": "You have completed the task! You can continue your journey"
+                "message": "You have completed the task! You can continue your journey",
+                "string": "completed"
             },
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            "level": "Level",
+            "gameOver": "Game over!",
+            "nextRound": "Next round",
+            "anotherRound": "Another round",
             "playAgain": "Spil igen",
             "reset": "Start spillet forfra",
             "continue": "Fortsæt rejsen",
