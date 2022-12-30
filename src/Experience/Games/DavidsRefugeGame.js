@@ -23,11 +23,17 @@ export default class DavidsRefuge {
     backOneStep() {
         instance.modal.destroy()
         instance.program.previousStep()
+
+        const dialogue = document.getElementById('dialogue')
+        dialogue.remove()
     }
 
     finishGame() {
         instance.modal.destroy()
         instance.program.nextStep()
+
+        const dialogue = document.getElementById('dialogue')
+        dialogue.remove()
     }
 
     init() {
