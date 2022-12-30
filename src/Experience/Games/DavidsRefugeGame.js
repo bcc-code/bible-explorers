@@ -22,9 +22,8 @@ export default class DavidsRefuge {
             instance.modal.destroy()
         } else {
             instance.modalHtml()
-            instance.hintsHtml()
-
             instance.toggleQuestion()
+            instance.hintsHtml()
             instance.eventListeners()
         }
     }
@@ -94,7 +93,12 @@ export default class DavidsRefuge {
         getHints.innerText = 'Get more hints'
 
         hints.append(hintsHeader, hintsList, getHints)
-        document.querySelector('.modal_davids').append(hints)
+
+        const hintsButton = document.createElement('button')
+        hintsButton.setAttribute('id', 'hints_toggle')
+        hintsButton.className = 'button width height bg--secondary border--5 border--solid border--transparent rounded--full | icon-question-solid | hints_toggle'
+
+        document.querySelector('.davidRefuge').append(hintsButton, hints)
     }
 
     eventListeners() {
@@ -163,6 +167,26 @@ export default class DavidsRefuge {
         const listContainer = document.querySelector('.hints_list')
         const getHint = document.querySelector('.hints_get')
 
+        const toggleHints = document.getElementById('hints_toggle')
+
+        gsap.set(toggleHints.nextElementSibling, { scale: 0, autoAlpha: 0, transformOrigin: 'top right' })
+
+        const hintsShow = gsap.timeline({ paused: true })
+            .to(toggleHints.nextElementSibling, { scale: 1, autoAlpha: 1 })
+
+        toggleHints.addEventListener('click', () => {
+            if (toggleHints.nextElementSibling.style.opacity === '0') {
+                hintsShow.play()
+            } else {
+                hintsShow.reverse()
+            }
+        })
+
+        document.addEventListener('click', (event) => {
+            if (!toggleHints.nextElementSibling.contains(event.target) && !toggleHints.contains(event.target) && !getHint.contains(event.target))
+                hintsShow.reverse()
+        })
+
         // First hint is visible by default
         const item = document.querySelector('li')
         item.innerText = instance.data.hints[0].text
@@ -188,7 +212,11 @@ export default class DavidsRefuge {
 
         overlay.addEventListener('click', () => {
             gsap.to(dialogue, { y: '100%', autoAlpha: 0, onComplete: () => { dialogue.remove() } })
-            gsap.to(overlay, { autoAlpha: 0, onComplete: () => { overlay.remove() } })
+            gsap.to(overlay, {
+                autoAlpha: 0, onComplete: () => {
+                    overlay.remove()
+                }
+            })
         })
     }
 

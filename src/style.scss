@@ -1076,6 +1076,7 @@ button,
         justify-content: space-between;
         padding-bottom: 1rem;
         border-bottom: 4px solid $accent;
+        gap: 1rem;
     }
 
     &__title {
@@ -2593,7 +2594,6 @@ button,
 
     &_content {
         display: flex;
-        gap: 14rem;
     }
 
     &_footer {
@@ -2629,15 +2629,14 @@ button,
 
     &_tooltip {
         position: absolute;
+        top: -1rem;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 100%;
         color: #fff;
         border-radius: 1rem;
-        padding-block: 0.5rem;
-        padding-inline: 1rem;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
         z-index: 2;
-        margin-bottom: 2rem;
 
         span {
             white-space: nowrap;
@@ -2709,32 +2708,14 @@ button,
 }
 
 .hints {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    width: 280px;
+    position: absolute;
+    top: 4rem;
+    right: 4em;
+    width: 400px;
+    background: $accent;
+    border-radius: 1rem;
     padding: 1.5rem 2rem 1rem;
-
-    &::after,
-    &::before {
-        content: '';
-        position: absolute;
-        width: 2rem;
-        height: 100%;
-        top: 0;
-        border-top: 4px solid $accent;
-        border-bottom: 4px solid $accent;
-    }
-
-    &::before {
-        left: 0;
-        border-left: 4px solid $accent;
-    }
-
-    &::after {
-        right: 0;
-        border-right: 4px solid $accent;
-    }
+    z-index: 2;
 
     &_header {
         color: #fff;
@@ -2742,7 +2723,7 @@ button,
         text-transform: uppercase;
         font-weight: bold;
         border-bottom: 1px solid #fff;
-        opacity: 0.4;
+        opacity: 0.6;
         padding-bottom: 1rem;
     }
 
@@ -2786,6 +2767,13 @@ button,
         &:focus-visible {
             background-color: $accent;
         }
+    }
+
+    &_toggle {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        z-index: 3;
     }
 }
 
