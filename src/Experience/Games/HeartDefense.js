@@ -63,25 +63,36 @@ export default class HeartDefense {
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         } else {
-            const wrapper = document.createElement('div')
-            wrapper.classList.add('heart-defense_wrapper')
-
-            const canvas = document.createElement('div')
-            canvas.setAttribute('id', 'heart-defense_canvas')
-
-            wrapper.append(canvas)
-
-            instance.modal = new Modal(wrapper.outerHTML, 'heart-defense')
-
-            const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>
-                <p>${instance.currentStepData.details.prompts[0].prompt}</p>`
-
-            const close = document.querySelector('.modal__close')
-            close.style.display = 'none'
-
+            instance.modalHtml()
             instance.startGame()
         }
+    }
+
+    modalHtml() {
+        const wrapper = document.createElement('div')
+        wrapper.classList.add('heart-defense_wrapper')
+
+        const canvas = document.createElement('div')
+        canvas.setAttribute('id', 'heart-defense_canvas')
+
+        const gameRounds = document.createElement('div')
+        gameRounds.setAttribute('id', 'heart-defense_rounds')
+        gameRounds.innerHTML =
+            `<p>Rounds:</p>
+            <span class="level">${instance.stats.level}</span>
+            <span>${instance.config.levels}</span>`
+
+        wrapper.append(canvas, gameRounds)
+
+        instance.modal = new Modal(wrapper.outerHTML, 'heart-defense')
+
+        const title = document.querySelector('.modal__heading--minigame')
+        title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>
+            <p>${instance.currentStepData.details.prompts[0].prompt}</p>`
+
+        const close = document.querySelector('.modal__close')
+        close.style.display = 'none'
+
     }
 
     startGame() {
@@ -125,7 +136,7 @@ export default class HeartDefense {
         instance.layer.add(heartGroup)
         instance.layer.findOne('#heart').zIndex(0)
 
-        for (let i=0; i<instance.config.heartStates.length; i++) {
+        for (let i = 0; i < instance.config.heartStates.length; i++) {
             const heartImage = new Image()
             heartImage.onload = () => {
                 const heart = new Konva.Image({
@@ -142,6 +153,7 @@ export default class HeartDefense {
                 instance.layer.findOne('#heart-' + instance.config.heartStates[i]).zIndex(i)
             }
             heartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[i] + '.png'
+
         }
     }
 
@@ -154,7 +166,7 @@ export default class HeartDefense {
         instance.layer.add(doorGroup)
         instance.layer.findOne('#door').zIndex(1)
 
-        for (let i=0; i<instance.config.doorStates.length; i++) {
+        for (let i = 0; i < instance.config.doorStates.length; i++) {
             const doorImage = new Image()
             doorImage.onload = () => {
                 const door = new Konva.Image({
@@ -185,9 +197,9 @@ export default class HeartDefense {
         instance.layer.add(livesGroup)
         instance.layer.findOne('#lives').zIndex(2)
 
-        for (let i=0; i<instance.config.maxLives; i++) {
+        for (let i = 0; i < instance.config.maxLives; i++) {
             const lostLife = new Image()
-            lostLife.onload = function() {
+            lostLife.onload = function () {
                 const life = new Konva.Image({
                     id: 'life-' + instance.config.livesStates[1] + i,
                     image: lostLife,
@@ -312,7 +324,7 @@ export default class HeartDefense {
         function setSprite(src, animation) {
             const image = new Image()
             image.src = src
-    
+
             return new Konva.Sprite({
                 id: animation,
                 x: 0,
@@ -335,15 +347,15 @@ export default class HeartDefense {
         function playAnimation(obj, spriteObj) {
             spriteObj.position(instance.center)
             const animation = spriteObj
-    
+
             if (animation.isRunning()) {
                 animation.stop()
                 animation.frameIndex(0)
             }
-    
+
             animation.visible(true)
             animation.start()
-    
+
             animation.on('frameIndexChange.konva', function () {
                 if (this.frameIndex() == 2) {
                     animation.stop()
@@ -359,23 +371,24 @@ export default class HeartDefense {
     possiblePositions = () => [
         {
             x: -instance.config.thoughts.width,
-            y: instance.getRndBetween(-instance.config.thoughts.height/2, instance.stage.height() + instance.config.thoughts.height/2)
+            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2)
         },
         {
-            x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width/2),
-            y: -instance.config.thoughts.height/2
+            x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
+            y: -instance.config.thoughts.height / 2
         },
         {
-            x: instance.stage.width() + instance.config.thoughts.width/2,
-            y: instance.getRndBetween(-instance.config.thoughts.height/2, instance.stage.height() + instance.config.thoughts.height/2)
+            x: instance.stage.width() + instance.config.thoughts.width / 2,
+            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2)
         },
         {
-            x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width/2),
-            y: instance.stage.height() + instance.config.thoughts.height/2
+            x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
+            y: instance.stage.height() + instance.config.thoughts.height / 2
         }
     ]
 
     getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * Math.min(instance.stats.level, instance.config.levels)
+    // getRndSpeed = () => 10
     getRndBadThoughtSrc = () => instance.config.path + 'bad-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
     getRndGoodThoughtSrc = () => instance.config.path + 'good-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
     getRndBetween = (min, max) => min + Math.random() * (max - min)
@@ -391,6 +404,7 @@ export default class HeartDefense {
             instance.stage.width(window.innerWidth)
             instance.stage.height(window.innerHeight)
         });
+
     }
 
     keyDownHandler(e) {
@@ -400,6 +414,10 @@ export default class HeartDefense {
             instance.stats.heartClosed = !instance.stats.heartClosed
             instance.updateDoorStatus()
         }
+    }
+
+    updateRoundsStatus() {
+        document.querySelector('#heart-defense_rounds .level').innerText = instance.stats.level
     }
 
     updateDoorStatus() {
@@ -427,7 +445,7 @@ export default class HeartDefense {
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.level} ${instance.stats.level}/${ Math.max(instance.config.levels, instance.stats.level) } ${_s.miniGames.completed.string}</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.level} ${instance.stats.level}/${Math.max(instance.config.levels, instance.stats.level)} ${_s.miniGames.completed.string}</div>
             </div>
         </div>`
 
@@ -451,6 +469,7 @@ export default class HeartDefense {
             next.addEventListener('click', () => {
                 instance.destroy()
                 instance.startGame()
+                instance.updateRoundsStatus()
             })
         }
         else {
@@ -463,7 +482,7 @@ export default class HeartDefense {
             })
 
             const anotherRound = modal.querySelector('#restart')
-            anotherRound.style.display = 'block' 
+            anotherRound.style.display = 'block'
             anotherRound.innerText = _s.miniGames.anotherRound
             anotherRound.addEventListener('click', () => {
                 instance.destroy()
@@ -505,7 +524,7 @@ export default class HeartDefense {
         const modal = document.querySelector('.modal__congrats')
 
         const restart = modal.querySelector('#restart')
-        restart.style.display = 'block' 
+        restart.style.display = 'block'
         restart.innerText = _s.miniGames.reset
         restart.addEventListener('click', () => {
             instance.destroy()

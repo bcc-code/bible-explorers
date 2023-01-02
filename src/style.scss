@@ -3854,6 +3854,47 @@ button,
     color: #fff;
 }
 
+#heart-defense_rounds {
+    position: absolute;
+    background-color: $primary;
+    border-right: 4px solid $accent;
+    border-block: 4px solid $accent;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0 2rem 2rem 0;
+    left: 0;
+    top: 2rem;
+
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+
+    color: #fff;
+    font-weight: bold;
+
+    p {
+        flex-shrink: 0;
+        flex-grow: 1;
+        margin-bottom: 0;
+    }
+
+    span {
+        font-size: 1.5rem;
+    }
+
+    span.level {
+        margin-left: 1rem;
+    }
+
+    span:not(.level)::before {
+        content: '/';
+        margin-inline: 0.5rem;
+    }
+
+    .level {
+        color: $accent2;
+    }
+}
+
 // #endregion
 
 // #region Responsive
