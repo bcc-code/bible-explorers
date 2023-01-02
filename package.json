@@ -45,7 +45,7 @@
     "mini-svg-data-uri": "^1.4.4",
     "node-sass": "^7.0.1",
     "sass-loader": "^12.6.0",
-    "svgo-loader": "^3.0.0",
+    "svgo-loader": "^3.0.3",
     "url-loader": "^4.1.1",
     "workbox-webpack-plugin": "^6.5.2"
   }
