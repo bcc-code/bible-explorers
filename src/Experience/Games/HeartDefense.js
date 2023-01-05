@@ -108,6 +108,7 @@ export default class HeartDefense {
 
         instance.experience.gameIsOn = true
         instance.animation.start()
+        instance.fadeInOverlay.reverse()
     }
 
     drawCanvas() {
@@ -119,6 +120,21 @@ export default class HeartDefense {
 
         instance.layer = new Konva.Layer()
         instance.stage.add(instance.layer)
+
+        instance.overlay = new Konva.Rect({
+            width: window.innerWidth,
+            height: window.innerHeight,
+            fill: '#131a43',
+            opacity: 0
+        })
+        instance.layer.add(instance.overlay)
+
+        instance.fadeInOverlay = new Konva.Tween({
+            node: instance.overlay,
+            duration: 1,
+            easing: Konva.Easings.EaseInOut,
+            opacity: 0.5
+        })
 
         instance.center = {
             x: instance.stage.width() / 2,
@@ -141,11 +157,11 @@ export default class HeartDefense {
                 const heart = new Konva.Image({
                     id: 'heart-' + instance.config.heartStates[i],
                     image: heartImage,
-                    width: 450,
-                    height: 377,
+                    width: 500,
+                    height: 419,
                     offset: {
-                        x: 450 / 2,
-                        y: 377 / 2
+                        x: 500 / 2,
+                        y: 419 / 2
                     }
                 })
                 instance.layer.findOne('#heart').add(heart)
@@ -170,11 +186,11 @@ export default class HeartDefense {
                 const door = new Konva.Image({
                     id: 'door-' + instance.config.doorStates[i],
                     image: doorImage,
-                    width: 75,
-                    height: 157,
+                    width: 96,
+                    height: 200,
                     offset: {
-                        x: 75 / 2,
-                        y: 157 / 2
+                        x: 96 / 2,
+                        y: 200 / 2
                     },
                     visible: i == 1
                 })
@@ -319,7 +335,7 @@ export default class HeartDefense {
                         instance.updateLivesStatus()
 
                         if (instance.stats.lives == 0) {
-                            instance.animation.stop()
+                            instance.stopAnimation()
                             setTimeout(() => { instance.toggleGameOver() }, 500)
                         }
                     }
@@ -329,7 +345,7 @@ export default class HeartDefense {
                         instance.stats.points++
 
                         if (instance.stats.points == instance.config.pointsToCompleteLevel) {
-                            instance.animation.stop()
+                            instance.stopAnimation()
                             setTimeout(() => { instance.toggleLevelCompleted() }, 500)
                         }
                     }
@@ -425,6 +441,11 @@ export default class HeartDefense {
         }
     }
 
+    stopAnimation() {
+        instance.animation.stop()
+        instance.fadeInOverlay.play()
+    }
+
     // Helpers
     getRndPosition = () => instance.possiblePositions()[instance.getRoundedRndBetween(0, 3)]
     possiblePositions = () => [
@@ -459,10 +480,7 @@ export default class HeartDefense {
 
     setEventListeners() {
         document.addEventListener('keydown', instance.keyDownHandler)
-        window.addEventListener("resize", () => {
-            instance.stage.width(window.innerWidth)
-            instance.stage.height(window.innerHeight)
-        })
+        window.addEventListener("resize", instance.updateStageDimension)
     }
 
     keyDownHandler(e) {
@@ -472,6 +490,11 @@ export default class HeartDefense {
             instance.stats.heartClosed = !instance.stats.heartClosed
             instance.updateDoorStatus()
         }
+    }
+
+    updateStageDimension() {
+        instance.stage.width(window.innerWidth)
+        instance.stage.height(window.innerHeight)
     }
 
     updateRoundsStatus() {
@@ -589,11 +612,15 @@ export default class HeartDefense {
         skip.style.display = instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries
             ? 'block'
             : 'none'
-
-        skip.addEventListener('click', instance.program.nextStep)
+        skip.addEventListener('click', () => {
+            instance.destroy()
+            instance.toggleGame()
+            instance.program.nextStep()
+        })
     }
 
     destroy() {
+        window.removeEventListener('resize', instance.updateStageDimension)
         instance.modal.destroy()
         instance.layer.destroy()
         instance.experience.gameIsOn = false
