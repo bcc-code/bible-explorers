@@ -17,7 +17,7 @@ export default class HeartDefense {
         const spriteH = 100
 
         instance.config = {
-            maxThoughts: 8,
+            noOfThoughts: 8,
             levels: 6,
             maxLives: 3,
             path: 'games/heart-defense/',
@@ -78,7 +78,7 @@ export default class HeartDefense {
         const gameRounds = document.createElement('div')
         gameRounds.setAttribute('id', 'heart-defense_rounds')
         gameRounds.innerHTML =
-            `<p>Rounds:</p>
+            `<p>${_s.miniGames.round}:</p>
             <span class="level">${instance.stats.level}</span>
             <span>${instance.config.levels}</span>`
 
@@ -92,7 +92,6 @@ export default class HeartDefense {
 
         const close = document.querySelector('.modal__close')
         close.style.display = 'none'
-
     }
 
     startGame() {
@@ -107,7 +106,7 @@ export default class HeartDefense {
         instance.setUpAnimation()
         instance.setEventListeners()
 
-        instance.gameIsOn = true
+        instance.experience.gameIsOn = true
         instance.animation.start()
     }
 
@@ -153,7 +152,6 @@ export default class HeartDefense {
                 instance.layer.findOne('#heart-' + instance.config.heartStates[i]).zIndex(i)
             }
             heartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[i] + '.png'
-
         }
     }
 
@@ -233,8 +231,8 @@ export default class HeartDefense {
         instance.layer.add(thoughtsGroup)
         instance.layer.findOne('#thoughts').zIndex(3)
 
-        instance.animation = new Konva.Animation(frames => {
-            if (instance.thoughts.length < instance.config.maxThoughts)
+        instance.animation = new Konva.Animation(frame => {
+            if (instance.thoughts.length < instance.getNoOfThoughts())
                 createThought()
 
             animateThoughts()
@@ -244,52 +242,70 @@ export default class HeartDefense {
         instance.layer.add(instance.explosionSprite)
 
         function createThought() {
-            if (Math.random() < instance.config.probability) {
+            if (Math.random() > instance.config.probability) return
+
+            // 8/10 thoughts are bad
+            const badThought = Math.random() < 0.8
+
+            const thoughtImage = new Image()
+            thoughtImage.onload = () => {
+                const framesBetweenEachThought = 75
                 const position = instance.getRndPosition()
-                const x = position.x
-                const y = position.y
-                const dX = instance.center.x - x
-                const dY = instance.center.y - y
-                const norm = Math.sqrt(dX ** 2 + dY ** 2)
+                let x = position.x
+                let y = position.y
+                let dX = instance.center.x - x
+                let dY = instance.center.y - y
+                let norm = Math.sqrt(dX ** 2 + dY ** 2)
                 const speed = instance.getRndSpeed()
-
-                // 3/4 thoughts are bad
-                const badThought = Math.random() < 0.75
-
-                const thoughtImage = new Image()
-                thoughtImage.onload = () => {
-                    const thought = new Konva.Image({
-                        name: 'thought',
-                        image: thoughtImage,
-                        x: x,
-                        y: y,
-                        width: instance.config.thoughts.width,
-                        height: instance.config.thoughts.height,
-                        offset: {
-                            x: instance.config.thoughts.width / 2,
-                            y: instance.config.thoughts.height / 2
-                        }
-                    })
-
-                    instance.layer.findOne('#thoughts').add(thought)
-                    instance.thoughts.push({
-                        item: thought,
-                        speedX: dX / norm * speed,
-                        speedY: dY / norm * speed,
-                        badThought: badThought
-                    })
+                const distancePerFrame = {
+                    x: dX / norm * speed,
+                    y: dY / norm * speed
                 }
-                thoughtImage.src = badThought ? instance.getRndBadThoughtSrc() : instance.getRndGoodThoughtSrc()
+                let estFramesToCenter = dX / distancePerFrame.x
+
+                // Adjust distance if necessary
+                const diffFrames = getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) - estFramesToCenter
+
+                // Updated values
+                x -= diffFrames * distancePerFrame.x
+                y -= diffFrames * distancePerFrame.y
+                dX = instance.center.x - x
+                dY = instance.center.y - y
+                estFramesToCenter = dX / distancePerFrame.x
+
+                const thought = new Konva.Image({
+                    name: 'thought',
+                    image: thoughtImage,
+                    x: x,
+                    y: y,
+                    width: instance.config.thoughts.width,
+                    height: instance.config.thoughts.height,
+                    offset: {
+                        x: instance.config.thoughts.width / 2,
+                        y: instance.config.thoughts.height / 2
+                    }
+                })
+
+                instance.layer.findOne('#thoughts').add(thought)
+                instance.thoughts.push({
+                    item: thought,
+                    speedX: distancePerFrame.x,
+                    speedY: distancePerFrame.y,
+                    badThought: badThought,
+                    remainingFramesToCenter: estFramesToCenter
+                })
             }
+            thoughtImage.src = badThought ? instance.getRndBadThoughtSrc() : instance.getRndGoodThoughtSrc()
         }
 
         function animateThoughts() {
             instance.thoughts.forEach((thought, index) => {
-                // Update thought position
-                thought.item.position({
-                    x: thought.item.x() + thought.speedX,
-                    y: thought.item.y() + thought.speedY
+                // Move thought towards the center
+                thought.item.move({
+                    x: thought.speedX,
+                    y: thought.speedY
                 })
+                thought.remainingFramesToCenter--
 
                 if (!instance.isIntersectingRectangleWithRectangle(thought.item.position(), 10, 10, instance.center, 10, 10))
                     return
@@ -302,16 +318,20 @@ export default class HeartDefense {
                         instance.stats.lives--
                         instance.updateLivesStatus()
 
-                        if (instance.stats.lives == 0)
-                            instance.toggleGameOver()
+                        if (instance.stats.lives == 0) {
+                            instance.animation.stop()
+                            setTimeout(() => { instance.toggleGameOver() }, 500)
+                        }
                     }
                     else {
                         instance.audio.playCorrectSound()
                         instance.updateHeartStatus()
                         instance.stats.points++
 
-                        if (instance.stats.points == instance.config.pointsToCompleteLevel)
-                            instance.toggleLevelCompleted()
+                        if (instance.stats.points == instance.config.pointsToCompleteLevel) {
+                            instance.animation.stop()
+                            setTimeout(() => { instance.toggleLevelCompleted() }, 500)
+                        }
                     }
                 }
                 else {
@@ -319,6 +339,46 @@ export default class HeartDefense {
                     playAnimation(thought.item, instance.explosionSprite)
                 }
             })
+        }
+
+        function getUpdatedFramesToCenterValue(min, padding) {
+            const framesToCenterArr = instance.thoughts
+                .map(thought => thought.remainingFramesToCenter)
+                .sort(function(a, b) { return a-b })
+
+            // No update
+            if (framesToCenterArr.length === 0)
+                return min
+
+            // Value is already the closest to center
+            if (min + padding < framesToCenterArr[0])
+                return min
+
+            // Find value inside array
+            for (let i=1; i < framesToCenterArr.length; i++) {
+                if (framesToCenterArr[i] < min + padding) continue
+            
+                if (intervalsIntersect(framesToCenterArr[i-1], min, padding)) {
+                    min = framesToCenterArr[i-1] + padding
+                }
+                else if (intervalsIntersect(framesToCenterArr[i], min, padding)) {
+                    min = framesToCenterArr[i] + padding
+                }
+                else {
+                    return min
+                }
+            }
+
+            // Value is the farthest from the center
+            const highestValue = framesToCenterArr[framesToCenterArr.length-1]
+            return min - padding > highestValue ? min : highestValue + padding
+        }
+
+        function intervalsIntersect(a, b, padding) {
+            const a_start = a-padding/2, a_end = a+padding/2
+            const b_start = b-padding/2, b_end = b+padding/2
+            
+            return a_start < b_end && b_start < a_end
         }
 
         function setSprite(src, animation) {
@@ -366,11 +426,10 @@ export default class HeartDefense {
     }
 
     // Helpers
-
     getRndPosition = () => instance.possiblePositions()[instance.getRoundedRndBetween(0, 3)]
     possiblePositions = () => [
         {
-            x: -instance.config.thoughts.width,
+            x: -instance.config.thoughts.width / 2,
             y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2)
         },
         {
@@ -387,6 +446,7 @@ export default class HeartDefense {
         }
     ]
 
+    getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
     getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * Math.min(instance.stats.level, instance.config.levels)
     getRndBadThoughtSrc = () => instance.config.path + 'bad-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
     getRndGoodThoughtSrc = () => instance.config.path + 'good-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
@@ -402,12 +462,11 @@ export default class HeartDefense {
         window.addEventListener("resize", () => {
             instance.stage.width(window.innerWidth)
             instance.stage.height(window.innerHeight)
-        });
-
+        })
     }
 
     keyDownHandler(e) {
-        if (!instance.gameIsOn) return
+        if (instance.experience.gameIsOn == false) return
 
         if (e.keyCode == 32) {
             instance.stats.heartClosed = !instance.stats.heartClosed
@@ -444,19 +503,16 @@ export default class HeartDefense {
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.level} ${instance.stats.level}/${Math.max(instance.config.levels, instance.stats.level)} ${_s.miniGames.completed.string}</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.level} ${instance.stats.level} ${_s.miniGames.completed.string}!</div>
             </div>
         </div>`
 
         instance.stats.level++
-        instance.gameIsOn = false
         instance.stats.points = 0
-        instance.animation.stop()
 
         instance.modal = new Modal(html, 'modal__congrats')
 
         // Add event listeners
-
         const modal = document.querySelector('.modal__congrats')
 
         const next = modal.querySelector('#continue')
@@ -510,8 +566,6 @@ export default class HeartDefense {
             </div>
         </div>`
 
-        instance.animation.stop()
-        instance.gameIsOn = false
         instance.stats.fails++
         instance.stats.lives = instance.config.maxLives
         instance.stats.level = 1
@@ -542,5 +596,6 @@ export default class HeartDefense {
     destroy() {
         instance.modal.destroy()
         instance.layer.destroy()
+        instance.experience.gameIsOn = false
     }
 }

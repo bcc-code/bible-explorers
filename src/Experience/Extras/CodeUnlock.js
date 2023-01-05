@@ -24,8 +24,6 @@ export default class CodeUnlock {
             instance.program = instance.world.program
             instance.secretCode = instance.program.getCurrentStepData().code_to_unlock
 
-            console.log(instance.program.getCurrentStepData())
-
             let html = `
                 <div class="modal__content code-unlock">
                     <div class="code-unlock__container">

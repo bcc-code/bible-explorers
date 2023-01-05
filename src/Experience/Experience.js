@@ -60,7 +60,7 @@ export default class Experience {
         this.gameIsOn = false
 
         this.time.on('animation', () => {
-            if (!this.videoIsPlaying || !this.gameIsOn)
+            if (this.videoIsPlaying == false && this.gameIsOn == false)
                 this.update()
         })
     }
