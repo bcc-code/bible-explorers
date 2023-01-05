@@ -22,7 +22,7 @@ export default class PictureAndCode {
             instance.program = instance.world.program
             instance.selectedChapter = instance.world.selectedChapter
             instance.stepData = instance.program.getCurrentStepData()
-            instance.pictureAndCode = instance.stepData.picture_and_code
+            instance.data = instance.stepData.picture_and_code
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
             instance.lastKnownScrollPosition = 0
             instance.togglePicture()
@@ -30,7 +30,7 @@ export default class PictureAndCode {
     }
 
     togglePicture() {
-        instance.offline.fetchChapterAsset(instance.pictureAndCode, "picture", (data) => this.setPicture(data.picture))
+        instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
 
         let html = `<div class="modal__content picture-and-code">
             <div class="picture-and-code__content">
@@ -74,8 +74,8 @@ export default class PictureAndCode {
     }
 
     setPicture(url) {
-        instance.pictureAndCode.picture = url
-        instance.el.querySelector('img').setAttribute('data-src', instance.pictureAndCode.picture)
+        instance.data.picture = url
+        instance.el.querySelector('img').setAttribute('data-src', instance.data.picture)
     }
 
     addExistingCircles() {

@@ -50,7 +50,7 @@ export default class HeartDefense {
     toggleGame() {
         instance.audio = instance.world.audio
         instance.program = instance.world.program
-        instance.currentStepData = instance.program.getCurrentStepData()
+        instance.stepData = instance.program.getCurrentStepData()
 
         instance.stats = {
             lives: 3,
@@ -87,8 +87,8 @@ export default class HeartDefense {
         instance.modal = new Modal(wrapper.outerHTML, 'heart-defense')
 
         const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>
-            <p>${instance.currentStepData.details.prompts[0].prompt}</p>`
+        title.innerHTML = `<h3>${instance.stepData.details.title}</h3>
+            <p>${instance.stepData.details.prompts[0].prompt}</p>`
 
         const close = document.querySelector('.modal__close')
         close.style.display = 'none'

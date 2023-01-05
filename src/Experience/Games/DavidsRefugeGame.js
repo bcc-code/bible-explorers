@@ -16,14 +16,18 @@ export default class DavidsRefuge {
 
     toggleGame() {
         instance.program = instance.world.program
-        instance.data = instance.program.getCurrentStepData().davids_refuge
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.davids_refuge
 
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
         } else {
             instance.modalHtml()
             instance.toggleQuestion()
-            instance.hintsHtml()
+
+            if (instance.data.hints.length)
+                instance.hintsHtml()
+
             instance.eventListeners()
         }
     }
@@ -52,7 +56,8 @@ export default class DavidsRefuge {
         close.style.display = 'none'
 
         const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${instance.program.getCurrentStepData().details.title}</h3>`
+        title.innerHTML = `<h3>${instance.stepData.details.title}</h3>
+            <p>${instance.stepData.details.prompts[0].prompt}</p>`
 
         instance.data.characters.forEach(goat => {
             const url = goat.image.split('/')
@@ -153,8 +158,22 @@ export default class DavidsRefuge {
         selectGoat.addEventListener('click', () => {
             if (selectGoat.disabled) return
 
-            document.querySelectorAll('.davidRefuge_box').forEach(goat => {
-                if (goat.hasAttribute('data-selected')) return
+            document.querySelectorAll('.davidRefuge_box').forEach((goat, index) => {
+                const tooltip = goat.querySelector('.davidRefuge_tooltip')
+
+                if (goat.hasAttribute('data-selected')) {
+                    if (instance.data.characters[index].tells_the_truth)
+                        tooltip.style.top = '-7rem'
+
+                    tooltip.style.width = '330px'
+                    tooltip.innerHTML = instance.data.characters[index].tells_the_truth
+                        ? `<span style="white-space: normal">${instance.data.correct_character_message}</span>`
+                        : `<span style="white-space: normal">${instance.data.wrong_character_message}</span>`
+
+                    return
+                }
+
+                tooltip.remove()
                 gsap.to(goat, { filter: 'grayscale(0.5)', pointerEvents: 'none' })
             })
 
@@ -163,48 +182,50 @@ export default class DavidsRefuge {
             instance.toggleMessage()
         })
 
-        // Hints
-        const listContainer = document.querySelector('.hints_list')
-        const getHint = document.querySelector('.hints_get')
+        if (instance.data.hints.length) {
+            // Hints
+            const listContainer = document.querySelector('.hints_list')
+            const getHint = document.querySelector('.hints_get')
 
-        const toggleHints = document.getElementById('hints_toggle')
+            const toggleHints = document.getElementById('hints_toggle')
 
-        gsap.set(toggleHints.nextElementSibling, { scale: 0, autoAlpha: 0, transformOrigin: 'top right' })
+            gsap.set(toggleHints.nextElementSibling, { scale: 0, autoAlpha: 0, transformOrigin: 'top right' })
 
-        const hintsShow = gsap.timeline({ paused: true })
-            .to(toggleHints.nextElementSibling, { scale: 1, autoAlpha: 1 })
+            const hintsShow = gsap.timeline({ paused: true })
+                .to(toggleHints.nextElementSibling, { scale: 1, autoAlpha: 1 })
 
-        toggleHints.addEventListener('click', () => {
-            if (toggleHints.nextElementSibling.style.opacity === '0') {
-                hintsShow.play()
-            } else {
-                hintsShow.reverse()
-            }
-        })
+            toggleHints.addEventListener('click', () => {
+                if (toggleHints.nextElementSibling.style.opacity === '0') {
+                    hintsShow.play()
+                } else {
+                    hintsShow.reverse()
+                }
+            })
 
-        document.addEventListener('click', (event) => {
-            if (!toggleHints.nextElementSibling.contains(event.target) && !toggleHints.contains(event.target) && !getHint.contains(event.target))
-                hintsShow.reverse()
-        })
+            document.addEventListener('click', (event) => {
+                if (!toggleHints.nextElementSibling.contains(event.target) && !toggleHints.contains(event.target) && !getHint.contains(event.target))
+                    hintsShow.reverse()
+            })
 
-        // First hint is visible by default
-        const item = document.querySelector('li')
-        item.innerText = instance.data.hints[0].text
-        listContainer.appendChild(item)
+            // First hint is visible by default
+            const item = document.querySelector('li')
+            item.innerText = instance.data.hints[0].text
+            listContainer.appendChild(item)
 
-        let index = 1
+            let index = 1
 
-        getHint.addEventListener('click', () => {
-            if (index < instance.data.hints.length) {
-                const item = document.querySelector('li')
-                item.innerText = instance.data.hints[index].text
-                listContainer.appendChild(item)
-            }
+            getHint.addEventListener('click', () => {
+                if (index < instance.data.hints.length) {
+                    const item = document.querySelector('li')
+                    item.innerText = instance.data.hints[index].text
+                    listContainer.appendChild(item)
+                }
 
-            if (++index == instance.data.hints.length) {
-                getHint.remove()
-            }
-        })
+                if (++index == instance.data.hints.length) {
+                    getHint.remove()
+                }
+            })
+        }
 
         // Message event
         const overlay = document.getElementById('overlay')
