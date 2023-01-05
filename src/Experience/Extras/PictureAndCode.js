@@ -21,7 +21,8 @@ export default class PictureAndCode {
             instance.offline = instance.world.offline
             instance.program = instance.world.program
             instance.selectedChapter = instance.world.selectedChapter
-            instance.data = instance.program.getCurrentStepData().picture_and_code
+            instance.stepData = instance.program.getCurrentStepData()
+            instance.pictureAndCode = instance.stepData.picture_and_code
             instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length
             instance.lastKnownScrollPosition = 0
             instance.togglePicture()
@@ -29,7 +30,7 @@ export default class PictureAndCode {
     }
 
     togglePicture() {
-        instance.offline.fetchChapterAsset(instance.data, "picture", (data) => this.setPicture(data.picture))
+        instance.offline.fetchChapterAsset(instance.pictureAndCode, "picture", (data) => this.setPicture(data.picture))
 
         let html = `<div class="modal__content picture-and-code">
             <div class="picture-and-code__content">
@@ -41,8 +42,10 @@ export default class PictureAndCode {
         instance.modal = new Modal(html, 'modal__picture-and-code')
         instance.el = document.querySelector('.picture-and-code')
 
+        console.log()
+
         const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${instance.data.details.title}</h3>`
+        title.innerHTML = `<h3>${instance.stepData.details.title}</h3>`
 
         const back = document.getElementById("back")
         back.style.display = 'block'
@@ -71,8 +74,8 @@ export default class PictureAndCode {
     }
 
     setPicture(url) {
-        instance.data.picture = url
-        instance.el.querySelector('img').setAttribute('data-src', instance.data.picture)
+        instance.pictureAndCode.picture = url
+        instance.el.querySelector('img').setAttribute('data-src', instance.pictureAndCode.picture)
     }
 
     addExistingCircles() {

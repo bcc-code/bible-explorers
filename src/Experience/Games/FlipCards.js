@@ -16,7 +16,8 @@ export default class Chapter3Game2 {
 
     init() {
         instance.program = instance.world.program
-        instance.data = instance.program.getCurrentStepData()
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.flipCards = instance.stepData.flip_cards
 
         if (document.querySelector('.modal')) {
             instance.modal.destroy()
@@ -34,7 +35,7 @@ export default class Chapter3Game2 {
             cardSelect.innerText = _s.miniGames.flipCards.chooseKing
             cardSelect.disabled = true
 
-            instance.data.flip_cards.cards.forEach(card => {
+            instance.flipCards.cards.forEach(card => {
                 cardWrapper.append(instance.getCardHtml(
                     card.image_front,
                     card.image_back,
@@ -50,8 +51,8 @@ export default class Chapter3Game2 {
             close.style.display = 'none'
 
             const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>${instance.data.details.title}</h3>
-                <p>${instance.data.details.prompts[0].prompt}</p>`
+            title.innerHTML = `<h3>${instance.stepData.details.title}</h3>
+                <p>${instance.stepData.details.prompts[0].prompt}</p>`
 
             const next = document.getElementById('continue')
             next.style.display = 'block'
@@ -88,14 +89,14 @@ export default class Chapter3Game2 {
                     .to(card, { duration: 1, rotationY: 180 })
 
                 input[0].addEventListener('input', () => {
-                    if (input[0].value === instance.data.flip_cards.cards[index].code) {
+                    if (input[0].value === instance.flipCards.cards[index].code) {
                         card.setAttribute('flipped', '')
                         flip.play()
 
                         const flippedCards = document.querySelectorAll('[flipped]')
 
-                        if (flippedCards.length == instance.data.flip_cards.cards.length) {
-                            title.querySelector('p').innerText = instance.data.details.prompts[1].prompt
+                        if (flippedCards.length == instance.flipCards.cards.length) {
+                            title.querySelector('p').innerText = instance.stepData.details.prompts[1].prompt
 
                         }
                     }
@@ -106,7 +107,7 @@ export default class Chapter3Game2 {
 
                 card.addEventListener('click', () => {
                     const flippedCards = document.querySelectorAll('[flipped]')
-                    if (flippedCards.length == instance.data.flip_cards.cards.length) {
+                    if (flippedCards.length == instance.flipCards.cards.length) {
 
 
                         document.getElementById('cardWrapper').classList.add('cardSelection')
@@ -180,20 +181,20 @@ export default class Chapter3Game2 {
 
     toggleGlitch() {
         const imageSrc = 'games/glitch.png'
-        const glitch = instance.dialogueHtml('glitch', instance.data.flip_cards.glitchs_voice.text, imageSrc)
+        const glitch = instance.dialogueHtml('glitch', instance.flipCards.glitchs_voice.text, imageSrc)
 
         document.querySelector('.modal__flipCardGame').insertAdjacentHTML('beforeend', glitch)
 
         gsap.to('.dialogue', {
             y: 0, autoAlpha: 1, onComplete: () => {
-                instance.audio.togglePlayTaskDescription(instance.data.flip_cards.glitchs_voice.audio)
+                instance.audio.togglePlayTaskDescription(instance.flipCards.glitchs_voice.audio)
             }
         })
     }
 
     toggleGodVoice() {
         const imageSrc = 'games/godVoice.png'
-        const godVoice = instance.dialogueHtml('godVoice', instance.data.flip_cards.gods_voice.text, imageSrc)
+        const godVoice = instance.dialogueHtml('godVoice', instance.flipCards.gods_voice.text, imageSrc)
 
         gsap.to('.dialogue', {
             y: '100%', autoAlpha: 0, onComplete: () => {
@@ -201,7 +202,7 @@ export default class Chapter3Game2 {
                 document.querySelector('.modal__flipCardGame').insertAdjacentHTML('beforeend', godVoice)
                 gsap.to('.dialogue', {
                     y: 0, autoAlpha: 1, onComplete: () => {
-                        instance.audio.togglePlayTaskDescription(instance.data.flip_cards.gods_voice.audio)
+                        instance.audio.togglePlayTaskDescription(instance.flipCards.gods_voice.audio)
                     }
                 })
             }
