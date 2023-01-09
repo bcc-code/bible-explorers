@@ -17,10 +17,10 @@ function getWpApiUrl() {
             return wpApiUrl_production
 
         case 'zealous-ground-0c9103f03-develop.westeurope.1.azurestaticapps.net':
-            return wpApiUrl_staging
+            return wpApiUrl_production
 
         case 'localhost':
-            return wpApiUrl_staging
+            return wpApiUrl_production
 
         default:
             return wpApiUrl_staging
