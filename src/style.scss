@@ -1868,7 +1868,7 @@ button,
         textarea {
             width: 100%;
             margin-top: 2rem;
-            font-size: 1.5rem;
+            font-size: 2rem;
             resize: none;
 
             @include wrapper();
@@ -3979,7 +3979,8 @@ button,
         font-size: var(--text-size);
     }
 
-    .task__content p {
+    .task__content p,
+    .task__content textarea {
         font-size: var(--text-size--task);
     }
 
