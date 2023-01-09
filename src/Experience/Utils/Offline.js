@@ -392,6 +392,8 @@ export default class Offline {
     }
 
     fetchChapterAsset(data, param, callback) {
+        if (!data[param]) return
+
         caches.open("chaptersAssets").then((cache) => {
             cache.match(data[param])
                 .then((response) => {
