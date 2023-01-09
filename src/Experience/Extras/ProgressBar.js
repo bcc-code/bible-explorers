@@ -47,7 +47,15 @@ export default class ProgressBar {
     static generateHtml() {
         let html = '<div class="progress-bar__checkpoints">'
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
-            const taskTypeClass = instance.program.programData[i].steps.some(step => step.details.step_type == 'video') ? 'icon-film-solid' : instance.program.programData[i].steps.some(step => step.details.step_type == 'quiz') ? 'icon-question-solid' : 'icon-pen-to-square-solid'
+            let taskTypeClass = 'icon-pen-to-square-solid'
+
+            if (instance.program.programData[i].steps.some(step => step.details.step_type == 'video'))
+                taskTypeClass = 'icon-film-solid'
+            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'quiz'))
+                taskTypeClass = 'icon-question-solid'
+            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause'))
+                taskTypeClass = 'icon-pause-solid'
+
             html += `<div class="progress-bar__checkpoint ${i > instance.program.chapterProgress() ? 'locked' : ''} ${taskTypeClass}" data-index="${i}" ></div>`
         }
         html += `<div class="progress-bar__checkpoint">#</div>`

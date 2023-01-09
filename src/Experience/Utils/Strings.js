@@ -25,7 +25,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
-            } 
+            },
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can now take a short break before you continue the time travel. See you back soon!"
+            }
         },
         "task": {
             "codeUnlock": "Enter the correct number",

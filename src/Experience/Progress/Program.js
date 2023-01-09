@@ -15,6 +15,7 @@ import Congrats from '../Extras/Congrats.js'
 import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
+import Pause from '../Extras/Pause.js'
 
 let instance = null
 
@@ -49,6 +50,7 @@ export default class Program {
         this.flipCards = new FlipCards()
         this.heartDefense = new HeartDefense()
         this.davidsRefuge = new DavidsRefuge()
+        this.pause = new Pause()
 
         instance = this
 
@@ -120,10 +122,8 @@ export default class Program {
             this.advance()
         }
 
-
         else if (this.stepType() == 'iris') {
             this.taskDescription.toggleTaskDescription()
-
         }
 
         else if (this.stepType() == 'task') {
@@ -227,6 +227,12 @@ export default class Program {
         if (this.currentCheckpoint == this.totalCheckpoints) {
             setTimeout(() => {
                 instance.congrats.toggleBibleCardsReminder()
+            }, instance.camera.data.moveDuration)
+        }
+
+        if (this.stepType() == 'pause') {
+            setTimeout(() => {
+                this.pause.togglePause()
             }, instance.camera.data.moveDuration)
         }
     }
