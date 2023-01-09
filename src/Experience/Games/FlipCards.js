@@ -54,10 +54,6 @@ export default class Chapter3Game2 {
             title.innerHTML = `<h3>${instance.stepData.details.title}</h3>
                 <p>${instance.stepData.details.prompts[0].prompt}</p>`
 
-            const next = document.getElementById('continue')
-            next.style.display = 'block'
-            next.disabled = true
-            next.innerText = 'next'
 
             const back = document.getElementById('back')
             back.style.display = 'block'
@@ -66,6 +62,18 @@ export default class Chapter3Game2 {
                 instance.modal.destroy()
                 instance.program.previousStep()
             })
+
+            const next = document.getElementById('continue')
+            next.style.display = 'block'
+            next.disabled = true
+            next.innerText = 'next'
+
+            const skip = document.getElementById("skip")
+            skip.innerText = _s.miniGames.skip
+            skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
+                ? 'block'
+                : 'none'
+            skip.addEventListener('click', instance.finishGame)
 
             let firstTimeClick = true
             let cards = gsap.utils.toArray('.card')
