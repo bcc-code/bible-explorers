@@ -2,50 +2,45 @@ import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 
-let questions = null
+let instance = null
 
 export default class Questions {
     constructor() {
+        instance = this
         this.experience = new Experience()
-        questions = this
+        instance.world = instance.experience.world
+        instance.audio = instance.world.audio
+        instance.debug = instance.experience.debug
     }
 
     toggleQuestions() {
         if (document.querySelector('.modal')) {
-            questions.modal.destroy()
+            instance.modal.destroy()
         }
         else {
-            let world = this.experience.world
-            let program = world.program
-            let currentCheckpoint = program.currentCheckpoint
-            let selectedChapter = world.selectedChapter
-            let localStorageId = 'answers-theme-' + selectedChapter.id
-            let allAnswersFromTheme = JSON.parse(localStorage.getItem(localStorageId)) || {}
+            instance.program = instance.world.program
+            instance.stepData = instance.program.getCurrentStepData()
+            instance.data = instance.stepData.questions
 
-            const questions = selectedChapter.program[currentCheckpoint].questions
-
-            let html = `<div class="modal__content questions">
-                <div class="questions__header heading"><h2>${_s.task.questions}</h2></div>
-                <div class="questions__content">`
-
-                questions.forEach((question, index) => {
-                    html += `<div class="question">
-                        <span class="question__label"> Question ${index + 1} / ${questions.length}</span>
-                        <div class="question__title">${question.title}</div>
-                        <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}">${allAnswersFromTheme.hasOwnProperty(currentCheckpoint) ? allAnswersFromTheme[currentCheckpoint][index] : ''}</textarea>
-                    </div>`
-                })
-
-            html += `</div>
+            let html = `<div class="modal__content task questions">
+                <div class="task__content">`
+                    instance.data.forEach((question, index) => {
+                        html += `<div class="question">
+                            <span class="question__label"> Question ${index + 1} / ${instance.data.length}</span>
+                            <div class="question__title">${question.title}</div>
+                            <textarea class="question__textarea" rows="8" placeholder="${question.placeholder}"></textarea>
+                        </div>`
+                    })
+                html += `</div>
             </div>
 
-            <div class="modal__footer ${questions.length == 1 ? "hide-nav" : ""}">
+            <div class="modal__footer ${instance.data.length == 1 ? "hide-nav" : ""}">
                 <div class="button button__prev button__round"><div class="button__content"><i class="icon icon-arrow-left-long-solid"></i></div></div>
                 <div id="submit-task" class="button button__submit button__default"><span>${_s.task.submit}</span></div>
                 <div class="button button__next button__round"><div class="button__content"><i class="icon icon-arrow-right-long-solid"></i></div></div>
             </div>`
 
-            questions.modal = new Modal(html, 'modal__questions')
+            instance.modal = new Modal(html, 'modal__questions')
 
             const nextButton = document.querySelector('.button__next')
             const prevButton = document.querySelector('.button__prev')
@@ -55,7 +50,7 @@ export default class Questions {
 
             prevButton.classList.add('disabled')
 
-            if (questions.length > 1) {
+            if (instance.data.length > 1) {
                 submitButton.classList.add('disabled')
             }
 
@@ -93,7 +88,7 @@ export default class Questions {
 
                 allAnswersFromTheme[currentCheckpoint] = thisThemeAnswers
                 localStorage.setItem(localStorageId, JSON.stringify(allAnswersFromTheme))
-                questions.modal.destroy()
+                instance.modal.destroy()
                 program.nextStep()
             })
         }
