@@ -37,7 +37,8 @@ const strings = {
             "questions": "Question",
             "getTask": "Go to the task",
             "submit": "Submit",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archive",
         "settings": {
@@ -164,7 +165,8 @@ const strings = {
             "questions": "Spørsmål",
             "getTask": "Gå til oppgaven",
             "submit": "Send",
-            "next": "Neste"
+            "next": "Neste",
+            "openQuestion": "Åpen spørsmål"
         },
         "archive": "Arkiv",
         "settings": {
@@ -291,7 +293,8 @@ const strings = {
             "questions": "Frage",
             "getTask": "Weiter zur Aufgabe",
             "submit": "Senden",
-            "next": "Weiter"
+            "next": "Weiter",
+            "openQuestion": "Open question"
         },
         "archive": "Archiv",
         "settings": {
@@ -418,7 +421,8 @@ const strings = {
             "questions": "Vraag",
             "getTask": "Ga naar de opdracht",
             "submit": "Verzend",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archief",
         "settings": {
@@ -545,7 +549,8 @@ const strings = {
             "questions": "Question",
             "getTask": "Aller à la tâche",
             "submit": "Envoyer",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archive",
         "settings": {
@@ -672,7 +677,8 @@ const strings = {
             "questions": "Pytanie",
             "getTask": "Przejdź do zadania",
             "submit": "Wyślij",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archiwum",
         "settings": {
@@ -799,7 +805,8 @@ const strings = {
             "questions": "Întrebare",
             "getTask": "Mergi la sarcină",
             "submit": "Trimite",
-            "next": "Continuă"
+            "next": "Continuă",
+            "openQuestion": "Open question"
         },
         "archive": "Arhivă",
         "settings": {
@@ -926,7 +933,8 @@ const strings = {
             "questions": "Pregunta",
             "getTask": "Ir a la tarea",
             "submit": "Enviar",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archivo",
         "settings": {
@@ -1053,7 +1061,8 @@ const strings = {
             "questions": "Pergunta",
             "getTask": "Vá para a tarefa",
             "submit": "Enviar",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Arquivo",
         "settings": {
@@ -1180,7 +1189,8 @@ const strings = {
             "questions": "Domanda",
             "getTask": "Vai all'attività",
             "submit": "Invia",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archivio",
         "settings": {
@@ -1307,7 +1317,8 @@ const strings = {
             "questions": "Вопрос",
             "getTask": "Перейти к заданию",
             "submit": "Отправить",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Архив",
         "settings": {
@@ -1434,7 +1445,8 @@ const strings = {
             "questions": "Kysymys",
             "getTask": "Mene tehtävään",
             "submit": "Lähetä",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Arkisto",
         "settings": {
@@ -1561,7 +1573,8 @@ const strings = {
             "questions": "Kérdés",
             "getTask": "Menj a feladathoz",
             "submit": "Küldés",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Archívum",
         "settings": {
@@ -1688,7 +1701,8 @@ const strings = {
             "questions": "Spørgsmål",
             "getTask": "Gå til opgaven",
             "submit": "Send",
-            "next": "Next"
+            "next": "Next",
+            "openQuestion": "Open question"
         },
         "archive": "Arkiv",
         "settings": {

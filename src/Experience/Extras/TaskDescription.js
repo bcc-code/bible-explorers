@@ -143,8 +143,13 @@ export default class TaskDescription {
                     html += `<div class="task__tips">${instance.getDomElement(mediaUrl)}</div>`
                 }
 
-                html += `${title}
-                ${additionalContent}
+                html += `<div class="task__content-text">${title}</div>`
+
+                if (instance.message.open_question === true) {
+                    html += `<textarea class="question__textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>`
+                }
+
+                html += `${additionalContent}
             </div>
         </div>`
 

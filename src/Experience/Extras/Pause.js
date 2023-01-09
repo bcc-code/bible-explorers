@@ -1,4 +1,4 @@
-import Experience from "../Experience.js";
+import Experience from "../Experience.js"
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 
@@ -28,7 +28,7 @@ export default class Pause {
                     </div>
                 </div>
             </div>
-        `;
+        `
 
         instance.modal = new Modal(html, 'modal__congrats')
 

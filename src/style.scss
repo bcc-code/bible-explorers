@@ -1854,11 +1854,24 @@ button,
         position: relative;
         flex: 1;
         margin-left: 2rem;
-        @include wrapper();
-        @include extras-bottom(calc(100% - 20rem));
+
+        &-text {
+            position: relative;
+            @include wrapper();
+            @include extras-bottom(calc(100% - 20rem));
+        }
 
         p {
             font-size: 2rem;
+        }
+
+        textarea {
+            width: 100%;
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            resize: none;
+
+            @include wrapper();
         }
     }
 
