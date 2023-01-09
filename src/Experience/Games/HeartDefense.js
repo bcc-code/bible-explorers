@@ -21,7 +21,7 @@ export default class HeartDefense {
             levels: 6,
             maxLives: 3,
             path: 'games/heart-defense/',
-            heartStates: ['full', 'half', 'empty'],
+            heartStates: ['full', '3quarter', 'half', '1quarter', 'empty'],
             doorStates: ['open', 'closed'],
             livesStates: ['active', 'lost'],
             explosionWidth: spriteW,
@@ -38,7 +38,7 @@ export default class HeartDefense {
             lowestSpeed: 0.6,
             probability: 0.02,
             thoughtVariants: 3,
-            pointsToCompleteLevel: 2,
+            pointsToCompleteLevel: 4,
             showSkipAfterNoOfTries: 3,
             thoughts: {
                 width: 85,
@@ -329,6 +329,7 @@ export default class HeartDefense {
                 thought.item.destroy()
                 instance.thoughts.splice(index, 1)
 
+                // When the heart is open
                 if (!instance.stats.heartClosed) {
                     if (thought.badThought) {
                         instance.stats.lives--
