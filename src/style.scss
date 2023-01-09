@@ -1385,6 +1385,10 @@ button,
         }
     }
 
+    body:not(.ak_leder) &.beta {
+        display: none;
+    }
+
     .chapter__download-failed {
         display: none;
     }

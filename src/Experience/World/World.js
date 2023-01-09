@@ -251,6 +251,7 @@ export default class World {
 
         let chapterClasses = "chapter"
         chapterClasses += chapter.status == "future" ? " locked" : ""
+        chapterClasses += chapter.is_beta === true ? " beta" : ""
         chapterHtml.className = chapterClasses
 
         chapterHtml.setAttribute("data-id", chapter.id)
