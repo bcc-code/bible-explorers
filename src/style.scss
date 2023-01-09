@@ -556,7 +556,7 @@ button,
     }
 
     &:hover .chapter:not(.locked):hover,
-    body.admin &:hover .chapter:hover {
+    body.ak_leder &:hover .chapter:hover {
         opacity: 1;
 
         .chapter__box {
@@ -1359,14 +1359,13 @@ button,
         }
     }
 
-    body.admin &,
-    body.ak_leder &:not(.locked) {
+    body.ak_leder & {
         .chapter__states {
             display: flex;
         }
     }
 
-    body:not(.admin) &.locked {
+    body:not(.ak_leder) &.locked {
         filter: grayscale(1);
         pointer-events: none;
         opacity: 0.6;
