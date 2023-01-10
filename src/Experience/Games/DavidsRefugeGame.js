@@ -258,7 +258,6 @@ export default class DavidsRefuge {
     toggleQuestion() {
         const overlay = document.createElement('div')
         overlay.setAttribute('id', 'overlay')
-        overlay.innerHTML = `<p>Click anywhere to continue</p>`
 
         const message = this.messageModal(instance.data.start_message)
         document.body.append(overlay, message)

@@ -102,6 +102,8 @@ export default class Program {
     }
 
     previousStep() {
+        if (this.currentStep == 0) return
+                
         this.currentStep--
         console.log('previousStep', this.currentStep)
         this.toggleStep()
