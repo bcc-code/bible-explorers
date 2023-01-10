@@ -7,13 +7,13 @@ let instance = null
 export default class Pause {
     constructor() {
         instance = this
-        this.experience = new Experience()
-        this.world = this.experience.world
-        this.camera = this.experience.camera
-        this.debug = this.experience.debug
+        instance.experience = new Experience()
+        instance.world = instance.experience.world
     }
 
     togglePause() {
+        instance.program = instance.world.program
+
         let html = `
             <div class="modal__content congrats congrats__journey">
                 <div class="congrats__sidebar">
@@ -39,7 +39,7 @@ export default class Pause {
         next.style.display = 'block'
         next.addEventListener('click', () => {
             instance.modal.destroy()
-            instance.world.program.nextStep()
+            instance.program.nextStep()
         })
     }
 

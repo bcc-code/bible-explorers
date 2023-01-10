@@ -527,7 +527,7 @@ export default class HeartDefense {
                     <i class="icon icon-star-solid"></i>
                     <i class="icon icon-star-solid"></i>
                 </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.level} ${instance.stats.level} ${_s.miniGames.completed.string}!</div>
+                <div class="congrats__chapter-completed">${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</div>
             </div>
         </div>`
 

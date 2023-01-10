@@ -44,6 +44,7 @@ export default class TaskDescription {
             backBTN.addEventListener('click', (e) => {
                 e.stopPropagation()
                 instance.destroy()
+                instance.program.previousStep()
             })
 
             continueBTN.addEventListener("click", () => {

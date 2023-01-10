@@ -103,6 +103,7 @@ export default class Program {
 
     previousStep() {
         this.currentStep--
+        console.log('previousStep', this.currentStep)
         this.toggleStep()
     }
 
@@ -174,6 +175,10 @@ export default class Program {
 
         else if (this.stepType() == 'quiz') {
             this.quiz.toggleQuiz()
+        }
+
+        else if (this.stepType() == 'pause') {
+            this.pause.togglePause()
         }
     }
 
