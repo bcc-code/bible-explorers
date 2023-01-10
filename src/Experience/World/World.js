@@ -260,15 +260,6 @@ export default class World {
         chapterHtml.innerHTML = `
             <div class="chapter__box">
                 <div class="chapter__background"></div>
-                <div class="chapter__number">
-                    <i class="icon icon-lock-solid"></i>
-                    <span>${index + 1}</span>
-                    <div class="stars">
-                        <i class="icon icon-star-solid"></i>
-                        <i class="icon icon-star-solid"></i>
-                        <i class="icon icon-star-solid"></i>
-                    </div>
-                </div>
                 <div class="chapter__heading">
                     <h2 class="chapter__title">${chapter.title}</h2>
                     <span class="chapter__date">${chapter.date}</span>
