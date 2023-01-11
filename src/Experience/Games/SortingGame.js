@@ -286,7 +286,10 @@ export default class SortingGame {
         instance.toggleGameComplete()
         instance.audio.playTaskCompleted()
 
-        document.getElementById('continue_journey').addEventListener('click', () => {
+        const nextBtn = document.getElementById('continue')
+        nextBtn.style.display = 'block'
+        nextBtn.innerText = _s.miniGames.continue
+        nextBtn.addEventListener('click', () => {
             document.body.classList.remove('freeze')
             instance.modal.destroy()
             instance.program.nextStep()
@@ -305,15 +308,6 @@ export default class SortingGame {
         </div>`
 
         instance.modal = new Modal(html, 'modal__congrats')
-
-        const next = document.getElementById('continue')
-        next.style.display = 'block'
-        next.innerText = _s.miniGames.continue
-        next.addEventListener('click', () => {
-            instance.destroy()
-            instance.modal.destroy()
-            instance.toggleSortingGame()
-        })
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
