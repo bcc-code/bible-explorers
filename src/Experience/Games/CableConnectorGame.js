@@ -418,23 +418,28 @@ export default class CableConnector {
     }
 
     toggleTryAgain() {
+        instance.modal.destroy()
+
         let html = `<div class="modal__content congrats congrats__miniGame">
             <div class="congrats__container">
                 <div class="congrats__title">
                     <h2>${_s.miniGames.timeElapsed.title}</h2>
                 </div>
                 <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}</div>
-                <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="reset">${_s.miniGames.reset}</button>
             </div>
         </div>`
 
         instance.modal = new Modal(html, 'modal__congrats')
 
-        document.getElementById('reset').addEventListener('click', () => {
-            instance.modal.destroy()
+        const restart = document.getElementById('restart')
+        restart.style.display = 'block'
+        restart.innerText = _s.miniGames.playAgain
+        restart.addEventListener('click', () => {
             instance.destroy()
+            instance.modal.destroy()
             instance.toggleCableConnector()
         })
+
     }
 
     colorCable(cable) {
