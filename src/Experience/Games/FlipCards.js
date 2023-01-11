@@ -41,7 +41,9 @@ export default class Chapter3Game2 {
                     card.image_back,
                     card.sound_effect
                 ))
+
             })
+
 
             gameWrapper.append(cardWrapper, cardSelect)
 
@@ -87,8 +89,9 @@ export default class Chapter3Game2 {
                 const q = gsap.utils.selector(card)
                 const front = q('.cardFront')
                 const back = q('.cardBack')
-                const input = q('.cardInput')
-                const audio = q('.cardAudio')
+                const input = q('input')
+                const audio = q('audio')
+                const inputWrapper = q('.cardInput')
 
                 gsap.set(front, { rotationY: 180 })
 
@@ -106,6 +109,10 @@ export default class Chapter3Game2 {
                         if (flippedCards.length == instance.data.cards.length)
                             title.querySelector('p').innerText = instance.stepData.details.prompts[1].prompt
                     }
+                })
+
+                inputWrapper[0].addEventListener('click', () => {
+                    inputWrapper[0].classList.add('expanded')
                 })
 
                 if (audio.length) {
@@ -138,6 +145,7 @@ export default class Chapter3Game2 {
                 })
             })
 
+
             document.querySelector('[card-select]').addEventListener('click', () => {
                 document.getElementById('cardWrapper').classList.remove('cardSelection')
                 document.getElementById('cardWrapper').classList.add('cardChoosed')
@@ -167,14 +175,15 @@ export default class Chapter3Game2 {
         card.innerHTML = `
             <image data-src="${back}" class="lazyload cardBack">
             <image data-src="${front}" class="lazyload cardFront">`
-    
-            if (sound) card.innerHTML += `
+
+        if (sound) card.innerHTML += `
+                <div class="audioIcon icon-volume-solid"></div>
                 <audio class="cardAudio">
                     <source src="${sound}" type="audio/ogg">
                 </audio>
             `
 
-            card.innerHTML += `<input type="text" placeholder="code" class="cardInput" />
+        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="number" placeholder="tall" min="1" max="6"/></div>
             <div class="cardSelect"></div>
         `
         return card
