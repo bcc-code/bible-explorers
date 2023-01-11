@@ -301,11 +301,19 @@ export default class SortingGame {
             <div class="congrats__container">
                 <div class="congrats__title"><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i><h2>${_s.miniGames.completed.title}</h2><i class="icon icon-star-solid"></i><i class="icon icon-star-solid"></i></div>
                 <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
-                <button id="continue_journey" class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate">${_s.miniGames.continue}</button>
             </div>
         </div>`
 
         instance.modal = new Modal(html, 'modal__congrats')
+
+        const next = document.getElementById('continue')
+        next.style.display = 'block'
+        next.innerText = _s.miniGames.continue
+        next.addEventListener('click', () => {
+            instance.destroy()
+            instance.modal.destroy()
+            instance.toggleSortingGame()
+        })
     }
 
     createBox(x, y, w, h, fill, stroke, strokeWidth, radius, id, buttonSrc) {
