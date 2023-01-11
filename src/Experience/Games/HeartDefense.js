@@ -162,10 +162,10 @@ export default class HeartDefense {
                     offset: {
                         x: 500 / 2,
                         y: 419 / 2
-                    }
+                    },
+                    visible: i == instance.config.heartStates.length - 1
                 })
                 instance.layer.findOne('#heart').add(heart)
-                instance.layer.findOne('#heart-' + instance.config.heartStates[i]).zIndex(i)
             }
             heartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[i] + '.png'
         }
@@ -195,7 +195,6 @@ export default class HeartDefense {
                     visible: i == 1
                 })
                 instance.layer.findOne('#door').add(door)
-                instance.layer.findOne('#door-' + instance.config.doorStates[i]).zIndex(i)
             }
             doorImage.src = instance.config.path + 'door-' + instance.config.doorStates[i] + '.png'
         }
@@ -213,7 +212,7 @@ export default class HeartDefense {
 
         for (let i = 0; i < instance.config.maxLives; i++) {
             const lostLife = new Image()
-            lostLife.onload = function () {
+            lostLife.onload = () => {
                 const life = new Konva.Image({
                     id: 'life-' + instance.config.livesStates[1] + i,
                     image: lostLife,
@@ -260,8 +259,8 @@ export default class HeartDefense {
         function createThought() {
             if (Math.random() > instance.config.probability) return
 
-            // 8/10 thoughts are bad
-            const badThought = Math.random() < 0.8
+            // 3/4 thoughts are bad
+            const badThought = Math.random() < 0.75
 
             const thoughtImage = new Image()
             thoughtImage.onload = () => {
@@ -308,7 +307,8 @@ export default class HeartDefense {
                     speedX: distancePerFrame.x,
                     speedY: distancePerFrame.y,
                     badThought: badThought,
-                    remainingFramesToCenter: estFramesToCenter
+                    remainingFramesToCenter: estFramesToCenter,
+                    active: true
                 })
             }
             thoughtImage.src = badThought ? instance.getRndBadThoughtSrc() : instance.getRndGoodThoughtSrc()
@@ -316,27 +316,34 @@ export default class HeartDefense {
 
         function animateThoughts() {
             instance.thoughts.forEach((thought, index) => {
+                thought.remainingFramesToCenter--
+
+                if (!thought.active) return
+
                 // Move thought towards the center
                 thought.item.move({
                     x: thought.speedX,
                     y: thought.speedY
                 })
-                thought.remainingFramesToCenter--
 
                 if (!instance.isIntersectingRectangleWithRectangle(thought.item.position(), 10, 10, instance.center, 10, 10))
                     return
 
-                thought.item.destroy()
-                instance.thoughts.splice(index, 1)
+                // Thought reached the heart
 
-                // When the heart is open
+                // Stop the thought from moving
+                thought.active = false
+
+                // The heart is open
                 if (!instance.stats.heartClosed) {
+                    thought.item.destroy()
+
                     if (thought.badThought) {
                         instance.stats.lives--
                         instance.updateLivesStatus()
 
                         if (instance.stats.lives == 0) {
-                            instance.stopAnimation()
+                            instance.stopThoughtsAnimation()
                             setTimeout(() => { instance.toggleGameOver() }, 500)
                         }
                     }
@@ -346,15 +353,18 @@ export default class HeartDefense {
                         instance.stats.points++
 
                         if (instance.stats.points == instance.config.pointsToCompleteLevel) {
-                            instance.stopAnimation()
+                            instance.stopThoughtsAnimation()
                             setTimeout(() => { instance.toggleLevelCompleted() }, 500)
                         }
                     }
                 }
                 else {
                     instance.audio.playWrongSound()
-                    playAnimation(thought.item, instance.explosionSprite)
+                    instance.playSpriteAnimation(thought.item, instance.explosionSprite)
                 }
+
+                // Remove the thought from the thoughts array
+                instance.thoughts.splice(index, 1)
             })
         }
 
@@ -420,29 +430,41 @@ export default class HeartDefense {
                 }
             })
         }
-
-        function playAnimation(obj, spriteObj) {
-            spriteObj.position(instance.center)
-            const animation = spriteObj
-
-            if (animation.isRunning()) {
-                animation.stop()
-                animation.frameIndex(0)
-            }
-
-            animation.visible(true)
-            animation.start()
-
-            animation.on('frameIndexChange.konva', function () {
-                if (this.frameIndex() == 2) {
-                    animation.stop()
-                    animation.visible(false)
-                }
-            })
-        }
     }
 
-    stopAnimation() {
+    playSpriteAnimation(obj, spriteObj) {
+        spriteObj.position(obj.position())
+
+        instance.spriteObj = obj
+        instance.spriteAnimation = spriteObj
+
+        if (instance.spriteAnimation.isRunning()) {
+            instance.spriteAnimation.stop()
+            instance.spriteAnimation.frameIndex(0)
+        }
+
+        instance.spriteAnimation.visible(true)
+        instance.spriteAnimation.start()
+
+        instance.spriteAnimation.on('frameIndexChange.konva', function () {
+            if (this.frameIndex() == 2) {
+                instance.spriteAnimation.stop()
+                instance.spriteAnimation.visible(false)
+                obj.destroy()
+            }
+        })
+    }
+
+    stopSpriteAnimation() {
+        if (!instance.spriteAnimation?.isRunning())
+            return
+
+        instance.spriteAnimation.stop()
+        instance.spriteAnimation.visible(false)
+        instance.spriteObj.destroy()
+    }
+
+    stopThoughtsAnimation() {
         instance.animation.stop()
         instance.fadeInOverlay.play()
     }
@@ -490,6 +512,7 @@ export default class HeartDefense {
         if (e.keyCode == 32) {
             instance.stats.heartClosed = !instance.stats.heartClosed
             instance.updateDoorStatus()
+            instance.stopSpriteAnimation()
         }
     }
 
@@ -515,6 +538,7 @@ export default class HeartDefense {
     updateHeartStatus() {
         const index = instance.config.pointsToCompleteLevel - instance.stats.points
         instance.layer.findOne('#heart-' + instance.config.heartStates[index]).hide()
+        instance.layer.findOne('#heart-' + instance.config.heartStates[index-1]).show()
     }
 
     toggleLevelCompleted() {

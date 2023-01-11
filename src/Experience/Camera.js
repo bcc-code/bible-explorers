@@ -58,6 +58,16 @@ export default class Camera {
                     maxAzimuthAngle: 0.31
                 }
             },
+            'irisCloseLook': {
+                position: new THREE.Vector3(-0.5762611867366175, 1.311365797334531, -0.7368178311566804),
+                lookAt: new THREE.Vector3(-0.5853749680936323, 1.3105364771329846, -0.7552741650596074),
+                controls: {
+                    minPolarAngle: 0,
+                    maxPolarAngle: 2.97,
+                    minAzimuthAngle: 0,
+                    maxAzimuthAngle: 0
+                }
+            },
             'controlBoard': {
                 position: new THREE.Vector3(-0.109, 2.224, 0.022),
                 lookAt: new THREE.Vector3(0.312, 1.975, 0.019),
