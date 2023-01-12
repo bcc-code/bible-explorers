@@ -194,7 +194,7 @@ export default class Chapter3Game2 {
             <image data-src="${front}" class="lazyload cardFront">`
 
         if (sound) card.innerHTML += `
-                <div class="audioIcon icon-volume-solid"></div>
+                <i class="icon-volume-solid"></i>
                 <audio class="cardAudio">
                     <source src="${sound}" type="audio/ogg">
                 </audio>
