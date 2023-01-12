@@ -24,6 +24,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-star-regular:before {
+    content: "\e91a";
+}
+
+.icon-star-half-stroke-regular:before {
+    content: "\e91b";
+}
+
 .icon-eye-solid:before {
     content: "\e919";
 }

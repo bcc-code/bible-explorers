@@ -20,8 +20,8 @@ export default class Pause {
                     <div class="congrats__container">
                         <div class="stars">
                             <i class="icon icon-star-solid"></i>
-                            <i class="icon icon-star-solid"></i>
-                            <i class="icon icon-star-solid"></i>
+                            <i class="icon icon-star-half-stroke-regular"></i>
+                            <i class="icon icon-star-regular"></i>
                         </div>
                         <h1 class="congrats__title">${_s.journey.pause.title}</h1>
                         <div class="congrats__chapter-completed">${_s.journey.pause.message}</div>
@@ -44,12 +44,12 @@ export default class Pause {
     }
 
     animateOneAndAHalfStars(timeout) {
-        const stars = document.querySelectorAll(".congrats .stars .icon")
-        
-        stars[0].classList.add('filled')
 
-        setTimeout(function () {
-            stars[1].classList.add('filled')
-        }, timeout)
+        const stars = document.querySelectorAll(".congrats .stars .icon")
+        stars.forEach((star, index) => {
+            setTimeout(function () {
+                star.classList.add('filled')
+            }, timeout * index)
+        })
     }
 }
