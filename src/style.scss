@@ -3799,7 +3799,7 @@ button,
         align-items: center;
         border-radius: 8px;
         background: $gradient2;
-        width: 56px;
+        width: 116px;
         height: 56px;
         padding: 8px;
         color: #fff;
@@ -3826,10 +3826,6 @@ button,
             text-align: center;
             transition: .3s ease;
             padding-inline: 0.5rem;
-        }
-
-        &.expanded {
-            width: 116px;
         }
     }
 

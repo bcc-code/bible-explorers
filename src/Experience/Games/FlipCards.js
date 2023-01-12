@@ -113,18 +113,18 @@ export default class Chapter3Game2 {
                     }
                 })
 
-                inputWrapper[0].addEventListener('click', () => {
-                    const inputs = document.querySelectorAll('.cardInput')
-                    inputs.forEach(input => {
-                        const field = input.querySelector('input')
+                // inputWrapper[0].addEventListener('click', () => {
+                //     const inputs = document.querySelectorAll('.cardInput')
+                //     inputs.forEach(input => {
+                //         const field = input.querySelector('input')
 
-                        if (!field.value)
-                            input.classList.remove('expanded')
-                    })
+                //         if (!field.value)
+                //             input.classList.remove('expanded')
+                //     })
 
-                    input[0].focus()
-                    inputWrapper[0].classList.add('expanded')
-                })
+                //     input[0].focus()
+                //     inputWrapper[0].classList.add('expanded')
+                // })
 
                 if (audio.length) {
                     back[0].addEventListener('click', () => { audio[0].play() })
@@ -200,7 +200,7 @@ export default class Chapter3Game2 {
                 </audio>
             `
 
-        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="#"/></div>
+        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="*"/></div>
             <div class="cardSelect"></div>
         `
         return card
