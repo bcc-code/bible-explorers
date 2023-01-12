@@ -272,25 +272,20 @@ export default class Program {
     }
 
     currentVideo() {
-        let localCurrentCheckpoint = this.currentCheckpoint
-
-        while (!(localCurrentCheckpoint in this.programData) || !(this.stepType() == 'video')) {
-            if (localCurrentCheckpoint == 0) return null
-            else localCurrentCheckpoint--
-        }
-
-        return this.programData[localCurrentCheckpoint].steps[this.currentStep].videoId
+        return this.programData[this.currentCheckpoint].steps[this.currentStep].videoId
     }
 
     nextVideo() {
-        let localCurrentCheckpoint = this.currentCheckpoint
+        for (let checkpoint = this.currentCheckpoint; checkpoint < this.totalCheckpoints; checkpoint++) {
+            const startingStep = checkpoint == this.currentCheckpoint ? this.currentStep : 0
 
-        while (!(localCurrentCheckpoint in this.programData) || !(this.stepType() == 'video')) {
-            if (localCurrentCheckpoint >= this.totalCheckpoints) return null
-            else localCurrentCheckpoint++
+            for (let step = startingStep; step < this.programData[checkpoint].steps.length; step++) {
+                if (this.programData[checkpoint].steps[step].details.step_type == 'video')
+                    return this.programData[checkpoint].steps[step].videoId
+            }
         }
 
-        return this.programData[localCurrentCheckpoint].steps[this.currentStep].videoId
+        return null
     }
 
     updateLocalStorage() {
