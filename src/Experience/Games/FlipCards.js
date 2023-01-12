@@ -29,12 +29,6 @@ export default class Chapter3Game2 {
             const cardWrapper = document.createElement('div')
             cardWrapper.setAttribute("id", "cardWrapper")
 
-            const cardSelect = document.createElement('button')
-            cardSelect.className = 'button button bg--secondary border--5 border--solid border--transparent height px rounded--full'
-            cardSelect.setAttribute('card-select', '')
-            cardSelect.innerText = _s.miniGames.flipCards.chooseKing
-            cardSelect.disabled = true
-
             instance.data.cards.forEach(card => {
                 cardWrapper.append(instance.getCardHtml(
                     card.image_front,
@@ -44,8 +38,7 @@ export default class Chapter3Game2 {
 
             })
 
-
-            gameWrapper.append(cardWrapper, cardSelect)
+            gameWrapper.append(cardWrapper)
 
             instance.modal = new Modal(gameWrapper.outerHTML, 'modal__flipCardGame')
 
@@ -99,6 +92,12 @@ export default class Chapter3Game2 {
                     .to(input, { autoAlpha: 0, display: 'none' })
                     .to(card, { duration: 1, rotationY: 180 })
 
+                const cardSelect = document.createElement('button')
+                cardSelect.className = 'button bg--secondary border--5 border--solid border--transparent height px rounded--full'
+                cardSelect.setAttribute('card-select', '')
+                cardSelect.innerText = _s.miniGames.flipCards.chooseKing
+                cardSelect.disabled = true
+
                 input[0].addEventListener('input', () => {
                     if (input[0].value === instance.data.cards[index].code) {
                         card.setAttribute('flipped', '')
@@ -106,12 +105,24 @@ export default class Chapter3Game2 {
 
                         const flippedCards = document.querySelectorAll('[flipped]')
 
-                        if (flippedCards.length == instance.data.cards.length)
+                        if (flippedCards.length == instance.data.cards.length) {
                             title.querySelector('p').innerText = instance.stepData.details.prompts[1].prompt
+                            document.getElementById('flipCardGame').append(cardSelect)
+                        }
+
                     }
                 })
 
                 inputWrapper[0].addEventListener('click', () => {
+                    const inputs = document.querySelectorAll('.cardInput')
+                    inputs.forEach(input => {
+                        const field = input.querySelector('input')
+
+                        if (!field.value)
+                            input.classList.remove('expanded')
+                    })
+
+                    input[0].focus()
                     inputWrapper[0].classList.add('expanded')
                 })
 
@@ -123,7 +134,6 @@ export default class Chapter3Game2 {
                 card.addEventListener('click', () => {
                     const flippedCards = document.querySelectorAll('[flipped]')
                     if (flippedCards.length == instance.data.cards.length) {
-
 
                         document.getElementById('cardWrapper').classList.add('cardSelection')
                         const selectedCard = document.querySelector('[selected]')
@@ -143,23 +153,30 @@ export default class Chapter3Game2 {
                         }, 1000)
                     }
                 })
+
+            })
+
+            document.addEventListener('click', (event) => {
+
+                if (event.target.hasAttribute('card-select')) {
+                    document.getElementById('cardWrapper').classList.remove('cardSelection')
+                    document.getElementById('cardWrapper').classList.add('cardChoosed')
+
+                    const selectedCard = document.querySelector('[selected]')
+                    selectedCard.setAttribute('choosed', '')
+                    document.querySelector('[card-select]').disabled = true
+
+                    setTimeout(() => {
+                        instance.toggleGodVoice()
+                        next.disabled = false
+                        next.addEventListener('click', instance.finishGame)
+                    }, 1000)
+                }
+
             })
 
 
-            document.querySelector('[card-select]').addEventListener('click', () => {
-                document.getElementById('cardWrapper').classList.remove('cardSelection')
-                document.getElementById('cardWrapper').classList.add('cardChoosed')
 
-                const selectedCard = document.querySelector('[selected]')
-                selectedCard.setAttribute('choosed', '')
-                document.querySelector('[card-select]').disabled = true
-
-                setTimeout(() => {
-                    instance.toggleGodVoice()
-                    next.disabled = false
-                    next.addEventListener('click', instance.finishGame)
-                }, 1000)
-            })
         }
     }
 
@@ -183,7 +200,7 @@ export default class Chapter3Game2 {
                 </audio>
             `
 
-        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="number" placeholder="tall" min="1" max="6"/></div>
+        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="tall"/></div>
             <div class="cardSelect"></div>
         `
         return card
