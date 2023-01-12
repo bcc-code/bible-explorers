@@ -84,7 +84,6 @@ export default class Chapter3Game2 {
                 const back = q('.cardBack')
                 const input = q('input')
                 const audio = q('audio')
-                const inputWrapper = q('.cardInput')
 
                 gsap.set(front, { rotationY: 180 })
 
@@ -113,19 +112,6 @@ export default class Chapter3Game2 {
                     }
                 })
 
-                // inputWrapper[0].addEventListener('click', () => {
-                //     const inputs = document.querySelectorAll('.cardInput')
-                //     inputs.forEach(input => {
-                //         const field = input.querySelector('input')
-
-                //         if (!field.value)
-                //             input.classList.remove('expanded')
-                //     })
-
-                //     input[0].focus()
-                //     inputWrapper[0].classList.add('expanded')
-                // })
-
                 if (audio.length) {
                     back[0].addEventListener('click', () => { audio[0].play() })
                     front[0].addEventListener('click', () => { audio[0].play() })
@@ -153,6 +139,11 @@ export default class Chapter3Game2 {
                         }, 1000)
                     }
                 })
+
+                card.addEventListener('mouseenter', () => {
+                    input[0].focus()
+                })
+
 
             })
 
@@ -200,7 +191,7 @@ export default class Chapter3Game2 {
                 </audio>
             `
 
-        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="*"/></div>
+        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="#"/></div>
             <div class="cardSelect"></div>
         `
         return card
