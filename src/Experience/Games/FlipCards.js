@@ -200,7 +200,7 @@ export default class Chapter3Game2 {
                 </audio>
             `
 
-        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="tall"/></div>
+        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><span>Unlock</span><input type="text" placeholder="tall"/></div>
             <div class="cardSelect"></div>
         `
         return card

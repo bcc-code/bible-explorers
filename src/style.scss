@@ -3795,6 +3795,7 @@ button,
         left: 50%;
         transform: translateX(-50%);
         display: flex;
+        align-items: center;
         border-radius: 8px;
         border: 4px solid transparent;
         background: $gradient padding-box, $accent border-box;
@@ -3810,6 +3811,10 @@ button,
             align-items: center;
             justify-content: center;
             transition: .3s ease;
+        }
+
+        span {
+            margin-right: 0.5rem;
         }
 
         input {
