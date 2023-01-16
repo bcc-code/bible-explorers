@@ -136,7 +136,7 @@ export default class Chapter3Game2 {
                                 instance.toggleGlitch()
 
                             firstTimeClick = false
-                        }, 1000)
+                        }, 300)
                     }
                 })
 
