@@ -252,7 +252,8 @@ export default class Camera {
                 Default: 'default',
                 Screens: 'screens',
                 ControlBoard: 'controlBoard',
-                Portal: 'portal'
+                Portal: 'portal',
+                Iris: 'irisCloseLook'
             })
             .onFinishChange((location) => {
                 this.updateCameraTo(location)
