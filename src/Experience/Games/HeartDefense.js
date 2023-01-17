@@ -259,8 +259,8 @@ export default class HeartDefense {
         function createThought() {
             if (Math.random() > instance.config.probability) return
 
-            // 3/4 thoughts are bad
-            const badThought = Math.random() < 0.75
+            // 6/10 thoughts are bad
+            const badThought = Math.random() < 0.6
 
             const thoughtImage = new Image()
             thoughtImage.onload = () => {
