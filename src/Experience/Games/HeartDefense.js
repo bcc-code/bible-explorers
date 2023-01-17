@@ -43,6 +43,10 @@ export default class HeartDefense {
             thoughts: {
                 width: 85,
                 height: 83
+            },
+            door: {
+                width: 96,
+                height: 200
             }
         }
     }
@@ -186,11 +190,11 @@ export default class HeartDefense {
                 const door = new Konva.Image({
                     id: 'door-' + instance.config.doorStates[i],
                     image: doorImage,
-                    width: 96,
-                    height: 200,
+                    width: instance.config.door.width,
+                    height: instance.config.door.height,
                     offset: {
-                        x: 96 / 2,
-                        y: 200 / 2
+                        x: instance.config.door.width / 2,
+                        y: instance.config.door.height / 2
                     },
                     visible: i == 1
                 })
@@ -326,7 +330,12 @@ export default class HeartDefense {
                     y: thought.speedY
                 })
 
-                if (!instance.isIntersectingRectangleWithRectangle(thought.item.position(), 10, 10, instance.center, 10, 10))
+                if (!instance.isIntersectingRectangleWithRectangle(
+                    { x: thought.item.position().x - 5, y: thought.item.position().y - 5 },
+                    10, 10,
+                    { x: instance.center.x - instance.config.door.width/4, y: instance.center.y - instance.config.door.height/4 },
+                    instance.config.door.width/2, instance.config.door.height/2)
+                )
                     return
 
                 // Thought reached the heart
