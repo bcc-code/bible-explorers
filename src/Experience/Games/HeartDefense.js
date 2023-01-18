@@ -44,10 +44,8 @@ export default class HeartDefense {
                 width: 85,
                 height: 83
             },
-            door: {
-                width: 96,
-                height: 200
-            }
+            heart: {},
+            door: {} 
         }
     }
 
@@ -126,8 +124,8 @@ export default class HeartDefense {
         instance.stage.add(instance.layer)
 
         instance.overlay = new Konva.Rect({
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: instance.stage.width(),
+            height: instance.stage.height(),
             fill: '#131a43',
             opacity: 0
         })
@@ -155,17 +153,20 @@ export default class HeartDefense {
         instance.layer.add(heartGroup)
         instance.layer.findOne('#heart').zIndex(0)
 
+        instance.config.heart.width = instance.stage.width() / 3
+        instance.config.heart.height = instance.config.heart.width / 1.1933174224
+
         for (let i = 0; i < instance.config.heartStates.length; i++) {
             const heartImage = new Image()
             heartImage.onload = () => {
                 const heart = new Konva.Image({
                     id: 'heart-' + instance.config.heartStates[i],
                     image: heartImage,
-                    width: 500,
-                    height: 419,
+                    width: instance.config.heart.width,
+                    height: instance.config.heart.height,
                     offset: {
-                        x: 500 / 2,
-                        y: 419 / 2
+                        x: instance.config.heart.width / 2,
+                        y: instance.config.heart.height / 2
                     },
                     visible: i == instance.config.heartStates.length - 1
                 })
@@ -183,6 +184,9 @@ export default class HeartDefense {
         })
         instance.layer.add(doorGroup)
         instance.layer.findOne('#door').zIndex(1)
+
+        instance.config.door.width = instance.config.heart.width / 5.2
+        instance.config.door.height = instance.config.door.width / 0.48
 
         for (let i = 0; i < instance.config.doorStates.length; i++) {
             const doorImage = new Image()
