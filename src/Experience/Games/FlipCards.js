@@ -108,7 +108,6 @@ export default class Chapter3Game2 {
                             title.querySelector('p').innerText = instance.stepData.details.prompts[1].prompt
                             document.getElementById('flipCardGame').append(cardSelect)
                         }
-
                     }
                 })
 
@@ -143,8 +142,6 @@ export default class Chapter3Game2 {
                 card.addEventListener('mouseenter', () => {
                     input[0].focus()
                 })
-
-
             })
 
             document.addEventListener('click', (event) => {
@@ -163,11 +160,7 @@ export default class Chapter3Game2 {
                         next.addEventListener('click', instance.finishGame)
                     }, 1000)
                 }
-
             })
-
-
-
         }
     }
 
