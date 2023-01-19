@@ -6,7 +6,7 @@ import _appInsights from '../Utils/AppInsights.js'
 
 let settings = null
 
-export default class Settings {
+export default class Menu {
     constructor() {
         this.experience = new Experience()
         settings = this
