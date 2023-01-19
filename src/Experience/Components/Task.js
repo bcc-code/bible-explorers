@@ -1,5 +1,6 @@
 import Experience from "../Experience"
 import _s from "../Utils/Strings.js"
+import _gl from "../Utils/Globals.js"
 
 export default class Task {
     constructor() {
@@ -8,13 +9,6 @@ export default class Task {
         instance.experience = new Experience()
 
         instance.init()
-    }
-
-    elementFromHtml(html) {
-        const template = document.createElement('template')
-
-        template.innerHTML = html.trim()
-        return template.content.firstElementChild
     }
 
     init() {

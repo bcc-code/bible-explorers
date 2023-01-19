@@ -1,5 +1,6 @@
 import Experience from "../Experience"
 import _s from "../Utils/Strings.js"
+import _gl from "../Utils/Globals.js"
 
 let instance = null
 
@@ -9,15 +10,8 @@ export default class Dialogue {
         instance.experience = new Experience()
     }
 
-    elementFromHtml(html) {
-        const template = document.createElement('template')
-
-        template.innerHTML = html.trim()
-        return template.content.firstElementChild
-    }
-
     init() {
-        const dialogueBox = instance.elementFromHtml(
+        const dialogueBox = _gl.elementFromHtml(
             `<section class="dialogue">
                 <header class="dialogue-header">
                     <span>${instance.message.character}</span>
@@ -28,7 +22,7 @@ export default class Dialogue {
             </section>`
         )
 
-        const nextCta = instance.elementFromHtml(
+        const nextCta = _gl.elementFromHtml(
             `<button class="btn default bordered" aria-label="next step">${_s.task.next}</button>`
         )
         nextCta.addEventListener("click", () => {

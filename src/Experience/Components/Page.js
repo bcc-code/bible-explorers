@@ -1,6 +1,7 @@
 // document.querySelector(".page .intro").innerText = _s.conceptDescription
 import Experience from '../Experience.js';
 import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
 
@@ -27,7 +28,7 @@ export default class Page {
     }
 
     loader() {
-        const pageLoader = instance.elementFromHtml(`
+        const pageLoader = _gl.elementFromHtml(`
             <section class="loader">
                 <div class="loading">
                     <span>${_s.loading}</span>
@@ -47,7 +48,7 @@ export default class Page {
 
     intro() {
 
-        const intro = instance.elementFromHtml(`
+        const intro = _gl.elementFromHtml(`
             <section class="intro">
                 <p>${_s.conceptDescription}</p>
                 <div class="categories list"></div>
@@ -60,7 +61,7 @@ export default class Page {
     }
 
     lobby() {
-        const lobby = instance.elementFromHtml(`
+        const lobby = _gl.elementFromHtml(`
             <section class="lobby">
                 <section class="chapters"></section>
                 <section class="chapter-details"></section>

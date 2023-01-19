@@ -1,6 +1,7 @@
 import Experience from "../Experience.js"
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
 import _lang from '../Utils/Lang.js'
 import _appInsights from '../Utils/AppInsights.js'
 
@@ -24,13 +25,6 @@ export default class Menu {
         settings.init()
         settings.eventListeners()
 
-    }
-
-    elementFromHtml(html) {
-        const template = document.createElement('template')
-
-        template.innerHTML = html.trim()
-        return template.content.firstElementChild
     }
 
     init() {
@@ -93,7 +87,7 @@ export default class Menu {
         faqHeader.innerText = _s.settings.faq
 
         for (let i = 0; i < faqQuestions.length; i++) {
-            const faqItem = settings.elementFromHtml(`
+            const faqItem = _gl.elementFromHtml(`
                 <li>
                     <p>${faqQuestions[i]}</p>
                     <p>${faqAnswers[i]}</p>
