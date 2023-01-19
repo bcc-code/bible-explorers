@@ -316,7 +316,8 @@ export default class HeartDefense {
                     speedY: distancePerFrame.y,
                     badThought: badThought,
                     remainingFramesToCenter: estFramesToCenter,
-                    active: true
+                    active: true,
+                    rotateDirection: Math.random() < 0.5 ? -1 : 1
                 })
             }
             thoughtImage.src = badThought ? instance.getRndBadThoughtSrc() : instance.getRndGoodThoughtSrc()
@@ -333,6 +334,8 @@ export default class HeartDefense {
                     x: thought.speedX,
                     y: thought.speedY
                 })
+                // Rotate thought
+                thought.item.rotate(thought.rotateDirection / 10)
 
                 if (!instance.isIntersectingRectangleWithRectangle(
                     { x: thought.item.position().x - 5, y: thought.item.position().y - 5 },
