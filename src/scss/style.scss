@@ -102,29 +102,29 @@
 
 
 
-.highlight__circle {
+.highlight-circle {
     position: absolute;
     left: -1.5rem;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
-    width: 2rem;
-    height: 2rem;
+    width: 1rem;
+    height: 1rem;
     pointer-events: none;
     @include pulsate()
 }
 
-// .label {
-//     position: absolute;
-//     top: 0;
-//     color: #fff;
-//     background: $gradient;
-//     padding: 0.5rem 1rem;
-//     border: 2px solid $accent;
-//     border-radius: 8px 16px;
-//     cursor: pointer;
-//     transition: opacity 1s ease;
-//     opacity: 0;
-// }
+.highlight-label {
+    position: absolute;
+    top: 0;
+    color: #fff;
+    background: var(--clr-background);
+    padding: 0.25rem 0.5rem;
+    border: 0.25rem solid var(--clr-primary);
+    border-radius: 0.5rem;
+    transition: var(--transition-duration) opacity var(--transition-timing);
+    opacity: 0;
+    cursor: pointer;
+}
 
 .fade-in {
     opacity: 1;
@@ -2726,7 +2726,7 @@
 .lazyloading {
     opacity: 1;
     transition: opacity 300ms;
-    background: #f7f7f7 url('../../static/assets/loader.gif') no-repeat center;
+    // background: #f7f7f7 url('../../static/assets/loader.gif') no-repeat center;
 }
 
 .lazyloaded {

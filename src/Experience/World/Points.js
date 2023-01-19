@@ -30,18 +30,18 @@ export default class Points {
                 // First checkpoint is a task description from Iris
                 if (type == 'task') type = 'iris'
                 this.create(child, _s.tooltips[type])
-                setTimeout(function() { instance.fadeIn() }, 50)
+                setTimeout(function () { instance.fadeIn() }, 50)
             }
         })
     }
 
     create(object, labelText) {
         const div = document.createElement('div')
-        div.className = 'label'
+        div.className = 'highlight-label'
         div.textContent = labelText
 
         const hightlight = document.createElement('div')
-        hightlight.classList.add('highlight__circle')
+        hightlight.classList.add('highlight-circle')
 
         div.append(hightlight)
 

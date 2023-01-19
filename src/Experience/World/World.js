@@ -546,6 +546,9 @@ export default class World {
             // document.documentElement.requestFullscreen()
         }
 
+        document.querySelector('.lobby').remove()
+        document.querySelector('.page').setAttribute('page', '')
+
 
     }
 
