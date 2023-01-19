@@ -99,8 +99,6 @@ export default class Program {
         this.clickedObject = currentIntersect.name
 
         if (this.objectIsClickable()) {
-            console.log(this.getCurrentStepData());
-
             this.startAction()
         }
     }
@@ -241,6 +239,12 @@ export default class Program {
         if (this.currentCheckpoint == this.totalCheckpoints) {
             setTimeout(() => {
                 instance.congrats.toggleBibleCardsReminder()
+            }, instance.camera.data.moveDuration)
+        }
+
+        if (this.stepType() == 'iris') {
+            setTimeout(() => {
+                this.dialogue.show()
             }, instance.camera.data.moveDuration)
         }
 
