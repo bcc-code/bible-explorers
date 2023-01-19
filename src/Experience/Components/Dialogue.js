@@ -5,11 +5,8 @@ let instance = null
 
 export default class Dialogue {
     constructor() {
-
         instance = this
         instance.experience = new Experience()
-        instance.program = instance.experience.world.program
-
     }
 
     elementFromHtml(html) {
@@ -23,17 +20,19 @@ export default class Dialogue {
         const dialogueBox = instance.elementFromHtml(
             `<section class="dialogue">
                 <header class="dialogue-header">
-                    <span>Iris</span>
+                    <span>${instance.message.character}</span>
                 </header>
                 <div class="dialogue-box">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, placeat nostrum? Laborum totam laboriosam incidunt beatae, delectus consequuntur enim accusamus?</p>
+                    ${instance.message.text}
                 </div>
             </section>`
         )
 
         const nextCta = instance.elementFromHtml(
-            `<button class="btn default bordered" aria-label="next step">Next</button>`
+            `<button class="btn default bordered" aria-label="next step">${_s.task.next}</button>`
         )
+        nextCta.addEventListener("click", () => {
+        })
 
         const hudContainer = document.querySelector('.hud-container')
         hudContainer.append(dialogueBox)
@@ -43,8 +42,11 @@ export default class Dialogue {
     }
 
     show() {
-        // instance.currentStepData = instance.program.getCurrentStepData()
-        // console.log(instance.program);
+        instance.world = instance.experience.world
+        instance.program = instance.world.program
+        instance.data = instance.program.getCurrentStepData()
+        instance.message = instance.data.message
+
         instance.init()
     }
 
