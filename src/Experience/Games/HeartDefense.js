@@ -41,8 +41,8 @@ export default class HeartDefense {
             pointsToCompleteLevel: 4,
             showSkipAfterNoOfTries: 3,
             thoughts: {
-                width: 85,
-                height: 83
+                width: 200,
+                height: 200
             },
             heart: {},
             door: {} 
