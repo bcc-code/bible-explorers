@@ -26,6 +26,7 @@ export default class Dialogue {
             `<button class="btn default bordered" aria-label="next step">${_s.task.next}</button>`
         )
         nextCta.addEventListener("click", () => {
+            instance.program.nextStep()
         })
 
         const hudContainer = document.querySelector('.hud-container')
