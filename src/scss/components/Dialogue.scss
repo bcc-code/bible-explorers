@@ -1,0 +1,36 @@
+.dialogue {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: var(--app-padding);
+    pointer-events: all;
+
+    &-header {
+        display: inline-block;
+        border-radius: 4px;
+        padding-inline: var(--app-padding);
+        background: var(--clr-primary);
+        margin-left: 16px;
+
+        span {
+            color: #fff;
+            font-size: 18px;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    }
+
+    &-box {
+        margin-top: -12px;
+        border-radius: 8px;
+        padding: var(--app-padding);
+        background: var(--clr-background);
+        border: 4px solid var(--clr-primary);
+        max-width: clamp(40ch, calc(100vw - var(--app-padding)), 70ch);
+
+        p {
+            color: #fff;
+        }
+    }
+}

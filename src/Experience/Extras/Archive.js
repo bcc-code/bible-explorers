@@ -14,7 +14,7 @@ export default class Archive {
 
         archive.facts = this.experience.world.selectedChapter.archive
 
-        archive.button = document.getElementById("archive")
+        archive.button = document.querySelector('[aria-label="Archive"]')
         archive.button.addEventListener("click", this.toggleArchive)
     }
 

@@ -11,24 +11,35 @@ export default class ProgressBar {
         this.program = this.experience.world.program
         this.checkpointWidth = 100 / this.program.totalCheckpoints;
 
-        instance.htmlEl = document.querySelector("#progress-bar");
-        instance.htmlEl.innerHTML = ProgressBar.generateHtml();
+        instance.htmlEl = document.querySelector(".progress-bar");
+        instance.htmlEl.innerHTML = ProgressBar.HTML()
 
         instance.el = {
-            passed: instance.htmlEl.querySelector(".progress-bar__percentage .passed"),
-            checkpoints: instance.htmlEl.querySelectorAll(".progress-bar__checkpoint:not(:last-child)")
+            passed: instance.htmlEl.querySelector(".percentageBar .passed"),
+            checkpoints: instance.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)")
         };
+
 
         instance.el.checkpoints.forEach(function (checkpoint, index) {
             checkpoint.addEventListener("click", () => {
                 let clickedCheckpoint = checkpoint.getAttribute('data-index')
+
                 if (instance.debug.developer || instance.debug.onQuickLook() || clickedCheckpoint <= instance.program.chapterProgress())
                     instance.program.advance(clickedCheckpoint)
+
             })
+
 
             if (index == instance.program.currentCheckpoint)
                 checkpoint.setAttribute('currentCheckpoint', '')
         });
+    }
+
+    elementFromHtml(html) {
+        const template = document.createElement('template')
+
+        template.innerHTML = html.trim()
+        return template.content.firstElementChild
     }
 
     refresh() {
@@ -38,14 +49,22 @@ export default class ProgressBar {
             checkpoint.removeAttribute('currentCheckpoint')
         })
 
+        console.log(instance.program.currentCheckpoint);
+
         if (instance.program.currentCheckpoint < instance.el.checkpoints.length) {
             instance.el.checkpoints[instance.program.currentCheckpoint].classList.remove('locked')
             instance.el.checkpoints[instance.program.currentCheckpoint].setAttribute('currentCheckpoint', '')
         }
     }
 
-    static generateHtml() {
-        let html = '<div class="progress-bar__checkpoints">'
+    static HTML() {
+
+        let generatedHTML =
+            `<div class="percentageBar">
+                <div class="passed" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
+            </div>
+            <div class="checkpoints">`
+
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
             let taskTypeClass = 'icon-pen-to-square-solid'
 
@@ -56,16 +75,30 @@ export default class ProgressBar {
             else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause'))
                 taskTypeClass = 'icon-pause-solid'
 
-            html += `<div class="progress-bar__checkpoint ${i > instance.program.chapterProgress() ? 'locked' : ''} ${taskTypeClass}" data-index="${i}" ></div>`
+            generatedHTML +=
+                `<button class="btn bordered rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                    <div class="${taskTypeClass}"></div>
+                </button>`
+
         }
-        html += `<div class="progress-bar__checkpoint">#</div>`
 
-        html += `</div>
-            <div class="progress-bar__percentage">
-                <div class="passed" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
-            </div>
-        `;
+        generatedHTML +=
+            `<button class="btn bordered rounded" aria-label="checkpoint">
+                <div class="icon-star-solid"></div>
+            </button>`
 
-        return html;
+        generatedHTML += '</div>'
+
+
+        return generatedHTML
+
+    }
+
+    hide() {
+        instance.htmlEl.classList.remove('is-visible')
+    }
+
+    show() {
+        instance.htmlEl.classList.add('is-visible')
     }
 }

@@ -16,6 +16,7 @@ import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import Pause from '../Extras/Pause.js'
+import Dialogue from '../Components/Dialogue.js'
 
 let instance = null
 
@@ -46,6 +47,7 @@ export default class Program {
         this.simonSays = new SimonSaysGame()
         this.quiz = new Quiz()
         this.dialog = new Dialog()
+        this.dialogue = new Dialogue()
         this.congrats = new Congrats()
         this.flipCards = new FlipCards()
         this.heartDefense = new HeartDefense()
@@ -97,13 +99,15 @@ export default class Program {
         this.clickedObject = currentIntersect.name
 
         if (this.objectIsClickable()) {
+            console.log(this.getCurrentStepData());
+
             this.startAction()
         }
     }
 
     previousStep() {
         if (this.currentStep == 0) return
-                
+
         this.currentStep--
         console.log('previousStep', this.currentStep)
         this.toggleStep()
@@ -126,7 +130,8 @@ export default class Program {
         }
 
         else if (this.stepType() == 'iris') {
-            this.taskDescription.toggleTaskDescription()
+            // this.taskDescription.toggleTaskDescription()
+            this.dialogue.show()
         }
 
         else if (this.stepType() == 'task') {
@@ -188,6 +193,8 @@ export default class Program {
         this.updateCurrentCheckpoint(checkpoint)
         this.world.progressBar.refresh()
         this.startInteractivity()
+
+        console.log('advance', checkpoint);
     }
 
     updateCurrentCheckpoint(newCheckpoint) {
@@ -264,7 +271,7 @@ export default class Program {
 
     startAction() {
         if (this.clickedObject == 'tv_16x9_screen') {
-            this.taskDescription.toggleTaskDescription()
+            this.dialogue.show()
         }
         else if (this.clickedObject == 'panel_screen') {
             this.video.play()

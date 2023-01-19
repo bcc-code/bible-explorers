@@ -6,6 +6,7 @@ import Experience from '../Experience.js'
 import Offline from '../Utils/Offline.js'
 import _c from '../Utils/Connection.js'
 import _lang from '../Utils/Lang.js'
+import _s from '../Utils/Strings.js'
 
 let resources = null
 
@@ -16,6 +17,7 @@ export default class Resources extends EventEmitter {
         this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
+        this.page = this.experience.page
 
         resources = this
 
@@ -40,21 +42,24 @@ export default class Resources extends EventEmitter {
     loadManager() {
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+            this.page.loader()
         }
 
         this.loadingManager.onLoad = () => {
             // console.log('Loading complete!')
+            document.querySelector('.loader').remove()
+            this.page.intro()
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
             // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            const progressRatio = Math.round(itemsLoaded / itemsTotal * 100)
-            document.querySelector('.loader__flame .flame').style.height = progressRatio + "%"
+            document.querySelector('.loader span').innerText = _s.initializing
         }
 
         this.loadingManager.onError = function (url) {
             // console.log('There was an error loading ' + url)
         }
+
     }
 
     setLoaders() {
@@ -165,12 +170,12 @@ export default class Resources extends EventEmitter {
 
     loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
         resources.streamLocally(videoName, videoUrl)
-        resources.loadVideoThumbnail(videoName, thumbnailUrl)
+        // resources.loadVideoThumbnail(videoName, thumbnailUrl)
     }
 
     async loadTexturesOnline(videoName) {
         await resources.streamFromBtv(videoName)
-        resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
+        // resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
     }
 
     loadVideoThumbnail(videoName, thumbnailUrl) {

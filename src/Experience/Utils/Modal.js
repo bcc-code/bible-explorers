@@ -37,17 +37,19 @@ export default class Modal {
 
     static generateHtml(html) {
         return `
-            <button class="modal__close | button bg--secondary width height border--5 border--solid border--transparent rounded--full | icon-xmark-solid"></button>
+            <button class="modal__close btn bordered rounded">
+                <div class="icon-xmark-solid"></div>
+            </button>
             <div class="modal__heading--minigame"></div>
             <div class="modal__wrapper">
                 <div class="modal__container">${html}</div>
             </div>
             <div class="modal__actions">
-                <button class="button bg--primary border--5 border--solid border--primary height px rounded--back" id="back"></button>
+                <button class="btn default bordered back" id="back"></button>
                 <div>
-                    <button class="button bg--primary border--5 border--solid border--primary height px rounded" id="restart"></button>
-                    <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward" id="skip"></button>
-                    <button class="button bg--secondary border--5 border--solid border--transparent height px rounded--forward pulsate" id="continue"></button>
+                    <button class="btn default bordered back" id="restart"></button>
+                    <button class="btn default bordered next" id="skip"></button>
+                    <button class="btn default bordered next pulsate" id="continue"></button>
                 </div>
             </div>
         `

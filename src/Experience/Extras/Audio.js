@@ -20,12 +20,8 @@ export default class Audio {
 
         audio.notes = []
 
-        audio.onBTN = document.getElementById("sound-on")
-        audio.onBTN.addEventListener("click", audio.togglePlayBgMusic)
-        audio.onBTN.style.display = "none"
-
-        audio.offBTN = document.getElementById("sound-off")
-        audio.offBTN.addEventListener("click", audio.togglePlayBgMusic)
+        audio.btn = document.querySelector('[aria-label="Background music"')
+        audio.btn.addEventListener('click', audio.togglePlayBgMusic)
 
         audio.initialize()
     }
@@ -156,21 +152,17 @@ export default class Audio {
     }
 
     setSoundIconOn() {
-        audio.onBTN.style.display = 'inline-block'
-        audio.offBTN.style.display = 'none'
+        audio.btn.setAttribute('is-playing', '')
     }
     setSoundIconOff() {
-        audio.offBTN.style.display = 'inline-block'
-        audio.onBTN.style.display = 'none'
+        audio.btn.removeAttribute('is-playing')
     }
 
     disableToggleBtn() {
-        audio.onBTN.classList.add('pointer-events-none')
-        audio.offBTN.classList.add('pointer-events-none')
+        audio.btn.classList.add('pointer-events-none')
     }
     enableToggleBtn() {
-        audio.onBTN.classList.remove('pointer-events-none')
-        audio.offBTN.classList.remove('pointer-events-none')
+        audio.btn.classList.remove('pointer-events-none')
     }
 
     notFetchedYet(soundtrack) {

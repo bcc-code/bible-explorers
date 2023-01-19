@@ -26,6 +26,7 @@ export default class World {
         this.camera = this.experience.camera
         this.resources = this.experience.resources
         this.debug = this.experience.debug
+        this.page = this.experience.page
 
         instance = this
 
@@ -35,60 +36,30 @@ export default class World {
         // Chapters
         this.menu = {
             categories: document.querySelector(".categories.list"),
-            chapters: document.querySelector(".chapters.list"),
-            chapterItems: document.querySelector(".chapter__items"),
-            chapterContent: document.querySelector(".chapter__content"),
+            chapters: document.querySelector(".chapters"),
             chaptersData: [],
-            quickLook: document.getElementById("quick-look")
-        }
-
-        // Welcome screen
-        this.welcome = {
-            loadingScreen: document.getElementById("loading-screen"),
-            conceptDescription: document.getElementById("concept-description"),
-            loading: document.getElementById("page-loader"),
-            chaptersScreen: document.getElementById("chapters-screen"),
-            topBar: document.getElementById("topBar")
         }
 
         this.buttons = {
-            back: document.getElementById("back-to-landing"),
-            start: document.getElementById("start-chapter"),
-            restart: document.getElementById("restart-chapter"),
-            archive: document.getElementById("archive"),
-            home: document.getElementById("home"),
-            support: document.getElementById("support-chat"),
-            howTo: document.getElementById("how-to")
+            archive: document.querySelector('[aria-label="Archive"]'),
+            contact: document.querySelector('[aria-label="Contact"]'),
+            home: document.querySelector('[aria-label="Home"]'),
         }
 
-        this.welcome.loading.querySelector('span').innerText = _s.loading
-        this.welcome.conceptDescription.innerText = _s.conceptDescription
-
-        if (window.location.hostname == 'explorers.biblekids.io') {
-            this.buttons.support.style.display = 'block'
-            this.buttons.support.addEventListener('click', function () {
-                document.getElementById('deskWidgetMain').classList.toggle('widget-open')
-
-                if (instance.buttons.support.classList.contains('icon-message-lines-solid')) {
-                    instance.buttons.support.classList.remove('icon-message-lines-solid')
-                    instance.buttons.support.classList.add('icon-xmark-solid')
-                } else {
-                    instance.buttons.support.classList.add('icon-message-lines-solid')
-                    instance.buttons.support.classList.remove('icon-xmark-solid')
-                }
-            })
+        this.navigation = {
+            prev: document.querySelector('[aria-label="Prev page"]'),
+            next: document.querySelector('[aria-label="Next page"]')
         }
 
-        this.buttons.howTo.querySelector('span').innerText = _s.howTo
-        this.buttons.howTo.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
+        this.buttons.archive.style.display = 'none'
+        this.buttons.home.style.display = 'none'
 
         this.selectedQuality = this.experience.settings.videoQuality
 
-        this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
-        document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.hideLoading)
-
         // Wait for resources
         this.resources.on('ready', () => {
+            this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
+
             // Setup
             this.controlRoom = new ControlRoom()
             this.environment = new Environment()
@@ -96,23 +67,27 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
 
-            this.buttons.start.addEventListener('click', this.startChapter)
-            this.buttons.restart.addEventListener('click', this.restartChapter)
+            this.navigation.next.addEventListener('click', this.startChapter)
+            // this.buttons.restart.addEventListener('click', this.restartChapter)
 
-            this.welcome.loading.querySelector('span').innerText = _s.initializing
         })
 
-        this.buttons.restart.innerText = _s.journey.restart
-        this.buttons.back.innerText = _s.journey.back
+        // this.buttons.restart.innerText = _s.journey.restart
+        // this.buttons.back.innerText = _s.journey.back
 
         this.buttons.home.addEventListener("click", this.goHome)
-        this.buttons.back.addEventListener("click", this.goToLandingScreen)
+        this.navigation.prev.addEventListener("click", this.goToLandingScreen)
+
+        if (window.location.hostname == 'explorers.biblekids.io') {
+            instance.buttons.contact.addEventListener('click', function () {
+                document.getElementById('deskWidgetMain').classList.toggle('widget-open')
+                instance.buttons.contact.toggleAttribute('is-open')
+            })
+        }
     }
 
     hideLoading() {
-        instance.welcome.loading.style.display = "none"
-        instance.welcome.topBar.style.display = "flex"
-        instance.welcome.loadingScreen.classList.add('visible')
+
     }
 
     placeholderChapterData() {
@@ -130,35 +105,30 @@ export default class World {
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()
+        instance.experience.world.progressBar.show()
 
         if (!instance.experience.settings.fullScreen) {
             document.exitFullscreen()
         }
     }
 
-    showStateButtons() {
-        instance.buttons.home.style.display = 'none'
-        instance.buttons.howTo.style.display = 'block'
-        instance.buttons.archive.style.display = 'none'
-    }
-
     showActionButtons() {
         if (this.chapterProgress() == 0) {
-            instance.buttons.restart.style.display = 'none'
+            // instance.buttons.restart.style.display = 'none'
         } else {
             instance.buttons.restart.style.display = 'block'
         }
 
         if (this.chapterProgress() == this.selectedChapter.program.length) {
-            instance.buttons.start.style.display = 'none'
+            instance.navigation.next.style.display = 'none'
         } else {
-            instance.buttons.start.style.display = 'block'
+            instance.navigation.next.style.display = 'block'
         }
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
-            instance.buttons.start.innerText = _s.journey.continue
+            // instance.buttons.start.innerText = _s.journey.continue
         } else {
-            instance.buttons.start.innerText = _s.journey.start
+            // instance.buttons.start.innerText = _s.journey.start
         }
     }
 
@@ -184,33 +154,23 @@ export default class World {
 
     setCategoryHtml(category) {
         const categoryHtml = document.createElement("button")
-        categoryHtml.className = "category | button bg--primary px height border--5 border--solid border--primary rounded"
+        categoryHtml.className = "category | btn default bordered"
         categoryHtml.setAttribute("data-slug", category.slug)
         categoryHtml.innerText = category.name
 
-        instance.menu.categories.appendChild(categoryHtml)
-
-        const getDivider = document.querySelector('.categories .divider')
-
-        if (!getDivider) {
-            const divider = document.createElement("span")
-            divider.className = "divider"
-            instance.menu.categories.appendChild(divider)
-        }
+        document.querySelector('.categories').appendChild(categoryHtml)
     }
 
     selectCategoryListeners() {
         document.querySelectorAll(".category").forEach(function (category) {
             category.addEventListener("click", () => {
+
                 const categorySlug = category.getAttribute('data-slug')
                 instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
 
                 instance.audio.changeBgMusic()
 
-                instance.welcome.loadingScreen.classList.remove('visible')
-                // instance.menu.quickLook.querySelector('span').innerText = _s.journey.quickLook.title
-
-                tippy('#quick-look', {
+                tippy('[aria-label="Preview chapter"]', {
                     theme: 'explorers',
                     content: _s.journey.quickLook.info,
                     duration: [500, 200],
@@ -226,28 +186,25 @@ export default class World {
         instance.placeholderChapterData()
         instance.removeDescriptionHtml()
 
-        instance.menu.chapters.innerHTML = ''
-        instance.welcome.loadingScreen.classList.add('visible')
-        instance.welcome.chaptersScreen.classList.remove('visible')
+        document.querySelector('.page').setAttribute('page', 'intro')
+        document.querySelector('.chapters').innerHTML = ''
 
-        instance.buttons.back.style.display = 'none'
-        instance.buttons.restart.style.display = 'none'
-        instance.buttons.start.style.display = 'none'
-        instance.buttons.howTo.style.display = 'none'
+        instance.navigation.prev.style.display = 'none'
+        instance.navigation.next.style.display = 'none'
     }
 
     setChapters(data) {
+        instance.page.lobby()
+
         data.forEach((chapter, index) => {
             instance.setChapterHtml(chapter, index)
-            instance.welcome.loadingScreen.classList.remove('visible')
-            instance.welcome.chaptersScreen.classList.add('visible')
         })
 
         instance.selectChapterListeners()
     }
 
     setChapterHtml(chapter, index) {
-        let chapterHtml = document.createElement("div")
+        let chapterHtml = document.createElement("article")
 
         let chapterClasses = "chapter"
         chapterClasses += chapter.status == "future" ? " locked" : ""
@@ -258,13 +215,10 @@ export default class World {
         chapterHtml.setAttribute("data-slug", chapter.category)
 
         chapterHtml.innerHTML = `
-            <div class="chapter__box">
-                <div class="chapter__background"></div>
-                <div class="chapter__heading">
-                    <h2 class="chapter__title">${chapter.title}</h2>
-                    <span class="chapter__date">${chapter.date}</span>
-                </div>
-            </div>
+            <header class="chapter__heading">
+                <h2 class="chapter__title">${chapter.title}</h2>
+                <span class="chapter__date">${chapter.date}</span>
+            </header>
             <div class="chapter__states">
                 <div class="chapter__offline">
                     <span>${_s.offline.download.title}</span>
@@ -283,54 +237,30 @@ export default class World {
                     <span>${_s.offline.availableOffline.title}</span>
                 </div>
             </div>
-        `
+            `
 
-        instance.menu.chapters.appendChild(chapterHtml)
+        const chapters = document.querySelector('.chapters')
+        chapters.appendChild(chapterHtml)
+
         instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
 
         instance.markChapterIfCompleted(chapter)
         instance.offline.markChapterIfAvailableOffline(chapter)
 
-        instance.buttons.back.style.display = 'block'
-        instance.buttons.howTo.style.display = 'block'
+        instance.navigation.prev.style.display = 'block'
 
         instance.setStatesTooltips()
     }
 
+
     setDescriptionHtml() {
         let chapter = instance.selectedChapter
-        let chapterDescription = instance.menu.chapterContent.querySelector('.chapter__description')
-        let chapterAttachments = instance.menu.chapterContent.querySelector('.chapter__attachments')
 
-        chapterDescription.setAttribute('data-id', chapter.id)
-        chapterDescription.setAttribute('data-slug', chapter.category)
-        instance.menu.chapterContent.querySelector('.chapter__title').innerHTML = chapter.title
-        instance.menu.chapterContent.querySelector('.chapter__text').innerHTML = chapter.content
-
-        instance.menu.quickLook.addEventListener("click", instance.quickLookOnChapter)
-
-        chapterAttachments.querySelector('.attachments').innerHTML = ''
-
-        if (chapter.attachments.length) {
-            chapterAttachments.querySelector('.attachments').classList.remove('hidden')
-            chapter.attachments.forEach((attachment) => {
-                chapterAttachments.querySelector('.attachments').innerHTML +=
-                    `<a href="${attachment.url}" target="_blank" class="button button__link"><i class="icon-download-solid"></i><span>${attachment.title}</span></a>`
-            })
-        }
-        else {
-            chapterAttachments.querySelector('.attachments').classList.add('hidden')
-        }
-
-        instance.menu.chapterItems.classList.add('chapter-selected')
-    }
-
-    setChapterContentPreviewHTML() {
         let numberOfEpisodes = 0
         let numberOfTasks = 0
         let numberOfQuizes = 0
 
-        instance.selectedChapter.program.forEach(checkpoint => {
+        chapter.program.forEach(checkpoint => {
             if (checkpoint.steps.some(step => step.details.step_type == 'video'))
                 numberOfEpisodes++
 
@@ -341,30 +271,53 @@ export default class World {
                 numberOfTasks++
         })
 
-        let itemHTMLString =
-            `<div class="chapter__content--preview">
-                <div class="column">
-                    <i class="icon-film-solid"></i>
-                    <span>${numberOfEpisodes} films</span>
-                </div>
-                <div class="column">
-                    <i class="icon-pen-to-square-solid"></i>
-                    <span>${numberOfTasks} tasks</span>
-                </div>`
-        if (numberOfQuizes > 0) {
-            itemHTMLString +=
-                ` <div class="column">
-                    <i class="icon-question-solid"></i>
-                    <span>${numberOfQuizes} quiz</span>
-                </div>`
-        }
-        `</div>`
+        let detailsHTML =
+            `<header>
+                <h2>${chapter.title}</h2>
+                <button class="btn default with-icon next" aria-label="Preview chapter">
+                    <div class="icon-eye-solid"></div>
+                    <span>Preview</span>
+                </button>
+            </header>`
 
-        document.querySelector('.chapter__task--content').innerHTML = itemHTMLString
+        if (chapter.attachments.length) {
+            detailsHTML += `<div class="attachments">`
+            chapter.attachments.forEach((item) => {
+                detailsHTML += `<a href="${item.url}" target="_blank" class="link asset icon"><i class="icon-download-solid"></i><span>${item.title}</span></a>`
+            })
+            detailsHTML += `</div>`
+        }
+
+        detailsHTML += `<div class="description">${chapter.content}</div>`
+
+
+        if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
+            detailsHTML +=
+                `<div class="info">
+                    <div><i class="icon-film-solid"></i><span>${numberOfEpisodes} films</span></div>
+                    <div><i class="icon-pen-to-square-solid"></i><span>${numberOfEpisodes} tasks</span></div>`
+
+            if (numberOfQuizes > 0) {
+                detailsHTML += `<div><i class="icon-question-solid"></i><span>${numberOfQuizes} quiz</span></div>`
+            }
+
+            detailsHTML += `</div>`
+        }
+
+
+        const details = document.querySelector('.chapter-details')
+        details.innerHTML = detailsHTML
+        details.classList.add('is-open')
+
+        const previewBtn = document.querySelector('[aria-label="Preview chapter"]')
+        previewBtn.addEventListener("click", instance.previewChapter)
+
+        document.querySelector('.chapters').classList.add('chapter-selected')
     }
 
+
     removeDescriptionHtml() {
-        instance.menu.chapterItems.classList.remove('chapter-selected')
+        document.querySelector('.chapters').classList.remove('chapter-selected')
     }
 
     selectChapterListeners() {
@@ -375,7 +328,6 @@ export default class World {
                 instance.loadChapterTextures()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
-                instance.setChapterContentPreviewHTML()
             })
         })
 
@@ -417,7 +369,7 @@ export default class World {
     }
 
     setChapterBgImage(chapter) {
-        document.querySelector('.chapter[data-id="' + chapter.id + '"] .chapter__background').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
+        document.querySelector('.chapter[data-id="' + chapter.id + '"]').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
     }
 
     markChapterIfCompleted(chapter) {
@@ -591,11 +543,13 @@ export default class World {
         })
 
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
-            document.documentElement.requestFullscreen()
+            // document.documentElement.requestFullscreen()
         }
+
+
     }
 
-    quickLookOnChapter() {
+    previewChapter() {
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
@@ -632,24 +586,29 @@ export default class World {
 
     showMenu() {
         document.body.classList.add('freeze')
-        instance.welcome.chaptersScreen.classList.add('visible')
+        document.querySelector('.page').classList.add('is-visible')
         instance.points.delete()
-        instance.showStateButtons()
+        instance.buttons.home.style.display = 'none'
+        instance.buttons.archive.style.display = 'none'
+        instance.buttons.contact.style.display = 'block'
         instance.showActionButtons()
+        instance.experience.world.progressBar.hide()
     }
 
     hideMenu() {
         document.body.classList.remove('freeze')
-        instance.welcome.chaptersScreen.classList.remove('visible')
+        document.querySelector('.page').classList.remove('is-visible')
+
+        instance.buttons.contact.style.display = 'none'
     }
 
     setUpChapter() {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        instance.buttons.howTo.style.display = 'none'
         instance.buttons.home.style.display = 'block'
         instance.buttons.archive.style.display = 'block'
+        instance.experience.world.progressBar.show()
     }
 
     fetchBgMusic() {

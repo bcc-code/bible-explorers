@@ -7,9 +7,10 @@ import MouseMove from './Utils/MouseMove.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import sources from './Sources.js'
-import Settings from './Extras/Settings.js'
+import Menu from './Components/Menu.js'
 import World from './World/World.js'
 import WebGL from 'three/examples/jsm/capabilities/WebGL.js'
+import Page from './Components/Page.js'
 
 let instance = null
 
@@ -29,6 +30,8 @@ export default class Experience {
         this.canvas = canvas
 
         // Setup
+        this.page = new Page()
+        this.settings = new Menu()
         this.debug = new Debug()
         this.stats = new StatsModule()
         this.sizes = new Sizes()
@@ -37,7 +40,6 @@ export default class Experience {
         this.resources = new Resources(sources)
         this.pointer = new MouseMove()
         this.camera = new Camera()
-        this.settings = new Settings()
         this.world = new World()
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
