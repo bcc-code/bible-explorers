@@ -27,6 +27,9 @@ export default class Quiz {
             questions.forEach((q, qIdx) => {
                 html += `<div class="question" data-index="${qIdx + 1}">
                             <div class="question__heading">
+                                <svg class="question-mark-icon" viewBox="0 0 15 22">
+                                    <use href="#question-mark-icon"></use>
+                                </svg>
                                 <div class="question__headingTop">
                                     <span class="question__label">Question ${qIdx + 1} / ${questions.length}</span>
                                     <div class="quiz__progressBar">

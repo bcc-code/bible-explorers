@@ -1835,10 +1835,6 @@
         }
 
         &__heading {
-            background-image: url("../../static/assets/question-mark.png"), $gradient;
-            background-repeat: no-repeat, no-repeat;
-            background-position: center, top left;
-            background-size: auto 50%, auto;
             border: 3px solid $accent;
             width: 30rem;
             min-height: 20rem;
@@ -1999,10 +1995,6 @@
                 background: rgba(red, 0.2);
                 display: flex;
             }
-
-            div::after {
-                background-image: url('../../static/assets/x.svg');
-            }
         }
 
         &__input.correct label {
@@ -2013,10 +2005,6 @@
                 border: 3px solid greenyellow;
                 background: rgba(greenyellow, 0.2);
                 display: flex;
-            }
-
-            div::after {
-                background-image: url('../../static/assets/check.svg');
             }
         }
 
