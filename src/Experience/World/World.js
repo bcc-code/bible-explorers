@@ -15,6 +15,7 @@ import _appInsights from '../Utils/AppInsights.js'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
 export default class World {
@@ -41,17 +42,15 @@ export default class World {
         }
 
         this.buttons = {
-            archive: document.querySelector('[aria-label="Archive"]'),
             contact: document.querySelector('[aria-label="Contact"]'),
             home: document.querySelector('[aria-label="Home"]'),
         }
 
         this.navigation = {
-            prev: document.querySelector('[aria-label="Prev page"]'),
-            next: document.querySelector('[aria-label="Next page"]')
+            prev: document.querySelector('[aria-label="prev page"]'),
+            next: document.querySelector('[aria-label="next page"]')
         }
 
-        this.buttons.archive.style.display = 'none'
         this.buttons.home.style.display = 'none'
 
         this.selectedQuality = this.experience.settings.videoQuality
@@ -68,15 +67,11 @@ export default class World {
             this.audio = new Audio()
 
             this.navigation.next.addEventListener('click', this.startChapter)
-            // this.buttons.restart.addEventListener('click', this.restartChapter)
 
         })
 
-        // this.buttons.restart.innerText = _s.journey.restart
-        // this.buttons.back.innerText = _s.journey.back
-
         this.buttons.home.addEventListener("click", this.goHome)
-        this.navigation.prev.addEventListener("click", this.goToLandingScreen)
+        this.navigation.prev.addEventListener("click", this.goToWelcomeMessage)
 
         if (window.location.hostname == 'explorers.biblekids.io') {
             instance.buttons.contact.addEventListener('click', function () {
@@ -86,9 +81,6 @@ export default class World {
         }
     }
 
-    hideLoading() {
-
-    }
 
     placeholderChapterData() {
         instance.selectedChapter = {
@@ -105,10 +97,13 @@ export default class World {
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()
-        instance.experience.world.progressBar.show()
+        // instance.experience.world.progressBar.show()
+
+        if (document.querySelector('.archive'))
+            instance.program.archive.remove()
 
         if (!instance.experience.settings.fullScreen) {
-            document.exitFullscreen()
+            // document.exitFullscreen()
         }
     }
 
@@ -153,12 +148,8 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryHtml = document.createElement("button")
-        categoryHtml.className = "category | btn default bordered"
-        categoryHtml.setAttribute("data-slug", category.slug)
-        categoryHtml.innerText = category.name
-
-        document.querySelector('.categories').appendChild(categoryHtml)
+        const categoryBtn = _gl.elementFromHtml(`<button class="category btn default bordered" data-slug="${category.slug}">${category.name}</button>`)
+        document.querySelector('.categories').appendChild(categoryBtn)
     }
 
     selectCategoryListeners() {
@@ -181,19 +172,21 @@ export default class World {
         })
     }
 
-    goToLandingScreen() {
+    goToWelcomeMessage() {
         instance.unselectAllChapters()
         instance.placeholderChapterData()
         instance.removeDescriptionHtml()
 
-        document.querySelector('.page').setAttribute('page', 'intro')
-        document.querySelector('.chapters').innerHTML = ''
+        document.querySelector('.lobby').remove()
+        instance.resources.fetchApiThenCache(_api.getBiexChapters(), instance.setCategories)
+        instance.page.intro()
 
         instance.navigation.prev.style.display = 'none'
         instance.navigation.next.style.display = 'none'
     }
 
     setChapters(data) {
+        document.querySelector('.intro').remove()
         instance.page.lobby()
 
         data.forEach((chapter, index) => {
@@ -547,8 +540,10 @@ export default class World {
         }
 
         document.querySelector('.lobby').remove()
-        document.querySelector('.page').setAttribute('page', '')
+        document.querySelector('.page').className = 'page page-home'
 
+        instance.navigation.prev.style.display = 'none'
+        instance.navigation.next.style.display = 'none'
 
     }
 
@@ -589,18 +584,19 @@ export default class World {
 
     showMenu() {
         document.body.classList.add('freeze')
-        document.querySelector('.page').classList.add('is-visible')
+        instance.page.lobby()
+
         instance.points.delete()
         instance.buttons.home.style.display = 'none'
-        instance.buttons.archive.style.display = 'none'
         instance.buttons.contact.style.display = 'block'
+
         instance.showActionButtons()
-        instance.experience.world.progressBar.hide()
+        // instance.experience.world.progressBar.hide()
     }
 
     hideMenu() {
         document.body.classList.remove('freeze')
-        document.querySelector('.page').classList.remove('is-visible')
+        document.querySelector('.page').className = 'page page-home'
 
         instance.buttons.contact.style.display = 'none'
     }
@@ -610,8 +606,11 @@ export default class World {
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
         instance.buttons.home.style.display = 'block'
-        instance.buttons.archive.style.display = 'block'
-        instance.experience.world.progressBar.show()
+        // instance.experience.world.progressBar.show()
+
+        if (instance.program.archive.facts.length > 0) {
+            instance.program.archive.init()
+        }
     }
 
     fetchBgMusic() {

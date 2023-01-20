@@ -22,18 +22,9 @@ export default class Dialogue {
             </section>`
         )
 
-        const nextCta = _gl.elementFromHtml(
-            `<button class="btn default bordered" aria-label="next step">${_s.task.next}</button>`
-        )
-        nextCta.addEventListener("click", () => {
-            instance.program.nextStep()
-        })
+        const container = document.querySelector('.ui-container')
+        container.append(dialogueBox)
 
-        const hudContainer = document.querySelector('.hud-container')
-        hudContainer.append(dialogueBox)
-
-        const ctaContainer = document.querySelector('.hud-container .cta')
-        ctaContainer.append(nextCta)
     }
 
     show() {
@@ -43,9 +34,12 @@ export default class Dialogue {
         instance.message = instance.data.message
 
         instance.init()
-    }
 
-    hide() {
-
+        const nextCTA = document.querySelector('[aria-label="next page"]')
+        nextCTA.style.display = 'block'
+        nextCTA.addEventListener("click", () => {
+            instance.program.nextStep()
+            console.log('click');
+        })
     }
 }

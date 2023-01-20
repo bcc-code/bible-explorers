@@ -78,8 +78,8 @@ export default class Menu {
         bibleExplorersGuide.querySelector('span').innerText = _s.howTo
         bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
-        const faqHeader = document.querySelector('.faq-content h2')
-        const faqList = document.querySelector('.faq-content ul')
+        const faqHeader = document.querySelector('.faq .content h2')
+        const faqList = document.querySelector('.faq .content ul')
         const faqQuestions = Object.values(_s.faq.questions)
         const faqAnswers = Object.values(_s.faq.answers)
 
@@ -104,10 +104,10 @@ export default class Menu {
         document.querySelector('[aria-label="Open menu"]').addEventListener('click', settings.openMenu)
         document.querySelector('[aria-label="Close menu"]').addEventListener('click', settings.closeMenu)
 
-        const overlay = document.querySelector('.menu-overlay')
+        const overlay = document.querySelector('.menu .overlay')
         overlay.addEventListener('click', settings.closeMenu)
 
-        document.querySelector('[aria-label="Open FAQ"]').addEventListener('click', () => {
+        document.querySelector('[aria-label="FAQ"]').addEventListener('click', () => {
             settings.openFAQ()
             settings.closeMenu()
         })

@@ -1,5 +1,5 @@
 import Experience from "../Experience.js"
-import Archive from '../Extras/Archive.js'
+import Archive from '../Components/Archive.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import CodeUnlock from '../Extras/CodeUnlock.js'
 import PictureAndCode from '../Extras/PictureAndCode.js'

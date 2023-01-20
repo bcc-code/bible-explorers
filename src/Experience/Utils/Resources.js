@@ -47,8 +47,9 @@ export default class Resources extends EventEmitter {
 
         this.loadingManager.onLoad = () => {
             // console.log('Loading complete!')
-            document.querySelector('.loader').remove()
             this.page.intro()
+            document.querySelector('.loader').remove()
+            document.querySelector('.app-header').style.display = "flex"
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {

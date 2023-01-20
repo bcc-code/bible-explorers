@@ -105,9 +105,6 @@
                     <div class="icon-message-lines-solid"></div>
                     <div class="icon-xmark-solid"></div>
                 </button>
-                <button class="btn rounded" aria-label="Archive">
-                    <div class="icon-folder-solid"></div>
-                </button>
                 <button class="btn rounded" aria-label="Background music">
                     <div class="icon-volume-solid"></div>
                     <div class="icon-volume-slash-solid"></div>
@@ -122,9 +119,9 @@
             </div>
         </header>
 
-        <aside class="menu">
-            <div class="menu-container">
-                <section class="menu-buttons">
+        <aside class="menu side-modal">
+            <div class="container">
+                <section class="buttons">
                     <a href="#" target="_blank" class="link dark icon" aria-label="Bible epxlorers guide">
                         <div class="icon-book-solid"></div>
                         <span>How to</span>
@@ -133,11 +130,11 @@
                         <div class="icon icon-xmark-solid"></div>
                     </button>
                 </section>
-                <section class="menu-content">
-                    <section class="menu-navigation">
-                        <button class="btn default" aria-label="Open FAQ">FAQ</button>
-                    </section>
-                    <section class="menu-info">
+                <section class="content">
+                    <nav class="nav">
+                        <button class="btn default" aria-label="FAQ">FAQ</button>
+                    </nav>
+                    <section class="info">
                         <h2>Settings</h2>
                         <section class="select-language">
                             <span class="label">Language</span>
@@ -169,7 +166,7 @@
                         </section>
                     </section>
                 </section>
-                <section class="menu-footer">
+                <section class="footer">
                     <section class="login">
                         <header>
                             <p aria-label="Logged in"></p>
@@ -184,47 +181,43 @@
                     <aside class="copyright">Copyright 2022 © <a href="https://bcc.media" target="_blank">bcc.media</a> foundation</aside>
                 </section>
             </div>
-            <div class="menu-overlay"></div>
+            <div class="overlay"></div>
         </aside>
 
-        <aside class="faq">
-            <div class="faq-container">
-                <section class="faq-buttons">
+        <aside class="faq side-modal">
+            <div class="container">
+                <section class="buttons">
                     <button class="btn rounded" aria-label="Close FAQ">
                         <div class="icon icon-xmark-solid"></div>
                     </button>
                 </section>
-                <section class="faq-content">
+                <section class="content">
                     <h2>FAQ</h2>
                     <ul></ul>
                 </section>
             </div>
-            <div class="faq-overlay"></div>
+            <div class="overlay"></div>
         </aside>
 
-        <aside class="hud">
-            <div class="hud-container">
-                <section class="progress-bar"></section>
-                <section class="cta"></section>
-            </div>
-            <div class="hud-minigames"></div>
-            <div class="hud-overlay"></div>
+        <aside class="page">
+            <div class="container"></div>
+            <div class="overlay"></div>
+        </aside>
+
+        <aside class="ui-container">
+            <section class="progress-bar"></section>
+            <section class="cta">
+                <button class="btn default text back" aria-label="prev page">
+                    <div class="icon-arrow-left-long-solid"></div>
+                </button>
+                <button class="btn default text next pulsate" aria-label="next page">
+                    <div class="icon-arrow-right-long-solid"></div>
+                </button>
+            </section>
         </aside>
 
     </main>
 
-    <aside class="page">
-        <div class="page-container"></div>
-        <div class="page-navigation">
-            <button class="btn default text back" aria-label="Prev page">
-                <div class="icon-arrow-left-long-solid"></div>
-            </button>
-            <button class="btn default text next pulsate" aria-label="Next page">
-                <div class="icon-arrow-right-long-solid"></div>
-            </button>
-        </div>
-        <div class="page-overlay"></div>
-    </aside>
     <aside class="webgl-wrapper">
         <canvas class="webgl-canvas"></canvas>
     </aside>

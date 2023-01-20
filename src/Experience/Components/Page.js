@@ -11,20 +11,11 @@ export default class Page {
         instance = this
         instance.experience = new Experience()
 
-
-        const prev = document.querySelector('[aria-label="Prev page"]')
-        const next = document.querySelector('[aria-label="Next page"]')
+        const prev = document.querySelector('[aria-label="prev page"]')
+        const next = document.querySelector('[aria-label="next page"]')
 
         prev.style.display = 'none'
         next.style.display = 'none'
-
-    }
-
-    elementFromHtml(html) {
-        const template = document.createElement('template')
-
-        template.innerHTML = html.trim()
-        return template.content.firstElementChild
     }
 
     loader() {
@@ -41,23 +32,20 @@ export default class Page {
                 </div>
             </section>`)
 
-        document.querySelector('.page').setAttribute('page', 'loader')
-        document.querySelector('.page').classList.add('is-visible')
-        document.querySelector('.page-container').append(pageLoader)
+        document.querySelector('.page').className = 'page page-loader'
+        document.querySelector('.page .container').append(pageLoader)
     }
 
     intro() {
-
         const intro = _gl.elementFromHtml(`
             <section class="intro">
                 <p>${_s.conceptDescription}</p>
                 <div class="categories list"></div>
             </section>
         `)
-        document.querySelector('.page').setAttribute('page', 'intro')
-        document.querySelector('.page-container').append(intro)
 
-        document.querySelector('.app-header').style.display = "flex"
+        document.querySelector('.page').className = 'page page-intro'
+        document.querySelector('.page .container').append(intro)
     }
 
     lobby() {
@@ -67,8 +55,8 @@ export default class Page {
                 <section class="chapter-details"></section>
             </section>
         `)
-        document.querySelector('.page').setAttribute('page', 'lobby')
-        document.querySelector('.page-container').append(lobby)
+        document.querySelector('.page').className = 'page page-lobby'
+        document.querySelector('.page .container').append(lobby)
     }
 
 }

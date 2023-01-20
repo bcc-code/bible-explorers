@@ -9,12 +9,10 @@
 @import "./globals/mixins.scss";
 @import "./globals/main.scss";
 
-@import "./interface/Buttons.scss";
-@import "./interface/HUD.scss";
-
+@import "./components/Buttons.scss";
 @import "./components/Header.scss";
+@import "./components/SideModal.scss";
 @import "./components/Menu.scss";
-@import "./components/FAQ.scss";
 @import "./components/Page.scss";
 @import "./components/Chapter.scss";
 @import "./components/Tooltip.scss";
@@ -22,7 +20,6 @@
 @import "./components/ProgressBar.scss";
 
 
-// #region Canvas
 .webgl {
     position: fixed;
     top: 0;
@@ -31,7 +28,22 @@
     cursor: grab;
 }
 
-// #endregion
+.cta {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    padding: var(--app-padding);
+    display: flex;
+
+    .btn {
+        display: none;
+    }
+
+    .btn:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+}
 
 
 .categories {
