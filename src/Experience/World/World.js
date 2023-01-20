@@ -138,6 +138,9 @@ export default class World {
         }
 
         instance.selectCategoryListeners()
+
+
+
     }
 
     addNotAvailableInYourLanguageMessage() {
@@ -168,8 +171,11 @@ export default class World {
                     animation: 'shift-away',
                     arrow: false
                 })
+
+
             })
         })
+
     }
 
     goToWelcomeMessage() {
@@ -264,43 +270,51 @@ export default class World {
                 numberOfTasks++
         })
 
-        let detailsHTML =
-            `<header>
-                <h2>${chapter.title}</h2>
-                <button class="btn default with-icon next" aria-label="Preview chapter">
-                    <div class="icon-eye-solid"></div>
-                    <span>Preview</span>
-                </button>
-            </header>`
+        const details = _gl.elementFromHtml(`
+            <section class="chapter-details">
+                <header>
+                    <h2>${chapter.title}</h2>
+                    <button class="btn default with-icon next" aria-label="Preview chapter">
+                        <div class="icon-eye-solid"></div>
+                        <span>Preview</span>
+                    </button>
+                </header>
+            </section>
+        `)
 
         if (chapter.attachments.length) {
-            detailsHTML += `<div class="attachments">`
+            const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
+
             chapter.attachments.forEach((item) => {
-                detailsHTML += `<a href="${item.url}" target="_blank" class="link asset icon"><i class="icon-download-solid"></i><span>${item.title}</span></a>`
+                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset icon"><i class="icon-download-solid"></i><span>${item.title}</span></a>`)
+                attachments.append(attachment)
             })
-            detailsHTML += `</div>`
+
+            details.append(attachments)
         }
 
-        detailsHTML += `<div class="description">${chapter.content}</div>`
+        const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
+        details.append(description)
 
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-            detailsHTML +=
-                `<div class="info">
+
+            const info = _gl.elementFromHtml(`
+                <div class="info">
                     <div><i class="icon-film-solid"></i><span>${numberOfEpisodes} films</span></div>
-                    <div><i class="icon-pen-to-square-solid"></i><span>${numberOfEpisodes} tasks</span></div>`
+                    <div><i class="icon-pen-to-square-solid"></i><span>${numberOfEpisodes} tasks</span></div>
+                </div>
+            `)
+
+            details.append(info)
 
             if (numberOfQuizes > 0) {
-                detailsHTML += `<div><i class="icon-question-solid"></i><span>${numberOfQuizes} quiz</span></div>`
+                const quizLabel = _gl.elementFromHtml(`<div><i class="icon-question-solid"></i><span>${numberOfQuizes} quiz</span></div>`)
+                info.append(quizLabel)
             }
-
-            detailsHTML += `</div>`
         }
 
-
-        const details = document.querySelector('.chapter-details')
-        details.innerHTML = detailsHTML
-        details.classList.add('is-open')
+        document.querySelector('.lobby').append(details)
 
         const previewBtn = document.querySelector('[aria-label="Preview chapter"]')
         previewBtn.addEventListener("click", instance.previewChapter)
@@ -311,16 +325,26 @@ export default class World {
 
     removeDescriptionHtml() {
         document.querySelector('.chapters').classList.remove('chapter-selected')
+
+        if (document.querySelector('.chapter-details'))
+            document.querySelector('.chapter-details').remove()
+
     }
 
     selectChapterListeners() {
         document.querySelectorAll(".chapter:not(.locked), body.ak_leder .chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
+
+                if (document.querySelector('.chapter-details'))
+                    document.querySelector('.chapter-details').remove()
+
                 instance.addClassToSelectedChapter(chapter)
                 instance.updateSelectedChapterData(chapter)
                 instance.loadChapterTextures()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
+
+                instance.navigation.next.disabled = false
             })
         })
 
@@ -341,6 +365,10 @@ export default class World {
                 event.stopPropagation()
             })
         })
+
+        instance.navigation.prev.style.display = 'block'
+        instance.navigation.next.style.display = 'block'
+        instance.navigation.next.disabled = true
     }
 
     setStatesTooltips() {
@@ -591,6 +619,7 @@ export default class World {
         instance.buttons.contact.style.display = 'block'
 
         instance.showActionButtons()
+        instance.navigation.next.disabled = false
         // instance.experience.world.progressBar.hide()
     }
 

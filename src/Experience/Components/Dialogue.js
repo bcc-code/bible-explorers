@@ -35,8 +35,11 @@ export default class Dialogue {
 
         instance.init()
 
+        const prevCTA = document.querySelector('[aria-label="prev page"]')
+        prevCTA.disabled = true
+
         const nextCTA = document.querySelector('[aria-label="next page"]')
-        nextCTA.style.display = 'block'
+        nextCTA.disabled = false
         nextCTA.addEventListener("click", () => {
             instance.program.nextStep()
             console.log('click');

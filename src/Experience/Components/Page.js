@@ -52,7 +52,6 @@ export default class Page {
         const lobby = _gl.elementFromHtml(`
             <section class="lobby">
                 <section class="chapters"></section>
-                <section class="chapter-details"></section>
             </section>
         `)
         document.querySelector('.page').className = 'page page-lobby'

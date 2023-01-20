@@ -72,6 +72,10 @@
         }
 
     }
+
+    &.pulsate:disabled {
+        animation: none;
+    }
 }
 
 .link {

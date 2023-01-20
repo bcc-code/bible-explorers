@@ -75,12 +75,7 @@
     border: 0.25rem solid var(--clr-primary);
     border-radius: 1rem;
     padding: var(--app-padding);
-    opacity: 0;
     transition: var(--transition-duration) var(--transition-timing);
-
-    &.is-open {
-        opacity: 1;
-    }
 
     h2,
     p {
