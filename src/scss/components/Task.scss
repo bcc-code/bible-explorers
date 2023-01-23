@@ -1,0 +1,54 @@
+.task {
+    .container {
+        position: absolute;
+        right: 0;
+        top: 5rem;
+        bottom: 5rem;
+        padding: var(--app-padding);
+        width: clamp(300px, calc(100vw - var(--app-padding)), 40vw);
+
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-end;
+    }
+
+    .content {
+        background-color: var(--clr-background);
+        padding: var(--app-padding);
+        border: 0.25rem solid var(--clr-primary);
+        border-radius: 1rem;
+        display: flex;
+        flex-flow: column nowrap;
+
+        >*:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &-header {
+
+        h2 {
+            color: #fff;
+        }
+    }
+
+    &-image {
+
+        img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            object-position: top center;
+        }
+    }
+
+    &-description {
+        color: #fff;
+        line-height: 1.5;
+
+        >*:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+}

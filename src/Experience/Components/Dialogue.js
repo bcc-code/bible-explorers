@@ -1,46 +1,50 @@
-import Experience from "../Experience"
-import _s from "../Utils/Strings.js"
-import _gl from "../Utils/Globals.js"
+import Experience from '../Experience.js'
+import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
 
 export default class Dialogue {
     constructor() {
+
         instance = this
         instance.experience = new Experience()
+        instance.debug = this.experience.debug
+
     }
 
     init() {
-        const dialogueBox = _gl.elementFromHtml(
-            `<section class="dialogue">
-                <header class="dialogue-header">
-                    <span>${instance.message.character}</span>
-                </header>
-                <div class="dialogue-box">
-                    ${instance.message.text}
+        const dialogue = _gl.elementFromHtml(`
+            <section class="dialogue">
+                <div class="container">
+                    <div class="content"></div>
                 </div>
-            </section>`
-        )
+            </section>
+        `)
 
-        document.querySelector('.ui-container').append(dialogueBox)
+        const optionsLength = instance.data.dialog.length
 
+        for (let i = 0; i < optionsLength; i++) {
+            const option = _gl.elementFromHtml(`<button class="btn default bordered">Option label</button>`)
+            dialogue.querySelector('.content').append(option)
+        }
+
+        document.querySelector('.ui-container').append(dialogue)
     }
 
-    show() {
-        instance.world = instance.experience.world
-        instance.program = instance.world.program
+    toggle() {
+        instance.program = instance.experience.world.program
         instance.data = instance.program.getCurrentStepData()
-        instance.message = instance.data.message
 
         instance.init()
+        instance.eventListeners()
+    }
 
-        document.querySelector('.ui-container').className = 'ui-container dialogue'
-
+    eventListeners() {
         const prevCTA = document.querySelector('[aria-label="prev page"]')
-        prevCTA.disabled = true
+        prevCTA.disabled = false
 
         const nextCTA = document.querySelector('[aria-label="next page"]')
-        nextCTA.disabled = false
         nextCTA.addEventListener("click", () => {
             instance.program.nextStep()
         })

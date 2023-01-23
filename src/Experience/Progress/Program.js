@@ -10,13 +10,14 @@ import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
 import Quiz from '../Extras/Quiz.js'
-import Dialog from '../Extras/Dialog.js'
 import Congrats from '../Extras/Congrats.js'
 import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
+import Message from '../Components/Message.js'
+import Task from '../Components/Task.js'
 
 let instance = null
 
@@ -46,13 +47,15 @@ export default class Program {
         this.cableConnectorGame = new CableConnectorGame()
         this.simonSays = new SimonSaysGame()
         this.quiz = new Quiz()
-        this.dialog = new Dialog()
-        this.dialogue = new Dialogue()
         this.congrats = new Congrats()
         this.flipCards = new FlipCards()
         this.heartDefense = new HeartDefense()
         this.davidsRefuge = new DavidsRefuge()
         this.pause = new Pause()
+        this.dialogue = new Dialogue()
+        this.message = new Message()
+        this.task = new Task()
+
 
         instance = this
 
@@ -130,7 +133,7 @@ export default class Program {
 
         else if (this.stepType() == 'iris') {
             // this.taskDescription.toggleTaskDescription()
-            this.dialogue.show()
+            this.message.toggle()
         }
 
         else if (this.stepType() == 'task') {
@@ -163,7 +166,7 @@ export default class Program {
             }
 
             else if (this.taskType() == 'dialog') {
-                this.dialog.toggleDialog()
+                this.dialogue.toggle()
             }
 
             else if (this.taskType() == 'flip_cards') {
@@ -245,7 +248,7 @@ export default class Program {
 
         if (this.stepType() == 'iris') {
             setTimeout(() => {
-                this.dialogue.show()
+                this.message.toggle()
             }, instance.camera.data.moveDuration)
         }
 
@@ -276,7 +279,7 @@ export default class Program {
 
     startAction() {
         if (this.clickedObject == 'tv_16x9_screen') {
-            this.dialogue.show()
+            this.message.toggle()
         }
         else if (this.clickedObject == 'panel_screen') {
             this.video.play()

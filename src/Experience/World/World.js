@@ -16,6 +16,7 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
+import Task from '../Components/Task.js'
 
 let instance = null
 export default class World {
@@ -42,7 +43,8 @@ export default class World {
             this.highlight = new Highlight()
             this.audio = new Audio()
 
-            document.querySelector('[aria-label="next page"]').addEventListener("click", instance.startChapter)
+            this.task = new Task()
+            // document.querySelector('[aria-label="next page"]').addEventListener("click", instance.startChapter)
 
         })
 
