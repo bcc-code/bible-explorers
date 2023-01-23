@@ -112,6 +112,7 @@ export default class Program {
     }
 
     nextStep() {
+        console.log('nextStep');
         this.currentStep++
         console.log('nextStep', this.currentStep)
         this.toggleStep()

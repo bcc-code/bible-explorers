@@ -31,8 +31,25 @@ export default class World {
 
         instance = this
 
+        // Wait for resources
+        this.resources.on('ready', () => {
+            this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
+
+            // Setup
+            this.controlRoom = new ControlRoom()
+            this.environment = new Environment()
+            this.points = new Points()
+            this.highlight = new Highlight()
+            this.audio = new Audio()
+
+            document.querySelector('[aria-label="next page"]').addEventListener("click", instance.startChapter)
+
+        })
+
         this.placeholderChapterData()
         this.chapterProgress = () => parseInt(localStorage.getItem(this.getId())) || 0
+
+        this.selectedQuality = this.experience.settings.videoQuality
 
         // Chapters
         this.menu = {
@@ -46,32 +63,10 @@ export default class World {
             home: document.querySelector('[aria-label="Home"]'),
         }
 
-        this.navigation = {
-            prev: document.querySelector('[aria-label="prev page"]'),
-            next: document.querySelector('[aria-label="next page"]')
-        }
-
         this.buttons.home.style.display = 'none'
-
-        this.selectedQuality = this.experience.settings.videoQuality
-
-        // Wait for resources
-        this.resources.on('ready', () => {
-            this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
-
-            // Setup
-            this.controlRoom = new ControlRoom()
-            this.environment = new Environment()
-            this.points = new Points()
-            this.highlight = new Highlight()
-            this.audio = new Audio()
-
-            this.navigation.next.addEventListener('click', this.startChapter)
-
-        })
-
         this.buttons.home.addEventListener("click", this.goHome)
-        this.navigation.prev.addEventListener("click", this.goToWelcomeMessage)
+
+        document.querySelector('[aria-label="prev page"]').addEventListener('click', this.goToWelcomeMessage)
 
         if (window.location.hostname == 'explorers.biblekids.io') {
             instance.buttons.contact.addEventListener('click', function () {
@@ -111,13 +106,13 @@ export default class World {
         if (this.chapterProgress() == 0) {
             // instance.buttons.restart.style.display = 'none'
         } else {
-            instance.buttons.restart.style.display = 'block'
+            // instance.buttons.restart.style.display = 'block'
         }
 
         if (this.chapterProgress() == this.selectedChapter.program.length) {
-            instance.navigation.next.style.display = 'none'
+            document.querySelector('[aria-label="next page"]').disabled = true
         } else {
-            instance.navigation.next.style.display = 'block'
+            document.querySelector('[aria-label="next page"]').disabled = false
         }
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
@@ -186,9 +181,6 @@ export default class World {
         document.querySelector('.lobby').remove()
         instance.resources.fetchApiThenCache(_api.getBiexChapters(), instance.setCategories)
         instance.page.intro()
-
-        instance.navigation.prev.style.display = 'none'
-        instance.navigation.next.style.display = 'none'
     }
 
     setChapters(data) {
@@ -199,6 +191,7 @@ export default class World {
             instance.setChapterHtml(chapter, index)
         })
 
+        document.querySelector('[aria-label="next page"]').disabled = true
         instance.selectChapterListeners()
     }
 
@@ -245,8 +238,6 @@ export default class World {
 
         instance.markChapterIfCompleted(chapter)
         instance.offline.markChapterIfAvailableOffline(chapter)
-
-        instance.navigation.prev.style.display = 'block'
 
         instance.setStatesTooltips()
     }
@@ -344,7 +335,7 @@ export default class World {
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
 
-                instance.navigation.next.disabled = false
+                document.querySelector('[aria-label="next page"]').disabled = false
             })
         })
 
@@ -366,9 +357,8 @@ export default class World {
             })
         })
 
-        instance.navigation.prev.style.display = 'block'
-        instance.navigation.next.style.display = 'block'
-        instance.navigation.next.disabled = true
+
+
     }
 
     setStatesTooltips() {
@@ -553,6 +543,7 @@ export default class World {
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
+
         _appInsights.trackEvent({
             name: "Start chapter",
             properties: {
@@ -570,8 +561,10 @@ export default class World {
         document.querySelector('.lobby').remove()
         document.querySelector('.page').className = 'page page-home'
 
-        instance.navigation.prev.style.display = 'none'
-        instance.navigation.next.style.display = 'none'
+        console.log(instance.program);
+        // 
+        document.querySelector('[aria-label="next page"]').removeEventListener("click", instance.startChapter)
+        document.querySelector('[aria-label="next page"]').addEventListener("click", instance.program.nextStep)
 
     }
 
@@ -619,8 +612,6 @@ export default class World {
         instance.buttons.contact.style.display = 'block'
 
         instance.showActionButtons()
-        instance.navigation.next.disabled = false
-        // instance.experience.world.progressBar.hide()
     }
 
     hideMenu() {
@@ -635,7 +626,6 @@ export default class World {
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
         instance.buttons.home.style.display = 'block'
-        // instance.experience.world.progressBar.show()
 
         if (instance.program.archive.facts.length > 0) {
             instance.program.archive.init()

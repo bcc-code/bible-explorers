@@ -22,8 +22,7 @@ export default class Dialogue {
             </section>`
         )
 
-        const container = document.querySelector('.ui-container')
-        container.append(dialogueBox)
+        document.querySelector('.ui-container').append(dialogueBox)
 
     }
 
@@ -35,6 +34,8 @@ export default class Dialogue {
 
         instance.init()
 
+        document.querySelector('.ui-container').className = 'ui-container dialogue'
+
         const prevCTA = document.querySelector('[aria-label="prev page"]')
         prevCTA.disabled = true
 
@@ -42,7 +43,6 @@ export default class Dialogue {
         nextCTA.disabled = false
         nextCTA.addEventListener("click", () => {
             instance.program.nextStep()
-            console.log('click');
         })
     }
 }
