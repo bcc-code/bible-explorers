@@ -91,8 +91,7 @@ const strings = {
             },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!",
-            "tryAgain": "Try again"
+            "downloadFailed": "There was a problem with downloading the chapter!"
         },
         "tooltips": {
             "video": "Play video",
@@ -126,6 +125,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Play again",
             "reset": "Start over",
             "continue": "Continue the journey",
@@ -219,8 +219,7 @@ const strings = {
             },
             "update": "Oppdater offline-versjonen",
             "redownloadConfirmation": "Er du sikker du vil laste kapitelet på nytt?",
-            "downloadFailed": "Det har oppstått et problem ved nedlastingen av kapitelet!",
-            "tryAgain": "Prøv på nytt"
+            "downloadFailed": "Det har oppstått et problem ved nedlastingen av kapitelet!"
         },
         "tooltips": {
             "video": "Spill av video",
@@ -254,6 +253,7 @@ const strings = {
             "round": "Runde",
             "nextRound": "Neste runde",
             "anotherRound": "Ny runde",
+            "tryAgain": "Prøv på nytt",
             "playAgain": "Spill igjen",
             "reset": "Start spillet på nytt",
             "continue": "Fortsett reisen",
@@ -347,8 +347,7 @@ const strings = {
             },
             "update": "Offline-Version aktualisieren",
             "redownloadConfirmation": "Bist du dir sicher, dass du das Kapitel erneut herunterladen möchtest?",
-            "downloadFailed": "Beim Herunterladen des Kapitels ist ein Problem aufgetreten!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Beim Herunterladen des Kapitels ist ein Problem aufgetreten!"
         },
         "tooltips": {
             "video": "Video abspielen",
@@ -382,6 +381,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
             "continue": "Reise fortsetzen",
@@ -475,8 +475,7 @@ const strings = {
             },
             "update": "Update de offline versie",
             "redownloadConfirmation": "Weet je zeker dat je het hoofdstuk opnieuw wilt downloaden?",
-            "downloadFailed": "Er is een probleem opgestaan met het downloaden van het hoofdstuk!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Er is een probleem opgestaan met het downloaden van het hoofdstuk!"
         },
         "tooltips": {
             "video": "Speel de video af",
@@ -510,6 +509,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
             "continue": "Ga door met de reis",
@@ -603,8 +603,7 @@ const strings = {
             },
             "update": "Mettre à jour la version hors connexion",
             "redownloadConfirmation": "Es-tu certain de vouloir télécharger le chapitre à nouveau ?",
-            "downloadFailed": "Un problème est survenu lors du téléchargement du chapitre !",
-            "tryAgain": "Try again"
+            "downloadFailed": "Un problème est survenu lors du téléchargement du chapitre !"
         },
         "tooltips": {
             "video": "Lire la vidéo",
@@ -638,6 +637,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Rejouer",
             "reset": "Redémarrer le jeu",
             "continue": "Continuer le voyage",
@@ -731,8 +731,7 @@ const strings = {
             },
             "update": "Zaktualizuj wersję offline",
             "redownloadConfirmation": "Czy chcesz na nowo załadować rozdział?",
-            "downloadFailed": "Podczas pobierania rozdziału powstał problem!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Podczas pobierania rozdziału powstał problem!"
         },
         "tooltips": {
             "video": "Odtwórz film",
@@ -766,6 +765,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
@@ -859,8 +859,7 @@ const strings = {
             },
             "update": "Actualizează versiunea offline",
             "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?",
-            "downloadFailed": "A apărut o problemă la descărcarea capitolului!",
-            "tryAgain": "Încearcă din nou"
+            "downloadFailed": "A apărut o problemă la descărcarea capitolului!"
         },
         "tooltips": {
             "video": "Pornește video",
@@ -894,6 +893,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Încearcă din nou",
             "playAgain": "O nouă rundă",
             "reset": "Începe jocul din nou",
             "continue": "Continuă călătoria",
@@ -987,8 +987,7 @@ const strings = {
             },
             "update": "Actualizar la versión sin conexión",
             "redownloadConfirmation": "¿Seguro que quieres descargar el capítulo nuevamente?",
-            "downloadFailed": "¡Ha habido un problema al descargar el capítulo!",
-            "tryAgain": "Try again"
+            "downloadFailed": "¡Ha habido un problema al descargar el capítulo!"
         },
         "tooltips": {
             "video": "Reproducir video",
@@ -1022,6 +1021,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
             "continue": "Continuar el viaje",
@@ -1115,8 +1115,7 @@ const strings = {
             },
             "update": "Atualizar a versão offline",
             "redownloadConfirmation": "Está seguro que deseja recarregar o capítulo?",
-            "downloadFailed": "Ocorreu um problema com o download do capítulo!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Ocorreu um problema com o download do capítulo!"
         },
         "tooltips": {
             "video": "Play video",
@@ -1150,6 +1149,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
             "continue": "Continue a viagem",
@@ -1243,8 +1243,7 @@ const strings = {
             },
             "update": "Aggiorna la versione offline",
             "redownloadConfirmation": "Sei sicuro di voler riscaricare il capitolo?",
-            "downloadFailed": "C'è stato un problema nel download del capitolo!",
-            "tryAgain": "Try again"
+            "downloadFailed": "C'è stato un problema nel download del capitolo!"
         },
         "tooltips": {
             "video": "Riproduci il video",
@@ -1278,6 +1277,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
             "continue": "Continua il tuo viaggio",
@@ -1371,8 +1371,7 @@ const strings = {
             },
             "update": "Обновите офлайн-версию",
             "redownloadConfirmation": "Вы уверены, что хотите повторно скачать главу?",
-            "downloadFailed": "Возникла проблема при попытке скачать главу!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Возникла проблема при попытке скачать главу!"
         },
         "tooltips": {
             "video": "Включить видео",
@@ -1406,6 +1405,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Играть снова",
             "reset": "Начать заново",
             "continue": "Продолжить путешествие",
@@ -1499,8 +1499,7 @@ const strings = {
             },
             "update": "Päivitä offline versio",
             "redownloadConfirmation": "Oletko varma että haluat uudelleen ladata kappaleen?",
-            "downloadFailed": "Kappaleen lataamisessa ilmeni ongelma!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Kappaleen lataamisessa ilmeni ongelma!"
         },
         "tooltips": {
             "video": "Toista video",
@@ -1534,6 +1533,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
             "continue": "Jatka matkaa",
@@ -1627,8 +1627,7 @@ const strings = {
             },
             "update": "Update offline version",
             "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-            "downloadFailed": "There was a problem with downloading the chapter!",
-            "tryAgain": "Try again"
+            "downloadFailed": "There was a problem with downloading the chapter!"
         },
         "tooltips": {
             "video": "Videó lejátszása",
@@ -1662,6 +1661,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Play again",
             "reset": "Újrakezdés",
             "continue": "Utazás folytatása",
@@ -1755,8 +1755,7 @@ const strings = {
             },
             "update": "Opdater offline-version",
             "redownloadConfirmation": "Er du sikker på, at du vil genindlæse kapitlet?",
-            "downloadFailed": "Der har været et problem med at downloade kapitlet!",
-            "tryAgain": "Try again"
+            "downloadFailed": "Der har været et problem med at downloade kapitlet!"
         },
         "tooltips": {
             "video": "Play video",
@@ -1790,6 +1789,7 @@ const strings = {
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
+            "tryAgain": "Try again",
             "playAgain": "Spil igen",
             "reset": "Start spillet forfra",
             "continue": "Fortsæt rejsen",

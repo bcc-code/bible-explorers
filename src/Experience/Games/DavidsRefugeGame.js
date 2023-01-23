@@ -161,25 +161,33 @@ export default class DavidsRefuge {
             document.querySelectorAll('.davidRefuge_box').forEach((goat, index) => {
                 const tooltip = goat.querySelector('.davidRefuge_tooltip')
 
+                // Selected goat
                 if (goat.hasAttribute('data-selected')) {
-                    if (instance.data.characters[index].tells_the_truth)
+                    tooltip.style.width = '330px'
+
+                    if (instance.data.characters[index].tells_the_truth) {
+                        tooltip.innerHTML = `<span style="white-space: normal">${instance.data.correct_character_message}</span>`
                         tooltip.style.top = '-7rem'
 
-                    tooltip.style.width = '330px'
-                    tooltip.innerHTML = instance.data.characters[index].tells_the_truth
-                        ? `<span style="white-space: normal">${instance.data.correct_character_message}</span>`
-                        : `<span style="white-space: normal">${instance.data.wrong_character_message}</span>`
+                        instance.toggleMessage()
+                        next.disabled = false
+                        selectGoat.disabled = true
+                    }
+                    else {
+                        tooltip.innerHTML = `<span style="white-space: normal">${instance.data.wrong_character_message}</span>`
 
-                    return
+                        selectGoat.innerText = _s.miniGames.tryAgain
+                        selectGoat.addEventListener('click', () => {
+                            instance.toggleGame()
+                            instance.toggleGame()
+                        })
+                    }
                 }
-
-                tooltip.remove()
-                gsap.to(goat, { filter: 'grayscale(0.5)', pointerEvents: 'none' })
+                else {
+                    tooltip?.remove()
+                    gsap.to(goat, { filter: 'grayscale(0.5)', pointerEvents: 'none' })
+                }
             })
-
-            selectGoat.disabled = true
-            next.disabled = false
-            instance.toggleMessage()
         })
 
         if (instance.data.hints.length) {

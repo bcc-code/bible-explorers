@@ -284,6 +284,9 @@ export default class Program {
     }
 
     currentVideo() {
+        if (this.currentCheckpoint >= this.programData.length)
+            return null
+
         return this.programData[this.currentCheckpoint].steps[this.currentStep].videoId
     }
 
