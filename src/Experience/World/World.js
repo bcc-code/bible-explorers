@@ -412,7 +412,7 @@ export default class World {
         instance.selectedChapter.episodes.forEach((episode) => {
             const fileName = episode.type + '-' + episode.id
 
-            if (instance.resources.textureItems.hasOwnProperty(fileName))
+            if (instance.resources.videoPlayers.hasOwnProperty(fileName))
                 return
 
             instance.resources.loadEpisodeTextures(fileName)
