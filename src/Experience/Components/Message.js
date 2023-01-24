@@ -10,44 +10,53 @@ export default class Message {
         instance.experience = new Experience()
     }
 
-    init() {
-        const dialogueBox = _gl.elementFromHtml(
-            `<section class="message">
-                <div class="container">
-                    <header class="message-header">
-                        <span>${instance.message.character}</span>
-                    </header>
-                    <div class="content">
-                        ${instance.message.text}
-                    </div>
-                </div>
-            </section>`
-        )
-
-        document.querySelector('.ui-container').append(dialogueBox)
-
-    }
-
-    toggle() {
+    show(text = '', character = '') {
         instance.world = instance.experience.world
         instance.program = instance.world.program
-        instance.data = instance.program.getCurrentStepData()
-        instance.message = instance.data.message
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.message
 
-        instance.init()
-        instance.eventListeners()
+        if (!text) text = instance.data.text
+        if (!character) character = instance.data ? instance.data.character : 'iris'
 
+        instance.setHtml(text, character)
+        instance.setEventListeners()
     }
 
+    setHtml(text, character) {
+        document.querySelector('.ui-container').append(
+            _gl.elementFromHtml(
+                `<section class="message">
+                    <div class="container">
+                        <header class="message-header">
+                            <span>${character}</span>
+                        </header>
+                        <div class="content">
+                            ${text}
+                        </div>
+                    </div>
+                </section>`
+            )
+        )
+    }
 
-    eventListeners() {
+    setEventListeners() {
         const prevCTA = document.querySelector('[aria-label="prev page"]')
         prevCTA.disabled = true
+        prevCTA.addEventListener("click", () => {
+            instance.destroy()
+            instance.program.previousStep()
+        })
 
         const nextCTA = document.querySelector('[aria-label="next page"]')
         nextCTA.disabled = false
         nextCTA.addEventListener("click", () => {
+            instance.destroy()
             instance.program.nextStep()
         })
+    }
+
+    destroy() {
+        document.querySelector('.ui-container > .message')?.remove()
     }
 }

@@ -56,7 +56,6 @@ export default class Program {
         this.message = new Message()
         this.task = new Task()
 
-
         instance = this
 
         instance.gamesData = {
@@ -132,8 +131,7 @@ export default class Program {
         }
 
         else if (this.stepType() == 'iris') {
-            // this.taskDescription.toggleTaskDescription()
-            this.message.toggle()
+            this.message.show()
         }
 
         else if (this.stepType() == 'task') {
@@ -248,7 +246,7 @@ export default class Program {
 
         if (this.stepType() == 'iris') {
             setTimeout(() => {
-                this.message.toggle()
+                this.message.show()
             }, instance.camera.data.moveDuration)
         }
 
@@ -279,7 +277,7 @@ export default class Program {
 
     startAction() {
         if (this.clickedObject == 'tv_16x9_screen') {
-            this.message.toggle()
+            this.message.show()
         }
         else if (this.clickedObject == 'panel_screen') {
             this.video.play()
