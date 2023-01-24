@@ -471,7 +471,7 @@ export default class HeartDefense {
         })
     }
 
-    stopSpriteAnimation() {
+    stopSpriteAnimationOnDoor() {
         if (!instance.spriteAnimation?.isRunning())
             return
 
@@ -523,12 +523,10 @@ export default class HeartDefense {
     }
 
     keyDownHandler(e) {
-        if (instance.experience.gameIsOn == false) return
-
         if (e.keyCode == 32) {
             instance.stats.heartClosed = !instance.stats.heartClosed
             instance.updateDoorStatus()
-            instance.stopSpriteAnimation()
+            instance.stopSpriteAnimationOnDoor()
         }
     }
 
@@ -574,9 +572,10 @@ export default class HeartDefense {
         instance.stats.level++
         instance.stats.points = 0
 
-        instance.modal = new Modal(html, 'modal__congrats')
+        document.removeEventListener('keydown', instance.keyDownHandler)
 
         // Add event listeners
+        instance.modal = new Modal(html, 'modal__congrats')
         const modal = document.querySelector('.modal__congrats')
 
         const next = modal.querySelector('#continue')
@@ -634,10 +633,10 @@ export default class HeartDefense {
         instance.stats.lives = instance.config.maxLives
         instance.stats.level = 1
 
-        instance.modal = new Modal(html, 'modal__congrats')
+        document.removeEventListener('keydown', instance.keyDownHandler)
 
         // Add event listeners
-
+        instance.modal = new Modal(html, 'modal__congrats')
         const modal = document.querySelector('.modal__congrats')
 
         const restart = modal.querySelector('#restart')
@@ -661,6 +660,7 @@ export default class HeartDefense {
     }
 
     destroy() {
+        document.removeEventListener('keydown', instance.keyDownHandler)
         window.removeEventListener('resize', instance.updateStageDimension)
         instance.modal.destroy()
         instance.layer.destroy()
