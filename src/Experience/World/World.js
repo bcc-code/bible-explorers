@@ -16,11 +16,11 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
-import Task from '../Components/Task.js'
 
 let instance = null
 export default class World {
     constructor() {
+        instance = this
         this.offline = new Offline()
         this.experience = new Experience()
         this.sizes = this.experience.sizes
@@ -29,8 +29,6 @@ export default class World {
         this.resources = this.experience.resources
         this.debug = this.experience.debug
         this.page = this.experience.page
-
-        instance = this
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -42,7 +40,6 @@ export default class World {
             this.points = new Points()
             this.highlight = new Highlight()
             this.audio = new Audio()
-            this.task = new Task()
         })
 
         this.placeholderChapterData()
@@ -64,8 +61,6 @@ export default class World {
 
         this.buttons.home.style.display = 'none'
         this.buttons.home.addEventListener("click", this.goHome)
-
-        document.querySelector('[aria-label="prev page"]').addEventListener('click', this.goToWelcomeMessage)
 
         if (window.location.hostname == 'explorers.biblekids.io') {
             instance.buttons.contact.addEventListener('click', () => {
@@ -148,6 +143,7 @@ export default class World {
                 instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
 
                 instance.audio.changeBgMusic()
+                instance.experience.navigation.prev.addEventListener('click', instance.goToWelcomeMessage)
 
                 tippy('[aria-label="Preview chapter"]', {
                     theme: 'explorers',
@@ -511,6 +507,7 @@ export default class World {
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
+        instance.removeLobbyEventListeners()
 
         _appInsights.trackEvent({
             name: "Start chapter",
@@ -523,13 +520,11 @@ export default class World {
         })
 
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
-            // document.documentElement.requestFullscreen()
+            document.documentElement.requestFullscreen()
         }
 
         document.querySelector('.lobby').remove()
         document.querySelector('.page').className = 'page page-home'
-
-        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     previewChapter() {
@@ -537,18 +532,22 @@ export default class World {
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
         instance.debug.addQuickLookMode()
+        instance.removeLobbyEventListeners()
 
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
             document.documentElement.requestFullscreen()
         }
-
-        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     restartChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
         localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
         instance.startChapter()
+    }
+
+    removeLobbyEventListeners() {
+        instance.experience.navigation.prev.removeEventListener('click', instance.goToWelcomeMessage)
+        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     finishJourney() {

@@ -43,7 +43,6 @@ export default class Dialogue {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.disabled = false
         instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
         instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
 

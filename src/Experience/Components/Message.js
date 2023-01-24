@@ -43,10 +43,7 @@ export default class Message {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.disabled = true
         instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
-
-        instance.experience.navigation.next.disabled = false
         instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
     }
 

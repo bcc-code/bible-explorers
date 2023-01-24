@@ -203,10 +203,6 @@ export default class Resources extends EventEmitter {
     }
 
     async streamFromBtv(videoName) {
-        await resources.loadEpisodeFromBtv(videoName)
-    }
-
-    async loadEpisodeFromBtv(videoName) {
         const episodeId = videoName.replace('episode-', '')
         let locale = _lang.getLanguageCode()
         locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes

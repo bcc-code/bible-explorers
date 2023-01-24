@@ -6,18 +6,12 @@ import PictureAndCode from '../Extras/PictureAndCode.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Questions from '../Extras/Questions.js'
 import Video from '../Extras/Video.js'
-import SortingGame from '../Games/SortingGame.js'
-import CableConnectorGame from '../Games/CableConnectorGame.js'
-import SimonSaysGame from '../Games/SimonSaysGame.js'
 import Quiz from '../Extras/Quiz.js'
 import Congrats from '../Extras/Congrats.js'
-import FlipCards from "../Games/FlipCards.js"
-import HeartDefense from '../Games/HeartDefense.js'
-import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
-import Task from '../Components/Task.js'
+import GameDescription from '../Components/GameDescription.js'
 
 let instance = null
 
@@ -43,18 +37,12 @@ export default class Program {
         this.pictureAndCode = new PictureAndCode()
         this.questionAndCode = new QuestionAndCode()
         this.questions = new Questions()
-        this.sortingGame = new SortingGame()
-        this.cableConnectorGame = new CableConnectorGame()
-        this.simonSays = new SimonSaysGame()
         this.quiz = new Quiz()
         this.congrats = new Congrats()
-        this.flipCards = new FlipCards()
-        this.heartDefense = new HeartDefense()
-        this.davidsRefuge = new DavidsRefuge()
         this.pause = new Pause()
         this.dialogue = new Dialogue()
         this.message = new Message()
-        this.task = new Task()
+        this.gameDescription = new GameDescription()
 
         instance = this
 
@@ -94,6 +82,7 @@ export default class Program {
             !document.body.classList.contains('camera-is-moving')
 
         this.startInteractivity()
+        this.updateCameraForCurrentStep()
     }
 
     control(currentIntersect) {
@@ -125,10 +114,13 @@ export default class Program {
         console.log("steptype", this.stepType())
         console.log("tasktype", this.taskType())
 
+        this.updateCameraForCurrentStep()
+
         if (this.currentStep == this.getCurrentCheckpointData().steps.length) {
             console.log('currentStep', 0)
             this.currentStep = 0
             this.advance()
+            instance.experience.navigation.prev.disabled = true
         }
 
         else if (this.stepType() == 'iris') {
@@ -152,32 +144,19 @@ export default class Program {
                 this.questions.toggleQuestions()
             }
 
-            else if (this.taskType() == 'cables') {
-                this.cableConnectorGame.toggleCableConnector()
-            }
-
-            else if (this.taskType() == 'sorting') {
-                this.sortingGame.toggleSortingGame()
-            }
-
-            else if (this.taskType() == 'simon_says') {
-                this.simonSays.toggleSimonSays()
-            }
-
             else if (this.taskType() == 'dialog') {
                 this.dialogue.toggle()
             }
 
-            else if (this.taskType() == 'flip_cards') {
-                this.flipCards.toggleGame()
-            }
-
-            else if (this.taskType() == 'heart_defense') {
-                this.heartDefense.toggleGame()
-            }
-
-            else if (this.taskType() == 'davids_refuge') {
-                this.davidsRefuge.toggleGame()
+            // Games
+            else if (this.taskType() == 'cables' 
+                || this.taskType() == 'sorting'
+                || this.taskType() == 'simon_says'
+                || this.taskType() == 'flip_cards'
+                || this.taskType() == 'heart_defense'
+                || this.taskType() == 'davids_refuge'
+            ) {
+                this.gameDescription.show()
             }
         }
 
@@ -215,17 +194,6 @@ export default class Program {
         this.points.fadeOut()
         this.highlight.fadeOut()
 
-        this.camera.updateCameraTo(this.currentLocation(), () => {
-            instance.points.add(this.interactiveObjects()[0], instance.stepType())
-            instance.highlight.add(this.interactiveObjects()[0])
-
-            document.addEventListener('click', (event) => {
-                if (event.target.classList.contains('label')) {
-                    this.control(instance.points.currentLabel)
-                }
-            })
-        })
-
         if (this.stepType() == 'video') {
             setTimeout(function () {
                 instance.video.load(currentVideo)
@@ -256,6 +224,19 @@ export default class Program {
                 this.pause.togglePause()
             }, instance.camera.data.moveDuration)
         }
+    }
+
+    updateCameraForCurrentStep() {
+        this.camera.updateCameraTo(this.currentLocation(), () => {
+            instance.points.add(this.interactiveObjects()[0], instance.stepType())
+            instance.highlight.add(this.interactiveObjects()[0])
+
+            document.addEventListener('click', (event) => {
+                if (event.target.classList.contains('label')) {
+                    this.control(instance.points.currentLabel)
+                }
+            })
+        })
     }
 
     objectIsClickable() {
