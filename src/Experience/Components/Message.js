@@ -11,6 +11,7 @@ export default class Message {
     }
 
     show(text = '', character = '') {
+        instance.destroy()
         instance.world = instance.experience.world
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
