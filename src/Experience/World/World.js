@@ -42,10 +42,7 @@ export default class World {
             this.points = new Points()
             this.highlight = new Highlight()
             this.audio = new Audio()
-
             this.task = new Task()
-            // document.querySelector('[aria-label="next page"]').addEventListener("click", instance.startChapter)
-
         })
 
         this.placeholderChapterData()
@@ -57,12 +54,12 @@ export default class World {
         this.menu = {
             categories: document.querySelector(".categories.list"),
             chapters: document.querySelector(".chapters"),
-            chaptersData: [],
+            chaptersData: []
         }
 
         this.buttons = {
             contact: document.querySelector('[aria-label="Contact"]'),
-            home: document.querySelector('[aria-label="Home"]'),
+            home: document.querySelector('[aria-label="Home"]')
         }
 
         this.buttons.home.style.display = 'none'
@@ -71,13 +68,12 @@ export default class World {
         document.querySelector('[aria-label="prev page"]').addEventListener('click', this.goToWelcomeMessage)
 
         if (window.location.hostname == 'explorers.biblekids.io') {
-            instance.buttons.contact.addEventListener('click', function () {
+            instance.buttons.contact.addEventListener('click', () => {
                 document.getElementById('deskWidgetMain').classList.toggle('widget-open')
                 instance.buttons.contact.toggleAttribute('is-open')
             })
         }
     }
-
 
     placeholderChapterData() {
         instance.selectedChapter = {
@@ -111,11 +107,7 @@ export default class World {
             // instance.buttons.restart.style.display = 'block'
         }
 
-        if (this.chapterProgress() == this.selectedChapter.program.length) {
-            document.querySelector('[aria-label="next page"]').disabled = true
-        } else {
-            document.querySelector('[aria-label="next page"]').disabled = false
-        }
+        instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length
 
         if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
             // instance.buttons.start.innerText = _s.journey.continue
@@ -135,9 +127,6 @@ export default class World {
         }
 
         instance.selectCategoryListeners()
-
-
-
     }
 
     addNotAvailableInYourLanguageMessage() {
@@ -155,7 +144,6 @@ export default class World {
     selectCategoryListeners() {
         document.querySelectorAll(".category").forEach(function (category) {
             category.addEventListener("click", () => {
-
                 const categorySlug = category.getAttribute('data-slug')
                 instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
 
@@ -168,11 +156,8 @@ export default class World {
                     animation: 'shift-away',
                     arrow: false
                 })
-
-
             })
         })
-
     }
 
     goToWelcomeMessage() {
@@ -193,7 +178,7 @@ export default class World {
             instance.setChapterHtml(chapter, index)
         })
 
-        document.querySelector('[aria-label="next page"]').disabled = true
+        instance.experience.navigation.next.disabled = true
         instance.selectChapterListeners()
     }
 
@@ -231,7 +216,7 @@ export default class World {
                     <span>${_s.offline.availableOffline.title}</span>
                 </div>
             </div>
-            `
+        `
 
         const chapters = document.querySelector('.chapters')
         chapters.appendChild(chapterHtml)
@@ -243,7 +228,6 @@ export default class World {
 
         instance.setStatesTooltips()
     }
-
 
     setDescriptionHtml() {
         let chapter = instance.selectedChapter
@@ -289,7 +273,6 @@ export default class World {
         const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
         details.append(description)
 
-
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
 
             const info = _gl.elementFromHtml(`
@@ -308,26 +291,24 @@ export default class World {
         }
 
         document.querySelector('.lobby').append(details)
+        document.querySelector('.chapters').classList.add('chapter-selected')
 
         const previewBtn = document.querySelector('[aria-label="Preview chapter"]')
         previewBtn.addEventListener("click", instance.previewChapter)
 
-        document.querySelector('.chapters').classList.add('chapter-selected')
+        instance.experience.navigation.next.addEventListener("click", instance.startChapter)
     }
-
 
     removeDescriptionHtml() {
         document.querySelector('.chapters').classList.remove('chapter-selected')
 
         if (document.querySelector('.chapter-details'))
             document.querySelector('.chapter-details').remove()
-
     }
 
     selectChapterListeners() {
         document.querySelectorAll(".chapter:not(.locked), body.ak_leder .chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
-
                 if (document.querySelector('.chapter-details'))
                     document.querySelector('.chapter-details').remove()
 
@@ -337,7 +318,7 @@ export default class World {
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
 
-                document.querySelector('[aria-label="next page"]').disabled = false
+                instance.experience.navigation.next.disabled = false
             })
         })
 
@@ -358,9 +339,6 @@ export default class World {
                 event.stopPropagation()
             })
         })
-
-
-
     }
 
     setStatesTooltips() {
@@ -545,7 +523,6 @@ export default class World {
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
-
         _appInsights.trackEvent({
             name: "Start chapter",
             properties: {
@@ -563,11 +540,7 @@ export default class World {
         document.querySelector('.lobby').remove()
         document.querySelector('.page').className = 'page page-home'
 
-        console.log(instance.program);
-        // 
-        document.querySelector('[aria-label="next page"]').removeEventListener("click", instance.startChapter)
-        document.querySelector('[aria-label="next page"]').addEventListener("click", instance.program.nextStep)
-
+        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     previewChapter() {
@@ -579,6 +552,8 @@ export default class World {
         if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
             document.documentElement.requestFullscreen()
         }
+
+        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     restartChapter() {

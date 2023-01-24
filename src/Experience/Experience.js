@@ -15,7 +15,6 @@ import Page from './Components/Page.js'
 let instance = null
 
 export default class Experience {
-
     constructor(canvas) {
         // Singleton
         if (instance)
@@ -65,6 +64,11 @@ export default class Experience {
             if (this.videoIsPlaying == false && this.gameIsOn == false)
                 this.update()
         })
+
+        this.navigation = {
+            prev: document.querySelector('[aria-label="prev page"]'),
+            next: document.querySelector('[aria-label="next page"]')
+        }
     }
 
     resize() {

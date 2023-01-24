@@ -43,18 +43,9 @@ export default class Dialogue {
     }
 
     setEventListeners() {
-        const prevCTA = document.querySelector('[aria-label="prev page"]')
-        prevCTA.disabled = false
-        prevCTA.addEventListener("click", () => {
-            instance.destroy()
-            instance.program.previousStep()
-        })
-
-        const nextCTA = document.querySelector('[aria-label="next page"]')
-        nextCTA.addEventListener("click", () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        instance.experience.navigation.prev.disabled = false
+        instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
+        instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
 
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
@@ -72,8 +63,24 @@ export default class Dialogue {
         })
     }
 
+    prevListeners() {
+        instance.destroy()
+        instance.program.previousStep()
+    }
+
+    nextListeners() {
+        instance.destroy()
+        instance.program.nextStep()
+    }
+
+    removeEventListeners() {
+        instance.experience.navigation.prev.removeEventListener("click", instance.prevListeners)
+        instance.experience.navigation.next.removeEventListener("click", instance.nextListeners)
+    }
+
     destroy() {
         instance.message.destroy()
         document.querySelector('.dialogue')?.remove()
+        instance.removeEventListeners()
     }
 }

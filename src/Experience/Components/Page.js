@@ -7,11 +7,8 @@ let instance = null
 
 export default class Page {
     constructor() {
-
         instance = this
         instance.experience = new Experience()
-
-
     }
 
     loader() {
@@ -26,7 +23,8 @@ export default class Page {
                         <span class="dot"></span>
                     </div>
                 </div>
-            </section>`)
+            </section>
+        `)
 
         document.querySelector('.page').className = 'page page-loader'
         document.querySelector('.page .container').append(pageLoader)
@@ -43,15 +41,11 @@ export default class Page {
         document.querySelector('.page').className = 'page page-intro'
         document.querySelector('.page .container').append(intro)
 
-        const prevCTA = document.querySelector('[aria-label="prev page"]')
-        const nextCTA = document.querySelector('[aria-label="next page"]')
-
-        prevCTA.style.display = 'none'
-        nextCTA.style.display = 'none'
+        instance.experience.navigation.prev.style.display = 'none'
+        instance.experience.navigation.next.style.display = 'none'
     }
 
     lobby() {
-
         const lobby = _gl.elementFromHtml(`
             <section class="lobby">
                 <section class="chapters"></section>
@@ -60,13 +54,7 @@ export default class Page {
         document.querySelector('.page').className = 'page page-lobby'
         document.querySelector('.page .container').append(lobby)
 
-        const prevCTA = document.querySelector('[aria-label="prev page"]')
-        const nextCTA = document.querySelector('[aria-label="next page"]')
-
-        prevCTA.style.display = 'block'
-        nextCTA.style.display = 'block'
+        instance.experience.navigation.prev.style.display = 'block'
+        instance.experience.navigation.next.style.display = 'block'
     }
-
 }
-
-

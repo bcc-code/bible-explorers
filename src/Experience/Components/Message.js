@@ -8,6 +8,7 @@ export default class Message {
     constructor() {
         instance = this
         instance.experience = new Experience()
+        instance.navigation = instance.experience.navigation
     }
 
     show(text = '', character = '') {
@@ -42,22 +43,30 @@ export default class Message {
     }
 
     setEventListeners() {
-        const prevCTA = document.querySelector('[aria-label="prev page"]')
-        prevCTA.disabled = true
-        prevCTA.addEventListener("click", () => {
-            instance.destroy()
-            instance.program.previousStep()
-        })
+        instance.experience.navigation.prev.disabled = true
+        instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
 
-        const nextCTA = document.querySelector('[aria-label="next page"]')
-        nextCTA.disabled = false
-        nextCTA.addEventListener("click", () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        instance.experience.navigation.next.disabled = false
+        instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
+    }
+
+    prevListeners() {
+        instance.destroy()
+        instance.program.previousStep()
+    }
+
+    nextListeners() {
+        instance.destroy()
+        instance.program.nextStep()
+    }
+
+    removeEventListeners() {
+        instance.experience.navigation.prev.removeEventListener("click", instance.prevListeners)
+        instance.experience.navigation.next.removeEventListener("click", instance.nextListeners)
     }
 
     destroy() {
         document.querySelector('.ui-container > .message')?.remove()
+        instance.removeEventListeners()
     }
 }
