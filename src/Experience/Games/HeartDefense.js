@@ -182,6 +182,7 @@ export default class HeartDefense {
             x: instance.center.x,
             y: instance.center.y
         })
+        instance.layer.on('touchstart click', instance.openCloseDoor)
         instance.layer.add(doorGroup)
         instance.layer.findOne('#door').zIndex(1)
 
@@ -523,11 +524,14 @@ export default class HeartDefense {
     }
 
     keyDownHandler(e) {
-        if (e.keyCode == 32) {
-            instance.stats.heartClosed = !instance.stats.heartClosed
-            instance.updateDoorStatus()
-            instance.stopSpriteAnimationOnDoor()
-        }
+        if (e.keyCode == 32)
+            instance.openCloseDoor()
+    }
+
+    openCloseDoor() {
+        instance.stats.heartClosed = !instance.stats.heartClosed
+        instance.updateDoorStatus()
+        instance.stopSpriteAnimationOnDoor()
     }
 
     updateStageDimension() {
