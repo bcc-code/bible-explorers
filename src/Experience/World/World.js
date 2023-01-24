@@ -222,10 +222,7 @@ export default class World {
         chapters.appendChild(chapterHtml)
 
         instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
-
-        instance.markChapterIfCompleted(chapter)
         instance.offline.markChapterIfAvailableOffline(chapter)
-
         instance.setStatesTooltips()
     }
 
@@ -274,7 +271,6 @@ export default class World {
         details.append(description)
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-
             const info = _gl.elementFromHtml(`
                 <div class="info">
                     <div><i class="icon-film-solid"></i><span>${numberOfEpisodes} films</span></div>
@@ -361,13 +357,6 @@ export default class World {
 
     setChapterBgImage(chapter) {
         document.querySelector('.chapter[data-id="' + chapter.id + '"]').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
-    }
-
-    markChapterIfCompleted(chapter) {
-        const chapterProgress = localStorage.getItem("progress-theme-" + chapter.id) || 0
-
-        if (chapterProgress == chapter.program.length && chapterProgress > 0)
-            document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('completed')
     }
 
     confirmRedownload(event) {
