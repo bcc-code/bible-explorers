@@ -35,7 +35,6 @@ export default class Chapter3Game2 {
                     card.image_back,
                     card.sound_effect
                 ))
-
             })
 
             gameWrapper.append(cardWrapper)
@@ -145,7 +144,6 @@ export default class Chapter3Game2 {
             })
 
             document.addEventListener('click', (event) => {
-
                 if (event.target.hasAttribute('card-select')) {
                     document.getElementById('cardWrapper').classList.remove('cardSelection')
                     document.getElementById('cardWrapper').classList.add('cardChoosed')
