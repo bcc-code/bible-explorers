@@ -168,8 +168,8 @@ export default class Camera {
             cameraLookAt: lookAt
         }
 
-        if (!this.debug.developer)
-            this.setDefaultAngleControls()
+        // if (!this.debug.developer)
+        //     this.setDefaultAngleControls()
 
         this.updateCameraTween = new TWEEN.Tween(from)
             .to(to, duration)
@@ -187,12 +187,12 @@ export default class Camera {
                 )
             })
             .onComplete(() => {
-                if (controls && !this.debug.developer) {
-                    camera.controls.minPolarAngle = controls.minPolarAngle
-                    camera.controls.maxPolarAngle = controls.maxPolarAngle
-                    camera.controls.minAzimuthAngle = controls.minAzimuthAngle
-                    camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
-                }
+                // if (controls && !this.debug.developer) {
+                //     camera.controls.minPolarAngle = controls.minPolarAngle
+                //     camera.controls.maxPolarAngle = controls.maxPolarAngle
+                //     camera.controls.minAzimuthAngle = controls.minAzimuthAngle
+                //     camera.controls.maxAzimuthAngle = controls.maxAzimuthAngle
+                // }
                 callback()
                 document.body.classList.remove('camera-is-moving')
             })
