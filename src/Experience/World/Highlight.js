@@ -12,18 +12,18 @@ export default class Highlight {
         // Setup
         this.currentHighlight = null
         this.clickableObjects = this.world.controlRoom.clickableObjects
-        this.tv_16x9_frame = this.world.controlRoom.tv_16x9_frame
-        this.tv_16x10_frame = this.world.controlRoom.tv_16x10_frame
+        this.tv_16x9 = this.world.controlRoom.tv_16x9
+        this.tv_16x10 = this.world.controlRoom.tv_16x10
     }
 
     add(name) {
         this.remove()
 
         if (name == 'tv_16x9_screen') {
-            this.set(this.tv_16x9_frame)
+            this.set(this.tv_16x9)
             this.pulse()
         } else if (name == 'tv_16x10_screen') {
-            this.set(this.tv_16x10_frame)
+            this.set(this.tv_16x10)
             this.pulse()
         } else {
             this.clickableObjects.filter(child => {
