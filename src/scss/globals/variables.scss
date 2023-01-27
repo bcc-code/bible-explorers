@@ -6,11 +6,6 @@ $gradient: linear-gradient(90deg, $dark, $primary);
 $gradient2: linear-gradient(90deg, #C5516E, #EB9159);
 $gradient-with-opacity: linear-gradient(90deg, rgba(19, 26, 67, 1), rgba(62, 48, 109, .95));
 
-$radius: 12px;
-
-$primary-font: "Archivo", sans-serif;
-$secondary-font: 'PT Sans', sans-serif;
-
 :root {
 
     --clr-primary: #0396e3;
@@ -20,7 +15,7 @@ $secondary-font: 'PT Sans', sans-serif;
 
     --gradient-dark: linear-gradient(90deg, var(--clr-dark), var(--clr-background));
 
-    --ff-primary: 'Play', sans-serif;
+    --ff-primary: 'Source Sans Pro', sans-serif;
 
     --app-padding: 1rem;
     --app-border-size: 0.25rem;
