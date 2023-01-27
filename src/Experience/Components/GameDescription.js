@@ -51,7 +51,7 @@ export default class Task {
                             <header class="game-header">
                                 <h2>${instance.data.title}</h2>
                             </header>
-                            <div class="game-tutorial" style="width:100%; height:0; padding-bottom:56%; position:relative;">
+                            <div class="game-tutorial">
                                 ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
                             </div>
                             <div class="game-description">
@@ -68,7 +68,7 @@ export default class Task {
         instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
         instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
     }
-    
+
     prevListeners() {
         instance.destroy()
         instance.program.previousStep()
@@ -104,7 +104,7 @@ export default class Task {
             this.davidsRefuge.toggleGame()
         }
     }
-    
+
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
