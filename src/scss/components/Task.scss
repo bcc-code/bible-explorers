@@ -6,6 +6,7 @@
         bottom: 5rem;
         padding: var(--app-padding);
         width: clamp(300px, calc(100vw - var(--app-padding)), 40vw);
+        pointer-events: all;
 
         display: flex;
         flex-flow: column nowrap;
@@ -25,25 +26,27 @@
         }
     }
 
-    &-header {
+    .game-header {
 
         h2 {
             color: #fff;
         }
     }
 
-    &-image {
+    .game-image {
+        aspect-ratio: 16/9;
 
         img {
             width: 100%;
             display: block;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            object-position: top center;
         }
     }
 
-    &-description {
+    .game-tutorial {
+        aspect-ratio: 16/9;
+    }
+
+    .game-description {
         color: #fff;
         line-height: 1.5;
 

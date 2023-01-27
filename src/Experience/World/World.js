@@ -85,6 +85,7 @@ export default class World {
         instance.audio.playWhoosh()
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()
+
         // instance.experience.world.progressBar.show()
 
         if (document.querySelector('.archive'))
@@ -245,7 +246,9 @@ export default class World {
                 <header>
                     <h2>${chapter.title}</h2>
                     <button class="btn default with-icon next" aria-label="Preview chapter">
-                        <div class="icon-eye-solid"></div>
+                        <svg class="preview-icon icon" width="28" height="22" viewBox="0 0 28 22">
+                            <use href="#preview"></use>
+                        </svg>
                         <span>Preview</span>
                     </button>
                 </header>
@@ -523,7 +526,6 @@ export default class World {
             document.documentElement.requestFullscreen()
         }
 
-        document.querySelector('.lobby').remove()
         document.querySelector('.page').className = 'page page-home'
     }
 
@@ -574,7 +576,7 @@ export default class World {
 
         instance.points.delete()
         instance.buttons.home.style.display = 'none'
-        instance.buttons.contact.style.display = 'block'
+        instance.buttons.contact.style.display = 'flex'
 
         instance.showActionButtons()
     }
@@ -590,7 +592,7 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        instance.buttons.home.style.display = 'block'
+        instance.buttons.home.style.display = 'flex'
 
         if (instance.program.archive.facts.length > 0) {
             instance.program.archive.init()

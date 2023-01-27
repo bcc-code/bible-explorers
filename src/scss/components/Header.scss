@@ -64,33 +64,33 @@
 }
 
 button[aria-label="Background music"] {
-    .icon-volume-solid {
+    .sound-on {
         display: none;
     }
 
 
     &[is-playing] {
-        .icon-volume-solid {
+        .sound-on {
             display: block;
         }
 
-        .icon-volume-slash-solid {
+        .sound-off {
             display: none;
         }
     }
 }
 
 button[aria-label="Contact"] {
-    .icon-xmark-solid {
+    .close-icon {
         display: none;
     }
 
     &[is-open] {
-        .icon-xmark-solid {
+        .close-icon {
             display: block;
         }
 
-        .icon-message-lines-solid {
+        .chat-icon {
             display: none;
         }
     }
