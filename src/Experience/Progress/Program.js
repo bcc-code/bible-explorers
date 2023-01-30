@@ -83,6 +83,9 @@ export default class Program {
 
         this.startInteractivity()
         this.updateCameraForCurrentStep()
+
+        // Disable prev on first step
+        instance.experience.navigation.prev.disabled = this.currentStep == 0
     }
 
     control(currentIntersect) {
@@ -96,15 +99,12 @@ export default class Program {
     }
 
     previousStep() {
-        if (this.currentStep == 0) return
-
         this.currentStep--
         console.log('previousStep', this.currentStep)
         this.toggleStep()
     }
 
     nextStep() {
-        console.log('nextStep');
         this.currentStep++
         console.log('nextStep', this.currentStep)
         this.toggleStep()
@@ -114,7 +114,8 @@ export default class Program {
         console.log("steptype", this.stepType())
         console.log("tasktype", this.taskType())
 
-        this.updateCameraForCurrentStep()
+        // Disable prev on first step
+        instance.experience.navigation.prev.disabled = this.currentStep == 0
 
         if (this.currentStep == this.getCurrentCheckpointData().steps.length) {
             console.log('currentStep', 0)
@@ -174,7 +175,6 @@ export default class Program {
         this.world.progressBar.refresh()
         this.startInteractivity()
 
-        console.log('advance', checkpoint);
     }
 
     updateCurrentCheckpoint(newCheckpoint) {
