@@ -46,7 +46,7 @@ export default class Task {
 
     setHtml() {
         const startGame = _gl.elementFromHtml(`
-            <button class="btn default text">${_s.miniGames.startGame}</button>
+            <button class="btn default next pulsate">${_s.miniGames.startGame}</button>
         `)
         startGame.addEventListener('click', instance.startGame)
 
