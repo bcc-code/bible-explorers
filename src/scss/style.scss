@@ -17,6 +17,7 @@
 @import "./components/Message.scss";
 @import "./components/Dialogue.scss";
 @import "./components/Task.scss";
+@import "./components/Game.scss";
 
 
 .webgl {
@@ -44,7 +45,6 @@
     }
 
 }
-
 
 .categories {
     position: relative;
@@ -121,26 +121,8 @@
 
 .highlight-circle {
     position: absolute;
-    left: -1.5rem;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    width: 1rem;
-    height: 1rem;
     pointer-events: none;
     @include pulsate()
-}
-
-.highlight-label {
-    position: absolute;
-    top: 0;
-    color: #fff;
-    background: var(--clr-background);
-    padding: 0.25rem 0.5rem;
-    border: 0.25rem solid var(--clr-primary);
-    border-radius: 0.5rem;
-    transition: var(--transition-duration) opacity var(--transition-timing);
-    opacity: 0;
-    cursor: pointer;
 }
 
 .fade-in {
@@ -850,8 +832,6 @@
 }
 
 .congrats {
-    position: relative;
-    width: 100%;
 
     &__container {
         position: relative;
