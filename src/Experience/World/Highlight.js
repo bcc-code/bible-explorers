@@ -54,7 +54,7 @@ export default class Highlight {
             this.outline.position.z = -0.03
         }
 
-        if (object.name === "panel_screen") {
+        if (object.name === "Screen") {
             this.outline.visible = false
         }
     }

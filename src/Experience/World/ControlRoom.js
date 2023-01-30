@@ -78,7 +78,6 @@ export default class ControlRoom {
             child.material.map.encoding = THREE.sRGBEncoding
         })
 
-
         this.screenObjects.forEach(child => {
             if (child.name === 'tv_4x4_screen') {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.items.screen_default })
@@ -96,9 +95,8 @@ export default class ControlRoom {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['iris'].item })
             }
 
-            if (child.name === "panel_screen") {
+            if (child.name === "Screen") {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['hud'].item })
-                child.scale.z = -1
                 child.material.map.image.pause()
             }
 

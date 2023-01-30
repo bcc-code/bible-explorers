@@ -149,7 +149,7 @@ export default class Program {
             }
 
             // Games
-            else if (this.taskType() == 'cables' 
+            else if (this.taskType() == 'cables'
                 || this.taskType() == 'sorting'
                 || this.taskType() == 'simon_says'
                 || this.taskType() == 'flip_cards'
@@ -248,7 +248,7 @@ export default class Program {
         let interactiveObjects = []
 
         if (this.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat(["panel_screen"])
+            interactiveObjects = interactiveObjects.concat(["Screen"])
         }
         else if (this.stepType() == 'iris' || this.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
@@ -261,7 +261,7 @@ export default class Program {
         if (this.clickedObject == 'tv_16x9_screen') {
             this.message.show()
         }
-        else if (this.clickedObject == 'panel_screen') {
+        else if (this.clickedObject == 'Screen') {
             this.video.play()
         }
     }
