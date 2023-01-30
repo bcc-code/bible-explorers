@@ -30,7 +30,7 @@ export default class Page {
         document.querySelector('.page .container').append(pageLoader)
     }
 
-    intro() {
+    createIntro() {
         const intro = _gl.elementFromHtml(`
             <section class="intro">
                 <p>${_s.conceptDescription}</p>
@@ -45,7 +45,11 @@ export default class Page {
         instance.experience.navigation.next.style.display = 'none'
     }
 
-    lobby() {
+    removeIntro() {
+        document.querySelector('.intro')?.remove()
+    }
+
+    createLobby() {
         const lobby = _gl.elementFromHtml(`
             <section class="lobby">
                 <section class="chapters"></section>
@@ -56,5 +60,14 @@ export default class Page {
 
         instance.experience.navigation.prev.style.display = 'block'
         instance.experience.navigation.next.style.display = 'block'
+    }
+
+    removeLobby() {
+        document.querySelector('.lobby')?.remove()
+    }
+
+    removeLobbyEventListeners() {
+        instance.experience.navigation.prev.removeEventListener('click', instance.showIntro)
+        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 }

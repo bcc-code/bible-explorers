@@ -32,6 +32,7 @@ export default class World {
 
         // Wait for resources
         this.resources.on('ready', () => {
+            this.page.createIntro()
             this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
 
             // Setup
@@ -77,39 +78,22 @@ export default class World {
             data: null
         }
     }
+    
+    showIntro() {
+        instance.placeholderChapterData()
+        instance.removeDescriptionHtml()
+        instance.page.removeLobby()
+        instance.page.createIntro()
 
-    goHome() {
-        instance.showMenu()
-        instance.program.video.defocus()
-        instance.camera.updateCameraTo()
-        instance.audio.playWhoosh()
-        instance.audio.changeBgMusic()
-        instance.debug.removeQuickLookMode()
-
-        // instance.experience.world.progressBar.show()
-
-        if (document.querySelector('.archive'))
-            instance.program.archive.remove()
-
-        if (!instance.experience.settings.fullScreen) {
-            // document.exitFullscreen()
-        }
+        !instance.menu.chaptersData
+            ? instance.resources.fetchApiThenCache(_api.getBiexChapters(), instance.setCategories)
+            : instance.setCategories(instance.menu.chaptersData)
     }
 
-    showActionButtons() {
-        if (this.chapterProgress() == 0) {
-            // instance.buttons.restart.style.display = 'none'
-        } else {
-            // instance.buttons.restart.style.display = 'block'
-        }
-
-        instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length
-
-        if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
-            // instance.buttons.start.innerText = _s.journey.continue
-        } else {
-            // instance.buttons.start.innerText = _s.journey.start
-        }
+    showLobby() {
+        instance.page.removeIntro()
+        instance.page.createLobby()
+        instance.setChapters()
     }
 
     setCategories(result) {
@@ -141,10 +125,11 @@ export default class World {
         document.querySelectorAll(".category").forEach(function (category) {
             category.addEventListener("click", () => {
                 const categorySlug = category.getAttribute('data-slug')
-                instance.setChapters(instance.menu.chaptersData[categorySlug]['chapters'])
+                instance.selectedCategory = categorySlug
+                instance.showLobby()
 
                 instance.audio.changeBgMusic()
-                instance.experience.navigation.prev.addEventListener('click', instance.goToWelcomeMessage)
+                instance.experience.navigation.prev.addEventListener('click', instance.showIntro)
 
                 tippy('[aria-label="Preview chapter"]', {
                     theme: 'explorers',
@@ -157,29 +142,16 @@ export default class World {
         })
     }
 
-    goToWelcomeMessage() {
-        instance.unselectAllChapters()
-        instance.placeholderChapterData()
-        instance.removeDescriptionHtml()
-
-        document.querySelector('.lobby').remove()
-        instance.resources.fetchApiThenCache(_api.getBiexChapters(), instance.setCategories)
-        instance.page.intro()
-    }
-
-    setChapters(data) {
-        document.querySelector('.intro').remove()
-        instance.page.lobby()
-
-        data.forEach((chapter, index) => {
-            instance.setChapterHtml(chapter, index)
+    setChapters() {
+        instance.menu.chaptersData[instance.selectedCategory]['chapters'].forEach(chapter => {
+            instance.setChapterHtml(chapter)
         })
 
         instance.experience.navigation.next.disabled = true
-        instance.selectChapterListeners()
+        instance.chapterEventListeners()
     }
 
-    setChapterHtml(chapter, index) {
+    setChapterHtml(chapter) {
         let chapterHtml = document.createElement("article")
 
         let chapterClasses = "chapter"
@@ -301,14 +273,25 @@ export default class World {
             document.querySelector('.chapter-details').remove()
     }
 
-    selectChapterListeners() {
+    setUpChapter() {
+        instance.hideMenu()
+        instance.program = new Program()
+        instance.progressBar = new ProgressBar()
+        instance.buttons.home.style.display = 'flex'
+
+        if (instance.program.archive.facts.length > 0) {
+            instance.program.archive.init()
+        }
+    }
+
+    chapterEventListeners() {
         document.querySelectorAll(".chapter:not(.locked), body.ak_leder .chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
                 if (document.querySelector('.chapter-details'))
                     document.querySelector('.chapter-details').remove()
 
-                instance.addClassToSelectedChapter(chapter)
                 instance.updateSelectedChapterData(chapter)
+                instance.addClassToSelectedChapter(chapter)
                 instance.loadChapterTextures()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
@@ -358,6 +341,13 @@ export default class World {
         document.querySelector('.chapter[data-id="' + chapter.id + '"]').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
     }
 
+    // Download
+
+    setDownloadHtml(button) {
+        button.innerHTML = `<span>${_s.offline.availableOffline.title}</span>`
+        button.addEventListener("click", instance.confirmRedownload)
+    }
+
     confirmRedownload(event) {
         const button = event.currentTarget
         button.removeEventListener("click", instance.confirmRedownload)
@@ -380,13 +370,8 @@ export default class World {
         event.stopPropagation()
     }
 
-    setDownloadHtml(button) {
-        button.innerHTML = `<span>${_s.offline.availableOffline.title}</span>`
-        button.addEventListener("click", instance.confirmRedownload)
-    }
-
     redownloadChapter(chapter) {
-        instance.removeChapter(chapter)
+        instance.removeDownload(chapter)
         instance.downloadChapter(chapter)
     }
 
@@ -435,7 +420,7 @@ export default class World {
         this.offline.downloadEpisodes(chapterId, selectedChapter['episodes'])
     }
 
-    removeChapter(chapter) {
+    removeDownload(chapter) {
         let chapterEl = chapter.closest(".chapter")
         const chapterId = chapterEl.getAttribute('data-id')
         const categorySlug = chapterEl.getAttribute('data-slug')
@@ -443,6 +428,22 @@ export default class World {
 
         selectedChapter['episodes'].forEach(episode => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id))
         chapterEl.classList.remove('downloaded')
+    }
+
+    fetchBgMusic() {
+        if (instance.selectedChapter.background_music) {
+            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
+                instance.audio.changeBgMusic(chapter.background_music)
+            })
+        }
+    }
+
+    fetchArchiveImage() {
+        instance.selectedChapter.archive.forEach(fact => {
+            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
+                fact.image = data
+            })
+        })
     }
 
     cacheChapterAssets(chapter) {
@@ -510,7 +511,8 @@ export default class World {
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
-        instance.removeLobbyEventListeners()
+        instance.page.removeLobby()
+        instance.page.removeLobbyEventListeners()
 
         _appInsights.trackEvent({
             name: "Start chapter",
@@ -530,15 +532,8 @@ export default class World {
     }
 
     previewChapter() {
-        instance.setUpChapter()
-        instance.fetchBgMusic()
-        instance.fetchArchiveImage()
         instance.debug.addQuickLookMode()
-        instance.removeLobbyEventListeners()
-
-        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
-            document.documentElement.requestFullscreen()
-        }
+        instance.startChapter()
     }
 
     restartChapter() {
@@ -547,9 +542,52 @@ export default class World {
         instance.startChapter()
     }
 
-    removeLobbyEventListeners() {
-        instance.experience.navigation.prev.removeEventListener('click', instance.goToWelcomeMessage)
-        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
+    goHome() {
+        document.body.classList.add('freeze')
+        instance.program.message.destroy()
+        instance.program.video.defocus()
+        instance.points.delete()
+        instance.buttons.home.style.display = 'none'
+        instance.buttons.contact.style.display = 'flex'
+        instance.camera.updateCameraTo()
+        instance.audio.playWhoosh()
+        instance.audio.changeBgMusic()
+        instance.debug.removeQuickLookMode()
+        instance.showLobby()
+        instance.preselectChapter()
+
+        // instance.experience.world.progressBar.show()
+
+        if (!instance.experience.settings.fullScreen) {
+            // document.exitFullscreen()
+        }
+    }
+
+    preselectChapter() {
+        document.querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']").click()
+    }
+
+    showActionButtons() {
+        if (this.chapterProgress() == 0) {
+            // instance.buttons.restart.style.display = 'none'
+        } else {
+            // instance.buttons.restart.style.display = 'block'
+        }
+
+        instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length
+
+        if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
+            // instance.buttons.start.innerText = _s.journey.continue
+        } else {
+            // instance.buttons.start.innerText = _s.journey.start
+        }
+    }
+
+    hideMenu() {
+        document.body.classList.remove('freeze')
+        document.querySelector('.page').className = 'page page-home'
+
+        instance.buttons.contact.style.display = 'none'
     }
 
     finishJourney() {
@@ -568,51 +606,6 @@ export default class World {
                 }
             })
         }
-    }
-
-    showMenu() {
-        document.body.classList.add('freeze')
-        instance.page.lobby()
-
-        instance.points.delete()
-        instance.buttons.home.style.display = 'none'
-        instance.buttons.contact.style.display = 'flex'
-
-        instance.showActionButtons()
-    }
-
-    hideMenu() {
-        document.body.classList.remove('freeze')
-        document.querySelector('.page').className = 'page page-home'
-
-        instance.buttons.contact.style.display = 'none'
-    }
-
-    setUpChapter() {
-        instance.hideMenu()
-        instance.program = new Program()
-        instance.progressBar = new ProgressBar()
-        instance.buttons.home.style.display = 'flex'
-
-        if (instance.program.archive.facts.length > 0) {
-            instance.program.archive.init()
-        }
-    }
-
-    fetchBgMusic() {
-        if (instance.selectedChapter.background_music) {
-            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
-                instance.audio.changeBgMusic(chapter.background_music)
-            })
-        }
-    }
-
-    fetchArchiveImage() {
-        instance.selectedChapter.archive.forEach(fact => {
-            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
-                fact.image = data
-            })
-        })
     }
 
     getId() {
