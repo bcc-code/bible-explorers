@@ -229,7 +229,7 @@ export default class Program {
     updateCameraForCurrentStep() {
         this.camera.updateCameraTo(this.currentLocation(), () => {
             instance.points.add(this.interactiveObjects()[0], instance.stepType())
-            instance.highlight.add(this.interactiveObjects()[0])
+            // instance.highlight.add(this.interactiveObjects()[0])
 
             document.addEventListener('click', (event) => {
                 if (event.target.classList.contains('label')) {
