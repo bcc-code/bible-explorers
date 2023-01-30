@@ -117,6 +117,9 @@ export default class Program {
         // Disable prev on first step
         instance.experience.navigation.prev.disabled = this.currentStep == 0
 
+        let moveCamera = true
+
+        // Advance to next checkpoint
         if (this.currentStep == this.getCurrentCheckpointData().steps.length) {
             console.log('currentStep', 0)
             this.currentStep = 0
@@ -157,6 +160,7 @@ export default class Program {
                 || this.taskType() == 'heart_defense'
                 || this.taskType() == 'davids_refuge'
             ) {
+                moveCamera = false
                 this.gameDescription.show()
             }
         }
@@ -168,6 +172,9 @@ export default class Program {
         else if (this.stepType() == 'pause') {
             this.pause.togglePause()
         }
+
+        if (moveCamera)
+            this.updateCameraForCurrentStep()
     }
 
     advance(checkpoint = ++this.currentCheckpoint) {
@@ -175,6 +182,7 @@ export default class Program {
         this.world.progressBar.refresh()
         this.startInteractivity()
 
+        console.log('advance', checkpoint)
     }
 
     updateCurrentCheckpoint(newCheckpoint) {
