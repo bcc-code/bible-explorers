@@ -97,11 +97,6 @@ export default class World {
         instance.experience.navigation.prev.addEventListener('click', instance.showIntro)
     }
 
-    removeLobbyEventListeners() {
-        instance.experience.navigation.prev.removeEventListener('click', instance.showIntro)
-        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
-    }
-
     setCategories(result) {
         if (result.length == 0) instance.addNotAvailableInYourLanguageMessage()
         if (result.hasOwnProperty('message')) return
@@ -526,6 +521,11 @@ export default class World {
         }
 
         document.querySelector('.page').className = 'page page-home'
+    }
+
+    removeLobbyEventListeners() {
+        instance.experience.navigation.prev.removeEventListener('click', instance.showIntro)
+        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     setUpChapter() {
