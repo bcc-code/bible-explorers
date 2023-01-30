@@ -31,7 +31,6 @@ export default class Task {
         instance.data = instance.stepData.details
 
         instance.setHtml()
-        instance.setEventListeners()
 
         if (instance.data.tutorial) {
             // Fetch details tutorial from blob or url
@@ -41,69 +40,64 @@ export default class Task {
             })
         }
 
+        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
+        instance.experience.navigation.next.disabled = true
     }
 
     setHtml() {
-        document.querySelector('.ui-container').append(
-            _gl.elementFromHtml(`
-                <section class="task">
-                    <div class="container">
-                        <div class="content">
-                            <header class="game-header">
-                                <h2>${instance.data.title}</h2>
-                            </header>
-                            <div class="game-tutorial">
-                                ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
-                            </div>
-                            <div class="game-description">
-                                ${instance.data.prompts[0].prompt}
-                            </div>
+        const startGame = _gl.elementFromHtml(`
+            <button class="btn default text">${_s.miniGames.startGame}</button>
+        `)
+        startGame.addEventListener('click', instance.startGame)
+
+        const task = _gl.elementFromHtml(`
+            <section class="task">
+                <div class="container">
+                    <div class="content">
+                        <header class="game-header">
+                            <h2>${instance.data.title}</h2>
+                        </header>
+                        <div class="game-tutorial">
+                            ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
+                        </div>
+                        <div class="game-description">
+                            ${instance.data.prompts[0].prompt}
                         </div>
                     </div>
-                    <div class="overlay"></div>
-                </section>
-            `)
-        )
-    }
+                </div>
+                <div class="overlay"></div>
+            </section>
+        `)
 
-    setEventListeners() {
-        instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
-        instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
-    }
-
-    prevListeners() {
-        instance.destroy()
-        instance.program.previousStep()
-    }
-
-    nextListeners() {
-        instance.destroy()
-        instance.startGame()
+        task.querySelector('.content').append(startGame)
+        document.querySelector('.ui-container').append(task)
     }
 
     startGame() {
+        instance.destroy()
+
         if (instance.program.taskType() == 'cables') {
-            this.cableConnectorGame.toggleCableConnector()
+            instance.cableConnectorGame.toggleCableConnector()
         }
 
         else if (instance.program.taskType() == 'sorting') {
-            this.sortingGame.toggleSortingGame()
+            instance.sortingGame.toggleSortingGame()
         }
 
         else if (instance.program.taskType() == 'simon_says') {
-            this.simonSays.toggleSimonSays()
+            instance.simonSays.toggleSimonSays()
         }
 
         else if (instance.program.taskType() == 'flip_cards') {
-            this.flipCards.toggleGame()
+            instance.flipCards.toggleGame()
         }
 
         else if (instance.program.taskType() == 'heart_defense') {
-            this.heartDefense.toggleGame()
+            instance.heartDefense.toggleGame()
         }
 
         else if (instance.program.taskType() == 'davids_refuge') {
-            this.davidsRefuge.toggleGame()
+            instance.davidsRefuge.toggleGame()
         }
     }
 
@@ -115,12 +109,13 @@ export default class Task {
     }
 
     removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.prevListeners)
-        instance.experience.navigation.next.removeEventListener("click", instance.nextListeners)
+        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
+        instance.experience.navigation.next.removeEventListener("click", instance.startGame)
     }
 
     destroy() {
-        document.querySelector('.ui-container > .task')?.remove()
+        document.querySelector('section.task')?.remove()
         instance.removeEventListeners()
+        instance.experience.navigation.next.disabled = false
     }
 }
