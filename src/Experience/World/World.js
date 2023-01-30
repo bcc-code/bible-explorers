@@ -277,7 +277,7 @@ export default class World {
     }
 
     chapterEventListeners() {
-        document.querySelectorAll(".chapter:not(.locked), body.ak_leder .chapter").forEach((chapter) => {
+        document.querySelectorAll(".chapter").forEach((chapter) => {
             chapter.addEventListener("click", () => {
                 if (document.querySelector('.chapter-details'))
                     document.querySelector('.chapter-details').remove()
@@ -292,14 +292,14 @@ export default class World {
             })
         })
 
-        document.querySelectorAll(".chapter:not(.locked) .chapter__offline, body.ak_leder .chapter__offline").forEach(function (chapter) {
+        document.querySelectorAll(".chapter__offline").forEach(function (chapter) {
             chapter.addEventListener("click", (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
 
-        document.querySelectorAll(".chapter:not(.locked) .chapter__downloaded, body.ak_leder .chapter__downloaded").forEach(function (button) {
+        document.querySelectorAll(".chapter__downloaded").forEach(function (button) {
             button.addEventListener("click", instance.confirmRedownload)
         })
 
