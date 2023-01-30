@@ -17,34 +17,29 @@ let instance = null
 
 export default class Program {
     constructor() {
-        this.initialize()
-    }
-
-    initialize() {
-        this.experience = new Experience()
-        this.resources = this.experience.resources
-        this.world = this.experience.world
-        this.camera = this.experience.camera
-        this.highlight = this.world.highlight
-        this.programData = this.world.selectedChapter.program
-        this.points = this.experience.world.points
-        this.debug = this.experience.debug
-
-        this.archive = new Archive()
-        this.taskDescription = new TaskDescription()
-        this.video = new Video()
-        this.codeUnlock = new CodeUnlock()
-        this.pictureAndCode = new PictureAndCode()
-        this.questionAndCode = new QuestionAndCode()
-        this.questions = new Questions()
-        this.quiz = new Quiz()
-        this.congrats = new Congrats()
-        this.pause = new Pause()
-        this.dialogue = new Dialogue()
-        this.message = new Message()
-        this.gameDescription = new GameDescription()
-
         instance = this
+        instance.experience = new Experience()
+        instance.resources = instance.experience.resources
+        instance.world = instance.experience.world
+        instance.camera = instance.experience.camera
+        instance.highlight = instance.world.highlight
+        instance.programData = instance.world.selectedChapter.program
+        instance.points = instance.experience.world.points
+        instance.debug = instance.experience.debug
+
+        instance.archive = new Archive()
+        instance.taskDescription = new TaskDescription()
+        instance.video = new Video()
+        instance.codeUnlock = new CodeUnlock()
+        instance.pictureAndCode = new PictureAndCode()
+        instance.questionAndCode = new QuestionAndCode()
+        instance.questions = new Questions()
+        instance.quiz = new Quiz()
+        instance.congrats = new Congrats()
+        instance.pause = new Pause()
+        instance.dialogue = new Dialogue()
+        instance.message = new Message()
+        instance.gameDescription = new GameDescription()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -53,159 +48,164 @@ export default class Program {
         }
 
         // Get instance variables
-        this.chapterProgress = () => parseInt(localStorage.getItem(this.world.getId())) || 0
-        this.currentCheckpoint = instance.debug.onQuickLook() ? 0 : (this.chapterProgress() || 0)
-        this.getCurrentCheckpointData = () => this.currentCheckpoint in this.programData ? this.programData[this.currentCheckpoint] : null
+        instance.chapterProgress = () => parseInt(localStorage.getItem(instance.world.getId())) || 0
+        instance.currentCheckpoint = instance.debug.onQuickLook() ? 0 : (instance.chapterProgress() || 0)
+        instance.getCurrentCheckpointData = () => instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null
 
-        this.currentStep = 0
-        this.getCurrentStepData = () => this.getCurrentCheckpointData() ? this.getCurrentCheckpointData().steps[this.currentStep] : null
-        this.stepType = () => this.getCurrentStepData() ? this.getCurrentStepData().details.step_type : null
-        this.taskType = () => this.getCurrentStepData() ? this.getCurrentStepData().details.task_type : null
+        instance.currentStep = 0
+        instance.getCurrentStepData = () => instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null
+        instance.stepType = () => instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null
+        instance.taskType = () => instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null
 
-        this.updateAssetInProgramData = (field, newValue) => {
+        instance.updateAssetInProgramData = (field, newValue) => {
             console.log(field, newValue)
-            this.programData[this.currentCheckpoint].steps[this.currentStep][field] = newValue
+            instance.programData[instance.currentCheckpoint].steps[instance.currentStep][field] = newValue
         }
 
-        this.currentLocation = () => {
-            if (this.stepType() == 'video') { return 'portal' }
-            else if (this.stepType() == 'iris') { return 'irisCloseLook' }
-            else if (this.stepType() == 'task') { return 'irisWithOptions' }
+        instance.currentLocation = () => {
+            if (instance.stepType() == 'video') { return 'portal' }
+            else if (instance.stepType() == 'iris') { return 'irisCloseLook' }
+            else if (instance.stepType() == 'task') { return 'irisWithOptions' }
             else { return 'default' }
         }
-        this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
-        this.totalCheckpoints = Object.keys(this.programData).length
-        this.clickedObject = null
-        this.canClick = () =>
+        instance.interactiveObjects = () => instance.getCurrentStepData() ? instance.getAllInteractiveObjects() : []
+        instance.totalCheckpoints = Object.keys(instance.programData).length
+        instance.clickedObject = null
+        instance.canClick = () =>
             !document.body.classList.contains('freeze') &&
             !document.body.classList.contains('modal-on') &&
             !document.body.classList.contains('camera-is-moving')
 
-        this.startInteractivity()
-        this.updateCameraForCurrentStep()
+        instance.startInteractivity()
+        instance.updateCameraForCurrentStep()
 
         // Disable prev on first step
-        instance.experience.navigation.prev.disabled = this.currentStep == 0
+        instance.experience.navigation.prev.disabled = instance.currentStep == 0
+
+        instance.addEventListeners()
+    }
+
+    addEventListeners() {
+        instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
+        instance.experience.navigation.next.addEventListener('click', instance.nextStep)
     }
 
     control(currentIntersect) {
-        if (!this.canClick()) return
+        if (!instance.canClick()) return
 
-        this.clickedObject = currentIntersect.name
+        instance.clickedObject = currentIntersect.name
 
-        if (this.objectIsClickable()) {
-            this.startAction()
+        if (instance.objectIsClickable()) {
+            instance.startAction()
         }
     }
 
     previousStep() {
-        this.currentStep--
-        console.log('previousStep', this.currentStep)
-        this.toggleStep()
+        instance.currentStep--
+        console.log('previousStep', instance.currentStep)
+        instance.toggleStep()
     }
 
     nextStep() {
-        this.currentStep++
-        console.log('nextStep', this.currentStep)
-        this.toggleStep()
+        instance.currentStep++
+        console.log('nextStep', instance.currentStep)
+        instance.toggleStep()
     }
 
     toggleStep() {
-        console.log("steptype", this.stepType())
-        console.log("tasktype", this.taskType())
+        console.log("steptype", instance.stepType())
+        console.log("tasktype", instance.taskType())
 
         // Disable prev on first step
-        instance.experience.navigation.prev.disabled = this.currentStep == 0
+        instance.experience.navigation.prev.disabled = instance.currentStep == 0
 
         let moveCamera = true
 
         // Advance to next checkpoint
-        if (this.currentStep == this.getCurrentCheckpointData().steps.length) {
+        if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
             console.log('currentStep', 0)
-            this.currentStep = 0
-            this.advance()
+            instance.currentStep = 0
+            instance.advance()
             instance.experience.navigation.prev.disabled = true
         }
 
-        else if (this.stepType() == 'iris') {
-            this.message.show()
+        else if (instance.stepType() == 'iris') {
+            instance.message.show()
         }
 
-        else if (this.stepType() == 'task') {
-            if (this.taskType() == 'code_to_unlock') {
-                this.codeUnlock.toggleCodeUnlock()
+        else if (instance.stepType() == 'task') {
+            if (instance.taskType() == 'code_to_unlock') {
+                instance.codeUnlock.toggleCodeUnlock()
             }
 
-            else if (this.taskType() == 'picture_and_code') {
-                this.pictureAndCode.togglePictureAndCode()
+            else if (instance.taskType() == 'picture_and_code') {
+                instance.pictureAndCode.togglePictureAndCode()
             }
 
-            else if (this.taskType() == 'question_and_code') {
-                this.questionAndCode.toggleQuestionAndCode()
+            else if (instance.taskType() == 'question_and_code') {
+                instance.questionAndCode.toggleQuestionAndCode()
             }
 
-            else if (this.taskType() == 'questions') {
-                this.questions.toggleQuestions()
+            else if (instance.taskType() == 'questions') {
+                instance.questions.toggleQuestions()
             }
 
-            else if (this.taskType() == 'dialog') {
-                this.dialogue.toggle()
+            else if (instance.taskType() == 'dialog') {
+                instance.dialogue.toggle()
             }
 
             // Games
-            else if (this.taskType() == 'cables'
-                || this.taskType() == 'sorting'
-                || this.taskType() == 'simon_says'
-                || this.taskType() == 'flip_cards'
-                || this.taskType() == 'heart_defense'
-                || this.taskType() == 'davids_refuge'
+            else if (instance.taskType() == 'cables'
+                || instance.taskType() == 'sorting'
+                || instance.taskType() == 'simon_says'
+                || instance.taskType() == 'flip_cards'
+                || instance.taskType() == 'heart_defense'
+                || instance.taskType() == 'davids_refuge'
             ) {
                 moveCamera = false
-                this.gameDescription.show()
+                instance.gameDescription.show()
             }
         }
 
-        else if (this.stepType() == 'quiz') {
-            this.quiz.toggleQuiz()
+        else if (instance.stepType() == 'quiz') {
+            instance.quiz.toggleQuiz()
         }
 
-        else if (this.stepType() == 'pause') {
-            this.pause.togglePause()
+        else if (instance.stepType() == 'pause') {
+            instance.pause.togglePause()
         }
 
         if (moveCamera)
-            this.updateCameraForCurrentStep()
+            instance.updateCameraForCurrentStep()
     }
 
-    advance(checkpoint = ++this.currentCheckpoint) {
-        this.updateCurrentCheckpoint(checkpoint)
-        this.world.progressBar.refresh()
-        this.startInteractivity()
+    advance(checkpoint = ++instance.currentCheckpoint) {
+        instance.updateCurrentCheckpoint(checkpoint)
+        instance.world.progressBar.refresh()
+        instance.startInteractivity()
 
         console.log('advance', checkpoint)
     }
 
     updateCurrentCheckpoint(newCheckpoint) {
         console.log('updateCurrentCheckpoint', newCheckpoint)
-        this.currentCheckpoint = newCheckpoint
+        instance.currentCheckpoint = newCheckpoint
 
-        if (newCheckpoint > this.chapterProgress() && !instance.debug.onQuickLook()) {
-            this.updateLocalStorage()
+        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook()) {
+            instance.updateLocalStorage()
         }
     }
 
     startInteractivity() {
-        this.world.audio.playWhoosh()
-        let currentVideo = this.currentVideo()
-        let nextVideo = this.nextVideo()
+        instance.world.audio.playWhoosh()
+        let currentVideo = instance.currentVideo()
+        let nextVideo = instance.nextVideo()
 
-        this.points.fadeOut()
-        this.highlight.fadeOut()
+        instance.points.fadeOut()
+        instance.highlight.fadeOut()
 
-        if (this.stepType() == 'video') {
+        if (instance.stepType() == 'video') {
             instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
-
-            console.log(instance.world.controlRoom.tv_portal);
 
             setTimeout(function () {
                 instance.video.load(currentVideo)
@@ -220,50 +220,50 @@ export default class Program {
             }, instance.camera.data.moveDuration, nextVideo)
         }
 
-        if (this.currentCheckpoint == this.totalCheckpoints) {
+        if (instance.currentCheckpoint == instance.totalCheckpoints) {
             setTimeout(() => {
                 instance.congrats.toggleBibleCardsReminder()
             }, instance.camera.data.moveDuration)
         }
 
-        if (this.stepType() == 'iris') {
+        if (instance.stepType() == 'iris') {
             setTimeout(() => {
-                this.message.show()
+                instance.message.show()
             }, instance.camera.data.moveDuration)
         }
 
-        if (this.stepType() == 'pause') {
+        if (instance.stepType() == 'pause') {
             setTimeout(() => {
-                this.pause.togglePause()
+                instance.pause.togglePause()
             }, instance.camera.data.moveDuration)
         }
     }
 
     updateCameraForCurrentStep() {
-        this.camera.updateCameraTo(this.currentLocation(), () => {
-            instance.points.add(this.interactiveObjects()[0], instance.stepType())
-            // instance.highlight.add(this.interactiveObjects()[0])
+        instance.camera.updateCameraTo(instance.currentLocation(), () => {
+            instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+            // instance.highlight.add(instance.interactiveObjects()[0])
 
             document.addEventListener('click', (event) => {
                 if (event.target.classList.contains('label')) {
-                    this.control(instance.points.currentLabel)
+                    instance.control(instance.points.currentLabel)
                 }
             })
         })
     }
 
     objectIsClickable() {
-        return this.currentCheckpoint in this.programData &&
-            this.interactiveObjects().includes(this.clickedObject)
+        return instance.currentCheckpoint in instance.programData &&
+            instance.interactiveObjects().includes(instance.clickedObject)
     }
 
     getAllInteractiveObjects() {
         let interactiveObjects = []
 
-        if (this.stepType() == 'video') {
+        if (instance.stepType() == 'video') {
             interactiveObjects = interactiveObjects.concat(["Screen"])
         }
-        else if (this.stepType() == 'iris' || this.stepType() == 'task') {
+        else if (instance.stepType() == 'iris' || instance.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
         }
 
@@ -271,28 +271,28 @@ export default class Program {
     }
 
     startAction() {
-        if (this.clickedObject == 'tv_16x9_screen') {
-            this.message.show()
+        if (instance.clickedObject == 'tv_16x9_screen') {
+            instance.message.show()
         }
-        else if (this.clickedObject == 'Screen') {
-            this.video.play()
+        else if (instance.clickedObject == 'Screen') {
+            instance.video.play()
         }
     }
 
     currentVideo() {
-        if (this.currentCheckpoint >= this.programData.length)
+        if (instance.currentCheckpoint >= instance.programData.length)
             return null
 
-        return this.programData[this.currentCheckpoint].steps[this.currentStep].videoId
+        return instance.programData[instance.currentCheckpoint].steps[instance.currentStep].videoId
     }
 
     nextVideo() {
-        for (let checkpoint = this.currentCheckpoint; checkpoint < this.totalCheckpoints; checkpoint++) {
-            const startingStep = checkpoint == this.currentCheckpoint ? this.currentStep : 0
+        for (let checkpoint = instance.currentCheckpoint; checkpoint < instance.totalCheckpoints; checkpoint++) {
+            const startingStep = checkpoint == instance.currentCheckpoint ? instance.currentStep : 0
 
-            for (let step = startingStep; step < this.programData[checkpoint].steps.length; step++) {
-                if (this.programData[checkpoint].steps[step].details.step_type == 'video')
-                    return this.programData[checkpoint].steps[step].videoId
+            for (let step = startingStep; step < instance.programData[checkpoint].steps.length; step++) {
+                if (instance.programData[checkpoint].steps[step].details.step_type == 'video')
+                    return instance.programData[checkpoint].steps[step].videoId
             }
         }
 
@@ -300,6 +300,6 @@ export default class Program {
     }
 
     updateLocalStorage() {
-        localStorage.setItem(this.world.getId(), this.currentCheckpoint)
+        localStorage.setItem(instance.world.getId(), instance.currentCheckpoint)
     }
 }

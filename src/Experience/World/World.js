@@ -500,11 +500,12 @@ export default class World {
     }
 
     startChapter() {
+        instance.page.removeLobby()
+        instance.removeLobbyEventListeners()
+
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
-        instance.page.removeLobby()
-        instance.removeLobbyEventListeners()
 
         _appInsights.trackEvent({
             name: "Start chapter",

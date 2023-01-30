@@ -552,7 +552,6 @@ export default class HeartDefense {
     }
 
     toggleLevelCompleted() {
-
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
                 <header>
@@ -584,7 +583,6 @@ export default class HeartDefense {
         document.removeEventListener('keydown', instance.keyDownHandler)
 
         // Add event listeners
-
         if (instance.stats.level <= instance.config.levels) {
             // Next level
             nextLevelBTN.addEventListener('click', () => {
@@ -602,17 +600,10 @@ export default class HeartDefense {
             })
 
             document.querySelector('.cta').style.display = 'flex'
-
             skipBTN.remove()
         }
 
-
-        const nextBTN = document.querySelector('[aria-label="next page"')
-        nextBTN.addEventListener('click', () => {
-            instance.destroy()
-            console.log(instance.stepData);
-            instance.program.nextStep()
-        })
+        instance.experience.navigation.next.addEventListener('click', instance.destroy)
 
         skipBTN.addEventListener('click', () => {
             instance.destroy()
@@ -621,7 +612,6 @@ export default class HeartDefense {
     }
 
     toggleGameOver() {
-
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
                 <header>
@@ -686,5 +676,7 @@ export default class HeartDefense {
         document.querySelector('.game')?.remove()
         instance.layer.destroy()
         instance.experience.gameIsOn = false
+
+        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
     }
 }

@@ -43,27 +43,17 @@ export default class Message {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
-        instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
-    }
-
-    prevListeners() {
-        instance.destroy()
-        instance.experience.world.program.previousStep()
-    }
-
-    nextListeners() {
-        instance.destroy()
-        instance.experience.world.program.nextStep()
+        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
+        instance.experience.navigation.next.addEventListener("click", instance.destroy)
     }
 
     removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.prevListeners)
-        instance.experience.navigation.next.removeEventListener("click", instance.nextListeners)
+        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
+        instance.experience.navigation.next.removeEventListener("click", instance.destroy)
     }
 
     destroy() {
-        document.querySelector('.ui-container > .message')?.remove()
+        document.querySelector('section.message')?.remove()
         instance.removeEventListeners()
     }
 }

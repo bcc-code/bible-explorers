@@ -43,13 +43,13 @@ export default class Dialogue {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.addEventListener("click", instance.prevListeners)
-        instance.experience.navigation.next.addEventListener("click", instance.nextListeners)
+        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
+        instance.experience.navigation.next.addEventListener("click", instance.destroy)
 
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
             button.addEventListener("click", () => {
-                instance.message.show(instance.data[index].answer)
+                instance.setMessageHtml(instance.data[index].answer)
 
                 if (instance.data[index].audio) {
                     // Fetch audio from blob or url
@@ -62,24 +62,31 @@ export default class Dialogue {
         })
     }
 
-    prevListeners() {
-        instance.destroy()
-        instance.program.previousStep()
-    }
-
-    nextListeners() {
-        instance.destroy()
-        instance.program.nextStep()
+    setMessageHtml(text) {
+        document.querySelector('.ui-container').append(
+            _gl.elementFromHtml(
+                `<section class="message-from-dialogue">
+                    <div class="container">
+                        <header class="message-header">
+                            <span>Iris</span>
+                        </header>
+                        <div class="content">
+                            ${text}
+                        </div>
+                    </div>
+                </section>`
+            )
+        )
     }
 
     removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.prevListeners)
-        instance.experience.navigation.next.removeEventListener("click", instance.nextListeners)
+        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
+        instance.experience.navigation.next.removeEventListener("click", instance.destroy)
     }
 
     destroy() {
-        instance.message.destroy()
         document.querySelector('.dialogue')?.remove()
+        document.querySelector('.message-from-dialogue')?.remove()
         instance.removeEventListeners()
     }
 }
