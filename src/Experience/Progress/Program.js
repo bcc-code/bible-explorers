@@ -70,7 +70,7 @@ export default class Program {
         this.currentLocation = () => {
             if (this.stepType() == 'video') { return 'portal' }
             else if (this.stepType() == 'iris') { return 'irisCloseLook' }
-            else if (this.stepType() == 'task') { return 'screens' }
+            else if (this.stepType() == 'task') { return 'irisWithOptions' }
             else { return 'default' }
         }
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []
@@ -83,6 +83,9 @@ export default class Program {
 
         this.startInteractivity()
         this.updateCameraForCurrentStep()
+
+        // Disable prev on first step
+        instance.experience.navigation.prev.disabled = this.currentStep == 0
     }
 
     control(currentIntersect) {
@@ -96,15 +99,12 @@ export default class Program {
     }
 
     previousStep() {
-        if (this.currentStep == 0) return
-
         this.currentStep--
         console.log('previousStep', this.currentStep)
         this.toggleStep()
     }
 
     nextStep() {
-        console.log('nextStep');
         this.currentStep++
         console.log('nextStep', this.currentStep)
         this.toggleStep()
@@ -114,8 +114,12 @@ export default class Program {
         console.log("steptype", this.stepType())
         console.log("tasktype", this.taskType())
 
-        this.updateCameraForCurrentStep()
+        // Disable prev on first step
+        instance.experience.navigation.prev.disabled = this.currentStep == 0
 
+        let moveCamera = true
+
+        // Advance to next checkpoint
         if (this.currentStep == this.getCurrentCheckpointData().steps.length) {
             console.log('currentStep', 0)
             this.currentStep = 0
@@ -156,6 +160,7 @@ export default class Program {
                 || this.taskType() == 'heart_defense'
                 || this.taskType() == 'davids_refuge'
             ) {
+                moveCamera = false
                 this.gameDescription.show()
             }
         }
@@ -167,6 +172,9 @@ export default class Program {
         else if (this.stepType() == 'pause') {
             this.pause.togglePause()
         }
+
+        if (moveCamera)
+            this.updateCameraForCurrentStep()
     }
 
     advance(checkpoint = ++this.currentCheckpoint) {
@@ -174,7 +182,7 @@ export default class Program {
         this.world.progressBar.refresh()
         this.startInteractivity()
 
-        console.log('advance', checkpoint);
+        console.log('advance', checkpoint)
     }
 
     updateCurrentCheckpoint(newCheckpoint) {

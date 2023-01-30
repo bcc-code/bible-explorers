@@ -65,9 +65,4 @@ export default class Page {
     removeLobby() {
         document.querySelector('.lobby')?.remove()
     }
-
-    removeLobbyEventListeners() {
-        instance.experience.navigation.prev.removeEventListener('click', instance.showIntro)
-        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
-    }
 }
