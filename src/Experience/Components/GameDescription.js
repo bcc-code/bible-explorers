@@ -40,6 +40,7 @@ export default class Task {
                 document.querySelector('.game-tutorial > *').src = data.tutorial
             })
         }
+
     }
 
     setHtml() {
@@ -59,6 +60,7 @@ export default class Task {
                             </div>
                         </div>
                     </div>
+                    <div class="overlay"></div>
                 </section>
             `)
         )
@@ -108,8 +110,8 @@ export default class Task {
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" width="100%" height="100%" style="position:absolute" frameBorder="0" autoplay loop></video>`
-        else return `<img src="" width="100%" height="100%" style="position:absolute" />`
+        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        else return `<img src="" width="100%" height="100%" />`
     }
 
     removeEventListeners() {
