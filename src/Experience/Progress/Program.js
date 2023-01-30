@@ -70,7 +70,7 @@ export default class Program {
         this.currentLocation = () => {
             if (this.stepType() == 'video') { return 'portal' }
             else if (this.stepType() == 'iris') { return 'irisCloseLook' }
-            else if (this.stepType() == 'task') { return 'screens' }
+            else if (this.stepType() == 'task') { return 'irisWithOptions' }
             else { return 'default' }
         }
         this.interactiveObjects = () => this.getCurrentStepData() ? this.getAllInteractiveObjects() : []

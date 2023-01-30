@@ -68,6 +68,16 @@ export default class Camera {
                     maxAzimuthAngle: 0
                 }
             },
+            'irisWithOptions': {
+                position: new THREE.Vector3(-0.2761545370256113, 1.4507675284532975, 0.07952206846763665),
+                lookAt: new THREE.Vector3(-0.47577618033905067, 1.3818037800219334, -0.5351459117438647),
+                controls: {
+                    minPolarAngle: 0,
+                    maxPolarAngle: 3.141592653589793,
+                    minAzimuthAngle: 0,
+                    maxAzimuthAngle: 0
+                }
+            },
             'controlBoard': {
                 position: new THREE.Vector3(-0.109, 2.224, 0.022),
                 lookAt: new THREE.Vector3(0.312, 1.975, 0.019),
@@ -253,7 +263,8 @@ export default class Camera {
                 Screens: 'screens',
                 ControlBoard: 'controlBoard',
                 Portal: 'portal',
-                Iris: 'irisCloseLook'
+                IrisCloseLook: 'irisCloseLook',
+                IrisWithOptions: 'irisWithOptions'
             })
             .onFinishChange((location) => {
                 this.updateCameraTo(location)
