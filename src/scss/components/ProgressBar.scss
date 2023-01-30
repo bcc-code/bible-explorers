@@ -1,21 +1,22 @@
 .progress-bar {
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: var(--app-padding);
+    right: 0;
+    top: 50%;
+    padding-inline: var(--app-padding);
     pointer-events: all;
-    transform: translateY(100%);
+    transform: translate(-100%, -50%);
     transition: var(--transition-duration) transform var(--transition-timing);
 
     .checkpoints {
         display: flex;
+        flex-flow: column nowrap;
         justify-content: space-between;
         position: relative;
     }
 
-    [aria-label="checkpoint"] {
-        margin-right: 0;
+
+    [aria-label="checkpoint"]:not(:last-child) {
+        margin-bottom: 1rem;
     }
 
     [aria-label="checkpoint"][currentCheckpoint] {
@@ -27,60 +28,29 @@
     }
 
     .percentageBar {
-
-        --bar-height: calc(var(--button-size) / 6);
-
         position: absolute;
-        top: calc(calc(var(--button-size) /2) + var(--app-padding) - calc(var(--bar-height) / 2));
+        top: 1rem;
         left: 2rem;
-        right: 2rem;
-        height: var(--bar-height);
+        bottom: 1rem;
+        width: 10px;
         background-color: var(--clr-background);
         box-shadow: 0 0 0 0.1rem var(--clr-secondary);
 
-        &::before {
-            content: "";
-            z-index: -1;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(-45deg, #C5516E 0%, #EB9159 100%);
-            transform: translate3d(0, 20px, 0);
-            filter: blur(20px);
-            opacity: var(0.7);
-            transition: opacity 0.3s;
-            border-radius: inherit;
-        }
-
-        &::after {
-            content: "";
-            z-index: -1;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: inherit;
-            border-radius: inherit;
-        }
-
         .passed {
             float: left;
-            height: 100%;
-            top: -10px;
+            width: 100%;
+            height: attr(data-progress);
             background: var(--clr-secondary);
             transition: var(--transition-duration) width var(--transition-timing);
         }
     }
 
     &.is-visible {
-        transform: translateY(0);
+        transform: translate(0, -50%);
     }
 
     .modal-on &,
     .freeze & {
-        transform: translateY(100%);
+        transform: translate(-100%, -50%);
     }
 }

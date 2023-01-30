@@ -43,7 +43,7 @@ export default class ProgressBar {
     }
 
     refresh() {
-        instance.el.passed.style.width = instance.checkpointWidth * instance.program.currentCheckpoint + '%';
+        instance.el.passed.style.height = instance.checkpointWidth * instance.program.currentCheckpoint + '%';
 
         instance.el.checkpoints.forEach(checkpoint => {
             checkpoint.removeAttribute('currentCheckpoint')
@@ -61,30 +61,52 @@ export default class ProgressBar {
 
         let generatedHTML =
             `<div class="percentageBar">
-                <div class="passed" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
+                <div class="passed" style="height: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
             </div>
             <div class="checkpoints">`
 
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
-            let taskTypeClass = 'icon-pen-to-square-solid'
 
-            if (instance.program.programData[i].steps.some(step => step.details.step_type == 'video'))
-                taskTypeClass = 'icon-film-solid'
-            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'quiz'))
-                taskTypeClass = 'icon-question-solid'
-            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause'))
-                taskTypeClass = 'icon-pause-solid'
-
-            generatedHTML +=
-                `<button class="btn bordered rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
-                    <div class="${taskTypeClass}"></div>
+            if (instance.program.programData[i].steps.some(step => step.details.step_type == 'video')) {
+                generatedHTML +=
+                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                        <svg class="film-icon icon" width="24" height="22" viewBox="0 0 24 22">
+                            <use href="#film"></use>
+                        </svg>
+                    </button>`
+            }
+            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'quiz')) {
+                generatedHTML +=
+                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                        <svg class="question-mark-icon icon"  width="15" height="22" viewBox="0 0 15 22">
+                            <use href="#question-mark"></use>
+                        </svg>
+                    </button>`
+            }
+            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause')) {
+                generatedHTML +=
+                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                        <svg class="pause-icon icon" width="15" height="18" viewBox="0 0 15 18">
+                            <use href="#pause"></use>
+                        </svg>
+                    </button>`
+            } else {
+                generatedHTML +=
+                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                    <svg class="star-icon icon" width="25" height="25" viewBox="0 0 25 25">
+                        <use href="#star"></use>
+                    </svg>
                 </button>`
+            }
+
 
         }
 
         generatedHTML +=
-            `<button class="btn bordered rounded" aria-label="checkpoint">
-                <div class="icon-star-solid"></div>
+            `<button class="btn rounded" aria-label="checkpoint">
+                <svg class="star-icon icon" width="25" height="25" viewBox="0 0 25 25">
+                    <use href="#star-full"></use>
+                </svg>
             </button>`
 
         generatedHTML += '</div>'

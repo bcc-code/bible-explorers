@@ -78,7 +78,7 @@ export default class World {
             data: null
         }
     }
-    
+
     showIntro() {
         instance.placeholderChapterData()
         instance.removeDescriptionHtml()
@@ -538,6 +538,8 @@ export default class World {
         if (instance.program.archive.facts.length > 0) {
             instance.program.archive.init()
         }
+
+        instance.progressBar.show()
     }
 
     restartChapter() {
@@ -559,8 +561,6 @@ export default class World {
         instance.debug.removeQuickLookMode()
         instance.showLobby()
         instance.preselectChapter()
-
-        // instance.experience.world.progressBar.show()
 
         if (!instance.experience.settings.fullScreen) {
             // document.exitFullscreen()
