@@ -49,12 +49,12 @@ export default class Message {
 
     prevListeners() {
         instance.destroy()
-        instance.program.previousStep()
+        instance.experience.world.program.previousStep()
     }
 
     nextListeners() {
         instance.destroy()
-        instance.program.nextStep()
+        instance.experience.world.program.nextStep()
     }
 
     removeEventListeners() {

@@ -94,6 +94,12 @@ export default class World {
         instance.page.removeIntro()
         instance.page.createLobby()
         instance.setChapters()
+        instance.experience.navigation.prev.addEventListener('click', instance.showIntro)
+    }
+
+    removeLobbyEventListeners() {
+        instance.experience.navigation.prev.removeEventListener('click', instance.showIntro)
+        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
     }
 
     setCategories(result) {
@@ -124,12 +130,9 @@ export default class World {
     selectCategoryListeners() {
         document.querySelectorAll(".category").forEach(function (category) {
             category.addEventListener("click", () => {
-                const categorySlug = category.getAttribute('data-slug')
-                instance.selectedCategory = categorySlug
+                instance.selectedCategory = category.getAttribute('data-slug')
                 instance.showLobby()
-
                 instance.audio.changeBgMusic()
-                instance.experience.navigation.prev.addEventListener('click', instance.showIntro)
 
                 tippy('[aria-label="Preview chapter"]', {
                     theme: 'explorers',
@@ -271,17 +274,6 @@ export default class World {
 
         if (document.querySelector('.chapter-details'))
             document.querySelector('.chapter-details').remove()
-    }
-
-    setUpChapter() {
-        instance.hideMenu()
-        instance.program = new Program()
-        instance.progressBar = new ProgressBar()
-        instance.buttons.home.style.display = 'flex'
-
-        if (instance.program.archive.facts.length > 0) {
-            instance.program.archive.init()
-        }
     }
 
     chapterEventListeners() {
@@ -507,12 +499,17 @@ export default class World {
         })
     }
 
+    previewChapter() {
+        instance.debug.addQuickLookMode()
+        instance.startChapter()
+    }
+
     startChapter() {
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
         instance.page.removeLobby()
-        instance.page.removeLobbyEventListeners()
+        instance.removeLobbyEventListeners()
 
         _appInsights.trackEvent({
             name: "Start chapter",
@@ -531,9 +528,15 @@ export default class World {
         document.querySelector('.page').className = 'page page-home'
     }
 
-    previewChapter() {
-        instance.debug.addQuickLookMode()
-        instance.startChapter()
+    setUpChapter() {
+        instance.hideMenu()
+        instance.program = new Program()
+        instance.progressBar = new ProgressBar()
+        instance.buttons.home.style.display = 'flex'
+
+        if (instance.program.archive.facts.length > 0) {
+            instance.program.archive.init()
+        }
     }
 
     restartChapter() {
