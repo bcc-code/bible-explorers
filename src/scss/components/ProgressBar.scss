@@ -14,6 +14,9 @@
         position: relative;
     }
 
+    [aria-label="checkpoint"] {
+        margin-right: 0;
+    }
 
     [aria-label="checkpoint"]:not(:last-child) {
         margin-bottom: 1rem;
