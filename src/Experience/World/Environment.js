@@ -11,7 +11,7 @@ export default class Environment {
         this.renderer = this.experience.renderer
 
         // Setup
-        // this.setEnvironmentMap()
+        this.setEnvironmentMap()
 
     }
 
