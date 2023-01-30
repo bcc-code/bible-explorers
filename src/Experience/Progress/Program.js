@@ -203,12 +203,17 @@ export default class Program {
         this.highlight.fadeOut()
 
         if (this.stepType() == 'video') {
+            instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
+
+            console.log(instance.world.controlRoom.tv_portal);
+
             setTimeout(function () {
                 instance.video.load(currentVideo)
             }, instance.camera.data.moveDuration, currentVideo)
         }
         else {
             instance.video.defocus()
+            instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
 
             setTimeout(function () {
                 instance.video.setTexture(nextVideo)

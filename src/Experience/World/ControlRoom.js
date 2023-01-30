@@ -33,6 +33,7 @@ export default class ControlRoom {
         this.setMaterials()
         this.setAnimation()
 
+
         // Events
         window.addEventListener('click', () => {
             if (this.experience.world.program) {
@@ -45,6 +46,7 @@ export default class ControlRoom {
     setModel() {
         this.model = this.resources.scene
         this.scene.add(this.model)
+
     }
 
     getObjects() {
@@ -64,7 +66,7 @@ export default class ControlRoom {
 
         this.roomTexture.push(this.controlRoom, this.arrow_h, this.arrow_m)
         this.clickableObjects.push(this.tablet, this.switcher)
-        this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet)
+        this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet, this.tv_portal)
     }
 
     getTextures() {
@@ -95,10 +97,16 @@ export default class ControlRoom {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['iris'].item })
             }
 
+            if (child.name === 'tv_portal_screen') {
+                child.scale.set(0, 0, 0)
+            }
+
             if (child.name === "Screen") {
                 child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['hud'].item })
                 child.material.map.image.pause()
             }
+
+
 
             if (child.material.map) {
                 child.material.map.flipY = false
