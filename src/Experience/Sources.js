@@ -3,12 +3,12 @@ export default [
         name: 'cubeMap',
         type: 'cubeTexture',
         path: [
-            'textures/envMap/C_Right.png',
-            'textures/envMap/C_Left.png',
-            'textures/envMap/C_Top.png',
-            'textures/envMap/C_Down.png',
-            'textures/envMap/C_Back.png',
-            'textures/envMap/C_Front.png'
+            'textures/cubeMap/C_Right.png',
+            'textures/cubeMap/C_Left.png',
+            'textures/cubeMap/C_Top.png',
+            'textures/cubeMap/C_Down.png',
+            'textures/cubeMap/C_Back.png',
+            'textures/cubeMap/C_Front.png'
         ]
     },
     {
