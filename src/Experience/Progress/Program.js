@@ -76,12 +76,7 @@ export default class Program {
             !document.body.classList.contains('modal-on') &&
             !document.body.classList.contains('camera-is-moving')
 
-        instance.startInteractivity()
-        instance.updateCameraForCurrentStep()
-
-        // Disable prev on first step
-        instance.experience.navigation.prev.disabled = instance.currentStep == 0
-
+        instance.toggleStep()
         instance.addEventListeners()
     }
 
@@ -113,84 +108,104 @@ export default class Program {
     }
 
     toggleStep() {
-        console.log("steptype", instance.stepType())
-        console.log("tasktype", instance.taskType())
-
         // Disable prev on first step - Enable otherwise
         instance.experience.navigation.prev.disabled = instance.currentStep == 0
 
-        let moveCamera = true
+        instance.stepType() == 'iris' || instance.taskType() == 'dialog'
+            ? instance.world.progressBar?.hide()
+            : instance.world.progressBar?.show()
 
         // Advance to next checkpoint
         if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
             instance.nextCheckpoint()
         }
-
-        else if (instance.stepType() == 'iris') {
-            instance.message.show()
+        else {
+            instance.startInteractivity()
         }
-
-        else if (instance.stepType() == 'video') {
-            // Disable next on video step
-            instance.experience.navigation.next.disabled = true
-        }
-
-        else if (instance.stepType() == 'task') {
-            if (instance.taskType() == 'code_to_unlock') {
-                instance.codeUnlock.toggleCodeUnlock()
-            }
-
-            else if (instance.taskType() == 'picture_and_code') {
-                instance.pictureAndCode.togglePictureAndCode()
-            }
-
-            else if (instance.taskType() == 'question_and_code') {
-                instance.questionAndCode.toggleQuestionAndCode()
-            }
-
-            else if (instance.taskType() == 'questions') {
-                instance.questions.toggleQuestions()
-            }
-
-            else if (instance.taskType() == 'dialog') {
-                instance.dialogue.toggle()
-            }
-
-            // Games
-            else if (instance.taskType() == 'cables'
-                || instance.taskType() == 'sorting'
-                || instance.taskType() == 'simon_says'
-                || instance.taskType() == 'flip_cards'
-                || instance.taskType() == 'heart_defense'
-                || instance.taskType() == 'davids_refuge'
-            ) {
-                moveCamera = false
-                instance.gameDescription.show()
-            }
-        }
-
-        else if (instance.stepType() == 'quiz') {
-            instance.quiz.toggleQuiz()
-        }
-
-        else if (instance.stepType() == 'pause') {
-            instance.pause.togglePause()
-        }
-
-        if (moveCamera)
-            instance.updateCameraForCurrentStep()
     }
 
     nextCheckpoint(checkpoint = ++instance.currentCheckpoint) {
         console.log('nextCheckpoint', checkpoint)
         console.log('currentStep', 0)
 
+        instance.points.fadeOut()
+        instance.highlight.fadeOut()
+
+        instance.world.audio.playSound('whoosh-between-screens')
         instance.currentStep = 0
         instance.experience.navigation.prev.disabled = true
 
         instance.updateCurrentCheckpoint(checkpoint)
         instance.world.progressBar.refresh()
+
         instance.startInteractivity()
+    }
+
+    startInteractivity() {
+        if (instance.stepType() == 'video') {
+            instance.updateCameraForCurrentStep(() => {
+                instance.experience.navigation.next.disabled = true
+                instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
+                instance.video.load(instance.currentVideo())
+            })
+        }
+        else {
+            instance.updateCameraForCurrentStep(() => {
+                instance.video.defocus()
+                instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
+                instance.video.setTexture(instance.nextVideo())
+
+                if (instance.stepType() == 'iris') {
+                    instance.message.show()
+                }
+            })
+
+            if (instance.stepType() == 'task') {
+                if (instance.taskType() == 'code_to_unlock') {
+                    instance.codeUnlock.toggleCodeUnlock()
+                }
+
+                else if (instance.taskType() == 'picture_and_code') {
+                    instance.pictureAndCode.togglePictureAndCode()
+                }
+
+                else if (instance.taskType() == 'question_and_code') {
+                    instance.questionAndCode.toggleQuestionAndCode()
+                }
+
+                else if (instance.taskType() == 'questions') {
+                    instance.questions.toggleQuestions()
+                }
+
+                else if (instance.taskType() == 'dialog') {
+                    instance.dialogue.toggle()
+                }
+
+                // Games
+                else if (instance.taskType() == 'cables'
+                    || instance.taskType() == 'sorting'
+                    || instance.taskType() == 'simon_says'
+                    || instance.taskType() == 'flip_cards'
+                    || instance.taskType() == 'heart_defense'
+                    || instance.taskType() == 'davids_refuge'
+                ) {
+                    instance.gameDescription.show()
+                }
+            }
+
+            else if (instance.stepType() == 'quiz') {
+                instance.quiz.toggleQuiz()
+            }
+
+            else if (instance.stepType() == 'pause') {
+                instance.pause.togglePause()
+            }
+        }
+
+        // Finish program
+        if (instance.currentCheckpoint == instance.totalCheckpoints) {
+            instance.updateCameraForCurrentStep(instance.congrats.toggleBibleCardsReminder)
+        }
     }
 
     updateCurrentCheckpoint(newCheckpoint) {
@@ -200,53 +215,12 @@ export default class Program {
             instance.updateLocalStorage()
     }
 
-    startInteractivity() {
-        instance.world.audio.playSound('whoosh-between-screens')
-        let currentVideo = instance.currentVideo()
-        let nextVideo = instance.nextVideo()
-
-        instance.points.fadeOut()
-        instance.highlight.fadeOut()
-
-        if (instance.stepType() == 'video') {
-            instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
-
-            setTimeout(function () {
-                instance.video.load(currentVideo)
-            }, instance.camera.data.moveDuration, currentVideo)
-        }
-        else {
-            instance.video.defocus()
-            instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
-
-            setTimeout(function () {
-                instance.video.setTexture(nextVideo)
-            }, instance.camera.data.moveDuration, nextVideo)
-        }
-
-        if (instance.currentCheckpoint == instance.totalCheckpoints) {
-            setTimeout(() => {
-                instance.congrats.toggleBibleCardsReminder()
-            }, instance.camera.data.moveDuration)
-        }
-
-        if (instance.stepType() == 'iris') {
-            setTimeout(() => {
-                instance.message.show()
-            }, instance.camera.data.moveDuration)
-        }
-
-        if (instance.stepType() == 'pause') {
-            setTimeout(() => {
-                instance.pause.togglePause()
-            }, instance.camera.data.moveDuration)
-        }
-    }
-
-    updateCameraForCurrentStep() {
+    updateCameraForCurrentStep(callback = () => {}) {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
             instance.points.add(instance.interactiveObjects()[0], instance.stepType())
             instance.highlight.add(instance.interactiveObjects()[0])
+
+            callback()
 
             document.addEventListener('click', (event) => {
                 if (event.target.classList.contains('label')) {

@@ -83,7 +83,6 @@ export default class HeartDefense {
         `)
 
         document.querySelector('.ui-container').append(game)
-        document.querySelector('.cta').style.display = 'none'
     }
 
     startGame() {
@@ -100,6 +99,8 @@ export default class HeartDefense {
 
         document.querySelector('.game-popup')?.remove()
         document.querySelector('.heart-defense')?.classList.remove('popup-visible')
+        document.querySelector('.cta').style.display = 'none'
+
         instance.experience.gameIsOn = true
         instance.animation.start()
         instance.fadeInOverlay.reverse()
@@ -684,5 +685,6 @@ export default class HeartDefense {
         instance.experience.gameIsOn = false
 
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        document.querySelector('.cta').style.display = 'flex'
     }
 }

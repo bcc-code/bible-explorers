@@ -106,8 +106,6 @@ export default class ControlRoom {
                 child.material.map.image.pause()
             }
 
-
-
             if (child.material.map) {
                 child.material.map.flipY = false
                 child.material.map.encoding = THREE.sRGBEncoding

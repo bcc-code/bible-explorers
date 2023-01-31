@@ -49,6 +49,7 @@ export default class Dialogue {
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
             button.addEventListener("click", () => {
+                document.querySelector('.message-from-dialogue')?.remove()
                 instance.setMessageHtml(instance.data[index].answer)
 
                 if (instance.data[index].audio) {

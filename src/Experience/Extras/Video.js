@@ -132,7 +132,6 @@ export default class Video {
 
     defocus() {
         if (instance.video()) {
-
             instance.pause()
             instance.tablet.material.map.image.pause()
 
@@ -149,6 +148,8 @@ export default class Video {
                     instance.audio.fadeInBgMusic()
                 })
         }
+
+        instance.experience.navigation.next.disabled = false
     }
 
     waitAndFinish() {

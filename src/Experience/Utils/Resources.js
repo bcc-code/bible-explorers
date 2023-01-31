@@ -33,6 +33,7 @@ export default class Resources extends EventEmitter {
         this.textureItems = []
         this.posterImages = []
         this.videoPlayers = []
+        this.initialLoadCompleted = false
 
         this.loadManager()
         this.setLoaders()
@@ -42,24 +43,26 @@ export default class Resources extends EventEmitter {
     loadManager() {
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            this.page.loader()
+            if (!this.initialLoadCompleted)
+                this.page.loader()
         }
 
         this.loadingManager.onLoad = () => {
             // console.log('Loading complete!')
-            document.querySelector('.loader').remove()
+            document.querySelector('.loader')?.remove()
             document.querySelector('.app-header').style.display = "flex"
+            this.initialLoadCompleted = true
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
             // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            document.querySelector('.loader span').innerText = _s.initializing
+            if (!this.initialLoadCompleted)
+                document.querySelector('.loader span').innerText = _s.initializing
         }
 
         this.loadingManager.onError = function (url) {
             // console.log('There was an error loading ' + url)
         }
-
     }
 
     setLoaders() {
@@ -110,7 +113,7 @@ export default class Resources extends EventEmitter {
                 video.setAttribute('id', source.name)
                 video.setAttribute('webkit-playsinline', 'webkit-playsinline')
                 video.setAttribute('playsinline', '')
-                video.style.background = "white";
+                video.style.background = 'white'
                 video.crossOrigin = ''
                 video.muted = false
                 video.loop = true
@@ -124,7 +127,7 @@ export default class Resources extends EventEmitter {
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.sRGBEncoding
-                texture.needsUpdate = true;
+                texture.needsUpdate = true
                 this.textureItems[source.name] = {
                     item: texture,
                     path: source.path,
@@ -170,12 +173,12 @@ export default class Resources extends EventEmitter {
 
     loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
         resources.streamLocally(videoName, videoUrl)
-        // resources.loadVideoThumbnail(videoName, thumbnailUrl)
+        resources.loadVideoThumbnail(videoName, thumbnailUrl)
     }
 
     async loadTexturesOnline(videoName) {
         await resources.streamFromBtv(videoName)
-        // resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
+        resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
     }
 
     loadVideoThumbnail(videoName, thumbnailUrl) {

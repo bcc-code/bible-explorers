@@ -133,7 +133,7 @@ export default class Audio {
         }, 100)
     }
 
-    fadeOutBgMusic(callback = () => { }) {
+    fadeOutBgMusic(callback = () => {}) {
         if (!audio.bgMusic) return
 
         const fadeOutAudio = setInterval(() => {

@@ -23,15 +23,13 @@ export default class ProgressBar {
             checkpoint.addEventListener("click", () => {
                 let clickedCheckpoint = checkpoint.getAttribute('data-index')
 
-                if (instance.debug.developer || instance.debug.onQuickLook() || clickedCheckpoint <= instance.program.chapterProgress()) {
+                if (instance.debug.developer || instance.debug.onQuickLook() || clickedCheckpoint <= instance.program.chapterProgress())
                     instance.program.nextCheckpoint(clickedCheckpoint)
-                    instance.program.updateCameraForCurrentStep()
-                }
             })
 
             if (index == instance.program.currentCheckpoint)
                 checkpoint.setAttribute('currentCheckpoint', '')
-        });
+        })
     }
 
     refresh() {
@@ -108,11 +106,11 @@ export default class ProgressBar {
 
     }
 
-    hide() {
-        instance.htmlEl.classList.remove('is-visible')
-    }
-
     show() {
         instance.htmlEl.classList.add('is-visible')
+    }
+
+    hide() {
+        instance.htmlEl.classList.remove('is-visible')
     }
 }
