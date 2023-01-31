@@ -67,7 +67,6 @@
     }
 }
 
-
 .chapter {
     position: relative;
     display: flex;
@@ -87,11 +86,13 @@
         flex-direction: column;
         justify-content: center;
         position: relative;
-        padding: 2rem;
+        padding: var(--app-padding) 2rem;
         color: #fff;
     }
 
     &__states {
+        color: #fff;
+        font-size: 0.9rem;
         position: relative;
         margin-inline: 2rem;
         flex: 1;
@@ -119,22 +120,12 @@
     &__offline {
         display: inline-flex;
 
-        i,
-        span {
-            font-size: 1rem;
-            color: #fff;
-        }
     }
 
     &__downloading {
         display: none;
         width: 100%;
         align-items: center;
-
-        span {
-            font-size: 1rem;
-            color: #fff;
-        }
 
         .downloading-progress {
             position: relative;
