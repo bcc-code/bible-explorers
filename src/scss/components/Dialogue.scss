@@ -2,11 +2,9 @@
     .container {
         position: absolute;
         right: 0;
-        top: 5rem;
         bottom: 5rem;
         padding: var(--app-padding);
         width: clamp(300px, calc(100vw - var(--app-padding)), 40vw);
-        pointer-events: all;
 
         display: flex;
         flex-flow: column nowrap;
@@ -25,4 +23,5 @@
     .btn {
         margin-right: 0;
     }
+
 }

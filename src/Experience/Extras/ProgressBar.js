@@ -19,7 +19,6 @@ export default class ProgressBar {
             checkpoints: instance.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)")
         };
 
-
         instance.el.checkpoints.forEach(function (checkpoint, index) {
             checkpoint.addEventListener("click", () => {
                 let clickedCheckpoint = checkpoint.getAttribute('data-index')
@@ -33,13 +32,6 @@ export default class ProgressBar {
             if (index == instance.program.currentCheckpoint)
                 checkpoint.setAttribute('currentCheckpoint', '')
         });
-    }
-
-    elementFromHtml(html) {
-        const template = document.createElement('template')
-
-        template.innerHTML = html.trim()
-        return template.content.firstElementChild
     }
 
     refresh() {

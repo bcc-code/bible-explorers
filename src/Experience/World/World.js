@@ -118,7 +118,7 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<button class="category btn default bordered" data-slug="${category.slug}">${category.name}</button>`)
+        const categoryBtn = _gl.elementFromHtml(`<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`)
         document.querySelector('.categories').appendChild(categoryBtn)
     }
 
@@ -128,14 +128,6 @@ export default class World {
                 instance.selectedCategory = category.getAttribute('data-slug')
                 instance.showLobby()
                 instance.audio.changeBgMusic()
-
-                tippy('[aria-label="Preview chapter"]', {
-                    theme: 'explorers',
-                    content: _s.journey.quickLook.info,
-                    duration: [500, 200],
-                    animation: 'shift-away',
-                    arrow: false
-                })
             })
         })
     }
@@ -239,6 +231,7 @@ export default class World {
         const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
         details.append(description)
 
+
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
             const info = _gl.elementFromHtml(`
                 <div class="info">
@@ -260,6 +253,14 @@ export default class World {
 
         const previewBtn = document.querySelector('[aria-label="Preview chapter"]')
         previewBtn.addEventListener("click", instance.previewChapter)
+
+        tippy('[aria-label="Preview chapter"]', {
+            theme: 'explorers',
+            content: _s.journey.quickLook.info,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom-end',
+        })
 
         instance.experience.navigation.next.addEventListener("click", instance.startChapter)
     }
@@ -312,7 +313,7 @@ export default class World {
             content: _s.offline.download.info,
             duration: [500, 200],
             animation: 'shift-away',
-            arrow: false
+            placement: 'bottom-start',
         })
 
         tippy('.chapter__downloaded', {
@@ -320,7 +321,7 @@ export default class World {
             content: _s.offline.availableOffline.info,
             duration: [500, 200],
             animation: 'shift-away',
-            arrow: false
+            placement: 'bottom-start',
         })
     }
 

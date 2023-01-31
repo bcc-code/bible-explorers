@@ -4,7 +4,7 @@
     top: 50%;
     padding-inline: var(--app-padding);
     pointer-events: all;
-    transform: translate(-100%, -50%);
+    transform: translate(100%, -50%);
     transition: var(--transition-duration) transform var(--transition-timing);
 
     .checkpoints {
@@ -54,6 +54,6 @@
 
     .modal-on &,
     .freeze & {
-        transform: translate(-100%, -50%);
+        transform: translate(100%, -50%);
     }
 }
