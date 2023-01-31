@@ -3,7 +3,6 @@ import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
-import ProgressBar from '../Extras/ProgressBar.js'
 import Program from '../Progress/Program.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
@@ -16,6 +15,7 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
+import ProgressBar from "../Components/ProgressBar.js"
 
 let instance = null
 export default class World {
@@ -540,7 +540,6 @@ export default class World {
             instance.program.archive.init()
         }
 
-        instance.progressBar.show()
     }
 
     restartChapter() {

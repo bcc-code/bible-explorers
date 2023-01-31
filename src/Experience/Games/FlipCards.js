@@ -91,7 +91,7 @@ export default class Chapter3Game2 {
                     .to(card, { duration: 1, rotationY: 180 })
 
                 const cardSelect = document.createElement('button')
-                cardSelect.className = 'button bg--secondary border--5 border--solid border--transparent height px rounded--full'
+                cardSelect.className = 'btn default next pulsate'
                 cardSelect.setAttribute('card-select', '')
                 cardSelect.innerText = _s.miniGames.flipCards.chooseKing
                 cardSelect.disabled = true

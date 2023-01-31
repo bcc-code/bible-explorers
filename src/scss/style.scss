@@ -81,44 +81,6 @@
     z-index: -1;
 }
 
-#loading-screen {
-    color: #fff;
-    z-index: 2;
-    text-align: center;
-
-    .container__wrapper {
-        justify-content: center;
-    }
-}
-
-#chapters-screen {
-    margin-top: 100px;
-    display: none;
-}
-
-.chapters__wrapper {
-    max-width: 120rem;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-
-    >div {
-        flex: 1;
-    }
-
-    &:hover .chapter:not(.locked):hover,
-    body.ak_leder &:hover .chapter:hover {
-        opacity: 1;
-        box-shadow: 0 0 1rem var(--clr-secondary);
-    }
-
-    .list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-}
-
 .highlight-circle {
     position: absolute;
     top: 0;
@@ -128,6 +90,16 @@
     @include pulsate()
 }
 
+.skip-video {
+    right: 2rem;
+    bottom: 4rem;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+
 .fade-in {
     opacity: 1;
 }
@@ -136,39 +108,7 @@
 
 // #region Components
 
-#settings {
-    display: block;
-    margin-right: 0;
-}
 
-#start-chapter {
-    margin-left: 2rem;
-}
-
-#how-to {
-    line-height: 3.5rem;
-    text-decoration: none;
-    align-items: center;
-    padding-inline: 1rem;
-
-    i {
-        vertical-align: middle;
-        margin-right: 0.5rem;
-    }
-
-    span {
-        vertical-align: middle;
-    }
-}
-
-.skip-video {
-    right: 2rem;
-    bottom: 7rem;
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-}
 
 .tooltip {
     min-height: 0;
