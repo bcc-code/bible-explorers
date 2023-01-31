@@ -47,7 +47,7 @@ export default class Highlight {
         })
         this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
         this.outline.name = object.name + "_outline"
-        this.outline.scale.multiplyScalar(1.05)
+        this.outline.scale.multiplyScalar(1.1)
         object.add(this.outline)
 
         if (object.name === "tv_16x9_screen") {

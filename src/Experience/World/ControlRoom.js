@@ -65,7 +65,7 @@ export default class ControlRoom {
         this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
 
         this.roomTexture.push(this.controlRoom, this.arrow_h, this.arrow_m)
-        this.clickableObjects.push(this.tablet, this.switcher)
+        this.clickableObjects.push(this.tv_16x10, this.tablet, this.switcher)
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet, this.tv_portal)
     }
 
