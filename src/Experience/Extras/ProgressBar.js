@@ -23,11 +23,11 @@ export default class ProgressBar {
             checkpoint.addEventListener("click", () => {
                 let clickedCheckpoint = checkpoint.getAttribute('data-index')
 
-                if (instance.debug.developer || instance.debug.onQuickLook() || clickedCheckpoint <= instance.program.chapterProgress())
-                    instance.program.advance(clickedCheckpoint)
-
+                if (instance.debug.developer || instance.debug.onQuickLook() || clickedCheckpoint <= instance.program.chapterProgress()) {
+                    instance.program.nextCheckpoint(clickedCheckpoint)
+                    instance.program.updateCameraForCurrentStep()
+                }
             })
-
 
             if (index == instance.program.currentCheckpoint)
                 checkpoint.setAttribute('currentCheckpoint', '')

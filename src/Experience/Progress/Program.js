@@ -116,17 +116,14 @@ export default class Program {
         console.log("steptype", instance.stepType())
         console.log("tasktype", instance.taskType())
 
-        // Disable prev on first step
+        // Disable prev on first step - Enable otherwise
         instance.experience.navigation.prev.disabled = instance.currentStep == 0
 
         let moveCamera = true
 
         // Advance to next checkpoint
         if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
-            console.log('currentStep', 0)
-            instance.currentStep = 0
-            instance.advance()
-            instance.experience.navigation.prev.disabled = true
+            instance.nextCheckpoint()
         }
 
         else if (instance.stepType() == 'iris') {
@@ -179,21 +176,23 @@ export default class Program {
             instance.updateCameraForCurrentStep()
     }
 
-    advance(checkpoint = ++instance.currentCheckpoint) {
+    nextCheckpoint(checkpoint = ++instance.currentCheckpoint) {
+        console.log('nextCheckpoint', checkpoint)
+        console.log('currentStep', 0)
+
+        instance.currentStep = 0
+        instance.experience.navigation.prev.disabled = true
+
         instance.updateCurrentCheckpoint(checkpoint)
         instance.world.progressBar.refresh()
         instance.startInteractivity()
-
-        console.log('advance', checkpoint)
     }
 
     updateCurrentCheckpoint(newCheckpoint) {
-        console.log('updateCurrentCheckpoint', newCheckpoint)
         instance.currentCheckpoint = newCheckpoint
 
-        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook()) {
+        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook())
             instance.updateLocalStorage()
-        }
     }
 
     startInteractivity() {
