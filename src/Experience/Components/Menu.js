@@ -83,8 +83,8 @@ export default class Menu {
         document.querySelector('[aria-label="Open menu"]').addEventListener('click', instance.open)
         document.querySelector('[aria-label="Close menu"]').addEventListener('click', instance.close)
 
-        const overlay = document.querySelector('.menu .overlay')
-        overlay.addEventListener('click', instance.close)
+        document.querySelector('.menu .overlay').addEventListener('click', instance.close)
+        document.querySelector('.faq .overlay').addEventListener('click', instance.experience.faq.close)
 
         document.querySelector('[aria-label="FAQ"]').addEventListener('click', () => {
             instance.experience.faq.open()
