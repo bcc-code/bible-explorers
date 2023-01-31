@@ -4,7 +4,7 @@
         right: 0;
         bottom: 5rem;
         padding: var(--app-padding);
-        width: clamp(300px, calc(100vw - var(--app-padding)), 40vw);
+        width: 40vw;
 
         display: flex;
         flex-flow: column nowrap;

@@ -85,8 +85,8 @@ export default class ProgressBar {
             } else {
                 generatedHTML +=
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
-                    <svg class="star-icon icon" width="25" height="25" viewBox="0 0 25 25">
-                        <use href="#star"></use>
+                    <svg class="task-icon icon" width="25" height="25" viewBox="0 0 25 25">
+                        <use href="#pen-to-square"></use>
                     </svg>
                 </button>`
             }

@@ -13,8 +13,6 @@ export default class FAQ {
     }
 
     generateItems() {
-
-
         const content = _gl.elementFromHtml(`
             <div class="content">
                 <h2>${_s.settings.faq}</h2>
