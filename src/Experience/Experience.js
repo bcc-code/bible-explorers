@@ -11,6 +11,7 @@ import Menu from './Components/Menu.js'
 import World from './World/World.js'
 import WebGL from 'three/examples/jsm/capabilities/WebGL.js'
 import Page from './Components/Page.js'
+import FAQ from './Components/FAQ.js'
 
 let instance = null
 
@@ -27,6 +28,7 @@ export default class Experience {
 
         // Options
         this.canvas = canvas
+        this.faq = new FAQ()
 
         // Setup
         this.page = new Page()

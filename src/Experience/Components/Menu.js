@@ -1,29 +1,28 @@
 import Experience from "../Experience.js"
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _lang from '../Utils/Lang.js'
 import _appInsights from '../Utils/AppInsights.js'
 
-let settings = null
+let instance = null
 
 export default class Menu {
     constructor() {
-        this.experience = new Experience()
-        settings = this
+        instance = this
+        instance.experience = new Experience()
 
-        settings.soundOn = true
-        settings.fullScreen = false
+        instance.soundOn = true
+        instance.fullScreen = false
 
         const defaultVideoQuality = 'high'
-        settings.videoQuality = localStorage.getItem('videoQuality') || defaultVideoQuality
-        settings.logInLogOut = {
+        instance.videoQuality = localStorage.getItem('videoQuality') || defaultVideoQuality
+        instance.logInLogOut = {
             login: false,
             logout: false
         }
 
-        settings.init()
-        settings.eventListeners()
+        instance.init()
+        instance.eventListeners()
 
     }
 
@@ -46,7 +45,7 @@ export default class Menu {
         const selectVQDropdown = selectVQ.querySelector('ul')
 
         selectVQLabel.innerText = _s.settings.videoQuality.title
-        selectVQCurrent.innerText = _s.settings.videoQuality[settings.videoQuality]
+        selectVQCurrent.innerText = _s.settings.videoQuality[instance.videoQuality]
         selectVQDropdown.querySelectorAll('li').forEach(item => {
             const li = item.getAttribute('data-id')
 
@@ -59,14 +58,13 @@ export default class Menu {
             }
         })
 
-
         const soundEFX = document.querySelector('.sound-effects')
         const soundEFXLabel = soundEFX.querySelector('.label')
         const soundEFXToggle = soundEFX.querySelector('[aria-label="Sound effects toggle"]')
 
         soundEFXLabel.innerText = _s.settings.soundEffects
-        soundEFXToggle.querySelector('input').setAttribute(settings.soundOn ? 'checked' : '', '')
-        soundEFXToggle.querySelector('.slider').innerText = settings.soundOn ? 'On' : 'Off'
+        soundEFXToggle.querySelector('input').setAttribute(instance.soundOn ? 'checked' : '', '')
+        soundEFXToggle.querySelector('.slider').innerText = instance.soundOn ? 'On' : 'Off'
 
         const fullScreenInput = document.querySelector('.fullscreen-toggle input')
         const fullScreenLabel = document.querySelector('.fullscreen-toggle .slider')
@@ -78,42 +76,23 @@ export default class Menu {
         bibleExplorersGuide.querySelector('span').innerText = _s.howTo
         bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
-        const faqHeader = document.querySelector('.faq .content h2')
-        const faqList = document.querySelector('.faq .content ul')
-        const faqQuestions = Object.values(_s.faq.questions)
-        const faqAnswers = Object.values(_s.faq.answers)
-
-
-        faqHeader.innerText = _s.settings.faq
-
-        for (let i = 0; i < faqQuestions.length; i++) {
-            const faqItem = _gl.elementFromHtml(`
-                <li>
-                    <p>${faqQuestions[i]}</p>
-                    <p>${faqAnswers[i]}</p>
-                </li>
-            `)
-
-            faqList.append(faqItem)
-        }
-
     }
 
     eventListeners() {
 
-        document.querySelector('[aria-label="Open menu"]').addEventListener('click', settings.openMenu)
-        document.querySelector('[aria-label="Close menu"]').addEventListener('click', settings.closeMenu)
+        document.querySelector('[aria-label="Open menu"]').addEventListener('click', instance.open)
+        document.querySelector('[aria-label="Close menu"]').addEventListener('click', instance.close)
 
         const overlay = document.querySelector('.menu .overlay')
-        overlay.addEventListener('click', settings.closeMenu)
+        overlay.addEventListener('click', instance.close)
 
         document.querySelector('[aria-label="FAQ"]').addEventListener('click', () => {
-            settings.openFAQ()
-            settings.closeMenu()
+            instance.experience.faq.open()
+            instance.close()
         })
         document.querySelector('[aria-label="Close FAQ"]').addEventListener('click', () => {
-            settings.closeFAQ()
-            settings.openMenu()
+            instance.experience.faq.close()
+            instance.open()
         })
 
         const languageBtn = document.querySelector('[aria-label="current language"]')
@@ -138,49 +117,48 @@ export default class Menu {
 
         videoQualityItems.forEach(function (videoQuality) {
             videoQuality.addEventListener("click", () => {
-                settings.videoQuality = videoQuality.getAttribute('data-id')
-                videoQualityBtn.textContent = _s.settings.videoQuality[settings.videoQuality]
-                localStorage.setItem('videoQuality', settings.videoQuality)
+                instance.videoQuality = videoQuality.getAttribute('data-id')
+                videoQualityBtn.textContent = _s.settings.videoQuality[instance.videoQuality]
+                localStorage.setItem('videoQuality', instance.videoQuality)
                 videoQualityBtn.parentElement.classList.toggle('is-open')
             })
         })
 
         const soundToggle = document.querySelector('[aria-label="Sound effects toggle"]');
         soundToggle.addEventListener('click', () => {
-            settings.soundOn = soundToggle.querySelector('input[type="checkbox"]').checked
+            instance.soundOn = soundToggle.querySelector('input[type="checkbox"]').checked
             const label = soundToggle.querySelector('.slider')
-            label.innerText = settings.soundOn ? 'On' : 'Off'
+            label.innerText = instance.soundOn ? 'On' : 'Off'
         })
 
         const fullScreenToggle = document.querySelector('[aria-label="Full screen toggle"]');
         fullScreenToggle.addEventListener('click', () => {
 
             if (!document.fullscreenElement) {
-                settings.fullScreen = true
+                instance.fullScreen = true
                 document.documentElement.requestFullscreen()
             } else if (document.exitFullscreen) {
                 document.exitFullscreen()
-                settings.fullScreen = false
+                instance.fullScreen = false
             }
 
             const label = fullScreenToggle.querySelector('.slider')
-            label.innerText = settings.fullScreen ? 'On' : 'Off'
+            label.innerText = instance.fullScreen ? 'On' : 'Off'
         })
 
         const loginBtn = document.querySelector('[aria-label="Login button"]')
         const logoutBtn = document.querySelector('[aria-label="Logout button"]')
 
-        loginBtn.addEventListener('click', settings.login)
-        logoutBtn.addEventListener('click', settings.logout)
-
+        loginBtn.addEventListener('click', instance.login)
+        logoutBtn.addEventListener('click', instance.logout)
 
 
     }
 
     updateUI = async () => {
 
-        settings.logInLogOut.login = this.experience.auth0.isAuthenticated
-        settings.logInLogOut.logout = !this.experience.auth0.isAuthenticated
+        instance.logInLogOut.login = instance.experience.auth0.isAuthenticated
+        instance.logInLogOut.logout = !instance.experience.auth0.isAuthenticated
 
         const loginBtn = document.querySelector('[aria-label="Login button"]')
         const logoutBtn = document.querySelector('[aria-label="Logout button"]')
@@ -190,12 +168,12 @@ export default class Menu {
         const loginRole = document.querySelector('[aria-label="Role"]')
 
         if (loginBtn) {
-            loginBtn.disabled = settings.logInLogOut.login
-            logoutBtn.disabled = settings.logInLogOut.logout
+            loginBtn.disabled = instance.logInLogOut.login
+            logoutBtn.disabled = instance.logInLogOut.logout
 
-            loginText.innerText = this.experience.auth0.isAuthenticated ? _s.settings.loggedInAs : _s.settings.notLoggedIn
-            loginUser.innerText = experience.auth0.userData?.name || ''
-            loginRole.innerText = this.experience.auth0.isAuthenticated
+            loginText.innerText = instance.experience.auth0.isAuthenticated ? _s.settings.loggedInAs : _s.settings.notLoggedIn
+            loginUser.innerText = instance.experience.auth0.userData?.name || ''
+            loginRole.innerText = instance.experience.auth0.isAuthenticated
                 ? document.body.classList.contains("ak_leder")
                     ? '(' + _s.settings.mentor + ')'
                     : '(' + _s.settings.noRole + ')'
@@ -215,24 +193,12 @@ export default class Menu {
         })
     }
 
-    openMenu() {
-        const menu = document.querySelector('.menu')
-        menu.classList.add('is-open');
+    open() {
+        document.querySelector('.menu').classList.add('is-open');
     }
 
-    closeMenu() {
-        const menu = document.querySelector('.menu')
-        menu.classList.remove('is-open');
-    }
-
-    openFAQ() {
-        const menu = document.querySelector('.faq')
-        menu.classList.add('is-open');
-    }
-
-    closeFAQ() {
-        const menu = document.querySelector('.faq')
-        menu.classList.remove('is-open');
+    close() {
+        document.querySelector('.menu').classList.remove('is-open');
     }
 
 }
