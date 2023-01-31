@@ -562,14 +562,14 @@ export default class HeartDefense {
         `)
 
         const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default text">${_s.miniGames.skip}</button>
+            <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
         if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             congratsHTML.append(skipBTN)
 
         const nextLevelBTN = _gl.elementFromHtml(`
-            <button class="btn default text next pulsate">${_s.miniGames.nextRound}</button>
+            <button class="btn default next pulsate">${_s.miniGames.nextRound}</button>
         `)
 
         congratsHTML.append(nextLevelBTN)
@@ -599,7 +599,9 @@ export default class HeartDefense {
                 instance.startGame()
             })
 
+            instance.experience.navigation.prev.disabled = true
             document.querySelector('.cta').style.display = 'flex'
+            document.querySelector('.game-rounds')?.remove()
             skipBTN.remove()
         }
 
@@ -621,14 +623,14 @@ export default class HeartDefense {
         `)
 
         const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default text">${_s.miniGames.skip}</button>
+            <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
         if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             gameOverHTML.append(skipBTN)
 
         const resetBTN = _gl.elementFromHtml(`
-            <button class="btn default text">${_s.miniGames.reset}</button>
+            <button class="btn default">${_s.miniGames.reset}</button>
         `)
         gameOverHTML.append(resetBTN)
 

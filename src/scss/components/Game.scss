@@ -44,12 +44,16 @@
     }
 
     &.popup-visible {
+        .container {
+            justify-content: flex-end;
+        }
+
         .game-rounds {
             display: none;
         }
 
-        .container {
-            justify-content: flex-end;
+        .game-canvas {
+            pointer-events: none;
         }
     }
 }
