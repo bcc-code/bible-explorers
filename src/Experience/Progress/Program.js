@@ -198,6 +198,7 @@ export default class Program {
             }
 
             else if (instance.stepType() == 'pause') {
+                instance.world.progressBar?.hide()
                 instance.pause.togglePause()
             }
         }
@@ -215,7 +216,7 @@ export default class Program {
             instance.updateLocalStorage()
     }
 
-    updateCameraForCurrentStep(callback = () => {}) {
+    updateCameraForCurrentStep(callback = () => { }) {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
             instance.points.add(instance.interactiveObjects()[0], instance.stepType())
             instance.highlight.add(instance.interactiveObjects()[0])

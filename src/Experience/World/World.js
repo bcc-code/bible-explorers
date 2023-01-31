@@ -539,9 +539,6 @@ export default class World {
         if (instance.program.archive.facts.length > 0) {
             instance.program.archive.init()
         }
-
-        instance.progressBar.show()
-
     }
 
     restartChapter() {
