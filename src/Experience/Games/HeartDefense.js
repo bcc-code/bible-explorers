@@ -350,6 +350,7 @@ export default class HeartDefense {
                     if (thought.badThought) {
                         instance.stats.lives--
                         instance.updateLivesStatus()
+                        instance.audio.playSound('heart-defense/lose-life')
 
                         if (instance.stats.lives == 0) {
                             instance.stopThoughtsAnimation()
@@ -357,7 +358,7 @@ export default class HeartDefense {
                         }
                     }
                     else {
-                        instance.audio.playCorrectSound()
+                        instance.audio.playSound('correct')
                         instance.updateHeartStatus()
                         instance.stats.points++
 
@@ -368,7 +369,7 @@ export default class HeartDefense {
                     }
                 }
                 else {
-                    instance.audio.playWrongSound()
+                    instance.audio.playSound('heart-defense/door-crash')
                     instance.playSpriteAnimation(thought.item, instance.explosionSprite)
                 }
 
@@ -524,6 +525,9 @@ export default class HeartDefense {
         instance.stats.heartClosed = !instance.stats.heartClosed
         instance.updateDoorStatus()
         instance.stopSpriteAnimationOnDoor()
+
+        const sound = instance.stats.heartClosed ? 'close' : 'open'
+        instance.audio.playSound('heart-defense/door-' + sound)
     }
 
     updateStageDimension() {

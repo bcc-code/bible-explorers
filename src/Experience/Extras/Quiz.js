@@ -268,7 +268,7 @@ export default class Quiz {
     }
 
     completeQuiz() {
-        quiz.experience.world.audio.playTaskCompleted()
+        quiz.experience.world.audio.playSound('task-completed')
         quiz.summary(quiz.correctAnswers + (document.getElementById('quizTextarea') ? 1 : 0), quiz.htmlQuestions.length)
     }
 

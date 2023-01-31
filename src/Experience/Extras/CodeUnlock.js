@@ -122,7 +122,7 @@ export default class CodeUnlock {
         const wrapper = document.querySelector('.code-unlock')
 
         if (instance.el.code.textContent == instance.secretCode) {
-            instance.audio.playTaskCompleted()
+            instance.audio.playSound('task-completed')
             instance.finishGame()
         }
         else {
@@ -134,7 +134,7 @@ export default class CodeUnlock {
             setTimeout(() => {
                 wrapper.classList.remove('wrong-code')
             }, 2000)
-            instance.audio.playWrongSound()
+            instance.audio.playSound('wrong')
         }
     }
 

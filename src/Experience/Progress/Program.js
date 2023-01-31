@@ -130,6 +130,11 @@ export default class Program {
             instance.message.show()
         }
 
+        else if (instance.stepType() == 'video') {
+            // Disable next on video step
+            instance.experience.navigation.next.disabled = true
+        }
+
         else if (instance.stepType() == 'task') {
             if (instance.taskType() == 'code_to_unlock') {
                 instance.codeUnlock.toggleCodeUnlock()
@@ -196,7 +201,7 @@ export default class Program {
     }
 
     startInteractivity() {
-        instance.world.audio.playWhoosh()
+        instance.world.audio.playSound('whoosh-between-screens')
         let currentVideo = instance.currentVideo()
         let nextVideo = instance.nextVideo()
 
