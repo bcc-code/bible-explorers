@@ -1,26 +1,23 @@
 .progress-bar {
     position: absolute;
-    right: 0;
-    top: 50%;
-    padding-inline: var(--app-padding);
+    bottom: 0;
+    left: 0;
+    padding: var(--app-padding);
     pointer-events: all;
-    transform: translate(100%, -50%);
+    width: clamp(300px, calc(100vw - var(--app-padding)), 60vw);
+    transform: translateY(100%);
     transition: var(--transition-duration) transform var(--transition-timing);
 
     .checkpoints {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: space-between;
         position: relative;
+        display: flex;
+        justify-content: space-between;
     }
 
     [aria-label="checkpoint"] {
         margin-right: 0;
     }
 
-    [aria-label="checkpoint"]:not(:last-child) {
-        margin-bottom: 1rem;
-    }
 
     [aria-label="checkpoint"][currentCheckpoint] {
         background-color: var(--clr-secondary);
@@ -32,28 +29,28 @@
 
     .percentageBar {
         position: absolute;
-        top: 1rem;
+        top: 2rem;
         left: 2rem;
+        right: 2rem;
         bottom: 1rem;
-        width: 10px;
+        height: 0.5rem;
         background-color: var(--clr-background);
         box-shadow: 0 0 0 0.1rem var(--clr-secondary);
 
         .passed {
             float: left;
-            width: 100%;
-            height: attr(data-progress);
+            height: 100%;
             background: var(--clr-secondary);
             transition: var(--transition-duration) width var(--transition-timing);
         }
     }
 
     &.is-visible {
-        transform: translate(0, -50%);
+        transform: translateY(0);
     }
 
     .modal-on &,
     .freeze & {
-        transform: translate(100%, -50%);
+        transform: translateY(100%);
     }
 }
