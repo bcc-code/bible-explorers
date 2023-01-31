@@ -161,6 +161,9 @@ export default class Program {
             })
 
             if (instance.stepType() == 'task') {
+
+                instance.world.progressBar?.hide()
+
                 if (instance.taskType() == 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
                 }
@@ -194,6 +197,7 @@ export default class Program {
             }
 
             else if (instance.stepType() == 'quiz') {
+                instance.world.progressBar?.hide()
                 instance.quiz.toggleQuiz()
             }
 
