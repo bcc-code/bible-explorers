@@ -4,7 +4,7 @@
     left: 0;
     padding: var(--app-padding);
     pointer-events: all;
-    width: clamp(300px, calc(100vw - var(--app-padding)), 60vw);
+    width: 60vw;
     transform: translateY(100%);
     transition: var(--transition-duration) transform var(--transition-timing);
 
