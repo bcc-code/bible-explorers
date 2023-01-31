@@ -540,6 +540,8 @@ export default class World {
             instance.program.archive.init()
         }
 
+        instance.progressBar.show()
+
     }
 
     restartChapter() {
