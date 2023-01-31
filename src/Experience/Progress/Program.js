@@ -306,4 +306,15 @@ export default class Program {
     updateLocalStorage() {
         localStorage.setItem(instance.world.getId(), instance.currentCheckpoint)
     }
+
+    removeEventListeners() {
+        instance.experience.navigation.prev.removeEventListener('click', instance.previousStep)
+        instance.experience.navigation.next.removeEventListener('click', instance.nextStep)
+    }
+
+    destroy() {
+        instance.removeEventListeners()
+        instance.message.destroy()
+        instance.dialogue.destroy()
+    }
 }

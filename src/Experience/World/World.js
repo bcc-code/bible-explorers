@@ -552,7 +552,7 @@ export default class World {
 
     goHome() {
         document.body.classList.add('freeze')
-        instance.program.message.destroy()
+        instance.program.destroy()
         instance.program.video.defocus()
         instance.points.delete()
         instance.buttons.home.style.display = 'none'
