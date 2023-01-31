@@ -201,6 +201,10 @@ export default class Program {
                 instance.world.progressBar?.hide()
                 instance.pause.togglePause()
             }
+
+            if (instance.stepType() !== 'pause') {
+                instance.pause.destroy()
+            }
         }
 
         // Finish program
