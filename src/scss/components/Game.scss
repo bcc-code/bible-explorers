@@ -39,6 +39,23 @@
         border: 0.25rem solid var(--clr-primary);
     }
 
+    &-notification {
+        background-color: #fff;
+
+        position: absolute;
+        top: var(--app-padding);
+        right: var(--app-padding);
+        padding: var(--app-padding);
+        border-radius: 1rem;
+        width: 36ch;
+
+        img {
+            position: absolute;
+            top: 0;
+            right: calc(100% + 1rem);
+        }
+    }
+
     button {
         pointer-events: all;
     }
@@ -73,4 +90,135 @@
         color: #fff;
         margin-bottom: 2rem;
     }
+}
+
+.flip-card {
+
+    .container {
+        justify-content: center;
+    }
+
+    .cards {
+        display: flex;
+    }
+
+    .card {
+        width: clamp(128px, calc(100vw - var(--app-padding)), 300px);
+        position: relative;
+        pointer-events: all;
+        padding: 16px;
+
+        audio {
+            display: none;
+        }
+
+        input {
+            flex: 1;
+            margin-left: 1rem;
+            border: none;
+            background-color: transparent;
+
+            &::placeholder {
+                color: #fff;
+                text-transform: uppercase;
+                transition: var(--transition-duration) var(--transition-timing);
+            }
+
+            &:focus-visible {
+                outline: none;
+            }
+
+            &:focus-visible::placeholder {
+                color: transparent;
+            }
+        }
+
+        .icon {
+            width: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &-frame {
+            position: absolute;
+            inset: 0;
+            background: url('../../static/games/select-tl.png') top left,
+                url('../../static/games/select-tr.png') top right,
+                url('../../static/games/select-bl.png') bottom left,
+                url('../../static/games/select-br.png') bottom right;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: var(--transition-duration) var(--transition-timing);
+        }
+
+        &-image {
+            position: relative;
+            aspect-ratio: 9/16;
+
+            div {
+                position: absolute;
+                inset: 0;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+        }
+
+        &-input {
+            color: #fff;
+            background: var(--clr-primary);
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+        }
+
+        &:not([selected]):hover {
+            img {
+                box-shadow: 0 0 0 4px $accent;
+            }
+
+            .cardInput {
+                opacity: 1;
+            }
+
+            .icon-volume-solid {
+                opacity: 1;
+            }
+        }
+
+        &.flipped {
+            .card-input {
+                display: none;
+            }
+        }
+
+        &.selected {
+            .card-frame {
+                opacity: 1;
+            }
+        }
+
+
+    }
+
+    button {
+        display: none;
+        margin-top: 2rem;
+    }
+
+    &.all-flipped {
+        button {
+            display: inline-block;
+        }
+    }
+
+
 }

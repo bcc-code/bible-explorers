@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
 import gsap from 'gsap'
 
 let instance = null
@@ -14,223 +15,187 @@ export default class Chapter3Game2 {
         instance.debug = instance.experience.debug
     }
 
-    init() {
-        instance.program = instance.world.program
-        instance.stepData = instance.program.getCurrentStepData()
-        instance.data = instance.stepData.flip_cards
-
-        if (document.querySelector('.modal')) {
-            instance.modal.destroy()
-        } else {
-            const gameWrapper = document.createElement('div')
-            gameWrapper.classList.add('model__content')
-            gameWrapper.setAttribute("id", "flipCardGame")
-
-            const cardWrapper = document.createElement('div')
-            cardWrapper.setAttribute("id", "cardWrapper")
-
-            instance.data.cards.forEach(card => {
-                cardWrapper.append(instance.getCardHtml(
-                    card.image_front,
-                    card.image_back,
-                    card.sound_effect
-                ))
-            })
-
-            gameWrapper.append(cardWrapper)
-
-            instance.modal = new Modal(gameWrapper.outerHTML, 'modal__flipCardGame')
-
-            const close = document.querySelector('.modal__close')
-            close.style.display = 'none'
-
-            const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>${instance.stepData.details.title}</h3>
-                <p>${instance.stepData.details.prompts[0].prompt}</p>`
-
-
-            const back = document.getElementById('back')
-            back.style.display = 'block'
-            back.innerText = _s.journey.back
-            back.addEventListener('click', () => {
-                instance.modal.destroy()
-                instance.program.previousStep()
-            })
-
-            const next = document.getElementById('continue')
-            next.style.display = 'block'
-            next.disabled = true
-            next.innerText = 'next'
-
-            const skip = document.getElementById("skip")
-            skip.innerText = _s.miniGames.skip
-            skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
-                ? 'block'
-                : 'none'
-            skip.addEventListener('click', instance.finishGame)
-
-            let firstTimeClick = true
-            let cards = gsap.utils.toArray('.card')
-
-            cards.forEach((card, index) => {
-                gsap.set(card, {
-                    transformStyle: "preserve-3d",
-                    transformPerspective: 1000
-                })
-
-                const q = gsap.utils.selector(card)
-                const front = q('.cardFront')
-                const back = q('.cardBack')
-                const input = q('input')
-                const audio = q('audio')
-
-                gsap.set(front, { rotationY: 180 })
-
-                const flip = gsap.timeline({ paused: true })
-                    .to(input, { autoAlpha: 0, display: 'none' })
-                    .to(card, { duration: 1, rotationY: 180 })
-
-                const cardSelect = document.createElement('button')
-                cardSelect.className = 'btn default next pulsate'
-                cardSelect.setAttribute('card-select', '')
-                cardSelect.innerText = _s.miniGames.flipCards.chooseKing
-                cardSelect.disabled = true
-
-                input[0].addEventListener('input', () => {
-                    if (input[0].value === instance.data.cards[index].code) {
-                        card.setAttribute('flipped', '')
-                        flip.play()
-
-                        const flippedCards = document.querySelectorAll('[flipped]')
-
-                        if (flippedCards.length == instance.data.cards.length) {
-                            title.querySelector('p').innerText = instance.stepData.details.prompts[1].prompt
-                            document.getElementById('flipCardGame').append(cardSelect)
-                        }
-                    }
-                })
-
-                if (audio.length) {
-                    back[0].addEventListener('click', () => { audio[0].play() })
-                    front[0].addEventListener('click', () => { audio[0].play() })
-                }
-
-                card.addEventListener('click', () => {
-                    const flippedCards = document.querySelectorAll('[flipped]')
-                    if (flippedCards.length == instance.data.cards.length) {
-
-                        document.getElementById('cardWrapper').classList.add('cardSelection')
-                        const selectedCard = document.querySelector('[selected]')
-
-                        if (selectedCard !== null) {
-                            selectedCard.removeAttribute('selected')
-                        }
-
-                        card.setAttribute('selected', '')
-                        document.querySelector('[card-select]').disabled = false
-
-                        setTimeout(() => {
-                            if (firstTimeClick)
-                                instance.toggleGlitch()
-
-                            firstTimeClick = false
-                        }, 300)
-                    }
-                })
-
-                card.addEventListener('mouseenter', () => {
-                    input[0].focus()
-                })
-            })
-
-            document.addEventListener('click', (event) => {
-                if (event.target.hasAttribute('card-select')) {
-                    document.getElementById('cardWrapper').classList.remove('cardSelection')
-                    document.getElementById('cardWrapper').classList.add('cardChoosed')
-
-                    const selectedCard = document.querySelector('[selected]')
-                    selectedCard.setAttribute('choosed', '')
-                    document.querySelector('[card-select]').disabled = true
-
-                    setTimeout(() => {
-                        instance.toggleGodVoice()
-                        next.disabled = false
-                        next.addEventListener('click', instance.finishGame)
-                    }, 1000)
-                }
-            })
-        }
-    }
-
     toggleGame() {
-        instance.init()
+        instance.gameHTML()
+        instance.setEventListeners()
+
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
     }
 
-    getCardHtml(front, back, sound) {
-        const card = document.createElement('div')
-        card.className = 'card'
-        card.innerHTML = `
-            <image data-src="${back}" class="lazyload cardBack">
-            <image data-src="${front}" class="lazyload cardFront">`
+    gameHTML() {
+        instance.program = instance.world.program
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.flip_cards
 
-        if (sound) card.innerHTML += `
-                <i class="icon-volume-solid"></i>
-                <audio class="cardAudio">
-                    <source src="${sound}" type="audio/ogg">
-                </audio>
-            `
+        const game = _gl.elementFromHtml(`
+            <section class="game flip-card">
+                <div class="container">
+                    <div class="cards"></div>
+                    <button class="btn default next" disabled aria-label="card select">${_s.miniGames.flipCards.chooseKing}</button>
+                </div>
+                <div class="overlay"></div>
+            </section>
+        `)
 
-        card.innerHTML += `<div class='cardInput'><i class='icon-lock-solid'></i><input type="text" placeholder="#"/></div>
-            <div class="cardSelect"></div>
-        `
-        return card
+        instance.data.cards.forEach(c => {
+            const card = _gl.elementFromHtml(`
+                <article class="card">
+                    <div class="card-frame"></div>
+                    <div class="card-image">
+                        <div class="card-back" style="background-image: url('${c.image_back}')"></div>
+                        <div class="card-front" style="background-image: url('${c.image_front}')"></div>
+                    </div>
+                    <div class="card-input">
+                        <div class="icon">
+                            <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
+                                <use href="#locked"></use>
+                            </svg>
+                        </div>
+                        <input type="text" placeholder="#"/>
+                    </div>
+                </article>
+            `)
+
+            if (c.sound) {
+                const audio = _gl.elementFromHtml(`
+                    <audio src="${c.sound_effect}"></audio>
+                `)
+
+                card.append(audio)
+                card.classList.add('has-audio')
+            }
+
+            game.querySelector('.cards').append(card)
+        })
+
+        document.querySelector('.ui-container').append(game)
+        document.querySelector('.cta').style.display = 'none'
     }
 
-    dialogueHtml(cls, text, avatar) {
-        return `
-            <div id="dialogue" class="dialogue ${cls}">
-                <div class="dialogue-content">
-                    <img src="${avatar}"/>
-                    <p>${text}</p>
-                </div>
-            </div>
-        `
+    setEventListeners() {
+        const cards = gsap.utils.toArray('.flip-card .card')
+
+        cards.forEach((card, index) => {
+            const q = gsap.utils.selector(card)
+
+            const cImage = q('.card-image')
+            const cAudio = q('.card-audio')
+            const cFront = q('.card-front')
+            const cInput = q('.card-input input')
+
+            gsap.set(cImage[0], {
+                transformStyle: "preserve-3d",
+                transformPerspective: 1000
+            })
+
+            gsap.set(cFront, { rotationY: 180 })
+
+            const flipAnimation = gsap.timeline({ paused: true })
+                .to(cImage[0], { duration: 1, rotationY: 180 })
+
+
+            cInput[0].addEventListener('input', (e) => {
+
+                if (e.target.value === instance.data.cards[index].code) {
+                    card.classList.add('flipped')
+                    flipAnimation.play()
+
+                    // All cards are flipped
+                    const flippedCards = document.querySelectorAll('.flipped')
+
+                    if (flippedCards.length == instance.data.cards.length) {
+                        document.querySelector('.flip-card').classList.add('all-flipped')
+                    }
+                }
+            })
+
+            let firstTimeClick = true
+
+            card.addEventListener('click', () => {
+
+                if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
+                    const selectedCard = document.querySelector('.selected')
+
+                    if (selectedCard)
+                        selectedCard.classList.remove('selected')
+
+                    card.classList.add('selected')
+                    document.querySelector('[aria-label="card select"]').disabled = false
+
+                    setTimeout(() => {
+                        if (firstTimeClick)
+                            instance.toggleGlitch()
+
+                        firstTimeClick = false
+                    }, 300)
+                }
+            })
+
+            if (cAudio.length)
+                cImage[0].addEventListener('click', () => { cAudio[0].play() })
+        })
+
+        const chooseCard = document.querySelector('[aria-label="card select"')
+
+        chooseCard.addEventListener('click', (e) => {
+            e.target.remove()
+
+            document.querySelector('.game-notification')?.remove()
+            document.querySelector('.cta').style.display = 'flex'
+
+            setTimeout(() => {
+                instance.toggleGodVoice()
+            }, 300)
+        })
+
+        instance.experience.navigation.next.addEventListener('click', instance.destroy)
+        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
+
     }
 
     toggleGlitch() {
-        const imageSrc = 'games/glitch.png'
-        const glitch = instance.dialogueHtml('glitch', instance.data.glitchs_voice.text, imageSrc)
+        const profilePic = 'games/glitch.png'
 
-        document.querySelector('.modal__flipCardGame').insertAdjacentHTML('beforeend', glitch)
+        const notification = _gl.elementFromHtml(`
+            <aside class="game-notification">
+                <img src="${profilePic}"/>
+                <p>${instance.data.glitchs_voice.text}</p>
+            </aside>
+        `)
 
-        gsap.to('.dialogue', {
-            y: 0, autoAlpha: 1, onComplete: () => {
+        document.querySelector('.flip-card .container').append(notification)
+
+        gsap.set(notification, { x: '100%' })
+        gsap.to(notification, {
+            x: 0, onComplete: () => {
                 instance.audio.togglePlayTaskDescription(instance.data.glitchs_voice.audio)
             }
         })
     }
 
     toggleGodVoice() {
-        const imageSrc = 'games/godVoice.png'
-        const godVoice = instance.dialogueHtml('godVoice', instance.data.gods_voice.text, imageSrc)
+        const profilePic = 'games/godVoice.png'
 
-        gsap.to('.dialogue', {
-            y: '100%', autoAlpha: 0, onComplete: () => {
-                document.querySelector('.dialogue').remove()
-                document.querySelector('.modal__flipCardGame').insertAdjacentHTML('beforeend', godVoice)
-                gsap.to('.dialogue', {
-                    y: 0, autoAlpha: 1, onComplete: () => {
-                        instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)
-                    }
-                })
+        const notification = _gl.elementFromHtml(`
+        <aside class="game-notification">
+            <img src="${profilePic}"/>
+            <p>${instance.data.gods_voice.text}</p>
+        </aside>
+        `)
+
+        document.querySelector('.flip-card .container').append(notification)
+
+        gsap.set(notification, { x: '100%' })
+        gsap.to(notification, {
+            x: 0, onComplete: () => {
+                instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)
             }
         })
     }
 
-    finishGame() {
-        instance.modal.destroy()
-        instance.program.nextStep()
+    destroy() {
+        document.querySelector('.game')?.remove()
     }
+
 }
