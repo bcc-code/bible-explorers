@@ -293,7 +293,7 @@ export default class SimonSays {
     finishGame() {
         instance.fails = 0
         instance.modal.destroy()
-        instance.audio.playTaskCompleted()
+        instance.audio.playSound('task-completed')
         instance.toggleGameComplete()
     }
 

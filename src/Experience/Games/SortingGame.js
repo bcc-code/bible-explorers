@@ -253,7 +253,7 @@ export default class SortingGame {
                 })
 
                 icon.draggable(false)
-                instance.audio.playCorrectSound()
+                instance.audio.playSound('correct')
 
                 if (instance.gameIsFinished()) {
                     setTimeout(instance.finishGame, 1000)
@@ -269,7 +269,7 @@ export default class SortingGame {
                     duration: 0.5
                 })
 
-                instance.audio.playWrongSound()
+                instance.audio.playSound('wrong')
             }
 
             instance.sortingFeedback(selectedBox, feedback)
@@ -284,7 +284,7 @@ export default class SortingGame {
 
     finishGame() {
         instance.toggleGameComplete()
-        instance.audio.playTaskCompleted()
+        instance.audio.playSound('task-completed')
 
         const nextBtn = document.getElementById('continue')
         nextBtn.style.display = 'block'

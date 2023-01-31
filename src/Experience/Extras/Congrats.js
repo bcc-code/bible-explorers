@@ -60,7 +60,7 @@ export default class Congrats {
 
         instance.modal = new Modal(html, 'modal__congrats', instance.world.finishJourney)
 
-        instance.world.audio.playCongratsSound()
+        instance.world.audio.playSound('congrats')
         instance.animateStars(500)
 
         const homescreen = document.getElementById('continue')

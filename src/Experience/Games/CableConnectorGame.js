@@ -251,7 +251,7 @@ export default class CableConnector {
 
                     if (instance.connectedToOutlet(plugPosition, instance.correspondingOutlet)) {
 
-                        instance.audio.playCorrectSound()
+                        instance.audio.playSound('correct')
                         instance.playAnimation(instance.correspondingOutlet, sparkleSprite)
 
                         const plugInPosition = {
@@ -288,7 +288,7 @@ export default class CableConnector {
                         })
 
                         if (outletConnectedTo) {
-                            instance.audio.playWrongSound()
+                            instance.audio.playSound('wrong')
                             instance.playAnimation(outletConnectedTo, explosionSprite)
                         }
                     }
@@ -330,7 +330,7 @@ export default class CableConnector {
                         currentVisible.canClick = false
                         outlet.colorFound = true
                         currentVisible.colorFound = true
-                        instance.audio.playCorrectSound()
+                        instance.audio.playSound('correct')
 
                         instance.colorCable(this.cables.find(c => c.color === outlet.color))
                     }
@@ -342,7 +342,7 @@ export default class CableConnector {
                         else {
                             // Opposite sides. Show wrong animation
                             instance.stopOutletClick()
-                            instance.audio.playWrongSound()
+                            instance.audio.playSound('wrong')
 
                             instance.animateIcon(this.triangle, '#fe7968', layer, () => {
                                 instance.deselectOutlet(currentVisible)
@@ -583,7 +583,7 @@ export default class CableConnector {
         instance.destroy()
         instance.modal.destroy()
         instance.toggleGameComplete()
-        instance.audio.playTaskCompleted()
+        instance.audio.playSound('task-completed')
     }
 
     toggleGameComplete() {
