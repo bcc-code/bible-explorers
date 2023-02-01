@@ -534,7 +534,6 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        instance.progressBar.show()
 
         instance.buttons.home.style.display = 'flex'
 
