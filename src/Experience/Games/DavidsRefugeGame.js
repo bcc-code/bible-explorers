@@ -190,6 +190,7 @@ export default class DavidsRefuge {
         })
 
         instance.experience.navigation.next.addEventListener('click', instance.destroy)
+        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
 
 
         // Message event
@@ -230,6 +231,7 @@ export default class DavidsRefuge {
     destroy() {
         document.querySelector('.game')?.remove()
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
     }
 
 }

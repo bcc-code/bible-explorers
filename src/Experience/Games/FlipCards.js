@@ -196,6 +196,9 @@ export default class Chapter3Game2 {
 
     destroy() {
         document.querySelector('.game')?.remove()
+        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
+
     }
 
 }

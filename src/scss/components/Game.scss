@@ -99,7 +99,7 @@
     }
 
     .card {
-        width: clamp(128px, calc(100vw - var(--app-padding)), 300px);
+        width: calc(100vw/6);
         position: relative;
         pointer-events: all;
         padding: 16px;
