@@ -126,7 +126,7 @@
 }
 
 .skip-video {
-    right: 2rem;
+    right: var(--app-padding);
     bottom: 4rem;
     position: absolute;
     display: flex;

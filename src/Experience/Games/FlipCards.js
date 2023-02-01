@@ -75,6 +75,7 @@ export default class Chapter3Game2 {
 
     setEventListeners() {
         const cards = gsap.utils.toArray('.flip-card .card')
+        let firstTimeClick = true
 
         cards.forEach((card, index) => {
             const q = gsap.utils.selector(card)
@@ -96,7 +97,6 @@ export default class Chapter3Game2 {
 
 
             cInput[0].addEventListener('input', (e) => {
-
                 if (e.target.value === instance.data.cards[index].code) {
                     card.classList.add('flipped')
                     flipAnimation.play()
@@ -110,10 +110,9 @@ export default class Chapter3Game2 {
                 }
             })
 
-            let firstTimeClick = true
+
 
             card.addEventListener('click', () => {
-
                 if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
                     const selectedCard = document.querySelector('.selected')
 
@@ -123,13 +122,13 @@ export default class Chapter3Game2 {
                     card.classList.add('selected')
                     document.querySelector('[aria-label="card select"]').disabled = false
 
-                    setTimeout(() => {
-                        if (firstTimeClick)
-                            instance.toggleGlitch()
-
+                    if (firstTimeClick) {
                         firstTimeClick = false
-                    }, 300)
+                        instance.toggleGlitch()
+                    }
+
                 }
+
             })
 
             if (cAudio.length)

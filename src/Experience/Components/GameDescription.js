@@ -40,6 +40,7 @@ export default class Task {
             })
         }
 
+        document.querySelector('.cta').style.display = 'none'
         instance.experience.navigation.prev.addEventListener("click", instance.destroy)
         instance.experience.navigation.next.disabled = true
     }

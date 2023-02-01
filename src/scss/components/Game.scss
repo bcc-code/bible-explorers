@@ -96,13 +96,14 @@
 
     .cards {
         display: flex;
+        width: clamp(600px, calc(100vw - var(--app-padding)), 1440px);
     }
 
     .card {
-        width: calc(100vw/6);
+        flex: 1;
         position: relative;
         pointer-events: all;
-        padding: 16px;
+        padding: var(--app-padding);
 
         audio {
             display: none;
@@ -167,9 +168,10 @@
             color: #fff;
             background: var(--clr-primary);
             position: absolute;
-            bottom: 1rem;
-            left: 1rem;
-            right: 1rem;
+            bottom: calc(var(--app-padding) + 8px);
+            left: calc(var(--app-padding) + 8px);
+            right: calc(var(--app-padding) + 8px);
+            border-radius: 0.25rem;
 
             display: flex;
             align-items: center;

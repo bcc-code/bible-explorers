@@ -99,7 +99,6 @@ export default class HeartDefense {
 
         document.querySelector('.game-popup')?.remove()
         document.querySelector('.heart-defense')?.classList.remove('popup-visible')
-        document.querySelector('.cta').style.display = 'none'
 
         instance.experience.gameIsOn = true
         instance.animation.start()
