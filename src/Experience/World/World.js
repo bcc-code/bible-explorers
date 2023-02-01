@@ -534,11 +534,15 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
+        instance.progressBar.show()
+
         instance.buttons.home.style.display = 'flex'
 
         if (instance.program.archive.facts.length > 0) {
             instance.program.archive.init()
         }
+
+
     }
 
     restartChapter() {
