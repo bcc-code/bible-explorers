@@ -111,10 +111,6 @@ export default class Program {
         // Disable prev on first step - Enable otherwise
         instance.experience.navigation.prev.disabled = instance.currentStep == 0
 
-        instance.stepType() == 'iris' || instance.taskType() == 'dialog'
-            ? instance.world.progressBar?.hide()
-            : instance.world.progressBar?.show()
-
         // Advance to next checkpoint
         if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
             instance.nextCheckpoint()
@@ -142,6 +138,9 @@ export default class Program {
     }
 
     startInteractivity() {
+
+        document.body.setAttribute('data-step', instance.stepType())
+
         if (instance.stepType() == 'video') {
             instance.updateCameraForCurrentStep(() => {
                 instance.experience.navigation.next.disabled = true
@@ -161,9 +160,6 @@ export default class Program {
             })
 
             if (instance.stepType() == 'task') {
-
-                instance.world.progressBar?.hide()
-
                 if (instance.taskType() == 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
                 }
@@ -197,12 +193,10 @@ export default class Program {
             }
 
             else if (instance.stepType() == 'quiz') {
-                instance.world.progressBar?.hide()
                 instance.quiz.toggleQuiz()
             }
 
             else if (instance.stepType() == 'pause') {
-                instance.world.progressBar?.hide()
                 instance.pause.togglePause()
             }
 

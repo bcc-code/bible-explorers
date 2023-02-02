@@ -105,12 +105,4 @@ export default class ProgressBar {
         return generatedHTML
 
     }
-
-    show() {
-        instance.htmlEl.classList.add('is-visible')
-    }
-
-    hide() {
-        instance.htmlEl.classList.remove('is-visible')
-    }
 }

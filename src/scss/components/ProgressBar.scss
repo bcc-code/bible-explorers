@@ -6,7 +6,8 @@
     pointer-events: all;
     width: 60vw;
     transform: translateY(100%);
-    transition: var(--transition-duration) transform var(--transition-timing);
+    transition: var(--transition-duration) var(--transition-timing);
+    opacity: 0;
 
     .checkpoints {
         position: relative;
@@ -45,12 +46,9 @@
         }
     }
 
-    &.is-visible {
-        transform: translateY(0);
-    }
 
-    .modal-on &,
-    .freeze & {
-        transform: translateY(100%);
+    body[data-step="video"] & {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
