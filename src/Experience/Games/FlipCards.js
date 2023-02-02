@@ -142,10 +142,9 @@ export default class Chapter3Game2 {
 
             document.querySelector('.game-notification')?.remove()
             document.querySelector('.cta').style.display = 'flex'
+            cards.forEach(card => card.style.pointerEvents = 'none')
 
-            setTimeout(() => {
-                instance.toggleGodVoice()
-            }, 300)
+            instance.toggleGodVoice()
         })
 
         instance.experience.navigation.next.addEventListener('click', instance.destroy)
