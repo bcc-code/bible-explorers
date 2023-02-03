@@ -35,11 +35,11 @@ export default class HeartDefense {
                     spriteW * 3, 0, spriteW, spriteH,
                 ]
             },
-            highestSpeed: 4.6,
-            lowestSpeed: 3.6,
+            highestSpeed: 3.2,
+            lowestSpeed: 1.2,
             probability: 0.02,
             thoughtVariants: 3,
-            pointsToCompleteLevel: 1,
+            pointsToCompleteLevel: 4,
             showSkipAfterNoOfTries: 3,
             thoughts: {
                 width: 200,
