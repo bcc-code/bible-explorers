@@ -502,8 +502,8 @@ export default class HeartDefense {
 
     getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
     getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * Math.min(instance.stats.level, instance.config.levels)
-    getRndBadThoughtSrc = () => instance.config.path + 'bad-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
-    getRndGoodThoughtSrc = () => instance.config.path + 'good-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
+    getRndBadThoughtSrc = () => instance.config.path + 'bad-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
+    getRndGoodThoughtSrc = () => instance.config.path + 'good-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
     getRndBetween = (min, max) => min + Math.random() * (max - min)
     getRoundedRndBetween = (min, max) => Math.round(instance.getRndBetween(min, max))
 
