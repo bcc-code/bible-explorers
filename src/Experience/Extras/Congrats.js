@@ -68,7 +68,7 @@ export default class Congrats {
         homescreen.style.display = 'block'
         homescreen.addEventListener('click', () => {
             instance.modal.destroy()
-            instance.world.showMenu()
+            instance.world.goHome()
             instance.debug.removeQuickLookMode()
 
             if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
