@@ -59,13 +59,23 @@ export default class Camera {
                 }
             },
             'irisCloseLook': {
-                position: new THREE.Vector3(-0.5762611867366175, 1.311365797334531, -0.7368178311566804),
-                lookAt: new THREE.Vector3(-0.5853749680936323, 1.3105364771329846, -0.7552741650596074),
+                position: new THREE.Vector3(-0.4308005000435932, 1.4008353135684253, -0.40447115309818304),
+                lookAt: new THREE.Vector3(-0.47577618033905067, 1.3818037800219334, -0.5351459117438647),
                 controls: {
                     minPolarAngle: 0,
-                    maxPolarAngle: 2.97,
+                    maxPolarAngle: 3.141592653589793,
                     minAzimuthAngle: 0,
-                    maxAzimuthAngle: 0
+                    maxAzimuthAngle: 0.53
+                }
+            },
+            'irisWithOptions': {
+                position: new THREE.Vector3(-0.2761545370256113, 1.4507675284532975, 0.07952206846763665),
+                lookAt: new THREE.Vector3(-0.47577618033905067, 1.3818037800219334, -0.5351459117438647),
+                controls: {
+                    minPolarAngle: 0,
+                    maxPolarAngle: 3.141592653589793,
+                    minAzimuthAngle: 0,
+                    maxAzimuthAngle: 0.53
                 }
             },
             'controlBoard': {
@@ -253,7 +263,8 @@ export default class Camera {
                 Screens: 'screens',
                 ControlBoard: 'controlBoard',
                 Portal: 'portal',
-                Iris: 'irisCloseLook'
+                IrisCloseLook: 'irisCloseLook',
+                IrisWithOptions: 'irisWithOptions'
             })
             .onFinishChange((location) => {
                 this.updateCameraTo(location)

@@ -6,6 +6,7 @@ import Experience from '../Experience.js'
 import Offline from '../Utils/Offline.js'
 import _c from '../Utils/Connection.js'
 import _lang from '../Utils/Lang.js'
+import _s from '../Utils/Strings.js'
 
 let resources = null
 
@@ -16,6 +17,7 @@ export default class Resources extends EventEmitter {
         this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
+        this.page = this.experience.page
 
         resources = this
 
@@ -31,6 +33,7 @@ export default class Resources extends EventEmitter {
         this.textureItems = []
         this.posterImages = []
         this.videoPlayers = []
+        this.initialLoadCompleted = false
 
         this.loadManager()
         this.setLoaders()
@@ -40,16 +43,21 @@ export default class Resources extends EventEmitter {
     loadManager() {
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+            if (!this.initialLoadCompleted)
+                this.page.loader()
         }
 
         this.loadingManager.onLoad = () => {
             // console.log('Loading complete!')
+            document.querySelector('.loader')?.remove()
+            document.querySelector('.app-header').style.display = "flex"
+            this.initialLoadCompleted = true
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
             // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            const progressRatio = Math.round(itemsLoaded / itemsTotal * 100)
-            document.querySelector('.loader__flame .flame').style.height = progressRatio + "%"
+            if (!this.initialLoadCompleted)
+                document.querySelector('.loader span').innerText = _s.initializing
         }
 
         this.loadingManager.onError = function (url) {
@@ -105,7 +113,7 @@ export default class Resources extends EventEmitter {
                 video.setAttribute('id', source.name)
                 video.setAttribute('webkit-playsinline', 'webkit-playsinline')
                 video.setAttribute('playsinline', '')
-                video.style.background = "white";
+                video.style.background = 'white'
                 video.crossOrigin = ''
                 video.muted = false
                 video.loop = true
@@ -119,7 +127,7 @@ export default class Resources extends EventEmitter {
                 texture.minFilter = THREE.LinearFilter
                 texture.magFilter = THREE.LinearFilter
                 texture.encoding = THREE.sRGBEncoding
-                texture.needsUpdate = true;
+                texture.needsUpdate = true
                 this.textureItems[source.name] = {
                     item: texture,
                     path: source.path,
@@ -197,10 +205,6 @@ export default class Resources extends EventEmitter {
     }
 
     async streamFromBtv(videoName) {
-        await resources.loadEpisodeFromBtv(videoName)
-    }
-
-    async loadEpisodeFromBtv(videoName) {
         const episodeId = videoName.replace('episode-', '')
         let locale = _lang.getLanguageCode()
         locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes

@@ -7,14 +7,15 @@ import MouseMove from './Utils/MouseMove.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import sources from './Sources.js'
-import Settings from './Extras/Settings.js'
+import Menu from './Components/Menu.js'
 import World from './World/World.js'
 import WebGL from 'three/examples/jsm/capabilities/WebGL.js'
+import Page from './Components/Page.js'
+import FAQ from './Components/FAQ.js'
 
 let instance = null
 
 export default class Experience {
-
     constructor(canvas) {
         // Singleton
         if (instance)
@@ -27,8 +28,11 @@ export default class Experience {
 
         // Options
         this.canvas = canvas
+        this.faq = new FAQ()
 
         // Setup
+        this.page = new Page()
+        this.settings = new Menu()
         this.debug = new Debug()
         this.stats = new StatsModule()
         this.sizes = new Sizes()
@@ -37,7 +41,6 @@ export default class Experience {
         this.resources = new Resources(sources)
         this.pointer = new MouseMove()
         this.camera = new Camera()
-        this.settings = new Settings()
         this.world = new World()
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
@@ -63,6 +66,11 @@ export default class Experience {
             if (this.videoIsPlaying == false && this.gameIsOn == false)
                 this.update()
         })
+
+        this.navigation = {
+            prev: document.querySelector('[aria-label="prev page"]'),
+            next: document.querySelector('[aria-label="next page"]')
+        }
     }
 
     resize() {

@@ -1,25 +1,25 @@
 export default [
     {
-        name: 'environmentMap',
+        name: 'cubeMap',
         type: 'cubeTexture',
         path: [
-            'textures/envMap/px-min.png',
-            'textures/envMap/nx-min.png',
-            'textures/envMap/py-min.png',
-            'textures/envMap/ny-min.png',
-            'textures/envMap/pz-min.png',
-            'textures/envMap/nz-min.png'
+            'textures/cubeMap/C_Left.png',
+            'textures/cubeMap/C_Right.png',
+            'textures/cubeMap/C_Top.png',
+            'textures/cubeMap/C_Down.png',
+            'textures/cubeMap/C_Back.png',
+            'textures/cubeMap/C_Front.png'
         ]
     },
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/Controlroom_low_v11_2.glb'
+        path: 'models/Controlroom_lowmodel_1.glb'
     },
     {
         name: 'baked',
         type: 'texture',
-        path: 'textures/baked_v4.jpg'
+        path: 'textures/Baking_v05.png'
     },
     {
         name: 'screen_default',

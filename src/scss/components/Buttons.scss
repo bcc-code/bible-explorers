@@ -1,0 +1,122 @@
+.btn {
+
+    color: #fff;
+    font-family: var(--ff-primary);
+    height: var(--button-size);
+    pointer-events: all;
+    cursor: pointer;
+
+    &.rounded {
+        width: var(--button-size);
+        background: var(--clr-background);
+        border-radius: var(--button-size);
+        border: var(--app-border-size) solid var(--clr-secondary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.default {
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        background: var(--clr-background);
+        border-radius: calc(var(--button-size) / 4);
+        border: var(--app-border-size) solid var(--clr-primary);
+        padding-inline: 1rem;
+    }
+
+    &.with-icon {
+        display: flex;
+        align-items: center;
+
+        [class*="icon"] {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &.back {
+        border-radius: var(--button-size) calc(var(--button-size) /4) calc(var(--button-size) /4) var(--button-size);
+    }
+
+    &.next {
+        border-color: var(--clr-secondary);
+        border-radius: calc(var(--button-size) /4) var(--button-size) var(--button-size) calc(var(--button-size) /4);
+    }
+
+    &.pulsate {
+        animation: pulsate-shadow 1.25s cubic-bezier(0.6, 0, 0, 1) infinite;
+    }
+
+    &:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+
+    &:disabled {
+        filter: grayscale(1);
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    &:hover {
+
+        &.default {
+            background: var(--clr-primary);
+        }
+
+        &.rounded {
+            background: var(--clr-secondary);
+        }
+
+        &.next {
+            background: var(--clr-secondary);
+        }
+
+        &.pulsate {
+            animation-duration: 0ms;
+        }
+
+    }
+
+    &.pulsate:disabled {
+        animation: none;
+    }
+}
+
+.link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: var(--transition-duration) var(--transition-timing);
+
+    [class*="icon"] {
+        margin-right: 0.5rem;
+    }
+
+    &.dark {
+        color: var(--clr-background);
+    }
+
+    &.light {
+        color: #fff
+    }
+
+    &.asset {
+        color: #fff;
+    }
+
+    &:hover {
+
+        &.dark {
+            color: var(--clr-secondary);
+        }
+
+        &.light {
+            color: var(--clr-secondary);
+        }
+
+        &.asset {
+            opacity: 0.6;
+        }
+    }
+}

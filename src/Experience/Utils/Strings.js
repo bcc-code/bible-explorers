@@ -120,6 +120,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -248,6 +249,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Runde",
@@ -376,6 +378,7 @@ const strings = {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -504,6 +507,7 @@ const strings = {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -632,6 +636,7 @@ const strings = {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -760,6 +765,7 @@ const strings = {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -888,6 +894,7 @@ const strings = {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1016,6 +1023,7 @@ const strings = {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1144,6 +1152,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1272,6 +1281,7 @@ const strings = {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1400,6 +1410,7 @@ const strings = {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1528,6 +1539,7 @@ const strings = {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1656,6 +1668,7 @@ const strings = {
                 "title": "Hoppá!",
                 "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",
@@ -1784,6 +1797,7 @@ const strings = {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
+            "startGame": "Start game",
             "level": "Level",
             "gameOver": "Game over!",
             "round": "Round",

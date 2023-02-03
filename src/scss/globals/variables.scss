@@ -1,0 +1,27 @@
+$primary: #3E306D;
+$accent: #0396e3;
+$accent2: #fcb04e;
+$dark: #131A43;
+$gradient: linear-gradient(90deg, $dark, $primary);
+$gradient2: linear-gradient(90deg, #C5516E, #EB9159);
+$gradient-with-opacity: linear-gradient(90deg, rgba(19, 26, 67, 1), rgba(62, 48, 109, .95));
+
+:root {
+
+    --clr-primary: #0396e3;
+    --clr-secondary: #FCB04E;
+    --clr-background: #3E306D;
+    --clr-dark: #0C0A16;
+
+    --gradient-dark: linear-gradient(90deg, var(--clr-dark), var(--clr-background));
+
+    --ff-primary: 'Source Sans Pro', sans-serif;
+
+    --app-padding: 1rem;
+    --app-border-size: 0.25rem;
+    --button-size: 2.5rem;
+
+    --transition-timing: cubic-bezier(0.23, 1, .32, 1);
+    --transition-duration: .3s;
+
+}

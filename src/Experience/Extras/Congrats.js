@@ -60,7 +60,7 @@ export default class Congrats {
 
         instance.modal = new Modal(html, 'modal__congrats', instance.world.finishJourney)
 
-        instance.world.audio.playCongratsSound()
+        instance.world.audio.playSound('congrats')
         instance.animateStars(500)
 
         const homescreen = document.getElementById('continue')
@@ -68,7 +68,7 @@ export default class Congrats {
         homescreen.style.display = 'block'
         homescreen.addEventListener('click', () => {
             instance.modal.destroy()
-            instance.world.showMenu()
+            instance.world.goHome()
             instance.debug.removeQuickLookMode()
 
             if (!instance.experience.settings.fullScreen && document.fullscreenElement) {

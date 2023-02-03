@@ -1,4 +1,4 @@
-import './style.scss'
+import './scss/style.scss'
 import Experience from './Experience/Experience.js'
 import Notification from './Experience/Utils/Notification.js';
 import createAuth0Client from '@auth0/auth0-spa-js';
@@ -12,8 +12,10 @@ import lazySizes from 'lazysizes';
 _appInsights.loadAppInsights()
 _appInsights.trackPageView({ name: "Home" })
 
+document.querySelector('.icons-spritesheet').style.display = 'none'
+
 // Start 3D experience
-const experience = new Experience(document.querySelector('.webgl'))
+const experience = new Experience(document.querySelector('.webgl-canvas'))
 
 // Auth0
 const fetchAuthConfig = () => fetch("/auth_config.json")

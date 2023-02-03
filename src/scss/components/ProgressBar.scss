@@ -1,0 +1,54 @@
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: var(--app-padding);
+    pointer-events: all;
+    width: 60vw;
+    transform: translateY(100%);
+    transition: var(--transition-duration) var(--transition-timing);
+    opacity: 0;
+
+    .checkpoints {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    [aria-label="checkpoint"] {
+        margin-right: 0;
+    }
+
+
+    [aria-label="checkpoint"][currentCheckpoint] {
+        background-color: var(--clr-secondary);
+    }
+
+    [aria-label="checkpoint"].locked {
+        filter: grayscale(1);
+    }
+
+    .percentageBar {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        right: 2rem;
+        bottom: 1rem;
+        height: 0.5rem;
+        background-color: var(--clr-background);
+        box-shadow: 0 0 0 0.1rem var(--clr-secondary);
+
+        .passed {
+            float: left;
+            height: 100%;
+            background: var(--clr-secondary);
+            transition: var(--transition-duration) width var(--transition-timing);
+        }
+    }
+
+
+    body[data-step="video"] & {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

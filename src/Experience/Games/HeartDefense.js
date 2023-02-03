@@ -2,6 +2,7 @@ import Konva from 'konva'
 import Experience from '../Experience.js'
 import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
 
@@ -34,18 +35,18 @@ export default class HeartDefense {
                     spriteW * 3, 0, spriteW, spriteH,
                 ]
             },
-            highestSpeed: 1.6,
-            lowestSpeed: 0.6,
+            highestSpeed: 4.6,
+            lowestSpeed: 3.6,
             probability: 0.02,
             thoughtVariants: 3,
-            pointsToCompleteLevel: 4,
+            pointsToCompleteLevel: 1,
             showSkipAfterNoOfTries: 3,
             thoughts: {
                 width: 200,
                 height: 200
             },
             heart: {},
-            door: {} 
+            door: {}
         }
     }
 
@@ -62,38 +63,26 @@ export default class HeartDefense {
             fails: 0
         }
 
-        if (document.querySelector('.modal')) {
-            instance.modal.destroy()
-        } else {
-            instance.modalHtml()
-            instance.startGame()
-        }
+        instance.gameHTML()
+        instance.startGame()
     }
 
-    modalHtml() {
-        const wrapper = document.createElement('div')
-        wrapper.classList.add('heart-defense_wrapper')
+    gameHTML() {
+        const game = _gl.elementFromHtml(`
+            <section class="game heart-defense">
+                <div class="container">
+                    <div class="game-rounds">
+                        <span>${_s.miniGames.round}:</span>
+                        <span class="level">${instance.stats.level}</span>
+                        <span> / ${instance.config.levels}</span>
+                    </div>
+                </div>
+                <div class="overlay"></div>
+                <div id="heart-defense" class="game-canvas"></div>
+            </section>
+        `)
 
-        const canvas = document.createElement('div')
-        canvas.setAttribute('id', 'heart-defense_canvas')
-
-        const gameRounds = document.createElement('div')
-        gameRounds.setAttribute('id', 'heart-defense_rounds')
-        gameRounds.innerHTML =
-            `<p>${_s.miniGames.round}:</p>
-            <span class="level">${instance.stats.level}</span>
-            <span>${instance.config.levels}</span>`
-
-        wrapper.append(canvas, gameRounds)
-
-        instance.modal = new Modal(wrapper.outerHTML, 'heart-defense')
-
-        const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${instance.stepData.details.title}</h3>
-            <p>${instance.stepData.details.prompts[0].prompt}</p>`
-
-        const close = document.querySelector('.modal__close')
-        close.style.display = 'none'
+        document.querySelector('.ui-container').append(game)
     }
 
     startGame() {
@@ -108,6 +97,9 @@ export default class HeartDefense {
         instance.setUpAnimation()
         instance.setEventListeners()
 
+        document.querySelector('.game-popup')?.remove()
+        document.querySelector('.heart-defense')?.classList.remove('popup-visible')
+
         instance.experience.gameIsOn = true
         instance.animation.start()
         instance.fadeInOverlay.reverse()
@@ -115,7 +107,7 @@ export default class HeartDefense {
 
     drawCanvas() {
         instance.stage = new Konva.Stage({
-            container: '#heart-defense_canvas',
+            container: 'heart-defense',
             width: window.innerWidth,
             height: window.innerHeight
         })
@@ -341,8 +333,8 @@ export default class HeartDefense {
                 if (!instance.isIntersectingRectangleWithRectangle(
                     { x: thought.item.position().x - 5, y: thought.item.position().y - 5 },
                     10, 10,
-                    { x: instance.center.x - instance.config.door.width/4, y: instance.center.y - instance.config.door.height/4 },
-                    instance.config.door.width/2, instance.config.door.height/2)
+                    { x: instance.center.x - instance.config.door.width / 4, y: instance.center.y - instance.config.door.height / 4 },
+                    instance.config.door.width / 2, instance.config.door.height / 2)
                 )
                     return
 
@@ -358,6 +350,7 @@ export default class HeartDefense {
                     if (thought.badThought) {
                         instance.stats.lives--
                         instance.updateLivesStatus()
+                        instance.audio.playSound('heart-defense/lose-life')
 
                         if (instance.stats.lives == 0) {
                             instance.stopThoughtsAnimation()
@@ -365,7 +358,7 @@ export default class HeartDefense {
                         }
                     }
                     else {
-                        instance.audio.playCorrectSound()
+                        instance.audio.playSound('correct')
                         instance.updateHeartStatus()
                         instance.stats.points++
 
@@ -376,7 +369,7 @@ export default class HeartDefense {
                     }
                 }
                 else {
-                    instance.audio.playWrongSound()
+                    instance.audio.playSound('heart-defense/door-crash')
                     instance.playSpriteAnimation(thought.item, instance.explosionSprite)
                 }
 
@@ -388,7 +381,7 @@ export default class HeartDefense {
         function getUpdatedFramesToCenterValue(min, padding) {
             const framesToCenterArr = instance.thoughts
                 .map(thought => thought.remainingFramesToCenter)
-                .sort(function(a, b) { return a-b })
+                .sort(function (a, b) { return a - b })
 
             // No update
             if (framesToCenterArr.length === 0)
@@ -399,11 +392,11 @@ export default class HeartDefense {
                 return min
 
             // Find value inside array
-            for (let i=1; i < framesToCenterArr.length; i++) {
+            for (let i = 1; i < framesToCenterArr.length; i++) {
                 if (framesToCenterArr[i] < min + padding) continue
-            
-                if (intervalsIntersect(framesToCenterArr[i-1], min, padding)) {
-                    min = framesToCenterArr[i-1] + padding
+
+                if (intervalsIntersect(framesToCenterArr[i - 1], min, padding)) {
+                    min = framesToCenterArr[i - 1] + padding
                 }
                 else if (intervalsIntersect(framesToCenterArr[i], min, padding)) {
                     min = framesToCenterArr[i] + padding
@@ -414,14 +407,14 @@ export default class HeartDefense {
             }
 
             // Value is the farthest from the center
-            const highestValue = framesToCenterArr[framesToCenterArr.length-1]
+            const highestValue = framesToCenterArr[framesToCenterArr.length - 1]
             return min - padding > highestValue ? min : highestValue + padding
         }
 
         function intervalsIntersect(a, b, padding) {
-            const a_start = a-padding/2, a_end = a+padding/2
-            const b_start = b-padding/2, b_end = b+padding/2
-            
+            const a_start = a - padding / 2, a_end = a + padding / 2
+            const b_start = b - padding / 2, b_end = b + padding / 2
+
             return a_start < b_end && b_start < a_end
         }
 
@@ -532,6 +525,9 @@ export default class HeartDefense {
         instance.stats.heartClosed = !instance.stats.heartClosed
         instance.updateDoorStatus()
         instance.stopSpriteAnimationOnDoor()
+
+        const sound = instance.stats.heartClosed ? 'close' : 'open'
+        instance.audio.playSound('heart-defense/door-' + sound)
     }
 
     updateStageDimension() {
@@ -540,7 +536,7 @@ export default class HeartDefense {
     }
 
     updateRoundsStatus() {
-        document.querySelector('#heart-defense_rounds .level').innerText = instance.stats.level
+        document.querySelector('.game-rounds .level').innerText = instance.stats.level
     }
 
     updateDoorStatus() {
@@ -556,22 +552,34 @@ export default class HeartDefense {
     updateHeartStatus() {
         const index = instance.config.pointsToCompleteLevel - instance.stats.points
         instance.layer.findOne('#heart-' + instance.config.heartStates[index]).hide()
-        instance.layer.findOne('#heart-' + instance.config.heartStates[index-1]).show()
+        instance.layer.findOne('#heart-' + instance.config.heartStates[index - 1]).show()
     }
 
     toggleLevelCompleted() {
-        let html = `<div class="modal__content congrats congrats__miniGame heart-defense">
-            <div class="congrats__container">
-                <div class="congrats__title">
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
+        const congratsHTML = _gl.elementFromHtml(`
+            <div class="game-popup">
+                <header>
                     <h2>${_s.miniGames.completed.title}</h2>
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</div>
+                </header>
+                <div>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</div>
             </div>
-        </div>`
+        `)
+
+        const skipBTN = _gl.elementFromHtml(`
+            <button class="btn default">${_s.miniGames.skip}</button>
+        `)
+
+        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+            congratsHTML.append(skipBTN)
+
+        const nextLevelBTN = _gl.elementFromHtml(`
+            <button class="btn default next pulsate">${_s.miniGames.nextRound}</button>
+        `)
+
+        congratsHTML.append(nextLevelBTN)
+
+        document.querySelector('.heart-defense .container').append(congratsHTML)
+        document.querySelector('.heart-defense').classList.add('popup-visible')
 
         instance.stats.level++
         instance.stats.points = 0
@@ -579,59 +587,59 @@ export default class HeartDefense {
         document.removeEventListener('keydown', instance.keyDownHandler)
 
         // Add event listeners
-        instance.modal = new Modal(html, 'modal__congrats')
-        const modal = document.querySelector('.modal__congrats')
-
-        const next = modal.querySelector('#continue')
-        next.style.display = 'block'
-
         if (instance.stats.level <= instance.config.levels) {
             // Next level
-            next.innerText = _s.miniGames.nextRound
-            next.addEventListener('click', () => {
-                instance.destroy()
+            nextLevelBTN.addEventListener('click', () => {
+                instance.newLevel()
                 instance.startGame()
                 instance.updateRoundsStatus()
             })
         }
         else {
             // All levels completed
-            next.innerText = _s.miniGames.continue
-            next.addEventListener('click', () => {
-                instance.destroy()
-                instance.toggleGame()
-                instance.program.nextStep()
-            })
-
-            const anotherRound = modal.querySelector('#restart')
-            anotherRound.style.display = 'block'
-            anotherRound.innerText = _s.miniGames.anotherRound
-            anotherRound.addEventListener('click', () => {
-                instance.destroy()
+            nextLevelBTN.innerText = _s.miniGames.anotherRound
+            nextLevelBTN.addEventListener('click', () => {
+                instance.resetGame()
                 instance.startGame()
             })
+
+            instance.experience.navigation.prev.disabled = true
+            document.querySelector('.cta').style.display = 'flex'
+            document.querySelector('.game-rounds')?.remove()
+            skipBTN.remove()
         }
 
-        const skip = modal.querySelector("#skip")
-        skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries
-            ? 'block'
-            : 'none'
-        skip.addEventListener('click', () => {
+        instance.experience.navigation.next.addEventListener('click', instance.destroy)
+
+        skipBTN.addEventListener('click', () => {
             instance.destroy()
-            instance.toggleGame()
             instance.program.nextStep()
         })
     }
 
     toggleGameOver() {
-        let html = `<div class="modal__content congrats congrats__miniGame heart-defense">
-            <div class="congrats__container">
-                <div class="congrats__title">
+        const gameOverHTML = _gl.elementFromHtml(`
+            <div class="game-popup">
+                <header>
                     <h2>${_s.miniGames.gameOver}</h2>
-                </div>
+                </header>
             </div>
-        </div>`
+        `)
+
+        const skipBTN = _gl.elementFromHtml(`
+            <button class="btn default">${_s.miniGames.skip}</button>
+        `)
+
+        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+            gameOverHTML.append(skipBTN)
+
+        const resetBTN = _gl.elementFromHtml(`
+            <button class="btn default">${_s.miniGames.reset}</button>
+        `)
+        gameOverHTML.append(resetBTN)
+
+        document.querySelector('.heart-defense .container').append(gameOverHTML)
+        document.querySelector('.heart-defense').classList.add('popup-visible')
 
         instance.stats.fails++
         instance.stats.lives = instance.config.maxLives
@@ -640,34 +648,42 @@ export default class HeartDefense {
         document.removeEventListener('keydown', instance.keyDownHandler)
 
         // Add event listeners
-        instance.modal = new Modal(html, 'modal__congrats')
-        const modal = document.querySelector('.modal__congrats')
-
-        const restart = modal.querySelector('#restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.reset
-        restart.addEventListener('click', () => {
-            instance.destroy()
+        resetBTN.addEventListener('click', () => {
+            instance.newLevel()
             instance.startGame()
         })
 
-        const skip = modal.querySelector("#skip")
-        skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries
-            ? 'block'
-            : 'none'
-        skip.addEventListener('click', () => {
+        skipBTN.addEventListener('click', () => {
             instance.destroy()
-            instance.toggleGame()
             instance.program.nextStep()
         })
+    }
+
+    resetGame() {
+        document.removeEventListener('keydown', instance.keyDownHandler)
+        window.removeEventListener('resize', instance.updateStageDimension)
+
+        instance.layer.destroy()
+        instance.experience.gameIsOn = false
+    }
+
+    newLevel() {
+        document.removeEventListener('keydown', instance.keyDownHandler)
+        window.removeEventListener('resize', instance.updateStageDimension)
+
+        instance.layer.destroy()
+        instance.experience.gameIsOn = false
     }
 
     destroy() {
         document.removeEventListener('keydown', instance.keyDownHandler)
         window.removeEventListener('resize', instance.updateStageDimension)
-        instance.modal.destroy()
+
+        document.querySelector('.game')?.remove()
         instance.layer.destroy()
         instance.experience.gameIsOn = false
+
+        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        document.querySelector('.cta').style.display = 'flex'
     }
 }
