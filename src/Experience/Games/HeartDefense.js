@@ -1,6 +1,5 @@
 import Konva from 'konva'
 import Experience from '../Experience.js'
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 
@@ -35,8 +34,8 @@ export default class HeartDefense {
                     spriteW * 3, 0, spriteW, spriteH,
                 ]
             },
-            highestSpeed: 4.6,
-            lowestSpeed: 3.6,
+            highestSpeed: 3.2,
+            lowestSpeed: 1.2,
             probability: 0.02,
             thoughtVariants: 3,
             pointsToCompleteLevel: 1,
@@ -502,8 +501,8 @@ export default class HeartDefense {
 
     getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
     getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * Math.min(instance.stats.level, instance.config.levels)
-    getRndBadThoughtSrc = () => instance.config.path + 'bad-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
-    getRndGoodThoughtSrc = () => instance.config.path + 'good-thought' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
+    getRndBadThoughtSrc = () => instance.config.path + 'bad-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
+    getRndGoodThoughtSrc = () => instance.config.path + 'good-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
     getRndBetween = (min, max) => min + Math.random() * (max - min)
     getRoundedRndBetween = (min, max) => Math.round(instance.getRndBetween(min, max))
 
