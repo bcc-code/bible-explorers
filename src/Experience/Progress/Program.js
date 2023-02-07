@@ -256,6 +256,11 @@ export default class Program {
 
     updateCameraForCurrentStep(callback = () => { }) {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
+            if (instance.stepType() == 'video') {
+                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+                instance.highlight.add(instance.interactiveObjects()[0])
+            }
+
             callback()
 
             document.addEventListener('click', (event) => {
