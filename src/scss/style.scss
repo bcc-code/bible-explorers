@@ -119,11 +119,26 @@
 
 .highlight-circle {
     position: absolute;
-    top: 0;
+    left: -1.5rem;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
     width: 1.5rem;
     height: 1.5rem;
     pointer-events: none;
     @include pulsate()
+}
+
+.highlight-label {
+    position: absolute;
+    top: 0;
+    color: #fff;
+    background: $gradient;
+    padding: 0.5rem 1rem;
+    border: 2px solid $accent;
+    border-radius: 8px 16px;
+    cursor: pointer;
+    transition: opacity 1s ease;
+    opacity: 0;
 }
 
 .skip-video {

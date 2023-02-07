@@ -21,10 +21,11 @@ export default class Program {
         instance.experience = new Experience()
         instance.resources = instance.experience.resources
         instance.world = instance.experience.world
+        instance.programData = instance.world.selectedChapter.program
         instance.camera = instance.experience.camera
         instance.highlight = instance.world.highlight
-        instance.programData = instance.world.selectedChapter.program
-        instance.points = instance.experience.world.points
+        instance.points = instance.world.points
+        instance.audio = instance.world.audio
         instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
@@ -71,28 +72,20 @@ export default class Program {
         instance.interactiveObjects = () => instance.getCurrentStepData() ? instance.getAllInteractiveObjects() : []
         instance.totalCheckpoints = Object.keys(instance.programData).length
         instance.clickedObject = null
+        instance.clickCallback = () => {}
         instance.canClick = () =>
             !document.body.classList.contains('freeze') &&
             !document.body.classList.contains('modal-on') &&
             !document.body.classList.contains('camera-is-moving')
 
-        instance.toggleStep()
+        instance.audio.playSound('whoosh-between-screens')
+        instance.startInteractivity()
         instance.addEventListeners()
     }
 
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
-    }
-
-    control(currentIntersect) {
-        if (!instance.canClick()) return
-
-        instance.clickedObject = currentIntersect.name
-
-        if (instance.objectIsClickable()) {
-            instance.startAction()
-        }
     }
 
     previousStep() {
@@ -108,38 +101,15 @@ export default class Program {
     }
 
     toggleStep() {
-        // Disable prev on first step - Enable otherwise
-        instance.experience.navigation.prev.disabled = instance.currentStep == 0
-
-        // Advance to next checkpoint
-        if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
-            instance.nextCheckpoint()
-        }
-        else {
-            instance.startInteractivity()
-        }
+        // Check if it was the last step in the current checkpoint
+        instance.currentStep == instance.getCurrentCheckpointData().steps.length
+            ? instance.nextCheckpoint()
+            : instance.nextTask()
     }
 
-    nextCheckpoint(checkpoint = ++instance.currentCheckpoint) {
-        console.log('nextCheckpoint', checkpoint)
-        console.log('currentStep', 0)
-
-        instance.points.fadeOut()
-        instance.highlight.fadeOut()
-
-        instance.world.audio.playSound('whoosh-between-screens')
-        instance.currentStep = 0
-        instance.experience.navigation.prev.disabled = true
-
-        instance.updateCurrentCheckpoint(checkpoint)
-        instance.world.progressBar.refresh()
-
-        instance.startInteractivity()
-    }
-
-    startInteractivity() {
-
-        document.body.setAttribute('data-step', instance.stepType())
+    nextTask() {
+        instance.experience.navigation.prev.disabled = false
+        instance.experience.navigation.next.disabled = false
 
         if (instance.stepType() == 'video') {
             instance.updateCameraForCurrentStep(() => {
@@ -211,6 +181,71 @@ export default class Program {
         }
     }
 
+    nextCheckpoint(checkpoint = ++instance.currentCheckpoint) {
+        console.log('nextCheckpoint', checkpoint)
+        console.log('currentStep', 0)
+
+        instance.currentStep = 0
+        instance.points.fadeOut()
+        instance.highlight.fadeOut()
+
+        instance.updateCurrentCheckpoint(checkpoint)
+        instance.startInteractivity()
+    }
+
+    startInteractivity() {
+        instance.audio.playSound('whoosh-between-screens')
+        instance.experience.navigation.prev.disabled = true
+        instance.experience.navigation.next.disabled = true
+
+        if (instance.stepType() == 'iris') {
+            instance.camera.updateCameraTo('screens', () => {
+                instance.world.progressBar.show()
+
+                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+                instance.highlight.add(instance.interactiveObjects()[0])
+
+                instance.clickCallback = () => {
+                    instance.points.fadeOut()
+                    instance.highlight.fadeOut()
+                    instance.world.progressBar.hide()
+                    instance.experience.navigation.next.disabled = false
+                }
+
+                document.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('highlight-label'))
+                        instance.control(instance.points.currentLabel)
+                })
+            })
+        }
+        else {
+            instance.nextTask()
+        }
+    }
+
+    control(currentIntersect) {
+        if (!instance.canClick()) return
+
+        instance.clickedObject = currentIntersect.name
+
+        if (instance.objectIsClickable()) {
+            instance.camera.updateCameraTo(this.currentLocation())
+            instance.startAction()
+        }
+    }
+
+    startAction() {
+        if (instance.clickedObject == 'tv_16x9_screen') {
+            instance.clickCallback()
+            instance.clickCallback = () => {}
+
+            instance.message.show()
+        }
+        else if (instance.clickedObject == 'Screen' || instance.clickedObject == 'Switch') {
+            instance.video.play()
+        }
+    }
+
     updateCurrentCheckpoint(newCheckpoint) {
         instance.currentCheckpoint = newCheckpoint
 
@@ -226,7 +261,7 @@ export default class Program {
             callback()
 
             document.addEventListener('click', (event) => {
-                if (event.target.classList.contains('label')) {
+                if (event.target.classList.contains('highlight-label')) {
                     instance.control(instance.points.currentLabel)
                 }
             })
@@ -242,22 +277,13 @@ export default class Program {
         let interactiveObjects = []
 
         if (instance.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat(["Screen"])
+            interactiveObjects = interactiveObjects.concat(["Screen", "Switch"])
         }
         else if (instance.stepType() == 'iris' || instance.stepType() == 'task') {
             interactiveObjects.push("tv_16x9_screen")
         }
 
         return interactiveObjects
-    }
-
-    startAction() {
-        if (instance.clickedObject == 'tv_16x9_screen') {
-            instance.message.show()
-        }
-        else if (instance.clickedObject == 'Screen') {
-            instance.video.play()
-        }
     }
 
     currentVideo() {

@@ -4,20 +4,25 @@ let instance = null
 
 export default class ProgressBar {
     constructor() {
-        this.experience = new Experience()
-        this.debug = this.experience.debug
         instance = this
 
-        this.program = this.experience.world.program
-        this.checkpointWidth = 100 / this.program.totalCheckpoints;
+        instance.experience = new Experience()
+        instance.debug = instance.experience.debug
+        instance.program = instance.experience.world.program
 
-        instance.htmlEl = document.querySelector(".progress-bar");
+        instance.init()
+    }
+
+    init() {
+        instance.checkpointWidth = 100 / instance.program.totalCheckpoints
+
+        instance.htmlEl = document.querySelector(".progress-bar")
         instance.htmlEl.innerHTML = ProgressBar.HTML()
 
         instance.el = {
             passed: instance.htmlEl.querySelector(".percentageBar .passed"),
             checkpoints: instance.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)")
-        };
+        }
 
         instance.el.checkpoints.forEach(function (checkpoint, index) {
             checkpoint.addEventListener("click", () => {
@@ -32,14 +37,21 @@ export default class ProgressBar {
         })
     }
 
+    show() {
+        instance.refresh()
+        instance.htmlEl.classList.add('is-visible')
+    }
+
+    hide() {
+        instance.htmlEl.classList.remove('is-visible')
+    }
+
     refresh() {
-        instance.el.passed.style.width = instance.checkpointWidth * instance.program.currentCheckpoint + '%';
+        instance.el.passed.style.width = instance.checkpointWidth * instance.program.currentCheckpoint + '%'
 
         instance.el.checkpoints.forEach(checkpoint => {
             checkpoint.removeAttribute('currentCheckpoint')
         })
-
-        console.log(instance.program.currentCheckpoint);
 
         if (instance.program.currentCheckpoint < instance.el.checkpoints.length) {
             instance.el.checkpoints[instance.program.currentCheckpoint].classList.remove('locked')
@@ -48,7 +60,6 @@ export default class ProgressBar {
     }
 
     static HTML() {
-
         let generatedHTML =
             `<div class="percentageBar">
                 <div class="passed" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
@@ -88,8 +99,6 @@ export default class ProgressBar {
                     </svg>
                 </button>`
             }
-
-
         }
 
         generatedHTML +=
@@ -101,8 +110,6 @@ export default class ProgressBar {
 
         generatedHTML += '</div>'
 
-
         return generatedHTML
-
     }
 }

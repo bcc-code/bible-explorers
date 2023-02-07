@@ -29,6 +29,7 @@ export default class Points {
             if (child.name === name) {
                 // First checkpoint is a task description from Iris
                 if (type == 'task') type = 'iris'
+                
                 this.create(child, _s.tooltips[type])
                 setTimeout(function () { instance.fadeIn() }, 50)
             }
@@ -40,15 +41,12 @@ export default class Points {
         div.className = 'highlight-label'
         div.textContent = labelText
 
-        const hightlight = document.createElement('div')
-        hightlight.classList.add('highlight-circle')
+        const highlight = document.createElement('div')
+        highlight.classList.add('highlight-circle')
+        div.append(highlight)
 
-        this.currentLabel = new CSS2DObject(hightlight)
-
-        const posX = object.geometry.boundingBox.min.x + object.geometry.boundingBox.max.x
-        const posY = object.geometry.boundingBox.min.y / 2
-
-        this.currentLabel.position.set(posX, posY, 0)
+        this.currentLabel = new CSS2DObject(div)
+        this.currentLabel.position.set(0, object.geometry.boundingBox.min.y, 0)
         this.currentLabel.name = object.name
         this.currentObject = object
         this.currentObject.add(this.currentLabel)
