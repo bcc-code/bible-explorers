@@ -50,6 +50,8 @@ export default class Dialogue {
         buttons.forEach((button, index) => {
             button.addEventListener("click", () => {
                 document.querySelector('.message-from-dialogue')?.remove()
+                button.classList.add('visited')
+
                 instance.setMessageHtml(instance.data[index].answer)
 
                 if (instance.data[index].audio) {

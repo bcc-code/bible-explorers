@@ -8,6 +8,8 @@ export default class Message {
     constructor() {
         instance = this
         instance.experience = new Experience()
+        instance.world = instance.experience.world
+        instance.audio = instance.world.audio
         instance.navigation = instance.experience.navigation
     }
 
@@ -23,6 +25,9 @@ export default class Message {
 
         instance.setHtml(text, character)
         instance.setEventListeners()
+        
+        if (instance.data.audio)
+            instance.audio.togglePlayTaskDescription(instance.data.audio)
     }
 
     setHtml(text, character) {

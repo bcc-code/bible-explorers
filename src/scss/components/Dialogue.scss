@@ -22,6 +22,12 @@
 
     .btn {
         margin-right: 0;
-    }
+        height: 3rem;
+        transition: opacity 1s ease;
 
+        &.visited {
+            background: var(--clr-primary);
+            opacity: 0.5;
+        }
+    }
 }

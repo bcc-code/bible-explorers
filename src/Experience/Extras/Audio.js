@@ -7,8 +7,12 @@ let audio = null
 
 export default class Audio {
     constructor() {
-        this.experience = new Experience()
+        // Singleton
+        if (audio)
+            return audio
+
         audio = this
+        audio.experience = new Experience()
 
         audio.taskDescriptionAudios = []
         audio.bgMusicAudios = {
@@ -170,6 +174,11 @@ export default class Audio {
     }
 
     togglePlayTaskDescription(url) {
+        // Stop other task descriptions (Dialogue task)
+        for (let url in audio.taskDescriptionAudios) {
+            audio.stopTaskDescription(url)
+        }
+
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.audioLoader.load(url, function (buffer) {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)

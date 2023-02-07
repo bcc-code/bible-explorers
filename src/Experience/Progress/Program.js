@@ -78,7 +78,6 @@ export default class Program {
             !document.body.classList.contains('modal-on') &&
             !document.body.classList.contains('camera-is-moving')
 
-        instance.audio.playSound('whoosh-between-screens')
         instance.startInteractivity()
         instance.addEventListeners()
     }
@@ -108,7 +107,7 @@ export default class Program {
     }
 
     nextTask() {
-        instance.experience.navigation.prev.disabled = false
+        instance.experience.navigation.prev.disabled = instance.currentStep == 0
         instance.experience.navigation.next.disabled = false
 
         if (instance.stepType() == 'video') {
@@ -123,13 +122,13 @@ export default class Program {
                 instance.video.defocus()
                 instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
                 instance.video.setTexture(instance.nextVideo())
-
-                if (instance.stepType() == 'iris') {
-                    instance.message.show()
-                }
             })
 
-            if (instance.stepType() == 'task') {
+            if (instance.stepType() == 'iris') {
+                instance.message.show()
+            }
+
+            else if (instance.stepType() == 'task') {
                 if (instance.taskType() == 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
                 }
@@ -175,10 +174,9 @@ export default class Program {
             }
         }
 
-        // Finish program
-        if (instance.currentCheckpoint == instance.totalCheckpoints) {
-            instance.updateCameraForCurrentStep(instance.congrats.toggleBibleCardsReminder)
-        }
+        // Check if it was the last step in the last checkpoint
+        if (instance.currentCheckpoint == instance.totalCheckpoints)
+            instance.showBibleCards()
     }
 
     nextCheckpoint(checkpoint = ++instance.currentCheckpoint) {
@@ -194,7 +192,6 @@ export default class Program {
     }
 
     startInteractivity() {
-        instance.audio.playSound('whoosh-between-screens')
         instance.experience.navigation.prev.disabled = true
         instance.experience.navigation.next.disabled = true
 
@@ -246,6 +243,10 @@ export default class Program {
         }
     }
 
+    showBibleCards() {
+        instance.updateCameraForCurrentStep(instance.congrats.toggleBibleCardsReminder)
+    }
+
     updateCurrentCheckpoint(newCheckpoint) {
         instance.currentCheckpoint = newCheckpoint
 
@@ -255,9 +256,6 @@ export default class Program {
 
     updateCameraForCurrentStep(callback = () => { }) {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
-            instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-            instance.highlight.add(instance.interactiveObjects()[0])
-
             callback()
 
             document.addEventListener('click', (event) => {
@@ -279,7 +277,7 @@ export default class Program {
         if (instance.stepType() == 'video') {
             interactiveObjects = interactiveObjects.concat(["Screen", "Switch"])
         }
-        else if (instance.stepType() == 'iris' || instance.stepType() == 'task') {
+        else if (instance.stepType() == 'iris' || instance.stepType() == 'task' && instance.currentStep == 0) {
             interactiveObjects.push("tv_16x9_screen")
         }
 

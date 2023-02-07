@@ -556,7 +556,6 @@ export default class World {
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
         instance.camera.updateCameraTo()
-        instance.audio.playSound('whoosh-between-screens')
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()
         instance.showLobby()
