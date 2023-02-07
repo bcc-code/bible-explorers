@@ -39,7 +39,7 @@ export default [
     {
         name: 'iris',
         type: 'videoTexture',
-        path: 'textures/iris_studio.mp4'
+        path: 'textures/Iris_Idle_Med_v2.mp4'
     },
     {
         name: 'hud',
