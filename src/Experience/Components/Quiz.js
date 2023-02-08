@@ -18,11 +18,7 @@ export default class Quiz {
         instance.debug = instance.experience.debug
         instance.program = instance.world.program
 
-        document.querySelector('.cta').style.display = 'none'
-
         instance.quizHTML()
-
-
     }
 
     quizHTML() {
@@ -117,7 +113,7 @@ export default class Quiz {
 
         quiz.querySelector('.quiz-nav').append(prev, next)
         document.querySelector('.ui-container').append(quiz)
-
+        document.querySelector('.cta').style.display = 'none'
 
         let questionsAnswered = 0
         let quizProgress = 0
@@ -210,47 +206,51 @@ export default class Quiz {
             })
         })
 
+        const submitQuiz = _gl.elementFromHtml(`<button type="submit" class="btn default next pulsate">submit</button>`)
+
         quiz.querySelector('.quiz-textarea').addEventListener('input', (e) => {
             if (e.target.value.length > 1) return
 
             if (e.target.value.length > 0) {
                 questionsAnswered = questions.length
-                document.querySelector('.cta').style.display = 'flex'
-                instance.experience.navigation.next.addEventListener('click', instance.destroy)
-                instance.experience.navigation.prev.addEventListener('click', instance.destroy)
+
+                quiz.classList.add('completed')
+                quiz.querySelector('.quiz-nav').appendChild(submitQuiz)
             }
             else {
                 questionsAnswered = questions.length - 1
             }
         })
 
-    }
+        submitQuiz.addEventListener('click', () => {
 
-    completeQuiz() {
-        instance.experience.world.audio.playSound('task-completed')
+            instance.experience.world.audio.playSound('task-completed')
 
-        const numberOfQuestions = document.getElementById('quizTextarea') ? 1 : 0
+            const summaryHTML = _gl.elementFromHtml(`
+                <div class="summary">
+                    <div class="summary-content">
+                        <header>
+                            <h2>${_s.miniGames.completed.title}</h2>
+                        </header>
+                        <div>${instance.correctAnswers + ' / ' + questions.length + ' '}!</div>
+                    </div>
+                </div>
+            `)
 
-        const summaryHTML = _gl.elementFromHtml(`
-            <div class="game-popup">
-                <header>
-                    <h2>${_s.miniGames.completed.title}</h2>
-                </header>
-                <div>${instance.correctAnswers + ' / ' + numberOfQuestions + ' '}!</div>
-            </div>
-        `)
+            quiz.querySelector('.container').style.display = 'none'
+            quiz.classList.add('popup-visible')
+            quiz.append(summaryHTML)
+            document.querySelector('.cta').style.display = 'flex'
+        })
 
-        document.querySelector('.ui-container').append(summaryHTML)
-    }
-
-    summary(correctAnswers, numberOfQuestions) {
-
+        instance.experience.navigation.next.addEventListener('click', instance.destroy)
+        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
     }
 
     destroy() {
         document.querySelector('.quiz')?.remove()
+        instance.correctAnswers = 0
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
-        document.querySelector('.cta').style.display = 'flex'
     }
 }

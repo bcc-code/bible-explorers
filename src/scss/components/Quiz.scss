@@ -192,4 +192,49 @@
 
         }
     }
+
+    &.completed {
+        .quiz-nav button[aria-label="next question"] {
+            margin-left: auto;
+        }
+    }
+
+    &.popup-visible {
+        .container {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .summary {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.summary {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--app-padding);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-duration) var(--transition-timing);
+    z-index: 21;
+
+    &-content {
+        color: #fff;
+        text-align: center;
+    }
+
+    header {
+        font-size: 2rem;
+    }
+
+    div {
+        font-size: 1.25rem;
+    }
+
 }
