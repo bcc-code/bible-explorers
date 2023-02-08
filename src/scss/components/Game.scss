@@ -41,7 +41,6 @@
 
     &-notification {
         background-color: #fff;
-
         position: absolute;
         top: var(--app-padding);
         right: var(--app-padding);
@@ -53,6 +52,7 @@
             position: absolute;
             top: 0;
             right: calc(100% + 1rem);
+            border-radius: 15px;
         }
     }
 
