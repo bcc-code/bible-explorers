@@ -84,14 +84,7 @@ export default class ProgressBar {
                         </svg>
                     </button>`
             }
-            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause')) {
-                generatedHTML +=
-                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
-                        <svg class="pause-icon icon" width="15" height="18" viewBox="0 0 15 18">
-                            <use href="#pause"></use>
-                        </svg>
-                    </button>`
-            } else {
+            else {
                 generatedHTML +=
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
                     <svg class="task-icon icon" width="25" height="25" viewBox="0 0 25 25">
