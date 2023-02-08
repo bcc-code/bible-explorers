@@ -3,6 +3,7 @@ import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 
+
 let instance = null
 const showSkipAfterNoOfTries = 3
 
@@ -22,8 +23,10 @@ export default class CodeUnlock {
         instance.program = instance.world.program
         instance.secretCode = instance.program.getCurrentStepData().code_to_unlock
 
+        console.log(instance.secretCode);
+
         instance.data = {
-            codeLength: 5,
+            codeLength: instance.secretCode.length,
             fails: 0,
             currentNumberIndex: 0,
             enteredCode: [],
@@ -191,6 +194,9 @@ export default class CodeUnlock {
     checkCode() {
         const wrapper = document.querySelector('.code-unlock')
 
+
+        console.log(instance.data.enteredCode);
+        console.log(instance.secretCode);
         if (instance.data.enteredCode.join('') == instance.secretCode) {
             wrapper.classList.add('correct-code')
             instance.audio.playSound('task-completed')
@@ -198,8 +204,19 @@ export default class CodeUnlock {
         }
         else {
             instance.data.fails++
-            // if (instance.fails >= showSkipAfterNoOfTries)
-            //     document.getElementById("skip").style.display = 'block'
+            instance.data.currentNumberIndex = 0
+            instance.data.enteredCode = []
+
+            const numbers = instance.el.code.querySelectorAll('div')
+            numbers.forEach(item => {
+                const asterisk = _gl.elementFromHtml(`
+                    <svg class="asterisk-icon icon" width="20" height="22" viewBox="0 0 20 22">
+                        <use href="#asterisk"></use>
+                    </svg>
+                `)
+                item.textContent = ''
+                item.appendChild(asterisk)
+            })
 
             wrapper.classList.add('wrong-code')
             setTimeout(() => {

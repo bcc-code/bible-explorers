@@ -1,12 +1,11 @@
 import Experience from "../Experience.js"
 import Archive from '../Components/Archive.js'
 import TaskDescription from '../Extras/TaskDescription.js'
-import CodeUnlock from '../Extras/CodeUnlock.js'
+import CodeUnlock from '../Components/CodeUnlock.js'
 import PictureAndCode from '../Extras/PictureAndCode.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Questions from '../Extras/Questions.js'
 import Video from '../Extras/Video.js'
-import Quiz from '../Extras/Quiz.js'
 import Congrats from '../Extras/Congrats.js'
 import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
@@ -71,7 +70,7 @@ export default class Program {
         instance.interactiveObjects = () => instance.getCurrentStepData() ? instance.getAllInteractiveObjects() : []
         instance.totalCheckpoints = Object.keys(instance.programData).length
         instance.clickedObject = null
-        instance.clickCallback = () => {}
+        instance.clickCallback = () => { }
         instance.canClick = () =>
             !document.body.classList.contains('freeze') &&
             !document.body.classList.contains('modal-on') &&
@@ -228,7 +227,7 @@ export default class Program {
     startAction() {
         if (instance.clickedObject == 'tv_16x9_screen') {
             instance.clickCallback()
-            instance.clickCallback = () => {}
+            instance.clickCallback = () => { }
 
             instance.message.show()
         }
