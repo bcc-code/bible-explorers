@@ -23,6 +23,7 @@ export default class Dialogue {
 
         instance.setHtml()
         instance.setEventListeners()
+        instance.experience.navigation.next.disabled = true
     }
 
     setHtml() {
@@ -49,8 +50,15 @@ export default class Dialogue {
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
             button.addEventListener("click", () => {
+                // Remove previous message
                 document.querySelector('.message-from-dialogue')?.remove()
+
+                // Add visited class
                 button.classList.add('visited')
+
+                // Check if all were visited
+                if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length)
+                    instance.experience.navigation.next.disabled = false
 
                 instance.setMessageHtml(instance.data[index].answer)
 
