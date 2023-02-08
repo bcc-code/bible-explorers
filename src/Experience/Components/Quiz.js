@@ -58,6 +58,7 @@ export default class Quiz {
         const quiz = _gl.elementFromHtml(`
             <section class="quiz">
                 <div class="container">
+                    <ul class="quiz-steps"></ul>
                     <ul class="quiz-items"></ul>
                     <div class="quiz-nav ${questions.length == 1 ? "hide - nav" : ""}"></div>
                 </div>
@@ -83,6 +84,10 @@ export default class Quiz {
 
 
         questions.forEach((q, qIdx) => {
+
+            const quizStep = _gl.elementFromHtml(`
+                <li class="quiz-step"></li>
+            `)
 
             const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
@@ -129,6 +134,7 @@ export default class Quiz {
                 const picture = _gl.elementFromHtml(`<div class="question__picture" ><img src="${q.picture}"></div>`)
             }
 
+            quiz.querySelector('.quiz-steps').append(quizStep)
             quiz.querySelector('.quiz-items').append(quizItem)
 
         })

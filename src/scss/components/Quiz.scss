@@ -27,7 +27,7 @@
 
     &-items {
         position: relative;
-        width: clamp(600px, calc(100vw - var(--app-padding)), 1000px);
+        width: clamp(600px, 80vw, 90em);
     }
 
     &-item {
@@ -40,13 +40,13 @@
 
     &-nav {
         margin-top: 1rem;
-        width: clamp(600px, calc(100vw - var(--app-padding)), 1000px);
+        width: clamp(600px, 80vw, 90em);
         display: flex;
         justify-content: space-between;
     }
 
     &-question {
-        width: 300px;
+        width: clamp(300px, 30%, 90em);
         position: relative;
         background-color: var(--clr-background);
         border: 0.25rem solid var(--clr-primary);
