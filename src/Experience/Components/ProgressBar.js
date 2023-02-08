@@ -40,10 +40,12 @@ export default class ProgressBar {
     show() {
         instance.refresh()
         instance.htmlEl.classList.add('is-visible')
+        document.querySelector('.cta').style.display = 'flex'
     }
 
     hide() {
         instance.htmlEl.classList.remove('is-visible')
+        document.querySelector('.cta').style.display = 'flex'
     }
 
     refresh() {
