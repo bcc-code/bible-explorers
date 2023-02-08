@@ -1,5 +1,4 @@
 import Experience from '../Experience.js'
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import gsap from 'gsap'
@@ -52,14 +51,14 @@ export default class Chapter3Game2 {
                                 <use href="#locked"></use>
                             </svg>
                         </div>
-                        <input type="text" placeholder="#"/>
+                        <input type="text" placeholder="#" maxlength="5" />
                     </div>
                 </article>
             `)
 
-            if (c.sound) {
+            if (c.sound_effect) {
                 const audio = _gl.elementFromHtml(`
-                    <audio src="${c.sound_effect}"></audio>
+                    <audio class="card-audio" src="${c.sound_effect}"></audio>
                 `)
 
                 card.append(audio)
@@ -95,7 +94,6 @@ export default class Chapter3Game2 {
             const flipAnimation = gsap.timeline({ paused: true })
                 .to(cImage[0], { duration: 1, rotationY: 180 })
 
-
             cInput[0].addEventListener('input', (e) => {
                 if (e.target.value === instance.data.cards[index].code) {
                     card.classList.add('flipped')
@@ -109,8 +107,6 @@ export default class Chapter3Game2 {
                     }
                 }
             })
-
-
 
             card.addEventListener('click', () => {
                 if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
@@ -126,9 +122,7 @@ export default class Chapter3Game2 {
                         firstTimeClick = false
                         instance.toggleGlitch()
                     }
-
                 }
-
             })
 
             if (cAudio.length)
@@ -149,7 +143,6 @@ export default class Chapter3Game2 {
 
         instance.experience.navigation.next.addEventListener('click', instance.destroy)
         instance.experience.navigation.prev.addEventListener('click', instance.destroy)
-
     }
 
     toggleGlitch() {
@@ -196,7 +189,5 @@ export default class Chapter3Game2 {
         document.querySelector('.game')?.remove()
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
-
     }
-
 }

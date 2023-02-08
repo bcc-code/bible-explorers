@@ -216,6 +216,7 @@ export default class Program {
             })
         }
         else {
+            instance.world.progressBar.hide()
             instance.nextTask()
         }
     }

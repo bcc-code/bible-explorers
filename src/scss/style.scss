@@ -142,8 +142,9 @@
 }
 
 .skip-video {
+    font-size: 1rem;
     right: var(--app-padding);
-    bottom: 4rem;
+    top: 4rem;
     position: absolute;
     display: flex;
     align-items: center;
