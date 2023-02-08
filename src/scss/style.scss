@@ -101,6 +101,90 @@
     }
 }
 
+textarea {
+    resize: none;
+}
+
+.modal {
+    .container {
+        position: absolute;
+        inset: 0;
+        padding: var(--app-padding);
+
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        pointer-events: all;
+
+        >div {
+            text-align: center;
+        }
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 12;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+        background: var(--gradient-dark);
+        pointer-events: none;
+    }
+
+    header {
+        color: var(--clr-secondary);
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.15rem;
+        color: #fff;
+    }
+
+    .bibleCards {
+        text-align: center;
+
+        video {
+            max-height: 50vh;
+        }
+    }
+
+    .congrats {
+        position: relative;
+        text-align: center;
+
+        &::after,
+        &::before {
+            content: '';
+            position: absolute;
+            width: 10rem;
+            top: 0;
+            aspect-ratio: 1/0.9;
+            background: url('/static/svgs/congrats.svg');
+            background-repeat: no-repeat;
+            transform-origin: bottom;
+            opacity: 0;
+        }
+
+        &::after {
+            left: -10rem;
+            transform: scaleX(-1) rotate(10deg);
+            animation: bounce-left 1s cubic-bezier(0.215, 0.610, 0.355, 1) 1s 1 forwards;
+        }
+
+        &::before {
+            right: -10rem;
+            transform: rotate(-10deg);
+            animation: bounce-right 1s cubic-bezier(0.215, 0.610, 0.355, 1) 1s 1 forwards;
+        }
+    }
+
+}
+
 // #region Interface
 
 .pointer-events-none {
@@ -119,16 +203,32 @@
 
 .highlight-circle {
     position: absolute;
-    top: 0;
+    left: -1.5rem;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
     width: 1.5rem;
     height: 1.5rem;
     pointer-events: none;
     @include pulsate()
 }
 
+.highlight-label {
+    position: absolute;
+    top: 0;
+    color: #fff;
+    background: $gradient;
+    padding: 0.5rem 1rem;
+    border: 2px solid $accent;
+    border-radius: 8px 16px;
+    cursor: pointer;
+    transition: opacity 1s ease;
+    opacity: 0;
+}
+
 .skip-video {
+    font-size: 1rem;
     right: var(--app-padding);
-    bottom: 4rem;
+    top: 4rem;
     position: absolute;
     display: flex;
     align-items: center;
@@ -166,137 +266,137 @@
     font-weight: bold;
 }
 
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 101;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    background: $gradient-with-opacity;
-    overflow-x: hidden;
-    overflow-y: auto;
+// .modal {
+//     // position: fixed;
+//     // top: 0;
+//     // left: 0;
+//     // width: 100%;
+//     // height: 100vh;
+//     // z-index: 101;
+//     // display: grid;
+//     // grid-template-rows: auto 1fr auto;
+//     // background: $gradient-with-opacity;
+//     // overflow-x: hidden;
+//     // overflow-y: auto;
 
-    &__close {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 99;
-    }
+//     &__close {
+//         position: fixed;
+//         top: 1rem;
+//         right: 1rem;
+//         z-index: 99;
+//     }
 
-    &__heading {
-        padding-bottom: 1rem;
-        border-bottom: 4px solid $accent;
-    }
+//     &__heading {
+//         padding-bottom: 1rem;
+//         border-bottom: 4px solid $accent;
+//     }
 
-    &__heading--minigame {
-        display: grid;
-        place-items: center;
-        padding-block: 2rem;
-        gap: 1rem;
+//     &__heading--minigame {
+//         display: grid;
+//         place-items: center;
+//         padding-block: 2rem;
+//         gap: 1rem;
 
-        h3 {
-            color: #fff;
-            line-height: 4rem;
-            display: grid;
-            place-items: center;
-            gap: 1rem;
-        }
+//         h3 {
+//             color: #fff;
+//             line-height: 4rem;
+//             display: grid;
+//             place-items: center;
+//             gap: 1rem;
+//         }
 
-        h3::after {
-            content: '';
-            height: 1px;
-            width: 80%;
-            background-color: #fff;
-        }
+//         h3::after {
+//             content: '';
+//             height: 1px;
+//             width: 80%;
+//             background-color: #fff;
+//         }
 
-        p {
-            position: relative;
-            color: #fff;
-            margin-top: 2rem;
-            padding-block: 0.5rem;
-            padding-inline: 2rem;
-            border-left: 4px solid $accent;
-            border-right: 4px solid $accent;
-        }
+//         p {
+//             position: relative;
+//             color: #fff;
+//             margin-top: 2rem;
+//             padding-block: 0.5rem;
+//             padding-inline: 2rem;
+//             border-left: 4px solid $accent;
+//             border-right: 4px solid $accent;
+//         }
 
-        p::after,
-        p::before {
-            content: '';
-            position: absolute;
-            height: 50%;
-            width: 100%;
-            left: 0;
-            opacity: 0.25;
-            z-index: -1;
-        }
+//         p::after,
+//         p::before {
+//             content: '';
+//             position: absolute;
+//             height: 50%;
+//             width: 100%;
+//             left: 0;
+//             opacity: 0.25;
+//             z-index: -1;
+//         }
 
-        p::before {
-            top: 0;
-            background: linear-gradient(to top, $accent, rgba($accent, 0.01));
-        }
+//         p::before {
+//             top: 0;
+//             background: linear-gradient(to top, $accent, rgba($accent, 0.01));
+//         }
 
-        p::after {
-            top: 50%;
-            background: linear-gradient(to bottom, $accent, rgba($accent, 0.01));
-        }
-    }
+//         p::after {
+//             top: 50%;
+//             background: linear-gradient(to bottom, $accent, rgba($accent, 0.01));
+//         }
+//     }
 
-    &__wrapper {
-        flex: 1;
-        min-width: 0;
-        padding: 2rem;
-    }
+//     &__wrapper {
+//         flex: 1;
+//         min-width: 0;
+//         padding: 2rem;
+//     }
 
-    &__container {
-        display: flex;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-    }
+//     &__container {
+//         display: flex;
+//         height: 100%;
+//         justify-content: center;
+//         align-items: center;
+//     }
 
-    &__content {
-        max-width: 90rem;
-        width: 100%;
+//     &__content {
+//         max-width: 90rem;
+//         width: 100%;
 
-        &.code-unlock,
-        &.congrats {
-            max-width: 40rem;
-        }
+//         &.code-unlock,
+//         &.congrats {
+//             max-width: 40rem;
+//         }
 
-    }
+//     }
 
-    &__actions {
-        position: relative;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 2rem;
-        display: flex;
-        justify-content: space-between;
-        pointer-events: none;
+//     &__actions {
+//         position: relative;
+//         bottom: 0;
+//         left: 0;
+//         right: 0;
+//         padding: 2rem;
+//         display: flex;
+//         justify-content: space-between;
+//         pointer-events: none;
 
-        div {
-            display: flex;
-            margin-left: auto;
-            gap: 1rem;
-        }
+//         div {
+//             display: flex;
+//             margin-left: auto;
+//             gap: 1rem;
+//         }
 
-        button {
-            display: none;
-            pointer-events: all;
-        }
+//         button {
+//             display: none;
+//             pointer-events: all;
+//         }
 
-        #skip {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-        }
-    }
+//         #skip {
+//             position: fixed;
+//             top: 2rem;
+//             right: 2rem;
+//         }
+//     }
 
-}
+// }
 
 .modal__task,
 .modal__dialog {
@@ -560,7 +660,6 @@
             width: 100%;
             margin-top: 2rem;
             font-size: 2rem;
-            resize: none;
 
             @include wrapper();
         }

@@ -25,9 +25,49 @@
         transition: .3s var(--transition-timing);
     }
 
+    &-progress {
+        position: relative;
+        display: flex;
+        margin-bottom: 2rem;
+    }
+
+    &-steps {
+        position: relative;
+        display: flex;
+
+        li:not(:last-child) {
+            margin-right: 2rem;
+        }
+
+        li:not(.visible) {
+            filter: grayscale(1);
+        }
+
+        li {
+            pointer-events: none;
+        }
+    }
+
+    &-progress-bar {
+        position: absolute;
+        top: calc(50% - 0.2rem);
+        left: 1rem;
+        right: 1rem;
+        height: 0.5rem;
+        background-color: var(--clr-background);
+        border: 2px solid var(--clr-secondary);
+
+        div {
+            width: 0;
+            height: 100%;
+            background-color: var(--clr-secondary);
+            transition: var(--transition-duration) width var(--transition-timing);
+        }
+    }
+
     &-items {
         position: relative;
-        width: clamp(600px, calc(100vw - var(--app-padding)), 1000px);
+        width: clamp(600px, 80vw, 90em);
     }
 
     &-item {
@@ -40,13 +80,13 @@
 
     &-nav {
         margin-top: 1rem;
-        width: clamp(600px, calc(100vw - var(--app-padding)), 1000px);
+        width: clamp(600px, 80vw, 90em);
         display: flex;
         justify-content: space-between;
     }
 
     &-question {
-        width: 300px;
+        width: clamp(300px, 30%, 90em);
         position: relative;
         background-color: var(--clr-background);
         border: 0.25rem solid var(--clr-primary);
@@ -86,6 +126,8 @@
 
         span {
             font-size: 1.25rem;
+            line-height: 1.25rem;
+            align-self: center;
         }
 
         input {
@@ -113,14 +155,14 @@
             }
         }
 
-        label {
+        .label {
             display: flex;
             position: relative;
             padding: var(--app-padding);
             cursor: pointer;
         }
 
-        label::before {
+        .label::before {
             content: counter(answers, upper-latin);
             display: inline-flex;
             align-items: center;
@@ -150,6 +192,12 @@
         &.correct {
             border-color: greenyellow;
 
+        }
+    }
+
+    &.completed {
+        .quiz-nav button[aria-label="next question"] {
+            margin-left: auto;
         }
     }
 }

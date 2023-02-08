@@ -4,6 +4,7 @@ import ControlRoom from './ControlRoom.js'
 import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
 import Program from '../Progress/Program.js'
+import ProgressBar from "../Components/ProgressBar.js"
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -15,7 +16,6 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
-import ProgressBar from "../Components/ProgressBar.js"
 
 let instance = null
 export default class World {
@@ -501,6 +501,10 @@ export default class World {
     }
 
     startChapter() {
+        // Reset chapter if completed
+        if (instance.chapterProgress() == instance.selectedChapter.program.length)
+            instance.resetChapter()
+
         instance.page.removeLobby()
         instance.removeLobbyEventListeners()
 
@@ -523,6 +527,7 @@ export default class World {
         }
 
         document.querySelector('.page').className = 'page page-home'
+        document.querySelector('.cta').style.display = 'none'
     }
 
     removeLobbyEventListeners() {
@@ -540,14 +545,11 @@ export default class World {
         if (instance.program.archive.facts.length > 0) {
             instance.program.archive.init()
         }
-
-
     }
 
-    restartChapter() {
+    resetChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
         localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
-        instance.startChapter()
     }
 
     goHome() {
@@ -557,8 +559,8 @@ export default class World {
         instance.points.delete()
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
+        document.querySelector('.cta').style.display = 'flex'
         instance.camera.updateCameraTo()
-        instance.audio.playSound('whoosh-between-screens')
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()
         instance.showLobby()
@@ -574,19 +576,7 @@ export default class World {
     }
 
     showActionButtons() {
-        if (this.chapterProgress() == 0) {
-            // instance.buttons.restart.style.display = 'none'
-        } else {
-            // instance.buttons.restart.style.display = 'block'
-        }
-
         instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length
-
-        if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
-            // instance.buttons.start.innerText = _s.journey.continue
-        } else {
-            // instance.buttons.start.innerText = _s.journey.start
-        }
     }
 
     hideMenu() {
@@ -599,19 +589,18 @@ export default class World {
     finishJourney() {
         instance.audio.changeBgMusic()
 
-        if (!instance.debug.onQuickLook()) {
-            document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
+        if (instance.debug.onQuickLook())
+            return
 
-            _appInsights.trackEvent({
-                name: "Finish chapter",
-                properties: {
-                    title: instance.selectedChapter.title,
-                    category: instance.selectedChapter.category,
-                    language: _lang.getLanguageCode(),
-                    quality: instance.selectedQuality
-                }
-            })
-        }
+        _appInsights.trackEvent({
+            name: "Finish chapter",
+            properties: {
+                title: instance.selectedChapter.title,
+                category: instance.selectedChapter.category,
+                language: _lang.getLanguageCode(),
+                quality: instance.selectedQuality
+            }
+        })
     }
 
     getId() {

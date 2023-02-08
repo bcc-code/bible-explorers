@@ -2,12 +2,19 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
+    margin: 0 auto;
     padding: var(--app-padding);
     pointer-events: all;
     width: 60vw;
     transform: translateY(100%);
     transition: var(--transition-duration) var(--transition-timing);
     opacity: 0;
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
     .checkpoints {
         position: relative;
@@ -19,12 +26,11 @@
         margin-right: 0;
     }
 
-
     [aria-label="checkpoint"][currentCheckpoint] {
         background-color: var(--clr-secondary);
     }
 
-    [aria-label="checkpoint"].locked {
+    body:not(.quick-look-mode) & [aria-label="checkpoint"].locked {
         filter: grayscale(1);
     }
 
@@ -46,9 +52,8 @@
         }
     }
 
-
-    body[data-step="video"] & {
-        opacity: 1;
-        transform: translateY(0);
+    .modal-on &,
+    .freeze & {
+        transform: translateY(100%);
     }
 }

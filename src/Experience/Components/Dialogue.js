@@ -23,6 +23,7 @@ export default class Dialogue {
 
         instance.setHtml()
         instance.setEventListeners()
+        instance.experience.navigation.next.disabled = true
     }
 
     setHtml() {
@@ -35,7 +36,16 @@ export default class Dialogue {
         `)
 
         instance.data.forEach(dialog => {
-            const option = _gl.elementFromHtml(`<button class="btn default bordered">${dialog.question}</button>`)
+            const option = _gl.elementFromHtml(`
+                <button class="question">
+                    <div class="current-icon">
+                        <svg class="next-icon icon" viewBox="0 0 25 16">
+                            <use href="#arrow-right"></use>
+                        </svg>
+                    </div>
+                    <span>${dialog.question}</span>
+                </button>`
+            )
             dialogue.querySelector('.content').append(option)
         })
 
@@ -49,7 +59,20 @@ export default class Dialogue {
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
             button.addEventListener("click", () => {
+
+                buttons.forEach(button => button.classList.remove('current'))
+
+                // Remove previous message
                 document.querySelector('.message-from-dialogue')?.remove()
+
+                // Add visited class
+                button.classList.add('visited')
+                button.classList.add('current')
+
+                // Check if all were visited
+                if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length)
+                    instance.experience.navigation.next.disabled = false
+
                 instance.setMessageHtml(instance.data[index].answer)
 
                 if (instance.data[index].audio) {

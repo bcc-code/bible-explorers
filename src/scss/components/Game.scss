@@ -19,7 +19,7 @@
         height: 100%;
         background: var(--gradient-dark);
         opacity: 1;
-        pointer-events: none;
+        pointer-events: all;
         transition: .3s var(--transition-timing);
     }
 
@@ -41,7 +41,6 @@
 
     &-notification {
         background-color: #fff;
-
         position: absolute;
         top: var(--app-padding);
         right: var(--app-padding);
@@ -53,6 +52,7 @@
             position: absolute;
             top: 0;
             right: calc(100% + 1rem);
+            border-radius: 15px;
         }
     }
 
@@ -89,7 +89,6 @@
 }
 
 .flip-card {
-
     .container {
         justify-content: center;
     }
@@ -114,6 +113,7 @@
             margin-left: 1rem;
             border: none;
             background-color: transparent;
+            color: #fff;
 
             &::placeholder {
                 color: #fff;
@@ -193,6 +193,8 @@
         }
 
         &.flipped {
+            cursor: pointer;
+
             .card-input {
                 display: none;
             }
@@ -203,8 +205,6 @@
                 opacity: 1;
             }
         }
-
-
     }
 
     button {
@@ -218,7 +218,12 @@
         }
     }
 
-
+    .skip {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 2rem;
+    }
 }
 
 .davids-refuge {
@@ -284,7 +289,6 @@
             }
         }
 
-
         [data-color='yellow'] {
             .tooltip {
                 background-color: var(--yellow);
@@ -304,7 +308,6 @@
             .tooltip {
                 background-color: var(--blue);
                 box-shadow: -2px -2px 0 2px var(--blue-shadow);
-
             }
 
             .tooltip::after {
@@ -376,5 +379,4 @@
             }
         }
     }
-
 }

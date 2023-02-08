@@ -1,25 +1,28 @@
 import * as THREE from 'three'
-import Experience from "./Experience.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN from '@tweenjs/tween.js'
+
+import Experience from "./Experience.js";
+import Audio from './Extras/Audio.js'
 
 let camera = null
 
 export default class Camera {
     constructor() {
-        this.experience = new Experience()
-        this.sizes = this.experience.sizes
-        this.scene = this.experience.scene
-        this.canvas = this.experience.canvas
-        this.resources = this.experience.resources
-        this.debug = this.experience.debug
         camera = this
+        camera.experience = new Experience()
+        camera.audio = new Audio()
+        camera.sizes = camera.experience.sizes
+        camera.scene = camera.experience.scene
+        camera.canvas = camera.experience.canvas
+        camera.resources = camera.experience.resources
+        camera.debug = camera.experience.debug
 
         // Options
-        this.cameraUpdated = false
-        this.updateCameraTween = null
-        this.zoomInTween = null
-        this.data = {
+        camera.cameraUpdated = false
+        camera.updateCameraTween = null
+        camera.zoomInTween = null
+        camera.data = {
             moveDuration: 2000,
             zoom: 1.15,
             location: 0,
@@ -27,7 +30,7 @@ export default class Camera {
             fov: 60
         }
 
-        this.cameraLocations = {
+        camera.cameraLocations = {
             'default': {
                 position: new THREE.Vector3(-0.423, 2.435, 5.019),
                 lookAt: new THREE.Vector3(-0.238, 1.469, -0.265),
@@ -100,77 +103,90 @@ export default class Camera {
             },
         }
 
-        this.lastCameraSettings = {
+        camera.lastCameraSettings = {
             position: new THREE.Vector3(0, 0, 0)
         }
 
         // Setup
+        camera.setInstance()
+        camera.setOrbitControls()
+        camera.autoRotateControls()
 
-        this.setInstance()
-        this.setOrbitControls()
-        this.autoRotateControls()
-
-        if (this.debug.developer) {
-            this.resources.on('ready', () => {
-                this.resources = this.resources.items
-                this.model = this.resources.controlRoom.scene
+        if (camera.debug.developer) {
+            camera.resources.on('ready', () => {
+                camera.resources = camera.resources.items
+                camera.model = camera.resources.controlRoom.scene
             })
 
-            this.addGUIControls()
+            camera.addGUIControls()
         }
     }
 
     setInstance() {
-        this.instance = new THREE.PerspectiveCamera(this.data.fov, this.sizes.width / this.sizes.height, 0.01, 1000)
-        this.instance.position.copy(this.cameraLocations.default.position)
+        camera.instance = new THREE.PerspectiveCamera(camera.data.fov, camera.sizes.width / camera.sizes.height, 0.01, 1000)
+        camera.instance.position.copy(camera.cameraLocations.default.position)
 
-        this.instance.layers.enable(0)
-        this.instance.layers.enable(1)
+        camera.instance.layers.enable(0)
+        camera.instance.layers.enable(1)
 
-        this.scene.add(this.instance)
+        camera.scene.add(camera.instance)
     }
 
     setOrbitControls() {
-        this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.target.copy(this.cameraLocations.default.lookAt)
+        camera.controls = new OrbitControls(camera.instance, camera.canvas)
+        camera.controls.target.copy(camera.cameraLocations.default.lookAt)
     }
 
     autoRotateControls() {
-        this.counter = 0
-        this.controls.enableDamping = true
-        this.controls.enablePan = this.debug.developer
-        this.controls.enableZoom = this.debug.developer
-        this.controls.autoRotate = true
-        this.controls.autoRotateSpeed = 0.1
+        camera.counter = 0
+        camera.controls.enableDamping = true
+        camera.controls.enablePan = camera.debug.developer
+        camera.controls.enableZoom = camera.debug.developer
+        camera.controls.autoRotate = true
+        camera.controls.autoRotateSpeed = 0.1
     }
 
     changeRotateDirection() {
-        if (this.counter > 1000) {
-            this.controls.autoRotateSpeed *= -1
-            this.counter = 0
+        if (camera.counter > 1000) {
+            camera.controls.autoRotateSpeed *= -1
+            camera.counter = 0
         } else {
-            this.counter++
+            camera.counter++
         }
     }
 
     updateCameraTo(location = 'default', callback = () => { }) {
         if (location == null) return
-        this.lastCameraSettings.position = new THREE.Vector3().copy(this.instance.position)
-        this.updateCamera(this.cameraLocations[location], callback)
+
+        const diffCamLocation = camera.lastCameraSettings.location != location
+
+        // Update camera history
+        camera.lastCameraSettings = {
+            'location': location,
+            'position': new THREE.Vector3().copy(camera.instance.position)
+        }
+
+        if (diffCamLocation) {
+            camera.updateCamera(camera.cameraLocations[location], callback)
+        }
+        else {
+            camera.audio.playSound('whoosh-between-screens')
+            callback()
+        }
     }
 
-    updateCamera({ position, lookAt, controls, duration = this.data.moveDuration }, callback) {
+    updateCamera({ position, lookAt, controls, duration = camera.data.moveDuration }, callback) {
         document.body.classList.add('camera-is-moving')
 
-        if (this.updateCameraTween)
-            this.updateCameraTween.stop()
+        if (camera.updateCameraTween)
+            camera.updateCameraTween.stop()
 
-        if (this.zoomInTween)
-            this.zoomOut(2000)
+        if (camera.zoomInTween)
+            camera.zoomOut(2000)
 
         const from = {
-            cameraPosition: new THREE.Vector3().copy(this.instance.position),
-            cameraLookAt: new THREE.Vector3().copy(this.controls.target)
+            cameraPosition: new THREE.Vector3().copy(camera.instance.position),
+            cameraLookAt: new THREE.Vector3().copy(camera.controls.target)
         }
 
         const to = {
@@ -178,26 +194,26 @@ export default class Camera {
             cameraLookAt: lookAt
         }
 
-        if (!this.debug.developer)
-            this.setDefaultAngleControls()
+        if (!camera.debug.developer)
+            camera.setDefaultAngleControls()
 
-        this.updateCameraTween = new TWEEN.Tween(from)
+        camera.updateCameraTween = new TWEEN.Tween(from)
             .to(to, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate((obj) => {
-                this.controls.target.set(
+                camera.controls.target.set(
                     obj.cameraLookAt.x,
                     obj.cameraLookAt.y,
                     obj.cameraLookAt.z
                 )
-                this.instance.position.set(
+                camera.instance.position.set(
                     obj.cameraPosition.x,
                     obj.cameraPosition.y,
                     obj.cameraPosition.z
                 )
             })
             .onComplete(() => {
-                if (controls && !this.debug.developer) {
+                if (controls && !camera.debug.developer) {
                     camera.controls.minPolarAngle = controls.minPolarAngle
                     camera.controls.maxPolarAngle = controls.maxPolarAngle
                     camera.controls.minAzimuthAngle = controls.minAzimuthAngle
@@ -208,25 +224,25 @@ export default class Camera {
             })
             .start()
 
-        this.controls.autoRotate = false
+        camera.controls.autoRotate = false
     }
 
     zoomIn(time) {
-        this.zoomInTween = new TWEEN.Tween(this.controls.object)
+        camera.zoomInTween = new TWEEN.Tween(camera.controls.object)
             .to({ zoom: 1.3 }, time)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
-                this.instance.updateProjectionMatrix()
+                camera.instance.updateProjectionMatrix()
             })
             .start()
     }
 
     zoomOut(time) {
-        this.zoomInTween = new TWEEN.Tween(this.controls.object)
+        camera.zoomInTween = new TWEEN.Tween(camera.controls.object)
             .to({ zoom: 1 }, time)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
-                this.instance.updateProjectionMatrix()
+                camera.instance.updateProjectionMatrix()
             })
             .start()
     }
@@ -239,26 +255,26 @@ export default class Camera {
     }
 
     resize() {
-        this.instance.aspect = this.sizes.width / this.sizes.height
-        this.instance.updateProjectionMatrix()
+        camera.instance.aspect = camera.sizes.width / camera.sizes.height
+        camera.instance.updateProjectionMatrix()
     }
 
     update() {
         TWEEN.update()
-        this.controls.update()
+        camera.controls.update()
 
-        if (this.controls.autoRotate) {
-            this.changeRotateDirection()
+        if (camera.controls.autoRotate) {
+            camera.changeRotateDirection()
         }
     }
 
     addGUIControls() {
-        const camera = this.debug.ui.addFolder('Camera')
+        const camera = camera.debug.ui.addFolder('Camera')
         camera.close()
 
         camera.
             // Location
-            add(this.data, 'location', {
+            add(camera.data, 'location', {
                 Default: 'default',
                 Screens: 'screens',
                 ControlBoard: 'controlBoard',
@@ -267,25 +283,25 @@ export default class Camera {
                 IrisWithOptions: 'irisWithOptions'
             })
             .onFinishChange((location) => {
-                this.updateCameraTo(location)
+                camera.updateCameraTo(location)
             })
             .name('Location')
             .listen()
 
         const cameraPosition = camera.addFolder('Position')
-        cameraPosition.add(this.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()
-        cameraPosition.add(this.instance.position, 'y').min(-20).max(20).step(0.01).name('position.y').listen()
-        cameraPosition.add(this.instance.position, 'z').min(-20).max(20).step(0.01).name('position.z').listen()
+        cameraPosition.add(camera.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()
+        cameraPosition.add(camera.instance.position, 'y').min(-20).max(20).step(0.01).name('position.y').listen()
+        cameraPosition.add(camera.instance.position, 'z').min(-20).max(20).step(0.01).name('position.z').listen()
 
         const cameraLookAt = camera.addFolder('LookAt')
-        cameraLookAt.add(this.controls.target, 'x').min(-20).max(20).step(0.01).name('lookAt.x').listen()
-        cameraLookAt.add(this.controls.target, 'y').min(-20).max(20).step(0.01).name('lookAt.y').listen()
-        cameraLookAt.add(this.controls.target, 'z').min(-20).max(20).step(0.01).name('lookAt.z').listen()
+        cameraLookAt.add(camera.controls.target, 'x').min(-20).max(20).step(0.01).name('lookAt.x').listen()
+        cameraLookAt.add(camera.controls.target, 'y').min(-20).max(20).step(0.01).name('lookAt.y').listen()
+        cameraLookAt.add(camera.controls.target, 'z').min(-20).max(20).step(0.01).name('lookAt.z').listen()
 
         const cameraAngles = camera.addFolder('Angles')
-        cameraAngles.add(this.controls, 'minPolarAngle').min(-Math.PI).max(Math.PI).step(0.01).name('minPolarAngle').listen()
-        cameraAngles.add(this.controls, 'maxPolarAngle').min(-Math.PI).max(Math.PI).step(0.01).name('maxPolarAngle').listen()
-        cameraAngles.add(this.controls, 'minAzimuthAngle').min(-Math.PI).max(Math.PI).step(0.01).name('minAzimuthAngle').listen()
-        cameraAngles.add(this.controls, 'maxAzimuthAngle').min(-Math.PI).max(Math.PI).step(0.01).name('maxAzimuthAngle').listen()
+        cameraAngles.add(camera.controls, 'minPolarAngle').min(-Math.PI).max(Math.PI).step(0.01).name('minPolarAngle').listen()
+        cameraAngles.add(camera.controls, 'maxPolarAngle').min(-Math.PI).max(Math.PI).step(0.01).name('maxPolarAngle').listen()
+        cameraAngles.add(camera.controls, 'minAzimuthAngle').min(-Math.PI).max(Math.PI).step(0.01).name('minAzimuthAngle').listen()
+        cameraAngles.add(camera.controls, 'maxAzimuthAngle').min(-Math.PI).max(Math.PI).step(0.01).name('maxAzimuthAngle').listen()
     }
 }

@@ -8,6 +8,8 @@ export default class Message {
     constructor() {
         instance = this
         instance.experience = new Experience()
+        instance.world = instance.experience.world
+        instance.audio = instance.world.audio
         instance.navigation = instance.experience.navigation
     }
 
@@ -23,6 +25,9 @@ export default class Message {
 
         instance.setHtml(text, character)
         instance.setEventListeners()
+
+        if (instance.data.audio)
+            instance.audio.togglePlayTaskDescription(instance.data.audio)
     }
 
     setHtml(text, character) {
@@ -40,6 +45,26 @@ export default class Message {
                 </section>`
             )
         )
+
+        if (instance.data.character == 'glitch') {
+            document.querySelector('section.message .container').append(
+                _gl.elementFromHtml('<video id="glitch-idle" src="textures/BIEX_Glitch_Idle_HD_v2.mp4" muted autoplay loop></video>')
+            )
+        }
+
+        if (instance.data.open_question === true) {
+            document.querySelector('.ui-container').append(
+                _gl.elementFromHtml(
+                    `<section class="open-question">
+                        <div class="container">
+                            <div class="content">
+                                <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                            </div>
+                        </div>
+                    </section>`
+                )
+            )
+        }
     }
 
     setEventListeners() {
@@ -54,6 +79,7 @@ export default class Message {
 
     destroy() {
         document.querySelector('section.message')?.remove()
+        document.querySelector('section.open-question')?.remove()
         instance.removeEventListeners()
     }
 }

@@ -22,10 +22,8 @@ export default class Highlight {
         if (name == 'tv_16x9_screen') {
             this.set(this.tv_16x9)
             this.pulse()
-        } else if (name == 'tv_16x10_screen') {
-            this.set(this.tv_16x10)
-            this.pulse()
-        } else {
+        }
+        else {
             this.clickableObjects.filter(child => {
                 if (child.name === name) {
                     this.set(child)
