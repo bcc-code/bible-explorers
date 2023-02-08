@@ -23,7 +23,6 @@ export default class Program {
         instance.world = instance.experience.world
         instance.programData = instance.world.selectedChapter.program
         instance.camera = instance.experience.camera
-        instance.highlight = instance.world.highlight
         instance.points = instance.world.points
         instance.audio = instance.world.audio
         instance.debug = instance.experience.debug
@@ -181,7 +180,6 @@ export default class Program {
 
         instance.currentStep = 0
         instance.points.fadeOut()
-        instance.highlight.fadeOut()
 
         instance.updateCurrentCheckpoint(checkpoint)
         instance.startInteractivity()
@@ -196,11 +194,9 @@ export default class Program {
                 instance.world.progressBar.show()
 
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-                instance.highlight.add(instance.interactiveObjects()[0])
 
                 instance.clickCallback = () => {
                     instance.points.fadeOut()
-                    instance.highlight.fadeOut()
                     instance.world.progressBar.hide()
                     instance.experience.navigation.next.disabled = false
                 }
@@ -255,7 +251,6 @@ export default class Program {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
             if (instance.stepType() == 'video') {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-                instance.highlight.add(instance.interactiveObjects()[0])
             }
 
             callback()
