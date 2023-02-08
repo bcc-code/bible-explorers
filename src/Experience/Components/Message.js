@@ -73,6 +73,7 @@ export default class Message {
 
     destroy() {
         document.querySelector('section.message')?.remove()
+        document.querySelector('section.open-question')?.remove()
         instance.removeEventListeners()
     }
 }
