@@ -168,10 +168,6 @@ export default class Program {
             else if (instance.stepType() == 'pause') {
                 instance.pause.togglePause()
             }
-
-            if (instance.stepType() !== 'pause') {
-                instance.pause.destroy()
-            }
         }
 
         // Check if it was the last step in the last checkpoint

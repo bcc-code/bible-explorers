@@ -1,5 +1,4 @@
 import Experience from "../Experience.js"
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 
@@ -26,11 +25,21 @@ export default class Pause {
         `)
 
         document.querySelector('.ui-container').append(pauseHTML)
+        instance.setEventListeners()
+    }
 
+    setEventListeners() {
+        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
+        instance.experience.navigation.next.addEventListener("click", instance.destroy)
+    }
+
+    removeEventListeners() {
+        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
+        instance.experience.navigation.next.removeEventListener("click", instance.destroy)
     }
 
     destroy() {
         document.querySelector('.pause')?.remove()
+        instance.removeEventListeners()
     }
-
 }
