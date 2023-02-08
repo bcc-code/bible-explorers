@@ -124,7 +124,9 @@ export default class Program {
             })
 
             if (instance.stepType() == 'iris') {
-                instance.message.show()
+                instance.getCurrentStepData().message.character == 'glitch'
+                    ? instance.camera.updateCameraTo('irisWithOptions', instance.message.show)
+                    : instance.message.show()
             }
 
             else if (instance.stepType() == 'task') {
@@ -192,7 +194,6 @@ export default class Program {
         if (instance.stepType() == 'iris') {
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
-
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
@@ -249,9 +250,8 @@ export default class Program {
 
     updateCameraForCurrentStep(callback = () => { }) {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
-            if (instance.stepType() == 'video') {
+            if (instance.stepType() == 'video')
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-            }
 
             callback()
 

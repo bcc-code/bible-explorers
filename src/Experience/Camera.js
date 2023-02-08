@@ -158,15 +158,21 @@ export default class Camera {
     updateCameraTo(location = 'default', callback = () => { }) {
         if (location == null) return
 
-        if (camera.lastCameraSettings.location != location)
-            camera.audio.playSound('whoosh-between-screens')
+        const diffCamLocation = camera.lastCameraSettings.location != location
 
+        // Update camera history
         camera.lastCameraSettings = {
             'location': location,
             'position': new THREE.Vector3().copy(camera.instance.position)
         }
 
-        camera.updateCamera(camera.cameraLocations[location], callback)
+        if (diffCamLocation) {
+            camera.updateCamera(camera.cameraLocations[location], callback)
+        }
+        else {
+            camera.audio.playSound('whoosh-between-screens')
+            callback()
+        }
     }
 
     updateCamera({ position, lookAt, controls, duration = camera.data.moveDuration }, callback) {
