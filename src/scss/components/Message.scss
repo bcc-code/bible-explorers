@@ -20,7 +20,9 @@
             line-height: 1.5;
         }
     }
+}
 
+.message {
     &-header {
         position: absolute;
         left: 4rem;
@@ -28,6 +30,7 @@
         background: var(--clr-primary);
         padding-inline: 1rem;
         border-radius: 0.25rem;
+        z-index: 1;
 
         span {
             color: #fff;
@@ -37,4 +40,12 @@
             letter-spacing: 0.1em;
         }
     }
+}
+
+#glitch-idle {
+    width: 285px;
+    position: absolute;
+    top: -148px;
+    border-radius: 1rem;
+    border: 0.25rem solid var(--clr-primary);
 }
