@@ -28,7 +28,7 @@ const strings = {
             },
             "pause": {
                 "title": "Part 1 completed",
-                "message": "The children can now take a short break before you continue the time travel. See you back soon!"
+                "message": "The children can take a break before the time travel continues."
             }
         },
         "task": {
@@ -122,7 +122,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -158,7 +158,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Bruk denne knappen for en rask gjennomgang av kapitlet. Her kan du hoppe over oppgavene og skaffe deg oversikt over innholdet."
-            } 
+            },
+            "pause": {
+                "title": "Del 1 fullført",
+                "message": "Barna kan ta en pause før tidsreisen fortsetter."
+            }
         },
         "task": {
             "codeUnlock": "Skriv riktig tall",
@@ -251,7 +255,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, du feilet.",
             "round": "Runde",
             "nextRound": "Neste runde",
             "anotherRound": "Ny runde",
@@ -287,7 +291,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Mit diesem Button kannst du schnell durch die Kapitel springen. Du kannst Aufgaben überspringen und dir so einen Überblick verschaffen."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Korrekte Zahl eingeben",
@@ -380,7 +388,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -416,7 +424,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Gebruik deze knop om snel door het hoofdstuk te gaan. Hiermee kan je opdrachten overslaan en een overzicht krijgen van de inhoud."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Voer het juiste getal in",
@@ -509,7 +521,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -545,7 +557,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Utilise ce bouton pour parcourir rapidement le chapitre. Tu peux sauter les tâches et obtenir un aperçu du contenu."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Saisir le bon numéro",
@@ -638,7 +654,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -674,7 +690,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Kliknij w ten przycisk celem szybkiego przeglądu rozdziału. Tutaj możesz przeskoczyć zadania i przejrzeć z czego składa się ten rozdział."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Wpisz poprawny numer",
@@ -767,7 +787,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -803,7 +823,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Folosește acest buton pentru a trece rapid prin capitol. Poți sări peste sarcini ca să vezi conținutul capitolului."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Scrie numărul corect",
@@ -896,7 +920,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -932,7 +956,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Usa este botón para una revisión rápida del capítulo. Aquí puedes omitir las tareas y obtener una descripción general del contenido."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Escribe el numero correcto",
@@ -1025,7 +1053,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -1061,7 +1089,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Utilize este botão para uma navegação rápida pelo capítulo. Aqui você poderá saltar as tarefas e ter uma visão apla do conteúdo."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Digite o número correto",
@@ -1154,7 +1186,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -1190,7 +1222,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Utilizzate questo pulsante per una rapida lettura del capitolo. È possibile saltare le attività e ottenere una panoramica dei contenuti."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Inserisci il numero corretto",
@@ -1283,7 +1319,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -1319,7 +1355,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Используйте эту кнопку, чтобы быстро просмотреть главу. Вы можете пропустить задания и ознакомиться с содержанием."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Введите правильный номер",
@@ -1412,7 +1452,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -1448,7 +1488,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Paina tästä napista nähdäksesi koko jakson sisällön. Voit hypätä tehtävien yli ja näet yleiskuvan koko sisällöstä."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Kirjoita oikea numero",
@@ -1541,7 +1585,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -1577,7 +1621,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Add meg a helyes számot",
@@ -1670,7 +1718,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
@@ -1706,7 +1754,11 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Brug denne knap for en hurtig gennemgang af kapitlet. Her kan du hoppe over opgaverne og få oversigt over indholdet."
-            } 
+            } ,
+            "pause": {
+                "title": "Part 1 completed",
+                "message": "The children can take a break before the time travel continues."
+            }
         },
         "task": {
             "codeUnlock": "Skriv det rigtige antal",
@@ -1799,7 +1851,7 @@ const strings = {
             },
             "startGame": "Start game",
             "level": "Level",
-            "gameOver": "Game over!",
+            "gameOver": "Uh oh, you failed.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
