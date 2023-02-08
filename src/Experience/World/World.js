@@ -501,6 +501,10 @@ export default class World {
     }
 
     startChapter() {
+        // Reset chapter if completed
+        if (instance.chapterProgress() == instance.selectedChapter.program.length)
+            instance.resetChapter()
+
         instance.page.removeLobby()
         instance.removeLobbyEventListeners()
 
@@ -543,10 +547,9 @@ export default class World {
         }
     }
 
-    restartChapter() {
+    resetChapter() {
         localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
         localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
-        instance.startChapter()
     }
 
     goHome() {
@@ -573,19 +576,7 @@ export default class World {
     }
 
     showActionButtons() {
-        if (this.chapterProgress() == 0) {
-            // instance.buttons.restart.style.display = 'none'
-        } else {
-            // instance.buttons.restart.style.display = 'block'
-        }
-
         instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length
-
-        if (this.chapterProgress() > 0 && this.chapterProgress() < this.selectedChapter.program.length) {
-            // instance.buttons.start.innerText = _s.journey.continue
-        } else {
-            // instance.buttons.start.innerText = _s.journey.start
-        }
     }
 
     hideMenu() {
@@ -598,19 +589,18 @@ export default class World {
     finishJourney() {
         instance.audio.changeBgMusic()
 
-        if (!instance.debug.onQuickLook()) {
-            document.querySelector('.chapter[data-id="' + instance.selectedChapter.id + '"]').classList.add('completed')
+        if (instance.debug.onQuickLook())
+            return
 
-            _appInsights.trackEvent({
-                name: "Finish chapter",
-                properties: {
-                    title: instance.selectedChapter.title,
-                    category: instance.selectedChapter.category,
-                    language: _lang.getLanguageCode(),
-                    quality: instance.selectedQuality
-                }
-            })
-        }
+        _appInsights.trackEvent({
+            name: "Finish chapter",
+            properties: {
+                title: instance.selectedChapter.title,
+                category: instance.selectedChapter.category,
+                language: _lang.getLanguageCode(),
+                quality: instance.selectedQuality
+            }
+        })
     }
 
     getId() {
