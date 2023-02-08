@@ -204,23 +204,12 @@ export default class Quiz {
         })
 
         submitQuiz.addEventListener('click', () => {
-            instance.experience.world.audio.playSound('task-completed')
-
-            const summaryHTML = _gl.elementFromHtml(`
-                <div class="summary">
-                    <div class="summary-content">
-                        <header>
-                            <h2>${_s.miniGames.completed.title}</h2>
-                        </header>
-                        <div>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length + ' '}!</div>
-                    </div>
-                </div>
-            `)
-
-            quiz.querySelector('.container').style.display = 'none'
-            quiz.classList.add('popup-visible')
-            quiz.append(summaryHTML)
+            instance.destroy()
+            instance.program.congrats.toggleSummary()
             document.querySelector('.cta').style.display = 'flex'
+
+            const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length + ' '}!</p>`)
+            document.querySelector('.modal .summary').append(message)
         })
 
         instance.experience.navigation.next.addEventListener('click', instance.destroy)

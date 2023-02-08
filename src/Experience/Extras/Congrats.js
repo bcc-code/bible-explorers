@@ -16,13 +16,17 @@ export default class Congrats {
     }
 
     toggleBibleCardsReminder() {
+        instance.destroy()
+
         const bibleCards = _gl.elementFromHtml(`
-            <div class="modal full-screen">
+            <div class="modal">
                 <div class="container">
-                    <header>
-                        <h2>${_s.journey.bibleCards.message}</h2>
-                    </header>
-                    <video id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
+                    <div class="bibleCards">
+                        <header>
+                            <h1>${_s.journey.bibleCards.message}</h1>
+                        </header>
+                        <video id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
+                    </div>
                 </div>
                 <div class="overlay"></div>
             </div>
@@ -37,21 +41,24 @@ export default class Congrats {
     }
 
     toggleCongrats() {
+        instance.destroy()
+        instance.world.audio.playSound('congrats')
+
         const chapterCongrats = _gl.elementFromHtml(`
-            <div class="modal full-screen">
+            <div class="modal">
                 <div class="container">
-                    <header>
-                        <h2>${_s.journey.congrats}</h2>
-                    </header>
-                    <p>${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong></p>
+                    <div class="congrats">
+                        <header>
+                            <h1>${_s.journey.congrats}</h1>
+                        </header>
+                        <p>${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong></p>
+                    </div>
                 </div>
                 <div class="overlay"></div>
             </div>
         `)
 
         document.querySelector('.ui-container').append(chapterCongrats)
-
-        instance.world.audio.playSound('congrats')
 
         instance.experience.navigation.next.addEventListener('click', () => {
             instance.destroy()
@@ -62,6 +69,25 @@ export default class Congrats {
                 document.exitFullscreen()
             }
         })
+    }
+
+    toggleSummary() {
+        instance.destroy()
+        instance.world.audio.playSound('task-completed')
+        const summary = _gl.elementFromHtml(`
+            <div class="modal">
+                <div class="container">
+                    <div class="summary">
+                        <header>
+                            <h1>${_s.miniGames.completed.title}</h1>
+                        </header>
+                    </div>
+                </div>
+                <div class="overlay"></div>
+            </div>
+        `)
+
+        document.querySelector('.ui-container').append(summary)
     }
 
     animateStars(timeout) {
