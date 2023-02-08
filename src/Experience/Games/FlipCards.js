@@ -51,7 +51,7 @@ export default class Chapter3Game2 {
                                 <use href="#locked"></use>
                             </svg>
                         </div>
-                        <input type="text" placeholder="#" maxlength="5" />
+                        <input type="number" placeholder="#" maxlength="1" />
                     </div>
                 </article>
             `)
