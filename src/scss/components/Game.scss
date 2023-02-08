@@ -217,6 +217,13 @@
             display: inline-block;
         }
     }
+
+    .skip {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 2rem;
+    }
 }
 
 .davids-refuge {
