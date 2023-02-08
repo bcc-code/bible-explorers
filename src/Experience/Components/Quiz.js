@@ -22,33 +22,6 @@ export default class Quiz {
 
         instance.quizHTML()
 
-        // const topbar = document.createElement('div')
-        // topbar.className = 'quiz__topbar'
-        // topbar.innerHTML = '<button class="archive button width height bg--secondary border--5 border--solid border--transparent rounded--full pulsate | icon-folder-solid"></button>'
-        // document.querySelector('.modal__quiz').prepend(topbar)
-
-        // const quizProgressBar = document.querySelectorAll('.quiz__progressLine')
-        // const quizStepWidth = 100 / questions.length
-
-        // quiz.htmlQuestions = document.querySelectorAll('.question')
-        // quiz.htmlQuestions[0].classList.add('visible')
-
-        // const quizContent = document.querySelector('.quiz__content')
-        // const quizStepsContainer = document.createElement('div')
-        // quizStepsContainer.className = 'quiz__checkpoints'
-
-        // questions.forEach((q, i) => {
-        //     const quizStep = document.createElement('div')
-        //     quizStep.className = 'quiz__checkpoint'
-        //     quizStep.innerText = i + 1
-        //     quizStep.setAttribute('step-index', i + 1)
-        //     quizStepsContainer.append(quizStep)
-        // })
-
-        // quizContent.prepend(quizStepsContainer)
-
-        // const quizSteps = document.querySelectorAll('.quiz__checkpoint')
-        // quizSteps[0].classList.add('active')
 
     }
 
@@ -58,7 +31,12 @@ export default class Quiz {
         const quiz = _gl.elementFromHtml(`
             <section class="quiz">
                 <div class="container">
-                    <ul class="quiz-steps"></ul>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar">
+                            <div></div>
+                        </div>   
+                        <ul class="quiz-steps"></ul>
+                    </div>
                     <ul class="quiz-items"></ul>
                     <div class="quiz-nav ${questions.length == 1 ? "hide - nav" : ""}"></div>
                 </div>
@@ -85,9 +63,7 @@ export default class Quiz {
 
         questions.forEach((q, qIdx) => {
 
-            const quizStep = _gl.elementFromHtml(`
-                <li class="quiz-step"></li>
-            `)
+            const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
 
             const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
@@ -142,15 +118,20 @@ export default class Quiz {
         quiz.querySelector('.quiz-nav').append(prev, next)
         document.querySelector('.ui-container').append(quiz)
 
+
+        let questionsAnswered = 0
+        let quizProgress = 0
+        const quizStepWidth = 100 / (questions.length - 1)
+
         prev.disabled = true
         prev.addEventListener("click", () => {
-            const current = document.querySelector('.quiz-item.visible')
-            // const currentCheckpoint = document.querySelector('.quiz__checkpoint.active')
+            const current = quiz.querySelector('.quiz-item.visible')
+            const currentCheckpoint = quiz.querySelector('.quiz-step.visible')
 
-            current?.classList.remove('visible')
-            // currentCheckpoint.classList.remove('active')
-            current.previousElementSibling?.classList.add('visible')
-            // currentCheckpoint.previousElementSibling?.classList.add('active')
+            current.classList.remove('visible')
+            currentCheckpoint.classList.remove('visible')
+            current.previousElementSibling.classList.add('visible')
+            currentCheckpoint.previousElementSibling?.classList.add('visible')
 
             if (current.previousElementSibling.querySelector('input:checked')) {
                 next.disabled = false
@@ -164,14 +145,20 @@ export default class Quiz {
 
         next.disabled = true
         next.addEventListener("click", () => {
-            const current = document.querySelector('.quiz-item.visible')
-            // const currentCheckpoint = document.querySelecor('.quiz__checkpoint.active')
+            const current = quiz.querySelector('.quiz-item.visible')
+            const currentCheckpoint = quiz.querySelector('.quiz-step.visible')
 
-            current?.classList.remove('visible')
-            // currentCheckpoint.classList.remove('active')
+            current.classList.remove('visible')
+            currentCheckpoint.classList.remove('visible')
 
-            current.nextElementSibling?.classList.add('visible')
-            // currentCheckpoint.nextElementSibling?.classList.add('active')
+            current.nextElementSibling.classList.add('visible')
+            currentCheckpoint.nextElementSibling.classList.add('visible')
+
+
+            if (questionsAnswered < questions.length - 1) {
+                questionsAnswered++
+                quizUpdateProgress(questionsAnswered)
+            }
 
             if (current.nextElementSibling.querySelector('input:checked')) {
                 next.disabled = false
@@ -187,12 +174,11 @@ export default class Quiz {
 
         })
 
-        let questionsAnswered = 0
-        let quizProgress = 0
+        let quizUpdateProgress = (answers) => {
+            quizProgress = quizStepWidth * answers
 
-        let quizUpdate = (questionsAnswered) => {
-            // quizProgress = quizStepWidth * questionsAnswered + '%'
-            // quizProgressBar.forEach(bar => bar.style.width = quizProgress)
+            const quizProgressBar = quiz.querySelector('.quiz-progress-bar div')
+            quizProgressBar.style.width = quizProgress + '%'
         }
 
         quiz.querySelectorAll('.quiz-item').forEach((q, i) => {
@@ -207,21 +193,16 @@ export default class Quiz {
                         a.style.pointerEvents = 'none'
                     })
 
-                    questionsAnswered++
-                    quizUpdate(questionsAnswered)
-
                     const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
                     htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
                     if (!objAnswers[i].correct_wrong) {
                         a.parentNode.classList.add('wrong')
                     } else {
-                        quiz.correctAnswers++
+                        instance.correctAnswers++
                     }
 
-                    if (q.getAttribute('data-index') == questions.length) {
-                        submitButton.style.display = "block"
-                    } else {
+                    if (q.getAttribute('data-index') !== questions.length) {
                         next.disabled = false
                     }
 
@@ -234,14 +215,12 @@ export default class Quiz {
 
             if (e.target.value.length > 0) {
                 questionsAnswered = questions.length
-                quizUpdate(questionsAnswered)
                 document.querySelector('.cta').style.display = 'flex'
                 instance.experience.navigation.next.addEventListener('click', instance.destroy)
                 instance.experience.navigation.prev.addEventListener('click', instance.destroy)
             }
             else {
                 questionsAnswered = questions.length - 1
-                quizUpdate(questionsAnswered)
             }
         })
 
