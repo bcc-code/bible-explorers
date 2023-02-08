@@ -523,6 +523,7 @@ export default class World {
         }
 
         document.querySelector('.page').className = 'page page-home'
+        document.querySelector('.cta').style.display = 'none'
     }
 
     removeLobbyEventListeners() {
@@ -555,6 +556,7 @@ export default class World {
         instance.points.delete()
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
+        document.querySelector('.cta').style.display = 'flex'
         instance.camera.updateCameraTo()
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()

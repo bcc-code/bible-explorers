@@ -85,7 +85,6 @@ export default class Video {
 
         // Add event listener on fullscreen change
         this.video().on('fullscreenchange', function () {
-
             if (!this.isFullscreen_) {
                 instance.pause()
             }
@@ -93,7 +92,6 @@ export default class Video {
 
         // Add event listener on video end
         this.video().on('ended', instance.waitAndFinish)
-
         this.focus()
     }
 
@@ -149,7 +147,7 @@ export default class Video {
                 })
         }
 
-        instance.experience.navigation.next.disabled = false
+        // instance.experience.navigation.next.disabled = false
     }
 
     waitAndFinish() {

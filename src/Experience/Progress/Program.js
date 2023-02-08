@@ -111,6 +111,7 @@ export default class Program {
 
         if (instance.stepType() == 'video') {
             instance.updateCameraForCurrentStep(() => {
+                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                 instance.experience.navigation.next.disabled = true
                 instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
                 instance.video.load(instance.currentVideo())
@@ -250,9 +251,6 @@ export default class Program {
 
     updateCameraForCurrentStep(callback = () => { }) {
         instance.camera.updateCameraTo(instance.currentLocation(), () => {
-            if (instance.stepType() == 'video')
-                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-
             callback()
 
             document.addEventListener('click', (event) => {
