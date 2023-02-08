@@ -126,6 +126,8 @@
 
         span {
             font-size: 1.25rem;
+            line-height: 1.25rem;
+            align-self: center;
         }
 
         input {
@@ -153,14 +155,14 @@
             }
         }
 
-        label {
+        .label {
             display: flex;
             position: relative;
             padding: var(--app-padding);
             cursor: pointer;
         }
 
-        label::before {
+        .label::before {
             content: counter(answers, upper-latin);
             display: inline-flex;
             align-items: center;
@@ -236,5 +238,4 @@
     div {
         font-size: 1.25rem;
     }
-
 }
