@@ -30,7 +30,7 @@
         background-color: var(--clr-secondary);
     }
 
-    [aria-label="checkpoint"].locked {
+    body:not(.quick-look-mode) & [aria-label="checkpoint"].locked {
         filter: grayscale(1);
     }
 
