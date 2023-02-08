@@ -33,7 +33,6 @@ export default class ControlRoom {
         this.setMaterials()
         this.setAnimation()
 
-
         // Events
         window.addEventListener('click', () => {
             if (this.experience.world.program)
@@ -58,13 +57,13 @@ export default class ControlRoom {
         this.tv_portal = this.resources.scene.children.find(child => child.name === 'tv_portal_screen')
 
         this.tablet = this.resources.scene.children.find(child => child.name === 'Screen')
-        this.switcher = this.resources.scene.children.find(child => child.name === 'Switch')
+        this.lever = this.resources.scene.children.find(child => child.name === 'Switch')
 
         this.arrow_h = this.resources.scene.children.find(child => child.name === 'arrow_H')
         this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
 
         this.roomTexture.push(this.controlRoom, this.arrow_h, this.arrow_m)
-        this.clickableObjects.push(this.tv_16x9, this.tablet, this.switcher)
+        this.clickableObjects.push(this.tv_16x9, this.lever)
         this.screenObjects.push(this.tv_4x4, this.tv_4x5, this.tv_16x10, this.tv_16x9, this.tablet, this.tv_portal)
     }
 
@@ -175,22 +174,23 @@ export default class ControlRoom {
     }
 
     // Set animations
-
     setAnimation() {
         this.animation = {}
         this.animation.mixer = new THREE.AnimationMixer(this.model)
+    }
 
-        this.animation.actions = {}
-
-        this.animation.actions.arrow_m = this.animation.mixer.clipAction(this.resources.animations[0])
-        this.animation.actions.arrow_m.play()
-
-        this.animation.actions.arrow_h = this.animation.mixer.clipAction(this.resources.animations[1])
-        this.animation.actions.arrow_h.play()
+    leverAnimation() {
+        const leverAnimation = THREE.AnimationClip.findByName(this.resources.animations, 'SwitchAction')
+        const leverAction = this.animation.mixer.clipAction(leverAnimation)
+        leverAction.loop = THREE.LoopOnce
+        leverAction.play()
     }
 
     update() {
         if (this.clickableObjects)
             this.checkObjectIntersection()
+
+        if (this.lever)
+            this.animation.mixer.update(this.time.delta * 0.001)
     }
 }

@@ -113,14 +113,13 @@ export default class Program {
             instance.updateCameraForCurrentStep(() => {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                 instance.experience.navigation.next.disabled = true
-                instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
                 instance.video.load(instance.currentVideo())
             })
         }
         else {
+
             instance.updateCameraForCurrentStep(() => {
                 instance.video.defocus()
-                instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
                 instance.video.setTexture(instance.nextVideo())
             })
 
@@ -231,10 +230,18 @@ export default class Program {
             instance.clickCallback()
             instance.clickCallback = () => { }
 
+            instance.points.delete()
             instance.message.show()
         }
-        else if (instance.clickedObject == 'Screen' || instance.clickedObject == 'Switch') {
-            instance.video.play()
+        else if (instance.clickedObject == 'Switch') {
+
+            instance.points.delete()
+            instance.world.controlRoom.leverAnimation()
+
+            instance.world.controlRoom.animation.mixer.addEventListener('finished', () => {
+                console.log('finished animation');
+                instance.video.play()
+            })
         }
     }
 
@@ -270,7 +277,7 @@ export default class Program {
         let interactiveObjects = []
 
         if (instance.stepType() == 'video') {
-            interactiveObjects = interactiveObjects.concat(["Screen", "Switch"])
+            interactiveObjects.push("Switch")
         }
         else if (instance.stepType() == 'iris' || instance.stepType() == 'task' && instance.currentStep == 0) {
             interactiveObjects.push("tv_16x9_screen")

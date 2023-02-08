@@ -608,18 +608,18 @@ export default class World {
     }
 
     resize() {
-        if (this.points) {
+        if (this.points)
             this.points.resize()
-        }
+
     }
 
     update() {
-        if (this.controlRoom) {
+        if (this.controlRoom)
             this.controlRoom.update()
-        }
 
-        if (this.points) {
+
+        if (this.points)
             this.points.update()
-        }
+
     }
 }
