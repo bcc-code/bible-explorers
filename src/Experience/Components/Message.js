@@ -45,6 +45,20 @@ export default class Message {
                 </section>`
             )
         )
+
+        if (instance.data.open_question === true) {
+            document.querySelector('.ui-container').append(
+                _gl.elementFromHtml(
+                    `<section class="open-question">
+                        <div class="container">
+                            <div class="content">
+                                <textarea class="question__textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                            </div>
+                        </div>
+                    </section>`
+                )
+            )
+        }
     }
 
     setEventListeners() {
