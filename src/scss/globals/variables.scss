@@ -8,10 +8,12 @@ $gradient-with-opacity: linear-gradient(90deg, rgba(19, 26, 67, 1), rgba(62, 48,
 
 :root {
 
-    --clr-primary: #0396e3;
-    --clr-secondary: #FCB04E;
-    --clr-background: #3E306D;
-    --clr-dark: #0C0A16;
+    --clr-primary: rgb(3, 150, 227);
+    --clr-secondary: rgb(252, 176, 78);
+    --clr-background: rgb(62, 48, 109);
+    --clr-dark: rgb(12, 10, 22);
+
+    --clr-background-with-opacity: rgba(62, 48, 109, 0.8);
 
     --gradient-dark: linear-gradient(90deg, var(--clr-dark), var(--clr-background));
 

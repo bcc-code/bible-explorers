@@ -25,7 +25,7 @@ export default class Message {
 
         instance.setHtml(text, character)
         instance.setEventListeners()
-        
+
         if (instance.data.audio)
             instance.audio.togglePlayTaskDescription(instance.data.audio)
     }
@@ -52,7 +52,7 @@ export default class Message {
                     `<section class="open-question">
                         <div class="container">
                             <div class="content">
-                                <textarea class="question__textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                                <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
                             </div>
                         </div>
                     </section>`
