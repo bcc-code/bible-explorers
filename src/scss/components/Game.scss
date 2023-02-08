@@ -19,7 +19,7 @@
         height: 100%;
         background: var(--gradient-dark);
         opacity: 1;
-        pointer-events: none;
+        pointer-events: all;
         transition: .3s var(--transition-timing);
     }
 

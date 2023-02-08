@@ -26,7 +26,9 @@ export default class Archive {
                 <div class="container">
                     <section class="buttons">
                         <button class="btn rounded" aria-label="Close Archive">
-                            <div class="icon icon-xmark-solid"></div>
+                            <svg class="close-icon icon" width="17" height="16" viewBox="0 0 17 16">
+                                <use href="#xmark"></use>
+                            </svg>
                         </button>
                     </section>
                     <section class="content"></section>
