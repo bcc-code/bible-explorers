@@ -158,11 +158,9 @@ export default class Chapter3Game2 {
     }
 
     toggleGlitch() {
-        const profilePic = 'games/glitch.png'
-
         const notification = _gl.elementFromHtml(`
             <aside class="game-notification">
-                <img src="${profilePic}"/>
+                <img src="games/glitchVoice.png"/>
                 <p>${instance.data.glitchs_voice.text}</p>
             </aside>
         `)
@@ -178,13 +176,11 @@ export default class Chapter3Game2 {
     }
 
     toggleGodVoice() {
-        const profilePic = 'games/godVoice.png'
-
         const notification = _gl.elementFromHtml(`
-        <aside class="game-notification">
-            <img src="${profilePic}"/>
-            <p>${instance.data.gods_voice.text}</p>
-        </aside>
+            <aside class="game-notification">
+                <img src="games/godVoice.png"/>
+                <p>${instance.data.gods_voice.text}</p>
+            </aside>
         `)
 
         document.querySelector('.flip-card .container').append(notification)

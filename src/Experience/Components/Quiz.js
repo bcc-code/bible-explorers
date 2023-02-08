@@ -57,7 +57,6 @@ export default class Quiz {
 
         questions.forEach((q, qIdx) => {
             const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
-
             const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
                     <div class="quiz-question">
