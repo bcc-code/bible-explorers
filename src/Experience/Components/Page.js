@@ -41,8 +41,7 @@ export default class Page {
         document.querySelector('.page').className = 'page page-intro'
         document.querySelector('.page .container').append(intro)
 
-        instance.experience.navigation.prev.style.display = 'none'
-        instance.experience.navigation.next.style.display = 'none'
+        document.querySelector('.cta').style.display = 'none'
     }
 
     removeIntro() {
@@ -57,12 +56,18 @@ export default class Page {
         `)
         document.querySelector('.page').className = 'page page-lobby'
         document.querySelector('.page .container').append(lobby)
+        document.querySelector('.cta').style.display = 'flex'
 
-        instance.experience.navigation.prev.style.display = 'block'
-        instance.experience.navigation.next.style.display = 'block'
+        const label = _gl.elementFromHtml(`<span>${_s.journey.start}</span>`)
+        instance.experience.navigation.next.querySelector('svg').style.display = 'none'
+        instance.experience.navigation.next.append(label)
+
     }
 
     removeLobby() {
+        instance.experience.navigation.next.querySelector('svg').style.display = 'block'
+        instance.experience.navigation.next.querySelector('span').style.display = 'none'
+
         document.querySelector('.lobby')?.remove()
     }
 }
