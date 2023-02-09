@@ -154,8 +154,10 @@ export default class ControlRoom {
 
         if (intersects.length > 0) {
             this.setCurrentIntersect(intersects[0].object)
+            document.body.style.cursor = 'pointer'
         } else {
             this.setCurrentIntersect(null)
+            document.body.style.cursor = 'default'
         }
     }
 

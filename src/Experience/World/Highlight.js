@@ -38,22 +38,20 @@ export default class Highlight {
 
         const outlineGeometry = object.geometry
         const outlineMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            side: THREE.DoubleSide,
+            color: 0xfcb04e,
             transparent: true,
-            opacity: 1
+            opacity: 0.6
         })
         this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
         this.outline.name = object.name + "_outline"
-        this.outline.scale.multiplyScalar(1.1)
         object.add(this.outline)
 
         if (object.name === "tv_16x9_screen") {
-            this.outline.position.z = -0.03
+            this.outline.position.z = 0.001
         }
 
-        if (object.name === "Screen") {
-            this.outline.visible = false
+        if (object.name === "Switch") {
+            this.outline.material.opacity = 1
         }
     }
 
@@ -66,8 +64,8 @@ export default class Highlight {
     fadeOut() {
         if (!this.outline) return
         this.instance = new TWEEN.Tween(this.outline.material)
-            .to({ opacity: 0 }, 1500)
-            .easing(TWEEN.Easing.Quadratic.InOut)
+            .to({ opacity: 0 }, 800)
+            .easing(TWEEN.Easing.Quartic.Out)
             .yoyo(true)
             .onComplete(() => {
                 this.remove()
@@ -77,8 +75,8 @@ export default class Highlight {
 
     pulse() {
         this.instance = new TWEEN.Tween(this.outline.material)
-            .to({ opacity: 0 }, 1500)
-            .easing(TWEEN.Easing.Quadratic.InOut)
+            .to({ opacity: 0 }, 800)
+            .easing(TWEEN.Easing.Quartic.Out)
             .repeat(Infinity)
             .yoyo(true)
             .start()

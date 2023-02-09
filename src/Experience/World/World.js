@@ -557,6 +557,7 @@ export default class World {
         instance.program.destroy()
         instance.program.video.defocus()
         instance.points.delete()
+        instance.highlight.fadeOut()
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
         document.querySelector('.cta').style.display = 'flex'
@@ -587,7 +588,6 @@ export default class World {
         document.querySelector('.page').className = 'page page-home'
 
         instance.buttons.contact.style.display = 'none'
-        console.log(instance.program);
     }
 
     finishJourney() {

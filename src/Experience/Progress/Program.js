@@ -24,6 +24,7 @@ export default class Program {
         instance.programData = instance.world.selectedChapter.program
         instance.camera = instance.experience.camera
         instance.points = instance.world.points
+        instance.highlight = instance.world.highlight
         instance.audio = instance.world.audio
         instance.debug = instance.experience.debug
 
@@ -111,6 +112,7 @@ export default class Program {
 
         if (instance.stepType() == 'video') {
             instance.updateCameraForCurrentStep(() => {
+                instance.highlight.add(instance.interactiveObjects()[0])
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                 instance.experience.navigation.next.disabled = true
                 instance.video.load(instance.currentVideo())
@@ -191,9 +193,11 @@ export default class Program {
         instance.experience.navigation.prev.disabled = true
         instance.experience.navigation.next.disabled = true
 
+
         if (instance.stepType() == 'iris') {
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
+                instance.highlight.add(instance.interactiveObjects()[0])
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
@@ -230,11 +234,13 @@ export default class Program {
             instance.clickCallback()
             instance.clickCallback = () => { }
 
+            instance.highlight.fadeOut()
             instance.points.delete()
             instance.message.show()
         }
         else if (instance.clickedObject == 'Switch') {
 
+            instance.highlight.fadeOut()
             instance.points.delete()
             instance.world.controlRoom.leverAnimation()
 
