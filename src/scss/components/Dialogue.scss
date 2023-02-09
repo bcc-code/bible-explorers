@@ -25,49 +25,35 @@
         position: relative;
         pointer-events: all;
         background-color: var(--bg-with-opacity);
-        border: var(--app-border-size) solid var(--clr-secondary);
+        border: var(--app-border-size) solid transparent;
         border-radius: calc(var(--app-padding) /2);
-        color: #fff;
         padding: 0.5rem var(--app-padding);
         text-align: left;
         cursor: pointer;
         transition: var(--transition-duration) var(--transition-timing);
 
+        p {
+            font-size: 1.25rem;
+        }
+
         &:hover {
-            background-color: var(--clr-secondary);
+            box-shadow: 0 0 10px 0 var(--clr-secondary);
+            border-color: var(--clr-secondary);
+            animation: none;
         }
 
-        .current-icon {
-            position: absolute;
-            left: -2rem;
-            top: 0.25rem;
-            width: 1.5rem;
-            height: 1.5rem;
-            border-radius: 50%;
-            background-color: var(--clr-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition-duration) var(--transition-timing);
-        }
-
-        svg {
-            width: 0.75rem;
-        }
-
-
-        &:not(.current).visited {
-            background-color: var(--clr-secondary);
-            opacity: 0.6;
+        &:not(:last-child) {
+            margin-bottom: 1rem;
         }
 
         &.current {
             box-shadow: 0 0 10px 0 var(--clr-secondary);
+            border-color: var(--clr-secondary);
+            animation: none;
+        }
 
-            .current-icon {
-                opacity: 1;
-            }
+        &.visited:not(.current) {
+            display: none;
         }
     }
 

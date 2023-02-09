@@ -37,13 +37,8 @@ export default class Dialogue {
 
         instance.data.forEach(dialog => {
             const option = _gl.elementFromHtml(`
-                <button class="question">
-                    <div class="current-icon">
-                        <svg class="next-icon icon" viewBox="0 0 25 16">
-                            <use href="#arrow-right"></use>
-                        </svg>
-                    </div>
-                    <span>${dialog.question}</span>
+                <button class="question pulsate">
+                    <p>${dialog.question}</p>
                 </button>`
             )
             dialogue.querySelector('.content').append(option)
