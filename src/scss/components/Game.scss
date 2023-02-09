@@ -32,11 +32,24 @@
 
     &-rounds {
         color: #fff;
-        background-color: var(--clr-background-color);
+        background-color: var(--bg-dark-color);
         position: relative;
         padding: 0.5rem var(--app-padding);
         border-radius: 0.5rem;
         border: var(--app-border-size) solid var(--clr-primary);
+    }
+
+    &-popup {
+        position: relative;
+        margin-bottom: 4rem;
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
     }
 
     &-notification {
@@ -53,6 +66,10 @@
             top: 0;
             right: calc(100% + 1rem);
             border-radius: 15px;
+        }
+
+        p {
+            color: var(--clr-text);
         }
     }
 
@@ -77,15 +94,6 @@
         text-align: center;
     }
 
-    header {
-        color: #fff;
-        font-size: 2rem;
-    }
-
-    div {
-        color: #fff;
-        margin-bottom: 2rem;
-    }
 }
 
 .flip-card {
@@ -181,7 +189,7 @@
 
         &:not([selected]):hover {
             img {
-                box-shadow: 0 0 0 4px $accent;
+                box-shadow: 0 0 0 4px var(--clr-secondary);
             }
 
             .cardInput {
@@ -255,7 +263,7 @@
 
         .circle {
             position: absolute;
-            background-color: var(--clr-background);
+            background-color: var(--bg-default);
             bottom: 0;
             left: 1.5rem;
             border-radius: 50%;
@@ -349,10 +357,10 @@
 
     .hints {
         position: absolute;
-        top: calc(var(--app-padding) + 1.5rem);
-        left: calc(var(--app-padding) + 1.5rem);
+        top: calc(var(--app-padding) + 1rem);
+        left: calc(var(--app-padding) + 1rem);
         width: 400px;
-        background: $accent;
+        background: var(--bg-with-opacity);
         border-radius: 1rem;
         padding: var(--app-padding);
         z-index: 3;

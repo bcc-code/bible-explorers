@@ -7,6 +7,7 @@
 html {
     font-family: var(--ff-primary);
     font-size: calc(15px + 0.390625vw);
+    color: var(--clr-text);
 }
 
 body {
@@ -33,11 +34,6 @@ ul {
     list-style: none;
 }
 
-.hidden {
-    display: none !important;
-}
-
-
 button,
 input,
 select,
@@ -46,6 +42,7 @@ textarea {
     font-size: 100%;
     line-height: 1.15;
     margin: 0;
+    color: #fff;
 }
 
 button,
@@ -75,10 +72,52 @@ a {
 
 }
 
+textarea {
+    resize: none;
+}
+
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--clr-secondary);
+    font-family: var(--ff-secondary);
+}
+
 h1 {
-    font-size: 2.25rem;
+    font-size: 2rem;
 }
 
 h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+}
+
+p {
+    color: #fff;
+}
+
+
+.lazyload {
+    opacity: 0;
+}
+
+.lazyloading {
+    opacity: 1;
+    transition: opacity 300ms;
+    // background: #f7f7f7 url('../../static/assets/loader.gif') no-repeat center;
+}
+
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+#webpack-dev-server-client-overlay {
+    display: none !important;
+}
+
+
+.hidden {
+    display: none !important;
 }

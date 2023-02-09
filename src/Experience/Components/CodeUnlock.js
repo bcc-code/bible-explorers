@@ -194,9 +194,6 @@ export default class CodeUnlock {
     checkCode() {
         const wrapper = document.querySelector('.code-unlock')
 
-
-        console.log(instance.data.enteredCode);
-        console.log(instance.secretCode);
         if (instance.data.enteredCode.join('') == instance.secretCode) {
             wrapper.classList.add('correct-code')
             instance.audio.playSound('task-completed')

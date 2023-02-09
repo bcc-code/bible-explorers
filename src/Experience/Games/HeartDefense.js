@@ -557,10 +557,8 @@ export default class HeartDefense {
     toggleLevelCompleted() {
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <header>
-                    <h2>${_s.miniGames.completed.title}</h2>
-                </header>
-                <div>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</div>
+                <h1>${_s.miniGames.completed.title}</h1>
+                <p>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</p>
             </div>
         `)
 
@@ -619,9 +617,7 @@ export default class HeartDefense {
     toggleGameOver() {
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <header>
-                    <h2>${_s.miniGames.gameOver}</h2>
-                </header>
+                <h1>${_s.miniGames.gameOver}</h1>
             </div>
         `)
 

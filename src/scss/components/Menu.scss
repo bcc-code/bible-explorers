@@ -1,6 +1,11 @@
 .menu {
     .buttons {
         justify-content: space-between;
+
+        .link {
+            flex: 1;
+            font-size: 0.9rem;
+        }
     }
 
     .content {
@@ -27,9 +32,10 @@
         display: flex;
         flex-flow: column nowrap;
         margin-block: 1rem;
-        border-top: 1px solid var(--clr-dark);
+        border-top: var(--app-border-size) solid var(--bg-default);
 
         h2 {
+            color: var(--clr-text);
             margin-top: 1rem;
         }
 
@@ -55,7 +61,7 @@
         outline: none;
         border: none;
         color: #fff;
-        background-color: var(--clr-background);
+        background-color: var(--bg-default);
         border-radius: 0.25rem;
         position: relative;
         margin-top: 0.25rem;
@@ -83,7 +89,7 @@
 
     ul {
         display: none;
-        background-color: var(--clr-background);
+        background-color: var(--bg-with-opacity);
         padding: 0.5rem;
         border-radius: 0.25rem;
         margin-top: 0.25rem;
@@ -114,7 +120,7 @@
 .toggle {
     --toggle-size: 2rem;
     --toggle-padding: 0.1rem;
-    --toggle-bg: var(--clr-background);
+    --toggle-bg: var(--bg-default);
     --slider-on: var(--clr-secondary);
     --slider-off: #fff;
 
@@ -186,7 +192,7 @@
 
 .copyright {
     font-size: 0.7rem;
-    color: var(--clr-background);
+    color: var(--bg-dark);
 
     a {
         transition: var(--transition-duration) var(--transition-timing);

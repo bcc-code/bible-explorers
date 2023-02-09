@@ -1,6 +1,6 @@
 .chapter-details {
     margin-left: 1rem;
-    background-color: var(--clr-background);
+    background-color: var(--bg-with-opacity);
     border: var(--app-border-size) solid var(--clr-primary);
     border-radius: 1rem;
     padding: var(--app-padding);
@@ -72,7 +72,7 @@
     display: flex;
     flex-flow: column nowrap;
     transition: var(--transition-duration) var(--transition-timing);
-    background-color: var(--clr-background);
+    background-color: var(--bg-with-opacity);
     background-size: cover;
     background-position: center center;
     border-radius: 1rem;
@@ -87,7 +87,10 @@
         justify-content: center;
         position: relative;
         padding: var(--app-padding) 2rem;
-        color: #fff;
+
+        h2 {
+            color: #fff;
+        }
     }
 
     &__states {

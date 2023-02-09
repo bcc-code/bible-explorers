@@ -73,7 +73,7 @@ export default class ProgressBar {
             if (instance.program.programData[i].steps.some(step => step.details.step_type == 'video')) {
                 generatedHTML +=
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
-                        <svg class="film-icon icon" width="24" height="22" viewBox="0 0 24 22">
+                        <svg class="film-icon icon"viewBox="0 0 24 22">
                             <use href="#film"></use>
                         </svg>
                     </button>`
@@ -81,7 +81,7 @@ export default class ProgressBar {
             else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'quiz')) {
                 generatedHTML +=
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
-                        <svg class="question-mark-icon icon"  width="15" height="22" viewBox="0 0 15 22">
+                        <svg class="question-mark-icon icon" viewBox="0 0 15 22">
                             <use href="#question-mark"></use>
                         </svg>
                     </button>`
@@ -89,7 +89,7 @@ export default class ProgressBar {
             else {
                 generatedHTML +=
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
-                    <svg class="task-icon icon" width="25" height="25" viewBox="0 0 25 25">
+                    <svg class="task-icon icon" viewBox="0 0 25 25">
                         <use href="#pen-to-square"></use>
                     </svg>
                 </button>`
@@ -98,7 +98,7 @@ export default class ProgressBar {
 
         generatedHTML +=
             `<button class="btn rounded" aria-label="checkpoint">
-                <svg class="star-icon icon" width="25" height="25" viewBox="0 0 25 25">
+                <svg class="star-icon icon" viewBox="0 0 25 25">
                     <use href="#star-full"></use>
                 </svg>
             </button>`

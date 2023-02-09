@@ -1,47 +1,44 @@
 .btn {
-
-    color: #fff;
-    font-family: var(--ff-primary);
-    height: var(--button-size);
+    height: var(--app-button-size);
     pointer-events: all;
     cursor: pointer;
 
     &.rounded {
-        width: var(--button-size);
-        background: var(--clr-background);
-        border-radius: var(--button-size);
+        width: var(--app-button-size);
+        background: var(--bg-default);
+        border-radius: var(--app-button-size);
         border: var(--app-border-size) solid var(--clr-secondary);
 
         display: flex;
         align-items: center;
         justify-content: center;
+
+        svg {
+            width: 0.9rem;
+        }
     }
 
     &.default {
         letter-spacing: 0.5px;
         text-transform: uppercase;
-        background: var(--clr-background);
-        border-radius: calc(var(--button-size) / 4);
+        background: var(--bg-default);
+        border-radius: calc(var(--app-button-size) / 4);
         border: var(--app-border-size) solid var(--clr-primary);
         padding-inline: 1rem;
-    }
-
-    &.with-icon {
+        font-size: 0.9rem;
         display: flex;
         align-items: center;
-
-        [class*="icon"] {
-            margin-right: 0.5rem;
-        }
+        justify-content: center;
+        gap: 0.5rem;
     }
 
     &.back {
-        border-radius: var(--button-size) calc(var(--button-size) /4) calc(var(--button-size) /4) var(--button-size);
+        border-radius: var(--app-button-size) calc(var(--app-button-size) /4) calc(var(--app-button-size) /4) var(--app-button-size);
     }
 
     &.next {
         border-color: var(--clr-secondary);
-        border-radius: calc(var(--button-size) /4) var(--button-size) var(--button-size) calc(var(--button-size) /4);
+        border-radius: calc(var(--app-button-size) /4) var(--app-button-size) var(--app-button-size) calc(var(--app-button-size) /4);
     }
 
     &.pulsate {
@@ -83,6 +80,11 @@
     }
 }
 
+[class*="icon"] {
+    width: 1rem;
+    max-height: 1rem;
+}
+
 .link {
     text-decoration: none;
     display: flex;
@@ -94,7 +96,7 @@
     }
 
     &.dark {
-        color: var(--clr-background);
+        color: var(--bg-dark);
     }
 
     &.light {

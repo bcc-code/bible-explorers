@@ -24,7 +24,7 @@
     .question {
         position: relative;
         pointer-events: all;
-        background-color: var(--clr-background-with-opacity);
+        background-color: var(--bg-with-opacity);
         border: var(--app-border-size) solid var(--clr-secondary);
         border-radius: calc(var(--app-padding) /2);
         color: #fff;
@@ -74,7 +74,7 @@
     .question-textarea {
         pointer-events: all;
         resize: none;
-        background-color: var(--clr-background-with-opacity);
+        background-color: var(--bg-with-opacity);
         border: var(--app-border-size) solid var(--clr-secondary);
         border-radius: 1rem;
         color: #fff;

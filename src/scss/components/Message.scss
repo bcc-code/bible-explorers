@@ -6,39 +6,27 @@
         left: 0;
         padding: var(--app-padding);
         width: 60vw;
+        pointer-events: all;
     }
 
     .content {
         border-radius: 1rem;
-        padding: 1rem 2rem;
-        background: var(--clr-background);
+        padding: var(--app-padding) calc(var(--app-padding) * 1.5);
+        background: var(--bg-with-opacity);
         border: var(--app-border-size) solid var(--clr-primary);
-
-        p {
-            color: #fff;
-            font-size: 1.5rem;
-            line-height: 1.5;
-        }
     }
-}
 
-.message {
-    &-header {
-        position: absolute;
-        left: 4rem;
-        top: 0;
-        background: var(--clr-primary);
-        padding-inline: 1rem;
-        border-radius: 0.25rem;
-        z-index: 1;
+    h2 {
+        font-family: var(--ff-secondary);
+        color: var(--clr-secondary);
+        text-transform: uppercase;
+        font-style: italic;
+    }
 
-        span {
-            color: #fff;
-            font-size: 1.25rem;
-            font-style: italic;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
+    p {
+        color: #fff;
+        font-size: 1.25rem;
+        line-height: 1.5;
     }
 }
 

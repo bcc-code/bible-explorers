@@ -35,10 +35,8 @@ export default class Message {
             _gl.elementFromHtml(
                 `<section class="message">
                     <div class="container">
-                        <header class="message-header">
-                            <span>${character}</span>
-                        </header>
                         <div class="content">
+                            <h2>${character}</h2>
                             ${text}
                         </div>
                     </div>

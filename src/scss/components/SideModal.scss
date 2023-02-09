@@ -66,8 +66,12 @@
         margin-top: 1.5rem;
     }
 
+    h2,
+    p {
+        color: var(--clr-text);
+    }
+
     p:first-child {
-        color: var(--clr-background);
         font-weight: bold;
         margin-bottom: 0.5rem;
     }
@@ -89,6 +93,11 @@
 
     div {
         margin-block: 1rem;
+    }
+
+    h2,
+    p {
+        color: var(--clr-text);
     }
 
     p:not(:last-child) {

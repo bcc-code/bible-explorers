@@ -13,7 +13,7 @@ export default class Notification {
         document.body.appendChild(this.htmlEl)
 
         this.el = {
-            close: this.htmlEl.querySelector('.close-alert')
+            close: this.htmlEl.querySelector('[aria-label="close alert"]')
         }
 
         this.el.close.addEventListener("click", this.destroy)
@@ -32,7 +32,11 @@ export default class Notification {
                 ${icon}
                 <div>
                     <p>${text}</p>
-                    <button class="close-alert | button button__link | icon-xmark-solid"></button>
+                    <button class="btn rounded" aria-label="close alert">
+                        <svg class="close-icon icon" width="17" height="16" viewBox="0 0 17 16">
+                            <use href="#xmark"></use>
+                        </svg>
+                    </button>
                 </div>
             </div>
         `

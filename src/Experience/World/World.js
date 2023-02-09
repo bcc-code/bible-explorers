@@ -207,8 +207,8 @@ export default class World {
             <section class="chapter-details">
                 <header>
                     <h2>${chapter.title}</h2>
-                    <button class="btn default with-icon next" aria-label="Preview chapter">
-                        <svg class="preview-icon icon" width="28" height="22" viewBox="0 0 28 22">
+                    <button class="btn default next" aria-label="Preview chapter">
+                        <svg class="preview-icon icon" viewBox="0 0 28 22">
                             <use href="#preview"></use>
                         </svg>
                         <span>Preview</span>
