@@ -89,11 +89,13 @@
 }
 
 .heart-defense {
-
     .container {
         text-align: center;
     }
 
+    .game-popup .buttons {
+        display: flex;
+    }
 }
 
 .flip-card {

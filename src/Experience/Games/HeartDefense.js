@@ -559,6 +559,7 @@ export default class HeartDefense {
             <div class="game-popup">
                 <h1>${_s.miniGames.completed.title}</h1>
                 <p>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</p>
+                <div class="buttons"></div>
             </div>
         `)
 
@@ -567,13 +568,13 @@ export default class HeartDefense {
         `)
 
         if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
-            congratsHTML.append(skipBTN)
+            congratsHTML.querySelector('.buttons').append(skipBTN)
 
         const nextLevelBTN = _gl.elementFromHtml(`
             <button class="btn default next pulsate">${_s.miniGames.nextRound}</button>
         `)
 
-        congratsHTML.append(nextLevelBTN)
+        congratsHTML.querySelector('.buttons').append(nextLevelBTN)
 
         document.querySelector('.heart-defense .container').append(congratsHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')
