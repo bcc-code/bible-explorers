@@ -58,15 +58,14 @@ export default class Page {
         document.querySelector('.page .container').append(lobby)
         document.querySelector('.cta').style.display = 'flex'
 
-        instance.experience.navigation.next.querySelector('svg').style.display = 'none'
-        instance.experience.navigation.next.querySelector('span').innerText = _s.journey.start
-        instance.experience.navigation.next.querySelector('span').style.display = 'block'
-
+        instance.experience.navigation.next.innerHTML = `<span>${_s.journey.start}</span>`
     }
 
     removeLobby() {
-        instance.experience.navigation.next.querySelector('svg').style.display = 'block'
-        instance.experience.navigation.next.querySelector('span').style.display = 'none'
+        instance.experience.navigation.next.innerHTML = `
+            <svg class="next-icon icon" viewBox="0 0 25 16">
+                <use href="#arrow-right"></use>
+            </svg>`
 
         document.querySelector('.lobby')?.remove()
     }
