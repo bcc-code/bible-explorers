@@ -89,7 +89,7 @@
         width: clamp(300px, 30%, 90em);
         position: relative;
         background-color: var(--clr-background);
-        border: 0.25rem solid var(--clr-primary);
+        border: var(--app-border-size) solid var(--clr-primary);
         border-radius: 1rem;
         padding: var(--app-padding);
 
@@ -119,7 +119,7 @@
     &-answer {
         color: #fff;
         background-color: var(--clr-background);
-        border: 0.25rem solid var(--clr-primary);
+        border: var(--app-border-size) solid var(--clr-primary);
         border-radius: 1rem;
         counter-increment: answers;
         transition: var(--transition-duration) var(--transition-timing);

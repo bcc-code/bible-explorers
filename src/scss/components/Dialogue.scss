@@ -25,7 +25,7 @@
         position: relative;
         pointer-events: all;
         background-color: var(--clr-background-with-opacity);
-        border: 0.25rem solid var(--clr-secondary);
+        border: var(--app-border-size) solid var(--clr-secondary);
         border-radius: calc(var(--app-padding) /2);
         color: #fff;
         padding: 0.5rem var(--app-padding);
@@ -39,7 +39,7 @@
 
         .current-icon {
             position: absolute;
-            left: -1rem;
+            left: -2rem;
             top: 0.25rem;
             width: 1.5rem;
             height: 1.5rem;
@@ -63,6 +63,7 @@
         }
 
         &.current {
+            box-shadow: 0 0 10px 0 var(--clr-secondary);
 
             .current-icon {
                 opacity: 1;
@@ -74,7 +75,7 @@
         pointer-events: all;
         resize: none;
         background-color: var(--clr-background-with-opacity);
-        border: 0.25rem solid var(--clr-secondary);
+        border: var(--app-border-size) solid var(--clr-secondary);
         border-radius: 1rem;
         color: #fff;
         padding: var(--app-padding);

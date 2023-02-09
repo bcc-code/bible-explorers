@@ -12,7 +12,7 @@
         border-radius: 1rem;
         padding: 1rem 2rem;
         background: var(--clr-background);
-        border: 0.25rem solid var(--clr-primary);
+        border: var(--app-border-size) solid var(--clr-primary);
 
         p {
             color: #fff;
@@ -47,5 +47,5 @@
     position: absolute;
     top: -148px;
     border-radius: 1rem;
-    border: 0.25rem solid var(--clr-primary);
+    border: var(--app-border-size) solid var(--clr-primary);
 }

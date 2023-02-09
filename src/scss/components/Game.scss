@@ -36,7 +36,7 @@
         position: relative;
         padding: 0.5rem var(--app-padding);
         border-radius: 0.5rem;
-        border: 0.25rem solid var(--clr-primary);
+        border: var(--app-border-size) solid var(--clr-primary);
     }
 
     &-notification {
