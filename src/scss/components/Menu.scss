@@ -176,6 +176,10 @@
     display: flex;
     flex-flow: column nowrap;
 
+    p {
+        color: var(--clr-text);
+    }
+
     &-buttons {
         margin-block: 1rem;
         display: flex;
