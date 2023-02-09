@@ -570,6 +570,10 @@ export default class World {
         if (instance.program.archive)
             instance.program.archive.remove()
 
+
+        if (instance.program.pause)
+            instance.program.pause.destroy()
+
         if (!instance.experience.settings.fullScreen) {
             // document.exitFullscreen()
         }

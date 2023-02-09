@@ -24,7 +24,7 @@ export default class Pause {
             </aside>
         `)
 
-        document.querySelector('.ui-container').append(pauseHTML)
+        document.body.append(pauseHTML)
         instance.setEventListeners()
     }
 

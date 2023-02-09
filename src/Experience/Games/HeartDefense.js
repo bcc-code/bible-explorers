@@ -38,7 +38,7 @@ export default class HeartDefense {
             lowestSpeed: 1.2,
             probability: 0.02,
             thoughtVariants: 3,
-            pointsToCompleteLevel: 1,
+            pointsToCompleteLevel: 4,
             showSkipAfterNoOfTries: 3,
             thoughts: {
                 width: 200,
