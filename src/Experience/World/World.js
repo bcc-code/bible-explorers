@@ -221,7 +221,7 @@ export default class World {
             const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
 
             chapter.attachments.forEach((item) => {
-                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset icon"><i class="icon-download-solid"></i><span>${item.title}</span></a>`)
+                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset"><span>${item.title}</span></a>`)
                 attachments.append(attachment)
             })
 
