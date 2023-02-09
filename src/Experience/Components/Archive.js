@@ -68,10 +68,7 @@ export default class Archive {
     }
 
     remove() {
-        const archiveBTN = document.querySelector('[aria-label="Archive"]')
-        archiveBTN.remove()
-
-        const archiveContent = document.querySelector('.archive')
-        archiveContent.remove()
+        document.querySelector('[aria-label="Archive"]')?.remove()
+        document.querySelector('.archive')?.remove()
     }
 }

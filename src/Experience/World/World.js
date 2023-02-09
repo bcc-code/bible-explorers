@@ -566,6 +566,9 @@ export default class World {
         instance.showLobby()
         instance.preselectChapter()
 
+        if (instance.program.archive)
+            instance.program.archive.remove()
+
         if (!instance.experience.settings.fullScreen) {
             // document.exitFullscreen()
         }
@@ -584,6 +587,7 @@ export default class World {
         document.querySelector('.page').className = 'page page-home'
 
         instance.buttons.contact.style.display = 'none'
+        console.log(instance.program);
     }
 
     finishJourney() {
