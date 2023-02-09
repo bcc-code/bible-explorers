@@ -72,7 +72,7 @@ export default class Menu {
         fullScreenInput.checked = document.fullscreenElement !== null
         fullScreenLabel.innerText = !document.fullscreenElement ? 'Off' : 'On'
 
-        const bibleExplorersGuide = document.querySelector('[aria-label="Bible epxlorers guide"')
+        const bibleExplorersGuide = document.querySelector('[aria-label="Guide"]')
         bibleExplorersGuide.querySelector('span').innerText = _s.howTo
         bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 

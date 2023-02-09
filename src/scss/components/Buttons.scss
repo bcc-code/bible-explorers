@@ -29,6 +29,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none;
         gap: 0.5rem;
     }
 
@@ -77,6 +78,16 @@
 
     &.pulsate:disabled {
         animation: none;
+    }
+}
+
+a.btn.default {
+    color: #fff;
+    border-radius: var(--app-button-size);
+    border-color: var(--clr-secondary);
+
+    &:hover {
+        background: var(--clr-secondary);
     }
 }
 

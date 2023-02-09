@@ -57,7 +57,8 @@ export default class World {
 
         this.buttons = {
             contact: document.querySelector('[aria-label="Contact"]'),
-            home: document.querySelector('[aria-label="Home"]')
+            home: document.querySelector('[aria-label="Home"]'),
+            guide: document.querySelector('[aria-label="Guide"]')
         }
 
         this.buttons.home.style.display = 'none'
@@ -560,6 +561,7 @@ export default class World {
         instance.highlight.fadeOut()
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
+        instance.buttons.guide.style.display = 'flex'
         document.querySelector('.cta').style.display = 'flex'
         instance.camera.updateCameraTo()
         instance.audio.changeBgMusic()
@@ -592,6 +594,7 @@ export default class World {
         document.querySelector('.page').className = 'page page-home'
 
         instance.buttons.contact.style.display = 'none'
+        instance.buttons.guide.style.display = 'none'
     }
 
     finishJourney() {
