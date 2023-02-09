@@ -236,15 +236,15 @@ export default class World {
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
             const info = _gl.elementFromHtml(`
                 <div class="info">
-                    <div><i class="icon-film-solid"></i><span>${numberOfEpisodes} films</span></div>
-                    <div><i class="icon-pen-to-square-solid"></i><span>${numberOfEpisodes} tasks</span></div>
+                    <div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} films</span></div>
+                    <div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfEpisodes} tasks</span></div>
                 </div>
             `)
 
             details.append(info)
 
             if (numberOfQuizes > 0) {
-                const quizLabel = _gl.elementFromHtml(`<div><i class="icon-question-solid"></i><span>${numberOfQuizes} quiz</span></div>`)
+                const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} quiz</span></div>`)
                 info.append(quizLabel)
             }
         }
