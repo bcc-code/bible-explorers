@@ -58,9 +58,9 @@ export default class Page {
         document.querySelector('.page .container').append(lobby)
         document.querySelector('.cta').style.display = 'flex'
 
-        const label = _gl.elementFromHtml(`<span>${_s.journey.start}</span>`)
         instance.experience.navigation.next.querySelector('svg').style.display = 'none'
-        instance.experience.navigation.next.append(label)
+        instance.experience.navigation.next.querySelector('span').innerText = _s.journey.start
+        instance.experience.navigation.next.querySelector('span').style.display = 'block'
 
     }
 
