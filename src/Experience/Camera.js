@@ -167,10 +167,10 @@ export default class Camera {
         }
 
         if (diffCamLocation) {
+            camera.audio.playSound('whoosh-between-screens')
             camera.updateCamera(camera.cameraLocations[location], callback)
         }
         else {
-            camera.audio.playSound('whoosh-between-screens')
             callback()
         }
     }
