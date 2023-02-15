@@ -576,8 +576,8 @@ export default class World {
         if (instance.program.pause)
             instance.program.pause.destroy()
 
-        if (!instance.experience.settings.fullScreen) {
-            // document.exitFullscreen()
+        if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
+            document.exitFullscreen()
         }
     }
 
