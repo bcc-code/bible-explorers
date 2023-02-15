@@ -54,7 +54,6 @@ export default class Dialogue {
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
             button.addEventListener("click", () => {
-
                 buttons.forEach(button => button.classList.remove('current'))
 
                 // Remove previous message
@@ -86,10 +85,8 @@ export default class Dialogue {
             _gl.elementFromHtml(
                 `<section class="message-from-dialogue">
                     <div class="container">
-                        <header class="message-header">
-                            <span>Iris</span>
-                        </header>
                         <div class="content">
+                            <h2>Iris</h2>
                             ${text}
                         </div>
                     </div>
