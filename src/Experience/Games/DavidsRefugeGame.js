@@ -21,7 +21,10 @@ export default class DavidsRefuge {
         document.querySelector('.cta').style.display = 'none'
 
         instance.gameHTML()
-        instance.hintsHTML()
+
+        if (instance.data.hints.length > 0)
+            instance.hintsHTML()
+
         instance.eventListeners()
     }
 
