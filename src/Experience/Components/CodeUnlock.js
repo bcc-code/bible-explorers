@@ -203,6 +203,8 @@ export default class CodeUnlock {
             instance.data.fails++
             instance.data.currentNumberIndex = 0
             instance.data.enteredCode = []
+            instance.el.backspace.disabled = true
+            instance.el.confirm.disabled = true
 
             const numbers = instance.el.code.querySelectorAll('div')
             numbers.forEach(item => {
