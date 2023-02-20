@@ -144,7 +144,8 @@ export default class Chapter3Game2 {
         const chooseCard = document.querySelector('[aria-label="card select"')
 
         chooseCard.addEventListener('click', (e) => {
-            e.target.remove()
+            e.target.disabled = true
+            e.target.style.opacity = '0'
 
             document.querySelector('.game-notification')?.remove()
             document.querySelector('.cta').style.display = 'flex'
