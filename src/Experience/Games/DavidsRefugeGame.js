@@ -198,19 +198,6 @@ export default class DavidsRefuge {
         instance.experience.navigation.next.addEventListener('click', instance.destroy)
         instance.experience.navigation.prev.addEventListener('click', instance.destroy)
 
-
-        // Message event
-        // const overlay = document.getElementById('overlay')
-        // const dialogue = document.getElementById('dialogue')
-
-        // overlay.addEventListener('click', () => {
-        //     gsap.to(dialogue, { y: '100%', autoAlpha: 0, onComplete: () => { dialogue.remove() } })
-        //     gsap.to(overlay, {
-        //         autoAlpha: 0, onComplete: () => {
-        //             overlay.remove()
-        //         }
-        //     })
-        // })
     }
 
     toggleQuestion() {
