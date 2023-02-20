@@ -35,6 +35,14 @@
         position: relative;
         display: flex;
 
+        li {
+            color: #fff;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
 
         li:not(:last-child) {
             margin-right: 2rem;
@@ -50,14 +58,6 @@
 
         li.done.current {
             background-color: var(--bg-default);
-        }
-
-        li {
-            color: #fff;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
     }
 
@@ -162,6 +162,7 @@
 
             &::placeholder {
                 color: #fff;
+                opacity: 0.6;
             }
 
             &:focus-visible {
