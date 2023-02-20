@@ -112,7 +112,7 @@
         flex: 1;
         position: relative;
         pointer-events: all;
-        padding: var(--app-padding);
+        padding: calc(var(--app-padding)/2);
 
         audio {
             display: none;
@@ -125,6 +125,7 @@
             border: none;
             background-color: transparent;
             color: #fff;
+
 
             &::placeholder {
                 color: #fff;
@@ -139,7 +140,14 @@
             &:focus-visible::placeholder {
                 color: transparent;
             }
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
         }
+
 
         .icon {
             width: 2rem;
@@ -151,12 +159,8 @@
         &-frame {
             position: absolute;
             inset: 0;
-            background: url('../../static/games/select-tl.png') top left,
-                url('../../static/games/select-tr.png') top right,
-                url('../../static/games/select-bl.png') bottom left,
-                url('../../static/games/select-br.png') bottom right;
-            background-repeat: no-repeat;
             opacity: 0;
+            border: 0.25rem solid var(--clr-secondary);
             transition: var(--transition-duration) var(--transition-timing);
         }
 
@@ -187,6 +191,37 @@
             display: flex;
             align-items: center;
             padding: 0.5rem;
+
+            &.wrong-code {
+                animation-name: wrong-code;
+                animation-duration: .25s;
+                animation-iteration-count: 2;
+            }
+
+            @keyframes wrong-code {
+                0% {
+                    box-shadow: 0 0 0 0.25rem red;
+                    transform: translate(0, 0) rotate(0deg);
+                }
+
+                25% {
+                    transform: translate(5px, 5px) rotate(5deg);
+                }
+
+                50% {
+                    transform: translate(0, 0) rotate(0eg);
+                }
+
+                75% {
+                    box-shadow: 0 0 0 0 transparent;
+                    transform: translate(-5px, 5px) rotate(-5deg);
+                }
+
+                100% {
+                    box-shadow: 0 0 0 0.25rem red;
+                    transform: translate(0, 0) rotate(0deg);
+                }
+            }
         }
 
         &:not([selected]):hover {

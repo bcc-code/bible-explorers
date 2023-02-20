@@ -21,7 +21,10 @@ export default class DavidsRefuge {
         document.querySelector('.cta').style.display = 'none'
 
         instance.gameHTML()
-        instance.hintsHTML()
+
+        if (instance.data.hints.length > 0)
+            instance.hintsHTML()
+
         instance.eventListeners()
     }
 
@@ -121,8 +124,11 @@ export default class DavidsRefuge {
             const circle = q('.circle')
             const tooltip = q('.tooltip')
 
+            gsap.set(tooltip, { autoAlpha: 0 })
+
             item.addEventListener('click', () => {
                 selectGoat.disabled = false
+                gsap.to(tooltip, { autoAlpha: 1 })
 
                 if (item.hasAttribute('data-selected')) return
 
@@ -185,19 +191,6 @@ export default class DavidsRefuge {
         instance.experience.navigation.next.addEventListener('click', instance.destroy)
         instance.experience.navigation.prev.addEventListener('click', instance.destroy)
 
-
-        // Message event
-        // const overlay = document.getElementById('overlay')
-        // const dialogue = document.getElementById('dialogue')
-
-        // overlay.addEventListener('click', () => {
-        //     gsap.to(dialogue, { y: '100%', autoAlpha: 0, onComplete: () => { dialogue.remove() } })
-        //     gsap.to(overlay, {
-        //         autoAlpha: 0, onComplete: () => {
-        //             overlay.remove()
-        //         }
-        //     })
-        // })
     }
 
     toggleQuestion() {

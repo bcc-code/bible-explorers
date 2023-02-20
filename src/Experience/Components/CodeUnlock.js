@@ -17,6 +17,7 @@ export default class CodeUnlock {
         instance.audio = instance.world.audio
         instance.program = instance.world.program
         instance.secretCode = instance.program.getCurrentStepData().code_to_unlock
+        instance.experience.navigation.next.disabled = true
 
         instance.data = {
             codeLength: instance.secretCode.length,
@@ -25,6 +26,7 @@ export default class CodeUnlock {
             enteredCode: [],
         }
 
+        console.log(instance.secretCode);
         instance.unlockScreenHTML()
     }
 
@@ -185,11 +187,15 @@ export default class CodeUnlock {
             wrapper.classList.add('correct-code')
             instance.audio.playSound('task-completed')
             instance.data.fails = 0
+
+            instance.experience.navigation.next.disabled = false
         }
         else {
             instance.data.fails++
             instance.data.currentNumberIndex = 0
             instance.data.enteredCode = []
+            instance.el.backspace.disabled = true
+            instance.el.confirm.disabled = true
 
             const numbers = instance.el.code.querySelectorAll('div')
             numbers.forEach(item => {

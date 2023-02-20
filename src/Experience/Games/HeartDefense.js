@@ -620,6 +620,7 @@ export default class HeartDefense {
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
                 <h1>${_s.miniGames.gameOver}</h1>
+                <div class="buttons"></div>
             </div>
         `)
 
@@ -628,12 +629,12 @@ export default class HeartDefense {
         `)
 
         if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
-            gameOverHTML.append(skipBTN)
+            gameOverHTML.querySelector('.buttons').append(skipBTN)
 
         const resetBTN = _gl.elementFromHtml(`
             <button class="btn default">${_s.miniGames.reset}</button>
         `)
-        gameOverHTML.append(resetBTN)
+        gameOverHTML.querySelector('.buttons').append(resetBTN)
 
         document.querySelector('.heart-defense .container').append(gameOverHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')

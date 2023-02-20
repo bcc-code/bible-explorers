@@ -56,7 +56,7 @@ export default class Quiz {
         `)
 
         questions.forEach((q, qIdx) => {
-            const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
+            const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
             const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
                     <div class="quiz-question">
@@ -99,10 +99,6 @@ export default class Quiz {
                 quizAnswers.append(quizAnswer)
             }
 
-            if (q.picture) {
-                const picture = _gl.elementFromHtml(`<div class="question__picture"><img src="${q.picture}"></div>`)
-            }
-
             quiz.querySelector('.quiz-steps').append(quizStep)
             quiz.querySelector('.quiz-items').append(quizItem)
         })
@@ -118,30 +114,29 @@ export default class Quiz {
         prev.disabled = true
         prev.addEventListener("click", () => {
             const current = quiz.querySelector('.quiz-item.visible')
-            const currentCheckpoint = quiz.querySelector('.quiz-step.visible')
+            const currentCheckpoint = quiz.querySelector('.quiz-step.current')
 
             current.classList.remove('visible')
-            currentCheckpoint.classList.remove('visible')
+            currentCheckpoint.classList.remove('current')
             current.previousElementSibling.classList.add('visible')
-            currentCheckpoint.previousElementSibling?.classList.add('visible')
+            currentCheckpoint.previousElementSibling?.classList.add('current')
+
+            next.disabled = !current.previousElementSibling.classList.contains('done')
 
             if (current.getAttribute('data-index') == 2)
                 prev.disabled = true
 
-            if (current.previousElementSibling.querySelector('input:checked'))
-                next.disabled = false
         })
 
         next.disabled = true
         next.addEventListener("click", () => {
             const current = quiz.querySelector('.quiz-item.visible')
-            const currentCheckpoint = quiz.querySelector('.quiz-step.visible')
+            const currentCheckpoint = quiz.querySelector('.quiz-step.current')
 
             current.classList.remove('visible')
-            currentCheckpoint.classList.remove('visible')
-
+            currentCheckpoint.classList.remove('current')
             current.nextElementSibling.classList.add('visible')
-            currentCheckpoint.nextElementSibling.classList.add('visible')
+            currentCheckpoint.nextElementSibling.classList.add('current')
 
             if (questionsAnswered < questions.length - 1) {
                 questionsAnswered++
@@ -149,7 +144,7 @@ export default class Quiz {
             }
 
             prev.disabled = false
-            next.disabled = !current.nextElementSibling.querySelector('input:checked')
+            next.disabled = !current.nextElementSibling.classList.contains('done')
 
             if (current.nextElementSibling.getAttribute('data-index') == questions.length)
                 next.disabled = true
@@ -165,6 +160,7 @@ export default class Quiz {
         quiz.querySelectorAll('.quiz-item').forEach((q, i) => {
             const htmlAnswers = q.querySelectorAll('.label')
             const objAnswers = questions[i].answers
+
 
             htmlAnswers.forEach((a, i) => {
                 a.addEventListener('click', () => {
@@ -184,6 +180,11 @@ export default class Quiz {
 
                     if (q.getAttribute('data-index') !== questions.length)
                         next.disabled = false
+
+                    const currentCheckpoint = quiz.querySelector('.quiz-step.current')
+                    const current = quiz.querySelector('.quiz-item.visible')
+                    currentCheckpoint.classList.add('done')
+                    current.classList.add('done')
                 })
             })
         })
