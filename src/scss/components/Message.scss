@@ -11,7 +11,7 @@
 
     .content {
         border-radius: 1rem;
-        padding: var(--app-padding) calc(var(--app-padding) * 1.5);
+        padding: var(--app-padding) calc(var(--app-padding) * 1.5) calc(var(--app-padding) * 1.5);
         background: var(--bg-with-opacity);
         border: var(--app-border-size) solid var(--clr-primary);
     }
