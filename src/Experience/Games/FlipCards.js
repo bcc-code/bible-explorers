@@ -107,7 +107,11 @@ export default class Chapter3Game2 {
                 .to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
+                if (e.target.value.length > e.target.maxLength)
+                    e.target.value = e.target.value.slice(0, e.target.maxLength)
+
                 if (e.target.value === instance.data.cards[index].code) {
+
                     card.classList.add('flipped')
                     flipAnimation.play()
 
@@ -117,6 +121,14 @@ export default class Chapter3Game2 {
                     if (flippedCards.length == instance.data.cards.length) {
                         document.querySelector('.flip-card').classList.add('all-flipped')
                     }
+                } else {
+                    e.target.parentNode.classList.add('wrong-code')
+                    instance.audio.playSound('wrong')
+
+                    setTimeout(() => {
+                        e.target.parentNode.classList.remove('wrong-code')
+                        e.target.value = ''
+                    }, 1000)
                 }
             })
 
@@ -145,7 +157,6 @@ export default class Chapter3Game2 {
 
         chooseCard.addEventListener('click', (e) => {
             e.target.disabled = true
-            e.target.style.opacity = '0'
 
             document.querySelector('.game-notification')?.remove()
             document.querySelector('.cta').style.display = 'flex'
