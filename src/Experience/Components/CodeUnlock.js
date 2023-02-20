@@ -1,29 +1,22 @@
 import Experience from "../Experience.js"
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
-
 
 let instance = null
 const showSkipAfterNoOfTries = 3
 
 export default class CodeUnlock {
     constructor() {
-        this.experience = new Experience()
-        this.world = this.experience.world
-        this.debug = this.experience.debug
-
         instance = this
-
+        instance.experience = new Experience()
+        instance.world = instance.experience.world
+        instance.debug = instance.experience.debug
     }
 
     toggleCodeUnlock() {
-
         instance.audio = instance.world.audio
         instance.program = instance.world.program
         instance.secretCode = instance.program.getCurrentStepData().code_to_unlock
-
-        console.log(instance.secretCode);
 
         instance.data = {
             codeLength: instance.secretCode.length,
@@ -36,7 +29,6 @@ export default class CodeUnlock {
     }
 
     unlockScreenHTML() {
-
         const unlockScreen = _gl.elementFromHtml(`
             <section class="code-unlock">
                 <div class="container">
@@ -50,7 +42,6 @@ export default class CodeUnlock {
         `)
 
         for (let i = 1; i <= 12; i++) {
-
             if (i == 10) {
                 const deleteKey = _gl.elementFromHtml(`
                     <button class="code-unlock-key delete-number">
@@ -79,7 +70,6 @@ export default class CodeUnlock {
 
                 confirmKey.disabled = true
                 unlockScreen.querySelector('.code-unlock-keyboard').append(confirmKey)
-
             }
 
             else {
@@ -146,7 +136,6 @@ export default class CodeUnlock {
                     instance.checkCode()
             }
         }
-
     }
 
     add(num) {
@@ -165,7 +154,6 @@ export default class CodeUnlock {
     }
 
     remove() {
-
         if (instance.data.currentNumberIndex == 0) return
 
         document.querySelector('.code-unlock.correct-code')?.classList.remove('correct-code')
@@ -179,7 +167,6 @@ export default class CodeUnlock {
         const numbers = instance.el.code.querySelectorAll('div')
         numbers[instance.data.currentNumberIndex - 1].textContent = ''
         numbers[instance.data.currentNumberIndex - 1].appendChild(asterisk)
-
 
         if (instance.data.currentNumberIndex == 1)
             instance.el.backspace.disabled = true
@@ -225,7 +212,6 @@ export default class CodeUnlock {
 
     destroy() {
         document.onkeydown = null
-
         document.querySelector('.code-unlock')?.remove()
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)

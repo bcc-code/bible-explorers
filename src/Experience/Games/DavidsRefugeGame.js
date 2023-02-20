@@ -53,10 +53,12 @@ export default class DavidsRefuge {
 
             game.querySelector('.goats').append(item)
         })
-
     }
 
     hintsHTML() {
+        if (!instance.data.hints.length)
+            return
+
         const hints = _gl.elementFromHtml(`
             <aside class="hints">
                 <h4>Hints</h4>
@@ -75,49 +77,41 @@ export default class DavidsRefuge {
             </button>
         `)
 
-        if (instance.data.hints.length) {
-            document.querySelector('.davids-refuge .container').append(hintsToggle, hints)
+        document.querySelector('.davids-refuge .container').append(hintsToggle, hints)
 
-            const hintsList = hints.querySelector('ul')
+        const hintsList = hints.querySelector('ul')
 
-            gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: 'top left' })
+        gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: 'top left' })
 
-            const showHints = gsap.timeline({ paused: true })
-                .to(hints, { scale: 1, autoAlpha: 1 })
+        const showHints = gsap.timeline({ paused: true })
+            .to(hints, { scale: 1, autoAlpha: 1 })
 
-            hintsToggle.addEventListener('click', () => {
-                if (hints.style.opacity === '0') {
-                    showHints.play()
-                } else {
-                    showHints.reverse()
-                }
-            })
+        hintsToggle.addEventListener('click', () => {
+            hints.style.opacity === '0'
+                ? showHints.play()
+                : showHints.reverse()
+        })
 
-            document.addEventListener('click', (event) => {
-                if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target))
-                    showHints.reverse()
-            })
+        document.addEventListener('click', (event) => {
+            if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target))
+                showHints.reverse()
+        })
 
-            let index = 1
+        let index = 1
 
-            const getHint = hints.querySelector('button')
-            getHint.addEventListener('click', () => {
-                if (index < instance.data.hints.length) {
-                    const hint = _gl.elementFromHtml(`<li>${instance.data.hints[index].text}</li>`)
-                    hintsList.appendChild(hint)
-                }
+        const getHint = hints.querySelector('button')
+        getHint.addEventListener('click', () => {
+            if (index < instance.data.hints.length) {
+                const hint = _gl.elementFromHtml(`<li>${instance.data.hints[index].text}</li>`)
+                hintsList.appendChild(hint)
+            }
 
-                if (++index == instance.data.hints.length) {
-                    getHint.remove()
-                }
-            })
-
-        }
-
+            if (++index == instance.data.hints.length)
+                getHint.remove()
+        })
     }
 
     eventListeners() {
-
         // Goat selection
         const selectGoat = document.querySelector('[aria-label="select goat"]')
 
@@ -168,7 +162,6 @@ export default class DavidsRefuge {
                         tooltip.innerHTML = `<span style="white-space: normal">${instance.data.correct_character_message}</span>`
                         tooltip.style.top = '-7rem'
 
-                        instance.toggleMessage()
                         selectGoat.disabled = true
                         document.querySelector('.cta').style.display = 'flex'
                     }
@@ -217,21 +210,9 @@ export default class DavidsRefuge {
         gsap.to('#dialogue', { y: 0, autoAlpha: 1 })
     }
 
-    toggleMessage() {
-        const notification = _gl.elementFromHtml(`
-            <aside class="game-notification">
-                <p>${instance.data.end_message}</p>
-            </aside>
-        `)
-
-        document.querySelector('.davids-refuge .container').append(notification)
-        gsap.fromTo(notification, { x: '100%' }, { x: 0 })
-    }
-
     destroy() {
         document.querySelector('.game')?.remove()
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
     }
-
 }
