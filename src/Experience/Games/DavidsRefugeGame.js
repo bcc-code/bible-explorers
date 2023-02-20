@@ -52,7 +52,10 @@ export default class DavidsRefuge {
             `)
 
             game.querySelector('.goats').append(item)
+
         })
+
+
 
     }
 
@@ -127,8 +130,11 @@ export default class DavidsRefuge {
             const circle = q('.circle')
             const tooltip = q('.tooltip')
 
+            gsap.set(tooltip, { autoAlpha: 0 })
+
             item.addEventListener('click', () => {
                 selectGoat.disabled = false
+                gsap.to(tooltip, { autoAlpha: 1 })
 
                 if (item.hasAttribute('data-selected')) return
 
