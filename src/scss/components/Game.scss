@@ -112,7 +112,7 @@
         flex: 1;
         position: relative;
         pointer-events: all;
-        padding: var(--app-padding);
+        padding: calc(var(--app-padding)/2);
 
         audio {
             display: none;
@@ -151,12 +151,8 @@
         &-frame {
             position: absolute;
             inset: 0;
-            background: url('../../static/games/select-tl.png') top left,
-                url('../../static/games/select-tr.png') top right,
-                url('../../static/games/select-bl.png') bottom left,
-                url('../../static/games/select-br.png') bottom right;
-            background-repeat: no-repeat;
             opacity: 0;
+            border: 0.25rem solid var(--clr-secondary);
             transition: var(--transition-duration) var(--transition-timing);
         }
 
