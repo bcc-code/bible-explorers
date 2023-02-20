@@ -65,6 +65,10 @@
         aspect-ratio: 16/9;
         margin: var(--key-spacing);
 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         color: #fff;
         font-size: 2rem;
         font-weight: bold;
