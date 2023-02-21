@@ -26,7 +26,6 @@ export default class CodeUnlock {
             enteredCode: [],
         }
 
-        console.log(instance.secretCode);
         instance.unlockScreenHTML()
     }
 

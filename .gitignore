@@ -2,3 +2,4 @@ node_modules
 dist
 .vercel
 .DS_store
+package-lock.json
