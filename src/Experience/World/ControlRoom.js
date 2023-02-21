@@ -37,8 +37,13 @@ export default class ControlRoom {
 
         // Events
         window.addEventListener('click', () => {
-            if (this.experience.world.program)
-                this.clickedObject()
+            if (!this.experience.world.program) return
+
+            this.clickedObject()
+        })
+
+        document.querySelector('.webgl-wrapper').addEventListener('mousemove', () => {
+            this.checkObjectIntersection()
         })
     }
 
@@ -157,7 +162,6 @@ export default class ControlRoom {
 
     checkObjectIntersection() {
         this.raycaster.setFromCamera(this.pointer.position, this.camera.instance)
-        this.raycaster.layers.set(1)
         const intersects = this.raycaster.intersectObjects(this.clickableObjects)
 
         if (intersects.length > 0) {
@@ -177,6 +181,7 @@ export default class ControlRoom {
     }
 
     clickedObject() {
+
         if (this.currentIntersect != null) {
             this.world.program.control(this.currentIntersect)
             this.currentIntersect = null
@@ -197,13 +202,9 @@ export default class ControlRoom {
     }
 
     update() {
-        if (this.clickableObjects)
-            this.checkObjectIntersection()
 
-
-        if (this.animations.actions.drag.isRunning()) {
+        if (this.animations.actions.drag.isRunning())
             this.animations.mixer.update(this.time.delta * 0.001)
-        }
 
     }
 }

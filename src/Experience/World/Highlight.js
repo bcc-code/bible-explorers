@@ -12,25 +12,16 @@ export default class Highlight {
         // Setup
         this.currentHighlight = null
         this.clickableObjects = this.world.controlRoom.clickableObjects
-        this.tv_16x9 = this.world.controlRoom.tv_16x9
-        this.tv_16x10 = this.world.controlRoom.tv_16x10
     }
 
     add(name) {
         this.remove()
-
-        if (name == 'tv_16x9_screen') {
-            this.set(this.tv_16x9)
-            this.pulse()
-        }
-        else {
-            this.clickableObjects.filter(child => {
-                if (child.name === name) {
-                    this.set(child)
-                    this.pulse()
-                }
-            })
-        }
+        this.clickableObjects.filter(child => {
+            if (child.name === name) {
+                this.set(child)
+                this.pulse()
+            }
+        })
     }
 
     set(object) {
@@ -39,20 +30,16 @@ export default class Highlight {
         const outlineGeometry = object.geometry
         const outlineMaterial = new THREE.MeshBasicMaterial({
             color: 0xfcb04e,
-            transparent: true,
-            opacity: 0.6
+            transparent: true
         })
         this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
-        this.outline.name = object.name + "_outline"
+        this.outline.name = object.name + "_highlight"
         object.add(this.outline)
 
         if (object.name === "tv_16x9_screen") {
-            this.outline.position.z = 0.001
+            this.outline.material.opacity = 0.6
         }
 
-        if (object.name === "Switch") {
-            this.outline.material.opacity = 1
-        }
     }
 
     remove() {

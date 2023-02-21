@@ -43,10 +43,26 @@ export default class Points {
 
         const highlight = document.createElement('div')
         highlight.classList.add('highlight-circle')
-        // div.append(highlight)
+
+        console.log(object.geometry.boundingBox);
+
 
         this.currentLabel = new CSS2DObject(highlight)
-        this.currentLabel.position.set(0, object.geometry.boundingBox.min.y / 2, 0)
+
+        if (object.name === "tv_16x9_screen") {
+            const posX = object.geometry.boundingBox.min.x + 0.1
+            const posY = object.geometry.boundingBox.max.y - 0.1
+
+            this.currentLabel.position.set(posX, posY, 0)
+        }
+
+        if (object.name === "Switcher") {
+            const posX = object.geometry.boundingBox.min.x
+            const posY = object.geometry.boundingBox.min.y
+
+            this.currentLabel.position.set(posX, posY, 0)
+        }
+
         this.currentLabel.name = object.name
         this.currentObject = object
         this.currentObject.add(this.currentLabel)
