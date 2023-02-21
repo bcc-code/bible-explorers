@@ -132,6 +132,7 @@ export default class Video {
         if (instance.video()) {
             instance.pause()
             instance.tablet.material.map.image.pause()
+            instance.portalScreen.scale.set(0, 0, 0)
 
             if (this.video().isFullscreen_) {
                 instance.video().exitFullscreen()

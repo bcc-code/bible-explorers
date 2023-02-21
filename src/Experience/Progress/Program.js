@@ -12,6 +12,8 @@ import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
+import * as THREE from 'three'
+import gsap from "gsap"
 
 let instance = null
 
@@ -193,7 +195,6 @@ export default class Program {
         instance.experience.navigation.prev.disabled = true
         instance.experience.navigation.next.disabled = true
 
-
         if (instance.stepType() == 'iris') {
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
@@ -242,12 +243,29 @@ export default class Program {
 
             instance.highlight.fadeOut()
             instance.points.delete()
-            instance.world.controlRoom.leverAnimation()
 
-            instance.world.controlRoom.animation.mixer.addEventListener('finished', () => {
-                console.log('finished animation');
-                instance.video.play()
+            // Animation for lever
+            const leverAnimation = instance.world.controlRoom.getAnimation('SwitchAction')
+            const leverAction = instance.world.controlRoom.animations.mixer.clipAction(leverAnimation)
+
+            leverAction.setLoop(THREE.LoopOnce)
+            leverAction.clampWhenFinished = true
+            leverAction.play()
+
+            console.log(leverAction);
+
+            gsap.to(instance.world.controlRoom.tv_portal.scale, {
+                x: 1,
+                y: 1,
+                z: 1,
+                duration: leverAction._clip.duration
             })
+
+            instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
+                instance.video.play()
+                leverAction.stop()
+            })
+
         }
     }
 

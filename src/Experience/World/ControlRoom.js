@@ -31,7 +31,9 @@ export default class ControlRoom {
         this.getObjects()
         this.getTextures()
         this.setMaterials()
-        this.setAnimation()
+
+        this.animations = {}
+        this.animations.mixer = new THREE.AnimationMixer(this.model)
 
         // Events
         window.addEventListener('click', () => {
@@ -175,17 +177,8 @@ export default class ControlRoom {
         }
     }
 
-    // Set animations
-    setAnimation() {
-        this.animation = {}
-        this.animation.mixer = new THREE.AnimationMixer(this.model)
-    }
-
-    leverAnimation() {
-        const leverAnimation = THREE.AnimationClip.findByName(this.resources.animations, 'SwitchAction')
-        const leverAction = this.animation.mixer.clipAction(leverAnimation)
-        leverAction.loop = THREE.LoopOnce
-        leverAction.play()
+    getAnimation(name) {
+        return THREE.AnimationClip.findByName(this.resources.animations, name)
     }
 
     update() {
@@ -193,6 +186,6 @@ export default class ControlRoom {
             this.checkObjectIntersection()
 
         if (this.lever)
-            this.animation.mixer.update(this.time.delta * 0.001)
+            this.animations.mixer.update(this.time.delta * 0.001)
     }
 }
