@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { VideoTexture } from 'three'
 import Experience from "../Experience.js"
+import gsap from "gsap"
 
 export default class ControlRoom {
     constructor() {
@@ -31,9 +32,8 @@ export default class ControlRoom {
         this.getObjects()
         this.getTextures()
         this.setMaterials()
-
-        this.animations = {}
-        this.animations.mixer = new THREE.AnimationMixer(this.model)
+        this.setAnimationMixer()
+        this.leverAction()
 
         // Events
         window.addEventListener('click', () => {
@@ -47,6 +47,12 @@ export default class ControlRoom {
         this.model = this.resources.scene
         this.scene.add(this.model)
 
+    }
+
+    setAnimationMixer() {
+        this.animations = {}
+        this.animations.mixer = new THREE.AnimationMixer(this.model)
+        this.animations.actions = {}
     }
 
     getObjects() {
@@ -181,11 +187,23 @@ export default class ControlRoom {
         return THREE.AnimationClip.findByName(this.resources.animations, name)
     }
 
+    leverAction() {
+
+        this.animations.lever = this.getAnimation('SwitchAction')
+        this.animations.actions.drag = this.animations.mixer.clipAction(this.animations.lever)
+
+        this.animations.actions.drag.setLoop(THREE.LoopOnce)
+        this.animations.actions.drag.clampWhenFinished = true
+    }
+
     update() {
         if (this.clickableObjects)
             this.checkObjectIntersection()
 
-        if (this.lever)
+
+        if (this.animations.actions.drag.isRunning()) {
             this.animations.mixer.update(this.time.delta * 0.001)
+        }
+
     }
 }

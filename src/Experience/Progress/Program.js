@@ -12,7 +12,6 @@ import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
-import * as THREE from 'three'
 import gsap from "gsap"
 
 let instance = null
@@ -245,25 +244,19 @@ export default class Program {
             instance.points.delete()
 
             // Animation for lever
-            const leverAnimation = instance.world.controlRoom.getAnimation('SwitchAction')
-            const leverAction = instance.world.controlRoom.animations.mixer.clipAction(leverAnimation)
-
-            leverAction.setLoop(THREE.LoopOnce)
-            leverAction.clampWhenFinished = true
-            leverAction.play()
-
-            console.log(leverAction);
 
             gsap.to(instance.world.controlRoom.tv_portal.scale, {
                 x: 1,
                 y: 1,
                 z: 1,
-                duration: leverAction._clip.duration
+                duration: instance.world.controlRoom.animations.actions.drag._clip.duration
             })
+
+            instance.world.controlRoom.animations.actions.drag.play()
 
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
                 instance.video.play()
-                leverAction.stop()
+                instance.world.controlRoom.animations.actions.drag.stop()
             })
 
         }

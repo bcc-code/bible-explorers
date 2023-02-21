@@ -29,6 +29,7 @@ export default class World {
         this.resources = this.experience.resources
         this.debug = this.experience.debug
         this.page = this.experience.page
+        this.time = this.experience.time
 
         // Wait for resources
         this.resources.on('ready', () => {
@@ -625,12 +626,13 @@ export default class World {
     }
 
     update() {
-        if (this.controlRoom)
+        if (this.controlRoom) {
             this.controlRoom.update()
+        }
 
-
-        if (this.points)
+        if (this.points) {
             this.points.update()
+        }
 
     }
 }
