@@ -44,9 +44,6 @@ export default class Points {
         const highlight = document.createElement('div')
         highlight.classList.add('highlight-circle')
 
-        console.log(object.geometry.boundingBox);
-
-
         this.currentLabel = new CSS2DObject(highlight)
 
         if (object.name === "tv_16x9_screen") {
