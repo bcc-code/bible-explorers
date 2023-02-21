@@ -269,10 +269,10 @@ export default class Camera {
     }
 
     addGUIControls() {
-        const camera = camera.debug.ui.addFolder('Camera')
-        camera.close()
+        const cameraGUI = camera.debug.ui.addFolder('Camera')
+        cameraGUI.close()
 
-        camera.
+        cameraGUI.
             // Location
             add(camera.data, 'location', {
                 Default: 'default',
@@ -288,17 +288,17 @@ export default class Camera {
             .name('Location')
             .listen()
 
-        const cameraPosition = camera.addFolder('Position')
+        const cameraPosition = cameraGUI.addFolder('Position')
         cameraPosition.add(camera.instance.position, 'x').min(-20).max(20).step(0.01).name('position.x').listen()
         cameraPosition.add(camera.instance.position, 'y').min(-20).max(20).step(0.01).name('position.y').listen()
         cameraPosition.add(camera.instance.position, 'z').min(-20).max(20).step(0.01).name('position.z').listen()
 
-        const cameraLookAt = camera.addFolder('LookAt')
+        const cameraLookAt = cameraGUI.addFolder('LookAt')
         cameraLookAt.add(camera.controls.target, 'x').min(-20).max(20).step(0.01).name('lookAt.x').listen()
         cameraLookAt.add(camera.controls.target, 'y').min(-20).max(20).step(0.01).name('lookAt.y').listen()
         cameraLookAt.add(camera.controls.target, 'z').min(-20).max(20).step(0.01).name('lookAt.z').listen()
 
-        const cameraAngles = camera.addFolder('Angles')
+        const cameraAngles = cameraGUI.addFolder('Angles')
         cameraAngles.add(camera.controls, 'minPolarAngle').min(-Math.PI).max(Math.PI).step(0.01).name('minPolarAngle').listen()
         cameraAngles.add(camera.controls, 'maxPolarAngle').min(-Math.PI).max(Math.PI).step(0.01).name('maxPolarAngle').listen()
         cameraAngles.add(camera.controls, 'minAzimuthAngle').min(-Math.PI).max(Math.PI).step(0.01).name('minAzimuthAngle').listen()
