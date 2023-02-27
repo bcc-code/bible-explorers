@@ -23,7 +23,6 @@ export default class Menu {
 
         instance.init()
         instance.eventListeners()
-
     }
 
     init() {
@@ -37,7 +36,6 @@ export default class Menu {
         selectLangLabel.innerText = _s.settings.language
         selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
-
 
         const selectVQ = document.querySelector('.select-video-quality')
         const selectVQLabel = selectVQ.querySelector('.label')

@@ -17,7 +17,7 @@ export default class HeartDefense {
         const spriteH = 100
 
         instance.config = {
-            noOfThoughts: 8,
+            noOfThoughts: 28,
             levels: 6,
             maxLives: 3,
             path: 'games/heart-defense/',
@@ -62,6 +62,9 @@ export default class HeartDefense {
             fails: 0
         }
 
+        instance.thoughtObjs = []
+        instance.spriteAnimations = []
+        
         instance.gameHTML()
         instance.startGame()
     }
@@ -253,9 +256,6 @@ export default class HeartDefense {
             animateThoughts()
         })
 
-        instance.explosionSprite = setSprite(instance.config.explosion, 'explosion')
-        instance.layer.add(instance.explosionSprite)
-
         function createThought() {
             if (Math.random() > instance.config.probability) return
 
@@ -369,7 +369,7 @@ export default class HeartDefense {
                 }
                 else {
                     instance.audio.playSound('heart-defense/door-crash')
-                    instance.playSpriteAnimation(thought.item, instance.explosionSprite)
+                    instance.playExplosionAnimation(thought.item)
                 }
 
                 // Remove the thought from the thoughts array
@@ -416,61 +416,60 @@ export default class HeartDefense {
 
             return a_start < b_end && b_start < a_end
         }
-
-        function setSprite(src, animation) {
-            const image = new Image()
-            image.src = src
-
-            return new Konva.Sprite({
-                id: animation,
-                x: 0,
-                y: 0,
-                width: instance.config.explosionWidth,
-                height: instance.config.explosionHeight,
-                image: image,
-                animation: animation,
-                animations: instance.config.animations,
-                frameRate: 3,
-                frameIndex: 0,
-                visible: false,
-                offset: {
-                    x: instance.config.explosionWidth / 2,
-                    y: instance.config.explosionHeight / 2
-                }
-            })
-        }
     }
 
-    playSpriteAnimation(obj, spriteObj) {
+    setSprite(src, animation) {
+        const image = new Image()
+        image.src = src
+
+        return new Konva.Sprite({
+            name: animation,
+            x: 0,
+            y: 0,
+            width: instance.config.explosionWidth,
+            height: instance.config.explosionHeight,
+            image: image,
+            animation: animation,
+            animations: instance.config.animations,
+            frameRate: 3,
+            frameIndex: 0,
+            visible: true,
+            offset: {
+                x: instance.config.explosionWidth / 2,
+                y: instance.config.explosionHeight / 2
+            }
+        })
+    }
+
+    playExplosionAnimation(obj) {
+        const spriteObj = instance.setSprite(instance.config.explosion, 'explosion')
+        instance.layer.add(spriteObj)
+
         spriteObj.position(obj.position())
+        spriteObj.start()
 
-        instance.spriteObj = obj
-        instance.spriteAnimation = spriteObj
+        instance.thoughtObjs.push(obj)
+        instance.spriteAnimations.push(spriteObj)
 
-        if (instance.spriteAnimation.isRunning()) {
-            instance.spriteAnimation.stop()
-            instance.spriteAnimation.frameIndex(0)
-        }
-
-        instance.spriteAnimation.visible(true)
-        instance.spriteAnimation.start()
-
-        instance.spriteAnimation.on('frameIndexChange.konva', function () {
+        spriteObj.on('frameIndexChange.konva', function () {
             if (this.frameIndex() == 2) {
-                instance.spriteAnimation.stop()
-                instance.spriteAnimation.visible(false)
+                spriteObj.stop()
                 obj.destroy()
+                instance.layer.find('.explosion')[0].destroy()
+                instance.spriteAnimations.shift()
+                instance.thoughtObjs.shift()
             }
         })
     }
 
     stopSpriteAnimationOnDoor() {
-        if (!instance.spriteAnimation?.isRunning())
-            return
+        instance.spriteAnimations.forEach((animation) => animation.stop())
+        instance.spriteAnimations = []
 
-        instance.spriteAnimation.stop()
-        instance.spriteAnimation.visible(false)
-        instance.spriteObj.destroy()
+        instance.thoughtObjs.forEach((obj) => obj.destroy())
+        instance.thoughtObjs = []
+
+        instance.layer.find('.explosion').forEach((explosion) => explosion.destroy())
     }
 
     stopThoughtsAnimation() {
@@ -523,7 +522,9 @@ export default class HeartDefense {
     openCloseDoor() {
         instance.stats.heartClosed = !instance.stats.heartClosed
         instance.updateDoorStatus()
-        instance.stopSpriteAnimationOnDoor()
+
+        if (!instance.stats.heartClosed)
+            instance.stopSpriteAnimationOnDoor()
 
         const sound = instance.stats.heartClosed ? 'close' : 'open'
         instance.audio.playSound('heart-defense/door-' + sound)
