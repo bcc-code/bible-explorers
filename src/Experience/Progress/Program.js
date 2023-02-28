@@ -238,27 +238,19 @@ export default class Program {
             instance.points.delete()
             instance.message.show()
         }
-        else if (instance.clickedObject == 'Switch') {
-
+        else if (instance.clickedObject == 'Screen') {
             instance.highlight.fadeOut()
             instance.points.delete()
+            instance.video.play()
 
-            // Animation for lever
-
-            gsap.to(instance.world.controlRoom.tv_portal.scale, {
-                x: 1,
-                y: 1,
-                z: 1,
-                duration: instance.world.controlRoom.animations.actions.drag._clip.duration
-            })
-
+        } else if (instance.clickedObject == 'Switch') {
             instance.world.controlRoom.animations.actions.drag.play()
-
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
+                instance.highlight.fadeOut()
+                instance.points.delete()
                 instance.video.play()
                 instance.world.controlRoom.animations.actions.drag.stop()
             })
-
         }
     }
 
@@ -294,8 +286,14 @@ export default class Program {
         let interactiveObjects = []
 
         if (instance.stepType() == 'video') {
-            interactiveObjects.push("Switch")
+
+            if (instance.currentCheckpoint != 6) {
+                interactiveObjects.push("Screen")
+            } else {
+                interactiveObjects.push("Switch")
+            }
         }
+
         else if (instance.stepType() == 'iris' || instance.stepType() == 'task' && instance.currentStep == 0) {
             interactiveObjects.push("tv_16x9_screen")
         }

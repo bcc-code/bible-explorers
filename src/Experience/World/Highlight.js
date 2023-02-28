@@ -30,15 +30,12 @@ export default class Highlight {
         const outlineGeometry = object.geometry
         const outlineMaterial = new THREE.MeshBasicMaterial({
             color: 0xfcb04e,
-            transparent: true
+            transparent: true,
+            opacity: 0.6
         })
         this.outline = new THREE.Mesh(outlineGeometry, outlineMaterial)
         this.outline.name = object.name + "_highlight"
         object.add(this.outline)
-
-        if (object.name === "tv_16x9_screen") {
-            this.outline.material.opacity = 0.6
-        }
 
     }
 
