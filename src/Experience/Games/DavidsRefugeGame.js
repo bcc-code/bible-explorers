@@ -49,7 +49,7 @@ export default class DavidsRefuge {
             const item = _gl.elementFromHtml(`
                 <article class="goat" data-color="${color}">
                     <div class="circle"></div>
-                    <div class="tooltip">${goat.text}</div>
+                    <p class="tooltip">${goat.text}</p>
                     <img src="${goat.image}"/>
                 </article>
             `)
@@ -124,11 +124,9 @@ export default class DavidsRefuge {
             const circle = q('.circle')
             const tooltip = q('.tooltip')
 
-            gsap.set(tooltip, { autoAlpha: 0 })
 
             item.addEventListener('click', () => {
                 selectGoat.disabled = false
-                gsap.to(tooltip, { autoAlpha: 1 })
 
                 if (item.hasAttribute('data-selected')) return
 
@@ -162,17 +160,14 @@ export default class DavidsRefuge {
 
                 // Selected goat
                 if (goat.hasAttribute('data-selected')) {
-                    tooltip.style.width = '330px'
-
                     if (instance.data.characters[index].tells_the_truth) {
-                        tooltip.innerHTML = `<span style="white-space: normal">${instance.data.correct_character_message}</span>`
-                        tooltip.style.top = '-7rem'
+                        tooltip.innerHTML = instance.data.correct_character_message
 
                         selectGoat.disabled = true
                         document.querySelector('.cta').style.display = 'flex'
                     }
                     else {
-                        tooltip.innerHTML = `<span style="white-space: normal">${instance.data.wrong_character_message}</span>`
+                        tooltip.innerHTML = instance.data.wrong_character_message
 
                         selectGoat.innerText = _s.miniGames.tryAgain
                         selectGoat.addEventListener('click', () => {

@@ -290,9 +290,8 @@
         --pink-shadow: #f75b99;
 
         position: relative;
-        padding: 3rem;
-        cursor: pointer;
         pointer-events: all;
+        cursor: pointer;
 
         img {
             position: relative;
@@ -301,29 +300,23 @@
         .circle {
             position: absolute;
             background-color: var(--bg-default);
-            bottom: 0;
-            left: 1.5rem;
+            bottom: -60px;
+            left: -30px;
             border-radius: 50%;
-            width: calc(100% - 6rem);
-            aspect-ratio: 1/1;
+            width: 300px;
+            height: 300px;
             cursor: pointer;
             transition: var(--transition-duration) var(--transition-timing);
         }
 
         .tooltip {
             position: absolute;
-            top: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
+            bottom: calc(100% + 20px);
+            width: 24ch;
             border-radius: 1rem;
             padding: 0.5rem 1rem;
-            margin-bottom: 1rem;
+            line-height: 1.35;
             z-index: 2;
-
-            span {
-                white-space: nowrap;
-            }
 
             &::after {
                 content: '';
@@ -335,7 +328,7 @@
             }
         }
 
-        [data-color='yellow'] {
+        &[data-color='yellow'] {
             .tooltip {
                 background-color: var(--yellow);
                 box-shadow: -2px -2px 0 2px var(--yellow-shadow);
@@ -350,7 +343,7 @@
             }
         }
 
-        [data-color='blue'] {
+        &[data-color='blue'] {
             .tooltip {
                 background-color: var(--blue);
                 box-shadow: -2px -2px 0 2px var(--blue-shadow);
@@ -365,7 +358,7 @@
             }
         }
 
-        [data-color='pink'] {
+        &[data-color='pink'] {
             .tooltip {
                 background-color: var(--pink);
                 box-shadow: -2px -2px 0 2px var(--pink-shadow);
@@ -379,10 +372,14 @@
                 box-shadow: 0 0 0 4px var(--pink-shadow);
             }
         }
+
+        &:not(:last-child) {
+            margin-right: 4rem;
+        }
     }
 
     [aria-label="select goat"] {
-        margin-top: 2rem;
+        margin-top: 100px;
     }
 
     [aria-label="toggle hints"] {
