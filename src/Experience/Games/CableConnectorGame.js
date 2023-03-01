@@ -559,13 +559,6 @@ export default class CableConnector {
             instance.modal.destroy()
             instance.toggleCableConnector()
         })
-
-        const skip = document.getElementById("skip")
-        skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
-            ? 'block'
-            : 'none'
-        skip.addEventListener('click', instance.advanceToNextStep)
     }
 
     advanceToNextStep() {

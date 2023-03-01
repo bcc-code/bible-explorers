@@ -1,5 +1,6 @@
 import Experience from "../Experience.js"
 import _gl from "../Utils/Globals.js"
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -12,7 +13,7 @@ export default class Skip {
         if (!document.body.classList.contains("quick-look-mode")) return
 
         instance.init()
-
+        instance.addEventListeners()
     }
 
     init() {
@@ -36,11 +37,16 @@ export default class Skip {
         `)
 
         html.append(prevStep, nextStep)
+    }
 
+    addEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, function (e) {
+            document.querySelector('[aria-label="prev step"]').disabled = e.detail.prev
+            document.querySelector('[aria-label="next step"]').disabled = e.detail.next
+        })
     }
 
     destroy() {
         document.querySelector('.skip-navigation').remove()
-
     }
 }

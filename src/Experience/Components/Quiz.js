@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -18,6 +19,7 @@ export default class Quiz {
         instance.correctAnswers = 0
         instance.openQuestions = 0
         instance.quizHTML()
+        instance.setEventListeners()
     }
 
     quizHTML() {
@@ -211,14 +213,13 @@ export default class Quiz {
             const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length + ' '}!</p>`)
             document.querySelector('.modal .summary').append(message)
         })
+    }
 
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
-        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     destroy() {
         document.querySelector('.quiz')?.remove()
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
     }
 }

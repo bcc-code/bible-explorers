@@ -1,6 +1,7 @@
 import Experience from "../Experience.js"
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 const showSkipAfterNoOfTries = 3
@@ -27,6 +28,7 @@ export default class CodeUnlock {
         }
 
         instance.unlockScreenHTML()
+        instance.setEventListeners()
     }
 
     unlockScreenHTML() {
@@ -110,9 +112,6 @@ export default class CodeUnlock {
 
         instance.el.backspace.addEventListener("click", instance.remove)
         instance.el.confirm.addEventListener("click", instance.checkCode)
-
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
-        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
 
         document.onkeydown = (e) => {
             if (e.key === '1' ||
@@ -215,10 +214,12 @@ export default class CodeUnlock {
         }
     }
 
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
+
     destroy() {
         document.onkeydown = null
         document.querySelector('.code-unlock')?.remove()
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
     }
 }
