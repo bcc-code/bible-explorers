@@ -632,7 +632,7 @@ export default class HeartDefense {
             gameOverHTML.querySelector('.buttons').append(skipBTN)
 
         const resetBTN = _gl.elementFromHtml(`
-            <button class="btn default">${_s.miniGames.reset}</button>
+            <button class="btn default">${_s.miniGames.restartRound}</button>
         `)
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 

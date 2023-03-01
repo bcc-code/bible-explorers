@@ -38,7 +38,7 @@ const strings = {
             "getTask": "Go to the task",
             "submit": "Submit",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archive",
         "settings": {
@@ -129,6 +129,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Play again",
             "reset": "Start over",
+            "restartRound": "Restart the round",
             "continue": "Continue the journey",
             "skip": "Skip",
             "correctAnswers": "correct answers"
@@ -171,7 +172,7 @@ const strings = {
             "getTask": "Gå til oppgaven",
             "submit": "Send",
             "next": "Neste",
-            "openQuestion": "Åpen spørsmål"
+            "openQuestion": "Skriv svaret her"
         },
         "archive": "Arkiv",
         "settings": {
@@ -262,6 +263,7 @@ const strings = {
             "tryAgain": "Prøv på nytt",
             "playAgain": "Spill igjen",
             "reset": "Start spillet på nytt",
+            "restartRound": "Start runden på nytt",
             "continue": "Fortsett reisen",
             "skip": "Hopp over",
             "correctAnswers": "riktige svar"
@@ -304,7 +306,7 @@ const strings = {
             "getTask": "Weiter zur Aufgabe",
             "submit": "Senden",
             "next": "Weiter",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archiv",
         "settings": {
@@ -395,6 +397,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
+            "restartRound": "Restart the round",
             "continue": "Reise fortsetzen",
             "skip": "Überspringen",
             "correctAnswers": "richtige Antworten"
@@ -437,7 +440,7 @@ const strings = {
             "getTask": "Ga naar de opdracht",
             "submit": "Verzend",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archief",
         "settings": {
@@ -528,6 +531,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
+            "restartRound": "Restart the round",
             "continue": "Ga door met de reis",
             "skip": "Overslaan",
             "correctAnswers": "antwoorden juist"
@@ -570,7 +574,7 @@ const strings = {
             "getTask": "Aller à la tâche",
             "submit": "Envoyer",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archive",
         "settings": {
@@ -661,6 +665,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Rejouer",
             "reset": "Redémarrer le jeu",
+            "restartRound": "Restart the round",
             "continue": "Continuer le voyage",
             "skip": "Sauter",
             "correctAnswers": "réponses correctes"
@@ -703,7 +708,7 @@ const strings = {
             "getTask": "Przejdź do zadania",
             "submit": "Wyślij",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archiwum",
         "settings": {
@@ -794,6 +799,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
+            "restartRound": "Restart the round",
             "continue": "Kontynuuj podróż",
             "skip": "Pomiń",
             "correctAnswers": "poprawnych odpowiedzi"
@@ -836,7 +842,7 @@ const strings = {
             "getTask": "Mergi la sarcină",
             "submit": "Trimite",
             "next": "Continuă",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Arhivă",
         "settings": {
@@ -927,6 +933,7 @@ const strings = {
             "tryAgain": "Încearcă din nou",
             "playAgain": "O nouă rundă",
             "reset": "Începe jocul din nou",
+            "restartRound": "Restart the round",
             "continue": "Continuă călătoria",
             "skip": "Mergi mai departe",
             "correctAnswers": "răspunsuri corecte"
@@ -969,7 +976,7 @@ const strings = {
             "getTask": "Ir a la tarea",
             "submit": "Enviar",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archivo",
         "settings": {
@@ -1060,6 +1067,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
+            "restartRound": "Restart the round",
             "continue": "Continuar el viaje",
             "skip": "Saltar",
             "correctAnswers": "respuestas correctas"
@@ -1102,7 +1110,7 @@ const strings = {
             "getTask": "Vá para a tarefa",
             "submit": "Enviar",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Arquivo",
         "settings": {
@@ -1193,6 +1201,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
+            "restartRound": "Restart the round",
             "continue": "Continue a viagem",
             "skip": "Skip",
             "correctAnswers": "respostas corretas"
@@ -1235,7 +1244,7 @@ const strings = {
             "getTask": "Vai all'attività",
             "submit": "Invia",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archivio",
         "settings": {
@@ -1326,6 +1335,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
+            "restartRound": "Restart the round",
             "continue": "Continua il tuo viaggio",
             "skip": "Salta",
             "correctAnswers": "risposte corrette"
@@ -1368,7 +1378,7 @@ const strings = {
             "getTask": "Перейти к заданию",
             "submit": "Отправить",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Архив",
         "settings": {
@@ -1459,6 +1469,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Играть снова",
             "reset": "Начать заново",
+            "restartRound": "Restart the round",
             "continue": "Продолжить путешествие",
             "skip": "Пропустить",
             "correctAnswers": "верных ответов"
@@ -1501,7 +1512,7 @@ const strings = {
             "getTask": "Mene tehtävään",
             "submit": "Lähetä",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Arkisto",
         "settings": {
@@ -1592,6 +1603,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
+            "restartRound": "Restart the round",
             "continue": "Jatka matkaa",
             "skip": "Ohita",
             "correctAnswers": "oikeaa vastausta"
@@ -1634,7 +1646,7 @@ const strings = {
             "getTask": "Menj a feladathoz",
             "submit": "Küldés",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Archívum",
         "settings": {
@@ -1725,6 +1737,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Play again",
             "reset": "Újrakezdés",
+            "restartRound": "Restart the round",
             "continue": "Utazás folytatása",
             "skip": "Átugrás",
             "correctAnswers": "correct answers"
@@ -1767,7 +1780,7 @@ const strings = {
             "getTask": "Gå til opgaven",
             "submit": "Send",
             "next": "Next",
-            "openQuestion": "Open question"
+            "openQuestion": "Write the answer here"
         },
         "archive": "Arkiv",
         "settings": {
@@ -1858,6 +1871,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Spil igen",
             "reset": "Start spillet forfra",
+            "restartRound": "Restart the round",
             "continue": "Fortsæt rejsen",
             "skip": "Skip",
             "correctAnswers": "rigtige svar"
