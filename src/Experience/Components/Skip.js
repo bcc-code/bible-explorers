@@ -47,6 +47,6 @@ export default class Skip {
     }
 
     destroy() {
-        document.querySelector('.skip-navigation').remove()
+        document.querySelector('.skip-navigation')?.remove()
     }
 }
