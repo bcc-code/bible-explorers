@@ -18,7 +18,7 @@ export default class HeartDefense {
 
         instance.config = {
             noOfThoughts: 28,
-            levels: 6,
+            levels: 5,
             maxLives: 3,
             path: 'games/heart-defense/',
             heartStates: ['full', '3quarter', 'half', '1quarter', 'empty'],
