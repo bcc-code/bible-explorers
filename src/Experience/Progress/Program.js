@@ -12,7 +12,7 @@ import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
-import gsap from "gsap"
+import Skip from "../Components/Skip.js"
 
 let instance = null
 
@@ -42,6 +42,7 @@ export default class Program {
         instance.dialogue = new Dialogue()
         instance.message = new Message()
         instance.gameDescription = new GameDescription()
+        instance.skip = new Skip()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -86,6 +87,11 @@ export default class Program {
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
+
+        if (instance.skip) {
+            document.querySelector('[aria-label="prev step"]').addEventListener('click', instance.previousStep)
+            document.querySelector('[aria-label="next step"]').addEventListener('click', instance.nextStep)
+        }
     }
 
     previousStep() {
@@ -334,5 +340,6 @@ export default class Program {
         instance.removeEventListeners()
         instance.message.destroy()
         instance.dialogue.destroy()
+        instance.skip.destroy()
     }
 }

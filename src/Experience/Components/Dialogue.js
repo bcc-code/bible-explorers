@@ -50,6 +50,8 @@ export default class Dialogue {
     setEventListeners() {
         instance.experience.navigation.prev.addEventListener("click", instance.destroy)
         instance.experience.navigation.next.addEventListener("click", instance.destroy)
+        document.querySelector('[aria-label="prev step"]')?.addEventListener('click', instance.destroy)
+        document.querySelector('[aria-label="next step"]')?.addEventListener('click', instance.destroy)
 
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {

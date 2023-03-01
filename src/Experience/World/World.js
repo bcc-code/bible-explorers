@@ -59,7 +59,7 @@ export default class World {
         this.buttons = {
             contact: document.querySelector('[aria-label="Contact"]'),
             home: document.querySelector('[aria-label="Home"]'),
-            guide: document.querySelector('[aria-label="Guide"]')
+            guide: document.querySelector('[aria-label="Guide"]'),
         }
 
         this.buttons.home.style.display = 'none'
@@ -563,6 +563,7 @@ export default class World {
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
         instance.buttons.guide.style.display = 'flex'
+
         document.querySelector('.cta').style.display = 'flex'
         instance.camera.updateCameraTo()
         instance.audio.changeBgMusic()

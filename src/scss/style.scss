@@ -466,3 +466,34 @@ img.lazyloaded~div.img-loader {
         transform: rotate(360deg);
     }
 }
+
+.skip-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+
+    button {
+        display: block;
+        background-color: var(--clr-text);
+        width: 2.5rem;
+        height: 2.5rem;
+        border: none;
+        z-index: 99;
+        pointer-events: all;
+        cursor: pointer;
+    }
+
+    button:nth-child(1) {
+        margin-bottom: 4px;
+    }
+
+    button svg {
+        pointer-events: none;
+    }
+
+    button:hover {
+        background-color: var(--clr-secondary);
+    }
+
+}
