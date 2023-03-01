@@ -116,8 +116,9 @@
 }
 
 #deskWidgetMain {
-    top: calc(3rem + 4rem);
-    left: 2rem;
+    top: 5rem;
+    right: var(--app-padding);
+    left: auto;
 
     .widget-toggle-row {
         display: none;
