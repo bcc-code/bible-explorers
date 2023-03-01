@@ -82,16 +82,6 @@ export default class Menu {
         document.querySelector('[aria-label="Close menu"]').addEventListener('click', instance.close)
 
         document.querySelector('.menu .overlay').addEventListener('click', instance.close)
-        document.querySelector('.faq .overlay').addEventListener('click', instance.experience.faq.close)
-
-        document.querySelector('[aria-label="FAQ"]').addEventListener('click', () => {
-            instance.experience.faq.open()
-            instance.close()
-        })
-        document.querySelector('[aria-label="Close FAQ"]').addEventListener('click', () => {
-            instance.experience.faq.close()
-            instance.open()
-        })
 
         const languageBtn = document.querySelector('[aria-label="current language"]')
         const languageItems = document.querySelectorAll('.select-language .dropdown li')

@@ -1,8 +1,4 @@
 .menu {
-    .buttons {
-        justify-content: flex-end
-    }
-
     .content {
         flex: 1;
         display: flex;
@@ -23,23 +19,21 @@
         }
     }
 
+    .label {
+        display: block;
+        font-size: 0.85rem;
+        color: #fff;
+        margin-bottom: 0.5rem;
+    }
+
     .info {
         display: flex;
         flex-flow: column nowrap;
         margin-block: 1rem;
         border-top: var(--app-border-size) solid var(--bg-default);
 
-        h2 {
-            color: var(--clr-text);
-            margin-top: 1rem;
-        }
-
-        .label {
-            display: block;
-        }
-
         >* {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
     }
 
@@ -55,8 +49,8 @@
     [aria-label*="current"] {
         outline: none;
         border: none;
-        color: #fff;
-        background-color: var(--bg-default);
+        color: var(--clr-text);
+        background-color: #fff;
         border-radius: 0.25rem;
         position: relative;
         margin-top: 0.25rem;
@@ -78,13 +72,13 @@
         }
 
         &:hover {
-            background-color: var(--clr-primary);
+            box-shadow: 0 0 0 0.15rem var(--clr-secondary);
         }
     }
 
     ul {
         display: none;
-        background-color: var(--bg-with-opacity);
+        background-color: rgba(255, 255, 255, .1);
         padding: 0.5rem;
         border-radius: 0.25rem;
         margin-top: 0.25rem;
@@ -115,7 +109,7 @@
 .toggle {
     --toggle-size: 2rem;
     --toggle-padding: 0.1rem;
-    --toggle-bg: var(--bg-default);
+    --toggle-bg: rgba(255, 255, 255, .1);
     --slider-on: var(--clr-secondary);
     --slider-off: #fff;
 
@@ -141,6 +135,7 @@
         padding-inline: 0.5rem;
         line-height: var(--toggle-size);
         text-align: right;
+        font-size: 0.85rem;
         cursor: pointer;
     }
 
@@ -170,10 +165,7 @@
 .login {
     display: flex;
     flex-flow: column nowrap;
-
-    p {
-        color: var(--clr-text);
-    }
+    color: #fff;
 
     &-buttons {
         margin-block: 1rem;
@@ -191,7 +183,7 @@
 
 .copyright {
     font-size: 0.7rem;
-    color: var(--bg-dark);
+    color: #fff;
 
     a {
         transition: var(--transition-duration) var(--transition-timing);

@@ -1,8 +1,8 @@
 .side-modal {
-    .buttons {
+    .header {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
     }
 
     .container {
@@ -12,7 +12,8 @@
         bottom: 0;
         width: clamp(300px, calc(100vw - var(--app-padding)), 400px);
         z-index: 20;
-        background-color: #fff;
+        background: var(--clr-text);
+        border-left: 0.15rem solid var(--clr-primary);
         display: flex;
         flex-flow: column nowrap;
         transform: translateX(100%);
@@ -44,7 +45,7 @@
         }
 
         .overlay {
-            opacity: .6;
+            opacity: .9;
             pointer-events: all;
         }
     }
@@ -64,14 +65,16 @@
 
     li:not(:first-child) {
         margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, .1);
     }
 
-    h2,
     p {
-        color: var(--clr-text);
+        line-height: 1.5;
     }
 
     p:first-child {
+        color: rgba(255, 255, 255, .8);
         font-weight: bold;
         margin-bottom: 0.5rem;
     }

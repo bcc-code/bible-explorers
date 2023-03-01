@@ -101,6 +101,9 @@
         <symbol id="delete-left" width="27" height="18" viewBox="0 0 27 18">
             <path d="M27 15c0 1.688-1.36 3-3 3H9.61c-.797 0-1.547-.281-2.11-.844L.422 10.078C.14 9.797 0 9.422 0 9c0-.375.14-.75.422-1.031L7.5.89A2.982 2.982 0 0 1 9.61 0H24c1.64 0 3 1.36 3 3v12ZM12.703 6.797 14.906 9l-2.203 2.203c-.469.469-.469 1.172 0 1.594a1.027 1.027 0 0 0 1.547 0l2.25-2.203 2.203 2.203a1.027 1.027 0 0 0 1.547 0c.469-.422.469-1.125 0-1.594L18.047 9l2.203-2.203c.469-.422.469-1.125 0-1.594a1.104 1.104 0 0 0-1.547 0L16.5 7.453l-2.25-2.25a1.104 1.104 0 0 0-1.547 0c-.469.469-.469 1.172 0 1.594Z" fill="currentColor" />
         </symbol>
+        <symbol id="question-circle" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M12 24a12 12 0 1 0 0-24 12 12 0 0 0 0 24ZM7.96 7.748A2.63 2.63 0 0 1 10.433 6h2.733a2.958 2.958 0 0 1 2.958 2.958c0 1.06-.567 2.039-1.486 2.569l-1.514.867c-.01.61-.51 1.106-1.125 1.106a1.122 1.122 0 0 1-1.125-1.125v-.633c0-.403.216-.773.567-.975l2.077-1.19a.709.709 0 0 0-.352-1.322h-2.733a.37.37 0 0 0-.351.248l-.019.056c-.206.586-.853.891-1.434.685a1.129 1.129 0 0 1-.685-1.435l.02-.056-.006-.005ZM10.5 16.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" fill="currentColor" />
+        </symbol>
     </svg>
     <aside id="videos-container" class="page-videos"></aside>
 
@@ -117,6 +120,11 @@
                     </svg>
                     <span>How to</span>
                 </a>
+                <button class="btn rounded" aria-label="FAQ">
+                    <svg class="question-circle-icon icon" viewBox="0 0 24 24">
+                        <use href="#question-circle"></use>
+                    </svg>
+                </button>
                 <button class="btn rounded" aria-label="Home">
                     <svg class="home-icon icon" viewBox="0 0 27 24">
                         <use href="#home"></use>
@@ -150,19 +158,16 @@
 
         <aside class="menu side-modal">
             <div class="container">
-                <section class="buttons">
+                <header class="header">
+                    <h2>Settings</h2>
                     <button class="btn rounded" aria-label="Close menu">
                         <svg class="close-icon icon" viewBox="0 0 17 16">
                             <use href="#xmark"></use>
                         </svg>
                     </button>
-                </section>
-                <section class="content">
-                    <nav class="nav">
-                        <button class="btn default" aria-label="FAQ">FAQ</button>
-                    </nav>
+                </header>
+                <div class="content">
                     <section class="info">
-                        <h2>Settings</h2>
                         <section class="select-language">
                             <span class="label">Language</span>
                             <button aria-label="current language">English</button>
@@ -192,8 +197,8 @@
                             </label>
                         </section>
                     </section>
-                </section>
-                <section class="footer">
+                </div>
+                <div class="footer">
                     <section class="login">
                         <header>
                             <p aria-label="Logged in"></p>
@@ -206,20 +211,24 @@
                         </div>
                     </section>
                     <aside class="copyright">Copyright 2022 © <a href="https://bcc.media" target="_blank">bcc.media</a> foundation</aside>
-                </section>
+                </div>
             </div>
             <div class="overlay"></div>
         </aside>
 
         <aside class="faq side-modal">
             <div class="container">
-                <section class="buttons">
+                <header class="header">
+                    <h2>FAQ</h2>
                     <button class="btn rounded" aria-label="Close FAQ">
                         <svg class="close-icon icon" viewBox="0 0 17 16">
                             <use href="#xmark"></use>
                         </svg>
                     </button>
-                </section>
+                </header>
+                <div class="content">
+                    <ul></ul>
+                </div>
             </div>
             <div class="overlay"></div>
         </aside>
@@ -230,15 +239,15 @@
         </aside>
 
         <aside class="ui-container">
-            <section class="progress-bar"></section>
-            <section class="cta">
+            <div class="progress-bar"></div>
+            <div class="cta">
                 <button class="btn default back" aria-label="prev page">
                     <svg class="prev-icon icon" viewBox="0 0 25 16">
                         <use href="#arrow-left"></use>
                     </svg>
                 </button>
                 <button class="btn default next" aria-label="next page"></button>
-            </section>
+            </div>
         </aside>
 
     </main>

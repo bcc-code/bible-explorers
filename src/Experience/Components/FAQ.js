@@ -10,17 +10,11 @@ export default class FAQ {
         instance.experience = new Experience()
 
         instance.generateItems()
+        instance.setEventListeners()
     }
 
     generateItems() {
-        const content = _gl.elementFromHtml(`
-            <div class="content">
-                <h2>${_s.settings.faq}</h2>
-            </div>
-        `)
-
-        const list = _gl.elementFromHtml(`<ul></ul>`)
-        content.append(list)
+        const list = document.querySelector('.faq ul')
 
         const faqQuestions = Object.values(_s.faq.questions)
         const faqAnswers = Object.values(_s.faq.answers)
@@ -36,7 +30,13 @@ export default class FAQ {
             list.append(listItem)
         }
 
-        document.querySelector('.faq .container').append(content)
+        document.querySelector('.faq h2').innerText = _s.settings.faq
+    }
+
+    setEventListeners() {
+        document.querySelector('.faq .overlay').addEventListener('click', instance.close)
+        document.querySelector('[aria-label="FAQ"]').addEventListener('click', instance.open)
+        document.querySelector('[aria-label="Close FAQ"]')?.addEventListener('click', instance.close)
     }
 
     open() {
