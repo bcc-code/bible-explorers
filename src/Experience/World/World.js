@@ -544,9 +544,6 @@ export default class World {
 
         instance.buttons.home.style.display = 'flex'
 
-        if (instance.program.archive.facts.length > 0) {
-            instance.program.archive.init()
-        }
     }
 
     resetChapter() {

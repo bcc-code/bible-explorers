@@ -74,9 +74,13 @@
     }
 
     p:first-child {
-        color: rgba(255, 255, 255, .8);
-        font-weight: bold;
+        color: #fff;
+        font-weight: 600;
         margin-bottom: 0.5rem;
+    }
+
+    p:not(:first-child) {
+        color: #d2d2d2;
     }
 
     a {
