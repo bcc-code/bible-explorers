@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 import gsap from 'gsap'
 
 let instance = null
@@ -70,21 +71,11 @@ export default class Chapter3Game2 {
 
         document.querySelector('.ui-container').append(game)
         document.querySelector('.cta').style.display = 'none'
-
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default skip">${_s.miniGames.skip}</button>
-        `)
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onQuickLook())
-            document.querySelector('.game.flip-card .container').append(skipBTN)
     }
 
     setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
         const cards = gsap.utils.toArray('.flip-card .card')
         let firstTimeClick = true
 
@@ -164,9 +155,6 @@ export default class Chapter3Game2 {
 
             instance.toggleGodVoice()
         })
-
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
-        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
     }
 
     toggleGlitch() {
@@ -207,8 +195,6 @@ export default class Chapter3Game2 {
 
     destroy() {
         document.querySelector('.game')?.remove()
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         document.querySelector('.cta').style.display = 'flex'
     }
 }

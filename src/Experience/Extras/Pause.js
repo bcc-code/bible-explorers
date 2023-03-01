@@ -1,6 +1,7 @@
 import Experience from "../Experience.js"
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -29,17 +30,10 @@ export default class Pause {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
-        instance.experience.navigation.next.addEventListener("click", instance.destroy)
-    }
-
-    removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
-        instance.experience.navigation.next.removeEventListener("click", instance.destroy)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     destroy() {
         document.querySelector('.pause')?.remove()
-        instance.removeEventListeners()
     }
 }

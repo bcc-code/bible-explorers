@@ -2,6 +2,7 @@ import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -48,8 +49,7 @@ export default class Dialogue {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
-        instance.experience.navigation.next.addEventListener("click", instance.destroy)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         const buttons = document.querySelectorAll('.dialogue .content button')
         buttons.forEach((button, index) => {
@@ -95,14 +95,8 @@ export default class Dialogue {
         )
     }
 
-    removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
-        instance.experience.navigation.next.removeEventListener("click", instance.destroy)
-    }
-
     destroy() {
         document.querySelector('.dialogue')?.remove()
         document.querySelector('.message-from-dialogue')?.remove()
-        instance.removeEventListeners()
     }
 }

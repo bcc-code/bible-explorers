@@ -2,6 +2,7 @@ import Offline from '../Utils/Offline.js'
 import Experience from "../Experience"
 import _s from "../Utils/Strings.js"
 import _gl from "../Utils/Globals.js"
+import _e from "../Utils/Events.js"
 import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
@@ -41,8 +42,8 @@ export default class Task {
         }
 
         document.querySelector('.cta').style.display = 'none'
-        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
         instance.experience.navigation.next.disabled = true
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     setHtml() {
@@ -109,14 +110,8 @@ export default class Task {
         else return `<img src="" width="100%" height="100%" />`
     }
 
-    removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
-        instance.experience.navigation.next.removeEventListener("click", instance.startGame)
-    }
-
     destroy() {
         document.querySelector('section.task')?.remove()
-        instance.removeEventListeners()
         instance.experience.navigation.next.disabled = false
     }
 }

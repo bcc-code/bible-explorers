@@ -1,6 +1,7 @@
 import Experience from "../Experience"
 import _s from "../Utils/Strings.js"
 import _gl from "../Utils/Globals.js"
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -66,18 +67,11 @@ export default class Message {
     }
 
     setEventListeners() {
-        instance.experience.navigation.prev.addEventListener("click", instance.destroy)
-        instance.experience.navigation.next.addEventListener("click", instance.destroy)
-    }
-
-    removeEventListeners() {
-        instance.experience.navigation.prev.removeEventListener("click", instance.destroy)
-        instance.experience.navigation.next.removeEventListener("click", instance.destroy)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     destroy() {
         document.querySelector('section.message')?.remove()
         document.querySelector('section.open-question')?.remove()
-        instance.removeEventListeners()
     }
 }

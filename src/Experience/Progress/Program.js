@@ -12,7 +12,8 @@ import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
-import gsap from "gsap"
+import Skip from "../Components/Skip.js"
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -42,6 +43,7 @@ export default class Program {
         instance.dialogue = new Dialogue()
         instance.message = new Message()
         instance.gameDescription = new GameDescription()
+        instance.skip = new Skip()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -81,11 +83,17 @@ export default class Program {
 
         instance.startInteractivity()
         instance.addEventListeners()
+        instance.stepToggled()
     }
 
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
+
+        if (instance.skip) {
+            document.querySelector('[aria-label="prev step"]').addEventListener('click', instance.previousStep)
+            document.querySelector('[aria-label="next step"]').addEventListener('click', instance.nextStep)
+        }
     }
 
     previousStep() {
@@ -101,13 +109,39 @@ export default class Program {
     }
 
     toggleStep() {
-        // Check if it was the last step in the current checkpoint
-        instance.currentStep == instance.getCurrentCheckpointData().steps.length
-            ? instance.nextCheckpoint()
-            : instance.nextTask()
+        instance.points.delete()
+        instance.highlight.fadeOut()
+        instance.world.progressBar.hide()
+
+        if (instance.currentStep < 0) {
+            // Back to previous checkpoint
+            instance.previousCheckpoint()
+            instance.stepToggled()
+            instance.startInteractivity()
+        } else {
+            if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
+                // Advance to next checkpoint
+                instance.nextCheckpoint()
+                instance.stepToggled()
+                instance.startInteractivity()
+            } else {
+                // Start next task
+                instance.stepToggled()
+                instance.startTask()
+            }
+        }
     }
 
-    nextTask() {
+    stepToggled() {
+        document.dispatchEvent(
+            new CustomEvent(_e.ACTIONS.STEP_TOGGLED, { 'detail': {
+                'prev': instance.currentCheckpoint == 0 && instance.currentStep == 0,
+                'next': instance.currentCheckpoint == instance.programData.length && instance.currentStep == instance.getCurrentCheckpointData()?.steps.length,
+            }})
+        )
+    }
+
+    startTask() {
         instance.experience.navigation.prev.disabled = instance.currentStep == 0
         instance.experience.navigation.next.disabled = false
 
@@ -120,7 +154,6 @@ export default class Program {
             })
         }
         else {
-
             instance.updateCameraForCurrentStep(() => {
                 instance.video.defocus()
                 instance.video.setTexture(instance.nextVideo())
@@ -179,15 +212,38 @@ export default class Program {
             instance.showBibleCards()
     }
 
-    nextCheckpoint(checkpoint = ++instance.currentCheckpoint) {
-        console.log('nextCheckpoint', checkpoint)
+    previousCheckpoint() {
+        instance.updateCurrentCheckpoint(--instance.currentCheckpoint)
+        instance.currentStep = instance.programData[instance.currentCheckpoint].steps.length - 1
+        
+        console.log('previousCheckpoint', instance.currentCheckpoint)
+        console.log('currentStep', instance.currentStep)
+    }
+
+    nextCheckpoint() {
+        instance.updateCurrentCheckpoint(++instance.currentCheckpoint)
+        instance.currentStep = 0
+
+        console.log('nextCheckpoint', instance.currentCheckpoint)
+        console.log('currentStep', instance.currentStep)
+    }
+
+    goToCheckpoint(checkpoint) {
+        instance.updateCurrentCheckpoint(checkpoint)
+        instance.currentStep = 0
+        
+        console.log('goToCheckpoint', instance.currentCheckpoint)
         console.log('currentStep', 0)
 
-        instance.currentStep = 0
-        instance.points.fadeOut()
-
-        instance.updateCurrentCheckpoint(checkpoint)
+        instance.stepToggled()
         instance.startInteractivity()
+    }
+
+    updateCurrentCheckpoint(newCheckpoint) {
+        instance.currentCheckpoint = newCheckpoint
+
+        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook())
+            instance.updateLocalStorage()
     }
 
     startInteractivity() {
@@ -201,7 +257,7 @@ export default class Program {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
-                    instance.points.fadeOut()
+                    instance.points.delete()
                     instance.world.progressBar.hide()
                     instance.experience.navigation.next.disabled = false
                 }
@@ -214,7 +270,7 @@ export default class Program {
         }
         else {
             instance.world.progressBar.hide()
-            instance.nextTask()
+            instance.startTask()
         }
     }
 
@@ -256,13 +312,6 @@ export default class Program {
 
     showBibleCards() {
         instance.updateCameraForCurrentStep(instance.congrats.toggleBibleCardsReminder)
-    }
-
-    updateCurrentCheckpoint(newCheckpoint) {
-        instance.currentCheckpoint = newCheckpoint
-
-        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook())
-            instance.updateLocalStorage()
     }
 
     updateCameraForCurrentStep(callback = () => { }) {
@@ -334,5 +383,6 @@ export default class Program {
         instance.removeEventListeners()
         instance.message.destroy()
         instance.dialogue.destroy()
+        instance.skip.destroy()
     }
 }

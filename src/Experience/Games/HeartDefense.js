@@ -2,6 +2,7 @@ import Konva from 'konva'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -510,6 +511,7 @@ export default class HeartDefense {
     }
 
     setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         document.addEventListener('keydown', instance.keyDownHandler)
         window.addEventListener("resize", instance.updateStageDimension)
     }
@@ -568,7 +570,7 @@ export default class HeartDefense {
             <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             congratsHTML.querySelector('.buttons').append(skipBTN)
 
         const nextLevelBTN = _gl.elementFromHtml(`
@@ -608,8 +610,6 @@ export default class HeartDefense {
             skipBTN.remove()
         }
 
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
-
         skipBTN.addEventListener('click', () => {
             instance.destroy()
             instance.program.nextStep()
@@ -628,7 +628,7 @@ export default class HeartDefense {
             <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             gameOverHTML.querySelector('.buttons').append(skipBTN)
 
         const resetBTN = _gl.elementFromHtml(`
@@ -681,7 +681,6 @@ export default class HeartDefense {
         instance.layer.destroy()
         instance.experience.gameIsOn = false
 
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         document.querySelector('.cta').style.display = 'flex'
     }
 }
