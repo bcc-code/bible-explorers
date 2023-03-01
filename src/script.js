@@ -42,6 +42,10 @@ const handleRedirectCallback = async () => {
         let personId = experience.auth0.userData['https://login.bcc.no/claims/personId']
 
         experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
+            // In some cases the function will return an object instead of an array
+            if (typeof roles === 'object')
+                roles = Object.values(roles)
+
             if (roles.includes("administrator") || roles.includes("editor")) {
                 document.body.classList.add("admin", "ak_leder")
             }
@@ -51,7 +55,6 @@ const handleRedirectCallback = async () => {
             else {
                 const mentorNotification = new Notification(_s.settings.noAccess)
                 mentorNotification.htmlEl.classList.add('alert-mentor')
-
             }
 
             experience.settings.updateUI()
