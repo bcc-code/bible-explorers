@@ -628,8 +628,10 @@ export default class HeartDefense {
             <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (++instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             gameOverHTML.querySelector('.buttons').append(skipBTN)
+
+        instance.stats.lives = instance.config.maxLives
 
         const resetBTN = _gl.elementFromHtml(`
             <button class="btn default">${_s.miniGames.restartRound}</button>
@@ -639,8 +641,6 @@ export default class HeartDefense {
         document.querySelector('.heart-defense .container').append(gameOverHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')
 
-        instance.stats.fails++
-        instance.stats.lives = instance.config.maxLives
         instance.stats.level = 1
 
         document.removeEventListener('keydown', instance.keyDownHandler)
