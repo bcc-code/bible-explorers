@@ -35,6 +35,8 @@ export default class Audio {
             audio.listener = new THREE.AudioListener()
             audio.audioLoader = new THREE.AudioLoader()
         }
+
+        audio.addEventListeners()
     }
 
     changeBgMusic(soundtrack = audio.bgMusicAudios.default) {
@@ -127,10 +129,10 @@ export default class Audio {
 
         const fadeInAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() + 0.025
+                audio.bgMusic.getVolume() + 0.015
             )
 
-            if (audio.bgMusic.getVolume() > 0.25) {
+            if (audio.bgMusic.getVolume() > 0.15) {
                 clearInterval(fadeInAudio)
                 audio.enableToggleBtn()
             }
@@ -174,11 +176,6 @@ export default class Audio {
     }
 
     togglePlayTaskDescription(url) {
-        // Stop other task descriptions (Dialogue task)
-        for (let url in audio.taskDescriptionAudios) {
-            audio.stopTaskDescription(url)
-        }
-
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.audioLoader.load(url, function (buffer) {
                 audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
@@ -210,6 +207,16 @@ export default class Audio {
 
         audio.setOtherAudioIsPlaying(false)
         audio.fadeInBgMusic()
+    }
+
+    stopAllTaskDescriptions() {
+        // Stop other task descriptions
+        for (let url in audio.taskDescriptionAudios)
+            audio.stopTaskDescription(url)
+    }
+
+    addEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)
     }
 
     playSound(sound) {

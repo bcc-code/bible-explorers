@@ -73,6 +73,7 @@ export default class Dialogue {
                     // Fetch audio from blob or url
                     instance.offline.fetchChapterAsset(instance.data[index], "audio", (data) => {
                         instance.answerAudio = data.audio
+                        instance.audio.stopAllTaskDescriptions()
                         instance.audio.togglePlayTaskDescription(instance.answerAudio)
                     })
                 }
