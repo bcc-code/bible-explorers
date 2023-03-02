@@ -167,35 +167,40 @@
                     </button>
                 </header>
                 <div class="content">
-                    <section class="info">
-                        <section class="select-language">
-                            <span class="label">Language</span>
-                            <button aria-label="current language">English</button>
-                            <ul class="dropdown"></ul>
-                        </section>
-                        <section class="select-video-quality">
-                            <span class="label">Video quality</span>
-                            <button aria-label="current video quality">High (1080p)</button>
-                            <ul class="dropdown">
-                                <li data-id="low"></li>
-                                <li data-id="medium"></li>
-                                <li data-id="high"></li>
-                            </ul>
-                        </section>
-                        <section class="sound-effects">
-                            <span class="label">Sound effects</span>
-                            <label class="toggle" aria-label="Sound effects toggle">
-                                <input type="checkbox">
-                                <div class="slider"></div>
-                            </label>
-                        </section>
-                        <section class="fullscreen-toggle">
-                            <span class="label">Full screen mode</span>
-                            <label class="toggle" aria-label="Full screen toggle">
-                                <input type="checkbox">
-                                <div class="slider"></div>
-                            </label>
-                        </section>
+                    <section class="select-language">
+                        <span class="label">Language</span>
+                        <button aria-label="current language">English</button>
+                        <ul class="dropdown"></ul>
+                    </section>
+                    <section class="select-video-quality">
+                        <span class="label">Video quality</span>
+                        <button aria-label="current video quality">High (1080p)</button>
+                        <ul class="dropdown">
+                            <li data-id="low"></li>
+                            <li data-id="medium"></li>
+                            <li data-id="high"></li>
+                        </ul>
+                    </section>
+                    <section class="background-music">
+                        <span class="label">Backgorund music</span>
+                        <div class="range">
+                            <input type="range" min="0" max="100" value="50" id="musicRange" oninput="rangeValue.innerText = this.value">
+                            <span for="musicRange" id="rangeValue">50</span>
+                        </div>
+                    </section>
+                    <section class="sound-effects">
+                        <span class="label">Sound effects</span>
+                        <label class="toggle" aria-label="Sound effects toggle">
+                            <input type="checkbox">
+                            <div class="slider"></div>
+                        </label>
+                    </section>
+                    <section class="fullscreen-toggle">
+                        <span class="label">Full screen mode</span>
+                        <label class="toggle" aria-label="Full screen toggle">
+                            <input type="checkbox">
+                            <div class="slider"></div>
+                        </label>
                     </section>
                 </div>
                 <div class="footer">
