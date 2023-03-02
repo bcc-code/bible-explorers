@@ -641,8 +641,6 @@ export default class HeartDefense {
         document.querySelector('.heart-defense .container').append(gameOverHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')
 
-        instance.stats.level = 1
-
         document.removeEventListener('keydown', instance.keyDownHandler)
 
         // Add event listeners
