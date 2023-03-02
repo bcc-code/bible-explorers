@@ -43,7 +43,9 @@ export default class Program {
         instance.dialogue = new Dialogue()
         instance.message = new Message()
         instance.gameDescription = new GameDescription()
-        instance.skip = new Skip()
+
+        if (document.body.classList.contains("quick-look-mode"))
+            instance.skip = new Skip()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -100,6 +102,7 @@ export default class Program {
         // If there is a multi-action step, go to the first step of the checkpoint instead of going to the previous step
         if (instance.points.previousLabel) {
             instance.goToCheckpoint(instance.currentCheckpoint)
+            instance.points.delete()
             return
         }
 
@@ -112,6 +115,7 @@ export default class Program {
         // If there is any clickable item, trigger the action instead of going to the next step
         if (instance.points.currentLabel) {
             instance.control(instance.points.currentLabel)
+            instance.points.delete()
             return
         }
 
@@ -281,7 +285,7 @@ export default class Program {
             })
         }
         else {
-            instance.world.progressBar.hide()
+            instance.world.progressBar?.hide()
             instance.startTask()
         }
     }
@@ -294,7 +298,9 @@ export default class Program {
         if (instance.objectIsClickable()) {
             instance.camera.updateCameraTo(this.currentLocation())
             instance.startAction()
-            document.querySelector('[aria-label="prev step"]').disabled = false
+
+            instance.experience.navigation.prev.disabled = false
+            if (instance.skip) document.querySelector('[aria-label="prev step"]').disabled = false
         }
     }
 

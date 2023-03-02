@@ -71,7 +71,6 @@ export default class Experience {
             prev: document.querySelector('[aria-label="prev page"]'),
             next: document.querySelector('[aria-label="next page"]'),
         }
-
     }
 
     resize() {

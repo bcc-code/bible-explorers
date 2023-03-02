@@ -9,9 +9,6 @@ export default class Skip {
         instance = this
         instance.experience = new Experience()
 
-        if (!instance.experience.auth0.isAuthenticated) return
-        if (!document.body.classList.contains("quick-look-mode")) return
-
         instance.init()
         instance.addEventListeners()
     }
