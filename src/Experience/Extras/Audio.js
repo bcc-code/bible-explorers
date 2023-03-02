@@ -129,10 +129,10 @@ export default class Audio {
 
         const fadeInAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() + 0.025
+                audio.bgMusic.getVolume() + 0.015
             )
 
-            if (audio.bgMusic.getVolume() > 0.25) {
+            if (audio.bgMusic.getVolume() > 0.15) {
                 clearInterval(fadeInAudio)
                 audio.enableToggleBtn()
             }
