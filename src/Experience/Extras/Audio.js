@@ -23,9 +23,11 @@ export default class Audio {
         }
 
         audio.notes = []
-
         audio.btn = document.querySelector('[aria-label="Background music"')
-        audio.btn.addEventListener('click', audio.togglePlayBgMusic)
+        audio.musicRange = document.getElementById('musicRange')
+        audio.fadeSteps = 20
+        audio.slideValueConversion = 3.33
+        audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
         audio.initialize()
     }
@@ -129,10 +131,10 @@ export default class Audio {
 
         const fadeInAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() + 0.015
+                audio.bgMusic.getVolume() + audio.bgMusicVolume() / audio.fadeSteps
             )
 
-            if (audio.bgMusic.getVolume() > 0.15) {
+            if (audio.bgMusic.getVolume() > audio.bgMusicVolume()) {
                 clearInterval(fadeInAudio)
                 audio.enableToggleBtn()
             }
@@ -144,10 +146,10 @@ export default class Audio {
 
         const fadeOutAudio = setInterval(() => {
             audio.bgMusic.setVolume(
-                audio.bgMusic.getVolume() - 0.025
+                audio.bgMusic.getVolume() - audio.bgMusicVolume() / audio.fadeSteps
             )
 
-            if (audio.bgMusic.getVolume() < 0.025) {
+            if (audio.bgMusic.getVolume() < audio.bgMusicVolume() / audio.fadeSteps) {
                 clearInterval(fadeOutAudio)
                 audio.enableToggleBtn()
                 audio.bgMusic.setVolume(0)
@@ -216,6 +218,11 @@ export default class Audio {
     }
 
     addEventListeners() {
+        audio.btn.addEventListener('click', audio.togglePlayBgMusic)
+        audio.musicRange.addEventListener('input', function() {
+            if (!audio.bgMusic) return
+            audio.bgMusic.setVolume(audio.bgMusicVolume())
+        })
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)
     }
 
