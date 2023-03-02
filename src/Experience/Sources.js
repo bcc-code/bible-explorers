@@ -3,12 +3,12 @@ export default [
         name: 'cubeMap',
         type: 'cubeTexture',
         path: [
-            'textures/cubeMap/C_Left.png',
-            'textures/cubeMap/C_Right.png',
-            'textures/cubeMap/C_Top.png',
-            'textures/cubeMap/C_Down.png',
-            'textures/cubeMap/C_Back.png',
-            'textures/cubeMap/C_Front.png'
+            'textures/cubeMap/C_Left_v2.png',
+            'textures/cubeMap/C_Right_v2.png',
+            'textures/cubeMap/C_Top_v2.png',
+            'textures/cubeMap/C_Down_v2.png',
+            'textures/cubeMap/C_Back_v2.png',
+            'textures/cubeMap/C_Front_v2.png'
         ]
     },
     {
@@ -19,7 +19,7 @@ export default [
     {
         name: 'baked',
         type: 'texture',
-        path: 'textures/Baking_v05.png'
+        path: 'textures/baking_v6.png'
     },
     {
         name: 'screen_default',
@@ -29,21 +29,21 @@ export default [
     {
         name: 'map',
         type: 'videoTexture',
-        path: 'textures/map.mp4'
+        path: 'textures/map_v2.mp4'
     },
     {
         name: 'codes',
         type: 'videoTexture',
-        path: 'textures/codes.mp4'
+        path: 'textures/codes_v2.mp4'
     },
     {
         name: 'iris',
         type: 'videoTexture',
-        path: 'textures/Iris_Idle_Med_v2.mp4'
+        path: 'textures/iris_idle_v3.mp4'
     },
     {
         name: 'hud',
         type: 'videoTexture',
-        path: 'textures/screen_hud.mp4'
+        path: 'textures/screen_hud_v2.mp4'
     }
 ]

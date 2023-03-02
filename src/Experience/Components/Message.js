@@ -47,7 +47,7 @@ export default class Message {
 
         if (instance.data.character == 'glitch') {
             document.querySelector('section.message .container').append(
-                _gl.elementFromHtml('<video id="glitch-idle" src="textures/BIEX_Glitch_Idle_HD_v2.mp4" muted autoplay loop></video>')
+                _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
             )
         }
 
