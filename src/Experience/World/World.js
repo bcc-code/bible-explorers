@@ -541,9 +541,7 @@ export default class World {
         instance.hideMenu()
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-
         instance.buttons.home.style.display = 'flex'
-
     }
 
     resetChapter() {
@@ -562,7 +560,10 @@ export default class World {
         instance.buttons.guide.style.display = 'flex'
 
         document.querySelector('.cta').style.display = 'flex'
+        instance.experience.navigation.prev.disabled = false
+
         instance.camera.updateCameraTo()
+        instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
         instance.debug.removeQuickLookMode()
         instance.showLobby()
