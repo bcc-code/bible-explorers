@@ -95,6 +95,7 @@
 
     .game-popup .buttons {
         display: flex;
+        justify-content: center;
     }
 }
 
@@ -314,7 +315,7 @@
             bottom: calc(100% + 20px);
             width: 24ch;
             border-radius: 1rem;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1rem 0.75rem;
             line-height: 1.35;
             z-index: 2;
 
@@ -323,7 +324,7 @@
                 position: absolute;
                 border-left: 10px solid transparent;
                 border-right: 10px solid transparent;
-                top: 100%;
+                top: calc(100% - 1px);
                 right: 2rem;
             }
         }
