@@ -14,6 +14,7 @@ export default class Points {
 
         this.objects = this.experience.world.controlRoom.clickableObjects
         this.currentLabel = null
+        this.previousLabel = null
         this.currentObject = null
 
         instance = this
@@ -44,6 +45,7 @@ export default class Points {
         const highlight = document.createElement('div')
         highlight.classList.add('highlight-circle')
 
+        this.previousLabel = this.currentLabel
         this.currentLabel = new CSS2DObject(highlight)
 
         if (object.name === "tv_16x9_screen") {
@@ -69,6 +71,7 @@ export default class Points {
         if (!this.currentObject) return
         this.currentObject.remove(this.currentLabel)
         this.currentObject = null
+        this.previousLabel = this.currentLabel
         this.currentLabel = null
     }
 
@@ -94,6 +97,5 @@ export default class Points {
 
     update() {
         this.labelRenderer.render(this.scene, this.camera.instance)
-
     }
 }

@@ -97,12 +97,24 @@ export default class Program {
     }
 
     previousStep() {
+        // If there is a multi-action step, go to the first step of the checkpoint instead of going to the previous step
+        if (instance.points.previousLabel) {
+            instance.goToCheckpoint(instance.currentCheckpoint)
+            return
+        }
+
         instance.currentStep--
         console.log('previousStep', instance.currentStep)
         instance.toggleStep()
     }
 
     nextStep() {
+        // If there is any clickable item, trigger the action instead of going to the next step
+        if (instance.points.currentLabel) {
+            instance.control(instance.points.currentLabel)
+            return
+        }
+
         instance.currentStep++
         console.log('nextStep', instance.currentStep)
         instance.toggleStep()
@@ -282,6 +294,7 @@ export default class Program {
         if (instance.objectIsClickable()) {
             instance.camera.updateCameraTo(this.currentLocation())
             instance.startAction()
+            document.querySelector('[aria-label="prev step"]').disabled = false
         }
     }
 
