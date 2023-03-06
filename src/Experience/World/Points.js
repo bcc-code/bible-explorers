@@ -96,7 +96,7 @@ export default class Points {
     }
 
     addEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.delete())
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.delete)
     }
 
     resize() {
