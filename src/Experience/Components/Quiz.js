@@ -93,8 +93,8 @@ export default class Quiz {
                 instance.openQuestions++
 
                 const quizAnswer = _gl.elementFromHtml(`
-                    <li class="quiz-answer quiz-textarea">
-                        <textarea rows="8" placeholder="${q.placeholder}"></textarea>
+                    <li class="quiz-answer">
+                        <textarea rows="8" placeholder="${q.placeholder}" class="quiz-textarea"></textarea>
                     </li>
                 `)
 
@@ -140,16 +140,15 @@ export default class Quiz {
             current.nextElementSibling.classList.add('visible')
             currentCheckpoint.nextElementSibling.classList.add('current')
 
-            if (questionsAnswered < questions.length - 1) {
-                questionsAnswered++
+            if (questionsAnswered < questions.length)
                 quizUpdateProgress(questionsAnswered)
-            }
 
             prev.disabled = false
             next.disabled = !current.nextElementSibling.classList.contains('done')
 
             if (current.nextElementSibling.getAttribute('data-index') == questions.length)
                 next.disabled = true
+
         })
 
         let quizUpdateProgress = (answers) => {
@@ -187,6 +186,7 @@ export default class Quiz {
                     const current = quiz.querySelector('.quiz-item.visible')
                     currentCheckpoint.classList.add('done')
                     current.classList.add('done')
+                    questionsAnswered++
                 })
             })
         })
@@ -194,6 +194,7 @@ export default class Quiz {
         const submitQuiz = _gl.elementFromHtml(`<button type="submit" class="btn default next pulsate">${_s.task.submit}</button>`)
 
         quiz.querySelector('.quiz-textarea').addEventListener('input', (e) => {
+
             if (e.target.value.length > 0) {
                 questionsAnswered = questions.length
 
