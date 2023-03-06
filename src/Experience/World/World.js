@@ -193,7 +193,7 @@ export default class World {
 
         tippy('.under-construction', {
             theme: 'construction',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing el',
+            content: 'The chapter is under maintenance, but you can still go through the tasks and watch the films',
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'left',

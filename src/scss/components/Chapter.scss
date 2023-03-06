@@ -22,10 +22,12 @@
     .attachments {
         margin-top: 1rem;
         display: flex;
+        flex-wrap: wrap;
         padding-bottom: 1rem;
         border-bottom: 2px solid rgba(#fff, .1);
 
         .link {
+            margin-top: 0.5rem;
             display: inline-flex;
             align-items: center;
             padding: 0.25rem var(--app-padding);
