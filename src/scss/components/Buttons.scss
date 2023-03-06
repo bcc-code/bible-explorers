@@ -122,8 +122,9 @@ a.btn.default {
     }
 
     &.asset {
-        color: var(--clr-text);
-        background-color: var(--clr-secondary);
+        color: #fff;
+        background-color: var(--bg-text);
+        box-shadow: 0 0 0 2px var(--clr-secondary);
     }
 
     &:hover {
@@ -137,8 +138,8 @@ a.btn.default {
         }
 
         &.asset {
-            color: #fff;
-            background-color: var(--bg-text);
+            color: var(--clr-text);
+            background-color: var(--clr-secondary);
         }
     }
 }
