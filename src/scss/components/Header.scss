@@ -47,6 +47,10 @@
 
     .btn:hover & {
 
+        .bar {
+            background-color: var(--clr-text);
+        }
+
         .bar-1 {
             transform: translateY(4px) scaleX(1.8);
         }

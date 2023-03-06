@@ -28,6 +28,7 @@
 
     [aria-label="checkpoint"][currentCheckpoint] {
         background-color: var(--clr-secondary);
+        color: var(--clr-text);
     }
 
     body:not(.quick-look-mode) & [aria-label="checkpoint"].locked {

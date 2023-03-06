@@ -235,14 +235,30 @@ export default class World {
                         <span>Preview</span>
                     </button>
                 </header>
+                
             </section>
         `)
 
         if (chapter.attachments.length) {
             const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
 
+            const guide = _gl.elementFromHtml(`
+                <a class="link asset" href="https://biblekids.io/explorers-mentor-guide/" target="_blank">
+                    <svg class="book-icon icon" viewBox="0 0 21 24">
+                        <use href="#book"></use>
+                    </svg>
+                    <span>Guide</span>
+                </a>`
+            )
+            attachments.append(guide)
+
             chapter.attachments.forEach((item) => {
-                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset"><span>${item.title}</span></a>`)
+                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset">
+                    <svg class="download-icon icon" viewBox="0 0 24 24">
+                        <use href="#download"></use>
+                    </svg>
+                    <span>${item.title}</span>
+                </a>`)
                 attachments.append(attachment)
             })
 
