@@ -667,7 +667,7 @@ export default class HeartDefense {
         window.removeEventListener('resize', instance.updateStageDimension)
 
         document.querySelector('.game')?.remove()
-        instance.layer.destroy()
+        instance.layer?.destroy()
         instance.experience.gameIsOn = false
 
         document.querySelector('.cta').style.display = 'flex'
