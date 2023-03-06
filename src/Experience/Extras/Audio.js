@@ -29,6 +29,16 @@ export default class Audio {
         audio.slideValueConversion = 3.33
         audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
+        audio.musicRange.oninput = function () {
+            audio.musicRange.nextElementSibling.innerText = this.value
+
+            if (this.value == 0) {
+                audio.musicRange.parentElement.parentElement.classList.add('sound-off')
+            } else {
+                audio.musicRange.parentElement.parentElement.classList.remove('sound-off')
+            }
+        }
+
         audio.initialize()
     }
 
@@ -141,7 +151,7 @@ export default class Audio {
         }, 100)
     }
 
-    fadeOutBgMusic(callback = () => {}) {
+    fadeOutBgMusic(callback = () => { }) {
         if (!audio.bgMusic) return
 
         const fadeOutAudio = setInterval(() => {
@@ -219,7 +229,7 @@ export default class Audio {
 
     addEventListeners() {
         audio.btn.addEventListener('click', audio.togglePlayBgMusic)
-        audio.musicRange.addEventListener('input', function() {
+        audio.musicRange.addEventListener('input', function () {
             if (!audio.bgMusic) return
             audio.bgMusic.setVolume(audio.bgMusicVolume())
         })

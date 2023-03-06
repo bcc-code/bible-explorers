@@ -191,9 +191,17 @@
                         </ul>
                     </section>
                     <section class="background-music">
-                        <span class="label">Background music</span>
+                        <div class="label">
+                            <span>Background music</span>
+                            <svg class="music-on icon" viewBox="0 0 24 24">
+                                <use href="#music-on"></use>
+                            </svg>
+                            <svg class="music-off icon" viewBox="0 0 32 25">
+                                <use href="#music-off"></use>
+                            </svg>
+                        </div>
                         <div class="range">
-                            <input type="range" min="0" max="100" value="50" id="musicRange" oninput="rangeValue.innerText = this.value">
+                            <input type="range" min="0" max="100" value="50" id="musicRange">
                             <span id="rangeValue">50</span>
                         </div>
                     </section>
