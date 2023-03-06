@@ -136,6 +136,18 @@ export default class CodeUnlock {
                     instance.checkCode()
             }
         }
+
+        const skipBTN = _gl.elementFromHtml(`
+            <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
+        `)
+
+        if (instance.debug.developer || instance.debug.onQuickLook())
+            unlockScreen.querySelector('.container').append(skipBTN)
+
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
     }
 
     add(num) {

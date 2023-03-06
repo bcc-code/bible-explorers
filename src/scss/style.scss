@@ -458,7 +458,6 @@ img.lazyloaded~div.img-loader {
     }
 }
 
-
 .skip-video {
     font-size: 1rem;
     right: var(--app-padding);
@@ -504,4 +503,11 @@ img.lazyloaded~div.img-loader {
         background-color: var(--clr-secondary);
     }
 
+}
+
+
+button[aria-label="skip-button"] {
+    position: absolute;
+    top: var(--app-padding);
+    right: var(--app-padding);
 }

@@ -214,6 +214,19 @@ export default class Quiz {
             const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length + ' '}!</p>`)
             document.querySelector('.modal .summary').append(message)
         })
+
+
+        const skipBTN = _gl.elementFromHtml(`
+            <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
+        `)
+
+        if (instance.debug.developer || instance.debug.onQuickLook())
+            quiz.querySelector('.container').append(skipBTN)
+
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
     }
 
     setEventListeners() {

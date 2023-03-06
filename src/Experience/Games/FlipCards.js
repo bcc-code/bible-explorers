@@ -71,7 +71,7 @@ export default class Chapter3Game2 {
 
         document.querySelector('.ui-container').append(game)
         document.querySelector('.cta').style.display = 'none'
-        
+
         const skipBTN = _gl.elementFromHtml(`
             <button class="btn default skip">${_s.miniGames.skip}</button>
         `)
@@ -177,7 +177,7 @@ export default class Chapter3Game2 {
 
         document.querySelector('.flip-card .container').append(notification)
 
-        gsap.set(notification, { x: '100%' })
+        gsap.set(notification, { x: '-100%' })
         gsap.to(notification, {
             x: 0, onComplete: () => {
                 instance.audio.togglePlayTaskDescription(instance.data.glitchs_voice.audio)
@@ -195,7 +195,7 @@ export default class Chapter3Game2 {
 
         document.querySelector('.flip-card .container').append(notification)
 
-        gsap.set(notification, { x: '100%' })
+        gsap.set(notification, { x: '-100%' })
         gsap.to(notification, {
             x: 0, onComplete: () => {
                 instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)

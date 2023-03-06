@@ -57,6 +57,18 @@ export default class DavidsRefuge {
 
             game.querySelector('.goats').append(item)
         })
+
+        const skipBTN = _gl.elementFromHtml(`
+            <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
+        `)
+
+        if (instance.debug.developer || instance.debug.onQuickLook())
+            game.querySelector('.container').append(skipBTN)
+
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
     }
 
     hintsHTML() {

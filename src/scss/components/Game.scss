@@ -56,7 +56,7 @@
         background-color: #fff;
         position: absolute;
         top: var(--app-padding);
-        right: var(--app-padding);
+        left: var(--app-padding);
         padding: var(--app-padding);
         border-radius: 1rem;
         width: 36ch;
@@ -64,7 +64,7 @@
         img {
             position: absolute;
             top: 0;
-            right: calc(100% + 1rem);
+            left: calc(100% + 1rem);
             border-radius: 15px;
         }
 
