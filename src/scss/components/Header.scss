@@ -64,17 +64,17 @@
 }
 
 button[aria-label="Background music"] {
-    .sound-on {
+    .music-on {
         display: none;
     }
 
 
     &[is-playing] {
-        .sound-on {
+        .music-on {
             display: block;
         }
 
-        .sound-off {
+        .music-off {
             display: none;
         }
     }
