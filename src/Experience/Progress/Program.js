@@ -247,6 +247,7 @@ export default class Program {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
+                    instance.highlight.fadeOut()
                     instance.points.delete()
                     instance.world.progressBar.hide()
                     instance.experience.navigation.next.disabled = false
