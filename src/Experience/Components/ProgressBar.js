@@ -1,4 +1,5 @@
 import Experience from "../Experience.js"
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -11,6 +12,7 @@ export default class ProgressBar {
         instance.program = instance.experience.world.program
 
         instance.init()
+        instance.setEventListeners()
     }
 
     init() {
@@ -38,7 +40,6 @@ export default class ProgressBar {
     }
 
     show() {
-        instance.refresh()
         instance.htmlEl.classList.add('is-visible')
         document.querySelector('.cta').style.display = 'none'
     }
@@ -59,6 +60,10 @@ export default class ProgressBar {
             instance.el.checkpoints[instance.program.currentCheckpoint].classList.remove('locked')
             instance.el.checkpoints[instance.program.currentCheckpoint].setAttribute('currentCheckpoint', '')
         }
+    }
+
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
     }
 
     static HTML() {
