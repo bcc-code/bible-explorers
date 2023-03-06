@@ -1,9 +1,10 @@
 .tippy-box[data-theme~='explorers'] {
-    color: #fff;
-    font-size: 0.7rem;
+    color: var(--clr-text);
+    font-size: 0.8rem;
     background-color: var(--clr-secondary);
     padding: 0.25rem;
     border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem var(--clr-text);
 }
 
 .tippy-box[data-theme~='explorers'][data-placement^='top']>.tippy-arrow::before {
@@ -24,10 +25,11 @@
 
 .tippy-box[data-theme~='construction'] {
     color: var(--clr-text);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     background-color: #f7d211;
     padding: 0.25rem;
     border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem var(--clr-text);
 }
 
 .tippy-box[data-theme~='construction'][data-placement^='top']>.tippy-arrow::before {

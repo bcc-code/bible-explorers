@@ -52,6 +52,10 @@
             filter: grayscale(1);
         }
 
+        li.done:not(.current) {
+            color: var(--clr-text);
+        }
+
         li.done {
             background-color: var(--clr-secondary);
         }

@@ -59,10 +59,12 @@
         }
 
         &.rounded {
+            color: var(--clr-text);
             background: var(--clr-secondary);
         }
 
         &.next {
+            color: var(--clr-text);
             background: var(--clr-secondary);
         }
 
@@ -96,6 +98,7 @@ a.btn.default {
     border-color: var(--clr-secondary);
 
     &:hover {
+        color: var(--clr-text);
         background: var(--clr-secondary);
     }
 }
@@ -119,7 +122,7 @@ a.btn.default {
     }
 
     &.asset {
-        color: #fff;
+        background-color: var(--clr-secondary);
     }
 
     &:hover {
@@ -133,7 +136,8 @@ a.btn.default {
         }
 
         &.asset {
-            opacity: 0.6;
+            color: #fff;
+            background-color: var(--bg-text);
         }
     }
 }
