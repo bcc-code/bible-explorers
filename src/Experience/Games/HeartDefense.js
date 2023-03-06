@@ -65,7 +65,7 @@ export default class HeartDefense {
 
         instance.thoughtObjs = []
         instance.spriteAnimations = []
-        
+
         instance.gameHTML()
         instance.startGame()
     }
@@ -208,7 +208,7 @@ export default class HeartDefense {
         const padding = 50, iconWidth = 40, iconHeight = 33, spaceBetween = 5
         const livesGroup = new Konva.Group({
             id: "lives",
-            x: instance.stage.width() - padding - iconWidth * instance.config.maxLives - spaceBetween * instance.config.maxLives,
+            x: padding,
             y: padding
         })
         instance.layer.add(livesGroup)
