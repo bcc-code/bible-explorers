@@ -179,7 +179,7 @@ export default class World {
             </div>
         `
 
-        if (chapter.id == 56874 || chapter.id == 56877) {
+        if (chapter.is_beta) {
             const tooltip = _gl.elementFromHtml(`
                 <div class="under-construction">
                     <svg viewBox="0 0 26 26">
