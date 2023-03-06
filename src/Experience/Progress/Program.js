@@ -134,10 +134,12 @@ export default class Program {
 
     stepToggled() {
         document.dispatchEvent(
-            new CustomEvent(_e.ACTIONS.STEP_TOGGLED, { 'detail': {
-                'prev': instance.currentCheckpoint == 0 && instance.currentStep == 0,
-                'next': instance.currentCheckpoint == instance.programData.length && instance.currentStep == instance.getCurrentCheckpointData()?.steps.length,
-            }})
+            new CustomEvent(_e.ACTIONS.STEP_TOGGLED, {
+                'detail': {
+                    'prev': instance.currentCheckpoint == 0 && instance.currentStep == 0,
+                    'next': instance.currentCheckpoint == instance.programData.length && instance.currentStep == instance.getCurrentCheckpointData()?.steps.length,
+                }
+            })
         )
     }
 
@@ -151,10 +153,12 @@ export default class Program {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                 instance.experience.navigation.next.disabled = true
                 instance.video.load(instance.currentVideo())
+                instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
             })
         }
         else {
             instance.updateCameraForCurrentStep(() => {
+                instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
                 instance.video.defocus()
                 instance.video.setTexture(instance.nextVideo())
             })
@@ -215,7 +219,7 @@ export default class Program {
     previousCheckpoint() {
         instance.updateCurrentCheckpoint(--instance.currentCheckpoint)
         instance.currentStep = instance.programData[instance.currentCheckpoint].steps.length - 1
-        
+
         console.log('previousCheckpoint', instance.currentCheckpoint)
         console.log('currentStep', instance.currentStep)
     }
@@ -231,7 +235,7 @@ export default class Program {
     goToCheckpoint(checkpoint) {
         instance.updateCurrentCheckpoint(checkpoint)
         instance.currentStep = 0
-        
+
         console.log('goToCheckpoint', instance.currentCheckpoint)
         console.log('currentStep', 0)
 
@@ -290,20 +294,15 @@ export default class Program {
             instance.clickCallback()
             instance.clickCallback = () => { }
 
-            instance.highlight.fadeOut()
-            instance.points.delete()
             instance.message.show()
         }
         else if (instance.clickedObject == 'Screen') {
-            instance.highlight.fadeOut()
-            instance.points.delete()
             instance.video.play()
 
         } else if (instance.clickedObject == 'Switch') {
+
             instance.world.controlRoom.animations.actions.drag.play()
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
-                instance.highlight.fadeOut()
-                instance.points.delete()
                 instance.video.play()
                 instance.world.controlRoom.animations.actions.drag.stop()
             })
