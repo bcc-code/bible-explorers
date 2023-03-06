@@ -79,6 +79,7 @@ export default class HeartDefense {
                         <span class="level">${instance.stats.level}</span>
                         <span> / ${instance.config.levels}</span>
                     </div>
+                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 </div>
                 <div class="overlay"></div>
                 <div id="heart-defense" class="game-canvas"></div>
@@ -86,6 +87,17 @@ export default class HeartDefense {
         `)
 
         document.querySelector('.ui-container').append(game)
+
+        const skipBTN = document.querySelector('[aria-label="skip-button"]')
+        skipBTN.addEventListener('click', () => {
+            instance.stopExplosionAnimation()
+            instance.stopThoughtsAnimation()
+            instance.destroy()
+            instance.program.nextStep()
+        })
+
+        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+            skipBTN.style.display = 'block'
     }
 
     startGame() {
@@ -205,7 +217,7 @@ export default class HeartDefense {
     }
 
     drawLives() {
-        const padding = 50, iconWidth = 40, iconHeight = 33, spaceBetween = 5
+        const padding = 31.5, iconWidth = 40, iconHeight = 33, spaceBetween = 5
         const livesGroup = new Konva.Group({
             id: "lives",
             x: padding,
@@ -463,7 +475,7 @@ export default class HeartDefense {
         })
     }
 
-    stopSpriteAnimationOnDoor() {
+    stopExplosionAnimation() {
         instance.spriteAnimations.forEach((animation) => animation.stop())
         instance.spriteAnimations = []
 
@@ -526,7 +538,7 @@ export default class HeartDefense {
         instance.updateDoorStatus()
 
         if (!instance.stats.heartClosed)
-            instance.stopSpriteAnimationOnDoor()
+            instance.stopExplosionAnimation()
 
         const sound = instance.stats.heartClosed ? 'close' : 'open'
         instance.audio.playSound('heart-defense/door-' + sound)
@@ -566,13 +578,6 @@ export default class HeartDefense {
             </div>
         `)
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default">${_s.miniGames.skip}</button>
-        `)
-
-        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
-            congratsHTML.querySelector('.buttons').append(skipBTN)
-
         const nextLevelBTN = _gl.elementFromHtml(`
             <button class="btn default next pulsate">${_s.miniGames.nextRound}</button>
         `)
@@ -607,13 +612,7 @@ export default class HeartDefense {
             instance.experience.navigation.prev.disabled = true
             document.querySelector('.cta').style.display = 'flex'
             document.querySelector('.game-rounds')?.remove()
-            skipBTN.remove()
         }
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
     }
 
     toggleGameOver() {
@@ -624,13 +623,6 @@ export default class HeartDefense {
             </div>
         `)
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default">${_s.miniGames.skip}</button>
-        `)
-
-        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
-            gameOverHTML.querySelector('.buttons').append(skipBTN)
-
         const resetBTN = _gl.elementFromHtml(`
             <button class="btn default">${_s.miniGames.restartRound}</button>
         `)
@@ -639,7 +631,9 @@ export default class HeartDefense {
         document.querySelector('.heart-defense .container').append(gameOverHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')
 
-        instance.stats.fails++
+        if (++instance.stats.fails == 3)
+            document.querySelector('[aria-label="skip-button"]').style.display = 'block'
+
         instance.stats.lives = instance.config.maxLives
         instance.stats.level = 1
 
@@ -649,11 +643,6 @@ export default class HeartDefense {
         resetBTN.addEventListener('click', () => {
             instance.newLevel()
             instance.startGame()
-        })
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
         })
     }
 
