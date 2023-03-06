@@ -1,11 +1,14 @@
 import Experience from "../Experience.js";
 import _s from '../Utils/Strings.js'
+import _e from '../Utils/Events.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 
 let instance = null
 
 export default class Points {
     constructor() {
+        instance = this
+
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -14,11 +17,11 @@ export default class Points {
 
         this.objects = this.experience.world.controlRoom.clickableObjects
         this.currentLabel = null
+        this.previousLabel = null
         this.currentObject = null
 
-        instance = this
-
         this.render()
+        this.addEventListeners()
     }
 
     add(name, type) {
@@ -44,6 +47,7 @@ export default class Points {
         const highlight = document.createElement('div')
         highlight.classList.add('highlight-circle')
 
+        this.previousLabel = this.currentLabel
         this.currentLabel = new CSS2DObject(highlight)
 
         if (object.name === "tv_16x9_screen") {
@@ -66,7 +70,10 @@ export default class Points {
     }
 
     delete() {
+        this.previousLabel = this.currentLabel
+
         if (!this.currentObject) return
+
         this.currentObject.remove(this.currentLabel)
         this.currentObject = null
         this.currentLabel = null
@@ -88,12 +95,15 @@ export default class Points {
         document.body.appendChild(this.labelRenderer.domElement)
     }
 
+    addEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.delete)
+    }
+
     resize() {
         this.labelRenderer.setSize(this.sizes.width, this.sizes.height)
     }
 
     update() {
         this.labelRenderer.render(this.scene, this.camera.instance)
-
     }
 }
