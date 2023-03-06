@@ -73,8 +73,9 @@
     flex-flow: column nowrap;
     transition: var(--transition-duration) var(--transition-timing);
     background-color: var(--bg-with-opacity);
-    background-size: cover;
-    background-position: center center;
+    background-size: 60%;
+    background-position: right;
+    background-repeat: no-repeat;
     border-radius: 1rem;
     border: var(--app-border-size) solid var(--clr-primary);
     cursor: pointer;
@@ -83,10 +84,12 @@
     &::before {
         content: '';
         position: absolute;
-        inset: 0;
-        background: var(--gradient-dark);
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to right, var(--clr-text) 40%, rgba(62, 48, 109, 0.001));
         border-radius: 1rem;
-        opacity: 0.4;
     }
 
     &__heading {
