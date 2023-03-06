@@ -12,7 +12,6 @@ import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
-import Skip from "../Components/Skip.js"
 import _e from '../Utils/Events.js'
 
 let instance = null
@@ -43,7 +42,6 @@ export default class Program {
         instance.dialogue = new Dialogue()
         instance.message = new Message()
         instance.gameDescription = new GameDescription()
-        instance.skip = new Skip()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -89,11 +87,6 @@ export default class Program {
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
-
-        if (instance.skip) {
-            document.querySelector('[aria-label="prev step"]').addEventListener('click', instance.previousStep)
-            document.querySelector('[aria-label="next step"]').addEventListener('click', instance.nextStep)
-        }
     }
 
     previousStep() {
@@ -133,14 +126,7 @@ export default class Program {
     }
 
     stepToggled() {
-        document.dispatchEvent(
-            new CustomEvent(_e.ACTIONS.STEP_TOGGLED, {
-                'detail': {
-                    'prev': instance.currentCheckpoint == 0 && instance.currentStep == 0,
-                    'next': instance.currentCheckpoint == instance.programData.length && instance.currentStep == instance.getCurrentCheckpointData()?.steps.length,
-                }
-            })
-        )
+        document.dispatchEvent(_e.EVENTS.STEP_TOGGLED)
     }
 
     startTask() {
@@ -382,6 +368,5 @@ export default class Program {
         instance.removeEventListeners()
         instance.message.destroy()
         instance.dialogue.destroy()
-        instance.skip.destroy()
     }
 }

@@ -69,9 +69,8 @@ export default class Experience {
 
         this.navigation = {
             prev: document.querySelector('[aria-label="prev page"]'),
-            next: document.querySelector('[aria-label="next page"]'),
+            next: document.querySelector('[aria-label="next page"]')
         }
-
     }
 
     resize() {

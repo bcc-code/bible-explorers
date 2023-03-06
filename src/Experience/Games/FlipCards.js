@@ -71,6 +71,16 @@ export default class Chapter3Game2 {
 
         document.querySelector('.ui-container').append(game)
         document.querySelector('.cta').style.display = 'none'
+        
+        const skipBTN = _gl.elementFromHtml(`
+            <button class="btn default skip">${_s.miniGames.skip}</button>
+        `)
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
+        if (instance.debug.developer || instance.debug.onQuickLook())
+            document.querySelector('.game.flip-card .container').append(skipBTN)
     }
 
     setEventListeners() {

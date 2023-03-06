@@ -59,7 +59,7 @@ export default class World {
         this.buttons = {
             contact: document.querySelector('[aria-label="Contact"]'),
             home: document.querySelector('[aria-label="Home"]'),
-            guide: document.querySelector('[aria-label="Guide"]'),
+            guide: document.querySelector('[aria-label="Guide"]')
         }
 
         this.buttons.home.style.display = 'none'
@@ -178,6 +178,7 @@ export default class World {
                 </div>
             </div>
         `
+
         if (chapter.id == 56874 || chapter.id == 56877) {
             const tooltip = _gl.elementFromHtml(`
                 <div class="under-construction">
@@ -208,8 +209,6 @@ export default class World {
 
     setDescriptionHtml() {
         let chapter = instance.selectedChapter
-
-
         let numberOfEpisodes = 0
         let numberOfTasks = 0
         let numberOfQuizes = 0
@@ -285,7 +284,6 @@ export default class World {
         })
 
         instance.experience.navigation.next.addEventListener("click", instance.startChapter)
-
     }
 
     removeDescriptionHtml() {
@@ -308,8 +306,6 @@ export default class World {
 
                 instance.experience.navigation.next.disabled = false
             })
-
-
         })
 
         document.querySelectorAll(".chapter__offline").forEach(function (chapter) {
@@ -329,7 +325,6 @@ export default class World {
                 event.stopPropagation()
             })
         })
-
     }
 
     setStatesTooltips() {
@@ -644,17 +639,13 @@ export default class World {
     resize() {
         if (this.points)
             this.points.resize()
-
     }
 
     update() {
-        if (this.controlRoom) {
+        if (this.controlRoom)
             this.controlRoom.update()
-        }
 
-        if (this.points) {
+        if (this.points)
             this.points.update()
-        }
-
     }
 }

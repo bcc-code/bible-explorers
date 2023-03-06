@@ -10,7 +10,8 @@ const EVENTS = {
     USER_DATA_FETCHED: new Event('userDataFetched'),
     AUDIO_TASK_DESCRIPTION_ENDED: new Event('audioTaskDescriptionEnded'),
     NOTE_PLAYED: new Event('notePlayed'),
-    TIME_ELAPSED: new Event('timeElapsed')
+    TIME_ELAPSED: new Event('timeElapsed'),
+    STEP_TOGGLED: new Event('stepToggled')
 }
 
 export default { ACTIONS, EVENTS }

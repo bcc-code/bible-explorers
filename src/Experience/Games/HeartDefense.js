@@ -570,7 +570,7 @@ export default class HeartDefense {
             <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             congratsHTML.querySelector('.buttons').append(skipBTN)
 
         const nextLevelBTN = _gl.elementFromHtml(`
@@ -628,7 +628,7 @@ export default class HeartDefense {
             <button class="btn default">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             gameOverHTML.querySelector('.buttons').append(skipBTN)
 
         const resetBTN = _gl.elementFromHtml(`

@@ -160,6 +160,13 @@ export default class SimonSays {
                 instance.modal.destroy()
                 instance.toggleSimonSays()
             })
+            
+            const skip = document.getElementById("skip")
+            skip.innerText = _s.miniGames.skip
+            skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
+                ? 'block'
+                : 'none'
+            skip.addEventListener('click', instance.advanceToNextStep)
         }
     }
 
@@ -275,7 +282,7 @@ export default class SimonSays {
 
         const skip = document.getElementById("skip")
         skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.fails >= showSkipAfterNoOfTries - 1
+        skip.style.display = instance.debug.developer || instance.debug.onQuickLook() || instance.fails >= showSkipAfterNoOfTries - 1
             ? 'block'
             : 'none'
 
