@@ -21,3 +21,27 @@
 .tippy-box[data-theme~='explorers'][data-placement^='right']>.tippy-arrow::before {
     border-right-color: var(--clr-secondary);
 }
+
+.tippy-box[data-theme~='construction'] {
+    color: var(--clr-text);
+    font-size: 0.7rem;
+    background-color: #f7d211;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.tippy-box[data-theme~='construction'][data-placement^='top']>.tippy-arrow::before {
+    border-top-color: #f7d211;
+}
+
+.tippy-box[data-theme~='construction'][data-placement^='bottom']>.tippy-arrow::before {
+    border-bottom-color: #f7d211;
+}
+
+.tippy-box[data-theme~='construction'][data-placement^='left']>.tippy-arrow::before {
+    border-left-color: #f7d211;
+}
+
+.tippy-box[data-theme~='construction'][data-placement^='right']>.tippy-arrow::before {
+    border-right-color: #f7d211;
+}

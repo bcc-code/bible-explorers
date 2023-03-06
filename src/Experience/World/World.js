@@ -178,6 +178,25 @@ export default class World {
                 </div>
             </div>
         `
+        if (chapter.id == 56874 || chapter.id == 56877) {
+            const tooltip = _gl.elementFromHtml(`
+                <div class="under-construction">
+                    <svg viewBox="0 0 26 26">
+                        <use href="#under-construction"></use>
+                    </svg>
+                </div>`
+            )
+
+            chapterHtml.append(tooltip)
+        }
+
+        tippy('.under-construction', {
+            theme: 'construction',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing el',
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'left',
+        })
 
         const chapters = document.querySelector('.chapters')
         chapters.appendChild(chapterHtml)
@@ -189,6 +208,7 @@ export default class World {
 
     setDescriptionHtml() {
         let chapter = instance.selectedChapter
+
 
         let numberOfEpisodes = 0
         let numberOfTasks = 0
@@ -265,11 +285,11 @@ export default class World {
         })
 
         instance.experience.navigation.next.addEventListener("click", instance.startChapter)
+
     }
 
     removeDescriptionHtml() {
         document.querySelector('.chapters').classList.remove('chapter-selected')
-
         if (document.querySelector('.chapter-details'))
             document.querySelector('.chapter-details').remove()
     }
@@ -288,6 +308,8 @@ export default class World {
 
                 instance.experience.navigation.next.disabled = false
             })
+
+
         })
 
         document.querySelectorAll(".chapter__offline").forEach(function (chapter) {
@@ -307,6 +329,7 @@ export default class World {
                 event.stopPropagation()
             })
         })
+
     }
 
     setStatesTooltips() {

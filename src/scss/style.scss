@@ -137,16 +137,6 @@
     pointer-events: none;
 }
 
-.skip-video {
-    font-size: 1rem;
-    right: var(--app-padding);
-    top: var(--app-padding);
-    position: absolute;
-    display: flex;
-    align-items: center;
-    z-index: 1;
-}
-
 .fade-in {
     opacity: 1;
 }
@@ -466,6 +456,17 @@ img.lazyloaded~div.img-loader {
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+.skip-video {
+    font-size: 1rem;
+    right: var(--app-padding);
+    top: var(--app-padding);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    z-index: 1;
 }
 
 .skip-navigation {
