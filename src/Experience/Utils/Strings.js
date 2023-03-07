@@ -51,6 +51,10 @@ const strings = {
                 "high": "High (1080p)"
             },
             "language": "Language",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Feedback",
             "faq": "FAQ",
             "notLoggedIn": "You are not logged in!",
@@ -185,6 +189,10 @@ const strings = {
                 "high": "Høy (1080p)"
             },
             "language": "Språk",
+            "backgroundMusic": "Bakgrunnsmusikk",
+            "fullScreenMode": "Fullskjerm modus",
+            "on": "På",
+            "off": "Av",
             "feedback": "Tilbakemelding",
             "faq": "FAQ",
             "notLoggedIn": "Du er ikke logget inn!",
@@ -319,6 +327,10 @@ const strings = {
                 "high": "Hoch (1080p)"
             },
             "language": "Sprache",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Rückmeldung",
             "faq": "FAQ",
             "notLoggedIn": "Du bist nicht angemeldet!",
@@ -453,6 +465,10 @@ const strings = {
                 "high": "Hoog (1080p)"
             },
             "language": "Taal",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Feedback",
             "faq": "FAQ",
             "notLoggedIn": "Je bent niet ingelogd!",
@@ -587,6 +603,10 @@ const strings = {
                 "high": "Haute (1080p)"
             },
             "language": "Langue",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Commentaires",
             "faq": "FAQ",
             "notLoggedIn": "Tu n'es pas connecté !",
@@ -721,6 +741,10 @@ const strings = {
                 "high": "Wysoka (1080p)"
             },
             "language": "Język",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Feedback",
             "faq": "FAQ",
             "notLoggedIn": "Nie jesteś zalogowany",
@@ -831,8 +855,8 @@ const strings = {
                 "info": "Folosește acest buton pentru a trece rapid prin capitol. Poți sări peste sarcini ca să vezi conținutul capitolului."
             } ,
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Ați terminat partea 1",
+                "message": "Copiii pot lua o pauză înainte ca să continuăm călătoria în timp."
             }
         },
         "task": {
@@ -842,7 +866,7 @@ const strings = {
             "getTask": "Mergi la sarcină",
             "submit": "Trimite",
             "next": "Continuă",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Scrie răspunsul aici"
         },
         "archive": "Arhivă",
         "settings": {
@@ -855,6 +879,10 @@ const strings = {
                 "high": "Înalt (1080p)"
             },
             "language": "Limbă",
+            "backgroundMusic": "Muzică de fundal",
+            "fullScreenMode": "Pe tot ecranul",
+            "on": "On",
+            "off": "Off",
             "feedback": "Feedback",
             "faq": "FAQ",
             "notLoggedIn": "Nu ești autentificat!",
@@ -867,7 +895,7 @@ const strings = {
         },
         "faq": {
             "questions": [
-                "Nu pot descărca filmele - ce fac?",
+                "Nu pot descărca filmele - ce pot să fac?",
                 "M-am logat cu contul meu de Portal, dar tot nu pot descărca filmele.",
                 "Am descărcat capitolul dar nu găsesc fișierele - de ce?",
                 "Vom viziona filmele în adunarea locală fără internet, cum procedăm?",
@@ -910,30 +938,30 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Alege ca împărat"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Alege capră"
             },
             "completed": {
                 "title": "Bravo!",
                 "message": "Ai terminat sarcina cu succes!",
-                "string": "completed"
+                "string": "finalizat"
             },
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
-            "startGame": "Start game",
-            "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
+            "startGame": "Pornește joc",
+            "level": "Nivel",
+            "gameOver": "Ups, ai pierdut.",
+            "round": "Runda",
+            "nextRound": "Următoarea rundă",
+            "anotherRound": "Încă o rundă",
             "tryAgain": "Încearcă din nou",
             "playAgain": "O nouă rundă",
             "reset": "Începe jocul din nou",
-            "restartRound": "Restart the round",
+            "restartRound": "Joacă din nou runda",
             "continue": "Continuă călătoria",
             "skip": "Mergi mai departe",
             "correctAnswers": "răspunsuri corecte"
@@ -989,6 +1017,10 @@ const strings = {
                 "high": "Alta (1080p)"
             },
             "language": "Idioma",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Retroalimentación",
             "faq": "FAQ",
             "notLoggedIn": "Usted no se ha identificado!",
@@ -1123,6 +1155,10 @@ const strings = {
                 "high": "Alto (1080p)"
             },
             "language": "Idioma",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Comentários",
             "faq": "FAQ",
             "notLoggedIn": "Você não está logado!",
@@ -1257,6 +1293,10 @@ const strings = {
                 "high": "Alta (1080p)"
             },
             "language": "Lingua",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Feedback",
             "faq": "FAQ",
             "notLoggedIn": "Non hai effettuato l'accesso!",
@@ -1391,6 +1431,10 @@ const strings = {
                 "high": "Высокое (1080p)"
             },
             "language": "Язык",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Обратная связь",
             "faq": "FAQ",
             "notLoggedIn": "Вы не вошли в учетную запись",
@@ -1525,6 +1569,10 @@ const strings = {
                 "high": "Korkea (1080p)"
             },
             "language": "Kieli",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Palaute",
             "faq": "FAQ",
             "notLoggedIn": "Et ole kirjautunut sisään!",
@@ -1659,6 +1707,10 @@ const strings = {
                 "high": "Magas (1080p)"
             },
             "language": "Nyelv",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Visszajelzés",
             "faq": "FAQ",
             "notLoggedIn": "You are not logged in!",
@@ -1793,6 +1845,10 @@ const strings = {
                 "high": "Høj (1080p)"
             },
             "language": "Sprog",
+            "backgroundMusic": "Background music",
+            "fullScreenMode": "Full screen mode",
+            "on": "On",
+            "off": "Off",
             "feedback": "Tilbagemelding",
             "faq": "FAQ",
             "notLoggedIn": "Du er ikke logget ind!",
