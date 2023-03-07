@@ -161,6 +161,9 @@ export default class World {
             </header>
             <div class="chapter__states">
                 <div class="chapter__offline">
+                    <svg class="download-icon" viewBox="0 0 24 24">
+                        <use href="#download"></use>
+                    </svg>
                     <span>${_s.offline.download.title}</span>
                 </div>
                 <div class="chapter__downloading">
@@ -174,6 +177,9 @@ export default class World {
                     <span>${_s.offline.downloadFailed}</span>
                 </div>
                 <div class="chapter__downloaded">
+                    <svg class="check-mark-icon" viewBox="0 0 23 16">
+                        <use href="#check-mark"></use>
+                    </svg>
                     <span>${_s.offline.availableOffline.title}</span>
                 </div>
             </div>
@@ -349,7 +355,7 @@ export default class World {
             content: _s.offline.download.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'bottom-start',
+            placement: 'right',
         })
 
         tippy('.chapter__downloaded', {
@@ -357,7 +363,7 @@ export default class World {
             content: _s.offline.availableOffline.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'bottom-start',
+            placement: 'right',
         })
     }
 
@@ -368,7 +374,12 @@ export default class World {
     // Download
 
     setDownloadHtml(button) {
-        button.innerHTML = `<span>${_s.offline.availableOffline.title}</span>`
+        button.innerHTML = `
+        <svg class="check-mark-icon" viewBox="0 0 23 16">
+            <use href="#check-mark"></use>
+        </svg>
+        <span>${_s.offline.availableOffline.title}</span>
+        `
         button.addEventListener("click", instance.confirmRedownload)
     }
 

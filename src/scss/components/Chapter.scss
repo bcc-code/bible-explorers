@@ -82,17 +82,15 @@
 
 .chapter {
     position: relative;
-    display: flex;
-    flex-flow: column nowrap;
     transition: var(--transition-duration) var(--transition-timing);
     background-color: var(--bg-with-opacity);
-    background-size: 60%;
+    background-size: auto 120%;
     background-position: right;
     background-repeat: no-repeat;
     border-radius: 1rem;
     border: var(--app-border-size) solid var(--clr-primary);
     cursor: pointer;
-    min-height: 160px;
+    min-height: 156px;
     pointer-events: all;
 
     &::before {
@@ -102,7 +100,7 @@
         top: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(to right, var(--clr-text) 40%, rgba(62, 48, 109, 0.001));
+        background: linear-gradient(to right, var(--clr-text) 55%, rgba(62, 48, 109, 0.001));
         border-radius: 1rem;
     }
 
@@ -122,42 +120,40 @@
     }
 
     &__states {
-        color: #fff;
-        font-size: 0.9rem;
         position: relative;
-        margin-inline: 2rem;
-        flex: 1;
-
-        overflow: hidden;
         display: none;
-        z-index: 2;
-        pointer-events: none;
-
-        >div {
-            position: relative;
-            background: var(--clr-primary);
-            border-top-right-radius: 1rem;
-            border-top-left-radius: 1rem;
-            padding-inline: 1rem;
-            padding-block: 0.25rem;
-            pointer-events: all;
-        }
-
-        >div:hover {
-            color: var(--clr-text);
-            background: var(--clr-secondary);
-        }
+        margin-left: 2rem;
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
     }
 
     &__offline {
-        font-size: 0.8rem;
         display: inline-flex;
+        align-items: center;
+        color: #fff;
+        background-color: var(--clr-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+
+        svg {
+            height: 0.7rem;
+            margin-right: 0.25rem;
+        }
+
+        &:hover {
+            color: var(--clr-text);
+            background-color: var(--clr-secondary);
+        }
     }
 
     &__downloading {
         display: none;
         width: 100%;
         align-items: center;
+        color: #fff;
+        background-color: var(--clr-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
 
         .downloading-progress {
             position: relative;
@@ -172,8 +168,8 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-color: #fff;
-                opacity: 0.4;
+                background-color: var(--clr-text);
+                opacity: 0.2;
             }
         }
 
@@ -185,17 +181,42 @@
             height: 100%;
             transform: scaleX(0);
             transform-origin: center left;
-            background-color: #fff;
+            background-color: var(--clr-text);
+        }
+
+        &:hover {
+            color: var(--clr-text);
+            background-color: var(--clr-secondary);
         }
     }
 
     &__downloaded {
         display: none;
+        color: #fff;
+        background-color: var(--clr-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
 
-        span {
-            color: #fff;
-            font-size: 1rem;
+        svg {
+            width: 0.8rem;
+            height: 0.8rem;
+            padding: 0.2rem;
+            background-color: #fff;
+            color: var(--clr-primary);
+            border-radius: 50%;
+            margin-right: 0.25rem;
         }
+
+        &:hover {
+            color: var(--clr-text);
+            background-color: var(--clr-secondary);
+
+            svg {
+                background-color: var(--clr-text);
+                color: var(--clr-secondary);
+            }
+        }
+
     }
 
     &:not(:last-child) {
@@ -203,6 +224,10 @@
     }
 
     &.downloading {
+        .chapter__states {
+            width: clamp(300px, calc(100% - var(--app-padding)), 480px);
+        }
+
         .chapter__offline {
             display: none;
         }
@@ -260,7 +285,7 @@
 
     body.ak_leder & {
         .chapter__states {
-            display: flex;
+            display: inline-flex;
         }
     }
 
