@@ -63,6 +63,26 @@ export default class Congrats {
         const chapterCongrats = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
+                    <div class="chapter-progress">
+                        <progress max="3" value="3"></progress>
+                        <ul>
+                            <li class="filled">
+                                <svg viewBox="0 0 29 29">
+                                    <use href="#star"></use>
+                                </svg>
+                            </li>
+                            <li class="filled">
+                                <svg viewBox="0 0 29 29">
+                                    <use href="#star"></use>
+                                </svg>
+                            </li>
+                            <li class="filled">
+                                <svg viewBox="0 0 29 29">
+                                    <use href="#star"></use>
+                                </svg>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="congrats">
                         <header>
                             <h1>${_s.journey.congrats}</h1>

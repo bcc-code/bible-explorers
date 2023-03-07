@@ -13,7 +13,6 @@ import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
 import _e from '../Utils/Events.js'
-import ChapterProgressBar from "../Components/ChapterProgressBar.js"
 
 let instance = null
 
@@ -209,7 +208,6 @@ export default class Program {
 
             else if (instance.stepType() == 'pause') {
                 instance.pause.togglePause()
-                instance.progress = new ChapterProgressBar()
             }
         }
 

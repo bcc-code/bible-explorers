@@ -34,7 +34,7 @@
     }
 
     p {
-        font-size: 1.15rem;
+        font-size: 1.5rem;
         color: #fff;
     }
 
@@ -64,13 +64,13 @@
         }
 
         &::after {
-            left: -10rem;
+            left: -12rem;
             transform: scaleX(-1) rotate(10deg);
             animation: bounce-left 1s cubic-bezier(0.215, 0.610, 0.355, 1) 1s 1 forwards;
         }
 
         &::before {
-            right: -10rem;
+            right: -12rem;
             transform: rotate(-10deg);
             animation: bounce-right 1s cubic-bezier(0.215, 0.610, 0.355, 1) 1s 1 forwards;
         }

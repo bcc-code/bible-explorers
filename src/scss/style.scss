@@ -513,13 +513,10 @@ button[aria-label="skip-button"] {
 }
 
 .chapter-progress {
+    width: 480px;
     display: flex;
-    justify-content: center;
-
-    .bar {
-        position: fixed;
-        bottom: 10rem;
-    }
+    position: relative;
+    margin-bottom: 2rem;
 
     progress {
         -webkit-appearance: none;
@@ -530,7 +527,7 @@ button[aria-label="skip-button"] {
         width: 100%;
         height: 2rem;
         border: 2px solid var(--clr-secondary);
-        padding: 2px;
+        padding: 6px;
         border-radius: 2rem;
     }
 
@@ -552,21 +549,16 @@ button[aria-label="skip-button"] {
     }
 
     ul {
-        position: relative;
-        display: grid;
-        gap: 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
 
-        li:first-child {
-            grid-column-start: 2;
+        li {
+            flex: 1;
         }
 
         li.filled {
             color: var(--clr-secondary);
         }
-
-        li:not(:nth-child(1)):not(:nth-child(3)):not(:last-child) {
-            opacity: 0;
-        }
-
     }
 }
