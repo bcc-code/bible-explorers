@@ -35,6 +35,9 @@ export default class CodeUnlock {
         const unlockScreen = _gl.elementFromHtml(`
             <section class="code-unlock">
                 <div class="container">
+                    <header class="game-header">
+                        <h2>${_s.task.codeUnlock}</h2>
+                    </header>
                     <div class="code-unlock-device">
                         <div class="code-unlock-code"></div>
                         <div class="code-unlock-keyboard"></div>
