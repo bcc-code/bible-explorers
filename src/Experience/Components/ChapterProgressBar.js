@@ -17,18 +17,19 @@ export default class ChapterProgressBar {
     init() {
         instance.program = instance.world.program
 
-        console.log(instance.program);
+        const currentCheckpoint = parseInt(instance.program.currentCheckpoint) + 1
 
         const progress = _gl.elementFromHtml(`
             <div class="chapter-progress">
-                <progress max="${instance.program.totalCheckpoints}" value="${(instance.program.currentCheckpoint + 1)}"></progress>
+                <div class="bar">
+                    <progress max="${instance.program.totalCheckpoints}" value="${currentCheckpoint}"></progress>
+                </div>
             </div>
         `)
-        document.body.append(progress)
 
         const labelList = _gl.elementFromHtml(`<ul data-value="${instance.program.totalCheckpoints}"></ul>`)
-        labelList.style.gridTemplateColumns = `repeat(${(instance.program.totalCheckpoints + 1)} + 1, 1fr)`
-        progress.append(labelList)
+        labelList.style.gridTemplateColumns = `repeat(${(instance.program.totalCheckpoints + 1)}, 1fr)`
+        progress.querySelector('.bar').append(labelList)
 
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
             const item = _gl.elementFromHtml(`
@@ -41,11 +42,13 @@ export default class ChapterProgressBar {
 
             labelList.append(item)
 
-            if (i < instance.program.currentCheckpoint)
+            if (i < currentCheckpoint)
                 item.classList.add('filled')
 
         }
 
+        document.querySelector('.ui-container').append(progress)
+        instance.setEventListeners()
     }
 
     setEventListeners() {
