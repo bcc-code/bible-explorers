@@ -219,6 +219,15 @@
 
     }
 
+    &__download-failed {
+        display: none;
+        align-items: center;
+        color: #fff;
+        background-color: var(--clr-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
     &:not(:last-child) {
         margin-bottom: 1rem;
     }
@@ -246,7 +255,6 @@
 
         .chapter__downloaded {
             display: inline-flex;
-            align-items: center;
 
             .icon,
             .separator {
@@ -266,11 +274,6 @@
 
         .chapter__download-failed {
             display: inline-flex;
-
-            span {
-                font-size: 1rem;
-                color: #fff;
-            }
 
             .icon,
             .separator {
@@ -301,10 +304,6 @@
     }
 
     body:not(.ak_leder) &.beta {
-        display: none;
-    }
-
-    .chapter__download-failed {
         display: none;
     }
 
