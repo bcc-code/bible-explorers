@@ -563,5 +563,10 @@ button[aria-label="skip-button"] {
         li.filled {
             color: var(--clr-secondary);
         }
+
+        li:not(:nth-child(1)):not(:nth-child(3)):not(:last-child) {
+            opacity: 0;
+        }
+
     }
 }
