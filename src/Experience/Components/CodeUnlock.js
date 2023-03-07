@@ -141,7 +141,7 @@ export default class CodeUnlock {
             <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.debug.developer || instance.debug.onQuickLook())
+        if (instance.debug.developer || instance.debug.onPreviewMode())
             unlockScreen.querySelector('.container').append(skipBTN)
 
         skipBTN.addEventListener('click', () => {

@@ -51,7 +51,7 @@ export default class Program {
 
         // Get instance variables
         instance.chapterProgress = () => parseInt(localStorage.getItem(instance.world.getId())) || 0
-        instance.currentCheckpoint = instance.debug.onQuickLook() ? 0 : (instance.chapterProgress() || 0)
+        instance.currentCheckpoint = instance.debug.onPreviewMode() ? 0 : (instance.chapterProgress() || 0)
         instance.getCurrentCheckpointData = () => instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null
 
         instance.currentStep = 0
@@ -246,7 +246,7 @@ export default class Program {
     updateCurrentCheckpoint(newCheckpoint) {
         instance.currentCheckpoint = newCheckpoint
 
-        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook())
+        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onPreviewMode())
             instance.updateLocalStorage()
     }
 

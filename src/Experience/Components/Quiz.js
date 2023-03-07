@@ -220,7 +220,7 @@ export default class Quiz {
             <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.debug.developer || instance.debug.onQuickLook())
+        if (instance.debug.developer || instance.debug.onPreviewMode())
             quiz.querySelector('.container').append(skipBTN)
 
         skipBTN.addEventListener('click', () => {

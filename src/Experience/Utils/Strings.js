@@ -22,8 +22,8 @@ const strings = {
             "back": "Back",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
             },
             "pause": {
@@ -156,8 +156,8 @@ const strings = {
             "back": "Tilbake",
             "attachments": "Vedlegg",
             "homescreen": "Ferdig",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Bruk denne knappen for en rask gjennomgang av kapitlet. Her kan du hoppe over oppgavene og skaffe deg oversikt over innholdet."
             },
             "pause": {
@@ -290,8 +290,8 @@ const strings = {
             "back": "Zurück",
             "attachments": "Anhang",
             "homescreen": "Fertig",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Mit diesem Button kannst du schnell durch die Kapitel springen. Du kannst Aufgaben überspringen und dir so einen Überblick verschaffen."
             } ,
             "pause": {
@@ -424,8 +424,8 @@ const strings = {
             "back": "Terug",
             "attachments": "Bijlagen",
             "homescreen": "Klaar",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Gebruik deze knop om snel door het hoofdstuk te gaan. Hiermee kan je opdrachten overslaan en een overzicht krijgen van de inhoud."
             } ,
             "pause": {
@@ -558,8 +558,8 @@ const strings = {
             "back": "Retour",
             "attachments": "Pièces jointes",
             "homescreen": "Terminé",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Utilise ce bouton pour parcourir rapidement le chapitre. Tu peux sauter les tâches et obtenir un aperçu du contenu."
             } ,
             "pause": {
@@ -692,8 +692,8 @@ const strings = {
             "back": "Powrót",
             "attachments": "Załączniki",
             "homescreen": "Gotowe",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Kliknij w ten przycisk celem szybkiego przeglądu rozdziału. Tutaj możesz przeskoczyć zadania i przejrzeć z czego składa się ten rozdział."
             } ,
             "pause": {
@@ -826,8 +826,8 @@ const strings = {
             "back": "Înapoi",
             "attachments": "Fișiere",
             "homescreen": "Finalizare",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Folosește acest buton pentru a trece rapid prin capitol. Poți sări peste sarcini ca să vezi conținutul capitolului."
             } ,
             "pause": {
@@ -960,8 +960,8 @@ const strings = {
             "back": "Regresar",
             "attachments": "Adjunto",
             "homescreen": "Listo",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Usa este botón para una revisión rápida del capítulo. Aquí puedes omitir las tareas y obtener una descripción general del contenido."
             } ,
             "pause": {
@@ -1094,8 +1094,8 @@ const strings = {
             "back": "Voltar",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Utilize este botão para uma navegação rápida pelo capítulo. Aqui você poderá saltar as tarefas e ter uma visão apla do conteúdo."
             } ,
             "pause": {
@@ -1228,8 +1228,8 @@ const strings = {
             "back": "Indietro",
             "attachments": "Allegati",
             "homescreen": "Fatto",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Utilizzate questo pulsante per una rapida lettura del capitolo. È possibile saltare le attività e ottenere una panoramica dei contenuti."
             } ,
             "pause": {
@@ -1362,8 +1362,8 @@ const strings = {
             "back": "Назад",
             "attachments": "Вложения",
             "homescreen": "Готово",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Используйте эту кнопку, чтобы быстро просмотреть главу. Вы можете пропустить задания и ознакомиться с содержанием."
             } ,
             "pause": {
@@ -1496,8 +1496,8 @@ const strings = {
             "back": "Takaisin",
             "attachments": "Liitteet",
             "homescreen": "Valmis",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Paina tästä napista nähdäksesi koko jakson sisällön. Voit hypätä tehtävien yli ja näet yleiskuvan koko sisällöstä."
             } ,
             "pause": {
@@ -1630,8 +1630,8 @@ const strings = {
             "back": "Vissza",
             "attachments": "Csatolmányok",
             "homescreen": "Kész",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
             } ,
             "pause": {
@@ -1764,8 +1764,8 @@ const strings = {
             "back": "Tilbage",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "quickLook": {
-                "title": "Quick look",
+            "preview": {
+                "title": "Preview",
                 "info": "Brug denne knap for en hurtig gennemgang af kapitlet. Her kan du hoppe over opgaverne og få oversigt over indholdet."
             } ,
             "pause": {

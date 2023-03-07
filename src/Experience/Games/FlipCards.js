@@ -79,7 +79,7 @@ export default class Chapter3Game2 {
             instance.destroy()
             instance.program.nextStep()
         })
-        if (instance.debug.developer || instance.debug.onQuickLook())
+        if (instance.debug.developer || instance.debug.onPreviewMode())
             document.querySelector('.game.flip-card .container').append(skipBTN)
     }
 
