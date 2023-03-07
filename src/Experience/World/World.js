@@ -16,6 +16,7 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
+import gsap from 'gsap'
 
 let instance = null
 export default class World {
@@ -573,8 +574,31 @@ export default class World {
             document.documentElement.requestFullscreen()
         }
 
+
+        instance.currentChapterLabel()
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
+    }
+
+    currentChapterLabel() {
+        const el = _gl.elementFromHtml(`
+            <div class="page-title">
+                <p>Chapter: <span>${instance.selectedChapter.title}</span></p>
+                <p>Age: <span>${instance.selectedChapter.category}</span></p>
+            </div>`)
+
+        document.querySelector('.app-header').append(el)
+
+        const tl = gsap.timeline()
+
+        tl
+            .set(el, { autoAlpha: 0, x: -20 })
+            .to(el, { autoAlpha: 1, x: 0, })
+
+
+        setTimeout(() => {
+            tl.to(el, { autoAlpha: 0, x: -20 })
+        }, 10000)
     }
 
     removeLobbyEventListeners() {
@@ -613,6 +637,8 @@ export default class World {
         instance.debug.removeQuickLookMode()
         instance.showLobby()
         instance.preselectChapter()
+
+        document.querySelector('.page-title')?.remove()
 
         if (instance.program.archive)
             instance.program.archive.remove()

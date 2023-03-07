@@ -99,3 +99,27 @@ button[aria-label="Contact"] {
         }
     }
 }
+
+.page-title {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--clr-secondary);
+
+    p {
+        color: var(--clr-text);
+        font-size: 0.9rem;
+    }
+
+    span {
+        font-weight: bold;
+    }
+
+}
