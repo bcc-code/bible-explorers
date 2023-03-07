@@ -103,8 +103,8 @@ export default class ProgressBar {
 
         generatedHTML +=
             `<button class="btn rounded" aria-label="checkpoint">
-                <svg class="star-icon icon" viewBox="0 0 25 25">
-                    <use href="#star-full"></use>
+                <svg class="star-icon icon" viewBox="0 0 29 29">
+                    <use href="#star"></use>
                 </svg>
             </button>`
 

@@ -2,6 +2,7 @@ import Experience from "../Experience.js"
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from "../Utils/Events.js"
+import ChapterProgressBar from "../Components/ChapterProgressBar.js"
 
 let instance = null
 
@@ -14,6 +15,7 @@ export default class Pause {
 
     togglePause() {
         instance.program = instance.world.program
+        instance.progress = new ChapterProgressBar()
 
         const pauseHTML = _gl.elementFromHtml(`
             <aside class="pause">
