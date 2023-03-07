@@ -178,6 +178,7 @@ export default class DavidsRefuge {
                     if (instance.data.characters[index].tells_the_truth) {
                         tooltip.innerHTML = instance.data.correct_character_message
 
+                        goat.style.pointerEvents = 'none'
                         selectGoat.disabled = true
                         document.querySelector('.cta').style.display = 'flex'
                     }
