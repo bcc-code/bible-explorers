@@ -32,9 +32,9 @@
 }
 
 #glitch-idle {
-    width: 285px;
+    width: 440px;
     position: absolute;
-    top: -148px;
+    bottom: 100%;
     border-radius: 1rem;
     border: var(--app-border-size) solid var(--clr-primary);
 }
