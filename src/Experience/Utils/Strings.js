@@ -133,6 +133,19 @@ const strings = {
             "continue": "Continue the journey",
             "skip": "Skip",
             "correctAnswers": "correct answers"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "no": {
@@ -267,6 +280,19 @@ const strings = {
             "continue": "Fortsett reisen",
             "skip": "Hopp over",
             "correctAnswers": "riktige svar"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "film",
+                "task": "oppgave",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "films",
+                "task": "oppgaver",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Oppgavebeskrivelse"
         }
     },
     "de": {
@@ -293,7 +319,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Mit diesem Button kannst du schnell durch die Kapitel springen. Du kannst Aufgaben überspringen und dir so einen Überblick verschaffen."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -401,6 +427,19 @@ const strings = {
             "continue": "Reise fortsetzen",
             "skip": "Überspringen",
             "correctAnswers": "richtige Antworten"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "nl": {
@@ -427,7 +466,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Gebruik deze knop om snel door het hoofdstuk te gaan. Hiermee kan je opdrachten overslaan en een overzicht krijgen van de inhoud."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -535,6 +574,19 @@ const strings = {
             "continue": "Ga door met de reis",
             "skip": "Overslaan",
             "correctAnswers": "antwoorden juist"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "fr": {
@@ -561,7 +613,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Utilise ce bouton pour parcourir rapidement le chapitre. Tu peux sauter les tâches et obtenir un aperçu du contenu."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -669,6 +721,19 @@ const strings = {
             "continue": "Continuer le voyage",
             "skip": "Sauter",
             "correctAnswers": "réponses correctes"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "pl": {
@@ -695,7 +760,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Kliknij w ten przycisk celem szybkiego przeglądu rozdziału. Tutaj możesz przeskoczyć zadania i przejrzeć z czego składa się ten rozdział."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -803,6 +868,19 @@ const strings = {
             "continue": "Kontynuuj podróż",
             "skip": "Pomiń",
             "correctAnswers": "poprawnych odpowiedzi"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "ro": {
@@ -829,7 +907,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Folosește acest buton pentru a trece rapid prin capitol. Poți sări peste sarcini ca să vezi conținutul capitolului."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -937,6 +1015,19 @@ const strings = {
             "continue": "Continuă călătoria",
             "skip": "Mergi mai departe",
             "correctAnswers": "răspunsuri corecte"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "film",
+                "task": "sarcină",
+                "quiz": "chestionar"
+            },
+            "infoPlural": {
+                "video": "filme",
+                "task": "sarcine",
+                "quiz": "chestionare"
+            },
+            "activityDescLabel": "Descrierea activităților"
         }
     },
     "es": {
@@ -963,7 +1054,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Usa este botón para una revisión rápida del capítulo. Aquí puedes omitir las tareas y obtener una descripción general del contenido."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1071,6 +1162,19 @@ const strings = {
             "continue": "Continuar el viaje",
             "skip": "Saltar",
             "correctAnswers": "respuestas correctas"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "pt-pt": {
@@ -1097,7 +1201,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Utilize este botão para uma navegação rápida pelo capítulo. Aqui você poderá saltar as tarefas e ter uma visão apla do conteúdo."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1205,6 +1309,19 @@ const strings = {
             "continue": "Continue a viagem",
             "skip": "Skip",
             "correctAnswers": "respostas corretas"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "it": {
@@ -1231,7 +1348,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Utilizzate questo pulsante per una rapida lettura del capitolo. È possibile saltare le attività e ottenere una panoramica dei contenuti."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1339,6 +1456,19 @@ const strings = {
             "continue": "Continua il tuo viaggio",
             "skip": "Salta",
             "correctAnswers": "risposte corrette"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "ru": {
@@ -1365,7 +1495,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Используйте эту кнопку, чтобы быстро просмотреть главу. Вы можете пропустить задания и ознакомиться с содержанием."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1473,6 +1603,19 @@ const strings = {
             "continue": "Продолжить путешествие",
             "skip": "Пропустить",
             "correctAnswers": "верных ответов"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "fi": {
@@ -1499,7 +1642,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Paina tästä napista nähdäksesi koko jakson sisällön. Voit hypätä tehtävien yli ja näet yleiskuvan koko sisällöstä."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1607,6 +1750,19 @@ const strings = {
             "continue": "Jatka matkaa",
             "skip": "Ohita",
             "correctAnswers": "oikeaa vastausta"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "hu": {
@@ -1633,7 +1789,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1741,6 +1897,19 @@ const strings = {
             "continue": "Utazás folytatása",
             "skip": "Átugrás",
             "correctAnswers": "correct answers"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
     "da": {
@@ -1767,7 +1936,7 @@ const strings = {
             "quickLook": {
                 "title": "Quick look",
                 "info": "Brug denne knap for en hurtig gennemgang af kapitlet. Her kan du hoppe over opgaverne og få oversigt over indholdet."
-            } ,
+            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1875,6 +2044,19 @@ const strings = {
             "continue": "Fortsæt rejsen",
             "skip": "Skip",
             "correctAnswers": "rigtige svar"
+        },
+        "chapter": {
+            "infoSingular": {
+                "video": "video",
+                "task": "task",
+                "quiz": "quiz"
+            },
+            "infoPlural": {
+                "video": "videos",
+                "task": "tasks",
+                "quiz": "quizzes"
+            },
+            "activityDescLabel": "Task description"
         }
     },
 }
