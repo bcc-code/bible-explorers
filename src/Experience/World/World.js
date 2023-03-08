@@ -159,6 +159,7 @@ export default class World {
                 <h2 class="chapter__title">${chapter.title}</h2>
                 <span class="chapter__date">${chapter.date}</span>
             </header>
+            <div class="coming-soon">Coming soon</div>
             <div class="chapter__states">
                 <div class="chapter__offline">
                     <svg class="download-icon" viewBox="0 0 24 24">
