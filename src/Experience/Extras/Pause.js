@@ -10,6 +10,7 @@ export default class Pause {
         instance = this
         instance.experience = new Experience()
         instance.world = instance.experience.world
+        instance.audio = instance.world.audio
     }
 
     togglePause() {
@@ -47,6 +48,12 @@ export default class Pause {
 
         document.body.append(pauseHTML)
         instance.setEventListeners()
+
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
 
     }
 

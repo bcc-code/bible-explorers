@@ -116,6 +116,12 @@ export default class Chapter3Game2 {
                     card.classList.add('flipped')
                     flipAnimation.play()
 
+                    instance.audio.playSound('task-completed')
+                    instance.experience.celebrate({
+                        particleCount: 100,
+                        spread: 160
+                    })
+
                     // All cards are flipped
                     const flippedCards = document.querySelectorAll('.flipped')
 

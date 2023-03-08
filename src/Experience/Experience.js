@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import confetti from 'canvas-confetti'
 import { Debug, StatsModule } from './Utils/Debug.js'
 import Sizes from "./Utils/Sizes.js"
 import Time from "./Utils/Time.js"
@@ -12,6 +13,7 @@ import World from './World/World.js'
 import WebGL from 'three/examples/jsm/capabilities/WebGL.js'
 import Page from './Components/Page.js'
 import FAQ from './Components/FAQ.js'
+import _gl from './Utils/Globals.js'
 
 let instance = null
 
@@ -71,6 +73,14 @@ export default class Experience {
             prev: document.querySelector('[aria-label="prev page"]'),
             next: document.querySelector('[aria-label="next page"]')
         }
+
+        const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`)
+        document.body.appendChild(celebrateCanvas)
+
+        this.celebrate = confetti.create(celebrateCanvas, {
+            resize: true,
+            useWorker: true
+        })
     }
 
     resize() {

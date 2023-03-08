@@ -201,6 +201,11 @@ export default class CodeUnlock {
             instance.audio.playSound('task-completed')
             instance.data.fails = 0
 
+            instance.experience.celebrate({
+                particleCount: 100,
+                spread: 160
+            })
+
             instance.experience.navigation.next.disabled = false
         }
         else {

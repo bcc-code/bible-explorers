@@ -181,6 +181,12 @@ export default class DavidsRefuge {
                         goat.style.pointerEvents = 'none'
                         selectGoat.disabled = true
                         document.querySelector('.cta').style.display = 'flex'
+
+                        instance.audio.playSound('correct')
+                        instance.experience.celebrate({
+                            particleCount: 100,
+                            spread: 160
+                        })
                     }
                     else {
                         tooltip.innerHTML = instance.data.wrong_character_message

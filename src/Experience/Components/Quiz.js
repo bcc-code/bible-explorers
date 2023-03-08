@@ -15,6 +15,7 @@ export default class Quiz {
         instance.world = instance.experience.world
         instance.debug = instance.experience.debug
         instance.program = instance.world.program
+        instance.audio = instance.world.audio
 
         instance.correctAnswers = 0
         instance.openQuestions = 0
@@ -174,9 +175,15 @@ export default class Quiz {
                     htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
                     if (!objAnswers[i].correct_wrong) {
+                        instance.audio.playSound('wrong')
                         a.parentNode.classList.add('wrong')
                     } else {
+                        instance.audio.playSound('correct')
                         instance.correctAnswers++
+                        instance.experience.celebrate({
+                            particleCount: 100,
+                            spread: 160
+                        })
                     }
 
                     if (q.getAttribute('data-index') !== questions.length)

@@ -59,7 +59,10 @@ export default class Congrats {
         instance.destroy()
         instance.experience.navigation.next.addEventListener('click', instance.finishChapter)
         instance.world.audio.playSound('congrats')
-
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
         const chapterCongrats = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">

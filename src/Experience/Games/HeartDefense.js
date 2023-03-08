@@ -613,6 +613,13 @@ export default class HeartDefense {
             document.querySelector('.cta').style.display = 'flex'
             document.querySelector('.game-rounds')?.remove()
         }
+
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
+
     }
 
     toggleGameOver() {
