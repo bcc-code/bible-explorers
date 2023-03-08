@@ -249,7 +249,7 @@ export default class World {
             const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
 
             const guide = _gl.elementFromHtml(`
-                <a class="link asset" href="https://biblekids.io/explorers-mentor-guide/${localStorage.getItem('lang')}/" target="_blank">
+                <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
                     <svg class="book-icon icon" viewBox="0 0 21 24">
                         <use href="#book"></use>
                     </svg>
