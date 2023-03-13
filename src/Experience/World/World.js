@@ -595,7 +595,6 @@ export default class World {
             .set(el, { autoAlpha: 0, x: -20 })
             .to(el, { autoAlpha: 1, x: 0, })
 
-
         setTimeout(() => {
             tl.to(el, { autoAlpha: 0, x: -20 })
         }, 10000)
