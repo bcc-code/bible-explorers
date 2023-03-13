@@ -934,7 +934,7 @@ const strings = {
             },
             "pause": {
                 "title": "Ați terminat partea 1",
-                "message": "Copiii pot lua o pauză înainte ca să continuăm călătoria în timp."
+                "message": "Copiii pot lua o pauză înainte de a continua călătoria în timp."
             }
         },
         "task": {
@@ -1024,7 +1024,7 @@ const strings = {
             "completed": {
                 "title": "Bravo!",
                 "message": "Ai terminat sarcina cu succes!",
-                "string": "finalizat"
+                "string": "finalizată"
             },
             "timeElapsed": {
                 "title": "Ups!",
@@ -1052,7 +1052,7 @@ const strings = {
             },
             "infoPlural": {
                 "video": "filme",
-                "task": "sarcine",
+                "task": "sarcini",
                 "quiz": "chestionare"
             },
             "activityDescLabel": "Descrierea activităților"
