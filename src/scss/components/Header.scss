@@ -46,7 +46,6 @@
     }
 
     .btn:hover & {
-
         .bar {
             background-color: var(--clr-text);
         }
@@ -64,14 +63,12 @@
             transform: translateY(-4px) scaleX(1.8);
         }
     }
-
 }
 
 button[aria-label="Background music"] {
     .music-on {
         display: none;
     }
-
 
     &[is-playing] {
         .music-on {
@@ -109,7 +106,7 @@ button[aria-label="Contact"] {
     justify-content: center;
     margin-left: 1rem;
     padding-left: 1rem;
-    padding: 0.35rem 0.5rem 0.5rem;
+    padding: 0.35rem 0.75rem 0.5rem;
     border-radius: 0.25rem;
     background-color: var(--clr-secondary);
 
@@ -121,5 +118,4 @@ button[aria-label="Contact"] {
     span {
         font-weight: bold;
     }
-
 }
