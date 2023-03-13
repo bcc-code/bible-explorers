@@ -286,20 +286,21 @@ export default class Program {
         if (instance.clickedObject == 'tv_16x9_screen') {
             instance.clickCallback()
             instance.clickCallback = () => { }
-
             instance.message.show()
         }
         else if (instance.clickedObject == 'Screen') {
             instance.video.play()
-
-        } else if (instance.clickedObject == 'Switch') {
-
+        }
+        else if (instance.clickedObject == 'Switch') {
             instance.world.controlRoom.animations.actions.drag.play()
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
                 instance.video.play()
                 instance.world.controlRoom.animations.actions.drag.stop()
             })
         }
+
+        instance.highlight.fadeOut()
+        instance.points.delete()
     }
 
     showBibleCards() {

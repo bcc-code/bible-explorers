@@ -248,7 +248,6 @@ export default class World {
 
         if (chapter.attachments.length) {
             const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
-
             const guide = _gl.elementFromHtml(`
                 <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
                     <svg class="book-icon icon" viewBox="0 0 21 24">
