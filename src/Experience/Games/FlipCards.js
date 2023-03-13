@@ -186,6 +186,7 @@ export default class Chapter3Game2 {
         gsap.set(notification, { x: '-100%' })
         gsap.to(notification, {
             x: 0, onComplete: () => {
+                instance.audio.stopAllTaskDescriptions()
                 instance.audio.togglePlayTaskDescription(instance.data.glitchs_voice.audio)
             }
         })
@@ -204,6 +205,7 @@ export default class Chapter3Game2 {
         gsap.set(notification, { x: '-100%' })
         gsap.to(notification, {
             x: 0, onComplete: () => {
+                instance.audio.stopAllTaskDescriptions()
                 instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)
             }
         })
