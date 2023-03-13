@@ -239,7 +239,7 @@ export default class World {
                         <svg class="preview-icon icon" viewBox="0 0 28 22">
                             <use href="#preview"></use>
                         </svg>
-                        <span>Preview</span>
+                        <span>${_s.journey.preview.title}</span>
                     </button>
                 </header>
                 
@@ -318,7 +318,7 @@ export default class World {
 
         tippy('[aria-label="Preview chapter"]', {
             theme: 'explorers',
-            content: _s.journey.quickLook.info,
+            content: _s.journey.preview.info,
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'bottom-end',
@@ -562,7 +562,7 @@ export default class World {
     }
 
     previewChapter() {
-        instance.debug.addQuickLookMode()
+        instance.debug.addPreviewMode()
         instance.startChapter()
     }
 
@@ -629,7 +629,7 @@ export default class World {
         instance.camera.updateCameraTo()
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
-        instance.debug.removeQuickLookMode()
+        instance.debug.removePreviewMode()
         instance.showLobby()
         instance.preselectChapter()
 
@@ -664,7 +664,7 @@ export default class World {
     finishJourney() {
         instance.audio.changeBgMusic()
 
-        if (instance.debug.onQuickLook())
+        if (instance.debug.onPreviewMode())
             return
 
         _appInsights.trackEvent({

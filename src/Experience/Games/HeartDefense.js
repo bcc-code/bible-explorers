@@ -96,7 +96,7 @@ export default class HeartDefense {
             instance.program.nextStep()
         })
 
-        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             skipBTN.style.display = 'block'
     }
 
