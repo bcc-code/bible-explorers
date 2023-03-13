@@ -32,11 +32,12 @@ export default class CodeUnlock {
     }
 
     unlockScreenHTML() {
+        const title = instance.program.getCurrentStepData().details.title
         const unlockScreen = _gl.elementFromHtml(`
             <section class="code-unlock">
                 <div class="container">
                     <header class="game-header">
-                        <h2>${_s.task.codeUnlock}</h2>
+                        <h2>${title}</h2>
                     </header>
                     <div class="code-unlock-device">
                         <div class="code-unlock-code"></div>
