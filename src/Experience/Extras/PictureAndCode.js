@@ -42,8 +42,6 @@ export default class PictureAndCode {
         instance.modal = new Modal(html, 'modal__picture-and-code')
         instance.el = document.querySelector('.picture-and-code')
 
-        console.log()
-
         const title = document.querySelector('.modal__heading--minigame')
         title.innerHTML = `<h3>${instance.stepData.details.title}</h3>`
 
