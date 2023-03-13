@@ -98,7 +98,6 @@ export default class Program {
         }
 
         instance.currentStep--
-        console.log('previousStep', instance.currentStep)
         instance.toggleStep()
     }
 
@@ -111,7 +110,6 @@ export default class Program {
         }
 
         instance.currentStep++
-        console.log('nextStep', instance.currentStep)
         instance.toggleStep()
     }
 
@@ -219,25 +217,16 @@ export default class Program {
     previousCheckpoint() {
         instance.updateCurrentCheckpoint(--instance.currentCheckpoint)
         instance.currentStep = instance.programData[instance.currentCheckpoint].steps.length - 1
-
-        console.log('previousCheckpoint', instance.currentCheckpoint)
-        console.log('currentStep', instance.currentStep)
     }
 
     nextCheckpoint() {
         instance.updateCurrentCheckpoint(++instance.currentCheckpoint)
         instance.currentStep = 0
-
-        console.log('nextCheckpoint', instance.currentCheckpoint)
-        console.log('currentStep', instance.currentStep)
     }
 
     goToCheckpoint(checkpoint) {
         instance.updateCurrentCheckpoint(checkpoint)
         instance.currentStep = 0
-
-        console.log('goToCheckpoint', instance.currentCheckpoint)
-        console.log('currentStep', 0)
 
         instance.stepToggled()
         instance.startInteractivity()
