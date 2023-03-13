@@ -180,7 +180,7 @@ export default class Video {
     }
 
     showSkipBtn() {
-        if (instance.debug.developer || instance.debug.onQuickLook())
+        if (instance.debug.developer || instance.debug.onPreviewMode())
             return true
 
         const secondsToSkip = 10

@@ -31,7 +31,7 @@
         color: var(--clr-text);
     }
 
-    body:not(.quick-look-mode) & [aria-label="checkpoint"].locked {
+    body:not(.preview-mode) & [aria-label="checkpoint"].locked {
         filter: grayscale(1);
     }
 

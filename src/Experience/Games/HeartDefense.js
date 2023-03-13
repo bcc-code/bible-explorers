@@ -96,7 +96,7 @@ export default class HeartDefense {
             instance.program.nextStep()
         })
 
-        if (instance.debug.developer || instance.debug.onQuickLook() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
+        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
             skipBTN.style.display = 'block'
     }
 
@@ -613,6 +613,13 @@ export default class HeartDefense {
             document.querySelector('.cta').style.display = 'flex'
             document.querySelector('.game-rounds')?.remove()
         }
+
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
+
     }
 
     toggleGameOver() {

@@ -51,7 +51,7 @@ export default class Program {
 
         // Get instance variables
         instance.chapterProgress = () => parseInt(localStorage.getItem(instance.world.getId())) || 0
-        instance.currentCheckpoint = instance.debug.onQuickLook() ? 0 : (instance.chapterProgress() || 0)
+        instance.currentCheckpoint = instance.debug.onPreviewMode() ? 0 : (instance.chapterProgress() || 0)
         instance.getCurrentCheckpointData = () => instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null
 
         instance.currentStep = 0
@@ -98,7 +98,6 @@ export default class Program {
         }
 
         instance.currentStep--
-        console.log('previousStep', instance.currentStep)
         instance.toggleStep()
     }
 
@@ -111,7 +110,6 @@ export default class Program {
         }
 
         instance.currentStep++
-        console.log('nextStep', instance.currentStep)
         instance.toggleStep()
     }
 
@@ -219,25 +217,16 @@ export default class Program {
     previousCheckpoint() {
         instance.updateCurrentCheckpoint(--instance.currentCheckpoint)
         instance.currentStep = instance.programData[instance.currentCheckpoint].steps.length - 1
-
-        console.log('previousCheckpoint', instance.currentCheckpoint)
-        console.log('currentStep', instance.currentStep)
     }
 
     nextCheckpoint() {
         instance.updateCurrentCheckpoint(++instance.currentCheckpoint)
         instance.currentStep = 0
-
-        console.log('nextCheckpoint', instance.currentCheckpoint)
-        console.log('currentStep', instance.currentStep)
     }
 
     goToCheckpoint(checkpoint) {
         instance.updateCurrentCheckpoint(checkpoint)
         instance.currentStep = 0
-
-        console.log('goToCheckpoint', instance.currentCheckpoint)
-        console.log('currentStep', 0)
 
         instance.stepToggled()
         instance.startInteractivity()
@@ -246,7 +235,7 @@ export default class Program {
     updateCurrentCheckpoint(newCheckpoint) {
         instance.currentCheckpoint = newCheckpoint
 
-        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onQuickLook())
+        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onPreviewMode())
             instance.updateLocalStorage()
     }
 
@@ -297,20 +286,21 @@ export default class Program {
         if (instance.clickedObject == 'tv_16x9_screen') {
             instance.clickCallback()
             instance.clickCallback = () => { }
-
             instance.message.show()
         }
         else if (instance.clickedObject == 'Screen') {
             instance.video.play()
-
-        } else if (instance.clickedObject == 'Switch') {
-
+        }
+        else if (instance.clickedObject == 'Switch') {
             instance.world.controlRoom.animations.actions.drag.play()
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
                 instance.video.play()
                 instance.world.controlRoom.animations.actions.drag.stop()
             })
         }
+
+        instance.highlight.fadeOut()
+        instance.points.delete()
     }
 
     showBibleCards() {

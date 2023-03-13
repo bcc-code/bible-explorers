@@ -30,7 +30,7 @@ export default class ProgressBar {
             checkpoint.addEventListener("click", () => {
                 let clickedCheckpoint = checkpoint.getAttribute('data-index')
 
-                if (instance.debug.developer || instance.debug.onQuickLook() || clickedCheckpoint <= instance.program.chapterProgress())
+                if (instance.debug.developer || instance.debug.onPreviewMode() || clickedCheckpoint <= instance.program.chapterProgress())
                     instance.program.goToCheckpoint(clickedCheckpoint)
             })
 

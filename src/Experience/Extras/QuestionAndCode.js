@@ -86,7 +86,6 @@ export default class QuestionAndCode {
 
     saveAnswers() {
         const initialAnswers = instance.allAnswersFromTheme[instance.currentCheckpoint]
-        console.log(initialAnswers)
 
         // Save answers to Local Storage
         let thisTaskAnswers = []

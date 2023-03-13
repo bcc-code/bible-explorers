@@ -562,3 +562,10 @@ button[aria-label="skip-button"] {
         }
     }
 }
+
+.celebrate {
+    position: absolute;
+    inset: 0;
+    z-index: 99;
+    pointer-events: none;
+}

@@ -562,7 +562,7 @@ export default class CableConnector {
         
         const skip = document.getElementById("skip")
         skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.debug.developer || instance.debug.onQuickLook()
+        skip.style.display = instance.debug.developer || instance.debug.onPreviewMode()
             ? 'block'
             : 'none'
         skip.addEventListener('click', instance.advanceToNextStep)

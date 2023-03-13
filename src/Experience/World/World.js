@@ -160,6 +160,7 @@ export default class World {
                 <h2 class="chapter__title">${chapter.title}</h2>
                 <span class="chapter__date">${chapter.date}</span>
             </header>
+            <div class="coming-soon">Coming soon</div>
             <div class="chapter__states">
                 <div class="chapter__offline">
                     <svg class="download-icon" viewBox="0 0 24 24">
@@ -239,7 +240,7 @@ export default class World {
                         <svg class="preview-icon icon" viewBox="0 0 28 22">
                             <use href="#preview"></use>
                         </svg>
-                        <span>Preview</span>
+                        <span>${_s.journey.preview.title}</span>
                     </button>
                 </header>
                 
@@ -248,16 +249,17 @@ export default class World {
 
         if (chapter.attachments.length) {
             const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
-
             const guide = _gl.elementFromHtml(`
-                <a class="link asset" href="https://biblekids.io/explorers-mentor-guide/" target="_blank">
+                <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
                     <svg class="book-icon icon" viewBox="0 0 21 24">
                         <use href="#book"></use>
                     </svg>
-                    <span>Guide</span>
+                    <span>${_s.chapter.activityDescLabel}</span>
                 </a>`
             )
-            attachments.append(guide)
+
+            if (!chapter.is_beta)
+                attachments.append(guide)
 
             chapter.attachments.forEach((item) => {
                 const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset">
@@ -277,19 +279,35 @@ export default class World {
 
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-            const info = _gl.elementFromHtml(`
-                <div class="info">
-                    <div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} films</span></div>
-                    <div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfEpisodes} tasks</span></div>
-                </div>
-            `)
+
+            const info = _gl.elementFromHtml(`<div class="info"></div>`)
 
             details.append(info)
 
-            if (numberOfQuizes > 0) {
-                const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} quiz</span></div>`)
+            if (numberOfEpisodes != 1) {
+                const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`)
+                info.append(videoLabel)
+            } else {
+                const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`)
+                info.append(videoLabel)
+            }
+
+            if (numberOfTasks != 1) {
+                const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`)
+                info.append(taskLabel)
+            } else {
+                const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`)
+                info.append(taskLabel)
+            }
+
+            if (numberOfQuizes != 1) {
+                const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`)
+                info.append(quizLabel)
+            } else {
+                const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`)
                 info.append(quizLabel)
             }
+
         }
 
         document.querySelector('.lobby').append(details)
@@ -300,7 +318,7 @@ export default class World {
 
         tippy('[aria-label="Preview chapter"]', {
             theme: 'explorers',
-            content: _s.journey.quickLook.info,
+            content: _s.journey.preview.info,
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'bottom-end',
@@ -544,7 +562,7 @@ export default class World {
     }
 
     previewChapter() {
-        instance.debug.addQuickLookMode()
+        instance.debug.addPreviewMode()
         instance.startChapter()
     }
 
@@ -633,7 +651,7 @@ export default class World {
         instance.camera.updateCameraTo()
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
-        instance.debug.removeQuickLookMode()
+        instance.debug.removePreviewMode()
         instance.showLobby()
         instance.preselectChapter()
 
@@ -670,7 +688,7 @@ export default class World {
     finishJourney() {
         instance.audio.changeBgMusic()
 
-        if (instance.debug.onQuickLook())
+        if (instance.debug.onPreviewMode())
             return
 
         _appInsights.trackEvent({

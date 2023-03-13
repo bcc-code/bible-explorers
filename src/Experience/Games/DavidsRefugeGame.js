@@ -62,7 +62,7 @@ export default class DavidsRefuge {
             <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.debug.developer || instance.debug.onQuickLook())
+        if (instance.debug.developer || instance.debug.onPreviewMode())
             game.querySelector('.container').append(skipBTN)
 
         skipBTN.addEventListener('click', () => {
@@ -181,6 +181,12 @@ export default class DavidsRefuge {
                         goat.style.pointerEvents = 'none'
                         selectGoat.disabled = true
                         document.querySelector('.cta').style.display = 'flex'
+
+                        instance.audio.playSound('correct')
+                        instance.experience.celebrate({
+                            particleCount: 100,
+                            spread: 160
+                        })
                     }
                     else {
                         tooltip.innerHTML = instance.data.wrong_character_message

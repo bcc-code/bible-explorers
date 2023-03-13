@@ -7,9 +7,9 @@ class Debug {
         this.experience = new Experience()
 
         this.developer = window.location.hash === '#debug'
-        this.addQuickLookMode = () => document.querySelector('body').classList.add('quick-look-mode')
-        this.removeQuickLookMode = () => document.querySelector('body').classList.remove('quick-look-mode')
-        this.onQuickLook = () => document.querySelector('body').classList.contains('quick-look-mode')
+        this.addPreviewMode = () => document.querySelector('body').classList.add('preview-mode')
+        this.removePreviewMode = () => document.querySelector('body').classList.remove('preview-mode')
+        this.onPreviewMode = () => document.querySelector('body').classList.contains('preview-mode')
 
         if (this.developer) {
             this.ui = new GUI()

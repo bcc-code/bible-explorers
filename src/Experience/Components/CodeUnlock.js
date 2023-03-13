@@ -32,11 +32,12 @@ export default class CodeUnlock {
     }
 
     unlockScreenHTML() {
+        const title = instance.program.getCurrentStepData().details.title
         const unlockScreen = _gl.elementFromHtml(`
             <section class="code-unlock">
                 <div class="container">
                     <header class="game-header">
-                        <h2>${_s.task.codeUnlock}</h2>
+                        <h2>${title}</h2>
                     </header>
                     <div class="code-unlock-device">
                         <div class="code-unlock-code"></div>
@@ -144,7 +145,7 @@ export default class CodeUnlock {
             <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
         `)
 
-        if (instance.debug.developer || instance.debug.onQuickLook())
+        if (instance.debug.developer || instance.debug.onPreviewMode())
             unlockScreen.querySelector('.container').append(skipBTN)
 
         skipBTN.addEventListener('click', () => {
@@ -200,6 +201,11 @@ export default class CodeUnlock {
             wrapper.classList.add('correct-code')
             instance.audio.playSound('task-completed')
             instance.data.fails = 0
+
+            instance.experience.celebrate({
+                particleCount: 100,
+                spread: 160
+            })
 
             instance.experience.navigation.next.disabled = false
         }
