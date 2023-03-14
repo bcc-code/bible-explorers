@@ -166,6 +166,6 @@ export default class TaskDescription {
 
     destroy() {
         instance.modal.destroy()
-        instance.audio.stopTaskDescription(instance.taskAudio)
+        instance.audio.stopAllTaskDescriptions()
     }
 }
