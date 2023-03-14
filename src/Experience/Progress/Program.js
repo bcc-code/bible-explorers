@@ -2,7 +2,7 @@ import Experience from "../Experience.js"
 import Archive from '../Components/Archive.js'
 import TaskDescription from '../Extras/TaskDescription.js'
 import CodeUnlock from '../Components/CodeUnlock.js'
-import PictureAndCode from '../Extras/PictureAndCode.js'
+import HiddenItems from '../Games/HiddenItems.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Questions from '../Extras/Questions.js'
 import Video from '../Extras/Video.js'
@@ -33,7 +33,7 @@ export default class Program {
         instance.taskDescription = new TaskDescription()
         instance.video = new Video()
         instance.codeUnlock = new CodeUnlock()
-        instance.pictureAndCode = new PictureAndCode()
+        instance.pictureAndCode = new HiddenItems()
         instance.questionAndCode = new QuestionAndCode()
         instance.questions = new Questions()
         instance.quiz = new Quiz()

@@ -150,60 +150,12 @@
     font-weight: bold;
 }
 
-
 #sort-game {
     width: 1600px;
     height: 800px;
 }
 
-.modal__picture-and-code .circle {
-    position: absolute;
-    width: 6rem;
-    height: 6rem;
-    margin-top: -3rem;
-    margin-left: -3rem;
-    border: 10px solid var(--bg-default);
-    border-radius: 50%;
-    z-index: 9999;
-    cursor: grab;
-    transition: .4s ease;
 
-    &:hover {
-        border: 10px solid var(--clr-secondary);
-    }
-}
-
-.img-loader {
-    display: inline-block;
-    z-index: -1;
-
-    &:after {
-        content: " ";
-        display: block;
-        width: 64px;
-        height: 64px;
-        margin: 8px;
-        border-radius: 50%;
-        border: 6px solid #fff;
-        border-color: #fff transparent #fff transparent;
-        animation: lds-dual-ring 1.2s linear infinite;
-    }
-
-}
-
-img.lazyloaded~div.img-loader {
-    display: none;
-}
-
-@keyframes lds-dual-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 .skip-video {
     font-size: 1rem;
