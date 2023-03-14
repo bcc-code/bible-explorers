@@ -25,18 +25,15 @@ export default class Audio {
         audio.notes = []
         audio.btn = document.querySelector('[aria-label="Background music"')
         audio.musicRange = document.getElementById('musicRange')
-        audio.fadeSteps = 20
+        audio.fadeSteps = 15
         audio.slideValueConversion = 3.33
         audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
         audio.musicRange.oninput = function () {
             audio.musicRange.nextElementSibling.innerText = this.value
-
-            if (this.value == 0) {
-                audio.musicRange.parentElement.parentElement.classList.add('sound-off')
-            } else {
-                audio.musicRange.parentElement.parentElement.classList.remove('sound-off')
-            }
+            this.value == 0
+                ? audio.musicRange.parentElement.parentElement.classList.add('sound-off')
+                :audio.musicRange.parentElement.parentElement.classList.remove('sound-off')
         }
 
         audio.initialize()
@@ -58,6 +55,10 @@ export default class Audio {
             audio.loadAndPlay(soundtrack)
         }
         else if (audio.bgMusicAudios.state == _STATE.PLAYING) {
+            if (audio.alreadyFetched(soundtrack)
+                && audio.bgMusicAudios.objs[soundtrack].isPlaying)
+                return
+
             audio.fadeOutBgMusic(() => {
                 audio.loadAndPlay(soundtrack)
             })
@@ -95,7 +96,7 @@ export default class Audio {
     }
 
     loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => { }) {
-        if (audio.notFetchedYet(soundtrack)) {
+        if (!audio.alreadyFetched(soundtrack)) {
             audio.disableToggleBtn()
 
             audio.bgMusicAudios.state = _STATE.PLAYING
@@ -106,9 +107,13 @@ export default class Audio {
 
             audio.audioLoader.load(soundtrack, function (buffer) {
                 audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
-                audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
                 audio.enableToggleBtn()
 
+                // Another bg music has started in the meantime (while loading this audio) so simply return
+                if (audio.bgMusic && audio.bgMusic.isPlaying)
+                    return
+
+                audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
                 callback()
             })
         }
@@ -148,7 +153,7 @@ export default class Audio {
                 clearInterval(fadeInAudio)
                 audio.enableToggleBtn()
             }
-        }, 100)
+        }, 10)
     }
 
     fadeOutBgMusic(callback = () => { }) {
@@ -166,7 +171,7 @@ export default class Audio {
                 audio.bgMusic.pause()
                 callback()
             }
-        }, 100)
+        }, 10)
     }
 
     setSoundIconOn() {
@@ -183,8 +188,8 @@ export default class Audio {
         audio.btn.classList.remove('pointer-events-none')
     }
 
-    notFetchedYet(soundtrack) {
-        return !audio.bgMusicAudios.objs[soundtrack]
+    alreadyFetched(soundtrack) {
+        return audio.bgMusicAudios.objs[soundtrack]
     }
 
     togglePlayTaskDescription(url) {
@@ -238,8 +243,7 @@ export default class Audio {
 
     playSound(sound) {
         if (!audio.experience.settings.soundOn) return
-        this.initialize()
-
+        
         if (!audio[sound]) {
             audio.audioLoader.load('sounds/' + sound + '.mp3', function (buffer) {
                 audio[sound] = new THREE.Audio(audio.listener)
@@ -258,8 +262,6 @@ export default class Audio {
     }
 
     loadMelodyNotes(notes) {
-        this.initialize()
-
         notes.forEach(note => {
             if (!audio.notes[note]) {
                 audio.audioLoader.load('sounds/notes/' + note + '.mp3', function (buffer) {
@@ -272,8 +274,6 @@ export default class Audio {
     }
 
     playNote(note) {
-        this.initialize()
-
         if (!audio.notes[note]) return
 
         if (audio.notes[note].isPlaying) {
