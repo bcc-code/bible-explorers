@@ -593,7 +593,6 @@ export default class World {
         }
 
 
-        instance.currentChapterLabel()
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
     }
