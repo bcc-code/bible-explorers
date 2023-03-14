@@ -25,7 +25,7 @@ export default class Audio {
         audio.notes = []
         audio.btn = document.querySelector('[aria-label="Background music"')
         audio.musicRange = document.getElementById('musicRange')
-        audio.fadeSteps = 1
+        audio.fadeSteps = 15
         audio.slideValueConversion = 3.33
         audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
@@ -143,19 +143,35 @@ export default class Audio {
         if (audio.bgMusicAudios.state != _STATE.PLAYING) return
 
         audio.bgMusic.play()
-        audio.bgMusic.setVolume(audio.bgMusicVolume())
-        audio.enableToggleBtn()
-        console.log('fadeInBgMusic volume')
+
+        const fadeInAudio = setInterval(() => {
+            audio.bgMusic.setVolume(
+                audio.bgMusic.getVolume() + audio.bgMusicVolume() / audio.fadeSteps
+            )
+
+            if (audio.bgMusic.getVolume() > audio.bgMusicVolume()) {
+                clearInterval(fadeInAudio)
+                audio.enableToggleBtn()
+            }
+        }, 10)
     }
 
     fadeOutBgMusic(callback = () => { }) {
         if (!audio.bgMusic) return
 
-        audio.bgMusic.setVolume(0)
-        audio.enableToggleBtn()
-        audio.bgMusic.pause()
-        console.log('fadeOutBgMusic volume')
-        callback()
+        const fadeOutAudio = setInterval(() => {
+            audio.bgMusic.setVolume(
+                audio.bgMusic.getVolume() - audio.bgMusicVolume() / audio.fadeSteps
+            )
+
+            if (audio.bgMusic.getVolume() < audio.bgMusicVolume() / audio.fadeSteps) {
+                clearInterval(fadeOutAudio)
+                audio.enableToggleBtn()
+                audio.bgMusic.setVolume(0)
+                audio.bgMusic.pause()
+                callback()
+            }
+        }, 10)
     }
 
     setSoundIconOn() {
@@ -221,7 +237,6 @@ export default class Audio {
         audio.musicRange.addEventListener('input', function () {
             if (!audio.bgMusic) return
             audio.bgMusic.setVolume(audio.bgMusicVolume())
-            console.log('volume changed', audio.bgMusicVolume())
         })
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)
     }
