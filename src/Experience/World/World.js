@@ -277,9 +277,7 @@ export default class World {
         const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
         details.append(description)
 
-
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-
             const info = _gl.elementFromHtml(`<div class="info"></div>`)
 
             details.append(info)
@@ -307,7 +305,6 @@ export default class World {
                 const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`)
                 info.append(quizLabel)
             }
-
         }
 
         document.querySelector('.lobby').append(details)
@@ -510,6 +507,7 @@ export default class World {
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
             instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
+            instance.cacheDialogueAudios(checkpoint.steps.filter(step => step.details && step.details.task_type == "dialog"))
         })
     }
 
@@ -548,6 +546,13 @@ export default class World {
     cachePictureAndCodeImage(pictureAndCodeTasks) {
         if (pictureAndCodeTasks.length == 0) return
         pictureAndCodeTasks.forEach(task => instance.fetchAndCacheAsset(task.picture_and_code.picture))
+    }
+
+    cacheDialogueAudios(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => {
+            step.dialog.forEach(dialog => instance.fetchAndCacheAsset(dialog.audio))
+        })
     }
 
     fetchAndCacheAsset(url) {
