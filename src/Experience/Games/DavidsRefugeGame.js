@@ -1,4 +1,5 @@
 import gsap from 'gsap'
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
@@ -9,6 +10,7 @@ let instance = null
 export default class DavidsRefuge {
     constructor() {
         instance = this
+        instance.offline = new Offline()
         instance.experience = new Experience()
         instance.world = instance.experience.world
         instance.audio = instance.world.audio
@@ -22,6 +24,13 @@ export default class DavidsRefuge {
         document.querySelector('.cta').style.display = 'none'
 
         instance.gameHTML()
+
+        instance.data.characters.forEach((character, index) => {
+            instance.offline.fetchChapterAsset(character, "image", (data) => {
+                character.image = data.image
+                document.querySelectorAll('article.goat img')[index].src = data.image
+            })
+        })
 
         if (instance.data.hints.length > 0)
             instance.hintsHTML()
@@ -138,7 +147,6 @@ export default class DavidsRefuge {
             const img = q('img')
             const circle = q('.circle')
             const tooltip = q('.tooltip')
-
 
             item.addEventListener('click', () => {
                 selectGoat.disabled = false

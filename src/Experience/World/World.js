@@ -510,6 +510,7 @@ export default class World {
             instance.cacheDialogueAudios(checkpoint.steps.filter(step => step.details && step.details.task_type == "dialog"))
             instance.cacheGameDescriptionTutorials(checkpoint.steps.filter(step => step.details && step.details.tutorial))
             instance.cacheFlipCardsMedia(checkpoint.steps.filter(step => step.details && step.details.task_type == "flip_cards"))
+            instance.cacheDavidsRefugeImages(checkpoint.steps.filter(step => step.details && step.details.task_type == "davids_refuge"))
         })
     }
 
@@ -572,6 +573,13 @@ export default class World {
             })
             instance.fetchAndCacheAsset(step.flip_cards.glitchs_voice.audio)
             instance.fetchAndCacheAsset(step.flip_cards.gods_voice.audio)
+        })
+    }
+
+    cacheDavidsRefugeImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => {
+            step.davids_refuge.characters.forEach(character => instance.fetchAndCacheAsset(character.image))
         })
     }
 
