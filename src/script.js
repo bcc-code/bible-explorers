@@ -49,7 +49,7 @@ const handleRedirectCallback = async () => {
             if (roles.includes("administrator") || roles.includes("editor")) {
                 document.body.classList.add("admin", "ak_leder")
             }
-            else if (roles.includes("ak_leder")) {
+            else if (roles.includes("ak_leder") || roles.includes("translator") || roles.includes("manager")) {
                 document.body.classList.add("ak_leder")
             }
             else {
