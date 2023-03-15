@@ -508,6 +508,7 @@ export default class World {
             instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
             instance.cacheDialogueAudios(checkpoint.steps.filter(step => step.details && step.details.task_type == "dialog"))
+            instance.cacheGameDescriptionTutorials(checkpoint.steps.filter(step => step.details && step.details.tutorial))
         })
     }
 
@@ -553,6 +554,11 @@ export default class World {
         steps.forEach(step => {
             step.dialog.forEach(dialog => instance.fetchAndCacheAsset(dialog.audio))
         })
+    }
+
+    cacheGameDescriptionTutorials(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => instance.fetchAndCacheAsset(step.details.tutorial))
     }
 
     fetchAndCacheAsset(url) {
