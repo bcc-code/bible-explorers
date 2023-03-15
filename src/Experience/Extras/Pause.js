@@ -14,6 +14,16 @@ export default class Pause {
     }
 
     togglePause() {
+        instance.setHtml()
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
+        instance.setEventListeners()
+    }
+
+    setHtml() {
         instance.program = instance.world.program
 
         const pauseHTML = _gl.elementFromHtml(`
@@ -47,14 +57,6 @@ export default class Pause {
         `)
 
         document.body.append(pauseHTML)
-        instance.setEventListeners()
-
-        instance.audio.playSound('task-completed')
-        instance.experience.celebrate({
-            particleCount: 100,
-            spread: 160
-        })
-
     }
 
     setEventListeners() {

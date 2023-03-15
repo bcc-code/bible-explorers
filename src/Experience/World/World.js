@@ -671,8 +671,7 @@ export default class World {
         document.body.classList.add('freeze')
         instance.program.destroy()
         instance.program.video.defocus()
-        instance.points.delete()
-        instance.highlight.fadeOut()
+        instance.program.removeInteractivity()
         instance.buttons.home.style.display = 'none'
         instance.buttons.contact.style.display = 'flex'
         instance.buttons.guide.style.display = 'flex'
