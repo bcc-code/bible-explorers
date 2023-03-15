@@ -249,7 +249,6 @@ export default class Program {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
-                    instance.removeInteractivity()
                     instance.world.progressBar.hide()
                     instance.experience.navigation.next.disabled = false
                 }
