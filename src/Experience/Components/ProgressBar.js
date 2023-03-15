@@ -74,7 +74,6 @@ export default class ProgressBar {
             <div class="checkpoints">`
 
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
-
             if (instance.program.programData[i].steps.some(step => step.details.step_type == 'video')) {
                 generatedHTML +=
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
@@ -88,6 +87,14 @@ export default class ProgressBar {
                     `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
                         <svg class="question-mark-icon icon" viewBox="0 0 15 22">
                             <use href="#question-mark"></use>
+                        </svg>
+                    </button>`
+            }
+            else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause')) {
+                generatedHTML +=
+                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                        <svg class="pause-icon icon" viewBox="0 0 15 18">
+                            <use href="#pause"></use>
                         </svg>
                     </button>`
             }
