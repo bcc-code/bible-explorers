@@ -24,13 +24,7 @@ export default class DavidsRefuge {
         document.querySelector('.cta').style.display = 'none'
 
         instance.gameHTML()
-
-        instance.data.characters.forEach((character, index) => {
-            instance.offline.fetchChapterAsset(character, "image", (data) => {
-                character.image = data.image
-                document.querySelectorAll('article.goat img')[index].src = data.image
-            })
-        })
+        instance.useCorrectAssetsSrc()
 
         if (instance.data.hints.length > 0)
             instance.hintsHTML()
@@ -77,6 +71,15 @@ export default class DavidsRefuge {
         skipBTN.addEventListener('click', () => {
             instance.destroy()
             instance.program.nextStep()
+        })
+    }
+
+    useCorrectAssetsSrc() {
+        instance.data.characters.forEach((character, index) => {
+            instance.offline.fetchChapterAsset(character, "image", (data) => {
+                character.image = data.image
+                document.querySelectorAll('article.goat img')[index].src = data.image
+            })
         })
     }
 

@@ -23,17 +23,7 @@ export default class Chapter3Game2 {
         instance.data = instance.stepData.flip_cards
 
         instance.gameHTML()
-
-        instance.data.cards.forEach((card, index) => {
-            instance.offline.fetchChapterAsset(card, "image_back", (data) => {
-                card.image_back = data.image_back
-                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
-            })
-            instance.offline.fetchChapterAsset(card, "image_front", (data) => {
-                card.image_front = data.image_front
-                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
-            })
-        })
+        instance.useCorrectAssetsSrc()
 
         instance.setEventListeners()
 
@@ -95,6 +85,19 @@ export default class Chapter3Game2 {
         })
         if (instance.debug.developer || instance.debug.onPreviewMode())
             document.querySelector('.game.flip-card .container').append(skipBTN)
+    }
+
+    useCorrectAssetsSrc() {
+        instance.data.cards.forEach((card, index) => {
+            instance.offline.fetchChapterAsset(card, "image_back", (data) => {
+                card.image_back = data.image_back
+                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
+            })
+            instance.offline.fetchChapterAsset(card, "image_front", (data) => {
+                card.image_front = data.image_front
+                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
+            })
+        })
     }
 
     setEventListeners() {

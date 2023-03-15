@@ -529,14 +529,14 @@ export default class World {
         facts.forEach(fact => instance.fetchAndCacheAsset(fact.image.url))
     }
 
-    cacheTaskDescriptionAudios(tasks) {
-        if (tasks.length == 0) return
-        tasks.forEach(task => instance.fetchAndCacheAsset(task.message.audio))
+    cacheTaskDescriptionAudios(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => instance.fetchAndCacheAsset(step.message.audio))
     }
 
-    cacheTaskDescriptionMedia(tasks) {
-        if (tasks.length == 0) return
-        tasks.forEach(task => instance.fetchAndCacheAsset(task.message.media))
+    cacheTaskDescriptionMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => instance.fetchAndCacheAsset(step.message.media))
     }
 
     cacheSortingGameIcons(sortingTasks) {
