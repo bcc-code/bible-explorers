@@ -57,7 +57,6 @@ export default class HiddenItems {
         if (instance.debug.developer || instance.debug.onPreviewMode())
             skipBTN.style.display = 'flex'
 
-
     }
 
     setEventListeners() {

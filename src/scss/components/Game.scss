@@ -30,18 +30,24 @@
         pointer-events: all;
     }
 
-    &-rounds {
+    &-rounds,
+    &-timer {
         color: #fff;
         background-color: var(--bg-dark-color);
         position: relative;
         padding: 0.5rem var(--app-padding);
         border-radius: 0.5rem;
         border: var(--app-border-size) solid var(--clr-primary);
+        display: flex;
+        justify-content: center;
+        gap: 0.25rem;
+        min-width: 6rem;
     }
 
     &-popup {
         position: relative;
         margin-bottom: 4rem;
+        text-align: center;
 
         h1 {
             margin-bottom: 1rem;
@@ -657,5 +663,20 @@ img.lazyloaded~div.img-loader {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+.cable-connect {
+    .game-canvas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.popup-visible {
+        .game-canvas {
+            opacity: 0.2;
+            pointer-events: none;
+        }
     }
 }
