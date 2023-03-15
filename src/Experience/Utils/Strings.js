@@ -432,7 +432,7 @@ const strings = {
             "round": "Runde",
             "nextRound": "Nächste Runde",
             "anotherRound": "Runde wiederholen",
-            "tryAgain": "Try again",
+            "tryAgain": "Versuche es noch einmal!",
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
             "restartRound": "Restart the round",
@@ -451,7 +451,7 @@ const strings = {
                 "task": "Aufgaben",
                 "quiz": "Quizze"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentorenanleitung"
         }
     },
     "nl": {
@@ -579,11 +579,11 @@ const strings = {
             },
             "startGame": "Start spel",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Oh oh, dat ging mis.",
             "round": "Ronde",
             "nextRound": "Volgende ronde",
             "anotherRound": "Nog een ronde",
-            "tryAgain": "Try again",
+            "tryAgain": "Probeer opnieuw!",
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
             "restartRound": "Restart the round",
@@ -881,11 +881,11 @@ const strings = {
             },
             "startGame": "Rozpocznij grę",
             "level": "Poziom",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "O nie, nie udało wam się.",
             "round": "Runda",
             "nextRound": "Następna runda",
             "anotherRound": "Kolejna runda",
-            "tryAgain": "Try again",
+            "tryAgain": "Spróbujcie jeszcze raz!",
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
             "restartRound": "Restart the round",
@@ -1167,7 +1167,7 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Elige como rey"
             },
             "davidsRefuge": {
                 "chooseGoat": "Choose goat"
@@ -1175,7 +1175,7 @@ const strings = {
             "completed": {
                 "title": "Buen Trabajo!",
                 "message": "Has completado tu tarea!",
-                "string": "completed"
+                "string": "completada"
             },
             "timeElapsed": {
                 "title": "Ups!",
@@ -1183,11 +1183,11 @@ const strings = {
             },
             "startGame": "Comienza el juego",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
+            "gameOver": "Uh oh, te has equivocado.",
+            "round": "Ronda",
             "nextRound": "Next round",
             "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "tryAgain": "Prueba nuevamente!",
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
             "restartRound": "Restart the round",
@@ -1338,7 +1338,7 @@ const strings = {
             "round": "Rodada",
             "nextRound": "Próxima rodada",
             "anotherRound": "Outra rodada",
-            "tryAgain": "Try again",
+            "tryAgain": "Tente novamente!",
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
             "restartRound": "Restart the round",
@@ -1469,7 +1469,7 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Scegli come re"
             },
             "davidsRefuge": {
                 "chooseGoat": "Choose goat"
@@ -1477,19 +1477,19 @@ const strings = {
             "completed": {
                 "title": "Ottimo lavoro!",
                 "message": "Hai completato il compito!",
-                "string": "completed"
+                "string": "completato"
             },
             "timeElapsed": {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
-            "startGame": "Start game",
+            "startGame": "Inizia il gioco",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Oh, oh, hai sbagliato.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "tryAgain": "Riprova!",
             "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
             "restartRound": "Restart the round",
@@ -1787,11 +1787,11 @@ const strings = {
             },
             "startGame": "Aloita peli",
             "level": "Taso",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Hups, huonosti kävi.",
             "round": "Kierros",
             "nextRound": "Seuraava kierros",
             "anotherRound": "Uusi kierros",
-            "tryAgain": "Try again",
+            "tryAgain": "Yritä uudestaan!",
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
             "restartRound": "Restart the round",
@@ -1922,7 +1922,7 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Válaszd ki a királyt"
             },
             "davidsRefuge": {
                 "chooseGoat": "Choose goat"
@@ -1930,19 +1930,19 @@ const strings = {
             "completed": {
                 "title": "Szép munka!",
                 "message": "Teljesítetted a feladatot! Folytathatod az utazást",
-                "string": "completed"
+                "string": "befejezve"
             },
             "timeElapsed": {
                 "title": "Hoppá!",
                 "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
             },
-            "startGame": "Start game",
+            "startGame": "Játék indítása",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Uh oh, elhibáztad.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "tryAgain": "Próbáld újra!",
             "playAgain": "Play again",
             "reset": "Újrakezdés",
             "restartRound": "Restart the round",
@@ -2089,11 +2089,11 @@ const strings = {
             },
             "startGame": "Start spillet",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Åh oh, du klarede det ikke.",
             "round": "Runde",
             "nextRound": "Næste runde",
             "anotherRound": "En runde mere",
-            "tryAgain": "Try again",
+            "tryAgain": "Prøv igjen",
             "playAgain": "Spil igen",
             "reset": "Start spillet forfra",
             "restartRound": "Restart the round",
