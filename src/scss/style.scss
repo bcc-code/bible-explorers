@@ -522,6 +522,7 @@ button[aria-label="skip-button"] {
         -webkit-appearance: none;
         appearance: none;
         position: absolute;
+        background-color: transparent;
         top: 0.5rem;
         left: 0;
         width: 100%;
@@ -529,6 +530,11 @@ button[aria-label="skip-button"] {
         border: 2px solid var(--clr-secondary);
         padding: 6px;
         border-radius: 2rem;
+    }
+
+    progress::-moz-progress-bar {
+        border-radius: 2rem;
+        overflow: hidden;
     }
 
     progress::-webkit-progress-bar {

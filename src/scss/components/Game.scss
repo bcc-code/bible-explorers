@@ -149,6 +149,9 @@
             }
         }
 
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
 
         .icon {
             width: 2rem;
