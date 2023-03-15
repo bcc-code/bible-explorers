@@ -150,6 +150,7 @@ const strings = {
                 "quiz": "quizzes"
             },
             "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentor guide"
         }
     },
     "no": {
@@ -300,7 +301,7 @@ const strings = {
                 "task": "oppgaver",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Oppgavebeskrivelse"
+            "activityDescLabel": "Mentor veiledning"
         }
     },
     "de": {
@@ -602,7 +603,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentor gids"
         }
     },
     "fr": {
@@ -753,7 +754,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Guide du mentor"
         }
     },
     "pl": {
@@ -904,7 +905,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Przewodnik mentora"
         }
     },
     "ro": {
@@ -1055,7 +1056,7 @@ const strings = {
                 "task": "sarcini",
                 "quiz": "chestionare"
             },
-            "activityDescLabel": "Descrierea activităților"
+            "activityDescLabel": "Ghidul mentorului"
         }
     },
     "es": {
@@ -1206,7 +1207,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Guía del tutor"
         }
     },
     "pt-pt": {
@@ -1357,7 +1358,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Guia do mentor"
         }
     },
     "it": {
@@ -1659,7 +1660,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Сопровождение ментора"
         }
     },
     "fi": {
@@ -1810,7 +1811,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentorin opas"
         }
     },
     "hu": {
@@ -2112,7 +2113,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentor vejledning"
         }
     },
 }
