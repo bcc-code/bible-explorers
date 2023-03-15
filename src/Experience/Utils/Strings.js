@@ -149,7 +149,6 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
             "activityDescLabel": "Mentor guide"
         }
     },
