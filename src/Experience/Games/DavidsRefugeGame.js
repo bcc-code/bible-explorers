@@ -77,7 +77,6 @@ export default class DavidsRefuge {
     useCorrectAssetsSrc() {
         instance.data.characters.forEach((character, index) => {
             instance.offline.fetchChapterAsset(character, "image", (data) => {
-                character.image = data.image
                 document.querySelectorAll('article.goat img')[index].src = data.image
             })
         })
