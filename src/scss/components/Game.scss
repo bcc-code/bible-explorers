@@ -282,7 +282,9 @@
     }
 
     .goats {
-        display: flex;
+        position: relative;
+        width: 300px;
+        height: 380px;
     }
 
     .goat {
@@ -293,30 +295,41 @@
         --pink: #cb4287;
         --pink-shadow: #f75b99;
 
-        position: relative;
+        position: absolute;
+        bottom: 0;
         pointer-events: all;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        transition: var(--transition-duration) var(--transition-timing);
         cursor: pointer;
 
-        img {
+        picture {
             position: relative;
-        }
+            display: flex;
+            align-items: flex-end;
 
-        .circle {
-            position: absolute;
-            background-color: var(--bg-default);
-            bottom: -60px;
-            left: -30px;
-            border-radius: 50%;
-            width: 300px;
-            height: 300px;
-            cursor: pointer;
-            transition: var(--transition-duration) var(--transition-timing);
+            &::before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                aspect-ratio: 1/1;
+                border-radius: 50%;
+                background-color: var(--bg-default);
+                z-index: -1;
+                transition: var(--transition-duration) var(--transition-timing);
+            }
+
+            img {
+                width: 120%;
+            }
         }
 
         .tooltip {
             position: absolute;
-            bottom: calc(100% + 20px);
-            width: 24ch;
             border-radius: 1rem;
             padding: 0.5rem 1rem 0.75rem;
             line-height: 1.35;
@@ -325,10 +338,28 @@
             &::after {
                 content: '';
                 position: absolute;
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-                top: calc(100% - 1px);
-                right: 2rem;
+                border: 10px solid transparent;
+            }
+
+            &.top {
+                width: 24ch;
+                bottom: 100%;
+
+                &::after {
+                    top: calc(100% - 1px);
+                    right: 2rem;
+                }
+            }
+
+            &.right {
+                width: 32ch;
+                left: calc(100% + 1rem);
+
+                &::after {
+                    left: -10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
             }
         }
 
@@ -339,11 +370,15 @@
             }
 
             .tooltip::after {
-                border-top: 10px solid var(--yellow);
+                border-top-color: var(--yellow);
             }
 
-            &:hover .circle {
+            &:hover picture::before {
                 box-shadow: 0 0 0 4px var(--yellow-shadow);
+            }
+
+            &.is-selected .tooltip::after {
+                border-right-color: var(--yellow);
             }
         }
 
@@ -354,11 +389,16 @@
             }
 
             .tooltip::after {
-                border-top: 10px solid var(--blue);
+                border-top-color: var(--blue);
             }
 
-            &:hover .circle {
+            &:hover picture::before {
                 box-shadow: 0 0 0 4px var(--blue-shadow);
+            }
+
+
+            &.is-selected .tooltip::after {
+                border-right-color: var(--blue);
             }
         }
 
@@ -369,21 +409,25 @@
             }
 
             .tooltip::after {
-                border-top: 10px solid var(--pink);
+                border-top-color: var(--pink);
             }
 
-            &:hover .circle {
+            &:hover picture::before {
                 box-shadow: 0 0 0 4px var(--pink-shadow);
+            }
+
+            &.is-selected .tooltip::after {
+                border-right-color: var(--pink);
             }
         }
 
-        &:not(:last-child) {
-            margin-right: 4rem;
+        &.is-active picture::before {
+            background-color: #fff;
         }
     }
 
     [aria-label="select goat"] {
-        margin-top: 100px;
+        margin-top: 2rem;
     }
 
     [aria-label="toggle hints"] {
@@ -424,6 +468,12 @@
             li:last-child {
                 border-bottom: none;
             }
+        }
+    }
+
+    @media (max-width: 1440px) {
+        .goats {
+            margin-top: 5rem;
         }
     }
 }
