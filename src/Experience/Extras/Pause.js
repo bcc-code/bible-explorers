@@ -30,14 +30,14 @@ export default class Pause {
             <aside class="pause">
                 <div class="container">
                     <div class="chapter-progress">
-                        <progress max="3" value="2"></progress>
+                        <progress max="3" value="1"></progress>
                         <ul>
                             <li class="filled">
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star"></use>
                                 </svg>
                             </li>
-                            <li class="filled">
+                            <li>
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star"></use>
                                 </svg>
