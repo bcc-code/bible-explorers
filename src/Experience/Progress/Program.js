@@ -60,7 +60,6 @@ export default class Program {
         instance.taskType = () => instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null
 
         instance.updateAssetInProgramData = (field, newValue) => {
-            console.log(field, newValue)
             instance.programData[instance.currentCheckpoint].steps[instance.currentStep][field] = newValue
         }
 

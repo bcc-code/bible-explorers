@@ -218,7 +218,7 @@ export default class Quiz {
             instance.program.congrats.toggleSummary()
             document.querySelector('.cta').style.display = 'flex'
 
-            const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length + ' '}!</p>`)
+            const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length}</p>`)
             document.querySelector('.modal .summary').append(message)
         })
 

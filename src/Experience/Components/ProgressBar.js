@@ -113,9 +113,8 @@ export default class ProgressBar {
                 <svg class="star-icon icon" viewBox="0 0 29 29">
                     <use href="#star"></use>
                 </svg>
-            </button>`
-
-        generatedHTML += '</div>'
+            </button>
+        </div>`
 
         return generatedHTML
     }

@@ -73,11 +73,8 @@ export default class TaskDescription {
 
             if (instance.message.media) {
                 // Fetch message media from blob or url
-                console.log(instance.currentStepData)
                 instance.offline.fetchChapterAsset(instance.message, "media", (data) => {
-                    console.log(instance.world.program.getCurrentStepData().message.media)
                     instance.program.updateAssetInProgramData('message', data)
-                    console.log(instance.world.program.getCurrentStepData().message.media)
                     document.querySelector('.task__tips > *').src = data.media
                 })
             }
