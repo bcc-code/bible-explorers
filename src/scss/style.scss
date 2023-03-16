@@ -115,22 +115,10 @@
     @include pulsate()
 }
 
-#deskWidgetMain {
+.intercom-namespace .intercom-messenger-frame {
     top: 5rem;
-    right: var(--app-padding);
-    left: auto;
-
-    .widget-toggle-row {
-        display: none;
-    }
-
-    .widget-iframe-hold {
-        top: 0;
-
-        &::after {
-            display: none;
-        }
-    }
+    bottom: auto !important;
+    right: var(--app-padding) !important;
 }
 
 .pointer-events-none {
