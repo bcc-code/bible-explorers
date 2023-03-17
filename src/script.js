@@ -74,7 +74,15 @@ document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function() {
         api_base: "https://api-iam.intercom.io",
         app_id: "gy6jlngb",
         language_override: _lang.getLanguageCode(),
-        vertical_padding: window.innerHeight - 704 - 105
+        vertical_padding: window.innerHeight - 704 - 105,
+        hide_default_launcher: true
+    }
+    
+    // Define user
+    if (experience.auth0.userData) {
+        window.intercomSettings.name = experience.auth0.userData.name
+        window.intercomSettings.email = experience.auth0.userData.email
+        window.intercomSettings.user_hash = experience.auth0.userData.intercom_hash
     }
 
     // Initialize
