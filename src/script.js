@@ -74,7 +74,6 @@ document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function() {
         api_base: "https://api-iam.intercom.io",
         app_id: "gy6jlngb",
         language_override: _lang.getLanguageCode(),
-        vertical_padding: window.innerHeight - 704 - 105,
         hide_default_launcher: true
     }
     
