@@ -65,16 +65,6 @@ export default class World {
 
         this.buttons.home.style.display = 'none'
         this.buttons.home.addEventListener("click", this.goHome)
-
-        // Support chat
-        Intercom('onHide', function() { instance.buttons.contact.removeAttribute('is-open') });
-        Intercom('onShow', function() { instance.buttons.contact.setAttribute('is-open', true) });
-
-        instance.buttons.contact.addEventListener('click', () => {
-            instance.buttons.contact.hasAttribute('is-open')
-                ? Intercom('hide')
-                : Intercom('show')
-        })
     }
 
     placeholderChapterData() {
