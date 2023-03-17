@@ -778,7 +778,7 @@ const strings = {
             "attachments": "Załączniki",
             "homescreen": "Gotowe",
             "preview": {
-                "title": "Preview",
+                "title": "Przegląd",
                 "info": "Kliknij w ten przycisk celem szybkiego przeglądu rozdziału. Tutaj możesz przeskoczyć zadania i przejrzeć z czego składa się ten rozdział."
             },
             "pause": {
@@ -792,7 +792,7 @@ const strings = {
             "questions": "Pytanie",
             "getTask": "Przejdź do zadania",
             "submit": "Wyślij",
-            "next": "Next",
+            "next": "Następny",
             "openQuestion": "Napiszcie odpowiedź tutaj"
         },
         "archive": "Archiwum",
@@ -888,7 +888,7 @@ const strings = {
             "tryAgain": "Spróbujcie jeszcze raz!",
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
-            "restartRound": "Restart the round",
+            "restartRound": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
             "skip": "Pomiń",
             "correctAnswers": "poprawnych odpowiedzi"
