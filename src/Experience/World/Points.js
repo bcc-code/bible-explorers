@@ -53,14 +53,12 @@ export default class Points {
         if (object.name === "tv_16x9_screen") {
             const posX = object.geometry.boundingBox.min.x + 0.1
             const posY = object.geometry.boundingBox.max.y - 0.1
-
             this.currentLabel.position.set(posX, posY, 0)
         }
 
         if (object.name === "Switcher") {
             const posX = object.geometry.boundingBox.min.x
             const posY = object.geometry.boundingBox.min.y
-
             this.currentLabel.position.set(posX, posY, 0)
         }
 
@@ -83,6 +81,7 @@ export default class Points {
         if (!this.currentLabel) return
         this.currentLabel.element.classList.add('fade-in')
     }
+
     fadeOut() {
         if (!this.currentLabel) return
         this.currentLabel.element.classList.remove('fade-in')

@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
     <svg class="icons-spritesheet" aria-hidden="true">
         <symbol id="logo-bible-explorers" class="raw" viewBox="0 0 692.31 183.84">
             <path d="M347.84 28.2c-.87-.82-2.37-6.54-4.28-5.36-6.17 4.21-15.6 3-3.64-2.72 3.45-2.57 7.07-3.07 7.43-6.2-2.17-4.56-7.06-7.61-12.12-7.43-11.7-.54-17.81 15.41-9.47 23.24 5.21 5.43 18.97 5.48 22.08-1.53Zm-10.76-14.43c1.24.11 1.52 1.66.41 2.19-1.86.97-3.64 3.15-5.65 3.31-1.24-3.13 2.38-6.67 5.24-5.5ZM422.56 42.96h.08c.03.8-.27 2.47 1 2.44.04.03 6.58-.45 6.63-.43.52-.04.92-.48.92-1l-.46-37.84c.32-2.13-8.2-.06-9.06-.38-2-.47.27 12.09-.06 12.78 0 1.33-1.37 1.1-2.21.7-22.92-4.5-16.68 37.29 3.16 23.73Zm-7.96-13.08c1.36-2 4.74-2.72 6.44-.8.22.34.23.59.25 2.31.03 2.15.01 2.43-.2 2.85-2.73 4.6-9.57 0-6.49-4.36ZM455.62 25.96c-1.77-1-7.36-2.52-8.07-2.87-2.06-1.69 1.84-2.98 3.27-2.77 2.71-.6 6.88 3.19 8.29-.4l1.34-5.26c-.06-5.27-11.39-3.55-14.86-2.53-10.94 3.41-11.17 18.21.62 20.47.78.16 6.36 1.75 3.05 3.8-3.67 2.25-9.1-2.47-10.47-.67-1.53 5.5-5.9 8.61 2.7 10.23 12.53 3.72 27.67-10.48 14.13-20Z" />
@@ -288,15 +287,6 @@
                 r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
                 a.appendChild(r);
             })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-
-            // Support chat
-            !(function (e) {
-                var basehref = "https://projects.bcc.no",
-                    token = "8e7970be-495c-11ed-b2da-fa06597ee949";
-
-                window.deskcontactwidget = {};
-                var r = e.getElementsByTagName("script")[0], c = e.createElement("script"); c.type = "text/javascript", c.async = !0, c.src = basehref + "/support/v1/contact/main.js?token=" + token, r.parentNode.insertBefore(c, r), window.addEventListener("message", function (e) { var t = e.data[0], a = e.data[1]; switch (t) { case "setContactFormHeight": document.getElementById("deskcontactwidgetframe").height = Math.min(a, window.window.innerHeight - 75) } }, !1);
-            })(document);
         }
     </script>
 </body>

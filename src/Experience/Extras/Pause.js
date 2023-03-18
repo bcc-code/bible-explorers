@@ -14,20 +14,30 @@ export default class Pause {
     }
 
     togglePause() {
+        instance.setHtml()
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
+        instance.setEventListeners()
+    }
+
+    setHtml() {
         instance.program = instance.world.program
 
         const pauseHTML = _gl.elementFromHtml(`
             <aside class="pause">
                 <div class="container">
                     <div class="chapter-progress">
-                        <progress max="3" value="2"></progress>
+                        <progress max="3" value="1"></progress>
                         <ul>
                             <li class="filled">
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star"></use>
                                 </svg>
                             </li>
-                            <li class="filled">
+                            <li>
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star"></use>
                                 </svg>
@@ -47,14 +57,6 @@ export default class Pause {
         `)
 
         document.body.append(pauseHTML)
-        instance.setEventListeners()
-
-        instance.audio.playSound('task-completed')
-        instance.experience.celebrate({
-            particleCount: 100,
-            spread: 160
-        })
-
     }
 
     setEventListeners() {

@@ -1,3 +1,4 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
@@ -9,6 +10,7 @@ let instance = null
 export default class Chapter3Game2 {
     constructor() {
         instance = this
+        instance.offline = new Offline()
         instance.experience = new Experience()
         instance.world = instance.experience.world
         instance.audio = instance.world.audio
@@ -16,7 +18,13 @@ export default class Chapter3Game2 {
     }
 
     toggleGame() {
+        instance.program = instance.world.program
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.flip_cards
+
         instance.gameHTML()
+        instance.useCorrectAssetsSrc()
+
         instance.setEventListeners()
 
         instance.audio.setOtherAudioIsPlaying(true)
@@ -24,10 +32,6 @@ export default class Chapter3Game2 {
     }
 
     gameHTML() {
-        instance.program = instance.world.program
-        instance.stepData = instance.program.getCurrentStepData()
-        instance.data = instance.stepData.flip_cards
-
         const game = _gl.elementFromHtml(`
             <section class="game flip-card">
                 <div class="container">
@@ -81,6 +85,19 @@ export default class Chapter3Game2 {
         })
         if (instance.debug.developer || instance.debug.onPreviewMode())
             document.querySelector('.game.flip-card .container').append(skipBTN)
+    }
+
+    useCorrectAssetsSrc() {
+        instance.data.cards.forEach((card, index) => {
+            instance.offline.fetchChapterAsset(card, "image_back", (data) => {
+                card.image_back = data.image_back
+                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
+            })
+            instance.offline.fetchChapterAsset(card, "image_front", (data) => {
+                card.image_front = data.image_front
+                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
+            })
+        })
     }
 
     setEventListeners() {

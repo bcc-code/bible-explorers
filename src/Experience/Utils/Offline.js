@@ -381,9 +381,8 @@ export default class Offline {
             var getItem = offline.objStore.get(id)
     
             getItem.onsuccess = function () {
-                if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+                if (getItem.result && getItem.result.language == _lang.getLanguageCode())
                     downloadedEpisodes.push(getItem.result.name)
-                }
 
                 if ((index+1) == episodes.length)
                     callback(downloadedEpisodes)
@@ -397,7 +396,6 @@ export default class Offline {
         caches.open("chaptersAssets").then((cache) => {
             cache.match(data[param])
                 .then((response) => {
-                    // console.log(response)
                     if (response) {
                         response.blob().then((blob) => {
                             const url = URL.createObjectURL(blob)

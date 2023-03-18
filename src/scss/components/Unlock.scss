@@ -54,14 +54,13 @@
     }
 
     &-keyboard {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
     --key-spacing: 0.5rem;
 
     &-key {
-        width: calc(calc(100% / 3) - calc(var(--key-spacing) * 2));
         aspect-ratio: 16/9;
         margin: var(--key-spacing);
 

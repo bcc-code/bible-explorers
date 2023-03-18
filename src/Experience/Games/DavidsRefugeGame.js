@@ -1,4 +1,5 @@
 import gsap from 'gsap'
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
@@ -9,6 +10,7 @@ let instance = null
 export default class DavidsRefuge {
     constructor() {
         instance = this
+        instance.offline = new Offline()
         instance.experience = new Experience()
         instance.world = instance.experience.world
         instance.audio = instance.world.audio
@@ -22,6 +24,7 @@ export default class DavidsRefuge {
         document.querySelector('.cta').style.display = 'none'
 
         instance.gameHTML()
+        instance.useCorrectAssetsSrc()
 
         if (instance.data.hints.length > 0)
             instance.hintsHTML()
@@ -49,13 +52,23 @@ export default class DavidsRefuge {
 
             const item = _gl.elementFromHtml(`
                 <article class="goat" data-color="${color}">
-                    <div class="circle"></div>
-                    <p class="tooltip">${goat.text}</p>
-                    <img src="${goat.image}"/>
+                    <p class="tooltip top">${goat.text}</p>
+                    <picture>
+                        <source srcset="${goat.image}">
+                        <img src="${goat.image}"/>
+                    </picture>
                 </article>
             `)
 
             game.querySelector('.goats').append(item)
+
+            gsap.to(item, { scale: 0.85 })
+
+            if (color === 'blue') {
+                gsap.set(item, { x: '-100%' })
+            } else if (color === 'yellow') {
+                gsap.set(item, { x: '100%' })
+            }
         })
 
         const skipBTN = _gl.elementFromHtml(`
@@ -68,6 +81,14 @@ export default class DavidsRefuge {
         skipBTN.addEventListener('click', () => {
             instance.destroy()
             instance.program.nextStep()
+        })
+    }
+
+    useCorrectAssetsSrc() {
+        instance.data.characters.forEach((character, index) => {
+            instance.offline.fetchChapterAsset(character, "image", (data) => {
+                document.querySelectorAll('article.goat img')[index].src = data.image
+            })
         })
     }
 
@@ -133,63 +154,48 @@ export default class DavidsRefuge {
         // Goat selection
         const selectGoat = document.querySelector('[aria-label="select goat"]')
 
-        gsap.utils.toArray('.goat').forEach(item => {
+        gsap.utils.toArray('.goat').forEach((item, index) => {
             const q = gsap.utils.selector(item)
-            const img = q('img')
-            const circle = q('.circle')
             const tooltip = q('.tooltip')
-
 
             item.addEventListener('click', () => {
                 selectGoat.disabled = false
 
-                if (item.hasAttribute('data-selected')) return
-
+                if (item.classList.contains('is-active')) return
                 document.querySelectorAll('.goat').forEach(goat => {
-                    if (!goat.hasAttribute('data-selected')) return
-
-                    const selectedImage = goat.querySelector('img')
-                    const selectedTooltip = goat.querySelector('.circle')
-                    const selectedCircle = goat.querySelector('.tooltip')
-
-                    gsap.to(selectedImage, { x: 0 })
-                    gsap.to(selectedTooltip, { y: 0, backgroundColor: '' })
-                    gsap.to(selectedCircle, { x: 0, y: 0 })
-
-                    goat.removeAttribute('data-selected')
+                    goat.classList.remove('is-active')
+                    gsap.to(goat, { scale: 0.85 })
                 })
 
-                item.setAttribute('data-selected', '')
-
-                gsap.to(img, { x: 10 })
-                gsap.to(circle, { y: 10, backgroundColor: '#fff' })
-                gsap.to(tooltip, { x: 10, y: 10 })
+                item.classList.add('is-active')
+                gsap.to(item, { scale: 1 })
             })
-        })
 
-        selectGoat.addEventListener('click', () => {
-            if (selectGoat.disabled) return
+            selectGoat.addEventListener('click', () => {
+                if (item.classList.contains('is-active')) {
 
-            document.querySelectorAll('.goat').forEach((goat, index) => {
-                const tooltip = goat.querySelector('.tooltip')
+                    item.classList.add('is-selected')
+                    gsap.to(item, { x: '-50%' })
 
-                // Selected goat
-                if (goat.hasAttribute('data-selected')) {
+                    tooltip[0].className = 'tooltip right'
+
+                    console.log();
+
                     if (instance.data.characters[index].tells_the_truth) {
-                        tooltip.innerHTML = instance.data.correct_character_message
 
-                        goat.style.pointerEvents = 'none'
-                        selectGoat.disabled = true
-                        document.querySelector('.cta').style.display = 'flex'
+                        tooltip[0].innerText = instance.data.correct_character_message
 
                         instance.audio.playSound('correct')
                         instance.experience.celebrate({
                             particleCount: 100,
                             spread: 160
                         })
+
+                        gsap.to(selectGoat, { autoAlpha: 0 })
+                        document.querySelector('.cta').style.display = 'flex'
                     }
                     else {
-                        tooltip.innerHTML = instance.data.wrong_character_message
+                        tooltip[0].innerText = instance.data.wrong_character_message
 
                         selectGoat.innerText = _s.miniGames.tryAgain
                         selectGoat.addEventListener('click', () => {
@@ -197,13 +203,12 @@ export default class DavidsRefuge {
                             instance.toggleGame()
                         })
                     }
-                }
-                else {
-                    tooltip?.remove()
-                    gsap.to(goat, { filter: 'grayscale(0.5)', pointerEvents: 'none' })
+                } else {
+                    item.remove()
                 }
             })
         })
+
     }
 
     toggleQuestion() {

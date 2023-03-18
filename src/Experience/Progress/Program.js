@@ -60,7 +60,6 @@ export default class Program {
         instance.taskType = () => instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null
 
         instance.updateAssetInProgramData = (field, newValue) => {
-            console.log(field, newValue)
             instance.programData[instance.currentCheckpoint].steps[instance.currentStep][field] = newValue
         }
 
@@ -87,6 +86,7 @@ export default class Program {
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.removeInteractivity)
     }
 
     previousStep() {
@@ -114,8 +114,6 @@ export default class Program {
     }
 
     toggleStep() {
-        instance.points.delete()
-        instance.highlight.fadeOut()
         instance.world.progressBar.hide()
 
         if (instance.currentStep < 0) {
@@ -250,8 +248,6 @@ export default class Program {
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
-                    instance.highlight.fadeOut()
-                    instance.points.delete()
                     instance.world.progressBar.hide()
                     instance.experience.navigation.next.disabled = false
                 }
@@ -299,8 +295,7 @@ export default class Program {
             })
         }
 
-        instance.highlight.fadeOut()
-        instance.points.delete()
+        instance.removeInteractivity()
     }
 
     showBibleCards() {
@@ -365,6 +360,11 @@ export default class Program {
 
     updateLocalStorage() {
         localStorage.setItem(instance.world.getId(), instance.currentCheckpoint)
+    }
+
+    removeInteractivity() {
+        instance.highlight.fadeOut()
+        instance.points.delete()
     }
 
     removeEventListeners() {

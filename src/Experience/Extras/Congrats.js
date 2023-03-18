@@ -105,15 +105,6 @@ export default class Congrats {
         instance.world.goHome()
     }
 
-    animateStars(timeout) {
-        const stars = document.querySelectorAll(".congrats .stars .icon")
-        stars.forEach((star, index) => {
-            setTimeout(function () {
-                star.classList.add('filled')
-            }, timeout * index)
-        })
-    }
-
     destroy() {
         document.querySelector('.modal')?.remove()
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)

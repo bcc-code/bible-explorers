@@ -38,7 +38,7 @@ const strings = {
             "getTask": "Go to the task",
             "submit": "Submit",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Write answer here"
         },
         "archive": "Archive",
         "settings": {
@@ -149,7 +149,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentor guide"
         }
     },
     "no": {
@@ -203,7 +203,7 @@ const strings = {
             },
             "language": "Språk",
             "backgroundMusic": "Bakgrunnsmusikk",
-            "fullScreenMode": "Fullskjerm modus",
+            "fullScreenMode": "Fullskjermmodus",
             "on": "På",
             "off": "Av",
             "feedback": "Tilbakemelding",
@@ -275,8 +275,8 @@ const strings = {
                 "title": "Oops!",
                 "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
             },
-            "startGame": "Start game",
-            "level": "Level",
+            "startGame": "Start spillet",
+            "level": "Runde",
             "gameOver": "Uh oh, du feilet.",
             "round": "Runde",
             "nextRound": "Neste runde",
@@ -291,16 +291,16 @@ const strings = {
         },
         "chapter": {
             "infoSingular": {
-                "video": "film",
+                "video": "video",
                 "task": "oppgave",
                 "quiz": "quiz"
             },
             "infoPlural": {
-                "video": "films",
+                "video": "videoer",
                 "task": "oppgaver",
-                "quiz": "quizzes"
+                "quiz": "quizer"
             },
-            "activityDescLabel": "Oppgavebeskrivelse"
+            "activityDescLabel": "Mentor veiledning"
         }
     },
     "de": {
@@ -329,8 +329,8 @@ const strings = {
                 "info": "Mit diesem Button kannst du schnell durch die Kapitel springen. Du kannst Aufgaben überspringen und dir so einen Überblick verschaffen."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Teil 1 abgeschlossen",
+                "message": "Die Kinder können eine Pause machen, bevor die Zeitreise weitergeht."
             }
         },
         "task": {
@@ -340,7 +340,7 @@ const strings = {
             "getTask": "Weiter zur Aufgabe",
             "submit": "Senden",
             "next": "Weiter",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Antwort hier eingeben"
         },
         "archive": "Archiv",
         "settings": {
@@ -353,10 +353,10 @@ const strings = {
                 "high": "Hoch (1080p)"
             },
             "language": "Sprache",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
-            "on": "On",
-            "off": "Off",
+            "backgroundMusic": "Hintergrundmusik",
+            "fullScreenMode": "Vollbildmodus",
+            "on": "An",
+            "off": "Aus",
             "feedback": "Rückmeldung",
             "faq": "FAQ",
             "notLoggedIn": "Du bist nicht angemeldet!",
@@ -412,27 +412,27 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Als König auswählen"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Geiß auswählen"
             },
             "completed": {
                 "title": "Gut gemacht!",
                 "message": "Du hast die Aufgabe geschafft!",
-                "string": "completed"
+                "string": "abgeschlossen"
             },
             "timeElapsed": {
                 "title": "Uuups!",
                 "message": "Die Zeit ist abgelaufen. Versuche alle Kabel zu verbinden, bevor sie abläuft."
             },
-            "startGame": "Start game",
+            "startGame": "Spiel starten",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "gameOver": "O nein, verloren.",
+            "round": "Runde",
+            "nextRound": "Nächste Runde",
+            "anotherRound": "Runde wiederholen",
+            "tryAgain": "Versuche es noch einmal!",
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
             "restartRound": "Restart the round",
@@ -442,16 +442,16 @@ const strings = {
         },
         "chapter": {
             "infoSingular": {
-                "video": "video",
-                "task": "task",
-                "quiz": "quiz"
+                "video": "Video",
+                "task": "Aufgabe",
+                "quiz": "Quiz"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "Videos",
+                "task": "Aufgaben",
+                "quiz": "Quizze"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentorenanleitung"
         }
     },
     "nl": {
@@ -480,8 +480,8 @@ const strings = {
                 "info": "Gebruik deze knop om snel door het hoofdstuk te gaan. Hiermee kan je opdrachten overslaan en een overzicht krijgen van de inhoud."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Deel 1 voltooid",
+                "message": "De kinderen kunnen even pauzeren voordat de tijdreis verder gaat."
             }
         },
         "task": {
@@ -491,7 +491,7 @@ const strings = {
             "getTask": "Ga naar de opdracht",
             "submit": "Verzend",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Schrijf antwoord hier"
         },
         "archive": "Archief",
         "settings": {
@@ -504,10 +504,10 @@ const strings = {
                 "high": "Hoog (1080p)"
             },
             "language": "Taal",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
-            "on": "On",
-            "off": "Off",
+            "backgroundMusic": "Achtergrondmuziek",
+            "fullScreenMode": "Volledig scherm",
+            "on": "Aan",
+            "off": "Uit",
             "feedback": "Feedback",
             "faq": "FAQ",
             "notLoggedIn": "Je bent niet ingelogd!",
@@ -563,27 +563,27 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Kies een koning"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Kies geit"
             },
             "completed": {
                 "title": "Goed gedaan!",
                 "message": "Je hebt de opdracht voltooid!",
-                "string": "completed"
+                "string": "voltooid"
             },
             "timeElapsed": {
                 "title": "Oeps!",
                 "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
             },
-            "startGame": "Start game",
+            "startGame": "Start spel",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "gameOver": "Oh oh, dat ging mis.",
+            "round": "Ronde",
+            "nextRound": "Volgende ronde",
+            "anotherRound": "Nog een ronde",
+            "tryAgain": "Probeer opnieuw!",
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
             "restartRound": "Restart the round",
@@ -594,15 +594,15 @@ const strings = {
         "chapter": {
             "infoSingular": {
                 "video": "video",
-                "task": "task",
+                "task": "opdracht",
                 "quiz": "quiz"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "video's",
+                "task": "opdrachten",
+                "quiz": "quizzen"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentor gids"
         }
     },
     "fr": {
@@ -631,8 +631,8 @@ const strings = {
                 "info": "Utilise ce bouton pour parcourir rapidement le chapitre. Tu peux sauter les tâches et obtenir un aperçu du contenu."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Partie 1 terminée",
+                "message": "Les enfants peuvent faire une pause avant de continuer le voyage dans le temps."
             }
         },
         "task": {
@@ -642,7 +642,7 @@ const strings = {
             "getTask": "Aller à la tâche",
             "submit": "Envoyer",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Inscrire la réponse ici"
         },
         "archive": "Archive",
         "settings": {
@@ -655,8 +655,8 @@ const strings = {
                 "high": "Haute (1080p)"
             },
             "language": "Langue",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
+            "backgroundMusic": "Musique de fond",
+            "fullScreenMode": "Mode plein écran",
             "on": "On",
             "off": "Off",
             "feedback": "Commentaires",
@@ -714,26 +714,26 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Choisir comme roi"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Choisir la chèvre"
             },
             "completed": {
                 "title": "Bien joué !",
-                "message": "Tu as réussi la tâche !",
-                "string": "completed"
+                "message": "Tu as réussi la tâche !",
+                "string": "terminé"
             },
             "timeElapsed": {
                 "title": "Oups!",
                 "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
             },
-            "startGame": "Start game",
-            "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
+            "startGame": "Commencer le jeu",
+            "level": "Niveau",
+            "gameOver": "Aïe, tu t’es trompé.",
+            "round": "Tour",
+            "nextRound": "Tour suivant",
+            "anotherRound": "Nouveau tour",
             "tryAgain": "Try again",
             "playAgain": "Rejouer",
             "reset": "Redémarrer le jeu",
@@ -744,16 +744,16 @@ const strings = {
         },
         "chapter": {
             "infoSingular": {
-                "video": "video",
-                "task": "task",
+                "video": "vidéo",
+                "task": "tâche",
                 "quiz": "quiz"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "vidéos",
+                "task": "tâches",
+                "quiz": "quiz"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Guide du mentor"
         }
     },
     "pl": {
@@ -778,12 +778,12 @@ const strings = {
             "attachments": "Załączniki",
             "homescreen": "Gotowe",
             "preview": {
-                "title": "Preview",
+                "title": "Przegląd",
                 "info": "Kliknij w ten przycisk celem szybkiego przeglądu rozdziału. Tutaj możesz przeskoczyć zadania i przejrzeć z czego składa się ten rozdział."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Cześć 1 ukończona",
+                "message": "Dzieci mogą zrobić sobie przerwę przed dalszą podróżą w czasie."
             }
         },
         "task": {
@@ -792,8 +792,8 @@ const strings = {
             "questions": "Pytanie",
             "getTask": "Przejdź do zadania",
             "submit": "Wyślij",
-            "next": "Next",
-            "openQuestion": "Write the answer here"
+            "next": "Następny",
+            "openQuestion": "Napiszcie odpowiedź tutaj"
         },
         "archive": "Archiwum",
         "settings": {
@@ -806,8 +806,8 @@ const strings = {
                 "high": "Wysoka (1080p)"
             },
             "language": "Język",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
+            "backgroundMusic": "Muzyka w tle",
+            "fullScreenMode": "Tryb pełnoekranowy",
             "on": "On",
             "off": "Off",
             "feedback": "Feedback",
@@ -865,46 +865,46 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Wybierz jako króla"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Wybierz kozę"
             },
             "completed": {
                 "title": "Dobra robota!",
                 "message": "Wykonaliście zadanie!",
-                "string": "completed"
+                "string": "ukończona"
             },
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
             },
-            "startGame": "Start game",
-            "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "startGame": "Rozpocznij grę",
+            "level": "Poziom",
+            "gameOver": "O nie, nie udało wam się.",
+            "round": "Runda",
+            "nextRound": "Następna runda",
+            "anotherRound": "Kolejna runda",
+            "tryAgain": "Spróbujcie jeszcze raz!",
             "playAgain": "Odtwórz ponownie",
             "reset": "Zacznij jeszcze raz",
-            "restartRound": "Restart the round",
+            "restartRound": "Zacznij jeszcze raz",
             "continue": "Kontynuuj podróż",
             "skip": "Pomiń",
             "correctAnswers": "poprawnych odpowiedzi"
         },
         "chapter": {
             "infoSingular": {
-                "video": "video",
-                "task": "task",
+                "video": "filmik",
+                "task": "zadanie",
                 "quiz": "quiz"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "filmiki",
+                "task": "zadania",
+                "quiz": "quizy"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Przewodnik mentora"
         }
     },
     "ro": {
@@ -933,7 +933,7 @@ const strings = {
                 "info": "Folosește acest buton pentru a trece rapid prin capitol. Poți sări peste sarcini ca să vezi conținutul capitolului."
             },
             "pause": {
-                "title": "Ați terminat partea 1",
+                "title": "Partea 1 finalizată",
                 "message": "Copiii pot lua o pauză înainte de a continua călătoria în timp."
             }
         },
@@ -1030,11 +1030,11 @@ const strings = {
                 "title": "Ups!",
                 "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
             },
-            "startGame": "Pornește joc",
+            "startGame": "Începe jocul",
             "level": "Nivel",
             "gameOver": "Ups, ai pierdut.",
             "round": "Runda",
-            "nextRound": "Următoarea rundă",
+            "nextRound": "Runda următoare",
             "anotherRound": "Încă o rundă",
             "tryAgain": "Încearcă din nou",
             "playAgain": "O nouă rundă",
@@ -1048,14 +1048,14 @@ const strings = {
             "infoSingular": {
                 "video": "film",
                 "task": "sarcină",
-                "quiz": "chestionar"
+                "quiz": "test"
             },
             "infoPlural": {
                 "video": "filme",
                 "task": "sarcini",
-                "quiz": "chestionare"
+                "quiz": "teste"
             },
-            "activityDescLabel": "Descrierea activităților"
+            "activityDescLabel": "Ghidul mentorului"
         }
     },
     "es": {
@@ -1095,7 +1095,7 @@ const strings = {
             "getTask": "Ir a la tarea",
             "submit": "Enviar",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Write answer here"
         },
         "archive": "Archivo",
         "settings": {
@@ -1167,7 +1167,7 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Elige como rey"
             },
             "davidsRefuge": {
                 "chooseGoat": "Choose goat"
@@ -1175,19 +1175,19 @@ const strings = {
             "completed": {
                 "title": "Buen Trabajo!",
                 "message": "Has completado tu tarea!",
-                "string": "completed"
+                "string": "completada"
             },
             "timeElapsed": {
                 "title": "Ups!",
                 "message": "Se acabo el tiempo, prueba atar los cables antes que el tiempo se acabe."
             },
-            "startGame": "Start game",
+            "startGame": "Comienza el juego",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
+            "gameOver": "Uh oh, te has equivocado.",
+            "round": "Ronda",
             "nextRound": "Next round",
             "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "tryAgain": "Prueba nuevamente!",
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
             "restartRound": "Restart the round",
@@ -1206,7 +1206,7 @@ const strings = {
                 "task": "tasks",
                 "quiz": "quizzes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Guía del tutor"
         }
     },
     "pt-pt": {
@@ -1235,8 +1235,8 @@ const strings = {
                 "info": "Utilize este botão para uma navegação rápida pelo capítulo. Aqui você poderá saltar as tarefas e ter uma visão apla do conteúdo."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Parte 1 completa",
+                "message": "As crianças podem fazer uma pausa antes que a viagem do tempo continue."
             }
         },
         "task": {
@@ -1246,7 +1246,7 @@ const strings = {
             "getTask": "Vá para a tarefa",
             "submit": "Enviar",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Escreva sua resposta aqui"
         },
         "archive": "Arquivo",
         "settings": {
@@ -1259,8 +1259,8 @@ const strings = {
                 "high": "Alto (1080p)"
             },
             "language": "Idioma",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
+            "backgroundMusic": "Musica de fundo",
+            "fullScreenMode": "Modo tela cheia",
             "on": "On",
             "off": "Off",
             "feedback": "Comentários",
@@ -1318,27 +1318,27 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Escolha como um rei"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Escolha a carneiro"
             },
             "completed": {
                 "title": "Well done!",
                 "message": "You have successfully completed the task!",
-                "string": "completed"
+                "string": "completa"
             },
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
-            "startGame": "Start game",
-            "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "startGame": "Comece o jogo",
+            "level": "Nivel",
+            "gameOver": "Oh, você falhou.",
+            "round": "Rodada",
+            "nextRound": "Próxima rodada",
+            "anotherRound": "Outra rodada",
+            "tryAgain": "Tente novamente!",
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
             "restartRound": "Restart the round",
@@ -1348,16 +1348,16 @@ const strings = {
         },
         "chapter": {
             "infoSingular": {
-                "video": "video",
-                "task": "task",
+                "video": "vídeo",
+                "task": "tarefa",
                 "quiz": "quiz"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "vídeos",
+                "task": "tarefa",
+                "quiz": "testes"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Guia do mentor"
         }
     },
     "it": {
@@ -1397,7 +1397,7 @@ const strings = {
             "getTask": "Vai all'attività",
             "submit": "Invia",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Write answer here"
         },
         "archive": "Archivio",
         "settings": {
@@ -1469,7 +1469,7 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Scegli come re"
             },
             "davidsRefuge": {
                 "chooseGoat": "Choose goat"
@@ -1477,19 +1477,19 @@ const strings = {
             "completed": {
                 "title": "Ottimo lavoro!",
                 "message": "Hai completato il compito!",
-                "string": "completed"
+                "string": "completato"
             },
             "timeElapsed": {
                 "title": "Ops!",
                 "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
             },
-            "startGame": "Start game",
+            "startGame": "Inizia il gioco",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Oh, oh, hai sbagliato.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "tryAgain": "Riprova!",
             "playAgain": "Gioca di nuovo",
             "reset": "Ricomincia il gioco da capo",
             "restartRound": "Restart the round",
@@ -1537,8 +1537,8 @@ const strings = {
                 "info": "Используйте эту кнопку, чтобы быстро просмотреть главу. Вы можете пропустить задания и ознакомиться с содержанием."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Часть 1 завершена",
+                "message": "Дети могут передохнуть, прежде чем путешествие во времени продолжится."
             }
         },
         "task": {
@@ -1548,7 +1548,7 @@ const strings = {
             "getTask": "Перейти к заданию",
             "submit": "Отправить",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Напишите ответ здесь"
         },
         "archive": "Архив",
         "settings": {
@@ -1561,10 +1561,10 @@ const strings = {
                 "high": "Высокое (1080p)"
             },
             "language": "Язык",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
-            "on": "On",
-            "off": "Off",
+            "backgroundMusic": "Фоновая музыка",
+            "fullScreenMode": "Полноэкранный режим",
+            "on": "Вкл.",
+            "off": "Выкл.",
             "feedback": "Обратная связь",
             "faq": "FAQ",
             "notLoggedIn": "Вы не вошли в учетную запись",
@@ -1620,26 +1620,26 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Выбрать царем"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Выберите козу"
             },
             "completed": {
                 "title": "Отличная работа!",
                 "message": "Вы выполнили задание!",
-                "string": "completed"
+                "string": "завершен"
             },
             "timeElapsed": {
                 "title": "Ой!",
                 "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
             },
-            "startGame": "Start game",
-            "level": "Level",
+            "startGame": "Начать игру",
+            "level": "Уровень",
             "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
+            "round": "Раунд",
+            "nextRound": "Следующий раунд",
+            "anotherRound": "Новый раунд",
             "tryAgain": "Try again",
             "playAgain": "Играть снова",
             "reset": "Начать заново",
@@ -1650,16 +1650,16 @@ const strings = {
         },
         "chapter": {
             "infoSingular": {
-                "video": "video",
-                "task": "task",
-                "quiz": "quiz"
+                "video": "Видео",
+                "task": "Задание",
+                "quiz": "Викторина"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "Видео",
+                "task": "Задания",
+                "quiz": "Викторины"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Сопровождение ментора"
         }
     },
     "fi": {
@@ -1688,8 +1688,8 @@ const strings = {
                 "info": "Paina tästä napista nähdäksesi koko jakson sisällön. Voit hypätä tehtävien yli ja näet yleiskuvan koko sisällöstä."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Osa 1 valmis",
+                "message": "Lapset voivat pitää tauon ennen kuin aikamatka jatkuu."
             }
         },
         "task": {
@@ -1699,7 +1699,7 @@ const strings = {
             "getTask": "Mene tehtävään",
             "submit": "Lähetä",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Kirjoita vastaus tähän"
         },
         "archive": "Arkisto",
         "settings": {
@@ -1712,10 +1712,10 @@ const strings = {
                 "high": "Korkea (1080p)"
             },
             "language": "Kieli",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
-            "on": "On",
-            "off": "Off",
+            "backgroundMusic": "Taustamusiikki",
+            "fullScreenMode": "Koko näytön tila",
+            "on": "Päälle",
+            "off": "Pois",
             "feedback": "Palaute",
             "faq": "FAQ",
             "notLoggedIn": "Et ole kirjautunut sisään!",
@@ -1771,27 +1771,27 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Valitse kuninkaaksi"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Valitse vuohi"
             },
             "completed": {
                 "title": "Hyvin tehty!",
                 "message": "Olet suorittanut tehtävän!",
-                "string": "completed"
+                "string": "valmis"
             },
             "timeElapsed": {
                 "title": "Hups!",
                 "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
             },
-            "startGame": "Start game",
-            "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "startGame": "Aloita peli",
+            "level": "Taso",
+            "gameOver": "Hups, huonosti kävi.",
+            "round": "Kierros",
+            "nextRound": "Seuraava kierros",
+            "anotherRound": "Uusi kierros",
+            "tryAgain": "Yritä uudestaan!",
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
             "restartRound": "Restart the round",
@@ -1802,15 +1802,15 @@ const strings = {
         "chapter": {
             "infoSingular": {
                 "video": "video",
-                "task": "task",
-                "quiz": "quiz"
+                "task": "tehtävä",
+                "quiz": "tietokilpailu"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "videot",
+                "task": "tehtävät",
+                "quiz": "tietokilpailut"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentorin opas"
         }
     },
     "hu": {
@@ -1850,7 +1850,7 @@ const strings = {
             "getTask": "Menj a feladathoz",
             "submit": "Küldés",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Write answer here"
         },
         "archive": "Archívum",
         "settings": {
@@ -1922,7 +1922,7 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Válaszd ki a királyt"
             },
             "davidsRefuge": {
                 "chooseGoat": "Choose goat"
@@ -1930,19 +1930,19 @@ const strings = {
             "completed": {
                 "title": "Szép munka!",
                 "message": "Teljesítetted a feladatot! Folytathatod az utazást",
-                "string": "completed"
+                "string": "befejezve"
             },
             "timeElapsed": {
                 "title": "Hoppá!",
                 "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
             },
-            "startGame": "Start game",
+            "startGame": "Játék indítása",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Uh oh, elhibáztad.",
             "round": "Round",
             "nextRound": "Next round",
             "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "tryAgain": "Próbáld újra!",
             "playAgain": "Play again",
             "reset": "Újrakezdés",
             "restartRound": "Restart the round",
@@ -1990,8 +1990,8 @@ const strings = {
                 "info": "Brug denne knap for en hurtig gennemgang af kapitlet. Her kan du hoppe over opgaverne og få oversigt over indholdet."
             },
             "pause": {
-                "title": "Part 1 completed",
-                "message": "The children can take a break before the time travel continues."
+                "title": "Del 1 afsluttet",
+                "message": "Børnene kan holde en pause, inden tidsrejsen fortsætter."
             }
         },
         "task": {
@@ -2001,7 +2001,7 @@ const strings = {
             "getTask": "Gå til opgaven",
             "submit": "Send",
             "next": "Next",
-            "openQuestion": "Write the answer here"
+            "openQuestion": "Skriv svaret her"
         },
         "archive": "Arkiv",
         "settings": {
@@ -2014,8 +2014,8 @@ const strings = {
                 "high": "Høj (1080p)"
             },
             "language": "Sprog",
-            "backgroundMusic": "Background music",
-            "fullScreenMode": "Full screen mode",
+            "backgroundMusic": "Baggrundsmusik",
+            "fullScreenMode": "Fuldskærmstilstand",
             "on": "On",
             "off": "Off",
             "feedback": "Tilbagemelding",
@@ -2073,27 +2073,27 @@ const strings = {
                 }
             },
             "flipCards": {
-                "chooseKing": "Choose as king"
+                "chooseKing": "Vælg som konge"
             },
             "davidsRefuge": {
-                "chooseGoat": "Choose goat"
+                "chooseGoat": "Vælg ged"
             },
             "completed": {
                 "title": "Well done!",
                 "message": "You have completed the task! You can continue your journey",
-                "string": "completed"
+                "string": "afsluttet"
             },
             "timeElapsed": {
                 "title": "Oops!",
                 "message": "Time is up; try to attach all the wires before time is up."
             },
-            "startGame": "Start game",
+            "startGame": "Start spillet",
             "level": "Level",
-            "gameOver": "Uh oh, you failed.",
-            "round": "Round",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
-            "tryAgain": "Try again",
+            "gameOver": "Åh oh, du klarede det ikke.",
+            "round": "Runde",
+            "nextRound": "Næste runde",
+            "anotherRound": "En runde mere",
+            "tryAgain": "Prøv igjen",
             "playAgain": "Spil igen",
             "reset": "Start spillet forfra",
             "restartRound": "Restart the round",
@@ -2104,15 +2104,15 @@ const strings = {
         "chapter": {
             "infoSingular": {
                 "video": "video",
-                "task": "task",
+                "task": "opgave",
                 "quiz": "quiz"
             },
             "infoPlural": {
-                "video": "videos",
-                "task": "tasks",
-                "quiz": "quizzes"
+                "video": "videoer",
+                "task": "opgaver",
+                "quiz": "quizzer"
             },
-            "activityDescLabel": "Task description"
+            "activityDescLabel": "Mentor vejledning"
         }
     },
 }
