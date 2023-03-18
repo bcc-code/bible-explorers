@@ -144,13 +144,17 @@ export default class Program {
         instance.experience.navigation.next.disabled = false
 
         if (instance.stepType() == 'video') {
+
             instance.updateCameraForCurrentStep(() => {
                 instance.highlight.add(instance.interactiveObjects()[0])
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                 instance.experience.navigation.next.disabled = true
                 instance.video.load(instance.currentVideo())
                 instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
+
             })
+
+
         }
         else {
             instance.updateCameraForCurrentStep(() => {
@@ -242,6 +246,7 @@ export default class Program {
         instance.experience.navigation.next.disabled = true
 
         if (instance.stepType() == 'iris') {
+
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
                 instance.highlight.add(instance.interactiveObjects()[0])
@@ -270,6 +275,7 @@ export default class Program {
         instance.clickedObject = currentIntersect.name
 
         if (instance.objectIsClickable()) {
+
             instance.camera.updateCameraTo(this.currentLocation())
             instance.startAction()
 
@@ -287,6 +293,7 @@ export default class Program {
         else if (instance.clickedObject == 'Screen') {
             instance.video.play()
         }
+
         else if (instance.clickedObject == 'Switch') {
             instance.world.controlRoom.animations.actions.drag.play()
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
@@ -327,7 +334,7 @@ export default class Program {
             if (instance.currentCheckpoint != 6) {
                 interactiveObjects.push("Screen")
             } else {
-                interactiveObjects.push("Switch")
+                interactiveObjects.push("Switch", "Screen")
             }
         }
 
