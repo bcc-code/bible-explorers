@@ -22,6 +22,17 @@
 @import "./components/Unlock.scss";
 @import "./components/Quiz.scss";
 
+button[aria-label="skip-button"] {
+    position: absolute;
+    top: var(--app-padding);
+    right: var(--app-padding);
+}
+
+textarea::placeholder {
+    color: #fff;
+    opacity: 0.6;
+}
+
 #videos-container {
     position: absolute;
     inset: 0;
@@ -492,11 +503,7 @@ img.lazyloaded~div.img-loader {
 }
 
 
-button[aria-label="skip-button"] {
-    position: absolute;
-    top: var(--app-padding);
-    right: var(--app-padding);
-}
+
 
 .chapter-progress {
     width: 480px;
