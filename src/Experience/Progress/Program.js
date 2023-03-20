@@ -144,17 +144,15 @@ export default class Program {
         instance.experience.navigation.next.disabled = false
 
         if (instance.stepType() == 'video') {
-
             instance.updateCameraForCurrentStep(() => {
                 instance.highlight.add(instance.interactiveObjects()[0])
                 instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                 instance.experience.navigation.next.disabled = true
                 instance.video.load(instance.currentVideo())
                 instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
-
             })
-
         }
+        
         else {
             instance.updateCameraForCurrentStep(() => {
                 instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
@@ -245,7 +243,6 @@ export default class Program {
         instance.experience.navigation.next.disabled = true
 
         if (instance.stepType() == 'iris') {
-
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
                 instance.highlight.add(instance.interactiveObjects()[0])
@@ -262,6 +259,14 @@ export default class Program {
                 })
             })
         }
+
+        else if (instance.stepType() == 'pause') {
+            instance.camera.updateCameraTo('default', () => {
+                instance.world.progressBar?.hide()
+                instance.startTask()
+            })
+        }
+
         else {
             instance.world.progressBar?.hide()
             instance.startTask()
@@ -274,7 +279,6 @@ export default class Program {
         instance.clickedObject = currentIntersect.name
 
         if (instance.objectIsClickable()) {
-
             instance.camera.updateCameraTo(this.currentLocation())
             instance.startAction()
 

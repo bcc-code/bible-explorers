@@ -672,7 +672,7 @@ export default class World {
         document.querySelector('.cta').style.display = 'flex'
         instance.experience.navigation.prev.disabled = false
 
-        instance.camera.updateCameraTo()
+        instance.camera.updateCameraTo(null)
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
         instance.debug.removePreviewMode()
@@ -683,7 +683,6 @@ export default class World {
 
         if (instance.program.archive)
             instance.program.archive.remove()
-
 
         if (instance.program.pause)
             instance.program.pause.destroy()

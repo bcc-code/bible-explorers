@@ -24,8 +24,6 @@ export default class Pause {
     }
 
     setHtml() {
-        instance.program = instance.world.program
-
         const pauseHTML = _gl.elementFromHtml(`
             <aside class="pause">
                 <div class="container">
