@@ -138,6 +138,14 @@ export default class Menu {
             }
         })
 
+        window.addEventListener('resize', (e) => {
+            if (window.innerHeight == screen.height) {
+                fullscreen.querySelector('input').checked = true
+            } else {
+                fullscreen.querySelector('input').checked = false
+            }
+        });
+
         const loginBtn = document.querySelector('[aria-label="Login button"]')
         const logoutBtn = document.querySelector('[aria-label="Logout button"]')
 

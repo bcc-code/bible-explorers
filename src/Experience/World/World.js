@@ -614,10 +614,8 @@ export default class World {
             }
         })
 
-        const fullscreen = document.querySelector('.fullscreen-section')
-        fullscreen.querySelector('input').checked = true
-
-        if (fullscreen.querySelector('input').checked)
+        document.querySelector('.fullscreen-section input').checked = true
+        if (!document.fullscreenElement)
             document.documentElement.requestFullscreen()
 
         document.querySelector('.page').className = 'page page-home'
@@ -688,11 +686,10 @@ export default class World {
         if (instance.program.pause)
             instance.program.pause.destroy()
 
-        const fullscreen = document.querySelector('.fullscreen-section')
-        fullscreen.querySelector('input').checked = false
-
-        if (!fullscreen.querySelector('input').checked)
+        document.querySelector('.fullscreen-section input').checked = false
+        if (document.fullscreenElement)
             document.exitFullscreen()
+
     }
 
     preselectChapter() {
