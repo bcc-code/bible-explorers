@@ -154,7 +154,6 @@ export default class Program {
 
             })
 
-
         }
         else {
             instance.updateCameraForCurrentStep(() => {
@@ -334,7 +333,19 @@ export default class Program {
             if (instance.currentCheckpoint != 6) {
                 interactiveObjects.push("Screen")
             } else {
-                interactiveObjects.push("Switch", "Screen")
+
+                const UA = navigator.userAgent;
+                const isWebkit =
+                    /\b(iPad|iPhone|iPod)\b/.test(UA) &&
+                    /WebKit/.test(UA) &&
+                    !/Edge/.test(UA) &&
+                    !window.MSStream;
+
+                if (isWebkit) {
+                    interactiveObjects.push("Screen")
+                } else {
+                    interactiveObjects.push("Switch")
+                }
             }
         }
 
