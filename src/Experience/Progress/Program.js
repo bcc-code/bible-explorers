@@ -66,7 +66,21 @@ export default class Program {
         instance.currentLocation = () => {
             if (instance.stepType() == 'video') { return 'portal' }
             else if (instance.stepType() == 'iris') { return 'irisCloseLook' }
-            else if (instance.stepType() == 'task') { return 'irisWithOptions' }
+            else if (instance.stepType() == 'task') {
+                // Games
+                if (instance.taskType() == 'cables'
+                    || instance.taskType() == 'sorting'
+                    || instance.taskType() == 'simon_says'
+                    || instance.taskType() == 'flip_cards'
+                    || instance.taskType() == 'heart_defense'
+                    || instance.taskType() == 'davids_refuge'
+                ) {
+                    return 'irisCloseLook'
+                }
+                else {
+                    return 'irisWithOptions'
+                }
+            }
             else { return 'default' }
         }
         instance.interactiveObjects = () => instance.getCurrentStepData() ? instance.getAllInteractiveObjects() : []
@@ -152,7 +166,7 @@ export default class Program {
                 instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
             })
         }
-        
+
         else {
             instance.updateCameraForCurrentStep(() => {
                 instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
