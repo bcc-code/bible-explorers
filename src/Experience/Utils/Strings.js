@@ -1533,7 +1533,7 @@ const strings = {
             "attachments": "Вложения",
             "homescreen": "Готово",
             "preview": {
-                "title": "Preview",
+                "title": "Предв. просмотр",
                 "info": "Используйте эту кнопку, чтобы быстро просмотреть главу. Вы можете пропустить задания и ознакомиться с содержанием."
             },
             "pause": {
@@ -1547,7 +1547,7 @@ const strings = {
             "questions": "Вопрос",
             "getTask": "Перейти к заданию",
             "submit": "Отправить",
-            "next": "Next",
+            "next": "Следующее",
             "openQuestion": "Напишите ответ здесь"
         },
         "archive": "Архив",
@@ -1636,14 +1636,14 @@ const strings = {
             },
             "startGame": "Начать игру",
             "level": "Уровень",
-            "gameOver": "Uh oh, you failed.",
+            "gameOver": "Ой, ты ошибся.",
             "round": "Раунд",
             "nextRound": "Следующий раунд",
             "anotherRound": "Новый раунд",
-            "tryAgain": "Try again",
+            "tryAgain": "Попробуй еще раз",
             "playAgain": "Играть снова",
             "reset": "Начать заново",
-            "restartRound": "Restart the round",
+            "restartRound": "Перезапустить раунд",
             "continue": "Продолжить путешествие",
             "skip": "Пропустить",
             "correctAnswers": "верных ответов"
