@@ -12,7 +12,6 @@ export default class Menu {
         instance.experience = new Experience()
 
         instance.soundOn = true
-        instance.fullScreen = false
 
         const defaultVideoQuality = 'high'
         instance.videoQuality = localStorage.getItem('videoQuality') || defaultVideoQuality
@@ -32,7 +31,7 @@ export default class Menu {
         settingsTitle.innerText = _s.settings.title
 
         const selectLang = document.querySelector('.select-language')
-        const selectLangLabel = selectLang.querySelector('.label')
+        const selectLangLabel = selectLang.querySelector('.heading')
         const selectLangCurrent = selectLang.querySelector('button')
         const selectLangDropdown = selectLang.querySelector('ul')
         selectLangLabel.innerText = _s.settings.language
@@ -40,7 +39,7 @@ export default class Menu {
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
 
         const selectVQ = document.querySelector('.select-video-quality')
-        const selectVQLabel = selectVQ.querySelector('.label')
+        const selectVQLabel = selectVQ.querySelector('.heading')
         const selectVQCurrent = selectVQ.querySelector('button')
         const selectVQDropdown = selectVQ.querySelector('ul')
         selectVQLabel.innerText = _s.settings.videoQuality.title
@@ -57,22 +56,20 @@ export default class Menu {
         })
 
         const backgroundMusic = document.querySelector('.background-music')
-        const backgroundMusicLabel = backgroundMusic.querySelector('.label span')
+        const backgroundMusicLabel = backgroundMusic.querySelector('.heading span')
         backgroundMusicLabel.innerText = _s.settings.backgroundMusic
 
         const soundEFX = document.querySelector('.sound-effects')
-        const soundEFXLabel = soundEFX.querySelector('.label')
-        const soundEFXToggle = soundEFX.querySelector('[aria-label="Sound effects toggle"]')
-        soundEFXLabel.innerText = _s.settings.soundEffects
-        soundEFXToggle.querySelector('input').setAttribute(instance.soundOn ? 'checked' : '', '')
-        soundEFXToggle.querySelector('.slider').innerText = instance.soundOn ? _s.settings.on : _s.settings.off
+        soundEFX.querySelector('.heading').innerText = _s.settings.soundEffects
+        soundEFX.querySelector('input').setAttribute(instance.soundOn ? 'checked' : '', '')
+        soundEFX.querySelector('label').innerText = instance.soundOn ? _s.settings.on : _s.settings.off
 
-        const fullScreenLabel = document.querySelector('.fullscreen-toggle .label')
-        const fullScreenInput = document.querySelector('.fullscreen-toggle input')
-        const fullScreenSlider = document.querySelector('.fullscreen-toggle .slider')
-        fullScreenLabel.innerText = _s.settings.fullScreenMode
-        fullScreenInput.checked = document.fullscreenElement !== null
-        fullScreenSlider.innerText = !document.fullscreenElement ? _s.settings.off : _s.settings.on
+
+        const fullscreen = document.querySelector('.fullscreen-section')
+        fullscreen.querySelector('.heading').innerText = _s.settings.fullScreenMode
+        fullscreen.querySelector('input').checked = document.fullscreenElement !== null
+        fullscreen.querySelector('label').innerText = !document.fullscreenElement ? _s.settings.off : _s.settings.on
+
 
         const loginBtn = document.querySelector('[aria-label="Login button"]')
         const logoutBtn = document.querySelector('[aria-label="Logout button"]')
@@ -119,26 +116,26 @@ export default class Menu {
             })
         })
 
-        const soundToggle = document.querySelector('[aria-label="Sound effects toggle"]');
-        soundToggle.addEventListener('click', () => {
-            instance.soundOn = soundToggle.querySelector('input[type="checkbox"]').checked
-            const label = soundToggle.querySelector('.slider')
-            label.innerText = instance.soundOn ? _s.settings.on : _s.settings.off
+        const soundEFX = document.querySelector('.sound-effects');
+        soundEFX.querySelector('input').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                instance.soundOn = true
+                soundEFX.querySelector('label').innerText = _s.settings.on
+            } else {
+                instance.soundOn = false
+                soundEFX.querySelector('label').innerText = _s.settings.off
+            }
         })
 
-        const fullScreenToggle = document.querySelector('[aria-label="Full screen toggle"]');
-        fullScreenToggle.addEventListener('click', () => {
-
-            if (!document.fullscreenElement) {
-                instance.fullScreen = true
+        const fullscreen = document.querySelector('.fullscreen-section');
+        fullscreen.querySelector('input').addEventListener('change', (e) => {
+            if (e.target.checked) {
                 document.documentElement.requestFullscreen()
-            } else if (document.exitFullscreen) {
+                fullscreen.querySelector('label').innerText = _s.settings.on
+            } else {
                 document.exitFullscreen()
-                instance.fullScreen = false
+                fullscreen.querySelector('label').innerText = _s.settings.off
             }
-
-            const label = fullScreenToggle.querySelector('.slider')
-            label.innerText = instance.fullScreen ? _s.settings.on : _s.settings.off
         })
 
         const loginBtn = document.querySelector('[aria-label="Login button"]')

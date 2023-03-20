@@ -614,10 +614,11 @@ export default class World {
             }
         })
 
-        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
-            document.documentElement.requestFullscreen()
-        }
+        const fullscreen = document.querySelector('.fullscreen-section')
+        fullscreen.querySelector('input').checked = true
 
+        if (fullscreen.querySelector('input').checked)
+            document.documentElement.requestFullscreen()
 
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
@@ -687,9 +688,11 @@ export default class World {
         if (instance.program.pause)
             instance.program.pause.destroy()
 
-        if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
+        const fullscreen = document.querySelector('.fullscreen-section')
+        fullscreen.querySelector('input').checked = false
+
+        if (!fullscreen.querySelector('input').checked)
             document.exitFullscreen()
-        }
     }
 
     preselectChapter() {
