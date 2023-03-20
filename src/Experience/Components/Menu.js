@@ -131,18 +131,19 @@ export default class Menu {
         fullscreen.querySelector('input').addEventListener('change', (e) => {
             if (e.target.checked) {
                 document.documentElement.requestFullscreen()
-                fullscreen.querySelector('label').innerText = _s.settings.on
             } else {
                 document.exitFullscreen()
-                fullscreen.querySelector('label').innerText = _s.settings.off
             }
         })
 
         window.addEventListener('resize', (e) => {
             if (window.innerHeight == screen.height) {
                 fullscreen.querySelector('input').checked = true
+                fullscreen.querySelector('label').innerText = _s.settings.on
+
             } else {
                 fullscreen.querySelector('input').checked = false
+                fullscreen.querySelector('label').innerText = _s.settings.off
             }
         });
 
