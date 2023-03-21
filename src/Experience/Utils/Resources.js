@@ -44,7 +44,7 @@ export default class Resources extends EventEmitter {
     loadManager() {
 
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-            console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+            // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
 
             this.loadingIcon = new rive.Rive({
                 src: 'textures/loading_icon.riv',
@@ -63,7 +63,7 @@ export default class Resources extends EventEmitter {
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-            console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
 
             const progressRatio = Math.trunc(itemsLoaded / itemsTotal * 100)
 
