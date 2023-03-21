@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/@rive-app/canvas@1.0.102"></script>
 </head>
 
 <body>
@@ -252,8 +254,21 @@
             <div class="overlay"></div>
         </aside>
 
-        <aside class="page">
-            <div class="container"></div>
+        <aside class="page page-loader">
+            <div class="container">
+                <section class="loader">
+                    <canvas id="loading_icon" width="240" height="240"></canvas>
+                    <div class="loading">
+                        <span></span>
+                        <div class="dots">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
             <div class="overlay"></div>
         </aside>
 

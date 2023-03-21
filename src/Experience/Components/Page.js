@@ -11,25 +11,6 @@ export default class Page {
         instance.experience = new Experience()
     }
 
-    loader() {
-        const pageLoader = _gl.elementFromHtml(`
-            <section class="loader">
-                <div class="loading">
-                    <span>${_s.loading}</span>
-                    <div class="dots">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-            </section>
-        `)
-
-        document.querySelector('.page').className = 'page page-loader'
-        document.querySelector('.page .container').append(pageLoader)
-    }
-
     createIntro() {
         const intro = _gl.elementFromHtml(`
             <section class="intro">

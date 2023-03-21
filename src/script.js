@@ -10,11 +10,13 @@ import _appInsights from './Experience/Utils/AppInsights.js'
 import _gl from './Experience/Utils/Globals.js'
 import lazySizes from 'lazysizes';
 
+
 // Application Insights
 _appInsights.loadAppInsights()
 _appInsights.trackPageView({ name: "Home" })
 
 document.querySelector('.icons-spritesheet').style.display = 'none'
+document.querySelector('.loader span').innerText = _s.initializing
 
 // Start 3D experience
 const experience = new Experience(document.querySelector('.webgl-canvas'))
