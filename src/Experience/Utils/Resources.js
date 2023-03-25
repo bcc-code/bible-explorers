@@ -46,6 +46,8 @@ export default class Resources extends EventEmitter {
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
 
+            if (!document.querySelector('.loader')) return
+
             this.loadingIcon = new rive.Rive({
                 src: 'textures/loading_icon.riv',
                 canvas: document.querySelector('#loading_icon'),
@@ -60,6 +62,7 @@ export default class Resources extends EventEmitter {
             document.querySelector('.loader')?.remove()
             document.querySelector('.app-header').style.display = "flex"
 
+            // this.loadingIcon.cleanup();
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
@@ -73,6 +76,7 @@ export default class Resources extends EventEmitter {
 
                 progress.runtimeInput.value = progressRatio
             }
+
         }
 
         this.loadingManager.onError = function (url) {
