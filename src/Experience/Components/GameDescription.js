@@ -52,6 +52,7 @@ export default class Task {
         `)
         startGame.addEventListener('click', instance.startGame)
 
+        console.log(instance.data.prompts);
         const task = _gl.elementFromHtml(`
             <section class="task">
                 <div class="container">
@@ -63,7 +64,7 @@ export default class Task {
                             ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
                         </div>
                         <div class="game-description">
-                            ${instance.data.prompts[0].prompt}
+                            ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
                         </div>
                     </div>
                 </div>
@@ -73,8 +74,8 @@ export default class Task {
 
         task.querySelector('.content').append(startGame)
         document.querySelector('.ui-container').append(task)
-    }
 
+    }
     startGame() {
         instance.destroy()
 
