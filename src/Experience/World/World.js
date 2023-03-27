@@ -180,26 +180,6 @@ export default class World {
             </div>
         `
 
-        if (chapter.is_beta) {
-            const tooltip = _gl.elementFromHtml(`
-                <div class="under-construction">
-                    <svg viewBox="0 0 26 26">
-                        <use href="#under-construction"></use>
-                    </svg>
-                </div>`
-            )
-
-            chapterHtml.append(tooltip)
-        }
-
-        tippy('.under-construction', {
-            theme: 'construction',
-            content: 'The chapter is under maintenance, but you can still go through the tasks and watch the films',
-            duration: [500, 200],
-            animation: 'shift-away',
-            placement: 'left',
-        })
-
         const chapters = document.querySelector('.chapters')
         chapters.appendChild(chapterHtml)
 

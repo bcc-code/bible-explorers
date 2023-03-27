@@ -1,8 +1,9 @@
 import Experience from '../Experience.js'
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
+import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -13,59 +14,56 @@ export default class QuestionAndCode {
     }
 
     toggleQuestionAndCode() {
-        if (document.querySelector('.modal')) {
-            instance.modal.destroy()
-        }
-        else {
-            instance.world = instance.experience.world
-            instance.program = instance.world.program
-            instance.currentCheckpoint = instance.program.currentCheckpoint
-            instance.selectedChapter = instance.world.selectedChapter
-            instance.currentStepData = instance.program.getCurrentStepData()
-            instance.question = instance.currentStepData.question_and_code
-            instance.localStorageId = 'answers-theme-' + instance.selectedChapter.id
-            instance.toggleQuestion()
-        }
+        instance.world = instance.experience.world
+        instance.debug = instance.experience.debug
+        instance.program = instance.world.program
+        instance.currentCheckpoint = instance.program.currentCheckpoint
+        instance.selectedChapter = instance.world.selectedChapter
+        instance.currentStepData = instance.program.getCurrentStepData()
+        instance.question = instance.currentStepData.question_and_code
+        instance.localStorageId = 'answers-theme-' + instance.selectedChapter.id
+        instance.toggleQuestion()
     }
 
     toggleQuestion() {
         instance.allAnswersFromTheme = JSON.parse(localStorage.getItem(instance.localStorageId)) || {}
 
-        const answersWrapper = `
-        <div class="answers__wrapper">
-            <div class="answers__field"><input type="text" class="answers__input" /></div>
-            <div class="answers__field"><input type="text" class="answers__input" /></div>
-            <div class="answers__field"><input type="text" class="answers__input" /></div>
-            <div class="answers__field"><input type="text" class="answers__input" /></div>
-        </div>`
-        const html = instance.program.taskDescription.getModalHtml('question-and-code', instance.question, answersWrapper)
-        instance.modal = new Modal(html, 'modal__task')
+        const answersWrapper = _gl.elementFromHtml(`
+        <div class="game answers">
+            <div class="container">
+                <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
+                <form>
+                    <label for="answer1">1</label>
+                    <input type="text" id="answer1" />
+                    <label for="answer2">2</label>
+                    <input type="text" id="answer2" />
+                    <label for="answer3">3</label>
+                    <input type="text" id="answer3" />
+                    <label for="answer4">4</label>
+                    <input type="text" id="answer4" />
+                </form>
+            </div>
+            <div class="overlay"></div>
+        </div>`)
 
-        if (!instance.currentStepData.audio)
-            document.getElementById("play").remove()
+        document.querySelector('.ui-container').append(answersWrapper)
 
-        const back = document.getElementById("back")
-        back.innerText = _s.journey.back
-        back.style.display = 'block'
-        back.addEventListener('click', (e) => {
-            e.stopPropagation()
-            instance.modal.destroy()
-            instance.program.previousStep()
-        })
 
-        const next = document.getElementById('continue')
-        next.innerText = _s.task.next
-        next.style.display = 'block'
-        next.addEventListener("click", () => {
-            instance.saveAnswers()
-            instance.modal.destroy()
+        const skipBTN = document.querySelector('[aria-label="skip-button"]')
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
             instance.program.nextStep()
         })
 
-        let allInputsEmpty = true
-        instance.el = {}
+        if (instance.debug.developer || instance.debug.onPreviewMode())
+            skipBTN.style.display = 'flex'
 
-        instance.el.inputs = document.querySelectorAll('.answers__input')
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        let allInputsEmpty = true
+
+        instance.el = {}
+        instance.el.inputs = document.querySelectorAll('.answers input')
         instance.el.inputs.forEach((input, index) => {
             input.value = instance.allAnswersFromTheme.hasOwnProperty(instance.currentCheckpoint) ? instance.allAnswersFromTheme[instance.currentCheckpoint][index] : ''
 
@@ -74,14 +72,18 @@ export default class QuestionAndCode {
 
             input.addEventListener("input", () => {
                 [...instance.el.inputs].filter(input => input.value.length == 0).length == 0
-                    ? next.classList.remove('disabled')
-                    : next.classList.add('disabled')
+                    ? instance.experience.navigation.next.disabled = false
+                    : instance.experience.navigation.next.disabled = true
+
             })
         })
 
-        if (allInputsEmpty) {
-            next.classList.add('disabled')
-        }
+        if (allInputsEmpty)
+            instance.experience.navigation.next.disabled = true
+
+
+        // instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
+
     }
 
     saveAnswers() {
@@ -107,5 +109,10 @@ export default class QuestionAndCode {
                 })
             })
         }
+    }
+
+    destroy() {
+        // document.removeEventListener('click', instance.saveAnswers)
+        document.querySelector('.game')?.remove()
     }
 }

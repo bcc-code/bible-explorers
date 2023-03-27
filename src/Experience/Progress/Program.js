@@ -1,10 +1,8 @@
 import Experience from "../Experience.js"
 import Archive from '../Components/Archive.js'
-import TaskDescription from '../Extras/TaskDescription.js'
 import CodeUnlock from '../Components/CodeUnlock.js'
-import PictureAndCode from '../Extras/PictureAndCode.js'
+import HiddenItems from '../Games/HiddenItems.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
-import Questions from '../Extras/Questions.js'
 import Video from '../Extras/Video.js'
 import Quiz from '../Components/Quiz.js'
 import Congrats from '../Extras/Congrats.js'
@@ -30,12 +28,10 @@ export default class Program {
         instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
-        instance.taskDescription = new TaskDescription()
         instance.video = new Video()
         instance.codeUnlock = new CodeUnlock()
-        instance.pictureAndCode = new PictureAndCode()
+        instance.pictureAndCode = new HiddenItems()
         instance.questionAndCode = new QuestionAndCode()
-        instance.questions = new Questions()
         instance.quiz = new Quiz()
         instance.congrats = new Congrats()
         instance.pause = new Pause()
@@ -194,7 +190,7 @@ export default class Program {
                 }
 
                 else if (instance.taskType() == 'questions') {
-                    instance.questions.toggleQuestions()
+                    // instance.questions.toggleQuestions()
                 }
 
                 else if (instance.taskType() == 'dialog') {

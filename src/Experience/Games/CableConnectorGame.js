@@ -1,9 +1,9 @@
 import Experience from '../Experience.js'
 import Konva from 'konva'
-import Modal from '../Utils/Modal.js'
 import Timer from '../Extras/Timer.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
 
@@ -24,20 +24,32 @@ export default class CableConnector {
         this.init()
         this.startTimerIfNecessary()
         this.setup()
-        this.addEventListeners()
+        this.setEventListeners()
     }
 
     init() {
         instance.program = instance.world.program
         instance.currentStepData = instance.program.getCurrentStepData()
 
-        const gameWrapper = document.createElement('div')
-        gameWrapper.setAttribute("id", "cable-connect")
+        const game = _gl.elementFromHtml(`
+        <section class="game cable-connect">
+            <div class="container">
+                <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
+            </div>
+            <div class="overlay"></div>
+            <div id="cable-connect" class="game-canvas"></div>
+        </section>`)
 
-        instance.modal = new Modal(gameWrapper.outerHTML, 'modal__cable-connector')
+        document.querySelector('.ui-container').append(game)
 
-        const title = document.querySelector('.modal__heading--minigame')
-        title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>`
+        const skipBTN = document.querySelector('[aria-label="skip-button"]')
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
+
+        if (instance.debug.developer || instance.debug.onPreviewMode())
+            skipBTN.style.display = 'flex'
 
         const spriteW = 180
         const spriteH = 100
@@ -122,6 +134,7 @@ export default class CableConnector {
             width: instance.data.canvas.width,
             height: instance.data.canvas.height
         })
+
         this.correspondingOutlet = null
     }
 
@@ -392,10 +405,11 @@ export default class CableConnector {
 
     startTimerIfNecessary() {
         const timerInMinutes = instance.currentStepData.timer
+        // const timerInMinutes = 0.1
 
         if (timerInMinutes > 0) {
             this.timer = new Timer()
-            this.timer.setMinutes(timerInMinutes)
+            this.timer.setMinutes(timerInMinutes, '.cable-connect .container')
             document.addEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed)
         }
     }
@@ -415,31 +429,6 @@ export default class CableConnector {
         instance.cables.forEach(cable => {
             cable.item.find('.plug').forEach(plug => plug.stopDrag())
         })
-    }
-
-    toggleTryAgain() {
-        instance.modal.destroy()
-
-        let html = `<div class="modal__content congrats congrats__miniGame">
-            <div class="congrats__container">
-                <div class="congrats__title">
-                    <h2>${_s.miniGames.timeElapsed.title}</h2>
-                </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.timeElapsed.message}</div>
-            </div>
-        </div>`
-
-        instance.modal = new Modal(html, 'modal__congrats')
-
-        const restart = document.getElementById('restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.playAgain
-        restart.addEventListener('click', () => {
-            instance.destroy()
-            instance.modal.destroy()
-            instance.toggleCableConnector()
-        })
-
     }
 
     colorCable(cable) {
@@ -540,79 +529,78 @@ export default class CableConnector {
         return instance.outlets.filter(o => o.connected).length == instance.data.itemsLength * 2
     }
 
-    addEventListeners() {
-        const back = document.getElementById('back')
-        back.style.display = 'block'
-        back.innerText = _s.journey.back
-        back.addEventListener('click', () => {
-            instance.destroy()
-            instance.modal.destroy()
-            instance.world.program.previousStep()
-        })
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
+    toggleTryAgain() {
 
-        const restart = document.getElementById('restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.reset
-        restart.addEventListener('click', () => {
+        instance.timer?.destroy()
+
+        const gameOverHTML = _gl.elementFromHtml(`
+            <div class="game-popup">
+                <h1>${_s.miniGames.timeElapsed.title}</h1>
+                <p>${_s.miniGames.timeElapsed.message}</p>
+                <div class="buttons"></div>
+            </div>
+        `)
+
+        const resetBTN = _gl.elementFromHtml(`
+            <button class="btn default">${_s.miniGames.playAgain}</button>
+        `)
+
+        gameOverHTML.querySelector('.buttons').append(resetBTN)
+
+        document.querySelector('.cable-connect .container').append(gameOverHTML)
+        document.querySelector('.cable-connect').classList.add('popup-visible')
+
+        if (instance.fails == 3)
+            document.querySelector('[aria-label="skip-button"]').style.display = 'flex'
+
+
+        // Add event listeners
+        resetBTN.addEventListener('click', () => {
             instance.fails++
             instance.destroy()
-            instance.modal.destroy()
             instance.toggleCableConnector()
         })
-        
-        const skip = document.getElementById("skip")
-        skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.debug.developer || instance.debug.onPreviewMode()
-            ? 'block'
-            : 'none'
-        skip.addEventListener('click', instance.advanceToNextStep)
-    }
-
-    advanceToNextStep() {
-        instance.fails = 0
-        instance.destroy()
-        instance.modal.destroy()
-        instance.world.program.nextStep()
-
-        instance.audio.setOtherAudioIsPlaying(false)
-        instance.audio.fadeInBgMusic()
     }
 
     finishGame() {
         instance.fails = 0
-        instance.destroy()
-        instance.modal.destroy()
+        instance.timer?.destroy()
+
         instance.toggleGameComplete()
         instance.audio.playSound('task-completed')
     }
 
     toggleGameComplete() {
-        let html = `<div class="modal__content congrats congrats__miniGame">
-            <div class="congrats__container">
-                <div class="congrats__title">
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                    <h2>${_s.miniGames.completed.title}</h2>
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.completed.message}</div>
+
+        const congratsHTML = _gl.elementFromHtml(`
+            <div class="game-popup">
+                <h1>${_s.miniGames.completed.title}</h1>
+                <p>${_s.miniGames.completed.message}</p>
+                <div class="buttons"></div>
             </div>
-        </div>`
+        `)
 
-        instance.modal = new Modal(html, 'modal__congrats')
+        const continueBtn = _gl.elementFromHtml(`
+            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
+        `)
 
-        const next = document.getElementById('continue')
-        next.style.display = 'block'
-        next.innerText = _s.miniGames.continue
-        next.addEventListener('click', instance.advanceToNextStep)
+        continueBtn.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
 
-        const restart = document.getElementById('restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.playAgain
-        restart.addEventListener('click', () => {
-            instance.modal.destroy()
-            instance.toggleSimonSays()
+        congratsHTML.querySelector('.buttons').append(continueBtn)
+
+        document.querySelector('.cable-connect .container').append(congratsHTML)
+        document.querySelector('.cable-connect').classList.add('popup-visible')
+
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
         })
     }
 
@@ -625,8 +613,7 @@ export default class CableConnector {
     }
 
     destroy() {
-        if (instance.timer)
-            instance.timer.destroy()
+        document.querySelector('.game')?.remove()
     }
 }
 

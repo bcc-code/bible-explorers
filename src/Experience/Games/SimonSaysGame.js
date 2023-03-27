@@ -1,10 +1,9 @@
 import Experience from '../Experience.js'
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
-const showSkipAfterNoOfTries = 3
 const explorersOne = {
     noOfRounds: 6,
     msBetweenNotes: 250
@@ -21,153 +20,108 @@ export default class SimonSays {
         this.debug = this.experience.debug
 
         instance = this
-        instance.fails = 0
 
         instance.data = {
-            color: {
-                name: [
-                    'pink',
-                    'yellow',
-                    'green',
-                    'lightBlue'
-                ],
-                hex: [
-                    "#ff6ea9",
-                    "#f9c662",
-                    "#67BD53",
-                    "#2c90cf"
-                ]
-            },
-            melody: [],
+            color: [
+                'pink',
+                'yellow',
+                'green',
+                'teal'
+            ],
             notes: [
                 'e-4',
                 'f-sharp-4',
                 'g-sharp-4',
                 'a-4'
             ],
+            melody: []
+        }
+
+        instance.config = {
+            fails: 0,
+            showSkipAfterNoOfTries: 3,
             rounds: instance.world.selectedChapter.category == '6-8' ? explorersOne.noOfRounds : explorersTwo.noOfRounds,
             msBetweenNotes: instance.world.selectedChapter.category == '6-8' ? explorersOne.msBetweenNotes : explorersTwo.msBetweenNotes
         }
     }
 
     toggleSimonSays() {
-        this.toggleInit()
+        instance.program = instance.world.program
+        instance.currentStepData = instance.program.getCurrentStepData()
+        instance.audio.loadMelodyNotes(instance.data.notes)
+
+        this.gameHTML()
+        this.setEventListeners()
         this.startGame()
 
         this.audio.setOtherAudioIsPlaying(true)
         this.audio.fadeOutBgMusic()
     }
 
-    toggleInit() {
-        instance.program = instance.world.program
-        instance.currentStepData = instance.program.getCurrentStepData()
+    gameHTML() {
+        const game = _gl.elementFromHtml(`
+            <section class="game simon-says">
+                <div class="container">
+                    <div class="box">
+                        <div class="center"></div>
+                        <div class="cables"></div>
+                        <div class="side left"></div>
+                        <div class="side right"></div>
+                    </div>
+                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
+                </div>
+                <div class="overlay"></div>
+            </section>`)
 
-        if (document.querySelector('.modal')) {
-            instance.modal.destroy()
+        document.querySelector('.ui-container').append(game)
+
+        for (let i = 0; i < instance.config.rounds; i++) {
+            const ticker = document.createElement('div')
+            ticker.classList.add('tick')
+            ticker.setAttribute('data-item', i)
+
+            const cable = document.createElement('div')
+            cable.classList.add('cable')
+            cable.setAttribute('data-item', i)
+
+            game.querySelector('.cables').append(cable)
+
+            i < 4
+                ? game.querySelector('.side.left').append(ticker)
+                : game.querySelector('.side.right').append(ticker)
         }
-        else {
-            const gameWrapper = document.createElement('div')
-            gameWrapper.classList.add('model__content', 'simon-says')
 
-            const gameContent = document.createElement('div')
-            gameContent.setAttribute("id", "miniGame__simon-says")
+        for (let j = 0; j < instance.data.color.length; j++) {
+            const note = _gl.elementFromHtml(`<button class="note" data-id="${j}" data-color="${instance.data.color[j]}"></button>`)
+            game.querySelector('.box').appendChild(note)
 
-            const gameContentBox = document.createElement('div')
-            gameContentBox.classList.add('frame')
-            const gameWatch = document.createElement('div')
-            gameWatch.classList.add('watch')
-            const gameWatchCenter = document.createElement('div')
-            gameWatchCenter.classList.add('watch-center')
-            const gameWatchMiddle = document.createElement('div')
-            gameWatchMiddle.classList.add('watch-middle')
-            const gameWatchTicker = document.createElement('div')
-            gameWatchTicker.classList.add('watch-ticker')
-
-            const cables = document.createElement('div')
-            cables.classList.add('watch-cables')
-
-            const gameWatchTickerLeft = document.createElement('div')
-            gameWatchTickerLeft.classList.add('column', 'watch-ticker--left')
-            const gameWatchTickerRight = document.createElement('div')
-            gameWatchTickerRight.classList.add('column', 'watch-ticker--right')
-
-            gameWatchTicker.append(gameWatchTickerLeft)
-            gameWatchTicker.append(gameWatchTickerRight)
-
-            for (let i = 0; i < instance.data.rounds; i++) {
-                const ticker = document.createElement('div')
-                ticker.classList.add('watch-tick')
-                ticker.setAttribute('data-item', i)
-
-                const cable = document.createElement('div')
-                cable.classList.add('cable')
-                cable.setAttribute('data-item', i)
-
-                cables.append(cable)
-
-                i < 4
-                    ? gameWatchTickerLeft.append(ticker)
-                    : gameWatchTickerRight.append(ticker)
-            }
-
-            gameWatch.appendChild(gameWatchCenter)
-            gameWatchMiddle.appendChild(cables)
-            gameWatchMiddle.appendChild(gameWatchTicker)
-            gameContentBox.appendChild(gameWatchMiddle)
-            gameContentBox.appendChild(gameWatch)
-            gameContent.appendChild(gameContentBox)
-            gameWrapper.appendChild(gameContent)
-
-            instance.audio.loadMelodyNotes(instance.data.notes)
-
-            instance.data.color.hex.forEach((color, index) => {
-                const noteColor = document.createElement('div')
-                noteColor.dataset.id = index
-                noteColor.style.backgroundColor = color
-                noteColor.classList.add('note')
-                gameWatch.appendChild(noteColor)
-            })
-
-            instance.modal = new Modal(gameWrapper.outerHTML, 'modal__simon-says')
-
-            const title = document.querySelector('.modal__heading--minigame')
-            title.innerHTML = `<h3>${instance.currentStepData.details.title}</h3>`
-
-            // Add event listeners
-
-            document.querySelectorAll(".simon-says .note").forEach((note) => {
-                note.addEventListener("click", () => {
-                    if (!instance.canPlay()) return
-
-                    const i = note.dataset.id
-                    instance.playPad(i)
-                    instance.checkMelody(i)
-                })
-            })
-
-            const back = document.getElementById('back')
-            back.style.display = 'block'
-            back.innerText = _s.journey.back
-            back.addEventListener('click', () => {
-                instance.modal.destroy()
-                instance.program.previousStep()
-            })
-
-            const restart = document.getElementById('restart')
-            restart.style.display = 'block'
-            restart.innerText = _s.miniGames.reset
-            restart.addEventListener('click', () => {
-                instance.modal.destroy()
-                instance.toggleSimonSays()
-            })
-            
-            const skip = document.getElementById("skip")
-            skip.innerText = _s.miniGames.skip
-            skip.style.display = instance.debug.developer || instance.debug.onPreviewMode()
-                ? 'block'
-                : 'none'
-            skip.addEventListener('click', instance.advanceToNextStep)
         }
+
+        const skipBTN = document.querySelector('[aria-label="skip-button"]')
+        skipBTN.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
+        })
+
+        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.config.fails >= instance.config.showSkipAfterNoOfTries)
+            skipBTN.style.display = 'flex'
+    }
+
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        document.querySelectorAll(".simon-says .note").forEach((note) => {
+            note.addEventListener("click", () => {
+
+                if (!instance.canPlay()) return
+
+                const i = note.dataset.id
+                instance.playPad(i)
+                instance.checkMelody(i)
+
+            })
+        })
+
     }
 
     startGame() {
@@ -195,7 +149,7 @@ export default class SimonSays {
         if (++instance.currentPad <= instance.level) {
             setTimeout(() => {
                 instance.playPad(instance.data.melody[instance.currentPad])
-            }, instance.data.msBetweenNotes)
+            }, instance.config.msBetweenNotes)
         }
         else {
             document.removeEventListener(_e.ACTIONS.NOTE_PLAYED, instance.continueMelody)
@@ -210,7 +164,7 @@ export default class SimonSays {
     }
 
     lightenPad(i) {
-        const note = document.querySelector("[data-id='" + i + "']")
+        const note = document.querySelector(".note[data-id='" + i + "']")
         if (!note) return
 
         note.classList.add('lighten')
@@ -227,7 +181,7 @@ export default class SimonSays {
 
                 if (instance.allNotesPlayed()) {
                     return setTimeout(() => {
-                        instance.finishGame()
+                        instance.toggleGameComplete()
                     }, 1000)
                 }
 
@@ -243,121 +197,112 @@ export default class SimonSays {
     }
 
     roundTick() {
-        const round = document.querySelectorAll('.watch-tick')
+        const round = document.querySelectorAll('.tick')
         round[instance.level].className += " done"
     }
 
     wrongNote() {
-        const existingModal = document.querySelectorAll('.modal__content')
+        const existingModal = document.querySelector('.simon-says')
         if (existingModal.length) return
 
         instance.toggleTryAgain()
     }
 
     toggleTryAgain() {
-        instance.toggleInit()
         instance.blockPlaying()
 
-        let html = `<div class="modal__content congrats congrats__miniGame simon-says">
-            <div class="congrats__container">
-                <div class="congrats__title">
-                    <h2>${_s.miniGames.simonSays.failed.title}</h2>
-                </div>
-                <div class="congrats__chapter-completed">${_s.miniGames.simonSays.failed.message}</div>
+        const gameOverHTML = _gl.elementFromHtml(`
+            <div class="game-popup">
+                <h1>${_s.miniGames.simonSays.failed.title}</h1>
+                <p>${_s.miniGames.simonSays.failed.message}</p>
+                <div class="buttons"></div>
             </div>
-        </div>`
+        `)
 
-        instance.modal = new Modal(html, 'modal__congrats')
+        const resetBTN = _gl.elementFromHtml(`
+            <button class="btn default">${_s.miniGames.restartRound}</button>
+        `)
+
+        gameOverHTML.querySelector('.buttons').append(resetBTN)
+
+        document.querySelector('.simon-says .container').append(gameOverHTML)
+        document.querySelector('.simon-says').classList.add('popup-visible')
+
+        if (instance.config.fails == 3)
+            document.querySelector('[aria-label="skip-button"]').style.display = 'flex'
+
 
         // Add event listeners
+        resetBTN.addEventListener('click', () => {
+            instance.config.fails++
 
-        const restart = document.getElementById('restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.reset
-        restart.addEventListener('click', () => {
-            instance.fails++
-            instance.modal.destroy()
+            instance.destroy()
             instance.toggleSimonSays()
         })
 
-        const skip = document.getElementById("skip")
-        skip.innerText = _s.miniGames.skip
-        skip.style.display = instance.debug.developer || instance.debug.onPreviewMode() || instance.fails >= showSkipAfterNoOfTries - 1
-            ? 'block'
-            : 'none'
-
-        skip.addEventListener('click', instance.advanceToNextStep)
-    }
-
-    finishGame() {
-        instance.fails = 0
-        instance.modal.destroy()
-        instance.audio.playSound('task-completed')
-        instance.toggleGameComplete()
     }
 
     toggleGameComplete() {
         instance.blockPlaying()
+        instance.config.fails = 0
 
-        let html = `<div class="modal__content congrats congrats__miniGame">
-            <div class="congrats__container">
-                <div class="congrats__title">
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                    <h2>${_s.miniGames.completed.title}</h2>
-                    <i class="icon icon-star-solid"></i>
-                    <i class="icon icon-star-solid"></i>
-                </div>
+        const congratsHTML = _gl.elementFromHtml(`
+            <div class="game-popup">
+                <h1>${_s.miniGames.completed.title}</h1>
+                <div class="buttons"></div>
             </div>
-        </div>`
+        `)
 
-        instance.modal = new Modal(html, 'modal__congrats')
 
-        const next = document.getElementById('continue')
-        next.style.display = 'block'
-        next.innerText = _s.miniGames.continue
-        next.addEventListener('click', instance.advanceToNextStep)
+        const continueBtn = _gl.elementFromHtml(`
+            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
+        `)
 
-        const restart = document.getElementById('restart')
-        restart.style.display = 'block'
-        restart.innerText = _s.miniGames.playAgain
-        restart.addEventListener('click', () => {
-            instance.modal.destroy()
-            instance.toggleSimonSays()
+        continueBtn.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.nextStep()
         })
-    }
 
-    advanceToNextStep() {
-        instance.fails = 0
-        instance.modal.destroy()
-        instance.program.nextStep()
+        congratsHTML.querySelector('.buttons').append(continueBtn)
 
-        instance.audio.setOtherAudioIsPlaying(false)
-        instance.audio.fadeInBgMusic()
+        document.querySelector('.simon-says .container').append(congratsHTML)
+        document.querySelector('.simon-says').classList.add('popup-visible')
+
+        instance.audio.playSound('task-completed')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160
+        })
+
     }
 
     allNotesPlayed() {
-        return instance.level + 1 == instance.data.rounds
+        return instance.level + 1 == instance.config.rounds
     }
 
     canPlay() {
-        const miniGame = document.getElementById('miniGame__simon-says')
+        const miniGame = document.querySelector('.simon-says')
         if (!miniGame) return false
 
         return miniGame.classList.contains('active')
     }
 
     allowPlaying() {
-        const miniGame = document.getElementById('miniGame__simon-says')
+        const miniGame = document.querySelector('.simon-says')
         if (!miniGame) return
 
         miniGame.classList.add('active')
     }
 
     blockPlaying() {
-        const miniGame = document.getElementById('miniGame__simon-says')
+        const miniGame = document.querySelector('.simon-says')
         if (!miniGame) return
 
         miniGame.classList.remove('active')
+    }
+
+
+    destroy() {
+        document.querySelector('.game')?.remove()
     }
 }
