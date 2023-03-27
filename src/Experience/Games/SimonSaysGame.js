@@ -1,5 +1,4 @@
 import Experience from '../Experience.js'
-import Modal from '../Utils/Modal.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'

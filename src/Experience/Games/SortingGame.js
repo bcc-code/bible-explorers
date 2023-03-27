@@ -1,7 +1,6 @@
 import Experience from '../Experience.js'
 import Konva from 'konva'
 import _s from '../Utils/Strings.js'
-import Modal from '../Utils/Modal.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
 
@@ -225,6 +224,8 @@ export default class SortingGame {
         icon.on('dragmove', () => {
             const maxX = icon.getParent().x()
             const maxY = icon.getParent().y()
+
+            console.log(maxX);
 
             const minX = maxX - instance.stage.width() + icon.width()
             const minY = maxY - instance.stage.height() + icon.height()
@@ -599,6 +600,7 @@ export default class SortingGame {
     }
 
     destroy() {
+        window.removeEventListener('resize', instance.resize)
         document.querySelector('.game')?.remove()
     }
 }

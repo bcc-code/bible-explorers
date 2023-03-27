@@ -214,9 +214,4 @@
         }
     }
 
-    &.completed {
-        .quiz-nav button[aria-label="next question"] {
-            margin-left: auto;
-        }
-    }
 }
