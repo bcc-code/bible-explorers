@@ -404,8 +404,8 @@ export default class CableConnector {
     }
 
     startTimerIfNecessary() {
-        // const timerInMinutes = instance.currentStepData.timer
-        const timerInMinutes = 0.1
+        const timerInMinutes = instance.currentStepData.timer
+        // const timerInMinutes = 0.1
 
         if (timerInMinutes > 0) {
             this.timer = new Timer()
