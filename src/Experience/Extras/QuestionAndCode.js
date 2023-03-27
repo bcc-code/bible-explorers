@@ -82,9 +82,7 @@ export default class QuestionAndCode {
             instance.experience.navigation.next.disabled = true
 
 
-        instance.experience.navigation.next.addEventListener('click', () => {
-            instance.saveAnswers()
-        })
+        // instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
 
     }
 
@@ -114,7 +112,7 @@ export default class QuestionAndCode {
     }
 
     destroy() {
-        document.removeEventListener('click', instance.saveAnswers)
+        // document.removeEventListener('click', instance.saveAnswers)
         document.querySelector('.game')?.remove()
     }
 }
