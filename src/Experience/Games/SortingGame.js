@@ -190,15 +190,6 @@ export default class SortingGame {
             })
         })
 
-
-        this.iconGroup = new Konva.Group({
-            x: 0,
-            y: 0,
-            name: 'icons'
-        })
-
-        this.layer.add(this.iconGroup)
-
         instance.data.icons.forEach(async (data) => {
             instance.offline.fetchChapterAsset(data, "icon", instance.createIcon)
         })
@@ -225,13 +216,12 @@ export default class SortingGame {
             const maxX = icon.getParent().x()
             const maxY = icon.getParent().y()
 
-            console.log(maxX);
-
             const minX = maxX - instance.stage.width() + icon.width()
             const minY = maxY - instance.stage.height() + icon.height()
 
             icon.x(Math.min(Math.max(icon.x(), -maxX), -minX))
             icon.y(Math.min(Math.max(icon.y(), -maxY), -minY))
+
         })
         icon.on('dragstart', () => {
             instance.draggedIconPosition = icon.position()
@@ -242,6 +232,7 @@ export default class SortingGame {
             const box = instance.boxes.find(b => b.id() == category)
             let selectedBox = category
             let feedback = null
+
 
             if (!instance.intersected(icon, instance.leftBox)
                 && !instance.intersected(icon, instance.rightBox)) {
@@ -452,7 +443,7 @@ export default class SortingGame {
             icon.add(img)
         })
 
-        instance.iconGroup.add(icon)
+        instance.layer.add(icon)
         instance.icons.push(icon)
         instance.setEventListenersForIcon(icon)
     }
@@ -550,10 +541,7 @@ export default class SortingGame {
     }
 
     getIconPosition(index) {
-        instance.iconGroup.x(instance.leftBox.x() + instance.leftBox.width())
-        instance.iconGroup.y(instance.leftBox.y())
-
-        instance.iconGroup.width(Math.abs(instance.iconGroup.x() - instance.rightBox.x()))
+        const iconsWrapper = Math.abs(instance.leftBox.x() + instance.leftBox.width() - instance.rightBox.x())
 
         const marginGutter = {
             top: 10,
@@ -561,12 +549,12 @@ export default class SortingGame {
         }
 
         const boxSize = instance.data.icon.width + marginGutter.between
-        const iconsPerRow = Math.max(Math.min(Math.floor((instance.iconGroup.width() - 20) / boxSize), 4), 2) // between [2-4]
-        marginGutter.sides = (instance.iconGroup.width() - iconsPerRow * instance.data.icon.width - (iconsPerRow - 1) * marginGutter.between) / 2
+        const iconsPerRow = Math.max(Math.min(Math.floor((iconsWrapper - 20) / boxSize), 4), 2) // between [2-4]
+        marginGutter.sides = (iconsWrapper - iconsPerRow * instance.data.icon.width - (iconsPerRow - 1) * marginGutter.between) / 2
 
         const position = {
-            x: marginGutter.sides + (index % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
-            y: marginGutter.top + Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between)
+            x: instance.leftBox.x() + instance.leftBox.width() + marginGutter.sides + (index % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
+            y: instance.leftBox.y() + marginGutter.top + Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between)
         }
 
         return position
