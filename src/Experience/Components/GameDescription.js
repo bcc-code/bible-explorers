@@ -52,7 +52,6 @@ export default class Task {
         `)
         startGame.addEventListener('click', instance.startGame)
 
-        console.log(instance.data.prompts);
         const task = _gl.elementFromHtml(`
             <section class="task">
                 <div class="container">
