@@ -30,7 +30,6 @@ export default class Program {
         instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
-        instance.taskDescription = new TaskDescription()
         instance.video = new Video()
         instance.codeUnlock = new CodeUnlock()
         instance.pictureAndCode = new HiddenItems()
