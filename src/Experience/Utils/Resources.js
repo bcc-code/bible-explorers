@@ -14,6 +14,7 @@ export default class Resources extends EventEmitter {
     constructor(sources) {
         super()
 
+
         this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
@@ -33,35 +34,53 @@ export default class Resources extends EventEmitter {
         this.textureItems = []
         this.posterImages = []
         this.videoPlayers = []
-        this.initialLoadCompleted = false
 
         this.loadManager()
         this.setLoaders()
         this.startLoading()
+
     }
 
     loadManager() {
+
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            if (!this.initialLoadCompleted)
-                this.page.loader()
+
+            if (!document.querySelector('.loader')) return
+
+            this.loadingIcon = new rive.Rive({
+                src: 'textures/loading_icon.riv',
+                canvas: document.querySelector('#loading_icon'),
+                autoplay: true,
+                stateMachines: 'State Machine 1',
+            })
+
         }
 
         this.loadingManager.onLoad = () => {
-            // console.log('Loading complete!')
+            console.log('Loading complete!')
             document.querySelector('.loader')?.remove()
             document.querySelector('.app-header').style.display = "flex"
-            this.initialLoadCompleted = true
+
+            // this.loadingIcon.cleanup();
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
             // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-            if (!this.initialLoadCompleted)
-                document.querySelector('.loader span').innerText = _s.initializing
+
+            const progressRatio = Math.trunc(itemsLoaded / itemsTotal * 100)
+
+            if (this.loadingIcon.loaded) {
+                const inputs = this.loadingIcon.stateMachineInputs('State Machine 1')
+                const progress = inputs.find(i => i.name === 'Progress')
+
+                progress.runtimeInput.value = progressRatio
+            }
+
         }
 
         this.loadingManager.onError = function (url) {
-            // console.log('There was an error loading ' + url)
+            console.log('There was an error loading ' + url)
         }
     }
 

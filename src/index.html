@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/@rive-app/canvas@1.0.102"></script>
 </head>
 
 <body>
@@ -174,12 +176,12 @@
                 </header>
                 <div class="content">
                     <section class="select-language">
-                        <span class="label">Language</span>
+                        <span class="heading">Language</span>
                         <button aria-label="current language">English</button>
                         <ul class="dropdown"></ul>
                     </section>
                     <section class="select-video-quality">
-                        <span class="label">Video quality</span>
+                        <span class="heading">Video quality</span>
                         <button aria-label="current video quality">High (1080p)</button>
                         <ul class="dropdown">
                             <li data-id="low"></li>
@@ -188,7 +190,7 @@
                         </ul>
                     </section>
                     <section class="background-music">
-                        <div class="label">
+                        <div class="heading">
                             <span>Background music</span>
                             <svg class="music-on icon" viewBox="0 0 24 24">
                                 <use href="#music-on"></use>
@@ -203,18 +205,18 @@
                         </div>
                     </section>
                     <section class="sound-effects">
-                        <span class="label">Sound effects</span>
-                        <label class="toggle" aria-label="Sound effects toggle">
-                            <input type="checkbox">
-                            <div class="slider"></div>
-                        </label>
+                        <span class="heading">Sound effects</span>
+                        <div class="toggle">
+                            <input type="checkbox" id="sound-checkbox">
+                            <label for="sound-checkbox"></label>
+                        </div>
                     </section>
-                    <section class="fullscreen-toggle">
-                        <span class="label">Full screen mode</span>
-                        <label class="toggle" aria-label="Full screen toggle">
-                            <input type="checkbox">
-                            <div class="slider"></div>
-                        </label>
+                    <section class="fullscreen-section">
+                        <span class="heading">Full screen mode</span>
+                        <div class="toggle">
+                            <input type="checkbox" id="fullscreen-checkbox">
+                            <label for="fullscreen-checkbox"></label>
+                        </div>
                     </section>
                 </div>
                 <div class="footer">
@@ -252,8 +254,21 @@
             <div class="overlay"></div>
         </aside>
 
-        <aside class="page">
-            <div class="container"></div>
+        <aside class="page page-loader">
+            <div class="container">
+                <section class="loader">
+                    <canvas id="loading_icon" width="240" height="240"></canvas>
+                    <div class="loading">
+                        <span></span>
+                        <div class="dots">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
             <div class="overlay"></div>
         </aside>
 

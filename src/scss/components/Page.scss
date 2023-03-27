@@ -136,6 +136,7 @@
     align-items: flex-start;
     margin-top: 5rem;
     padding: var(--app-padding);
+    width: clamp(300px, 100% - var(--app-padding), 1920px);
 
     >* {
         width: clamp(50%, 100vw, 50%)

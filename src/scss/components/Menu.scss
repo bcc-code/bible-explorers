@@ -23,7 +23,7 @@
         }
     }
 
-    .label {
+    .heading {
         display: block;
         font-size: 0.85rem;
         color: #fff;
@@ -209,7 +209,7 @@
         height: 0;
     }
 
-    .slider {
+    label {
         color: #fff;
         position: absolute;
         inset: 0;
@@ -223,7 +223,7 @@
         cursor: pointer;
     }
 
-    .slider:before {
+    label:before {
         content: "";
         position: absolute;
         height: calc(var(--toggle-size) - calc(var(--toggle-padding) * 2));
@@ -235,12 +235,12 @@
         border-radius: 50%;
     }
 
-    input:checked+.slider {
+    input:checked+label {
         text-align: left;
         color: var(--slider-on);
     }
 
-    input:checked+.slider:before {
+    input:checked+label:before {
         background-color: var(--slider-on);
         transform: translateX(var(--toggle-size));
     }

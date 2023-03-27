@@ -156,8 +156,6 @@ export default class Camera {
     }
 
     updateCameraTo(location = 'default', callback = () => { }) {
-        if (location == null) return
-
         const diffCamLocation = camera.lastCameraSettings.location != location
 
         // Update camera history
@@ -165,6 +163,8 @@ export default class Camera {
             'location': location,
             'position': new THREE.Vector3().copy(camera.instance.position)
         }
+
+        if (location == null) return
 
         if (diffCamLocation) {
             camera.audio.playSound('whoosh-between-screens')

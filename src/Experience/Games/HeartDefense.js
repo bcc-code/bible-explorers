@@ -642,7 +642,6 @@ export default class HeartDefense {
             document.querySelector('[aria-label="skip-button"]').style.display = 'block'
 
         instance.stats.lives = instance.config.maxLives
-        instance.stats.level = 1
 
         document.removeEventListener('keydown', instance.keyDownHandler)
 

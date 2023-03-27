@@ -8,8 +8,8 @@ export default class Notification {
         this.program = this.experience.world.program
 
         this.htmlEl = document.createElement("div")
-        this.htmlEl.className = "notification"
-        this.htmlEl.innerHTML = Notification.generateHtml(text, icon)
+        this.htmlEl.className = "alert"
+        this.htmlEl.innerHTML = Notification.generateHtml(text)
         document.body.appendChild(this.htmlEl)
 
         this.el = {
@@ -26,19 +26,17 @@ export default class Notification {
         notification.pop()
     }
 
-    static generateHtml(text, icon) {
+    static generateHtml(text) {
         return `
-            <div class="notification__container">
-                ${icon}
-                <div>
-                    <p>${text}</p>
-                    <button class="btn rounded" aria-label="close alert">
-                        <svg class="close-icon icon" width="17" height="16" viewBox="0 0 17 16">
-                            <use href="#xmark"></use>
-                        </svg>
-                    </button>
-                </div>
+            <div class="container">
+                <p>${text}</p>
+                <button class="btn rounded" aria-label="close alert">
+                    <svg class="close-icon icon" width="17" height="16" viewBox="0 0 17 16">
+                        <use href="#xmark"></use>
+                    </svg>
+                </button>
             </div>
+            <div class="overlay"></div>
         `
     }
 }

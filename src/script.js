@@ -7,13 +7,16 @@ import _s from './Experience/Utils/Strings.js'
 import _lang from './Experience/Utils/Lang.js'
 import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
+import _gl from './Experience/Utils/Globals.js'
 import lazySizes from 'lazysizes';
+
 
 // Application Insights
 _appInsights.loadAppInsights()
 _appInsights.trackPageView({ name: "Home" })
 
 document.querySelector('.icons-spritesheet').style.display = 'none'
+document.querySelector('.loader span').innerText = _s.initializing
 
 // Start 3D experience
 const experience = new Experience(document.querySelector('.webgl-canvas'))
@@ -54,8 +57,7 @@ const handleRedirectCallback = async () => {
                 document.body.classList.add("ak_leder")
             }
             else {
-                const mentorNotification = new Notification(_s.settings.noAccess)
-                mentorNotification.htmlEl.classList.add('alert-mentor')
+                new Notification(_s.settings.noAccess)
             }
 
             experience.settings.updateUI()
@@ -68,7 +70,7 @@ const handleRedirectCallback = async () => {
     }
 }
 
-document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function() {
+document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function () {
     // Support chat - setup
     window.intercomSettings = {
         api_base: "https://api-iam.intercom.io",
@@ -76,7 +78,7 @@ document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function() {
         language_override: _lang.getLanguageCode(),
         hide_default_launcher: true
     }
-    
+
     // Define user
     if (experience.auth0.userData) {
         window.intercomSettings.name = experience.auth0.userData.name
@@ -85,13 +87,13 @@ document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function() {
     }
 
     // Initialize
-    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/gy6jlngb';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+    (function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/gy6jlngb'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (document.readyState === 'complete') { l(); } else if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })()
 
     // Actions
     const contactButtons = document.querySelector('[aria-label="Contact"]')
 
-    Intercom('onHide', function() { contactButtons.removeAttribute('is-open') })
-    Intercom('onShow', function() { contactButtons.setAttribute('is-open', true) })
+    Intercom('onHide', function () { contactButtons.removeAttribute('is-open') })
+    Intercom('onShow', function () { contactButtons.setAttribute('is-open', true) })
 
     contactButtons.addEventListener('click', () => {
         contactButtons.hasAttribute('is-open')
@@ -114,10 +116,10 @@ var browserName = (function (agent) {
     }
 })(window.navigator.userAgent.toLowerCase());
 
+
 if (browserName !== 'Chrome') {
-    const chromeIcon = '<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 128 128"><g clip-rule="evenodd"><path fill="none" d="M0 0h128v128H0z"/><g fill-rule="evenodd"><path fill="#EA4335" d="M15.454 22.297c29.752-34.626 84.917-27.791 105.54 12.656-14.517.005-37.25-.004-49.562 0-8.93.003-14.695-.2-20.939 3.087-7.34 3.864-12.879 11.026-14.812 19.439L15.454 22.297z"/><path fill="#4285F4" d="M42.708 63.998c0 11.735 9.542 21.283 21.271 21.283 11.728 0 21.27-9.547 21.27-21.283 0-11.735-9.542-21.283-21.27-21.283-11.729 0-21.271 9.548-21.271 21.283z"/><path fill="#34A853" d="M72.234 91.855c-11.939 3.548-25.91-.387-33.563-13.597-5.842-10.083-21.277-36.972-28.292-49.198-24.57 37.659-3.394 88.978 41.212 97.737l20.643-34.942z"/><path fill="#FBBC05" d="M83.737 42.715c9.944 9.248 12.11 24.224 5.374 35.836-5.075 8.749-21.271 36.085-29.121 49.322 45.958 2.833 79.461-42.209 64.328-85.158H83.737z"/></g></g></svg>'
-    const browserNotification = new Notification(_s.browserNotification, chromeIcon)
-    browserNotification.htmlEl.classList.add('alert-browser-used')
+    new Notification(_s.browserNotification)
+    // document.body.appendChild(_gl.elementFromHtml(`<span style="background: red; color: white; position: absolute; top: 7rem; left: 1rem; padding: 0.5rem; border-radius: 1rem; z-index: 99">You are using: ${browserName}</span>`));
 }
 
 // Register Service Worker

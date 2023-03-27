@@ -614,10 +614,9 @@ export default class World {
             }
         })
 
-        if (!instance.experience.settings.fullScreen && !document.fullscreenElement) {
+        document.querySelector('.fullscreen-section input').checked = true
+        if (!document.fullscreenElement)
             document.documentElement.requestFullscreen()
-        }
-
 
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
@@ -672,7 +671,7 @@ export default class World {
         document.querySelector('.cta').style.display = 'flex'
         instance.experience.navigation.prev.disabled = false
 
-        instance.camera.updateCameraTo()
+        instance.camera.updateCameraTo(null)
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
         instance.debug.removePreviewMode()
@@ -684,13 +683,13 @@ export default class World {
         if (instance.program.archive)
             instance.program.archive.remove()
 
-
         if (instance.program.pause)
             instance.program.pause.destroy()
 
-        if (!instance.experience.settings.fullScreen && document.fullscreenElement) {
+        document.querySelector('.fullscreen-section input').checked = false
+        if (document.fullscreenElement)
             document.exitFullscreen()
-        }
+
     }
 
     preselectChapter() {

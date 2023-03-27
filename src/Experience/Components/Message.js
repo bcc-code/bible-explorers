@@ -32,37 +32,46 @@ export default class Message {
     }
 
     setHtml(text, character) {
-        document.querySelector('.ui-container').append(
-            _gl.elementFromHtml(
-                `<section class="message">
+        const message = _gl.elementFromHtml(
+            `<section class="message">
+                <div class="container">
+                    <div class="content">
+                        <h2>${character}</h2>
+                        ${text}
+                    </div>
+                </div>
+            </section>`
+        )
+        document.querySelector('.ui-container').append(message)
+
+        if (instance.data.character == 'glitch') {
+            const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
+            document.querySelector('section.message .container').append(glitch)
+        }
+
+        if (instance.data.open_question === true) {
+            instance.experience.navigation.next.disabled = true
+            const openQuestion = _gl.elementFromHtml(
+                `<section class="open-question">
                     <div class="container">
                         <div class="content">
-                            <h2>${character}</h2>
-                            ${text}
+                            <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
                         </div>
                     </div>
                 </section>`
             )
-        )
+            document.querySelector('.ui-container').append(openQuestion)
 
-        if (instance.data.character == 'glitch') {
-            document.querySelector('section.message .container').append(
-                _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
-            )
-        }
+            const texarea = openQuestion.querySelector('textarea')
+            texarea.addEventListener('input', (e) => {
+                if (e.target.value.length > 2) {
+                    instance.experience.navigation.next.disabled = false
+                }
+                else {
+                    instance.experience.navigation.next.disabled = true
+                }
+            })
 
-        if (instance.data.open_question === true) {
-            document.querySelector('.ui-container').append(
-                _gl.elementFromHtml(
-                    `<section class="open-question">
-                        <div class="container">
-                            <div class="content">
-                                <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
-                            </div>
-                        </div>
-                    </section>`
-                )
-            )
         }
     }
 

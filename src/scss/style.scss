@@ -22,6 +22,17 @@
 @import "./components/Unlock.scss";
 @import "./components/Quiz.scss";
 
+button[aria-label="skip-button"] {
+    position: absolute;
+    top: var(--app-padding);
+    right: var(--app-padding);
+}
+
+textarea::placeholder {
+    color: #fff;
+    opacity: 0.6;
+}
+
 #videos-container {
     position: absolute;
     inset: 0;
@@ -257,4 +268,41 @@ button[aria-label="skip-button"] {
     inset: 0;
     z-index: 99;
     pointer-events: none;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.alert {
+    .container {
+        position: absolute;
+        top: var(--app-padding);
+        left: var(--app-padding);
+        background-color: #fff;
+        padding: var(--app-padding);
+        border-radius: 1rem;
+        width: 40ch;
+        z-index: 99;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--gradient-dark);
+        z-index: 98;
+        opacity: 0.6;
+    }
+
+    p {
+        color: var(--clr-text);
+    }
+
+    [aria-label="close alert"] {
+        flex-shrink: 0;
+        margin-left: 1rem;
+    }
+
 }
