@@ -67,8 +67,6 @@ export default class QuestionAndCode {
         instance.el.inputs.forEach((input, index) => {
             input.value = instance.allAnswersFromTheme.hasOwnProperty(instance.currentCheckpoint) ? instance.allAnswersFromTheme[instance.currentCheckpoint][index] : ''
 
-
-            console.log(instance.allAnswersFromTheme);
             if (index == 0) input.focus()
             if (input.value.length != 0) allInputsEmpty = false
 
@@ -116,6 +114,7 @@ export default class QuestionAndCode {
     }
 
     destroy() {
+        document.removeEventListener('click', instance.saveAnswers)
         document.querySelector('.game')?.remove()
     }
 }
