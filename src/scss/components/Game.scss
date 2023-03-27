@@ -735,6 +735,26 @@ img.lazyloaded~div.img-loader {
     }
 }
 
+.sort-game {
+    .game-canvas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.popup-visible {
+        .container {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .game-canvas {
+            opacity: 0.2;
+            pointer-events: none;
+        }
+    }
+}
+
 .answers {
     .container {
         place-content: center;
