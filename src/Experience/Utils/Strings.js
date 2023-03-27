@@ -325,7 +325,7 @@ const strings = {
             "attachments": "Anhang",
             "homescreen": "Fertig",
             "preview": {
-                "title": "Preview",
+                "title": "Vorschau",
                 "info": "Mit diesem Button kannst du schnell durch die Kapitel springen. Du kannst Aufgaben überspringen und dir so einen Überblick verschaffen."
             },
             "pause": {
@@ -435,7 +435,7 @@ const strings = {
             "tryAgain": "Versuche es noch einmal!",
             "playAgain": "Nochmal spielen",
             "reset": "Neu starten",
-            "restartRound": "Restart the round",
+            "restartRound": "Runde neu starten",
             "continue": "Reise fortsetzen",
             "skip": "Überspringen",
             "correctAnswers": "richtige Antworten"
@@ -490,7 +490,7 @@ const strings = {
             "questions": "Vraag",
             "getTask": "Ga naar de opdracht",
             "submit": "Verzend",
-            "next": "Next",
+            "next": "Volgende",
             "openQuestion": "Schrijf antwoord hier"
         },
         "archive": "Archief",
@@ -586,7 +586,7 @@ const strings = {
             "tryAgain": "Probeer opnieuw!",
             "playAgain": "Speel opnieuw",
             "reset": "Begin opnieuw",
-            "restartRound": "Restart the round",
+            "restartRound": "Begin de ronde opnieuw",
             "continue": "Ga door met de reis",
             "skip": "Overslaan",
             "correctAnswers": "antwoorden juist"
@@ -627,7 +627,7 @@ const strings = {
             "attachments": "Pièces jointes",
             "homescreen": "Terminé",
             "preview": {
-                "title": "Preview",
+                "title": "Aperçu",
                 "info": "Utilise ce bouton pour parcourir rapidement le chapitre. Tu peux sauter les tâches et obtenir un aperçu du contenu."
             },
             "pause": {
@@ -641,7 +641,7 @@ const strings = {
             "questions": "Question",
             "getTask": "Aller à la tâche",
             "submit": "Envoyer",
-            "next": "Next",
+            "next": "Suivant",
             "openQuestion": "Inscrire la réponse ici"
         },
         "archive": "Archive",
@@ -737,7 +737,7 @@ const strings = {
             "tryAgain": "Try again",
             "playAgain": "Rejouer",
             "reset": "Redémarrer le jeu",
-            "restartRound": "Restart the round",
+            "restartRound": "Recommence le tour",
             "continue": "Continuer le voyage",
             "skip": "Sauter",
             "correctAnswers": "réponses correctes"
@@ -1080,7 +1080,7 @@ const strings = {
             "attachments": "Adjunto",
             "homescreen": "Listo",
             "preview": {
-                "title": "Preview",
+                "title": "Vista previa",
                 "info": "Usa este botón para una revisión rápida del capítulo. Aquí puedes omitir las tareas y obtener una descripción general del contenido."
             },
             "pause": {
@@ -1094,7 +1094,7 @@ const strings = {
             "questions": "Pregunta",
             "getTask": "Ir a la tarea",
             "submit": "Enviar",
-            "next": "Next",
+            "next": "Proximo",
             "openQuestion": "Write answer here"
         },
         "archive": "Archivo",
@@ -1185,12 +1185,12 @@ const strings = {
             "level": "Level",
             "gameOver": "Uh oh, te has equivocado.",
             "round": "Ronda",
-            "nextRound": "Next round",
-            "anotherRound": "Another round",
+            "nextRound": "Proxima ronda",
+            "anotherRound": "Una ronda mas",
             "tryAgain": "Prueba nuevamente!",
             "playAgain": "Juega de nuevo",
             "reset": "Reinicia el juego",
-            "restartRound": "Restart the round",
+            "restartRound": "Comienza la ronda nuevamente",
             "continue": "Continuar el viaje",
             "skip": "Saltar",
             "correctAnswers": "respuestas correctas"
@@ -1231,7 +1231,7 @@ const strings = {
             "attachments": "Attachments",
             "homescreen": "Done",
             "preview": {
-                "title": "Preview",
+                "title": "Visualização",
                 "info": "Utilize este botão para uma navegação rápida pelo capítulo. Aqui você poderá saltar as tarefas e ter uma visão apla do conteúdo."
             },
             "pause": {
@@ -1245,7 +1245,7 @@ const strings = {
             "questions": "Pergunta",
             "getTask": "Vá para a tarefa",
             "submit": "Enviar",
-            "next": "Next",
+            "next": "Seguinte",
             "openQuestion": "Escreva sua resposta aqui"
         },
         "archive": "Arquivo",
@@ -1341,7 +1341,7 @@ const strings = {
             "tryAgain": "Tente novamente!",
             "playAgain": "Toque novamente",
             "reset": "Recomeçar jogada",
-            "restartRound": "Restart the round",
+            "restartRound": "Reiniciar a rodada",
             "continue": "Continue a viagem",
             "skip": "Skip",
             "correctAnswers": "respostas corretas"
@@ -1684,7 +1684,7 @@ const strings = {
             "attachments": "Liitteet",
             "homescreen": "Valmis",
             "preview": {
-                "title": "Preview",
+                "title": "Esikatselu",
                 "info": "Paina tästä napista nähdäksesi koko jakson sisällön. Voit hypätä tehtävien yli ja näet yleiskuvan koko sisällöstä."
             },
             "pause": {
@@ -1698,7 +1698,7 @@ const strings = {
             "questions": "Kysymys",
             "getTask": "Mene tehtävään",
             "submit": "Lähetä",
-            "next": "Next",
+            "next": "Seuraava",
             "openQuestion": "Kirjoita vastaus tähän"
         },
         "archive": "Arkisto",
@@ -1794,7 +1794,7 @@ const strings = {
             "tryAgain": "Yritä uudestaan!",
             "playAgain": "Pelaa uudelleen",
             "reset": "Aloita alusta",
-            "restartRound": "Restart the round",
+            "restartRound": "Aloita kierros alusta",
             "continue": "Jatka matkaa",
             "skip": "Ohita",
             "correctAnswers": "oikeaa vastausta"
