@@ -58,7 +58,7 @@ export default class World {
         }
 
         this.buttons = {
-            contact: document.querySelector('[aria-label="Contact"]'),
+            // contact: document.querySelector('[aria-label="Contact"]'),
             home: document.querySelector('[aria-label="Home"]'),
             guide: document.querySelector('[aria-label="Guide"]')
         }
@@ -645,7 +645,7 @@ export default class World {
         instance.program.video.defocus()
         instance.program.removeInteractivity()
         instance.buttons.home.style.display = 'none'
-        instance.buttons.contact.style.display = 'flex'
+        // instance.buttons.contact.style.display = 'flex'
         instance.buttons.guide.style.display = 'flex'
 
         document.querySelector('.cta').style.display = 'flex'
@@ -684,7 +684,7 @@ export default class World {
         document.body.classList.remove('freeze')
         document.querySelector('.page').className = 'page page-home'
 
-        instance.buttons.contact.style.display = 'none'
+        // instance.buttons.contact.style.display = 'none'
         instance.buttons.guide.style.display = 'none'
     }
 

@@ -70,37 +70,37 @@ const handleRedirectCallback = async () => {
     }
 }
 
-document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function () {
-    // Support chat - setup
-    window.intercomSettings = {
-        api_base: "https://api-iam.intercom.io",
-        app_id: "gy6jlngb",
-        language_override: _lang.getLanguageCode(),
-        hide_default_launcher: true
-    }
+// document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, function () {
+//     // Support chat - setup
+//     window.intercomSettings = {
+//         api_base: "https://api-iam.intercom.io",
+//         app_id: "gy6jlngb",
+//         language_override: _lang.getLanguageCode(),
+//         hide_default_launcher: true
+//     }
 
-    // Define user
-    if (experience.auth0.userData) {
-        window.intercomSettings.name = experience.auth0.userData.name
-        window.intercomSettings.email = experience.auth0.userData.email
-        window.intercomSettings.user_hash = experience.auth0.userData.intercom_hash
-    }
+//     // Define user
+//     if (experience.auth0.userData) {
+//         window.intercomSettings.name = experience.auth0.userData.name
+//         window.intercomSettings.email = experience.auth0.userData.email
+//         window.intercomSettings.user_hash = experience.auth0.userData.intercom_hash
+//     }
 
-    // Initialize
-    (function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/gy6jlngb'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (document.readyState === 'complete') { l(); } else if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })()
+//     // Initialize
+//     (function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/gy6jlngb'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (document.readyState === 'complete') { l(); } else if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })()
 
-    // Actions
-    const contactButtons = document.querySelector('[aria-label="Contact"]')
+//     // Actions
+//     const contactButtons = document.querySelector('[aria-label="Contact"]')
 
-    Intercom('onHide', function () { contactButtons.removeAttribute('is-open') })
-    Intercom('onShow', function () { contactButtons.setAttribute('is-open', true) })
+//     Intercom('onHide', function () { contactButtons.removeAttribute('is-open') })
+//     Intercom('onShow', function () { contactButtons.setAttribute('is-open', true) })
 
-    contactButtons.addEventListener('click', () => {
-        contactButtons.hasAttribute('is-open')
-            ? Intercom('hide')
-            : Intercom('show')
-    })
-})
+//     contactButtons.addEventListener('click', () => {
+//         contactButtons.hasAttribute('is-open')
+//             ? Intercom('hide')
+//             : Intercom('show')
+//     })
+// })
 
 // Detect browser
 var browserName = (function (agent) {
