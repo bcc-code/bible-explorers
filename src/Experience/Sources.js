@@ -14,7 +14,7 @@ export default [
     {
         name: 'controlRoom',
         type: 'gltfModel',
-        path: 'models/Controlroom_lowmodel_1.glb'
+        path: 'models/Controlroom.glb'
     },
     {
         name: 'baked',
