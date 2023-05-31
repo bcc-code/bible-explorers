@@ -64,12 +64,10 @@ export default class Menu {
         soundEFX.querySelector('input').setAttribute(instance.soundOn ? 'checked' : '', '')
         soundEFX.querySelector('label').innerText = instance.soundOn ? _s.settings.on : _s.settings.off
 
-
         const fullscreen = document.querySelector('.fullscreen-section')
         fullscreen.querySelector('.heading').innerText = _s.settings.fullScreenMode
         fullscreen.querySelector('input').checked = document.fullscreenElement !== null
         fullscreen.querySelector('label').innerText = !document.fullscreenElement ? _s.settings.off : _s.settings.on
-
 
         const loginBtn = document.querySelector('[aria-label="Login button"]')
         const logoutBtn = document.querySelector('[aria-label="Logout button"]')
@@ -79,6 +77,9 @@ export default class Menu {
         const bibleExplorersGuide = document.querySelector('[aria-label="Guide"]')
         bibleExplorersGuide.querySelector('span').innerText = _s.howTo
         bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
+
+        const copyrightFooter = document.querySelector('aside.copyright')
+        copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank">BCC Media STI</a>`
     }
 
     eventListeners() {
