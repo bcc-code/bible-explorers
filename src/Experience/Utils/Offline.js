@@ -134,6 +134,7 @@ export default class Offline {
     downloadEpisodesFromChapter = async function (chapterId) {
         let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
         const episodeUrls = await offline.getEpisodeDownloadUrls(notDownloadedEpisodes[0].id, chapterId)
+
         if (episodeUrls) {
             notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
             notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
@@ -151,26 +152,20 @@ export default class Offline {
     }
 
     getEpisodeDownloadUrls = async function (episodeId, chapterId) {
-        const claims = await this.experience.auth0.getIdTokenClaims()
-        const idToken = claims.__raw
         let locale = _lang.getLanguageCode()
         locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
 
-        var btvPlayer = BTVPlayer({
-            type: 'episode',
-            id: episodeId,
-            locale: locale,
-            access_token: idToken
-        })
-
+        let episode = {}
         let allLanguagesVideos = []
+
         try {
-            allLanguagesVideos = await btvPlayer.api.getDownloadables('episode', episodeId)
+            episode = (await offline.getEpisodeData(episodeId)).episode
+            allLanguagesVideos = episode.files
         }
         catch (e) {
             offline.setErrorMessage(chapterId)
         }
-        const myLanguageVideos = allLanguagesVideos.filter(video => { return video.language.code == locale })
+        const myLanguageVideos = allLanguagesVideos.filter(file => { return file.audioLanguage == locale })
 
         if (!myLanguageVideos.length) {
             _appInsights.trackException({
@@ -189,27 +184,52 @@ export default class Offline {
         }
 
         const selectedQualityVideo = offline.getSelectedQualityVideo(myLanguageVideos)
-        const episode = {
-            downloadUrl: await btvPlayer.api.getDownloadable('episode', episodeId, selectedQualityVideo.id),
-            info: await btvPlayer.api.getEpisodeInfo('episode', episodeId)
-        }
 
         return {
-            downloadUrl: episode.downloadUrl,
-            thumbnail: episode.info.image
+            downloadUrl: selectedQualityVideo.url,
+            thumbnail: episode.image
         }
+    }
+
+    getEpisodeData = async function(episodeId) {
+        const response = await fetch('https://api.brunstad.tv/query', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: `
+                    query {
+                        episode(id: ${episodeId}) {
+                            id
+                            image
+                            files {
+                                id
+                                audioLanguage
+                                size
+                                url
+                                fileName
+                            }
+                        }
+                    }
+                `
+            })
+        })
+
+        const episode = await response.json()
+        return episode.data
     }
 
     getSelectedQualityVideo = function (arr) {
         switch (this.experience.settings.videoQuality) {
             case 'low':
-                return arr.reduce((prev, current) => (prev.sizeInMB < current.sizeInMB) ? prev : current)
+                return arr.reduce((prev, current) => (prev.size < current.size) ? prev : current)
 
             case 'medium':
                 return median(arr)
 
             case 'high':
-                return arr.reduce((prev, current) => (prev.sizeInMB > current.sizeInMB) ? prev : current)
+                return arr.reduce((prev, current) => (prev.size > current.size) ? prev : current)
         }
     }
 
