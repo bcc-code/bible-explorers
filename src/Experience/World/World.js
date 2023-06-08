@@ -220,32 +220,20 @@ export default class World {
             </section>
         `)
 
-        if (chapter.attachments.length) {
-            const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
-            const guide = _gl.elementFromHtml(`
-                <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
-                    <svg class="book-icon icon" viewBox="0 0 21 24">
-                        <use href="#book"></use>
-                    </svg>
-                    <span>${_s.chapter.activityDescLabel}</span>
-                </a>`
-            )
+        const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
+        const guide = _gl.elementFromHtml(`
+            <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
+                <svg class="book-icon icon" viewBox="0 0 21 24">
+                    <use href="#book"></use>
+                </svg>
+                <span>${_s.chapter.activityDescLabel}</span>
+            </a>`
+        )
 
-            if (!chapter.is_beta)
-                attachments.append(guide)
+        if (!chapter.is_beta)
+            attachments.append(guide)
 
-            chapter.attachments.forEach((item) => {
-                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset">
-                    <svg class="download-icon icon" viewBox="0 0 24 24">
-                        <use href="#download"></use>
-                    </svg>
-                    <span>${item.title}</span>
-                </a>`)
-                attachments.append(attachment)
-            })
-
-            details.append(attachments)
-        }
+        details.append(attachments)
 
         const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
         details.append(description)
