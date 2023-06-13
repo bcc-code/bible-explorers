@@ -138,9 +138,12 @@ export default class Resources extends EventEmitter {
         video.muted = false
         video.loop = true
         video.controls = false
-        video.autoplay = true
+        video.autoplay = false
         video.preload = 'auto'
         video.src = url
+        
+        if (name == 'iris')
+            video.autoplay = true
 
         const texture = new THREE.VideoTexture(video)
         texture.flipY = false
@@ -148,6 +151,7 @@ export default class Resources extends EventEmitter {
         texture.magFilter = THREE.LinearFilter
         texture.encoding = THREE.sRGBEncoding
         texture.needsUpdate = true
+        
         this.textureItems[name] = {
             item: texture,
             path: url,

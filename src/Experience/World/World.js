@@ -417,12 +417,13 @@ export default class World {
     }
 
     loadIrisVideoTextures() {
-        instance.selectedChapter.program.forEach(checkpoint => {
-            checkpoint.steps.forEach(step => {
+        instance.selectedChapter.program.forEach((checkpoint, cIndex) => {
+            checkpoint.steps.forEach((step, sIndex) => {
                 if (step.type == 'iris' && step.message.video) {
+                    const textureName = `chapter-${instance.selectedChapter.id}_c-${cIndex}_s-${sIndex}`
                     instance.offline.fetchChapterAsset(step.message, "video", (data) => {
                         step.message = data
-                        instance.resources.loadVideoTexture(step.message.video, step.message.video)
+                        instance.resources.loadVideoTexture(textureName, step.message.video)
                     })
                 }
             })

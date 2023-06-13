@@ -31,8 +31,11 @@ export default class Message {
         if (instance.data.audio)
             instance.audio.togglePlayTaskDescription(instance.data.audio)
 
-        if (instance.data.video)
-            instance.world.controlRoom.tv_16x9.material.map = instance.resources.textureItems[instance.data.video].item
+        if (instance.data.video) {
+            const textureName = `chapter-${instance.world.selectedChapter.id}_c-${instance.world.program.currentCheckpoint}_s-${instance.world.program.currentStep}`
+            instance.world.controlRoom.tv_16x9.material.map = instance.resources.textureItems[textureName].item
+            instance.world.controlRoom.playCustomIrisTexture(textureName)
+        }
     }
 
     setHtml(text, character) {

@@ -147,7 +147,6 @@ export default class Program {
 
     stepToggled() {
         document.dispatchEvent(_e.EVENTS.STEP_TOGGLED)
-        instance.world.controlRoom.tv_16x9.material.map = instance.resources.textureItems['iris'].item
     }
 
     startTask() {
