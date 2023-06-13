@@ -300,6 +300,7 @@ export default class World {
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
                 instance.loadChapterTextures()
+                instance.loadIrisVideoTextures()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
 
@@ -412,6 +413,15 @@ export default class World {
                 return
 
             instance.resources.loadEpisodeTextures(fileName)
+        })
+    }
+
+    loadIrisVideoTextures() {
+        instance.selectedChapter.program.forEach(checkpoint => {
+            checkpoint.steps.forEach(step => {
+                if (step.type == 'iris' && step.message.video)
+                    instance.resources.loadVideoTexture(step.message.video, step.message.video)
+            })
         })
     }
 

@@ -51,7 +51,6 @@ export default class ControlRoom {
     setModel() {
         this.model = this.resources.scene
         this.scene.add(this.model)
-
     }
 
     setAnimationMixer() {
@@ -181,7 +180,6 @@ export default class ControlRoom {
     }
 
     clickedObject() {
-
         if (this.currentIntersect != null) {
             this.world.program.control(this.currentIntersect)
             this.currentIntersect = null
@@ -193,7 +191,6 @@ export default class ControlRoom {
     }
 
     leverAction() {
-
         this.animations.lever = this.getAnimation('SwitchAction')
         this.animations.actions.drag = this.animations.mixer.clipAction(this.animations.lever)
 
@@ -202,9 +199,7 @@ export default class ControlRoom {
     }
 
     update() {
-
         if (this.animations.actions.drag.isRunning())
             this.animations.mixer.update(this.time.delta * 0.001)
-
     }
 }
