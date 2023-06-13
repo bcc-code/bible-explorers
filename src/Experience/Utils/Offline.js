@@ -421,7 +421,7 @@ export default class Offline {
                             const url = URL.createObjectURL(blob)
                             const newData = Object.assign({}, data)
                             newData[param] = url
-                            
+
                             callback(newData)
                         })
                     }

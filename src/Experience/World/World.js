@@ -419,8 +419,12 @@ export default class World {
     loadIrisVideoTextures() {
         instance.selectedChapter.program.forEach(checkpoint => {
             checkpoint.steps.forEach(step => {
-                if (step.type == 'iris' && step.message.video)
-                    instance.resources.loadVideoTexture(step.message.video, step.message.video)
+                if (step.type == 'iris' && step.message.video) {
+                    instance.offline.fetchChapterAsset(step.message, "video", (data) => {
+                        step.message = data
+                        instance.resources.loadVideoTexture(step.message.video, step.message.video)
+                    })
+                }
             })
         })
     }
@@ -475,6 +479,7 @@ export default class World {
 
         chapter['program'].forEach(checkpoint => {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter(step => step.message && step.message.audio))
+            instance.cacheTaskDescriptionVideos(checkpoint.steps.filter(step => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
             instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
@@ -503,6 +508,11 @@ export default class World {
     cacheTaskDescriptionAudios(steps) {
         if (steps.length == 0) return
         steps.forEach(step => instance.fetchAndCacheAsset(step.message.audio))
+    }
+
+    cacheTaskDescriptionVideos(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => instance.fetchAndCacheAsset(step.message.video))
     }
 
     cacheTaskDescriptionMedia(steps) {
