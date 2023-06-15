@@ -20,8 +20,8 @@ jobs:
         with:
           submodules: true
           
-      - name: Install webpack
-        run: npm install webpack
+      - name: Install vite
+        run: npm install vite
         
       - name: Build And Deploy
         id: builddeploy
