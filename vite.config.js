@@ -1,6 +1,7 @@
 const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env
 
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default {
     root: 'src/',
@@ -20,6 +21,7 @@ export default {
         sourcemap: true
     },
     plugins: [
-        basicSsl()
+        basicSsl(),
+        VitePWA({ registerType: 'autoUpdate' })
     ]
 }
