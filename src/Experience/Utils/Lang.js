@@ -1,6 +1,6 @@
 
 const defaultLang = "en"
-const list = {
+const languagesList = {
     "en": "English",
     "no": "Norsk",
     "de": "Deutsch",
@@ -16,12 +16,30 @@ const list = {
     "ru": "Русский",
     "fi": "Suomi"
 }
+const threeLettersLang = {
+    "no": "nor",
+    "en": "eng",
+    "nl": "nld",
+    "de": "deu",
+    "fr": "fra",
+    "es": "spa",
+    "fi": "fin",
+    "ru": "rus",
+    "pt-pt": "por",
+    "ro": "ron",
+    "tr": "tur",
+    "pl": "pol",
+    "hu": "hun",
+    "it": "ita",
+    "da": "dan"
+}
 
 let getLanguageCode = () => localStorage.getItem('lang') || defaultLang
-let getLanguageName = () => list[getLanguageCode()]
+let get3LettersLang = () => threeLettersLang[getLanguageCode()] ?? getLanguageCode()
+let getLanguageName = () => languagesList[getLanguageCode()]
 let getLanguagesList = () => {
     let html = ''
-    Object.entries(list).forEach(([code, language]) => {
+    Object.entries(languagesList).forEach(([code, language]) => {
         if (code == getLanguageCode()) return // Skip current language
         html += `<li data-id="${code}">${language}</li>`
     })
@@ -32,4 +50,4 @@ let updateLanguage = (newLang) => {
     window.location.reload();
 }
 
-export default { getLanguageCode, getLanguageName, getLanguagesList, updateLanguage }
+export default { getLanguageCode, get3LettersLang, getLanguageName, getLanguagesList, updateLanguage }

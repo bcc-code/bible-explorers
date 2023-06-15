@@ -29,16 +29,6 @@ const assets = new Route(({url}) => {
   ]
 }))
 
-const btvPlayer = new Route(({url}) => {
-  return url === 'https://brunstad.tv/Content/js/btvplayer.js?v=2022-06-24'
-}, new NetworkFirst({
-  plugins: [
-    new CacheableResponsePlugin({
-      statuses: [0, 200]
-    })
-  ]
-}))
-
 const castFramework = new Route(({url}) => {
   return url === 'https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js'
 }, new NetworkFirst({
@@ -50,6 +40,5 @@ const castFramework = new Route(({url}) => {
 }))
 
 registerRoute(assets)
-registerRoute(btvPlayer)
 registerRoute(castFramework)
 precacheAndRoute(self.__WB_MANIFEST)

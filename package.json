@@ -14,6 +14,7 @@
     "@microsoft/applicationinsights-web": "^2.8.3",
     "@tweenjs/tween.js": "^18.6.4",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "bccm-video-player": "^1.5.0",
     "canvas-confetti": "^1.6.0",
     "gsap": "^3.11.5",
     "konva": "^8.4.3",

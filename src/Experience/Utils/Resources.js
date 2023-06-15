@@ -4,6 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
 import Offline from '../Utils/Offline.js'
+import { PlayerFactory } from "bccm-video-player"
+import "bccm-video-player/css"
 import _c from '../Utils/Connection.js'
 import _lang from '../Utils/Lang.js'
 import _s from '../Utils/Strings.js'
@@ -37,6 +39,12 @@ export default class Resources extends EventEmitter {
         this.loadManager()
         this.setLoaders()
         this.startLoading()
+
+        // BTV player factory
+        this.factory = new PlayerFactory({
+            tokenFactory: null,
+            endpoint: "https://api.brunstad.tv/query"
+        })
     }
 
     loadManager() {
@@ -214,49 +222,40 @@ export default class Resources extends EventEmitter {
     }
 
     streamLocally(videoName, videoUrl) {
-        let options = {
+        resources.videoPlayers[videoName] = createVideoJsPlayer(videoName, {
             src: {
                 type: 'video/mp4',
                 src: videoUrl
             },
+            autoplay: false,
             videojs: {
                 autoplay: false
             }
-        }
-
-        resources.videoPlayers[videoName] = createVideoJsPlayer(videoName, options)
+        })
     }
 
     async streamFromBtv(videoName) {
-        const episodeId = videoName.replace('episode-', '')
-        let locale = _lang.getLanguageCode()
-        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
-
-        const claims = await resources.experience.auth0.getIdTokenClaims()
-        const idToken = claims ? claims.__raw : '';
-
-        var btvPlayer = BTVPlayer({
-            type: 'episode',
-            id: episodeId,
-            locale: locale,
-            access_token: idToken
-        })
-
         let btvContainer = document.createElement('div')
         btvContainer.setAttribute('id', videoName)
         document.getElementById('videos-container').appendChild(btvContainer)
 
-        const loadResponse = await btvPlayer.load({
-            el: videoName,
-            options: {
+        const episodeId = videoName.replace('episode-', '')
+        const player = await resources.factory.create(videoName, {
+            episodeId: episodeId,
+            overrides: {
+                languagePreferenceDefaults: {
+                    audio: _lang.get3LettersLang(),
+                    subtitle: _lang.get3LettersLang(),
+                },
+                autoplay: false,
                 videojs: {
                     autoplay: false
                 }
             }
         })
 
-        resources.videoPlayers[videoName] = loadResponse.player
-        resources.posterImages[videoName] = loadResponse.info.image
+        resources.videoPlayers[videoName] = player
+        resources.posterImages[videoName] = player.poster_
     }
 
     fetchApiThenCache(theUrl, callback) {

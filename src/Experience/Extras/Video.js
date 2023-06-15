@@ -26,7 +26,7 @@ export default class Video {
 
         this.video = () => {
             let id = instance.playingVideoId
-            return instance.resources.videoPlayers[id];
+            return instance.resources.videoPlayers[id]
         }
 
         this.videoJsEl = () => {
@@ -58,7 +58,8 @@ export default class Video {
         if (this.portalScreen.material.map != this.resources.textureItems[id])
             this.setTexture(id)
 
-        this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
+        const videoQuality = this.getVideoQuality()
+        this.resources.videoPlayers[id].setVideoQuality(videoQuality)
 
         // Add event listener on play
         this.video().on('play', function () {
