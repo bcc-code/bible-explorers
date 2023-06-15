@@ -697,6 +697,14 @@ export default class World {
         instance.buttons.guide.style.display = 'none'
     }
 
+    hideLoading() {
+
+        // instance.welcome.loading.style.display = "none"
+        // instance.welcome.topBar.style.display = "flex"
+        // instance.welcome.loadingScreen.classList.add('visible')
+
+    }
+
     finishJourney() {
         instance.audio.changeBgMusic()
 
