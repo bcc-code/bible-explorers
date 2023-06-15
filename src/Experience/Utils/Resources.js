@@ -14,7 +14,6 @@ export default class Resources extends EventEmitter {
     constructor(sources) {
         super()
 
-
         this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
@@ -38,11 +37,9 @@ export default class Resources extends EventEmitter {
         this.loadManager()
         this.setLoaders()
         this.startLoading()
-
     }
 
     loadManager() {
-
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
 
@@ -58,10 +55,9 @@ export default class Resources extends EventEmitter {
         }
 
         this.loadingManager.onLoad = () => {
-            console.log('Loading complete!')
+            // console.log('Loading complete!')
             document.querySelector('.loader')?.remove()
             document.querySelector('.app-header').style.display = "flex"
-
             // this.loadingIcon.cleanup();
         }
 
@@ -76,7 +72,6 @@ export default class Resources extends EventEmitter {
 
                 progress.runtimeInput.value = progressRatio
             }
-
         }
 
         this.loadingManager.onError = function (url) {
@@ -127,37 +122,45 @@ export default class Resources extends EventEmitter {
             }
 
             else if (source.type === 'videoTexture') {
-                const video = document.createElement('video')
-                video.addEventListener('canplay', this.onVideoLoad(video, source.path), false)
-
-                video.setAttribute('id', source.name)
-                video.setAttribute('webkit-playsinline', 'webkit-playsinline')
-                video.setAttribute('playsinline', '')
-                video.style.background = 'white'
-                video.crossOrigin = ''
-                video.muted = false
-                video.loop = true
-                video.controls = false
-                video.autoplay = true
-                video.preload = 'auto'
-                video.src = source.path
-
-                const texture = new THREE.VideoTexture(video)
-                texture.flipY = false
-                texture.minFilter = THREE.LinearFilter
-                texture.magFilter = THREE.LinearFilter
-                texture.encoding = THREE.sRGBEncoding
-                texture.needsUpdate = true
-                this.textureItems[source.name] = {
-                    item: texture,
-                    path: source.path,
-                    naturalWidth: video.videoWidth || 1,
-                    naturalHeight: video.videoHeight || 1
-                }
-
-                this.loadingManager.itemStart(source.path)
+                this.loadVideoTexture(source.name, source.path)
             }
         }
+    }
+
+    loadVideoTexture(name, url) {
+        const video = document.createElement('video')
+        video.addEventListener('canplay', this.onVideoLoad(video, url), false)
+
+        video.setAttribute('id', name)
+        video.setAttribute('webkit-playsinline', 'webkit-playsinline')
+        video.setAttribute('playsinline', '')
+        video.style.background = 'white'
+        video.crossOrigin = ''
+        video.muted = false
+        video.loop = true
+        video.controls = false
+        video.autoplay = false
+        video.preload = 'auto'
+        video.src = url
+        
+        if (name == 'iris')
+            video.autoplay = true
+
+        const texture = new THREE.VideoTexture(video)
+        texture.flipY = false
+        texture.minFilter = THREE.LinearFilter
+        texture.magFilter = THREE.LinearFilter
+        texture.encoding = THREE.sRGBEncoding
+        texture.needsUpdate = true
+        
+        this.textureItems[name] = {
+            item: texture,
+            path: url,
+            naturalWidth: video.videoWidth || 1,
+            naturalHeight: video.videoHeight || 1
+        }
+
+        this.loadingManager.itemStart(url)
     }
 
     onVideoLoad(video, url) {

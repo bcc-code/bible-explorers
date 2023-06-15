@@ -10,6 +10,7 @@ export default class Message {
         instance = this
         instance.experience = new Experience()
         instance.world = instance.experience.world
+        instance.resources = instance.experience.resources
         instance.audio = instance.world.audio
         instance.navigation = instance.experience.navigation
     }
@@ -29,6 +30,12 @@ export default class Message {
 
         if (instance.data.audio)
             instance.audio.togglePlayTaskDescription(instance.data.audio)
+
+        if (instance.data.video) {
+            const textureName = `chapter-${instance.world.selectedChapter.id}_c-${instance.world.program.currentCheckpoint}_s-${instance.world.program.currentStep}`
+            instance.world.controlRoom.tv_16x9.material.map = instance.resources.textureItems[textureName].item
+            instance.world.controlRoom.playCustomIrisTexture(textureName)
+        }
     }
 
     setHtml(text, character) {

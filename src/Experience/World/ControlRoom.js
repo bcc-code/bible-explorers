@@ -1,10 +1,13 @@
 import * as THREE from 'three'
 import { VideoTexture } from 'three'
 import Experience from "../Experience.js"
-import gsap from "gsap"
+import _e from "../Utils/Events.js"
+
+let instance = null
 
 export default class ControlRoom {
     constructor() {
+        instance = this
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -25,8 +28,7 @@ export default class ControlRoom {
         this.texture = null
 
         // Setup
-        this.sources = this.resources
-        this.resources = this.resources.items.controlRoom
+        this.resourceItems = this.resources.items.controlRoom
 
         this.setModel()
         this.getObjects()
@@ -36,6 +38,15 @@ export default class ControlRoom {
         this.leverAction()
 
         // Events
+        this.setEventListeners()
+    }
+
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, () => {
+            instance.setDefaultIrisTexture()
+            instance.stopAllCustomIrisTextures()
+        })
+
         window.addEventListener('click', () => {
             if (!this.experience.world.program) return
 
@@ -49,9 +60,8 @@ export default class ControlRoom {
 
     // Set scene
     setModel() {
-        this.model = this.resources.scene
+        this.model = this.resourceItems.scene
         this.scene.add(this.model)
-
     }
 
     setAnimationMixer() {
@@ -61,19 +71,19 @@ export default class ControlRoom {
     }
 
     getObjects() {
-        this.controlRoom = this.resources.scene.children.find(child => child.name === 'Controlroom')
+        this.controlRoom = this.resourceItems.scene.children.find(child => child.name === 'Controlroom')
 
-        this.tv_4x4 = this.resources.scene.children.find(child => child.name === 'tv_4x4_screen')
-        this.tv_4x5 = this.resources.scene.children.find(child => child.name === 'tv_4x5_screen')
-        this.tv_16x10 = this.resources.scene.children.find(child => child.name === 'tv_16x10_screen')
-        this.tv_16x9 = this.resources.scene.children.find(child => child.name === 'tv_16x9_screen')
-        this.tv_portal = this.resources.scene.children.find(child => child.name === 'tv_portal_screen')
+        this.tv_4x4 = this.resourceItems.scene.children.find(child => child.name === 'tv_4x4_screen')
+        this.tv_4x5 = this.resourceItems.scene.children.find(child => child.name === 'tv_4x5_screen')
+        this.tv_16x10 = this.resourceItems.scene.children.find(child => child.name === 'tv_16x10_screen')
+        this.tv_16x9 = this.resourceItems.scene.children.find(child => child.name === 'tv_16x9_screen')
+        this.tv_portal = this.resourceItems.scene.children.find(child => child.name === 'tv_portal_screen')
 
-        this.tablet = this.resources.scene.children.find(child => child.name === 'Screen')
-        this.lever = this.resources.scene.children.find(child => child.name === 'Switch')
+        this.tablet = this.resourceItems.scene.children.find(child => child.name === 'Screen')
+        this.lever = this.resourceItems.scene.children.find(child => child.name === 'Switch')
 
-        this.arrow_h = this.resources.scene.children.find(child => child.name === 'arrow_H')
-        this.arrow_m = this.resources.scene.children.find(child => child.name === 'arrow_M')
+        this.arrow_h = this.resourceItems.scene.children.find(child => child.name === 'arrow_H')
+        this.arrow_m = this.resourceItems.scene.children.find(child => child.name === 'arrow_M')
 
         this.roomTexture.push(this.controlRoom, this.arrow_h, this.arrow_m)
         this.clickableObjects.push(this.tv_16x9, this.tablet, this.lever)
@@ -81,7 +91,7 @@ export default class ControlRoom {
     }
 
     getTextures() {
-        this.bakedTexture = this.sources.items.baked
+        this.bakedTexture = this.resources.items.baked
     }
 
     setMaterials() {
@@ -93,19 +103,19 @@ export default class ControlRoom {
 
         this.screenObjects.forEach(child => {
             if (child.name === 'tv_4x4_screen') {
-                child.material = new THREE.MeshBasicMaterial({ map: this.sources.items.screen_default })
+                child.material = new THREE.MeshBasicMaterial({ map: this.resources.items.screen_default })
             }
 
             if (child.name === 'tv_4x5_screen') {
-                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['codes'].item })
+                child.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems['codes'].item })
             }
 
             if (child.name === 'tv_16x10_screen') {
-                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['map'].item })
+                child.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems['map'].item })
             }
 
             if (child.name === 'tv_16x9_screen') {
-                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['iris'].item })
+                child.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems['iris'].item })
             }
 
             if (child.name === 'tv_portal_screen') {
@@ -113,7 +123,7 @@ export default class ControlRoom {
             }
 
             if (child.name === "Screen") {
-                child.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems['hud'].item })
+                child.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems['hud'].item })
                 child.material.map.image.pause()
             }
 
@@ -147,7 +157,7 @@ export default class ControlRoom {
     }
 
     updateTextureScreen4x4() {
-        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.sources.textureItems[this.world.program.currentVideo()] })
+        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems[this.world.program.currentVideo()] })
         this.tv_4x4.material.map.flipY = false
         this.tv_4x4.material.map.encoding = THREE.sRGBEncoding
     }
@@ -156,6 +166,22 @@ export default class ControlRoom {
         if (this.texture instanceof VideoTexture) {
             this.texture.image.play()
         }
+    }
+
+    setDefaultIrisTexture() {
+        instance.tv_16x9.material.map = instance.resources.textureItems['iris'].item
+    }
+
+    playCustomIrisTexture(textureName) {
+        instance.resources.textureItems[textureName].item.source.data.currentTime = 0
+        instance.resources.textureItems[textureName].item.source.data.play()
+    }
+
+    stopAllCustomIrisTextures() {
+        const customIrisTextures = Object.keys(instance.resources.textureItems).filter(texture => texture.includes('chapter-'))
+        customIrisTextures.forEach(textureName => {
+            instance.resources.textureItems[textureName].item.source.data.pause()
+        })
     }
 
     // On click
@@ -181,7 +207,6 @@ export default class ControlRoom {
     }
 
     clickedObject() {
-
         if (this.currentIntersect != null) {
             this.world.program.control(this.currentIntersect)
             this.currentIntersect = null
@@ -189,11 +214,10 @@ export default class ControlRoom {
     }
 
     getAnimation(name) {
-        return THREE.AnimationClip.findByName(this.resources.animations, name)
+        return THREE.AnimationClip.findByName(this.resourceItems.animations, name)
     }
 
     leverAction() {
-
         this.animations.lever = this.getAnimation('SwitchAction')
         this.animations.actions.drag = this.animations.mixer.clipAction(this.animations.lever)
 
@@ -202,9 +226,7 @@ export default class ControlRoom {
     }
 
     update() {
-
         if (this.animations.actions.drag.isRunning())
             this.animations.mixer.update(this.time.delta * 0.001)
-
     }
 }

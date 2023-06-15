@@ -154,13 +154,19 @@ export default class Program {
         instance.experience.navigation.next.disabled = false
 
         if (instance.stepType() == 'video') {
-            instance.updateCameraForCurrentStep(() => {
-                instance.highlight.add(instance.interactiveObjects()[0])
-                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-                instance.experience.navigation.next.disabled = true
-                instance.video.load(instance.currentVideo())
-                instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
-            })
+            instance.video.load(instance.currentVideo())
+
+            if (instance.getCurrentStepData().details.play_video_directly) {
+                instance.video.play()
+            }
+            else {
+                instance.updateCameraForCurrentStep(() => {
+                    instance.highlight.add(instance.interactiveObjects()[0])
+                    instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+                    instance.experience.navigation.next.disabled = true
+                    instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
+                })
+            }
         }
 
         else {

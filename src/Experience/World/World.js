@@ -220,32 +220,20 @@ export default class World {
             </section>
         `)
 
-        if (chapter.attachments.length) {
-            const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
-            const guide = _gl.elementFromHtml(`
-                <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
-                    <svg class="book-icon icon" viewBox="0 0 21 24">
-                        <use href="#book"></use>
-                    </svg>
-                    <span>${_s.chapter.activityDescLabel}</span>
-                </a>`
-            )
+        const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
+        const guide = _gl.elementFromHtml(`
+            <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
+                <svg class="book-icon icon" viewBox="0 0 21 24">
+                    <use href="#book"></use>
+                </svg>
+                <span>${_s.chapter.activityDescLabel}</span>
+            </a>`
+        )
 
-            if (!chapter.is_beta)
-                attachments.append(guide)
+        if (!chapter.is_beta)
+            attachments.append(guide)
 
-            chapter.attachments.forEach((item) => {
-                const attachment = _gl.elementFromHtml(`<a href="${item.url}" target="_blank" class="link asset">
-                    <svg class="download-icon icon" viewBox="0 0 24 24">
-                        <use href="#download"></use>
-                    </svg>
-                    <span>${item.title}</span>
-                </a>`)
-                attachments.append(attachment)
-            })
-
-            details.append(attachments)
-        }
+        details.append(attachments)
 
         const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
         details.append(description)
@@ -312,6 +300,7 @@ export default class World {
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
                 instance.loadChapterTextures()
+                instance.loadIrisVideoTextures()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
 
@@ -427,6 +416,20 @@ export default class World {
         })
     }
 
+    loadIrisVideoTextures() {
+        instance.selectedChapter.program.forEach((checkpoint, cIndex) => {
+            checkpoint.steps.forEach((step, sIndex) => {
+                if (step.type == 'iris' && step.message.video) {
+                    const textureName = `chapter-${instance.selectedChapter.id}_c-${cIndex}_s-${sIndex}`
+                    instance.offline.fetchChapterAsset(step.message, "video", (data) => {
+                        step.message = data
+                        instance.resources.loadVideoTexture(textureName, step.message.video)
+                    })
+                }
+            })
+        })
+    }
+
     async downloadChapter(chapter) {
         if (!this.experience.auth0.isAuthenticated) return
 
@@ -477,6 +480,7 @@ export default class World {
 
         chapter['program'].forEach(checkpoint => {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter(step => step.message && step.message.audio))
+            instance.cacheTaskDescriptionVideos(checkpoint.steps.filter(step => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
             instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
@@ -505,6 +509,11 @@ export default class World {
     cacheTaskDescriptionAudios(steps) {
         if (steps.length == 0) return
         steps.forEach(step => instance.fetchAndCacheAsset(step.message.audio))
+    }
+
+    cacheTaskDescriptionVideos(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => instance.fetchAndCacheAsset(step.message.video))
     }
 
     cacheTaskDescriptionMedia(steps) {
