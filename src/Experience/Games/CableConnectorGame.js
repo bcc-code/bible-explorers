@@ -140,6 +140,7 @@ export default class CableConnector {
 
     setup() {
         const layer = new Konva.Layer()
+        const dragLayer = new Konva.Layer()
 
         const containerObj = new Container({
             x: 0,
@@ -221,7 +222,7 @@ export default class CableConnector {
 
         this.cables.forEach(cable => {
             cable.item.on('dragstart', () => {
-                cable.item.zIndex(4)
+                cable.item.moveTo(dragLayer)
             })
 
             cable.item.children.filter(c => c.name().includes('plug')).forEach(plug => {
@@ -254,6 +255,7 @@ export default class CableConnector {
 
                 plug.on('dragend', () => {
                     if (instance.timerWithTimeElapsed()) return
+                    cable.item.moveTo(cablesGroup)
 
                     const direction = plug.name().replace('plug_', '')
                     const plugPosition = {
@@ -369,6 +371,7 @@ export default class CableConnector {
         })
 
         this.stage.add(layer)
+        this.stage.add(dragLayer)
     }
 
     animateIcon(obj, fill, layer, callback = () => { }) {
