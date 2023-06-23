@@ -22,6 +22,16 @@ export default {
     },
     plugins: [
         basicSsl(),
-        VitePWA({ registerType: 'autoUpdate' })
+        VitePWA({
+            injectRegister: 'null',
+            registerType: 'autoUpdate',
+            includeAssets: ['*'],
+            injectManifest: {
+                swSrc: './src/js/sw/sw.js',
+                swDest: './sw.js',
+                maximumFileSizeToCacheInBytes: 20000000,
+                globPatterns: ['**/*.{js,css,html,png,svg,mp3,mp4}']
+            }
+        })
     ]
 }
