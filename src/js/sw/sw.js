@@ -39,6 +39,17 @@ const castFramework = new Route(({url}) => {
   ]
 }))
 
+const riveApp = new Route(({url}) => {
+  return url === 'https://unpkg.com/@rive-app/canvas@1.0.102'
+}, new NetworkFirst({
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200]
+    })
+  ]
+}))
+
 registerRoute(assets)
 registerRoute(castFramework)
+registerRoute(riveApp)
 precacheAndRoute(self.__WB_MANIFEST)
