@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
 import Offline from '../Utils/Offline.js'
-import { PlayerFactory } from "bccm-video-player"
+import { PlayerFactory, createPlayer } from "bccm-video-player"
 import "bccm-video-player/css"
 import _c from '../Utils/Connection.js'
 import _lang from '../Utils/Lang.js'
@@ -202,8 +202,8 @@ export default class Resources extends EventEmitter {
         )
     }
 
-    loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
-        resources.streamLocally(videoName, videoUrl)
+    async loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
+        await resources.streamLocally(videoName, videoUrl)
         resources.loadVideoThumbnail(videoName, thumbnailUrl)
     }
 
@@ -221,8 +221,8 @@ export default class Resources extends EventEmitter {
         )
     }
 
-    streamLocally(videoName, videoUrl) {
-        resources.videoPlayers[videoName] = createVideoJsPlayer(videoName, {
+    async streamLocally(videoName, videoUrl) {
+        const player = await createPlayer(videoName, {
             src: {
                 type: 'video/mp4',
                 src: videoUrl
@@ -232,6 +232,8 @@ export default class Resources extends EventEmitter {
                 autoplay: false
             }
         })
+
+        resources.videoPlayers[videoName] = player
     }
 
     async streamFromBtv(videoName) {
