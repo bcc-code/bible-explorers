@@ -41,14 +41,10 @@ export default {
             registerType: 'autoUpdate',
             includeAssets: ['*'],
             injectRegister: 'null',
-            injectManifest: {
-                swSrc: './src/js/sw/sw.js',
-                swDest: './sw.js',
-                maximumFileSizeToCacheInBytes: 20000000,
-                globPatterns: ['**/*.{js,css,html,png,svg,mp3,mp4}']
-            },
             workbox: {
+                swDest: './dist/sw.js',
                 maximumFileSizeToCacheInBytes: 20000000,
+                globPatterns: ['**/*.{js,css,html,png,svg,mp3,mp4,webm,riv,glb,wasm}'],
                 runtimeCaching: [
                     getCache({ 
                         pattern: "https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js", 
