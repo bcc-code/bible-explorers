@@ -9,6 +9,7 @@ import SimonSaysGame from '../Games/SimonSaysGame.js'
 import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
+import PictureWithQuestion from '../Extras/PictureWithQuestion.js'
 
 let instance = null
 
@@ -23,6 +24,7 @@ export default class Task {
         instance.flipCards = new FlipCards()
         instance.heartDefense = new HeartDefense()
         instance.davidsRefuge = new DavidsRefuge()
+        instance.pictureWithQuestion = new PictureWithQuestion()
     }
 
     show() {
@@ -100,6 +102,10 @@ export default class Task {
 
         else if (instance.program.taskType() == 'davids_refuge') {
             instance.davidsRefuge.toggleGame()
+        }
+
+        else if (instance.program.taskType() == 'picture_with_question') {
+            instance.pictureWithQuestion.togglePictureWithQuestion()
         }
     }
 

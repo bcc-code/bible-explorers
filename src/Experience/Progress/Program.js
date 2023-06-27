@@ -70,6 +70,7 @@ export default class Program {
                     || instance.taskType() == 'flip_cards'
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
+                    || instance.taskType() == 'picture_with_question'
                 ) {
                     return 'irisCloseLook'
                 }
@@ -210,6 +211,7 @@ export default class Program {
                     || instance.taskType() == 'flip_cards'
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
+                    || instance.taskType() == 'picture_with_question'
                 ) {
                     instance.gameDescription.show()
                 }
