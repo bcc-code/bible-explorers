@@ -266,6 +266,7 @@ export default class Program {
 
                 instance.clickCallback = () => {
                     instance.world.progressBar.hide()
+                    instance.world.controlRoom.irisTextureTransition()
                     instance.experience.navigation.next.disabled = false
                 }
 

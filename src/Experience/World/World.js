@@ -457,10 +457,26 @@ export default class World {
         chapterEl.classList.remove('downloaded')
     }
 
+    fetchLobbyVideoLoop() {
+        if (instance.selectedChapter.lobby_video_loop) {
+            instance.offline.fetchChapterAsset(instance.selectedChapter, "lobby_video_loop", (chapter) => {
+                const textureName = `chapter-${instance.selectedChapter.id}_lobby-video-loop`
+
+                instance.resources.loadVideoTexture(textureName, chapter.lobby_video_loop, true)
+
+                instance.controlRoom.tv_16x9.material.map = instance.resources.textureItems[textureName].item
+                instance.controlRoom.playCustomIrisTexture(textureName)
+            })
+        }
+    }
+
     fetchBgMusic() {
         if (instance.selectedChapter.background_music) {
             instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
-                instance.audio.changeBgMusic(chapter.background_music)
+                if (instance.selectedChapter.lobby_video_loop)
+                    instance.audio.fadeOutBgMusic()
+                else
+                    instance.audio.changeBgMusic(chapter.background_music)
             })
         }
     }
@@ -476,6 +492,7 @@ export default class World {
     cacheChapterAssets(chapter) {
         instance.cacheChapterThumbnail(chapter.thumbnail)
         instance.cacheChapterBgMusic(chapter.background_music)
+        instance.cacheChapterLobbyVideoLoop(chapter.lobby_video_loop)
         instance.cacheChapterArchiveImages(chapter.archive)
 
         chapter['program'].forEach(checkpoint => {
@@ -497,6 +514,11 @@ export default class World {
     }
 
     cacheChapterBgMusic(url) {
+        if (!url) return
+        instance.fetchAndCacheAsset(url)
+    }
+
+    cacheChapterLobbyVideoLoop(url) {
         if (!url) return
         instance.fetchAndCacheAsset(url)
     }
@@ -590,6 +612,7 @@ export default class World {
         instance.removeLobbyEventListeners()
 
         instance.setUpChapter()
+        instance.fetchLobbyVideoLoop()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
@@ -661,6 +684,7 @@ export default class World {
         instance.experience.navigation.prev.disabled = false
 
         instance.camera.updateCameraTo(null)
+        instance.controlRoom.irisTextureTransition()
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
         instance.debug.removePreviewMode()
@@ -678,7 +702,6 @@ export default class World {
         document.querySelector('.fullscreen-section input').checked = false
         if (document.fullscreenElement)
             document.exitFullscreen()
-
     }
 
     preselectChapter() {

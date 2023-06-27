@@ -42,10 +42,7 @@ export default class ControlRoom {
     }
 
     setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, () => {
-            instance.setDefaultIrisTexture()
-            instance.stopAllCustomIrisTextures()
-        })
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, this.irisTextureTransition)
 
         window.addEventListener('click', () => {
             if (!this.experience.world.program) return
@@ -56,6 +53,11 @@ export default class ControlRoom {
         document.querySelector('.webgl-wrapper').addEventListener('mousemove', () => {
             this.checkObjectIntersection()
         })
+    }
+
+    irisTextureTransition() {
+        instance.stopAllCustomIrisTextures()
+        instance.setDefaultIrisTexture()
     }
 
     // Set scene
