@@ -20,6 +20,14 @@
         justify-content: center;
     }
 
+    .title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--clr-secondary);
+        margin-bottom: 1rem;
+    }
+
     .game-header {
         text-align: center;
     }
@@ -56,5 +64,5 @@
         transition: .3s var(--transition-timing);
     }
 
-
 }
+

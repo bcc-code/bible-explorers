@@ -14,6 +14,8 @@ import WebGL from 'three/examples/jsm/capabilities/WebGL.js'
 import Page from './Components/Page.js'
 import FAQ from './Components/FAQ.js'
 import _gl from './Utils/Globals.js'
+import VideoScreen from './Views/VideoScreen.js'
+import QuestionScreen from './Views/QuestionScreen.js'
 
 let instance = null
 
@@ -47,6 +49,13 @@ export default class Experience {
         this.raycaster = new THREE.Raycaster()
         this.renderer = new Renderer()
         this.auth0 = {}
+
+
+        const videoScreen = new VideoScreen()
+        // videoScreen.show()
+
+        const questionScreen = new QuestionScreen()
+        // questionScreen.show()
 
         if (WebGL.isWebGLAvailable()) {
             console.log('WebGL is available')
