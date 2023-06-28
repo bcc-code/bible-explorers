@@ -5,6 +5,7 @@ import HiddenItems from '../Games/HiddenItems.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Video from '../Extras/Video.js'
 import Quiz from '../Components/Quiz.js'
+import MultipleChoiceWithPicture from '../Extras/MultipleChoiceWithPicture.js'
 import Congrats from '../Extras/Congrats.js'
 import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
@@ -33,6 +34,7 @@ export default class Program {
         instance.pictureAndCode = new HiddenItems()
         instance.questionAndCode = new QuestionAndCode()
         instance.quiz = new Quiz()
+        instance.multipleChoiceWithPicture = new MultipleChoiceWithPicture()
         instance.congrats = new Congrats()
         instance.pause = new Pause()
         instance.dialogue = new Dialogue()
@@ -214,6 +216,10 @@ export default class Program {
                     || instance.taskType() == 'question_with_picture'
                 ) {
                     instance.gameDescription.show()
+                }
+
+                else if (instance.taskType() == 'multiple_choice_with_picture') {
+                    instance.multipleChoiceWithPicture.toggleMultipleChoiceWithPicture()
                 }
             }
 
