@@ -21,6 +21,7 @@ function getWpApiUrl() {
             return wpApiUrl_staging
 
         case 'localhost':
+            return wpApiUrl_staging
             return wpApiUrl_local
 
         default:
