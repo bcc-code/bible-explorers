@@ -4,20 +4,20 @@ import _s from '../Utils/Strings.js'
 
 let instance = null
 
-export default class PictureWithQuestion {
+export default class QuestionWithPicture {
     constructor() {
         instance = this
         instance.experience = new Experience()
         instance.debug = instance.experience.debug
     }
 
-    togglePictureWithQuestion() {
+    toggleQuestionWithPicture() {
         instance.world = instance.experience.world
         instance.program = instance.world.program
-        instance.stepData = instance.program.getCurrentStepData().picture_with_question
+        instance.stepData = instance.program.getCurrentStepData().question_with_picture
 
         const container = _gl.elementFromHtml(`
-            <div class="view" id="picture-with-question">
+            <div class="view" id="question-with-picture">
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -47,6 +47,6 @@ export default class PictureWithQuestion {
     }
 
     destroy() {
-        document.getElementById('picture-with-question')?.remove()
+        document.getElementById('question-with-picture')?.remove()
     }
 }
