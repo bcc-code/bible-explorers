@@ -19,6 +19,7 @@ export default class QuestionWithPicture {
         const container = _gl.elementFromHtml(`
             <div class="view" id="question-with-picture">
                 <div class="container">
+                    <span class="title">${instance.stepData.question}</span>
                     <div class="row">
                         <div class="col">
                             <img src="${instance.stepData.image}" alt="picture" />

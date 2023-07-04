@@ -42,36 +42,38 @@ export default class Chapter3Game2 {
             </section>
         `)
 
-        instance.data.cards.forEach(c => {
-            const card = _gl.elementFromHtml(`
-                <article class="card">
-                    <div class="card-frame"></div>
-                    <div class="card-image">
-                        <div class="card-back" style="background-image: url('${c.image_back}')"></div>
-                        <div class="card-front" style="background-image: url('${c.image_front}')"></div>
-                    </div>
-                    <div class="card-input">
-                        <div class="icon">
-                            <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
-                                <use href="#locked"></use>
-                            </svg>
+        if (instance.data.cards) {
+            instance.data.cards.forEach(c => {
+                const card = _gl.elementFromHtml(`
+                    <article class="card">
+                        <div class="card-frame"></div>
+                        <div class="card-image">
+                            <div class="card-back" style="background-image: url('${c.image_back}')"></div>
+                            <div class="card-front" style="background-image: url('${c.image_front}')"></div>
                         </div>
-                        <input type="number" placeholder="#" maxlength="1" />
-                    </div>
-                </article>
-            `)
-
-            if (c.sound_effect) {
-                const audio = _gl.elementFromHtml(`
-                    <audio class="card-audio" src="${c.sound_effect}"></audio>
+                        <div class="card-input">
+                            <div class="icon">
+                                <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
+                                    <use href="#locked"></use>
+                                </svg>
+                            </div>
+                            <input type="number" placeholder="#" maxlength="1" />
+                        </div>
+                    </article>
                 `)
 
-                card.append(audio)
-                card.classList.add('has-audio')
-            }
+                if (c.sound_effect) {
+                    const audio = _gl.elementFromHtml(`
+                        <audio class="card-audio" src="${c.sound_effect}"></audio>
+                    `)
 
-            game.querySelector('.cards').append(card)
-        })
+                    card.append(audio)
+                    card.classList.add('has-audio')
+                }
+
+                game.querySelector('.cards').append(card)
+            })
+        }
 
         document.querySelector('.ui-container').append(game)
         document.querySelector('.cta').style.display = 'none'
@@ -88,6 +90,8 @@ export default class Chapter3Game2 {
     }
 
     useCorrectAssetsSrc() {
+        if (!instance.data.cards) return
+
         instance.data.cards.forEach((card, index) => {
             instance.offline.fetchChapterAsset(card, "image_back", (data) => {
                 card.image_back = data.image_back

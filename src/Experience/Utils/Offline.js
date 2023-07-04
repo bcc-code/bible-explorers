@@ -200,7 +200,7 @@ export default class Offline {
             body: JSON.stringify({
                 query: `
                     query {
-                        episode(id: ${episodeId}) {
+                        episode(id: "${episodeId}") {
                             id
                             image
                             files {
