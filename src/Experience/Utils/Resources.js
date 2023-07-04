@@ -33,6 +33,7 @@ export default class Resources extends EventEmitter {
         this.loadingScreenLoaded = false
         this.mediaItems = []
         this.textureItems = []
+        this.customTextureItems = []
         this.posterImages = []
         this.videoPlayers = []
 
@@ -130,12 +131,12 @@ export default class Resources extends EventEmitter {
             }
 
             else if (source.type === 'videoTexture') {
-                this.loadVideoTexture(source.name, source.path)
+                this.loadVideoTexture(source.name, source.path, 'default')
             }
         }
     }
 
-    loadVideoTexture(name, url) {
+    loadVideoTexture(name, url, type) {
         const video = document.createElement('video')
         video.addEventListener('canplay', this.onVideoLoad(video, url), false)
 
@@ -161,12 +162,16 @@ export default class Resources extends EventEmitter {
         texture.encoding = THREE.sRGBEncoding
         texture.needsUpdate = true
         
-        this.textureItems[name] = {
+        const textureObject = {
             item: texture,
             path: url,
             naturalWidth: video.videoWidth || 1,
             naturalHeight: video.videoHeight || 1
         }
+
+        type && type == 'default'
+            ? this.textureItems[name] = textureObject
+            : this.customTextureItems[name] = textureObject
 
         this.loadingManager.itemStart(url)
     }
@@ -195,7 +200,7 @@ export default class Resources extends EventEmitter {
     }
 
     loadEpisodeTextures(videoName) {
-        this.offline.loadFromIndexedDb(
+        this.offline.loadEpisodeFromIndexedDb(
             videoName,
             this.loadTexturesLocally,
             this.loadTexturesOnline
@@ -216,7 +221,7 @@ export default class Resources extends EventEmitter {
         this.loaders.textureLoader.load(
             thumbnailUrl,
             (texture) => {
-                this.textureItems[videoName] = texture
+                this.customTextureItems[videoName] = texture
             }
         )
     }
@@ -247,7 +252,7 @@ export default class Resources extends EventEmitter {
             overrides: {
                 languagePreferenceDefaults: {
                     audio: _lang.get3LettersLang(),
-                    subtitle: _lang.get3LettersLang(),
+                    subtitle: _lang.get3LettersLang()
                 },
                 autoplay: false,
                 videojs: {

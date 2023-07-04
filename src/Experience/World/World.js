@@ -300,7 +300,6 @@ export default class World {
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
                 instance.loadChapterTextures()
-                instance.loadIrisVideoTextures()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
 
@@ -416,20 +415,6 @@ export default class World {
         })
     }
 
-    loadIrisVideoTextures() {
-        instance.selectedChapter.program.forEach((checkpoint, cIndex) => {
-            checkpoint.steps.forEach((step, sIndex) => {
-                if (step.type == 'iris' && step.message.video) {
-                    const textureName = `chapter-${instance.selectedChapter.id}_c-${cIndex}_s-${sIndex}`
-                    instance.offline.fetchChapterAsset(step.message, "video", (data) => {
-                        step.message = data
-                        instance.resources.loadVideoTexture(textureName, step.message.video)
-                    })
-                }
-            })
-        })
-    }
-
     async downloadChapter(chapter) {
         if (!this.experience.auth0.isAuthenticated) return
 
@@ -444,6 +429,7 @@ export default class World {
         chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
+        this.offline.downloadScreenTextures(selectedChapter)
         this.offline.downloadEpisodes(chapterId, selectedChapter['episodes'])
     }
 
@@ -458,16 +444,11 @@ export default class World {
     }
 
     fetchLobbyVideoLoop() {
-        if (instance.selectedChapter.lobby_video_loop) {
-            instance.offline.fetchChapterAsset(instance.selectedChapter, "lobby_video_loop", (chapter) => {
-                const textureName = `chapter-${instance.selectedChapter.id}_lobby-video-loop`
-
-                instance.resources.loadVideoTexture(textureName, chapter.lobby_video_loop, true)
-
-                instance.controlRoom.tv_16x9.material.map = instance.resources.textureItems[textureName].item
-                instance.controlRoom.playCustomIrisTexture(textureName)
+        const videoName = instance.selectedChapter.lobby_video_loop
+        if (videoName)
+            instance.offline.fetchScreenTexture(videoName, () => {
+                instance.offline.setScreenTexture(videoName)
             })
-        }
     }
 
     fetchBgMusic() {
@@ -492,7 +473,6 @@ export default class World {
     cacheChapterAssets(chapter) {
         instance.cacheChapterThumbnail(chapter.thumbnail)
         instance.cacheChapterBgMusic(chapter.background_music)
-        instance.cacheChapterLobbyVideoLoop(chapter.lobby_video_loop)
         instance.cacheChapterArchiveImages(chapter.archive)
 
         chapter['program'].forEach(checkpoint => {
@@ -571,13 +551,16 @@ export default class World {
     cacheFlipCardsMedia(steps) {
         if (steps.length == 0) return
         steps.forEach(step => {
+            instance.fetchAndCacheAsset(step.flip_cards.glitchs_voice.audio)
+            instance.fetchAndCacheAsset(step.flip_cards.gods_voice.audio)
+
+            if (!step.flip_cards.cards) return
+
             step.flip_cards.cards.forEach(card => {
                 instance.fetchAndCacheAsset(card.image_back)
                 instance.fetchAndCacheAsset(card.image_front)
                 instance.fetchAndCacheAsset(card.sound_effect)
             })
-            instance.fetchAndCacheAsset(step.flip_cards.glitchs_voice.audio)
-            instance.fetchAndCacheAsset(step.flip_cards.gods_voice.audio)
         })
     }
 
@@ -591,7 +574,8 @@ export default class World {
     cacheQuestionWithPictureImages(steps) {
         if (steps.length == 0) return
         steps.forEach(step => {
-            instance.fetchAndCacheAsset(step.question_with_picture.image)
+            if (step.question_with_picture)
+                instance.fetchAndCacheAsset(step.question_with_picture.image)
         })
     }
 

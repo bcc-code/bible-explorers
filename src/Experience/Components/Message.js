@@ -32,9 +32,8 @@ export default class Message {
             instance.audio.togglePlayTaskDescription(instance.data.audio)
 
         if (instance.data.video) {
-            const textureName = `chapter-${instance.world.selectedChapter.id}_c-${instance.world.program.currentCheckpoint}_s-${instance.world.program.currentStep}`
-            instance.world.controlRoom.tv_16x9.material.map = instance.resources.textureItems[textureName].item
-            instance.world.controlRoom.playCustomIrisTexture(textureName)
+            instance.world.controlRoom.tv_16x9.material.map = instance.resources.customTextureItems[instance.data.video].item
+            instance.world.controlRoom.playCustomIrisTexture(instance.data.video)
         }
     }
 
@@ -69,16 +68,10 @@ export default class Message {
             )
             document.querySelector('.ui-container').append(openQuestion)
 
-            const texarea = openQuestion.querySelector('textarea')
-            texarea.addEventListener('input', (e) => {
-                if (e.target.value.length > 2) {
-                    instance.experience.navigation.next.disabled = false
-                }
-                else {
-                    instance.experience.navigation.next.disabled = true
-                }
+            const textarea = openQuestion.querySelector('textarea')
+            textarea.addEventListener('input', (e) => {
+                instance.experience.navigation.next.disabled = e.target.value.length <= 2
             })
-
         }
     }
 

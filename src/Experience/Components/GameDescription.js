@@ -35,17 +35,12 @@ export default class Task {
 
         instance.setHtml()
 
-        if (instance.data.tutorial) {
-            // Fetch details tutorial from blob or url
-            instance.offline.fetchChapterAsset(instance.data, "tutorial", (data) => {
-                instance.program.updateAssetInProgramData('details', data)
-                document.querySelector('.game-tutorial > *').src = data.tutorial
-            })
-        }
+        if (instance.data.tutorial)
+            document.querySelector('.game-tutorial > *').src = instance.experience.resources.customTextureItems[instance.data.tutorial].item.source.data.src
 
         document.querySelector('.cta').style.display = 'none'
         instance.experience.navigation.next.disabled = true
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        instance.addEventListeners()
     }
 
     setHtml() {
@@ -77,6 +72,7 @@ export default class Task {
         document.querySelector('.ui-container').append(task)
 
     }
+
     startGame() {
         instance.destroy()
 
@@ -109,11 +105,21 @@ export default class Task {
         }
     }
 
+    addEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        document.querySelector('video').addEventListener('click', (e) => {
+            e.target.paused
+                ? e.target.play()
+                : e.target.pause()
+        })
+    }
+
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
-        else return `<img src="" width="100%" height="100%" />`
+        if (['jpg', 'jpeg', 'webp', 'png', 'gif', 'svg'].includes(ext)) return `<img src="" width="100%" height="100%" />`
+        else return `<video src="" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
     }
 
     destroy() {

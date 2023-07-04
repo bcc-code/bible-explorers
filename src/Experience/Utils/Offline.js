@@ -15,6 +15,9 @@ export default class Offline {
         offline.isOnline = false
         offline.data = []
         offline.downloaded = []
+        
+        offline.texturesArr = []
+        offline.downloadedTextures = []
 
         if ("indexedDB" in window) {
             this.initialize()
@@ -191,6 +194,73 @@ export default class Offline {
         }
     }
 
+    downloadScreenTextures = async function (chapter) {
+        if (chapter.lobby_video_loop)
+            offline.texturesArr.push(chapter.lobby_video_loop)
+
+        chapter.program.forEach(checkpoint => {
+            checkpoint.steps.forEach(step => {
+                if (step.details.step_type == 'message' && step.message.video)
+                    offline.texturesArr.push(step.message.video)
+
+                if (step.details.step_type == 'task' && step.details.tutorial)
+                    offline.texturesArr.push(step.details.tutorial)
+            })
+        })
+
+        if (!offline.texturesArr.length) return
+
+        // Start downloading textures
+        offline.startTextureDownload(0)
+    }
+
+    downloadScreenTexture = function(videoName, video) {
+        var xhr = new XMLHttpRequest()
+        xhr.responseType = "blob"
+        xhr.open("GET", video.url, true)
+        xhr.timeout = 86400000 // 24 hours
+        xhr.addEventListener("error", () => { console.log("Episode " + videoName + " failed to download!") })
+        xhr.addEventListener("load", () => { offline.onScreenTextureDownloadComplete(videoName, video, xhr) }, false)
+        xhr.send()
+    }
+
+    onScreenTextureDownloadComplete = async function (videoName, video, xhr) {
+        if (xhr.status === 200) {
+            offline.putFileInDb({
+                language: video.audioLanguage,
+                name: videoName,
+                quality: "low",
+                video: xhr.response
+            })
+
+            offline.downloadedTextures.push(videoName)
+
+            if (offline.downloadedTextures.length < offline.texturesArr.length) {
+                // Next texture to download
+                offline.startTextureDownload(offline.downloadedTextures.length)
+            }
+        }
+    }
+
+    startTextureDownload = function(index) {
+        offline.getEpisodeLowQualityDownloadUrl(offline.texturesArr[index], (video) => {
+            offline.downloadScreenTexture(offline.texturesArr[index], video)
+        })
+    }
+
+    getEpisodeLowQualityDownloadUrl = async function (episodeId, callback = () => {}) {
+        let locale = _lang.getLanguageCode()
+        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
+
+        let episode = (await offline.getEpisodeData(episodeId)).episode
+        let allLanguagesVideos = episode.files
+
+        const myLanguageVideos = allLanguagesVideos.filter(file => { return file.audioLanguage == locale })
+        const selectedQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.size < current.size) ? prev : current)
+
+        callback(selectedQualityVideo)
+    }
+
     getEpisodeData = async function(episodeId) {
         const response = await fetch('https://api.brunstad.tv/query', {
             method: 'POST',
@@ -329,7 +399,7 @@ export default class Offline {
         offline.objStore.delete(videoName)
     }
 
-    loadFromIndexedDb = function (videoName, callback, fallback) {
+    loadEpisodeFromIndexedDb = function (videoName, callback, fallback) {
         if (!offline.db) {
             fallback(videoName)
             return
@@ -368,6 +438,38 @@ export default class Offline {
                 }
 
                 f.readAsArrayBuffer(item.thumbnail)
+            }
+            else {
+                fallback(videoName)
+            }
+        }
+    }
+
+    loadScreenTextureFromIndexedDb = function (videoName, callback, fallback) {
+        if (!offline.db) {
+            fallback(videoName)
+            return
+        }
+
+        offline.transaction = offline.db.transaction([offline.store], "readonly")
+        offline.objStore = offline.transaction.objectStore(offline.store)
+        const getItem = offline.objStore.get(videoName)
+
+        getItem.onsuccess = function () {
+            if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+                const item = getItem.result
+                
+                // Load video blob as array buffer
+                var r = new FileReader()
+
+                r.onload = function (e) {
+                    const blob = offline.getArrayBufferBlob(e)
+                    const videoUrl = URL.createObjectURL(blob)
+
+                    callback(videoName, videoUrl)
+                }
+
+                r.readAsArrayBuffer(item.video)
             }
             else {
                 fallback(videoName)
@@ -430,6 +532,31 @@ export default class Offline {
                     }
                 })
         })
+    }
+
+    fetchScreenTexture = async function (videoName) {
+        offline.loadScreenTextureFromIndexedDb(
+            videoName,
+            this.loadScreenTextureLocally, // callback
+            this.loadScreenTextureOnline // fallback
+        )
+    }
+
+    async loadScreenTextureLocally(videoName, videoUrl) {
+        offline.experience.resources.loadVideoTexture(videoName, videoUrl)
+        offline.setScreenTexture(videoName)
+    }
+
+    async loadScreenTextureOnline(videoName) {
+        offline.getEpisodeLowQualityDownloadUrl(videoName, (video) => {
+            offline.experience.resources.loadVideoTexture(videoName, video.url)
+            offline.setScreenTexture(videoName)
+        })
+    }
+
+    setScreenTexture(videoName) {
+        offline.experience.world.controlRoom.tv_16x9.material.map = offline.experience.resources.customTextureItems[videoName].item
+        offline.experience.world.controlRoom.playCustomIrisTexture(videoName)
     }
 
     setConnection(mode) {

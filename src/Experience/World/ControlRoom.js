@@ -159,7 +159,7 @@ export default class ControlRoom {
     }
 
     updateTextureScreen4x4() {
-        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems[this.world.program.currentVideo()] })
+        this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.resources.customTextureItems[this.world.program.currentVideo()] })
         this.tv_4x4.material.map.flipY = false
         this.tv_4x4.material.map.encoding = THREE.sRGBEncoding
     }
@@ -175,14 +175,14 @@ export default class ControlRoom {
     }
 
     playCustomIrisTexture(textureName) {
-        instance.resources.textureItems[textureName].item.source.data.currentTime = 0
-        instance.resources.textureItems[textureName].item.source.data.play()
+        instance.resources.customTextureItems[textureName].item.source.data.currentTime = 0
+        instance.resources.customTextureItems[textureName].item.source.data.play()
     }
 
     stopAllCustomIrisTextures() {
-        const customIrisTextures = Object.keys(instance.resources.textureItems).filter(texture => texture.includes('chapter-'))
+        const customIrisTextures = Object.keys(instance.resources.customTextureItems)
         customIrisTextures.forEach(textureName => {
-            instance.resources.textureItems[textureName].item.source.data.pause()
+            instance.resources.customTextureItems[textureName].item.source.data.pause()
         })
     }
 

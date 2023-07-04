@@ -55,7 +55,7 @@ export default class Video {
         this.video().currentTime(0)
 
         // Set texture when starting directly on a video task type
-        if (this.portalScreen.material.map != this.resources.textureItems[id])
+        if (this.portalScreen.material.map != this.resources.customTextureItems[id])
             this.setTexture(id)
 
         const videoQuality = this.getVideoQuality()
@@ -97,9 +97,9 @@ export default class Video {
     }
 
     setTexture(id) {
-        if (!this.resources.textureItems.hasOwnProperty(id)) return
+        if (!this.resources.customTextureItems.hasOwnProperty(id)) return
 
-        this.portalScreen.material.map = this.resources.textureItems[id]
+        this.portalScreen.material.map = this.resources.customTextureItems[id]
         this.portalScreen.material.map.flipY = false
         this.portalScreen.material.needsUpdate = true
     }
