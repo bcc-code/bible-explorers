@@ -136,7 +136,7 @@ export default class MazeGame {
         this.addCamera()
         this.addLight()
         this.addRenderer()
-        this.setText()
+        // this.setText()
 
         // add elements
         this.addFloor()
