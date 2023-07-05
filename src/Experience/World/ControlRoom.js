@@ -182,7 +182,7 @@ export default class ControlRoom {
     stopAllCustomIrisTextures() {
         const customIrisTextures = Object.keys(instance.resources.customTextureItems)
         customIrisTextures.forEach(textureName => {
-            instance.resources.customTextureItems[textureName].item.source.data.pause()
+            instance.resources.customTextureItems[textureName].item?.source.data.pause()
         })
     }
 

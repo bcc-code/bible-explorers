@@ -256,6 +256,7 @@ export default class Offline {
         let allLanguagesVideos = episode.files
 
         const myLanguageVideos = allLanguagesVideos.filter(file => { return file.audioLanguage == locale })
+        if (!myLanguageVideos.length) return
         const selectedQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.size < current.size) ? prev : current)
 
         callback(selectedQualityVideo)
