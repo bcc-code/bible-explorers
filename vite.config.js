@@ -55,7 +55,7 @@ export default {
                 globIgnores: ['index.html', 'assets/index.css', 'assets/index.js'],
                 runtimeCaching: [
                     getCache({ 
-                        pattern: "index.html", 
+                        pattern: "/", 
                         name: "html" 
                     }),
                     getCache({ 
