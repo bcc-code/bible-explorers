@@ -23,9 +23,8 @@ export default class Renderer {
             antialias: true,
         })
 
-        this.instance.outputEncoding = THREE.sRGBEncoding
-        this.instance.toneMapping = THREE.ReinhardToneMapping
-        this.instance.toneMappingExposure = 1.5
+        // this.instance.toneMapping = THREE.ReinhardToneMapping
+        // this.instance.toneMappingExposure = 1.5
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
 
