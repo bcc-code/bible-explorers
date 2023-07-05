@@ -62,6 +62,26 @@ export default class MazeGame {
         })
     }
 
+    // setText() {
+    //     const canvas = document.createElement('canvas')
+    //     const context = canvas.getContext('2d')
+
+    //     context.fillStyle = 'start here'
+    //     context.font = '20px sans-serif'
+
+    //     const texture = new THREE.Texture(canvas)
+    //     texture.needsUpdate = true
+
+    //     const material = new THREE.MeshBasicMaterial({
+    //         map: texture,
+    //         side: THREE.DoubleSide
+    //     })
+    //     material.transparent = true
+
+    //     const geometry = new THREE.PlaneGeometry(10, 10)
+    //     this.textMesh = new THREE.Mesh(geometry, material)
+    //     this.textMesh.rotation.x = -Math.PI * 0.5 // make it face up
+    // }
 
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
@@ -96,6 +116,11 @@ export default class MazeGame {
                         <button id="new-level" class="btn default next pulsate">${_s.miniGames.restartRound}</button>
                     </div>
                 </div>
+
+                <div class="game-labels">
+                    <span id="start-label"></span>
+                    <span id="exit-label"></span>
+                </div>
             </div>
             <div class="overlay"></div>
             <div id="maze-canvas" class="game-canvas"></div>
@@ -111,6 +136,7 @@ export default class MazeGame {
         this.addCamera()
         this.addLight()
         this.addRenderer()
+        this.setText()
 
         // add elements
         this.addFloor()
@@ -121,6 +147,7 @@ export default class MazeGame {
 
         this.addPlayer()
         this.addBox()
+
 
     }
 
@@ -138,12 +165,12 @@ export default class MazeGame {
 
     addLight() {
         this.light = new THREE.PointLight('#ffffff')
-        this.light.position.set(0, 1, 0)
+        this.light.position.set(0, 0.65, 0)
         this.scene.add(this.light)
     }
 
     addFloor() {
-        const texture = this.resources.items.maze_floor
+        const texture = this.resources.items.floor
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
         texture.repeat.set(50, 50);
 
@@ -151,6 +178,7 @@ export default class MazeGame {
         const material = new THREE.MeshStandardMaterial({ map: texture })
         this.groundMesh = new THREE.Mesh(geometry, material)
         this.groundMesh.rotation.x = -Math.PI * 0.5 // make it face up
+        this.groundMesh.receiveShadow = true
         this.scene.add(this.groundMesh)
 
         this.groundBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() })
@@ -174,6 +202,7 @@ export default class MazeGame {
         this.playerMesh.position.y = this.maze.wallSize
         this.playerMesh.position.z = this.maze.entrancePosition[1] * this.maze.wallSize
         this.playerMesh.rotation.x = -Math.PI / 3
+        this.playerMesh.castShadow = true
         this.scene.add(this.playerMesh)
 
         const boundingBox = new THREE.Box3().setFromObject(this.playerMesh)
@@ -214,7 +243,7 @@ export default class MazeGame {
     }
 
     addMaze(idx, wallSize) {
-        const texture = this.resources.items.maze_wall
+        const texture = this.resources.items.wall
         const geometries = []
 
         this.mazeBody = new CANNON.Body({ mass: 0 })
@@ -232,6 +261,13 @@ export default class MazeGame {
 
                 if (cell == 2) {
                     const shape = new CANNON.Box(new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5))
+
+                    // this.textMesh.position.x = c
+                    // this.textMesh.position.y = 0.2
+                    // this.textMesh.position.z = r
+
+                    // console.log(this.textMesh);
+                    // this.scene.add(this.textMesh)
 
                     // If entrance on left
                     if (c == 0) {
@@ -262,9 +298,10 @@ export default class MazeGame {
             })
         })
 
-        const geometry = BufferGeometryUtils.mergeGeometries(geometries, true)
+        const geometry = BufferGeometryUtils.mergeGeometries(geometries, false)
         const material = new THREE.MeshStandardMaterial({ map: texture })
         this.mazeMesh = new THREE.Mesh(geometry, material)
+        this.mazeMesh.castShadow = true
         this.scene.add(this.mazeMesh)
 
         this.mazeBody.position.copy(this.mazeMesh.position)
@@ -275,6 +312,8 @@ export default class MazeGame {
         this.renderer = new THREE.WebGLRenderer({ antialias: true })
         this.renderer.setPixelRatio(this.sizes.pixelRatio)
         this.renderer.setSize(this.sizes.width, this.sizes.height)
+        this.renderer.shadowMap.enabled = true
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         document.querySelector('#maze-canvas').appendChild(this.renderer.domElement)
         this.renderer.domElement.classList.add('maze-webgl')

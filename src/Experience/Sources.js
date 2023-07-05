@@ -58,13 +58,13 @@ export default [
         path: 'games/maze/glitch_v02.jpg'
     },
     {
-        name: 'maze_wall',
+        name: 'wall',
         type: 'texture',
-        path: 'games/maze/brick.png'
+        path: 'games/maze/TexturesCom_Scifi_Panel8_New_1K_albedo.png',
     },
     {
-        name: 'maze_floor',
+        name: 'floor',
         type: 'texture',
-        path: 'games/maze/concrete.png'
+        path: 'games/maze/TexturesCom_OutdoorFloor4_512_albedo.png'
     },
 ]

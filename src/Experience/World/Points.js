@@ -1,7 +1,7 @@
 import Experience from "../Experience.js";
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
-import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js'
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js'
 
 let instance = null
 
