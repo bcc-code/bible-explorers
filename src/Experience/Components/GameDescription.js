@@ -10,6 +10,7 @@ import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import QuestionWithPicture from '../Extras/QuestionWithPicture.js'
+import MazeGame from '../Games/MazeGame.js'
 
 let instance = null
 
@@ -25,6 +26,7 @@ export default class Task {
         instance.heartDefense = new HeartDefense()
         instance.davidsRefuge = new DavidsRefuge()
         instance.questionWithPicture = new QuestionWithPicture()
+        instance.mazeGame = new MazeGame()
     }
 
     show() {
@@ -103,12 +105,16 @@ export default class Task {
         else if (instance.program.taskType() == 'question_with_picture') {
             instance.questionWithPicture.toggleQuestionWithPicture()
         }
+
+        else if (instance.program.taskType() == 'labyrinth') {
+            instance.mazeGame.toggleGame()
+        }
     }
 
     addEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
-        document.querySelector('video').addEventListener('click', (e) => {
+        document.querySelector('video')?.addEventListener('click', (e) => {
             e.target.paused
                 ? e.target.play()
                 : e.target.pause()
@@ -126,4 +132,5 @@ export default class Task {
         document.querySelector('section.task')?.remove()
         instance.experience.navigation.next.disabled = false
     }
+
 }

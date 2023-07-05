@@ -32,6 +32,7 @@ export default class World {
         this.page = this.experience.page
         this.time = this.experience.time
 
+
         // Wait for resources
         this.resources.on('ready', () => {
             this.page.createIntro()
@@ -43,6 +44,7 @@ export default class World {
             this.points = new Points()
             this.highlight = new Highlight()
             this.audio = new Audio()
+
         })
 
         this.placeholderChapterData()
@@ -744,6 +746,7 @@ export default class World {
     resize() {
         if (this.points)
             this.points.resize()
+
     }
 
     update() {
@@ -752,5 +755,6 @@ export default class World {
 
         if (this.points)
             this.points.update()
+  
     }
 }

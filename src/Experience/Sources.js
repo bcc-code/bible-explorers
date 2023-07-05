@@ -45,5 +45,26 @@ export default [
         name: 'hud',
         type: 'videoTexture',
         path: 'textures/screen_hud_v2.mp4'
-    }
+    },
+    // Maze game
+    {
+        name: 'glitch',
+        type: 'gltfModel',
+        path: 'games/maze/GLITCH_LowPoly_v05.gltf'
+    },
+    {
+        name: 'glitch_baked',
+        type: 'texture',
+        path: 'games/maze/glitch_v02.jpg'
+    },
+    {
+        name: 'maze_wall',
+        type: 'texture',
+        path: 'games/maze/brick.png'
+    },
+    {
+        name: 'maze_floor',
+        type: 'texture',
+        path: 'games/maze/concrete.png'
+    },
 ]

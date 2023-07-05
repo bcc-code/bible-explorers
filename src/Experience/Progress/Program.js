@@ -73,6 +73,7 @@ export default class Program {
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
                     || instance.taskType() == 'question_with_picture'
+                    || instance.taskType() == 'labyrinth'
                 ) {
                     return 'irisCloseLook'
                 }
@@ -214,6 +215,7 @@ export default class Program {
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
                     || instance.taskType() == 'question_with_picture'
+                    || instance.taskType() == 'labyrinth'
                 ) {
                     instance.gameDescription.show()
                 }
