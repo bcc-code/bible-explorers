@@ -100,7 +100,7 @@ export default class ControlRoom {
         this.roomTexture.forEach(child => {
             child.material = new THREE.MeshBasicMaterial({ map: this.bakedTexture })
             child.material.map.flipY = false
-            child.material.map.encoding = THREE.sRGBEncoding
+            child.material.map.colorSpace = THREE.SRGBColorSpace
         })
 
         this.screenObjects.forEach(child => {
@@ -131,7 +131,7 @@ export default class ControlRoom {
 
             if (child.material.map) {
                 child.material.map.flipY = false
-                child.material.map.encoding = THREE.sRGBEncoding
+                child.material.map.colorSpace = THREE.SRGBColorSpace
             }
         })
 
@@ -161,7 +161,7 @@ export default class ControlRoom {
     updateTextureScreen4x4() {
         this.tv_4x4.material = new THREE.MeshBasicMaterial({ map: this.resources.customTextureItems[this.world.program.currentVideo()] })
         this.tv_4x4.material.map.flipY = false
-        this.tv_4x4.material.map.encoding = THREE.sRGBEncoding
+        this.tv_4x4.material.map.colorSpace = THREE.SRGBColorSpace
     }
 
     playIfVideoTexture() {

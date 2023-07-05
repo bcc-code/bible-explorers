@@ -159,7 +159,7 @@ export default class Resources extends EventEmitter {
         texture.flipY = false
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
-        texture.encoding = THREE.sRGBEncoding
+        texture.colorSpace = THREE.SRGBColorSpace
         texture.needsUpdate = true
         
         const textureObject = {
