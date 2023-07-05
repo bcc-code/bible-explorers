@@ -52,7 +52,20 @@ export default {
                 swDest: './dist/sw.js',
                 maximumFileSizeToCacheInBytes: 20000000,
                 globPatterns: ['**/*.{js,css,html,png,svg,mp3,mp4,webm,riv,glb,wasm}'],
+                globIgnores: ['index.html', 'assets/index.css', 'assets/index.js'],
                 runtimeCaching: [
+                    getCache({ 
+                        pattern: "index.html", 
+                        name: "html" 
+                    }),
+                    getCache({ 
+                        pattern: "assets/index.css", 
+                        name: "style" 
+                    }),
+                    getCache({ 
+                        pattern: "assets/index.js", 
+                        name: "script" 
+                    }),
                     getCache({ 
                         pattern: "https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js", 
                         name: "castFramework" 
