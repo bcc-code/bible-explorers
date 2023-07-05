@@ -12,7 +12,6 @@ export default class Environment {
 
         // Setup
         this.setEnvironmentMap()
-        this.setLight()
 
     }
 
@@ -38,11 +37,5 @@ export default class Environment {
 
         this.environmentMap.updateMaterials()
     }
-
-    setLight() {
-        const light = new THREE.AmbientLight(0xffffff, 10); // soft white light
-        this.scene.add(light);
-    }
-
 
 }
