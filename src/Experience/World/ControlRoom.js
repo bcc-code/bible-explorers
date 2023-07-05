@@ -118,6 +118,7 @@ export default class ControlRoom {
 
             if (child.name === 'tv_16x9_screen') {
                 child.material = new THREE.MeshBasicMaterial({ map: this.resources.textureItems['iris'].item })
+                child.material.side = THREE.DoubleSide
             }
 
             if (child.name === 'tv_portal_screen') {
