@@ -138,8 +138,6 @@ export default class Quiz {
         let quizProgress = 0
         const quizStepWidth = 100 / (questions.length - 1)
 
-        console.log(questions.length);
-
         prev.disabled = true
         prev.addEventListener("click", () => {
             const current = quiz.querySelector('.quiz-item.visible')

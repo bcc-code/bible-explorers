@@ -242,13 +242,12 @@ export default class Offline {
         }
     }
 
-    startTextureDownload = function(index) {
-        offline.getEpisodeLowQualityDownloadUrl(offline.texturesArr[index], (video) => {
-            offline.downloadScreenTexture(offline.texturesArr[index], video)
-        })
+    startTextureDownload = async function(index) {
+        const video = await offline.getEpisodeLowQualityDownloadUrl(offline.texturesArr[index])
+        offline.downloadScreenTexture(offline.texturesArr[index], video)
     }
 
-    getEpisodeLowQualityDownloadUrl = async function (episodeId, callback = () => {}) {
+    getEpisodeLowQualityDownloadUrl = async function (episodeId) {
         let locale = _lang.getLanguageCode()
         locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
 
@@ -257,9 +256,10 @@ export default class Offline {
 
         const myLanguageVideos = allLanguagesVideos.filter(file => { return file.audioLanguage == locale })
         if (!myLanguageVideos.length) return
-        const selectedQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.size < current.size) ? prev : current)
 
-        callback(selectedQualityVideo)
+        const lowQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.size < current.size) ? prev : current)
+
+        return lowQualityVideo
     }
 
     getEpisodeData = async function(episodeId) {
@@ -446,9 +446,9 @@ export default class Offline {
         }
     }
 
-    loadScreenTextureFromIndexedDb = function (videoName, callback, fallback) {
+    loadScreenTextureFromIndexedDb = function (videoName, firstCase, secondCase, callback) {
         if (!offline.db) {
-            fallback(videoName)
+            secondCase(videoName, callback)
             return
         }
 
@@ -467,13 +467,13 @@ export default class Offline {
                     const blob = offline.getArrayBufferBlob(e)
                     const videoUrl = URL.createObjectURL(blob)
 
-                    callback(videoName, videoUrl)
+                    firstCase(videoName, videoUrl)
                 }
 
                 r.readAsArrayBuffer(item.video)
             }
             else {
-                fallback(videoName)
+                secondCase(videoName, callback)
             }
         }
     }
@@ -535,28 +535,28 @@ export default class Offline {
         })
     }
 
-    fetchScreenTexture = async function (videoName) {
+    fetchScreenTexture = function (videoName, callback = () => {}) {
         if (Object.keys(offline.experience.resources.customTextureItems).includes(videoName))
             return
 
         offline.experience.resources.customTextureItems[videoName] = {}
+
         offline.loadScreenTextureFromIndexedDb(
             videoName,
-            this.loadScreenTextureLocally, // callback
-            this.loadScreenTextureOnline // fallback
+            this.loadScreenTextureLocally,
+            this.loadScreenTextureOnline,
+            callback
         )
     }
 
-    async loadScreenTextureLocally(videoName, videoUrl) {
+    loadScreenTextureLocally(videoName, videoUrl) {
         offline.experience.resources.loadVideoTexture(videoName, videoUrl)
-        offline.setScreenTexture(videoName)
     }
 
-    async loadScreenTextureOnline(videoName) {
-        offline.getEpisodeLowQualityDownloadUrl(videoName, (video) => {
-            offline.experience.resources.loadVideoTexture(videoName, video.url)
-            offline.setScreenTexture(videoName)
-        })
+    async loadScreenTextureOnline(videoName, callback) {
+        const video = await offline.getEpisodeLowQualityDownloadUrl(videoName)
+        offline.experience.resources.loadVideoTexture(videoName, video.url)
+        callback()
     }
 
     setScreenTexture(videoName) {

@@ -176,6 +176,8 @@ export default class ControlRoom {
     }
 
     playCustomIrisTexture(textureName) {
+        if (!instance.resources.customTextureItems[textureName].item) return
+
         instance.resources.customTextureItems[textureName].item.source.data.currentTime = 0
         instance.resources.customTextureItems[textureName].item.source.data.play()
     }

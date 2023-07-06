@@ -152,7 +152,7 @@ export default class Resources extends EventEmitter {
         video.preload = 'auto'
         video.src = url
         
-        if (name == 'iris')
+        if (type == 'default')
             video.autoplay = true
 
         const texture = new THREE.VideoTexture(video)
