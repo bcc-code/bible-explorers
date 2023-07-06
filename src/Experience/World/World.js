@@ -451,6 +451,18 @@ export default class World {
             instance.offline.fetchScreenTexture(videoName)
     }
 
+    fetchBtvVideos() {
+        instance.selectedChapter.program.forEach(checkpoint => {
+            checkpoint.steps.forEach(step => {
+                if (step.details.step_type == 'iris' && step.message?.video)
+                    instance.offline.fetchScreenTexture(step.message.video)
+    
+                if (step.details.step_type == 'task' && step.details?.tutorial)
+                    instance.offline.fetchScreenTexture(step.details.tutorial)
+            })
+        })
+    }
+
     fetchBgMusic() {
         if (instance.selectedChapter.background_music) {
             instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
@@ -605,6 +617,7 @@ export default class World {
 
         instance.setUpChapter()
         instance.fetchLobbyVideoLoop()
+        instance.fetchBtvVideos()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
