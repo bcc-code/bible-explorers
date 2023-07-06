@@ -29,6 +29,7 @@ export default class MazeGame {
             gameState: 'initialize',
             gameLevel: 0,
             gameLevels: 5,
+            mainGameEnded: false
         }
 
         this.player = {
@@ -426,18 +427,20 @@ export default class MazeGame {
                 this.playerMesh.visible = false
                 this.light.intensity = 0
 
-
                 document.querySelector('.maze-game').classList.remove('popup-visible')
                 document.querySelector('.game-popup').style.display = 'none'
 
-                if (this.options.gameLevel > 0)
-                    document.querySelector('.game-rounds').innerHTML = `Game level ${this.options.gameLevel + 1}`
-
-                if (this.options.gameLevel > this.options.gameLevels) {
-                    this.levelContainer.style.display = 'none'
+                if (this.options.gameLevel == this.options.gameLevels) {
+                    this.options.mainGameEnded = true
                 }
 
-                if (this.options.gameLevel < mazeArr.length) {
+                if (this.options.mainGameEnded) {
+                    document.querySelector('.game-rounds').style.display = 'none'
+                } else {
+                    document.querySelector('.game-rounds').innerHTML = `Game level ${this.options.gameLevel + 1}`
+                }
+
+                if (this.options.gameLevel < mazeArr.length - 1) {
                     this.options.gameLevel++
                 } else {
                     this.options.gameLevel = 1
@@ -514,7 +517,6 @@ export default class MazeGame {
     }
 
 }
-
 
 const mazeArr = [
     [
