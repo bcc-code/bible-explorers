@@ -33,6 +33,8 @@ export default class MazeGame {
         this.player = {
             localVelocity: new CANNON.Vec3(),
             moveDistance: 10,
+            axis: new THREE.Vector3(0, 1, 0),
+            degree: 90
         }
 
         this.maze = {
@@ -198,10 +200,10 @@ export default class MazeGame {
             child.material = material
         })
 
-        this.playerMesh.position.x = this.maze.entrancePosition[0] * this.maze.wallSize
+        this.playerMesh.position.x = this.maze.entrancePosition[0]
         this.playerMesh.position.y = this.maze.wallSize
-        this.playerMesh.position.z = this.maze.entrancePosition[1] * this.maze.wallSize
-        this.playerMesh.rotation.x = -Math.PI / 3
+        this.playerMesh.position.z = this.maze.entrancePosition[1]
+        this.playerMesh.rotation.x = -Math.PI / 4
         this.playerMesh.castShadow = true
         this.scene.add(this.playerMesh)
 
@@ -224,8 +226,8 @@ export default class MazeGame {
         const material = new THREE.MeshStandardMaterial({ color: '#00ffff' })
         this.boxMesh = new THREE.Mesh(geometry, material)
 
-        this.boxMesh.position.x = this.maze.exitPosition[0] * this.maze.wallSize
-        this.boxMesh.position.z = this.maze.exitPosition[1] * this.maze.wallSize
+        this.boxMesh.position.x = this.maze.exitPosition[0]
+        this.boxMesh.position.z = this.maze.exitPosition[1]
         this.scene.add(this.boxMesh)
 
         const boundingBox = new THREE.Box3().setFromObject(this.boxMesh)
@@ -261,14 +263,6 @@ export default class MazeGame {
 
                 if (cell == 2) {
                     const shape = new CANNON.Box(new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5))
-
-                    // this.textMesh.position.x = c
-                    // this.textMesh.position.y = 0.2
-                    // this.textMesh.position.z = r
-
-                    // console.log(this.textMesh);
-                    // this.scene.add(this.textMesh)
-
                     // If entrance on left
                     if (c == 0) {
                         this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize - wallSize, wallSize * 0.5, r * wallSize))
@@ -289,11 +283,11 @@ export default class MazeGame {
                         this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize + wallSize, wallSize * 0.5, r * wallSize))
                     }
 
-                    this.maze.entrancePosition = [c, r]
+                    this.maze.entrancePosition = [c * wallSize, r * wallSize]
                 }
 
                 if (cell == 3) {
-                    this.maze.exitPosition = [c, r]
+                    this.maze.exitPosition = [c * wallSize, r * wallSize]
                 }
             })
         })
@@ -370,27 +364,53 @@ export default class MazeGame {
         this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
         const worldVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
 
+        this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-35));
+
         if (keys.arrowleft || keys.a) {
             this.playerBody.velocity.x = -worldVelocity.x
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-90));
         }
 
         if (keys.arrowright || keys.d) {
             this.playerBody.velocity.x = worldVelocity.x
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(90));
         }
 
         if (keys.arrowup || keys.w) {
             this.playerBody.velocity.z = -worldVelocity.z;
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(180));
         }
 
         if (keys.arrowdown || keys.s) {
             this.playerBody.velocity.z = worldVelocity.z;
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(0));
         }
+
+
+        if (keys.arrowleft && keys.arrowup || keys.a && keys.w) {
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(225));
+        }
+
+        if (keys.arrowright && keys.arrowup || keys.d && keys.w) {
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(135));
+        }
+
+        if (keys.arrowleft && keys.arrowdown || keys.a && keys.s) {
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-45));
+        }
+
+        if (keys.arrowright && keys.arrowdown || keys.d && keys.s) {
+            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(45));
+        }
+
 
         this.camera.position.x = this.playerMesh.position.x
         this.camera.position.z = this.playerMesh.position.z
 
         this.light.position.x = this.playerMesh.position.x
         this.light.position.z = this.playerMesh.position.z
+
+
 
     }
 
@@ -405,6 +425,7 @@ export default class MazeGame {
                 this.playerMesh.visible = false
                 this.light.intensity = 0
 
+
                 document.querySelector('.maze-game').classList.remove('popup-visible')
                 document.querySelector('.game-popup').style.display = 'none'
 
@@ -418,7 +439,7 @@ export default class MazeGame {
                 if (this.options.gameLevel < mazeArr.length) {
                     this.options.gameLevel++
                 } else {
-                    this.options.gameLevel = 0
+                    this.options.gameLevel = 1
                 }
 
                 this.options.gameState = 'fade in'
