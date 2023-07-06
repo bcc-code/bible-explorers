@@ -171,6 +171,8 @@ export default class MazeGame {
 
     addFloor() {
         const texture = this.resources.items.floor
+        texture.flipY = false
+        texture.colorSpace = THREE.SRGBColorSpace
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
         texture.repeat.set(50, 50);
 
@@ -220,11 +222,15 @@ export default class MazeGame {
     }
 
     addBox() {
-        const geometry = new THREE.BoxGeometry(this.maze.wallSize * 0.5, this.maze.wallSize * 0.5, this.maze.wallSize * 0.5)
-        const material = new THREE.MeshStandardMaterial({ color: '#00ffff' })
-        this.boxMesh = new THREE.Mesh(geometry, material)
+        const texture = this.resources.items.mazeBox
+        texture.colorSpace = THREE.SRGBColorSpace
 
+        const geometry = new THREE.PlaneGeometry(this.maze.wallSize * 0.5, this.maze.wallSize * 0.5)
+        const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true })
+        this.boxMesh = new THREE.Mesh(geometry, material)
+        this.boxMesh.rotation.x = -Math.PI / 2
         this.boxMesh.position.x = this.maze.exitPosition[0]
+        this.boxMesh.position.y = 0.01
         this.boxMesh.position.z = this.maze.exitPosition[1]
         this.scene.add(this.boxMesh)
 
