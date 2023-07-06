@@ -8,6 +8,7 @@ import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js'
 import * as CANNON from 'cannon-es'
 
 let instance = null
+let q = new THREE.Quaternion()
 
 export default class MazeGame {
     constructor() {
@@ -33,8 +34,6 @@ export default class MazeGame {
         this.player = {
             localVelocity: new CANNON.Vec3(),
             moveDistance: 10,
-            axis: new THREE.Vector3(0, 1, 0),
-            degree: 90
         }
 
         this.maze = {
@@ -362,53 +361,57 @@ export default class MazeGame {
         this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
         const worldVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
 
-        this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-35));
+
+        if (this.options.gameState === 'fade out') {
+            q.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-75))
+        } else {
+            q.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-35))
+        }
 
         if (keys.arrowleft || keys.a) {
             this.playerBody.velocity.x = -worldVelocity.x
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-90));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-90));
         }
 
         if (keys.arrowright || keys.d) {
             this.playerBody.velocity.x = worldVelocity.x
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(90));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(90));
         }
 
         if (keys.arrowup || keys.w) {
             this.playerBody.velocity.z = -worldVelocity.z;
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(180));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(180));
         }
 
         if (keys.arrowdown || keys.s) {
             this.playerBody.velocity.z = worldVelocity.z;
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(0));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(0));
         }
 
 
         if (keys.arrowleft && keys.arrowup || keys.a && keys.w) {
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(225));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(225));
         }
 
         if (keys.arrowright && keys.arrowup || keys.d && keys.w) {
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(135));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(135));
         }
 
         if (keys.arrowleft && keys.arrowdown || keys.a && keys.s) {
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-45));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-45));
         }
 
         if (keys.arrowright && keys.arrowdown || keys.d && keys.s) {
-            this.playerMesh.quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(45));
+            q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(45));
         }
 
+        this.playerMesh.quaternion.slerp(q, 0.2);
 
         this.camera.position.x = this.playerMesh.position.x
         this.camera.position.z = this.playerMesh.position.z
 
         this.light.position.x = this.playerMesh.position.x
         this.light.position.z = this.playerMesh.position.z
-
-
 
     }
 
@@ -462,8 +465,8 @@ export default class MazeGame {
                 // Check for victory
                 this.boxBody.addEventListener('collide', (e) => {
                     if (e.body === this.playerBody) {
-
-                        this.playerMesh.visible = false
+                        this.mazeMesh.visible = false
+                        this.boxMesh.visible = false
                         this.options.gameState = 'fade out'
                     }
                 }, false)
