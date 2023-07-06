@@ -67,4 +67,9 @@ export default [
         type: 'texture',
         path: 'games/maze/TexturesCom_OutdoorFloor4_512_albedo.png'
     },
+    {
+        name: 'instructions',
+        type: 'texture',
+        path: 'games/maze/instructions.png'
+    },
 ]

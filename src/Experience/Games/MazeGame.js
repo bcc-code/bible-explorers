@@ -64,26 +64,23 @@ export default class MazeGame {
         })
     }
 
-    // setText() {
-    //     const canvas = document.createElement('canvas')
-    //     const context = canvas.getContext('2d')
+    addInstructions() {
+        const texture = this.resources.items.instructions
 
-    //     context.fillStyle = 'start here'
-    //     context.font = '20px sans-serif'
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide,
+            transparent: true
+        })
+        const geometry = new THREE.PlaneGeometry(0.3, 0.5)
 
-    //     const texture = new THREE.Texture(canvas)
-    //     texture.needsUpdate = true
-
-    //     const material = new THREE.MeshBasicMaterial({
-    //         map: texture,
-    //         side: THREE.DoubleSide
-    //     })
-    //     material.transparent = true
-
-    //     const geometry = new THREE.PlaneGeometry(10, 10)
-    //     this.textMesh = new THREE.Mesh(geometry, material)
-    //     this.textMesh.rotation.x = -Math.PI * 0.5 // make it face up
-    // }
+        const mesh = new THREE.Mesh(geometry, material)
+        mesh.rotation.x = -Math.PI / 2
+        mesh.position.x = this.maze.entrancePosition[0] - 0.75
+        mesh.position.y = 0.1
+        mesh.position.z = this.maze.entrancePosition[1]
+        this.scene.add(mesh)
+    }
 
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
@@ -138,7 +135,6 @@ export default class MazeGame {
         this.addCamera()
         this.addLight()
         this.addRenderer()
-        // this.setText()
 
         // add elements
         this.addFloor()
@@ -150,6 +146,8 @@ export default class MazeGame {
         this.addPlayer()
         this.addBox()
 
+        if (this.options.gameLevel == 0)
+            this.addInstructions()
 
     }
 
