@@ -23,6 +23,7 @@ export default class Page {
         document.querySelector('.page .container').append(intro)
 
         document.querySelector('.cta').style.display = 'none'
+        document.querySelector('[aria-label="Preview chapter"]').style.display = 'none'
     }
 
     removeIntro() {

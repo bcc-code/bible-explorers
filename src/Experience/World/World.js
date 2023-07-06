@@ -62,8 +62,11 @@ export default class World {
         this.buttons = {
             // contact: document.querySelector('[aria-label="Contact"]'),
             home: document.querySelector('[aria-label="Home"]'),
-            guide: document.querySelector('[aria-label="Guide"]')
+            guide: document.querySelector('[aria-label="Guide"]'),
+            preview: document.querySelector('[aria-label="Preview chapter"]')
         }
+
+        this.buttons.preview.querySelector('span').innerHTML = _s.journey.preview.title
 
         this.buttons.home.style.display = 'none'
         this.buttons.home.addEventListener("click", this.goHome)
@@ -211,14 +214,7 @@ export default class World {
             <section class="chapter-details">
                 <header>
                     <h2>${chapter.title}</h2>
-                    <button class="btn default next" aria-label="Preview chapter">
-                        <svg class="preview-icon icon" viewBox="0 0 28 22">
-                            <use href="#preview"></use>
-                        </svg>
-                        <span>${_s.journey.preview.title}</span>
-                    </button>
                 </header>
-                
             </section>
         `)
 
@@ -273,11 +269,11 @@ export default class World {
         document.querySelector('.lobby').append(details)
         document.querySelector('.chapters').classList.add('chapter-selected')
 
-        const previewBtn = document.querySelector('[aria-label="Preview chapter"]')
-        previewBtn.addEventListener("click", instance.previewChapter)
+        this.buttons.preview.style.display = 'inline-flex'
+        this.buttons.preview.addEventListener("click", instance.previewChapter)
 
         tippy('[aria-label="Preview chapter"]', {
-            theme: 'explorers',
+            theme: 'preview',
             content: _s.journey.preview.info,
             duration: [500, 200],
             animation: 'shift-away',
@@ -459,7 +455,7 @@ export default class World {
             checkpoint.steps.forEach(step => {
                 if (step.details.step_type == 'iris' && step.message?.video)
                     instance.offline.fetchScreenTexture(step.message.video)
-    
+
                 if (step.details.step_type == 'task' && step.details?.tutorial)
                     instance.offline.fetchScreenTexture(step.details.tutorial)
             })
@@ -640,6 +636,7 @@ export default class World {
 
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
+        this.buttons.preview.style.display = 'none'
     }
 
     currentChapterLabel() {
@@ -689,6 +686,8 @@ export default class World {
         instance.buttons.guide.style.display = 'flex'
 
         document.querySelector('.cta').style.display = 'flex'
+        this.buttons.preview.style.display = 'inline-flex'
+
         instance.experience.navigation.prev.disabled = false
 
         instance.camera.updateCameraTo(null)
@@ -769,6 +768,6 @@ export default class World {
 
         if (this.points)
             this.points.update()
-  
+
     }
 }

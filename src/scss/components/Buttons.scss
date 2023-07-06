@@ -42,7 +42,7 @@
         border-radius: calc(var(--app-button-size) /4) var(--app-button-size) var(--app-button-size) calc(var(--app-button-size) /4);
     }
 
-    &:not(:last-child) {
+    &:not(:last-child):not([aria-label="Preview chapter"]) {
         margin-right: 0.5rem;
     }
 
@@ -144,4 +144,12 @@ a.btn.default {
             background-color: var(--clr-secondary);
         }
     }
+}
+
+
+.btn[aria-label="Preview chapter"] {
+    position: fixed;
+    bottom: 100px;
+    right: 1rem;
+    display: none;
 }
