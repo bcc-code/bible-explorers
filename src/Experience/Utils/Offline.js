@@ -536,6 +536,10 @@ export default class Offline {
     }
 
     fetchScreenTexture = async function (videoName) {
+        if (Object.keys(offline.experience.resources.customTextureItems).includes(videoName))
+            return
+
+        offline.experience.resources.customTextureItems[videoName] = {}
         offline.loadScreenTextureFromIndexedDb(
             videoName,
             this.loadScreenTextureLocally, // callback
