@@ -39,8 +39,10 @@
         gap: 4rem;
     }
 
+    .video {
+        width: 100%;
+    }
     video {
-        width: clamp(300px, 100% - 2rem, 48rem);
         aspect-ratio: 3/2;
     }
 
@@ -67,7 +69,7 @@
     }
 }
 
-#question-with-picture {
+#video-with-question {
     .col:nth-child(1) {
         width: clamp(180px, 40%, 300px);
     }

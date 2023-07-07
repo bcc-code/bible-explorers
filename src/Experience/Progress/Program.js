@@ -72,7 +72,7 @@ export default class Program {
                     || instance.taskType() == 'flip_cards'
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
-                    || instance.taskType() == 'question_with_picture'
+                    || instance.taskType() == 'video_with_question'
                     || instance.taskType() == 'labyrinth'
                 ) {
                     return 'irisCloseLook'
@@ -214,7 +214,7 @@ export default class Program {
                     || instance.taskType() == 'flip_cards'
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
-                    || instance.taskType() == 'question_with_picture'
+                    || instance.taskType() == 'video_with_question'
                     || instance.taskType() == 'labyrinth'
                 ) {
                     instance.gameDescription.show()

@@ -16,7 +16,7 @@ export default class Offline {
         offline.data = []
         offline.downloaded = []
         
-        offline.texturesArr = []
+        offline.btvVideos = []
         offline.downloadedTextures = []
 
         if ("indexedDB" in window) {
@@ -196,16 +196,19 @@ export default class Offline {
 
     downloadScreenTextures = async function (chapter) {
         if (chapter.lobby_video_loop)
-            offline.texturesArr.push(chapter.lobby_video_loop)
+            offline.btvVideos.push(chapter.lobby_video_loop)
 
         chapter.program.forEach(checkpoint => {
             checkpoint.steps.forEach(step => {
                 if (step.details.step_type == 'iris' && step.message.video)
-                    offline.texturesArr.push(step.message.video)
+                    offline.btvVideos.push(step.message.video)
+
+                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video)
+                    offline.btvVideos.push(step.video_with_question.video)
             })
         })
 
-        if (!offline.texturesArr.length) return
+        if (!offline.btvVideos.length) return
 
         // Start downloading textures
         offline.startTextureDownload(0)
@@ -232,7 +235,7 @@ export default class Offline {
 
             offline.downloadedTextures.push(videoName)
 
-            if (offline.downloadedTextures.length < offline.texturesArr.length) {
+            if (offline.downloadedTextures.length < offline.btvVideos.length) {
                 // Next texture to download
                 offline.startTextureDownload(offline.downloadedTextures.length)
             }
@@ -240,8 +243,8 @@ export default class Offline {
     }
 
     startTextureDownload = async function(index) {
-        const video = await offline.getEpisodeLowQualityDownloadUrl(offline.texturesArr[index])
-        offline.downloadScreenTexture(offline.texturesArr[index], video)
+        const video = await offline.getEpisodeLowQualityDownloadUrl(offline.btvVideos[index])
+        offline.downloadScreenTexture(offline.btvVideos[index], video)
     }
 
     getEpisodeLowQualityDownloadUrl = async function (episodeId) {

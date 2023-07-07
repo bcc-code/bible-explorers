@@ -9,7 +9,7 @@ import SimonSaysGame from '../Games/SimonSaysGame.js'
 import FlipCards from "../Games/FlipCards.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
-import QuestionWithPicture from '../Extras/QuestionWithPicture.js'
+import VideoWithQuestion from '../Extras/VideoWithQuestion.js'
 import MazeGame from '../Games/MazeGame.js'
 
 let instance = null
@@ -25,7 +25,7 @@ export default class Task {
         instance.flipCards = new FlipCards()
         instance.heartDefense = new HeartDefense()
         instance.davidsRefuge = new DavidsRefuge()
-        instance.questionWithPicture = new QuestionWithPicture()
+        instance.videoWithQuestion = new VideoWithQuestion()
         instance.mazeGame = new MazeGame()
     }
 
@@ -107,8 +107,8 @@ export default class Task {
             instance.davidsRefuge.toggleGame()
         }
 
-        else if (instance.program.taskType() == 'question_with_picture') {
-            instance.questionWithPicture.toggleQuestionWithPicture()
+        else if (instance.program.taskType() == 'video_with_question') {
+            instance.videoWithQuestion.toggleVideoWithQuestion()
         }
 
         else if (instance.program.taskType() == 'labyrinth') {
