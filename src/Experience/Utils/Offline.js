@@ -202,9 +202,6 @@ export default class Offline {
             checkpoint.steps.forEach(step => {
                 if (step.details.step_type == 'iris' && step.message.video)
                     offline.texturesArr.push(step.message.video)
-
-                if (step.details.step_type == 'task' && step.details.tutorial)
-                    offline.texturesArr.push(step.details.tutorial)
             })
         })
 

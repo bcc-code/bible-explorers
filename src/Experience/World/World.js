@@ -455,9 +455,6 @@ export default class World {
             checkpoint.steps.forEach(step => {
                 if (step.details.step_type == 'iris' && step.message?.video)
                     instance.offline.fetchScreenTexture(step.message.video)
-
-                if (step.details.step_type == 'task' && step.details?.tutorial)
-                    instance.offline.fetchScreenTexture(step.details.tutorial)
             })
         })
     }
