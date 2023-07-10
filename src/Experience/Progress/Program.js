@@ -256,6 +256,7 @@ export default class Program {
     nextCheckpoint() {
         instance.updateCurrentCheckpoint(++instance.currentCheckpoint)
         instance.currentStep = 0
+
     }
 
     goToCheckpoint(checkpoint) {
@@ -277,7 +278,9 @@ export default class Program {
         instance.experience.navigation.prev.disabled = true
         instance.experience.navigation.next.disabled = true
 
+
         if (instance.stepType() == 'iris') {
+
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
                 instance.highlight.add(instance.interactiveObjects()[0])
@@ -301,6 +304,7 @@ export default class Program {
                 instance.world.progressBar?.hide()
                 instance.startTask()
             })
+
         }
 
         else {
@@ -373,7 +377,7 @@ export default class Program {
 
             if (instance.currentCheckpoint != 6) {
                 interactiveObjects.push("Screen", "play_video_icon")
-                
+
             } else {
 
                 const UA = navigator.userAgent;

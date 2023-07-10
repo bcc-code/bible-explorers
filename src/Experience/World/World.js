@@ -17,6 +17,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
 import gsap from 'gsap'
+import Glitch from './Glitch.js'
 
 let instance = null
 export default class World {
@@ -40,6 +41,7 @@ export default class World {
 
             // Setup
             this.controlRoom = new ControlRoom()
+            this.glitch = new Glitch()
             this.environment = new Environment()
             this.points = new Points()
             this.highlight = new Highlight()
@@ -758,6 +760,9 @@ export default class World {
 
         if (this.points)
             this.points.update()
+
+        if (this.glitch)
+            this.glitch.update()
 
     }
 }
