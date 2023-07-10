@@ -102,6 +102,9 @@ export default class Offline {
         let episodesData = []
 
         episodes.forEach(episode => {
+            if (episodesData.map(e => e.id).includes(episode.id))
+                return
+
             episodesData.push({
                 id: episode.id,
                 data: {
@@ -110,11 +113,9 @@ export default class Offline {
                     quality: this.experience.settings.videoQuality
                 }
             })
-
-            if (episodesData.length == episodes.length) {
-                offline.downloadFromWeb(chapterId, episodesData)
-            }
         })
+
+        offline.downloadFromWeb(chapterId, episodesData)
     }
 
     downloadFromWeb = function (chapterId, episodes) {
