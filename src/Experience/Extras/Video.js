@@ -49,8 +49,6 @@ export default class Video {
         }
 
         this.playingVideoId = null
-
-
     }
 
     canvasTexture() {

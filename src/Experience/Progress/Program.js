@@ -6,6 +6,7 @@ import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Video from '../Extras/Video.js'
 import Quiz from '../Components/Quiz.js'
 import MultipleChoiceWithPicture from '../Extras/MultipleChoiceWithPicture.js'
+import VideoWithQuestion from '../Extras/VideoWithQuestion.js'
 import Congrats from '../Extras/Congrats.js'
 import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
@@ -35,6 +36,7 @@ export default class Program {
         instance.questionAndCode = new QuestionAndCode()
         instance.quiz = new Quiz()
         instance.multipleChoiceWithPicture = new MultipleChoiceWithPicture()
+        instance.videoWithQuestion = new VideoWithQuestion()
         instance.congrats = new Congrats()
         instance.pause = new Pause()
         instance.dialogue = new Dialogue()
@@ -218,7 +220,6 @@ export default class Program {
                     || instance.taskType() == 'flip_cards'
                     || instance.taskType() == 'heart_defense'
                     || instance.taskType() == 'davids_refuge'
-                    || instance.taskType() == 'video_with_question'
                     || instance.taskType() == 'labyrinth'
                 ) {
                     instance.gameDescription.show()
@@ -226,6 +227,10 @@ export default class Program {
 
                 else if (instance.taskType() == 'multiple_choice_with_picture') {
                     instance.multipleChoiceWithPicture.toggleMultipleChoiceWithPicture()
+                }
+
+                else if (instance.taskType() == 'video_with_question') {
+                    instance.videoWithQuestion.toggleVideoWithQuestion()
                 }
             }
 

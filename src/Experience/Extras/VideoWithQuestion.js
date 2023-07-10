@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
-import _gl from '../Utils/Globals.js'
 import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
+import _e from "../Utils/Events.js"
 
 let instance = null
 
@@ -53,33 +54,33 @@ export default class VideoWithQuestion {
             ?.addEventListener('ended', (e) => {
                 container.querySelectorAll('.hidden').forEach(item => item.classList.remove('hidden'))
             })
-
-        if (instance.showSkipBtn()) {
-            const skipVideo = document.createElement('div')
-            skipVideo.className = 'skip-video btn default next pulsate'
-            skipVideo.innerText = _s.miniGames.skip
-
-            skipVideo.addEventListener('click', () => {
-                container.querySelector('video').pause()
-                skipVideo.remove()
-                container.querySelectorAll('.hidden').forEach(item => item.classList.remove('hidden'))
-            })
-
-            container.querySelector('.video').appendChild(skipVideo)
-        }
-
+        
         const submitQuestion = container.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {
             instance.destroy()
             instance.program.nextStep()
         })
+
+        document.querySelector('.cta').style.display = 'flex'
+        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
+        instance.experience.navigation.next.addEventListener('click', instance.skipVideo)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
-    showSkipBtn() {
-        return instance.debug.developer || instance.debug.onPreviewMode()
+    skipVideo() {
+        document.querySelector('#video-with-question video').pause()
+        document.querySelectorAll('#video-with-question .hidden').forEach(item => item.classList.remove('hidden'))
+
+        instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
+        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
     }
 
     destroy() {
+        console.log('destroy')
+        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
+        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
     }
 }
