@@ -63,11 +63,15 @@ export default {
                         name: "script" 
                     }),
                     getCache({ 
-                        pattern: "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1", 
+                        pattern: "https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js", 
                         name: "castFramework" 
                     }),
                     getCache({ 
-                        pattern: "https://unpkg.com/@rive-app/canvas@1.0.102/rive.wasm", 
+                        pattern: "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1", 
+                        name: "castSender" 
+                    }),
+                    getCache({ 
+                        pattern: "https://unpkg.com/@rive-app/canvas@1.0.102", 
                         name: "riveApp" 
                     })
                 ]
