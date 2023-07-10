@@ -677,7 +677,7 @@ export default class World {
         instance.buttons.guide.style.display = 'flex'
 
         document.querySelector('.cta').style.display = 'flex'
-        this.buttons.preview.style.display = 'inline-flex'
+        instance.buttons.preview.style.display = 'inline-flex'
 
         instance.experience.navigation.prev.disabled = false
 
