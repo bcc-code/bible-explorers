@@ -56,28 +56,42 @@ export default class Video {
 
     canvasTexture() {
         //create image
-        const bitmap = createRetinaCanvas(1920, 1080);
-        const ctx = bitmap.getContext('2d', { antialias: false });
+        const bitmap = createRetinaCanvas(1920, 1080)
+        const ctx = bitmap.getContext('2d', { antialias: false })
 
         const centerX = bitmap.width / 2
         const centerY = bitmap.height / 2
         const size = 40
+        const circle = size * 2.5
 
-        ctx.globalAlpha = 0.2;
-        ctx.beginPath();
-        ctx.rect(0, 0, 1920, 1080);
-        ctx.fillStyle = 'black';
-        ctx.fill();
+        ctx.globalAlpha = 0.2
+        ctx.beginPath()
+        ctx.rect(0, 0, 1920, 1080)
+        ctx.fillStyle = 'black'
+        ctx.fill()
 
-        //make play button
         ctx.globalAlpha = 1.0;
+        ctx.lineWidth = 20
+        ctx.strokeStyle = "#ffffff"
+        ctx.fillStyle = "#ffffff"
 
-        ctx.fillStyle = "#ffffff";
-        ctx.beginPath();
-        ctx.moveTo(centerX - size, centerY - size);
-        ctx.lineTo(centerX - size, centerY + size);
-        ctx.lineTo(centerX + size, centerY);
-        ctx.fill();
+        // make circle
+        ctx.beginPath()
+        ctx.arc(centerX, centerY , circle, 0, 2 * Math.PI)
+        ctx.closePath()
+        ctx.stroke()
+
+        // make play button
+        
+        ctx.lineJoin = "round"
+
+        ctx.beginPath()
+        ctx.moveTo(centerX - size + 10, centerY - size)
+        ctx.lineTo(centerX - size + 10, centerY + size)
+        ctx.lineTo(centerX + size + 5, centerY)
+        ctx.closePath()
+        ctx.stroke()
+        ctx.fill()
 
         // canvas contents are used for
         const texture = new THREE.Texture(bitmap)

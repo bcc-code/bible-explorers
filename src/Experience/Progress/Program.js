@@ -166,7 +166,7 @@ export default class Program {
             else {
                 instance.updateCameraForCurrentStep(() => {
                     instance.highlight.add(instance.interactiveObjects()[0])
-                    instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+                    // instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                     instance.experience.navigation.next.disabled = true
                     instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
                     instance.video.videoPlayIcon.visible = true
@@ -276,7 +276,7 @@ export default class Program {
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
                 instance.highlight.add(instance.interactiveObjects()[0])
-                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+                // instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
                     instance.world.progressBar.hide()
