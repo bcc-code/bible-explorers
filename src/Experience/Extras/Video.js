@@ -72,7 +72,7 @@ export default class Video {
                 if (instance.hasSkipBtn()) return
 
                 const skipVideo = document.createElement('div')
-                skipVideo.className = 'skip-video btn default next pulsate'
+                skipVideo.className = 'skip-video btn default next'
                 skipVideo.innerText = _s.miniGames.skip
 
                 skipVideo.addEventListener('click', instance.finish)
