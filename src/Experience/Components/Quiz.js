@@ -42,6 +42,9 @@ export default class Quiz {
                                 <use href="#arrow-left"></use>
                             </svg>
                         </button>
+                        <button type="submit" class="btn default next" aria-label="submit form">
+                            ${_s.task.submit}
+                        </button>
                         <button class="btn rounded" aria-label="next question">
                             <svg class="next-icon icon" width="25" height="16" viewBox="0 0 25 16">
                                 <use href="#arrow-right"></use>
@@ -61,6 +64,17 @@ export default class Quiz {
         skipBTN.addEventListener('click', () => {
             instance.destroy()
             instance.program.nextStep()
+        })
+
+        const submitQuiz = quiz.querySelector('[aria-label="submit form"')
+        submitQuiz.style.display = 'none'
+        submitQuiz.addEventListener('click', () => {
+            instance.destroy()
+            instance.program.congrats.toggleSummary()
+            document.querySelector('.cta').style.display = 'flex'
+
+            const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length}</p>`)
+            document.querySelector('.modal .summary').append(message)
         })
 
         const prev = quiz.querySelector('[aria-label="prev question"')
@@ -194,7 +208,7 @@ export default class Quiz {
                     }
 
                     if (q.getAttribute('data-index') == questions.length) {
-                        document.querySelector('.cta').style.display = 'flex'
+                        submitQuiz.style.display = 'inline-flex'
                         next.disabled = true
                     }
 
@@ -211,10 +225,10 @@ export default class Quiz {
                 input.addEventListener('input', (e) => {
                     if (e.target.value.length > 0) {
                         questionsAnswered = questions.length
-                        document.querySelector('.cta').style.display = 'flex'
+                        submitQuiz.style.display = 'inline-flex'
                     } else {
                         questionsAnswered = questions.length - 1
-                        document.querySelector('.cta').style.display = 'none'
+                        submitQuiz.style.display = 'none'
                     }
                 })
             }
@@ -239,5 +253,6 @@ export default class Quiz {
 
     destroy() {
         document.querySelector('.quiz')?.remove()
+        document.querySelector('.modal')?.remove()
     }
 }
