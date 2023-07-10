@@ -490,12 +490,12 @@ export default class World {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter(step => step.message && step.message.audio))
             instance.cacheTaskDescriptionVideos(checkpoint.steps.filter(step => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
-            instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
-            instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
-            instance.cacheDialogueAudios(checkpoint.steps.filter(step => step.details && step.details.task_type == "dialog"))
+            instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "sorting"))
+            instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "picture_and_code"))
+            instance.cacheDialogueAudios(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "dialog"))
             instance.cacheGameDescriptionTutorials(checkpoint.steps.filter(step => step.details && step.details.tutorial))
-            instance.cacheFlipCardsMedia(checkpoint.steps.filter(step => step.details && step.details.task_type == "flip_cards"))
-            instance.cacheDavidsRefugeImages(checkpoint.steps.filter(step => step.details && step.details.task_type == "davids_refuge"))
+            instance.cacheFlipCardsMedia(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "flip_cards"))
+            instance.cacheDavidsRefugeImages(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "davids_refuge"))
         })
     }
 
