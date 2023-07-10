@@ -41,9 +41,8 @@
 
     .video {
         width: 100%;
-    }
-    video {
-        aspect-ratio: 3/2;
+        position: relative;
+        color: #fff;
     }
 
     img {
@@ -70,6 +69,13 @@
 }
 
 #video-with-question {
+    .container {
+        overflow: auto;
+        padding-top: 5rem;
+        padding-bottom: 2rem;
+        gap: 2rem;
+    }
+
     .col:nth-child(1) {
         width: clamp(180px, 40%, 300px);
     }
