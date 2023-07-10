@@ -627,7 +627,7 @@ export default class World {
 
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
-        this.buttons.preview.style.display = 'none'
+        instance.buttons.preview.style.display = 'none'
     }
 
     currentChapterLabel() {
@@ -673,7 +673,6 @@ export default class World {
         instance.program.video.defocus()
         instance.program.removeInteractivity()
         instance.buttons.home.style.display = 'none'
-        // instance.buttons.contact.style.display = 'flex'
         instance.buttons.guide.style.display = 'flex'
 
         document.querySelector('.cta').style.display = 'flex'
