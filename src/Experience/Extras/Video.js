@@ -6,7 +6,6 @@ import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 
 let instance = null
-let canvasTexture = null
 
 export default class Video {
     constructor() {
@@ -77,12 +76,11 @@ export default class Video {
 
         // make circle
         ctx.beginPath()
-        ctx.arc(centerX, centerY , circle, 0, 2 * Math.PI)
+        ctx.arc(centerX, centerY, circle, 0, 2 * Math.PI)
         ctx.closePath()
         ctx.stroke()
 
         // make play button
-        
         ctx.lineJoin = "round"
 
         ctx.beginPath()
@@ -236,10 +234,6 @@ export default class Video {
     finish() {
         instance.defocus()
         instance.world.program.nextStep()
-    }
-
-    update() {
-        canvasTexture.needsUpdate = true
     }
 
     //#endregion
