@@ -56,7 +56,7 @@ export default class Video {
 
     canvasTexture() {
         //create image
-        const bitmap = createRetinaCanvas(1920, 1080)
+        const bitmap = createRetinaCanvas(1920, 1080, 1)
         const ctx = bitmap.getContext('2d', { antialias: false })
 
         const centerX = bitmap.width / 2
@@ -64,7 +64,7 @@ export default class Video {
         const size = 40
         const circle = size * 2.5
 
-        ctx.globalAlpha = 0.2
+        ctx.globalAlpha = 0.4
         ctx.beginPath()
         ctx.rect(0, 0, 1920, 1080)
         ctx.fillStyle = 'black'
