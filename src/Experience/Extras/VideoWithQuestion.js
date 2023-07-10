@@ -42,7 +42,7 @@ export default class VideoWithQuestion {
         document.querySelector('.ui-container').append(container)
 
         if (instance.data.video)
-            container.querySelector('.video > *').src = instance.experience.resources.customTextureItems[instance.data.video].item.source.data.src
+            container.querySelector('.video > *').src = instance.experience.resources.customTextureItems[instance.data.video].item?.source.data.src
 
         container.querySelector('video')
             ?.addEventListener('click', (e) => {
@@ -54,11 +54,29 @@ export default class VideoWithQuestion {
                 container.querySelectorAll('.hidden').forEach(item => item.classList.remove('hidden'))
             })
 
+        if (instance.showSkipBtn()) {
+            const skipVideo = document.createElement('div')
+            skipVideo.className = 'skip-video btn default next pulsate'
+            skipVideo.innerText = _s.miniGames.skip
+
+            skipVideo.addEventListener('click', () => {
+                container.querySelector('video').pause()
+                skipVideo.remove()
+                container.querySelectorAll('.hidden').forEach(item => item.classList.remove('hidden'))
+            })
+
+            container.querySelector('.video').appendChild(skipVideo)
+        }
+
         const submitQuestion = container.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {
             instance.destroy()
             instance.program.nextStep()
         })
+    }
+
+    showSkipBtn() {
+        return instance.debug.developer || instance.debug.onPreviewMode()
     }
 
     destroy() {

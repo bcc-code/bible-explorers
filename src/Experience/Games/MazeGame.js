@@ -12,7 +12,6 @@ let q = new THREE.Quaternion()
 
 export default class MazeGame {
     constructor() {
-
         instance = this
 
         this.experience = new Experience()
@@ -21,9 +20,29 @@ export default class MazeGame {
         this.sizes = this.experience.sizes
         this.time = this.experience.time
         this.resources = this.experience.resources
+    }
 
-        this.program = this.world.program
+    toggleGame() {
+        instance.program = instance.world.program
+        instance.currentStepData = instance.program.getCurrentStepData()
 
+        this.experience.gameIsOn = true
+        document.querySelector('.cta').style.display = 'none'
+
+        this.initSettings()
+        this.initHtml()
+        this.setEventListeners()
+
+        this.time.on('animation', () => {
+            this.update()
+        })
+
+        this.sizes.on('resize', () => {
+            this.resize()
+        })
+    }
+
+    initSettings() {
         // Options
         this.options = {
             gameState: 'initialize',
@@ -42,26 +61,6 @@ export default class MazeGame {
             exitPosition: [],
             wallSize: 0.5, // width, height and depth
         }
-
-    }
-
-    toggleGame() {
-        instance.program = instance.world.program
-        instance.currentStepData = instance.program.getCurrentStepData()
-
-        this.experience.gameIsOn = true
-        document.querySelector('.cta').style.display = 'none'
-
-        this.initHTML()
-        this.setEventListeners()
-
-        this.time.on('animation', () => {
-            this.update()
-        })
-
-        this.sizes.on('resize', () => {
-            this.resize()
-        })
     }
 
     addInstructions() {
@@ -99,20 +98,19 @@ export default class MazeGame {
 
         if (this.debug.developer || this.debug.onPreviewMode())
             skipBTN.style.display = 'flex'
-
     }
 
-    initHTML() {
+    initHtml() {
         const game = _gl.elementFromHtml(`
         <section class="game maze-game">
             <div class="container">
                 <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
-                <div class="game-rounds">Game level ${this.options.gameLevel + 1}</div>
+                <div class="game-rounds">${_s.miniGames.level} ${this.options.gameLevel + 1}</div>
 
                 <div class="game-popup">
                     <h1>${_s.miniGames.completed.title}</h1>
                     <div class="buttons">
-                        <button id="new-level" class="btn default next pulsate">${_s.miniGames.restartRound}</button>
+                        <button id="new-level" class="btn default next pulsate">${_s.miniGames.nextRound}</button>
                     </div>
                 </div>
 
@@ -152,9 +150,9 @@ export default class MazeGame {
     }
 
     initCannon() {
-        this.world = new CANNON.World()
-        this.world.broadphase = new CANNON.SAPBroadphase(this.world)
-        this.world.gravity = new CANNON.Vec3(0, -9.82, 0)
+        this.canon = new CANNON.World()
+        this.canon.broadphase = new CANNON.SAPBroadphase(this.canon)
+        this.canon.gravity = new CANNON.Vec3(0, -9.82, 0)
     }
 
     addCamera() {
@@ -185,7 +183,7 @@ export default class MazeGame {
 
         this.groundBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() })
         this.groundBody.quaternion.setFromEuler(-Math.PI * 0.5, 0, 0) // make it face up
-        this.world.addBody(this.groundBody)
+        this.canon.addBody(this.groundBody)
     }
 
     addPlayer() {
@@ -218,7 +216,7 @@ export default class MazeGame {
             angularDamping: 1,
         })
         this.playerBody.position.copy(this.playerMesh.position)
-        this.world.addBody(this.playerBody)
+        this.canon.addBody(this.playerBody)
     }
 
     addBox() {
@@ -244,7 +242,7 @@ export default class MazeGame {
             isTrigger: true
         })
         this.boxBody.position.copy(this.boxMesh.position)
-        this.world.addBody(this.boxBody)
+        this.canon.addBody(this.boxBody)
 
     }
 
@@ -303,7 +301,7 @@ export default class MazeGame {
         this.scene.add(this.mazeMesh)
 
         this.mazeBody.position.copy(this.mazeMesh.position)
-        this.world.addBody(this.mazeBody)
+        this.canon.addBody(this.mazeBody)
     }
 
     addRenderer() {
@@ -325,7 +323,6 @@ export default class MazeGame {
             this.renderer.setSize(this.sizes.width, this.sizes.height)
             this.renderer.setPixelRatio(this.sizes.pixelRatio)
         }
-
     }
 
     destroy() {
@@ -350,9 +347,7 @@ export default class MazeGame {
                         value.dispose()
                     }
                 }
-
             }
-
         })
 
         this.renderer.dispose()
@@ -361,12 +356,12 @@ export default class MazeGame {
     }
 
     updateWorld() {
-        this.world.fixedStep()
+        this.canon.fixedStep()
 
         this.playerMesh.position.copy(this.playerBody.position)
 
         this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
-        const worldVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
+        const canonVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
 
 
         if (this.options.gameState === 'fade out') {
@@ -376,25 +371,24 @@ export default class MazeGame {
         }
 
         if (keys.arrowleft || keys.a) {
-            this.playerBody.velocity.x = -worldVelocity.x
+            this.playerBody.velocity.x = -canonVelocity.x
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-90));
         }
 
         if (keys.arrowright || keys.d) {
-            this.playerBody.velocity.x = worldVelocity.x
+            this.playerBody.velocity.x = canonVelocity.x
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(90));
         }
 
         if (keys.arrowup || keys.w) {
-            this.playerBody.velocity.z = -worldVelocity.z;
+            this.playerBody.velocity.z = -canonVelocity.z;
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(180));
         }
 
         if (keys.arrowdown || keys.s) {
-            this.playerBody.velocity.z = worldVelocity.z;
+            this.playerBody.velocity.z = canonVelocity.z;
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(0));
         }
-
 
         if (keys.arrowleft && keys.arrowup || keys.a && keys.w) {
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(225));
@@ -419,13 +413,11 @@ export default class MazeGame {
 
         this.light.position.x = this.playerMesh.position.x
         this.light.position.z = this.playerMesh.position.z
-
     }
 
     update() {
         switch (this.options.gameState) {
             case 'initialize':
-
                 // Setup
                 this.initCannon()
                 this.initScene()
@@ -443,7 +435,7 @@ export default class MazeGame {
                 if (this.options.mainGameEnded) {
                     document.querySelector('.game-rounds').style.display = 'none'
                 } else {
-                    document.querySelector('.game-rounds').innerHTML = `Game level ${this.options.gameLevel + 1}`
+                    document.querySelector('.game-rounds').innerHTML = `${_s.miniGames.level} ${this.options.gameLevel + 1}`
                 }
 
                 if (this.options.gameLevel < mazeArr.length - 1) {
@@ -501,7 +493,6 @@ export default class MazeGame {
                 break;
 
             case 'congrats':
-
                 document.querySelector('.maze-game')?.classList.add('popup-visible')
 
                 if (document.querySelector('.game-popup'))
@@ -510,7 +501,6 @@ export default class MazeGame {
                 break;
 
             case 'end game':
-
                 document.querySelector('.maze-game')?.classList.add('popup-visible')
 
                 if (document.querySelector('.game-popup'))
@@ -521,7 +511,6 @@ export default class MazeGame {
                 break;
         }
     }
-
 }
 
 const mazeArr = [

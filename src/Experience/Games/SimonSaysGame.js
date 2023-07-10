@@ -253,7 +253,6 @@ export default class SimonSays {
             </div>
         `)
 
-
         const continueBtn = _gl.elementFromHtml(`
             <button class="btn default next pulsate">${_s.miniGames.continue}</button>
         `)
@@ -300,7 +299,6 @@ export default class SimonSays {
 
         miniGame.classList.remove('active')
     }
-
 
     destroy() {
         document.querySelector('.game')?.remove()
