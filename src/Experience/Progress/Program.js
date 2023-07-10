@@ -169,11 +169,15 @@ export default class Program {
                     instance.points.add(instance.interactiveObjects()[0], instance.stepType())
                     instance.experience.navigation.next.disabled = true
                     instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
+                    instance.video.videoPlayIcon.visible = true
                 })
             }
         }
 
         else {
+
+            instance.video.videoPlayIcon.visible = false
+
             instance.updateCameraForCurrentStep(() => {
                 instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
                 instance.video.defocus()
@@ -315,12 +319,13 @@ export default class Program {
     }
 
     startAction() {
+
         if (instance.clickedObject == 'tv_16x9_screen') {
             instance.clickCallback()
             instance.clickCallback = () => { }
             instance.message.show()
         }
-        else if (instance.clickedObject == 'Screen') {
+        else if (instance.clickedObject == 'Screen' || instance.clickedObject == 'play_video_icon') {
             instance.video.play()
         }
 
@@ -362,7 +367,8 @@ export default class Program {
         if (instance.stepType() == 'video') {
 
             if (instance.currentCheckpoint != 6) {
-                interactiveObjects.push("Screen")
+                interactiveObjects.push("Screen", "play_video_icon")
+                
             } else {
 
                 const UA = navigator.userAgent;

@@ -3,8 +3,10 @@ import TWEEN from '@tweenjs/tween.js'
 import Experience from "../Experience.js";
 import _lang from '../Utils/Lang.js'
 import _s from '../Utils/Strings.js'
+import _e from '../Utils/Events.js'
 
 let instance = null
+let canvasTexture = null
 
 export default class Video {
     constructor() {
@@ -17,12 +19,17 @@ export default class Video {
         this.resources = this.experience.resources
         this.camera = this.experience.camera
         this.audio = this.experience.world.audio
+        this.scene = this.experience.scene
+        this.clickableObjects = this.world.controlRoom.clickableObjects
 
         instance = this
 
         // Setup
         this.portalScreen = this.world.controlRoom.tv_portal
         this.tablet = this.world.controlRoom.tablet
+        this.videoPlayIcon = null
+
+        instance.canvasTexture()
 
         this.video = () => {
             let id = instance.playingVideoId
@@ -43,6 +50,53 @@ export default class Video {
         }
 
         this.playingVideoId = null
+
+
+    }
+
+    canvasTexture() {
+        //create image
+        const bitmap = createRetinaCanvas(1920, 1080);
+        const ctx = bitmap.getContext('2d', { antialias: false });
+
+        const centerX = bitmap.width / 2
+        const centerY = bitmap.height / 2
+        const size = 40
+
+        ctx.globalAlpha = 0.2;
+        ctx.beginPath();
+        ctx.rect(0, 0, 1920, 1080);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+
+        //make play button
+        ctx.globalAlpha = 1.0;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.moveTo(centerX - size, centerY - size);
+        ctx.lineTo(centerX - size, centerY + size);
+        ctx.lineTo(centerX + size, centerY);
+        ctx.fill();
+
+        // canvas contents are used for
+        const texture = new THREE.Texture(bitmap)
+        texture.needsUpdate = true
+
+        const material = new THREE.MeshBasicMaterial({ color: '#ffffff', map: texture, transparent: true })
+
+        const geometry = new THREE.PlaneGeometry(16, 9)
+        const mesh = new THREE.Mesh(geometry, material)
+        mesh.name = 'play_video_icon'
+        this.scene.add(mesh)
+
+        mesh.position.copy(instance.portalScreen.position)
+        mesh.quaternion.copy(instance.portalScreen.quaternion)
+        mesh.position.x -= 0.01
+        mesh.visible = false
+
+        this.videoPlayIcon = mesh
+        this.clickableObjects.push(mesh)
     }
 
     load(id) {
@@ -127,13 +181,17 @@ export default class Video {
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .start()
+
     }
 
     defocus() {
         if (instance.video()) {
+
             instance.pause()
             instance.tablet.material.map.image.pause()
             instance.portalScreen.scale.set(0, 0, 0)
+            instance.videoPlayIcon.visible = false
+
 
             if (this.video().isFullscreen_) {
                 instance.video().exitFullscreen()
@@ -147,6 +205,8 @@ export default class Video {
                     instance.audio.setOtherAudioIsPlaying(false)
                     instance.audio.fadeInBgMusic()
                 })
+
+
         }
 
         // instance.experience.navigation.next.disabled = false
@@ -162,6 +222,10 @@ export default class Video {
     finish() {
         instance.defocus()
         instance.world.program.nextStep()
+    }
+
+    update() {
+        canvasTexture.needsUpdate = true
     }
 
     //#endregion
@@ -190,4 +254,27 @@ export default class Video {
 
         return duration - currentTime < secondsToSkip
     }
+}
+
+const PIXEL_RATIO = (function () {
+    var ctx = document.createElement('canvas').getContext('2d'),
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
+            ctx.mozBackingStorePixelRatio ||
+            ctx.msBackingStorePixelRatio ||
+            ctx.oBackingStorePixelRatio ||
+            ctx.backingStorePixelRatio || 1;
+    return dpr / bsr;
+})();
+
+
+const createRetinaCanvas = function (w, h, ratio) {
+    if (!ratio) { ratio = PIXEL_RATIO; }
+    var can = document.createElement('canvas');
+    can.width = w * ratio;
+    can.height = h * ratio;
+    can.style.width = w + 'px';
+    can.style.height = h + 'px';
+    can.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+    return can;
 }
