@@ -71,7 +71,11 @@ export default {
                         name: "castSender" 
                     }),
                     getCache({ 
-                        pattern: "https://unpkg.com/@rive-app/canvas@1.0.102", 
+                        pattern: "https://www.gstatic.com/eureka/clank/cast_sender.js", 
+                        name: "castSenderClank" 
+                    }),
+                    getCache({ 
+                        pattern: "https://unpkg.com/@rive-app/canvas@1.0.102/rive.js", 
                         name: "riveApp" 
                     })
                 ]
