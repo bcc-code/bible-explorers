@@ -51,7 +51,7 @@ export default {
             workbox: {
                 swDest: './dist/sw.js',
                 maximumFileSizeToCacheInBytes: 20000000,
-                globPatterns: ['**/*.{js,css,html,png,svg,mp3,mp4,webm,riv,glb,gltf,wasm}'],
+                globPatterns: ['**/*.{js,css,html,jpg,png,svg,mp3,mp4,webm,riv,glb,gltf,wasm}'],
                 globIgnores: [ 'assets/index.css', 'assets/index.js'],
                 runtimeCaching: [
                     getCache({ 
@@ -63,11 +63,11 @@ export default {
                         name: "script" 
                     }),
                     getCache({ 
-                        pattern: "https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js", 
+                        pattern: "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1", 
                         name: "castFramework" 
                     }),
                     getCache({ 
-                        pattern: "https://unpkg.com/@rive-app/canvas@1.0.102", 
+                        pattern: "https://unpkg.com/@rive-app/canvas@1.0.102/rive.wasm", 
                         name: "riveApp" 
                     })
                 ]

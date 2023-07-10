@@ -25,7 +25,6 @@ export default class Quiz {
 
     quizHTML() {
         const questions = instance.program.getCurrentStepData().quiz
-
         const quiz = _gl.elementFromHtml(`
             <section class="quiz">
                 <div class="container">
@@ -54,7 +53,6 @@ export default class Quiz {
                 <div class="overlay"></div>
             </section>
         `)
-
 
         const skipBTN = quiz.querySelector('[aria-label="skip-button"')
         if (instance.debug.developer || instance.debug.onPreviewMode())
@@ -111,7 +109,6 @@ export default class Quiz {
 
                 quizAnswers.append(quizAnswer)
                 quizAnswers.closest('.quiz-item').classList.add('textarea')
-
             }
 
             quiz.querySelector('.quiz-steps').append(quizStep)
@@ -218,12 +215,9 @@ export default class Quiz {
                     } else {
                         questionsAnswered = questions.length - 1
                         document.querySelector('.cta').style.display = 'none'
-
                     }
                 })
-
             }
-
         })
 
         let quizUpdateProgress = (answers) => {
@@ -232,7 +226,6 @@ export default class Quiz {
             const quizProgressBar = quiz.querySelector('.quiz-progress-bar div')
             quizProgressBar.style.width = quizProgress + '%'
         }
-
     }
 
     quizSummary() {
