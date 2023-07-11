@@ -286,7 +286,7 @@ export default class Program {
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
                 instance.highlight.add(instance.interactiveObjects()[0])
-                // instance.points.add(instance.interactiveObjects()[0], instance.stepType())
+                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
 
                 instance.clickCallback = () => {
                     instance.world.progressBar.hide()
