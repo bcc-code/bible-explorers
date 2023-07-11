@@ -54,6 +54,12 @@
         opacity: 0.4;
     }
 
+    &.less-focussed {
+        border-radius: calc(var(--app-button-size) /4) var(--app-button-size) var(--app-button-size) calc(var(--app-button-size) /4);
+        filter: grayscale(1);
+        opacity: 0.6;
+    }
+
     &:hover {
 
         &.default {
