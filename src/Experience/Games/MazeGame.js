@@ -6,9 +6,12 @@ import _e from '../Utils/Events.js'
 import * as THREE from 'three'
 import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js'
 import * as CANNON from 'cannon-es'
+import CannonDebugger from 'cannon-es-debugger'
 
 let instance = null
 let q = new THREE.Quaternion()
+
+const clock = new THREE.Clock()
 
 export default class MazeGame {
     constructor() {
@@ -150,9 +153,15 @@ export default class MazeGame {
     }
 
     initCannon() {
-        this.canon = new CANNON.World()
-        this.canon.broadphase = new CANNON.SAPBroadphase(this.canon)
-        this.canon.gravity = new CANNON.Vec3(0, -9.82, 0)
+        this.cannon = new CANNON.World()
+        this.cannon.broadphase = new CANNON.SAPBroadphase(this.cannon)
+        this.cannon.gravity = new CANNON.Vec3(0, -9.82, 0)
+    }
+
+    initCannonDebugger() {
+        this.cannonDebugger = new CannonDebugger(this.scene, this.cannon, {
+            // options...
+        })
     }
 
     addCamera() {
@@ -162,7 +171,8 @@ export default class MazeGame {
     }
 
     addLight() {
-        this.light = new THREE.PointLight('#ffffff')
+        this.light = new THREE.PointLight('#ffffff', 2, 5)
+        // this.light = new THREE.AmbientLight('#ffffff')
         this.light.position.set(0, 0.65, 0)
         this.scene.add(this.light)
     }
@@ -183,7 +193,7 @@ export default class MazeGame {
 
         this.groundBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() })
         this.groundBody.quaternion.setFromEuler(-Math.PI * 0.5, 0, 0) // make it face up
-        this.canon.addBody(this.groundBody)
+        this.cannon.addBody(this.groundBody)
     }
 
     addPlayer() {
@@ -202,7 +212,6 @@ export default class MazeGame {
         this.playerMesh.position.y = this.maze.wallSize
         this.playerMesh.position.z = this.maze.entrancePosition[1]
         this.playerMesh.rotation.x = -Math.PI / 4
-        this.playerMesh.castShadow = true
         this.scene.add(this.playerMesh)
 
         const boundingBox = new THREE.Box3().setFromObject(this.playerMesh)
@@ -216,19 +225,23 @@ export default class MazeGame {
             angularDamping: 1,
         })
         this.playerBody.position.copy(this.playerMesh.position)
-        this.canon.addBody(this.playerBody)
+        this.cannon.addBody(this.playerBody)
     }
 
     addBox() {
-        const texture = this.resources.items.mazeBox
+        const texture = this.resources.items.mazeBoxBaked
+        texture.flipY = false
         texture.colorSpace = THREE.SRGBColorSpace
 
-        const geometry = new THREE.PlaneGeometry(this.maze.wallSize * 0.5, this.maze.wallSize * 0.5)
-        const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true })
-        this.boxMesh = new THREE.Mesh(geometry, material)
-        this.boxMesh.rotation.x = -Math.PI / 2
+        const material = new THREE.MeshBasicMaterial({ map: texture })
+
+        this.boxMesh = this.resources.items.mazeBox.scene
+        this.boxMesh.traverse((child) => {
+            child.material = material
+        })
+
         this.boxMesh.position.x = this.maze.exitPosition[0]
-        this.boxMesh.position.y = 0.01
+        this.boxMesh.position.y = 0.15
         this.boxMesh.position.z = this.maze.exitPosition[1]
         this.scene.add(this.boxMesh)
 
@@ -242,12 +255,38 @@ export default class MazeGame {
             isTrigger: true
         })
         this.boxBody.position.copy(this.boxMesh.position)
-        this.canon.addBody(this.boxBody)
+        this.cannon.addBody(this.boxBody)
 
     }
 
     addMaze(idx, wallSize) {
-        const texture = this.resources.items.wall
+
+        const textureSide = this.resources.items.cubeMapSide
+        const textureTop = this.resources.items.cubeMapTop
+
+        console.log(textureSide, textureTop);
+
+        const materialCube = [
+            new THREE.MeshStandardMaterial({
+                map: textureSide
+            }),
+            new THREE.MeshStandardMaterial({
+                map: textureSide
+            }),
+            new THREE.MeshStandardMaterial({
+                map: textureTop
+            }),
+            new THREE.MeshStandardMaterial({
+                map: textureSide
+            }),
+            new THREE.MeshStandardMaterial({
+                map: textureSide
+            }),
+            new THREE.MeshStandardMaterial({
+                map: textureSide
+            })
+        ]
+
         const geometries = []
 
         this.mazeBody = new CANNON.Body({ mass: 0 })
@@ -294,14 +333,15 @@ export default class MazeGame {
             })
         })
 
-        const geometry = BufferGeometryUtils.mergeGeometries(geometries, false)
+        const texture = this.resources.items.cubeMapTop
         const material = new THREE.MeshStandardMaterial({ map: texture })
+        const geometry = BufferGeometryUtils.mergeGeometries(geometries, false)
         this.mazeMesh = new THREE.Mesh(geometry, material)
         this.mazeMesh.castShadow = true
         this.scene.add(this.mazeMesh)
 
         this.mazeBody.position.copy(this.mazeMesh.position)
-        this.canon.addBody(this.mazeBody)
+        this.cannon.addBody(this.mazeBody)
     }
 
     addRenderer() {
@@ -356,13 +396,18 @@ export default class MazeGame {
     }
 
     updateWorld() {
-        this.canon.fixedStep()
+        this.cannon.fixedStep()
+        // this.cannonDebugger.update()
+
+        const elapsedTime = clock.getElapsedTime()
 
         this.playerMesh.position.copy(this.playerBody.position)
 
-        this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
-        const canonVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
+        this.boxMesh.position.copy(this.boxBody.position)
+        this.boxMesh.rotation.y = elapsedTime
 
+        this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
+        const cannonVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
 
         if (this.options.gameState === 'fade out') {
             q.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-75))
@@ -371,22 +416,22 @@ export default class MazeGame {
         }
 
         if (keys.arrowleft || keys.a) {
-            this.playerBody.velocity.x = -canonVelocity.x
+            this.playerBody.velocity.x = -cannonVelocity.x
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(-90));
         }
 
         if (keys.arrowright || keys.d) {
-            this.playerBody.velocity.x = canonVelocity.x
+            this.playerBody.velocity.x = cannonVelocity.x
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(90));
         }
 
         if (keys.arrowup || keys.w) {
-            this.playerBody.velocity.z = -canonVelocity.z;
+            this.playerBody.velocity.z = -cannonVelocity.z;
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(180));
         }
 
         if (keys.arrowdown || keys.s) {
-            this.playerBody.velocity.z = canonVelocity.z;
+            this.playerBody.velocity.z = cannonVelocity.z;
             q.setFromAxisAngle(new THREE.Vector3(0, 1, 0).normalize(), THREE.MathUtils.degToRad(0));
         }
 
@@ -421,6 +466,7 @@ export default class MazeGame {
                 // Setup
                 this.initCannon()
                 this.initScene()
+                this.initCannonDebugger()
 
                 this.playerMesh.visible = false
                 this.light.intensity = 0
@@ -762,3 +808,4 @@ document.body.addEventListener('keyup', (e) => {
     const key = e.code.replace('Key', '').toLowerCase()
     if (keys[key] !== undefined) keys[key] = false
 })
+

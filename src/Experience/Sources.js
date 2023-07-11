@@ -58,9 +58,14 @@ export default [
         path: 'games/maze/glitch_v02.jpg'
     },
     {
-        name: 'wall',
+        name: 'cubeMapTop',
         type: 'texture',
-        path: 'games/maze/TexturesCom_Scifi_Panel8_New_1K_albedo.png',
+        path: 'games/maze/cubeMap/c_top.png'
+    },
+    {
+        name: 'cubeMapSide',
+        type: 'texture',
+        path: 'games/maze/cubeMap/c_side.png'
     },
     {
         name: 'floor',
@@ -69,8 +74,13 @@ export default [
     },
     {
         name: 'mazeBox',
+        type: 'gltfModel',
+        path: 'games/maze/BibleBox_v03.gltf'
+    },
+    {
+        name: 'mazeBoxBaked',
         type: 'texture',
-        path: 'games/maze/BibleBox.png'
+        path: 'games/maze/BibleBoxTexture_Baked_V01.png'
     },
     {
         name: 'instructions',
