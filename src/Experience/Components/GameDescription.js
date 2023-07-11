@@ -7,6 +7,7 @@ import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
 import FlipCards from "../Games/FlipCards.js"
+import ChooseNewKing from "../Games/ChooseNewKing.js"
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import MazeGame from '../Games/MazeGame.js'
@@ -22,6 +23,7 @@ export default class Task {
         instance.cableConnectorGame = new CableConnectorGame()
         instance.simonSays = new SimonSaysGame()
         instance.flipCards = new FlipCards()
+        instance.chooseNewKing = new ChooseNewKing()
         instance.heartDefense = new HeartDefense()
         instance.davidsRefuge = new DavidsRefuge()
         instance.mazeGame = new MazeGame()
@@ -95,6 +97,10 @@ export default class Task {
 
         else if (instance.program.taskType() == 'flip_cards') {
             instance.flipCards.toggleGame()
+        }
+
+        else if (instance.program.taskType() == 'choose_new_king') {
+            instance.chooseNewKing.toggleGame()
         }
 
         else if (instance.program.taskType() == 'heart_defense') {

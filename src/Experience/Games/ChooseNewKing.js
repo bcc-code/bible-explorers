@@ -7,7 +7,7 @@ import gsap from 'gsap'
 
 let instance = null
 
-export default class FlipCards {
+export default class ChooseNewKing {
     constructor() {
         instance = this
         instance.offline = new Offline()
@@ -20,7 +20,7 @@ export default class FlipCards {
     toggleGame() {
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
-        instance.data = instance.stepData.flip_cards
+        instance.data = instance.stepData.choose_new_king
 
         instance.gameHTML()
         instance.useCorrectAssetsSrc()
@@ -36,6 +36,7 @@ export default class FlipCards {
             <section class="game flip-card">
                 <div class="container">
                     <div class="cards"></div>
+                    <button class="btn default next" disabled aria-label="card select">${_s.miniGames.flipCards.chooseKing}</button>
                 </div>
                 <div class="overlay"></div>
             </section>
@@ -107,6 +108,8 @@ export default class FlipCards {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         const cards = gsap.utils.toArray('.flip-card .card')
+        let firstTimeClick = true
+
         cards.forEach((card, index) => {
             const q = gsap.utils.selector(card)
 
@@ -143,7 +146,7 @@ export default class FlipCards {
                     const flippedCards = document.querySelectorAll('.flipped')
 
                     if (flippedCards.length == instance.data.cards.length) {
-                        document.querySelector('.cta').style.display = 'flex'
+                        document.querySelector('.flip-card').classList.add('all-flipped')
                     }
                 } else {
                     e.target.parentNode.classList.add('wrong-code')
@@ -156,8 +159,75 @@ export default class FlipCards {
                 }
             })
 
+            card.addEventListener('click', () => {
+                if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
+                    const selectedCard = document.querySelector('.selected')
+
+                    if (selectedCard)
+                        selectedCard.classList.remove('selected')
+
+                    card.classList.add('selected')
+                    document.querySelector('[aria-label="card select"]').disabled = false
+
+                    if (firstTimeClick) {
+                        firstTimeClick = false
+                        instance.toggleGlitch()
+                    }
+                }
+            })
+
             if (cAudio.length)
                 cImage[0].addEventListener('click', () => { cAudio[0].play() })
+        })
+
+        const chooseCard = document.querySelector('[aria-label="card select"')
+
+        chooseCard.addEventListener('click', (e) => {
+            e.target.disabled = true
+
+            document.querySelector('.game-notification')?.remove()
+            document.querySelector('.cta').style.display = 'flex'
+            cards.forEach(card => card.style.pointerEvents = 'none')
+
+            instance.toggleGodVoice()
+        })
+    }
+
+    toggleGlitch() {
+        const notification = _gl.elementFromHtml(`
+            <aside class="game-notification">
+                <img src="games/glitchVoice.png"/>
+                <p>${instance.data.glitchs_voice.text}</p>
+            </aside>
+        `)
+
+        document.querySelector('.flip-card .container').append(notification)
+
+        gsap.set(notification, { x: '-100%' })
+        gsap.to(notification, {
+            x: 0, onComplete: () => {
+                instance.audio.stopAllTaskDescriptions()
+                instance.audio.togglePlayTaskDescription(instance.data.glitchs_voice.audio)
+            }
+        })
+    }
+
+    toggleGodVoice() {
+        const notification = _gl.elementFromHtml(`
+            <aside class="game-notification">
+                <img src="games/godVoice.png"/>
+                <p>${instance.data.gods_voice.text}</p>
+            </aside>
+        `)
+
+        document.querySelector('.flip-card .container').append(notification)
+
+        gsap.set(notification, { x: '-100%' })
+        gsap.to(notification, {
+            x: 0, onComplete: () => {
+                instance.audio.stopAllTaskDescriptions()
+                instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)
+            }
         })
     }
 
