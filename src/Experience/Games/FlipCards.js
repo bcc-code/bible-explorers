@@ -33,7 +33,7 @@ export default class FlipCards {
 
     gameHTML() {
         const game = _gl.elementFromHtml(`
-            <section class="game flip-card">
+            <section class="game flip-card flip-card-new">
                 <div class="container">
                     <div class="cards"></div>
                 </div>

@@ -282,6 +282,30 @@
     }
 }
 
+.flip-card-new {
+    .cards {
+        width: clamp(600px, 100vw - var(--app-padding), 90rem);
+    }
+
+    .card-image {
+        aspect-ratio: 1/1;
+    }
+
+    .card-image div {
+        background-size: contain;
+    }
+
+    .card-input {
+        position: relative;
+        width: 180px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-top: 1rem;
+        margin-inline: auto;
+    }
+}
+
 .davids-refuge {
     .container {
         justify-content: center;
