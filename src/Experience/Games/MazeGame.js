@@ -260,31 +260,6 @@ export default class MazeGame {
     }
 
     addMaze(idx, wallSize) {
-
-        const textureSide = this.resources.items.cubeMapSide
-        const textureTop = this.resources.items.cubeMapTop
-
-        const materialCube = [
-            new THREE.MeshStandardMaterial({
-                map: textureSide
-            }),
-            new THREE.MeshStandardMaterial({
-                map: textureSide
-            }),
-            new THREE.MeshStandardMaterial({
-                map: textureTop
-            }),
-            new THREE.MeshStandardMaterial({
-                map: textureSide
-            }),
-            new THREE.MeshStandardMaterial({
-                map: textureSide
-            }),
-            new THREE.MeshStandardMaterial({
-                map: textureSide
-            })
-        ]
-
         const geometries = []
 
         this.mazeBody = new CANNON.Body({ mass: 0 })
@@ -333,9 +308,8 @@ export default class MazeGame {
 
         const texture = this.resources.items.cubeMapTop
         const material = new THREE.MeshStandardMaterial({ map: texture })
-        const geometry = BufferGeometryUtils.mergeGeometries(geometries, false)
+        const geometry = BufferGeometryUtils.mergeGeometries(geometries, true)
         this.mazeMesh = new THREE.Mesh(geometry, material)
-        this.mazeMesh.castShadow = true
         this.scene.add(this.mazeMesh)
 
         this.mazeBody.position.copy(this.mazeMesh.position)
@@ -467,6 +441,8 @@ export default class MazeGame {
                 this.initCannonDebugger()
 
                 this.playerMesh.visible = false
+                this.mazeMesh.visible = false
+                this.boxMesh.visible = false
                 this.light.intensity = 0
 
                 document.querySelector('.maze-game').classList.remove('popup-visible')
@@ -495,6 +471,9 @@ export default class MazeGame {
                 this.updateWorld()
 
                 this.playerMesh.visible = true
+                this.mazeMesh.visible = true
+                this.boxMesh.visible = true
+
                 this.light.intensity += 0.1 * (1.0 - this.light.intensity);
                 if (Math.abs(this.light.intensity - 1.0) < 0.05) {
                     this.light.intensity = 1.0;
