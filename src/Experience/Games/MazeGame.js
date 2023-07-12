@@ -264,8 +264,6 @@ export default class MazeGame {
         const textureSide = this.resources.items.cubeMapSide
         const textureTop = this.resources.items.cubeMapTop
 
-        console.log(textureSide, textureTop);
-
         const materialCube = [
             new THREE.MeshStandardMaterial({
                 map: textureSide
