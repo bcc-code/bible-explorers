@@ -340,7 +340,7 @@ export default class Program {
         if (instance.clickedObject == 'play_video_icon') {
             instance.video.play()
         }
-        
+
         if (instance.clickedObject == 'Screen') {
             instance.video.play()
         }
@@ -352,6 +352,8 @@ export default class Program {
                 instance.world.controlRoom.animations.actions.drag.stop()
             })
         }
+
+        console.log(instance.clickedObject);
 
         instance.removeInteractivity()
     }
@@ -395,9 +397,9 @@ export default class Program {
                     !window.MSStream;
 
                 if (isWebkit) {
-                    interactiveObjects.push("Screen")
+                    interactiveObjects.push("Screen", "play_video_icon")
                 } else {
-                    interactiveObjects.push("Switch")
+                    interactiveObjects.push("Switch", "play_video_icon")
                 }
             }
         }
