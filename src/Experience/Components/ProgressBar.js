@@ -76,7 +76,7 @@ export default class ProgressBar {
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
             if (instance.program.programData[i].steps.some(step => step.details.step_type == 'video')) {
                 generatedHTML +=
-                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                    `<button class="btn rounded focused ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
                         <svg class="film-icon icon"viewBox="0 0 24 22">
                             <use href="#film"></use>
                         </svg>
@@ -84,7 +84,7 @@ export default class ProgressBar {
             }
             else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'quiz')) {
                 generatedHTML +=
-                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                    `<button class="btn rounded focused ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
                         <svg class="question-mark-icon icon" viewBox="0 0 15 22">
                             <use href="#question-mark"></use>
                         </svg>
@@ -92,7 +92,7 @@ export default class ProgressBar {
             }
             else if (instance.program.programData[i].steps.some(step => step.details.step_type == 'pause')) {
                 generatedHTML +=
-                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                    `<button class="btn rounded focused ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
                         <svg class="pause-icon icon" viewBox="0 0 15 18">
                             <use href="#pause"></use>
                         </svg>
@@ -100,7 +100,7 @@ export default class ProgressBar {
             }
             else {
                 generatedHTML +=
-                    `<button class="btn rounded ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
+                    `<button class="btn rounded focused ${i > instance.program.chapterProgress() ? 'locked' : ''}" aria-label="checkpoint" data-index="${i}">
                     <svg class="task-icon icon" viewBox="0 0 25 25">
                         <use href="#pen-to-square"></use>
                     </svg>
@@ -109,7 +109,7 @@ export default class ProgressBar {
         }
 
         generatedHTML +=
-            `<button class="btn rounded" aria-label="checkpoint">
+            `<button class="btn rounded focused" aria-label="checkpoint">
                 <svg class="star-icon icon" viewBox="0 0 29 29">
                     <use href="#star"></use>
                 </svg>

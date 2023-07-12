@@ -7,7 +7,7 @@
         width: var(--app-button-size);
         background: var(--bg-default);
         border-radius: var(--app-button-size);
-        border: var(--app-border-size) solid var(--clr-secondary);
+        border: var(--app-border-size) solid var(--clr-primary);
 
         display: flex;
         align-items: center;
@@ -38,7 +38,6 @@
     }
 
     &.next {
-        border-color: var(--clr-secondary);
         border-radius: calc(var(--app-button-size) /4) var(--app-button-size) var(--app-button-size) calc(var(--app-button-size) /4);
     }
 
@@ -54,10 +53,13 @@
         opacity: 0.4;
     }
 
-    &.less-focussed {
-        border-radius: calc(var(--app-button-size) /4) var(--app-button-size) var(--app-button-size) calc(var(--app-button-size) /4);
+    &.less-focused {
         filter: grayscale(1);
         opacity: 0.6;
+    }
+
+    &.focused {
+        border-color: var(--clr-secondary);
     }
 
     &:hover {
@@ -67,11 +69,11 @@
         }
 
         &.rounded {
-            color: var(--clr-text);
-            background: var(--clr-secondary);
+            // color: var(--clr-text);
+            background: var(--clr-primary);
         }
 
-        &.next {
+        &.focused {
             color: var(--clr-text);
             background: var(--clr-secondary);
         }

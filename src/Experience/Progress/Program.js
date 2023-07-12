@@ -336,11 +336,16 @@ export default class Program {
             instance.clickCallback = () => { }
             instance.message.show()
         }
-        else if (instance.clickedObject == 'Screen' || instance.clickedObject == 'play_video_icon') {
+
+        if (instance.clickedObject == 'play_video_icon') {
+            instance.video.play()
+        }
+        
+        if (instance.clickedObject == 'Screen') {
             instance.video.play()
         }
 
-        else if (instance.clickedObject == 'Switch') {
+        if (instance.clickedObject == 'Switch') {
             instance.world.controlRoom.animations.actions.drag.play()
             instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
                 instance.video.play()

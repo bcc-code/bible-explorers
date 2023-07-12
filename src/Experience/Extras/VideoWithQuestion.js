@@ -32,7 +32,7 @@ export default class VideoWithQuestion {
                         </div>
                         <div class="col">
                             <textarea></textarea>
-                            <button class="btn default" type="submit" aria-label="submit question">${_s.task.submit}</button>
+                            <button class="btn default focused" type="submit" aria-label="submit question">${_s.task.submit}</button>
                         </div>
                     </div>
                 </div>
@@ -65,11 +65,17 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
         instance.experience.navigation.next.addEventListener('click', instance.skipVideo)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        
+
     }
 
     skipVideo() {
         document.querySelector('#video-with-question video').pause()
         document.querySelectorAll('#video-with-question .hidden').forEach(item => item.classList.remove('hidden'))
+
+        const nextBtn = document.querySelector('.cta button[aria-label="next page"]')
+        nextBtn.classList.remove('focused')
 
         instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
@@ -77,6 +83,9 @@ export default class VideoWithQuestion {
 
     destroy() {
         console.log('destroy')
+        const nextBtn = document.querySelector('.cta button[aria-label="next page"]')
+        nextBtn.classList.add('focused')
+
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)

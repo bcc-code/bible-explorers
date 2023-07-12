@@ -136,7 +136,7 @@ export default class Video {
                 if (instance.hasSkipBtn()) return
 
                 const skipVideo = document.createElement('div')
-                skipVideo.className = 'skip-video btn default less-focussed'
+                skipVideo.className = 'skip-video btn default less-focused'
                 skipVideo.innerText = _s.miniGames.skip
 
                 skipVideo.addEventListener('click', instance.finish)
