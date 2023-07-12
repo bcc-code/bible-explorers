@@ -179,8 +179,6 @@ export default class DavidsRefuge {
 
                     tooltip[0].className = 'tooltip right'
 
-                    console.log();
-
                     if (instance.data.characters[index].tells_the_truth) {
 
                         tooltip[0].innerText = instance.data.correct_character_message

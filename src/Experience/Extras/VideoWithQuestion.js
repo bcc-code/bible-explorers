@@ -82,7 +82,6 @@ export default class VideoWithQuestion {
     }
 
     destroy() {
-        console.log('destroy')
         const nextBtn = document.querySelector('.cta button[aria-label="next page"]')
         nextBtn.classList.add('focused')
 

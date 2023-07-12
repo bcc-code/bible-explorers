@@ -353,8 +353,6 @@ export default class Program {
             })
         }
 
-        console.log(instance.clickedObject);
-
         instance.removeInteractivity()
     }
 
