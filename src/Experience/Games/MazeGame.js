@@ -7,6 +7,7 @@ import * as THREE from 'three'
 import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js'
 import * as CANNON from 'cannon-es'
 import CannonDebugger from 'cannon-es-debugger'
+import TWEEN from '@tweenjs/tween.js'
 
 let instance = null
 let q = new THREE.Quaternion()
@@ -142,7 +143,7 @@ export default class MazeGame {
         )
 
         this.addPlayer()
-        this.addBox()
+        this.addBibleBox()
 
         if (this.options.gameLevel == 0)
             this.addInstructions()
@@ -225,34 +226,43 @@ export default class MazeGame {
         this.cannon.addBody(this.playerBody)
     }
 
-    addBox() {
+    addBibleBox() {
         const texture = this.resources.items.mazeBoxBaked
         texture.flipY = false
         texture.colorSpace = THREE.SRGBColorSpace
 
-        const material = new THREE.MeshBasicMaterial({ map: texture })
+        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide })
 
-        this.boxMesh = this.resources.items.mazeBox.scene
-        this.boxMesh.traverse((child) => {
+        this.bibleBoxMesh = this.resources.items.mazeBox.scene
+        this.bibleBoxMesh.traverse((child) => {
             child.material = material
         })
 
-        this.boxMesh.position.x = this.maze.exitPosition[0]
-        this.boxMesh.position.y = 0.15
-        this.boxMesh.position.z = this.maze.exitPosition[1]
-        this.scene.add(this.boxMesh)
+        this.bibleBoxAnimation = {}
+        this.bibleBoxAnimation.mixer = new THREE.AnimationMixer(this.bibleBoxMesh)
 
-        const boundingBox = new THREE.Box3().setFromObject(this.boxMesh)
+        this.bibleBoxAnimation.actions = {}
+        this.bibleBoxAnimation.actions.open = this.bibleBoxAnimation.mixer.clipAction(this.resources.items.mazeBox.animations[1])
+
+        this.bibleBoxAnimation.actions.open.setLoop(THREE.LoopOnce)
+        this.bibleBoxAnimation.actions.open.clampWhenFinished = true
+
+        this.bibleBoxMesh.position.x = this.maze.exitPosition[0]
+        this.bibleBoxMesh.position.y = 0.15
+        this.bibleBoxMesh.position.z = this.maze.exitPosition[1]
+        this.scene.add(this.bibleBoxMesh)
+
+        const boundingBox = new THREE.Box3().setFromObject(this.bibleBoxMesh)
         const boxSize = boundingBox.getSize(new THREE.Vector3())
 
         const shape = new CANNON.Box(new CANNON.Vec3(boxSize.x / 2, boxSize.y / 2, boxSize.z / 2))
-        this.boxBody = new CANNON.Body({
+        this.bibleBoxBody = new CANNON.Body({
             mass: 0,
             shape,
             isTrigger: true
         })
-        this.boxBody.position.copy(this.boxMesh.position)
-        this.cannon.addBody(this.boxBody)
+        this.bibleBoxBody.position.copy(this.bibleBoxMesh.position)
+        this.cannon.addBody(this.bibleBoxBody)
 
     }
 
@@ -375,16 +385,14 @@ export default class MazeGame {
 
         this.playerMesh.position.copy(this.playerBody.position)
 
-        this.boxMesh.rotation.y = elapsedTime
+        this.bibleBoxMesh.rotation.y = elapsedTime
 
         this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
         const cannonVelocity = this.playerBody.quaternion.vmult(this.player.localVelocity);
 
-        if (this.options.gameState === 'fade out') {
-            q.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-75))
-        } else {
-            q.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-35))
-        }
+        // if (this.options.gameState === 'fade out') {
+        //     q.setFromAxisAngle(new THREE.Vector3(1, 0, 0).normalize(), THREE.MathUtils.degToRad(-45))
+        // } 
 
         if (keys.arrowleft || keys.a) {
             this.playerBody.velocity.x = -cannonVelocity.x
@@ -439,10 +447,10 @@ export default class MazeGame {
                 this.initScene()
                 this.initCannonDebugger()
 
-                this.playerMesh.visible = false
-                this.mazeMesh.visible = false
-                this.boxMesh.visible = false
                 this.light.intensity = 0
+
+
+                this.bibleBoxMesh.scale.set(1, 1, 1)
 
                 document.querySelector('.maze-game').classList.remove('popup-visible')
                 document.querySelector('.game-popup').style.display = 'none'
@@ -469,10 +477,6 @@ export default class MazeGame {
             case 'fade in':
                 this.updateWorld()
 
-                this.playerMesh.visible = true
-                this.mazeMesh.visible = true
-                this.boxMesh.visible = true
-
                 this.light.intensity += 0.1 * (1.0 - this.light.intensity);
                 if (Math.abs(this.light.intensity - 1.0) < 0.05) {
                     this.light.intensity = 1.0;
@@ -484,15 +488,28 @@ export default class MazeGame {
 
             case 'play':
                 this.updateWorld()
+                TWEEN.update()
+                this.bibleBoxAnimation.mixer.update(this.time.delta * 0.005)
 
                 // Check for victory
-                this.boxBody.addEventListener('collide', (e) => {
-                    if (e.body === this.playerBody) {
-                        this.mazeMesh.visible = false
-                        this.boxMesh.visible = false
-                        this.options.gameState = 'fade out'
+                this.bibleBoxBody.addEventListener('collide', (event) => {
+
+                    if (event.body === this.playerBody) {
+
+                        this.bibleBoxAnimation.actions.open.play()
+                        this.bibleBoxAnimation.mixer.addEventListener('finished', (e) => {
+                            this.bibleBoxAnimation.actions.open.stop()
+                            new TWEEN.Tween(instance.bibleBoxMesh.scale)
+                                .to({ x: 0, y: 0, z: 0 }, 300)
+                                .easing(TWEEN.Easing.Quadratic.InOut)
+                                .onComplete(() => {
+                                    instance.options.gameState = 'fade out'
+                                })
+                                .start()
+                        })
                     }
-                }, false)
+
+                })
 
                 this.renderer.render(this.scene, this.camera)
                 break;

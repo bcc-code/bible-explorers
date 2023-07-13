@@ -75,12 +75,12 @@ export default [
     {
         name: 'mazeBox',
         type: 'gltfModel',
-        path: 'games/maze/BibleBox_v03.gltf'
+        path: 'games/maze/BibleBox_OpenAnimation.gltf'
     },
     {
         name: 'mazeBoxBaked',
         type: 'texture',
-        path: 'games/maze/BibleBoxTexture_Baked_V01.png'
+        path: 'games/maze/BibleBoxTexture_Baked_V02.png'
     },
     {
         name: 'instructions',
