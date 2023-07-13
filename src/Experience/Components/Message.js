@@ -56,7 +56,7 @@ export default class Message {
         }
 
         if (instance.data.open_question === true) {
-            instance.experience.navigation.next.disabled = true
+            // instance.experience.navigation.next.disabled = true
             const openQuestion = _gl.elementFromHtml(
                 `<section class="open-question">
                     <div class="container">

@@ -79,7 +79,6 @@ export default class HeartDefense {
                         <span class="level">${instance.stats.level}</span>
                         <span> / ${instance.config.levels}</span>
                     </div>
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 </div>
                 <div class="overlay"></div>
                 <div id="heart-defense" class="game-canvas"></div>
@@ -88,16 +87,11 @@ export default class HeartDefense {
 
         document.querySelector('.ui-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.stopExplosionAnimation()
-            instance.stopThoughtsAnimation()
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries) {
+            instance.experience.navigation.next.classList.remove('focused')
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+        }
 
-        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
-            skipBTN.style.display = 'block'
     }
 
     startGame() {
@@ -579,7 +573,7 @@ export default class HeartDefense {
         `)
 
         const nextLevelBTN = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.nextRound}</button>
+            <button class="btn default focused pulsate">${_s.miniGames.nextRound}</button>
         `)
 
         congratsHTML.querySelector('.buttons').append(nextLevelBTN)
@@ -609,8 +603,10 @@ export default class HeartDefense {
                 instance.startGame()
             })
 
-            instance.experience.navigation.prev.disabled = true
-            document.querySelector('.cta').style.display = 'flex'
+            nextLevelBTN.classList.remove('focused', 'pulsate')
+            instance.experience.navigation.container.style.display = 'flex'
+            instance.experience.navigation.next.classList.add('focused')
+            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
             document.querySelector('.game-rounds')?.remove()
         }
 
@@ -638,8 +634,11 @@ export default class HeartDefense {
         document.querySelector('.heart-defense .container').append(gameOverHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')
 
-        if (++instance.stats.fails == 3)
-            document.querySelector('[aria-label="skip-button"]').style.display = 'block'
+        if (++instance.stats.fails == 3) {
+            instance.experience.navigation.next.classList.remove('focused')
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        }
 
         instance.stats.lives = instance.config.maxLives
 
@@ -669,11 +668,15 @@ export default class HeartDefense {
     }
 
     destroy() {
+        instance.stopExplosionAnimation()
+        instance.stopThoughtsAnimation()
+
         document.removeEventListener('keydown', instance.keyDownHandler)
         window.removeEventListener('resize', instance.updateStageDimension)
 
         document.querySelector('.game')?.remove()
-        document.querySelector('.cta').style.display = 'flex'
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         instance.layer?.destroy()
         instance.experience.gameIsOn = false

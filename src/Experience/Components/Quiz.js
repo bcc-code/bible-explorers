@@ -28,7 +28,6 @@ export default class Quiz {
         const quiz = _gl.elementFromHtml(`
             <section class="quiz">
                 <div class="container">
-                    <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
                     <div class="quiz-progress">
                         <div class="quiz-progress-bar">
                             <div></div>
@@ -42,7 +41,7 @@ export default class Quiz {
                                 <use href="#arrow-left"></use>
                             </svg>
                         </button>
-                        <button type="submit" class="btn default next" aria-label="submit form">
+                        <button type="submit" class="btn default focused" aria-label="submit form">
                             ${_s.task.submit}
                         </button>
                         <button class="btn rounded" aria-label="next question">
@@ -57,31 +56,23 @@ export default class Quiz {
             </section>
         `)
 
-        const skipBTN = quiz.querySelector('[aria-label="skip-button"')
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            quiz.querySelector('.container').append(skipBTN)
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
         const submitQuiz = quiz.querySelector('[aria-label="submit form"')
         submitQuiz.style.display = 'none'
         submitQuiz.addEventListener('click', () => {
             instance.destroy()
             instance.program.congrats.toggleSummary()
-            document.querySelector('.cta').style.display = 'flex'
 
             const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length}</p>`)
             document.querySelector('.modal .summary').append(message)
+
+            instance.experience.navigation.container.style.display = 'flex'
         })
 
         const prev = quiz.querySelector('[aria-label="prev question"')
         const next = quiz.querySelector('[aria-label="next question"')
 
         questions.forEach((q, qIdx) => {
-            const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
+            const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded  focused ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
             const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
                     <div class="quiz-question">
@@ -130,7 +121,15 @@ export default class Quiz {
         })
 
         document.querySelector('.ui-container').append(quiz)
-        document.querySelector('.cta').style.display = 'none'
+
+        instance.experience.navigation.next.classList.remove('focused')
+        
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
         let questionsAnswered = 0
         let quizProgress = 0
@@ -242,11 +241,6 @@ export default class Quiz {
         }
     }
 
-    quizSummary() {
-        const message = _gl.elementFromHtml(`<p>${(instance.correctAnswers + instance.openQuestions) + ' / ' + questions.length}</p>`)
-        document.querySelector('.modal .summary').append(message)
-    }
-
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -254,5 +248,8 @@ export default class Quiz {
     destroy() {
         document.querySelector('.quiz')?.remove()
         document.querySelector('.modal')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

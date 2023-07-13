@@ -45,9 +45,7 @@
         margin-right: 0.5rem;
     }
 
-    &:disabled,
-    body.camera-is-moving &.back,
-    body.camera-is-moving &.next {
+    &:disabled{
         filter: grayscale(1);
         pointer-events: none;
         opacity: 0.4;

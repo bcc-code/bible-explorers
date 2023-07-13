@@ -21,7 +21,8 @@ export default class DavidsRefuge {
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.davids_refuge
-        document.querySelector('.cta').style.display = 'none'
+
+
 
         instance.gameHTML()
         instance.useCorrectAssetsSrc()
@@ -71,17 +72,15 @@ export default class DavidsRefuge {
             }
         })
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
-        `)
+        instance.experience.navigation.next.classList.remove('focused')
 
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            game.querySelector('.container').append(skipBTN)
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
     }
 
     useCorrectAssetsSrc() {
@@ -190,7 +189,10 @@ export default class DavidsRefuge {
                         })
 
                         gsap.to(selectGoat, { autoAlpha: 0 })
-                        document.querySelector('.cta').style.display = 'flex'
+                        
+                        instance.experience.navigation.container.style.display = 'flex'
+                        instance.experience.navigation.next.classList.add('focused')
+                        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                     }
                     else {
                         tooltip[0].innerText = instance.data.wrong_character_message
@@ -221,5 +223,8 @@ export default class DavidsRefuge {
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

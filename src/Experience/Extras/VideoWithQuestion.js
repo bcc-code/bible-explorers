@@ -61,34 +61,27 @@ export default class VideoWithQuestion {
             instance.program.nextStep()
         })
 
-        document.querySelector('.cta').style.display = 'flex'
         instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
         instance.experience.navigation.next.addEventListener('click', instance.skipVideo)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-
-        
-
+       
     }
 
     skipVideo() {
         document.querySelector('#video-with-question video').pause()
         document.querySelectorAll('#video-with-question .hidden').forEach(item => item.classList.remove('hidden'))
 
-        const nextBtn = document.querySelector('.cta button[aria-label="next page"]')
-        nextBtn.classList.remove('focused')
-
         instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
+        instance.experience.navigation.next.classList.remove('focused')
     }
 
     destroy() {
-        const nextBtn = document.querySelector('.cta button[aria-label="next page"]')
-        nextBtn.classList.add('focused')
-
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
+        instance.experience.navigation.next.classList.add('focused')
     }
 }

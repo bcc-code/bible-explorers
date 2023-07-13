@@ -76,17 +76,15 @@ export default class ChooseNewKing {
         }
 
         document.querySelector('.ui-container').append(game)
-        document.querySelector('.cta').style.display = 'none'
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default skip">${_s.miniGames.skip}</button>
-        `)
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            document.querySelector('.game.flip-card .container').append(skipBTN)
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
     }
 
     useCorrectAssetsSrc() {
@@ -186,10 +184,14 @@ export default class ChooseNewKing {
             e.target.disabled = true
 
             document.querySelector('.game-notification')?.remove()
-            document.querySelector('.cta').style.display = 'flex'
+
             cards.forEach(card => card.style.pointerEvents = 'none')
 
             instance.toggleGodVoice()
+
+            instance.experience.navigation.container.style.display = 'flex'
+            instance.experience.navigation.next.classList.add('focused')
+            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
         })
     }
 
@@ -233,6 +235,8 @@ export default class ChooseNewKing {
 
     destroy() {
         document.querySelector('.game')?.remove()
-        document.querySelector('.cta').style.display = 'flex'
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

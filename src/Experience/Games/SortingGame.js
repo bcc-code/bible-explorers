@@ -35,24 +35,21 @@ export default class SortingGame {
 
         const game = _gl.elementFromHtml(`
             <div class="game sort-game">
-                <div class="container">
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
-                </div>
+                <div class="container"></div>
                 <div class="overlay"></div>
                 <div class="game-canvas" id="sort-game"></div>
             <div>
         `)
         document.querySelector('.ui-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        instance.experience.navigation.next.classList.remove('focused')
 
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
-
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
     }
 
     initCanvas() {
@@ -286,20 +283,12 @@ export default class SortingGame {
             <div class="game-popup">
                 <h1>${_s.miniGames.completed.title}</h1>
                 <p>${_s.miniGames.completed.message}</p>
-                <div class="buttons"></div>
             </div>
         `)
 
-        const continueBtn = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
-        `)
-
-        continueBtn.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        congratsHTML.querySelector('.buttons').append(continueBtn)
+        instance.experience.navigation.container.style.display = 'flex'
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         document.querySelector('.sort-game .container').append(congratsHTML)
         document.querySelector('.sort-game').classList.add('popup-visible')
@@ -590,5 +579,8 @@ export default class SortingGame {
     destroy() {
         window.removeEventListener('resize', instance.resize)
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

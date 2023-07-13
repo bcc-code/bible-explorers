@@ -157,8 +157,6 @@ export default class Program {
     }
 
     startTask() {
-        instance.experience.navigation.prev.disabled = instance.currentStep == 0
-        instance.experience.navigation.next.disabled = false
 
         if (instance.stepType() == 'video') {
             instance.video.load(instance.currentVideo())
@@ -170,7 +168,6 @@ export default class Program {
                 instance.updateCameraForCurrentStep(() => {
                     instance.highlight.add(instance.interactiveObjects()[0])
                     // instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-                    instance.experience.navigation.next.disabled = true
                     instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
                     instance.video.videoPlayIcon.visible = true
                 })
@@ -224,6 +221,7 @@ export default class Program {
                     || instance.taskType() == 'davids_refuge'
                     || instance.taskType() == 'labyrinth'
                 ) {
+
                     instance.gameDescription.show()
                 }
 
@@ -277,9 +275,6 @@ export default class Program {
     }
 
     startInteractivity() {
-        instance.experience.navigation.prev.disabled = true
-        instance.experience.navigation.next.disabled = true
-
 
         if (instance.stepType() == 'iris') {
 
@@ -291,7 +286,6 @@ export default class Program {
                 instance.clickCallback = () => {
                     instance.world.progressBar.hide()
                     instance.world.controlRoom.irisTextureTransition()
-                    instance.experience.navigation.next.disabled = false
                 }
 
                 document.addEventListener('click', (event) => {
@@ -323,9 +317,6 @@ export default class Program {
         if (instance.objectIsClickable()) {
             instance.camera.updateCameraTo(this.currentLocation())
             instance.startAction()
-
-            instance.experience.navigation.prev.disabled = false
-            if (instance.skip) document.querySelector('[aria-label="prev step"]').disabled = false
         }
     }
 

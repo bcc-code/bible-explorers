@@ -30,7 +30,6 @@ export default class MazeGame {
         instance.currentStepData = instance.program.getCurrentStepData()
 
         this.experience.gameIsOn = true
-        document.querySelector('.cta').style.display = 'none'
 
         this.initSettings()
         this.initHtml()
@@ -93,27 +92,18 @@ export default class MazeGame {
             instance.newLevel()
         })
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (this.debug.developer || this.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
     }
 
     initHtml() {
         const game = _gl.elementFromHtml(`
         <section class="game maze-game">
             <div class="container">
-                <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 <div class="game-rounds">${_s.miniGames.level} ${this.options.gameLevel + 1}</div>
 
                 <div class="game-popup">
                     <h1>${_s.miniGames.completed.title}</h1>
                     <div class="buttons">
-                        <button id="new-level" class="btn default next pulsate">${_s.miniGames.nextRound}</button>
+                        <button id="new-level" class="btn default focused">${_s.miniGames.nextRound}</button>
                     </div>
                 </div>
 
@@ -128,6 +118,13 @@ export default class MazeGame {
 
         document.querySelector('.ui-container').append(game)
         document.querySelector('.game-popup').style.display = 'none'
+
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+        }
+
     }
 
     initScene() {
@@ -340,6 +337,9 @@ export default class MazeGame {
     destroy() {
         document.querySelector('.game')?.remove()
         instance.experience.gameIsOn = false
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 
     newLevel() {
@@ -375,7 +375,6 @@ export default class MazeGame {
 
         this.playerMesh.position.copy(this.playerBody.position)
 
-        this.boxMesh.position.copy(this.boxBody.position)
         this.boxMesh.rotation.y = elapsedTime
 
         this.player.localVelocity.set(this.player.moveDistance * 0.2, 0, this.player.moveDistance * 0.2);
@@ -529,8 +528,11 @@ export default class MazeGame {
                 if (document.querySelector('.game-popup'))
                     document.querySelector('.game-popup').style.display = 'block'
 
-                document.querySelector('.cta').style.display = 'flex'
 
+                document.querySelector('#new-level')?.classList.remove('focused')
+                instance.experience.navigation.container.style.display = 'flex'
+                instance.experience.navigation.next.classList.add('focused')
+                instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                 break;
         }
     }

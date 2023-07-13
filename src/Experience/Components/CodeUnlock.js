@@ -18,8 +18,8 @@ export default class CodeUnlock {
         instance.audio = instance.world.audio
         instance.program = instance.world.program
         instance.secretCode = instance.program.getCurrentStepData().code_to_unlock
-        instance.experience.navigation.next.disabled = true
 
+        console.log(instance.secretCode);
         instance.data = {
             codeLength: instance.secretCode.length,
             fails: 0,
@@ -97,6 +97,14 @@ export default class CodeUnlock {
         }
 
         document.querySelector('.ui-container').append(unlockScreen)
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
         instance.el = {
             code: unlockScreen.querySelector(".code-unlock-code"),
@@ -141,17 +149,6 @@ export default class CodeUnlock {
             }
         }
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
-        `)
-
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            unlockScreen.querySelector('.container').append(skipBTN)
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
     }
 
     add(num) {
@@ -207,7 +204,9 @@ export default class CodeUnlock {
                 spread: 160
             })
 
-            instance.experience.navigation.next.disabled = false
+            instance.experience.navigation.container.style.display = 'flex'
+            instance.experience.navigation.next.classList.add('focused')
+            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
         }
         else {
             instance.data.fails++
@@ -242,5 +241,8 @@ export default class CodeUnlock {
     destroy() {
         document.onkeydown = null
         document.querySelector('.code-unlock')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

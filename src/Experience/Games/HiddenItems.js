@@ -40,32 +40,30 @@ export default class HiddenItems {
                         <img class="lazyload">
                         <div class="img-loader"></div>
                     </div>
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 </div>
                 <div class="overlay"></div>
             </section>`)
 
         document.querySelector('.ui-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
-
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
     }
 
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         if (instance.circlesVisible == 4) {
-            document.querySelector('.cta').style.display = 'flex'
+            instance.experience.navigation.container.style.display = 'flex'
+            instance.experience.navigation.next.classList.add('focused')
+            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
         } else {
-            document.querySelector('.cta').style.display = 'none'
+            instance.experience.navigation.next.classList.remove('focused')
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
         }
 
         instance.addExistingCircles()
@@ -105,9 +103,12 @@ export default class HiddenItems {
         }
 
         if (instance.circlesVisible == maxCirclesToAdd) {
-            document.querySelector('.cta').style.display = 'flex'
+            instance.experience.navigation.container.style.display = 'flex'
+            instance.experience.navigation.next.classList.add('focused')
+            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
         } else {
-            document.querySelector('.cta').style.display = 'none'
+            instance.experience.navigation.next.classList.remove('focused')
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
         }
     }
 
@@ -135,6 +136,8 @@ export default class HiddenItems {
 
     destroy() {
         document.querySelector('.game')?.remove()
-        document.querySelector('.cta').style.display = 'flex'
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

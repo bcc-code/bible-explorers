@@ -75,17 +75,15 @@ export default class FlipCards {
         }
 
         document.querySelector('.ui-container').append(game)
-        document.querySelector('.cta').style.display = 'none'
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default skip">${_s.miniGames.skip}</button>
-        `)
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            document.querySelector('.game.flip-card .container').append(skipBTN)
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
     }
 
     useCorrectAssetsSrc() {
@@ -143,7 +141,9 @@ export default class FlipCards {
                     const flippedCards = document.querySelectorAll('.flipped')
 
                     if (flippedCards.length == instance.data.cards.length) {
-                        document.querySelector('.cta').style.display = 'flex'
+                        instance.experience.navigation.container.style.display = 'flex'
+                        instance.experience.navigation.next.classList.add('focused')
+                        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                     }
                 } else {
                     e.target.parentNode.classList.add('wrong-code')
@@ -163,6 +163,8 @@ export default class FlipCards {
 
     destroy() {
         document.querySelector('.game')?.remove()
-        document.querySelector('.cta').style.display = 'flex'
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

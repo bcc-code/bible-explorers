@@ -48,15 +48,14 @@ export default class QuestionAndCode {
 
         document.querySelector('.ui-container').append(answersWrapper)
 
+        instance.experience.navigation.next.classList.remove('focused')
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
@@ -71,18 +70,23 @@ export default class QuestionAndCode {
             if (input.value.length != 0) allInputsEmpty = false
 
             input.addEventListener("input", () => {
-                [...instance.el.inputs].filter(input => input.value.length == 0).length == 0
-                    ? instance.experience.navigation.next.disabled = false
-                    : instance.experience.navigation.next.disabled = true
+                const val = [...instance.el.inputs].filter(input => input.value.length == 0).length
+
+                if (val == 0) {
+                    instance.experience.navigation.container.style.display = 'flex'
+                    instance.experience.navigation.next.classList.add('focused')
+                    instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+                } else {
+                    instance.experience.navigation.next.classList.remove('focused')
+                    instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+                }
 
             })
         })
 
-        if (allInputsEmpty)
-            instance.experience.navigation.next.disabled = true
+        // if (allInputsEmpty)
+        //     instance.experience.navigation.next.disabled = true
 
-
-        // instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
 
     }
 
@@ -112,7 +116,9 @@ export default class QuestionAndCode {
     }
 
     destroy() {
-        // document.removeEventListener('click', instance.saveAnswers)
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

@@ -72,11 +72,19 @@ export default class MultipleChoiceWithPicture {
                             particleCount: 100,
                             spread: 160
                         })
+
+                        instance.experience.navigation.next.disabled = false
+                        instance.experience.navigation.next.classList.add('focused')
+                        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                     }
 
                     if (tries == 2 || answerFound) {
                         const correctIndex = objAnswers.findIndex(a => a.correct_wrong)
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
+
+                        instance.experience.navigation.next.disabled = false
+                        instance.experience.navigation.next.classList.add('focused')
+                        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                     }
 
                     htmlAnswers.forEach(answer => {
@@ -88,6 +96,14 @@ export default class MultipleChoiceWithPicture {
         })
 
         document.querySelector('.ui-container').append(multipleChoiceWithPicture)
+
+        instance.experience.navigation.next.classList.remove('focused')
+        instance.experience.navigation.next.disabled = true
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.next.disabled = false
+        }
     }
 
     setEventListeners() {
@@ -96,5 +112,7 @@ export default class MultipleChoiceWithPicture {
 
     destroy() {
         document.getElementById('multiple-choice')?.remove()
+
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

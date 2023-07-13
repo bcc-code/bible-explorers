@@ -17,8 +17,12 @@ let instance = null
 export default class Task {
     constructor() {
         instance = this
-        instance.offline = new Offline()
+
         instance.experience = new Experience()
+        instance.debug = instance.experience.debug
+
+        // Setup
+        instance.offline = new Offline()
         instance.sortingGame = new SortingGame()
         instance.cableConnectorGame = new CableConnectorGame()
         instance.simonSays = new SimonSaysGame()
@@ -27,6 +31,7 @@ export default class Task {
         instance.heartDefense = new HeartDefense()
         instance.davidsRefuge = new DavidsRefuge()
         instance.mazeGame = new MazeGame()
+
     }
 
     show() {
@@ -45,14 +50,12 @@ export default class Task {
             })
         }
 
-        document.querySelector('.cta').style.display = 'none'
-        instance.experience.navigation.next.disabled = true
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     setHtml() {
         const startGame = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.startGame}</button>
+            <button class="btn default focused pulsate">${_s.miniGames.startGame}</button>
         `)
         startGame.addEventListener('click', instance.startGame)
 
@@ -77,6 +80,15 @@ export default class Task {
 
         task.querySelector('.content').append(startGame)
         document.querySelector('.ui-container').append(task)
+
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
     }
 
@@ -125,6 +137,8 @@ export default class Task {
 
     destroy() {
         document.querySelector('section.task')?.remove()
-        instance.experience.navigation.next.disabled = false
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

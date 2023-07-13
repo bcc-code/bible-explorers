@@ -33,23 +33,21 @@ export default class CableConnector {
 
         const game = _gl.elementFromHtml(`
         <section class="game cable-connect">
-            <div class="container">
-                <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
-            </div>
+            <div class="container"></div>
             <div class="overlay"></div>
             <div id="cable-connect" class="game-canvas"></div>
         </section>`)
 
         document.querySelector('.ui-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        instance.experience.navigation.next.classList.remove('focused')
 
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
+        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.fails >= 3) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
         const spriteW = 180
         const spriteH = 100
@@ -553,10 +551,6 @@ export default class CableConnector {
         document.querySelector('.cable-connect .container').append(gameOverHTML)
         document.querySelector('.cable-connect').classList.add('popup-visible')
 
-        if (instance.fails == 3)
-            document.querySelector('[aria-label="skip-button"]').style.display = 'flex'
-
-
         // Add event listeners
         resetBTN.addEventListener('click', () => {
             instance.fails++
@@ -579,20 +573,12 @@ export default class CableConnector {
             <div class="game-popup">
                 <h1>${_s.miniGames.completed.title}</h1>
                 <p>${_s.miniGames.completed.message}</p>
-                <div class="buttons"></div>
             </div>
         `)
 
-        const continueBtn = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
-        `)
-
-        continueBtn.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        congratsHTML.querySelector('.buttons').append(continueBtn)
+        instance.experience.navigation.container.style.display = 'flex'
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         document.querySelector('.cable-connect .container').append(congratsHTML)
         document.querySelector('.cable-connect').classList.add('popup-visible')
@@ -614,6 +600,9 @@ export default class CableConnector {
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }
 

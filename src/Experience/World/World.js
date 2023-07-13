@@ -694,8 +694,6 @@ export default class World {
         document.querySelector('.cta').style.display = 'flex'
         instance.buttons.preview.style.display = 'inline-flex'
 
-        instance.experience.navigation.prev.disabled = false
-
         instance.camera.updateCameraTo(null)
         instance.controlRoom.irisTextureTransition()
         instance.audio.stopAllTaskDescriptions()

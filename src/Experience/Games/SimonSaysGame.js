@@ -68,12 +68,20 @@ export default class SimonSays {
                         <div class="side left"></div>
                         <div class="side right"></div>
                     </div>
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 </div>
                 <div class="overlay"></div>
             </section>`)
 
         document.querySelector('.ui-container').append(game)
+
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.config.fails >= instance.config.showSkipAfterNoOfTries) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.container.style.display = 'flex'
+        } else {
+            instance.experience.navigation.container.style.display = 'none'
+        }
 
         for (let i = 0; i < instance.config.rounds; i++) {
             const ticker = document.createElement('div')
@@ -94,17 +102,8 @@ export default class SimonSays {
         for (let j = 0; j < instance.data.color.length; j++) {
             const note = _gl.elementFromHtml(`<button class="note" data-id="${j}" data-color="${instance.data.color[j]}"></button>`)
             game.querySelector('.box').appendChild(note)
-
         }
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.config.fails >= instance.config.showSkipAfterNoOfTries)
-            skipBTN.style.display = 'flex'
     }
 
     setEventListeners() {
@@ -228,10 +227,6 @@ export default class SimonSays {
         document.querySelector('.simon-says .container').append(gameOverHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')
 
-        if (instance.config.fails == 3)
-            document.querySelector('[aria-label="skip-button"]').style.display = 'flex'
-
-
         // Add event listeners
         resetBTN.addEventListener('click', () => {
             instance.config.fails++
@@ -253,16 +248,9 @@ export default class SimonSays {
             </div>
         `)
 
-        const continueBtn = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
-        `)
-
-        continueBtn.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        congratsHTML.querySelector('.buttons').append(continueBtn)
+        instance.experience.navigation.container.style.display = 'flex'
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         document.querySelector('.simon-says .container').append(congratsHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')

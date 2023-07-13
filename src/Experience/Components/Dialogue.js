@@ -24,7 +24,6 @@ export default class Dialogue {
 
         instance.setHtml()
         instance.setEventListeners()
-        instance.experience.navigation.next.disabled = true
     }
 
     setHtml() {
@@ -38,7 +37,7 @@ export default class Dialogue {
 
         instance.data.forEach(dialog => {
             const option = _gl.elementFromHtml(`
-                <button class="question pulsate">
+                <button class="question">
                     <p>${dialog.question}</p>
                 </button>`
             )
@@ -46,6 +45,15 @@ export default class Dialogue {
         })
 
         document.querySelector('.ui-container').append(dialogue)
+
+        instance.experience.navigation.next.classList.remove('focused')
+
+        if (instance.debug.developer || instance.debug.onPreviewMode()) {
+            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+            instance.experience.navigation.next.disabled = false
+        } else {
+            instance.experience.navigation.next.disabled = true
+        }
     }
 
     setEventListeners() {
@@ -64,8 +72,11 @@ export default class Dialogue {
                 button.classList.add('current')
 
                 // Check if all were visited
-                if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length)
+                if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
+                    instance.experience.navigation.next.classList.add('focused')
+                    instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+                }
 
                 instance.setMessageHtml(instance.data[index].answer)
 
@@ -99,5 +110,8 @@ export default class Dialogue {
     destroy() {
         document.querySelector('.dialogue')?.remove()
         document.querySelector('.message-from-dialogue')?.remove()
+
+        instance.experience.navigation.next.classList.add('focused')
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }
