@@ -1,38 +1,38 @@
-import Offline from '../Utils/Offline.js'
-import Experience from '../Experience.js'
-import _s from '../Utils/Strings.js'
-import _gl from '../Utils/Globals.js'
-import _e from "../Utils/Events.js"
-import gsap from 'gsap'
+import Offline from "../Utils/Offline.js";
+import Experience from "../Experience.js";
+import _s from "../Utils/Strings.js";
+import _gl from "../Utils/Globals.js";
+import _e from "../Utils/Events.js";
+import gsap from "gsap";
 
-let instance = null
+let instance = null;
 
 export default class ChooseNewKing {
-    constructor() {
-        instance = this
-        instance.offline = new Offline()
-        instance.experience = new Experience()
-        instance.world = instance.experience.world
-        instance.audio = instance.world.audio
-        instance.debug = instance.experience.debug
-    }
+  constructor() {
+    instance = this;
+    instance.offline = new Offline();
+    instance.experience = new Experience();
+    instance.world = instance.experience.world;
+    instance.audio = instance.world.audio;
+    instance.debug = instance.experience.debug;
+  }
 
-    toggleGame() {
-        instance.program = instance.world.program
-        instance.stepData = instance.program.getCurrentStepData()
-        instance.data = instance.stepData.choose_new_king
+  toggleGame() {
+    instance.program = instance.world.program;
+    instance.stepData = instance.program.getCurrentStepData();
+    instance.data = instance.stepData.choose_new_king;
 
-        instance.gameHTML()
-        instance.useCorrectAssetsSrc()
+    instance.gameHTML();
+    instance.useCorrectAssetsSrc();
 
-        instance.setEventListeners()
+    instance.setEventListeners();
 
-        instance.audio.setOtherAudioIsPlaying(true)
-        instance.audio.fadeOutBgMusic()
-    }
+    instance.audio.setOtherAudioIsPlaying(true);
+    instance.audio.fadeOutBgMusic();
+  }
 
-    gameHTML() {
-        const game = _gl.elementFromHtml(`
+  gameHTML() {
+    const game = _gl.elementFromHtml(`
             <section class="game flip-card">
                 <div class="container">
                     <div class="cards"></div>
@@ -40,11 +40,11 @@ export default class ChooseNewKing {
                 </div>
                 <div class="overlay"></div>
             </section>
-        `)
+        `);
 
-        if (instance.data.cards) {
-            instance.data.cards.forEach(c => {
-                const card = _gl.elementFromHtml(`
+    if (instance.data.cards) {
+      instance.data.cards.forEach((c) => {
+        const card = _gl.elementFromHtml(`
                     <article class="card">
                         <div class="card-frame"></div>
                         <div class="card-image">
@@ -57,186 +57,203 @@ export default class ChooseNewKing {
                                     <use href="#locked"></use>
                                 </svg>
                             </div>
-                            <input type="number" placeholder="#" maxlength="1" />
+                            <input type="number" placeholder="#" maxlength="${c.code.length}" />
                         </div>
                     </article>
-                `)
+                `);
 
-                if (c.sound_effect) {
-                    const audio = _gl.elementFromHtml(`
+        if (c.sound_effect) {
+          const audio = _gl.elementFromHtml(`
                         <audio class="card-audio" src="${c.sound_effect}"></audio>
-                    `)
+                    `);
 
-                    card.append(audio)
-                    card.classList.add('has-audio')
-                }
-
-                game.querySelector('.cards').append(card)
-            })
+          card.append(audio);
+          card.classList.add("has-audio");
         }
 
-        document.querySelector('.ui-container').append(game)
+        game.querySelector(".cards").append(card);
+      });
+    }
 
-        instance.experience.navigation.next.classList.remove('focused')
+    document.querySelector(".ui-container").append(game);
 
-        if (instance.debug.developer || instance.debug.onPreviewMode()) {
-            instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-            instance.experience.navigation.container.style.display = 'flex'
-        } else {
-            instance.experience.navigation.container.style.display = 'none'
+    instance.experience.navigation.next.classList.remove("focused");
+
+    if (instance.debug.developer || instance.debug.onPreviewMode()) {
+      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+      instance.experience.navigation.container.style.display = "flex";
+    } else {
+      instance.experience.navigation.container.style.display = "none";
+    }
+  }
+
+  useCorrectAssetsSrc() {
+    if (!instance.data.cards) return;
+
+    instance.data.cards.forEach((card, index) => {
+      instance.offline.fetchChapterAsset(card, "image_back", (data) => {
+        card.image_back = data.image_back;
+        document.querySelectorAll("article.card .card-back")[
+          index
+        ].style.backgroundImage = "url('" + data.image_back + "')";
+      });
+      instance.offline.fetchChapterAsset(card, "image_front", (data) => {
+        card.image_front = data.image_front;
+        document.querySelectorAll("article.card .card-front")[
+          index
+        ].style.backgroundImage = "url('" + data.image_front + "')";
+      });
+    });
+  }
+
+  setEventListeners() {
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
+
+    const cards = gsap.utils.toArray(".flip-card .card");
+    let firstTimeClick = true;
+
+    cards.forEach((card, index) => {
+      const q = gsap.utils.selector(card);
+
+      const cImage = q(".card-image");
+      const cAudio = q(".card-audio");
+      const cFront = q(".card-front");
+      const cInput = q(".card-input input");
+
+      gsap.set(cImage[0], {
+        transformStyle: "preserve-3d",
+        transformPerspective: 1000,
+      });
+
+      gsap.set(cFront, { rotationY: 180 });
+
+      const flipAnimation = gsap
+        .timeline({ paused: true })
+        .to(cImage[0], { duration: 1, rotationY: 180 });
+
+      cInput[0].addEventListener("input", (e) => {
+        if (e.target.value.length > e.target.maxLength)
+          e.target.value = e.target.value.slice(0, e.target.maxLength);
+
+        if (e.target.value.length == e.target.maxLength)
+          if (e.target.value === instance.data.cards[index].code) {
+            card.classList.add("flipped");
+            flipAnimation.play();
+
+            instance.audio.playSound("task-completed");
+            instance.experience.celebrate({
+              particleCount: 100,
+              spread: 160,
+            });
+
+            // All cards are flipped
+            const flippedCards = document.querySelectorAll(".flipped");
+
+            if (flippedCards.length == instance.data.cards.length) {
+              document.querySelector(".flip-card").classList.add("all-flipped");
+            }
+          } else {
+            e.target.parentNode.classList.add("wrong-code");
+            instance.audio.playSound("wrong");
+
+            setTimeout(() => {
+              e.target.parentNode.classList.remove("wrong-code");
+              e.target.value = "";
+            }, 1000);
+          }
+      });
+
+      card.addEventListener("click", () => {
+        if (
+          document.querySelector(".flip-card").classList.contains("all-flipped")
+        ) {
+          const selectedCard = document.querySelector(".selected");
+
+          if (selectedCard) selectedCard.classList.remove("selected");
+
+          card.classList.add("selected");
+          document.querySelector('[aria-label="card select"]').disabled = false;
+
+          if (firstTimeClick) {
+            firstTimeClick = false;
+            instance.toggleGlitch();
+          }
         }
-    }
+      });
 
-    useCorrectAssetsSrc() {
-        if (!instance.data.cards) return
+      if (cAudio.length)
+        cImage[0].addEventListener("click", () => {
+          cAudio[0].play();
+        });
+    });
 
-        instance.data.cards.forEach((card, index) => {
-            instance.offline.fetchChapterAsset(card, "image_back", (data) => {
-                card.image_back = data.image_back
-                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
-            })
-            instance.offline.fetchChapterAsset(card, "image_front", (data) => {
-                card.image_front = data.image_front
-                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
-            })
-        })
-    }
+    const chooseCard = document.querySelector('[aria-label="card select"');
 
-    setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    chooseCard.addEventListener("click", (e) => {
+      e.target.disabled = true;
 
-        const cards = gsap.utils.toArray('.flip-card .card')
-        let firstTimeClick = true
+      document.querySelector(".game-notification")?.remove();
 
-        cards.forEach((card, index) => {
-            const q = gsap.utils.selector(card)
+      cards.forEach((card) => (card.style.pointerEvents = "none"));
 
-            const cImage = q('.card-image')
-            const cAudio = q('.card-audio')
-            const cFront = q('.card-front')
-            const cInput = q('.card-input input')
+      instance.toggleGodVoice();
 
-            gsap.set(cImage[0], {
-                transformStyle: "preserve-3d",
-                transformPerspective: 1000
-            })
+      instance.experience.navigation.container.style.display = "flex";
+      instance.experience.navigation.next.classList.add("focused");
+      instance.experience.navigation.next.innerHTML =
+        instance.experience.icons.next;
+    });
+  }
 
-            gsap.set(cFront, { rotationY: 180 })
-
-            const flipAnimation = gsap.timeline({ paused: true })
-                .to(cImage[0], { duration: 1, rotationY: 180 })
-
-            cInput[0].addEventListener('input', (e) => {
-                if (e.target.value.length > e.target.maxLength)
-                    e.target.value = e.target.value.slice(0, e.target.maxLength)
-
-                if (e.target.value === instance.data.cards[index].code) {
-                    card.classList.add('flipped')
-                    flipAnimation.play()
-
-                    instance.audio.playSound('task-completed')
-                    instance.experience.celebrate({
-                        particleCount: 100,
-                        spread: 160
-                    })
-
-                    // All cards are flipped
-                    const flippedCards = document.querySelectorAll('.flipped')
-
-                    if (flippedCards.length == instance.data.cards.length) {
-                        document.querySelector('.flip-card').classList.add('all-flipped')
-                    }
-                } else {
-                    e.target.parentNode.classList.add('wrong-code')
-                    instance.audio.playSound('wrong')
-
-                    setTimeout(() => {
-                        e.target.parentNode.classList.remove('wrong-code')
-                        e.target.value = ''
-                    }, 1000)
-                }
-            })
-
-            card.addEventListener('click', () => {
-                if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
-                    const selectedCard = document.querySelector('.selected')
-
-                    if (selectedCard)
-                        selectedCard.classList.remove('selected')
-
-                    card.classList.add('selected')
-                    document.querySelector('[aria-label="card select"]').disabled = false
-
-                    if (firstTimeClick) {
-                        firstTimeClick = false
-                        instance.toggleGlitch()
-                    }
-                }
-            })
-
-            if (cAudio.length)
-                cImage[0].addEventListener('click', () => { cAudio[0].play() })
-        })
-
-        const chooseCard = document.querySelector('[aria-label="card select"')
-
-        chooseCard.addEventListener('click', (e) => {
-            e.target.disabled = true
-
-            document.querySelector('.game-notification')?.remove()
-
-            cards.forEach(card => card.style.pointerEvents = 'none')
-
-            instance.toggleGodVoice()
-
-            instance.experience.navigation.container.style.display = 'flex'
-            instance.experience.navigation.next.classList.add('focused')
-            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
-        })
-    }
-
-    toggleGlitch() {
-        const notification = _gl.elementFromHtml(`
+  toggleGlitch() {
+    const notification = _gl.elementFromHtml(`
             <aside class="game-notification">
                 <img src="games/glitchVoice.png"/>
                 <p>${instance.data.glitchs_voice.text}</p>
             </aside>
-        `)
+        `);
 
-        document.querySelector('.flip-card .container').append(notification)
+    document.querySelector(".flip-card .container").append(notification);
 
-        gsap.set(notification, { x: '-100%' })
-        gsap.to(notification, {
-            x: 0, onComplete: () => {
-                instance.audio.stopAllTaskDescriptions()
-                instance.audio.togglePlayTaskDescription(instance.data.glitchs_voice.audio)
-            }
-        })
-    }
+    gsap.set(notification, { x: "-100%" });
+    gsap.to(notification, {
+      x: 0,
+      onComplete: () => {
+        instance.audio.stopAllTaskDescriptions();
+        instance.audio.togglePlayTaskDescription(
+          instance.data.glitchs_voice.audio
+        );
+      },
+    });
+  }
 
-    toggleGodVoice() {
-        const notification = _gl.elementFromHtml(`
+  toggleGodVoice() {
+    const notification = _gl.elementFromHtml(`
             <aside class="game-notification">
                 <img src="games/godVoice.png"/>
                 <p>${instance.data.gods_voice.text}</p>
             </aside>
-        `)
+        `);
 
-        document.querySelector('.flip-card .container').append(notification)
+    document.querySelector(".flip-card .container").append(notification);
 
-        gsap.set(notification, { x: '-100%' })
-        gsap.to(notification, {
-            x: 0, onComplete: () => {
-                instance.audio.stopAllTaskDescriptions()
-                instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)
-            }
-        })
-    }
+    gsap.set(notification, { x: "-100%" });
+    gsap.to(notification, {
+      x: 0,
+      onComplete: () => {
+        instance.audio.stopAllTaskDescriptions();
+        instance.audio.togglePlayTaskDescription(
+          instance.data.gods_voice.audio
+        );
+      },
+    });
+  }
 
-    destroy() {
-        document.querySelector('.game')?.remove()
+  destroy() {
+    document.querySelector(".game")?.remove();
 
-        instance.experience.navigation.next.classList.add('focused')
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
-    }
+    instance.experience.navigation.next.classList.add("focused");
+    instance.experience.navigation.next.innerHTML =
+      instance.experience.icons.next;
+  }
 }
