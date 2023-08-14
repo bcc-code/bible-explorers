@@ -127,6 +127,7 @@ export default class MazeGame {
 
     if (instance.debug.developer || instance.debug.onPreviewMode()) {
       instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+      instance.experience.navigation.next.classList.add("less-focused");
     }
   }
 

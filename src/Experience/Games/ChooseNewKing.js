@@ -81,6 +81,7 @@ export default class ChooseNewKing {
 
     if (instance.debug.developer || instance.debug.onPreviewMode()) {
       instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+      instance.experience.navigation.next.classList.add("less-focused");
       instance.experience.navigation.container.style.display = "flex";
     } else {
       instance.experience.navigation.container.style.display = "none";
