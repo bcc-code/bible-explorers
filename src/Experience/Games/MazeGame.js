@@ -617,6 +617,7 @@ export default class MazeGame {
         document.querySelector("#new-level")?.classList.remove("focused");
         instance.experience.navigation.container.style.display = "flex";
         instance.experience.navigation.next.classList.add("focused");
+        instance.experience.navigation.next.classList.remove("less-focused");
         instance.experience.navigation.next.innerHTML =
           instance.experience.icons.next;
 

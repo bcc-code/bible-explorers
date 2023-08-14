@@ -122,6 +122,7 @@ export default class MultipleChoiceWithPicture {
   destroy() {
     document.getElementById("multiple-choice")?.remove();
 
+    instance.experience.navigation.next.classList.remove("less-focused");
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }

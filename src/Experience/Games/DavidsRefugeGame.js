@@ -224,6 +224,7 @@ export default class DavidsRefuge {
     document.querySelector(".game")?.remove();
 
     instance.experience.navigation.next.classList.add("focused");
+    instance.experience.navigation.next.classList.remove("less-focused");
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }

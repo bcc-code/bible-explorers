@@ -291,6 +291,7 @@ export default class SimonSays {
   }
 
   destroy() {
+    instance.experience.navigation.next.classList.remove("less-focused");
     document.querySelector(".game")?.remove();
   }
 }

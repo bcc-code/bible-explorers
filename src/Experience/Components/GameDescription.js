@@ -133,6 +133,7 @@ export default class Task {
     document.querySelector("section.task")?.remove();
 
     instance.experience.navigation.next.classList.add("focused");
+    instance.experience.navigation.next.classList.remove("less-focused");
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }

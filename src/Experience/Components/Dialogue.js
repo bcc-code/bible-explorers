@@ -120,6 +120,7 @@ export default class Dialogue {
     document.querySelector(".message-from-dialogue")?.remove();
 
     instance.experience.navigation.next.classList.add("focused");
+    instance.experience.navigation.next.classList.remove("less-focused");
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }
