@@ -429,7 +429,7 @@ export default class MazeGame {
     if (bibleBox) this.cannon.removeBody(bibleBox);
 
     this.cannon.fixedStep();
-    this.cannonDebugger.update();
+    // this.cannonDebugger.update();
 
     this.playerMesh.position.copy(this.playerBody.position);
 
