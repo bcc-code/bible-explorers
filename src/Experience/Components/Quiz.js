@@ -46,7 +46,7 @@ export default class Quiz {
                         <button type="submit" class="btn default focused" aria-label="submit form">
                             ${_s.task.submit}
                         </button>
-                        <button class="btn rounded" aria-label="next question">
+                        <button class="btn rounded focused" aria-label="next question">
                             <svg class="next-icon icon" width="25" height="16" viewBox="0 0 25 16">
                                 <use href="#arrow-right"></use>
                             </svg>
