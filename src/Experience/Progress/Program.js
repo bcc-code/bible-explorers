@@ -175,7 +175,6 @@ export default class Program {
         }
 
         else {
-
             instance.video.videoPlayIcon.visible = false
 
             instance.updateCameraForCurrentStep(() => {
@@ -256,7 +255,6 @@ export default class Program {
     nextCheckpoint() {
         instance.updateCurrentCheckpoint(++instance.currentCheckpoint)
         instance.currentStep = 0
-
     }
 
     goToCheckpoint(checkpoint) {
@@ -275,9 +273,7 @@ export default class Program {
     }
 
     startInteractivity() {
-
         if (instance.stepType() == 'iris') {
-
             instance.camera.updateCameraTo('screens', () => {
                 instance.world.progressBar.show()
                 instance.highlight.add(instance.interactiveObjects()[0])
@@ -300,7 +296,6 @@ export default class Program {
                 instance.world.progressBar?.hide()
                 instance.startTask()
             })
-
         }
 
         else {
@@ -372,18 +367,16 @@ export default class Program {
         let interactiveObjects = []
 
         if (instance.stepType() == 'video') {
-
             if (instance.currentCheckpoint != 6) {
                 interactiveObjects.push("Screen", "play_video_icon")
-
-            } else {
-
-                const UA = navigator.userAgent;
+            }
+            else {
+                const UA = navigator.userAgent
                 const isWebkit =
                     /\b(iPad|iPhone|iPod)\b/.test(UA) &&
                     /WebKit/.test(UA) &&
                     !/Edge/.test(UA) &&
-                    !window.MSStream;
+                    !window.MSStream
 
                 if (isWebkit) {
                     interactiveObjects.push("Screen", "play_video_icon")
