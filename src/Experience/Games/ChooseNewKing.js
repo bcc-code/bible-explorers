@@ -200,6 +200,7 @@ export default class ChooseNewKing {
       instance.toggleGodVoice();
 
       instance.experience.navigation.container.style.display = "flex";
+      instance.experience.navigation.next.classList.remove("less-focused");
       instance.experience.navigation.next.classList.add("focused");
       instance.experience.navigation.next.innerHTML =
         instance.experience.icons.next;
@@ -253,8 +254,8 @@ export default class ChooseNewKing {
   destroy() {
     document.querySelector(".game")?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
     instance.experience.navigation.next.classList.remove("less-focused");
+    instance.experience.navigation.next.classList.add("focused");
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }

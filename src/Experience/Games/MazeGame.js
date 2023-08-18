@@ -112,7 +112,7 @@ export default class MazeGame {
                 <div class="game-popup">
                     <h1>${_s.miniGames.completed.title}</h1>
                     <div class="buttons">
-                        <button class="btn default focused">
+                        <button class="btn default focused" id="new-level">
                         ${_s.miniGames.nextRound}</button>
                     </div>
                 </div>

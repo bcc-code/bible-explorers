@@ -84,6 +84,9 @@ export default class MultipleChoiceWithPicture {
               });
 
               instance.experience.navigation.next.disabled = false;
+              instance.experience.navigation.next.classList.remove(
+                "less-focused"
+              );
               instance.experience.navigation.next.classList.add("focused");
               instance.experience.navigation.next.innerHTML =
                 instance.experience.icons.next;
@@ -94,6 +97,9 @@ export default class MultipleChoiceWithPicture {
               htmlAnswers[correctIndex].parentNode.classList.add("correct");
 
               instance.experience.navigation.next.disabled = false;
+              instance.experience.navigation.next.classList.remove(
+                "less-focused"
+              );
               instance.experience.navigation.next.classList.add("focused");
               instance.experience.navigation.next.innerHTML =
                 instance.experience.icons.next;
