@@ -26,9 +26,13 @@ export default class MultipleChoiceWithPicture {
       answerFound = false;
     const stepData =
       instance.program.getCurrentStepData().multiple_choice_with_picture;
+
+    const question = instance.program.getCurrentStepData().details.title;
+
     const multipleChoiceWithPicture = _gl.elementFromHtml(`
             <div id="multiple-choice">
                 <div class="container">
+                    <h3>${question}</h3>
                     <div class="row">
                         <div class="col">
                             <img src="${stepData.image}" class="multiple-choice-image" alt="picture" />
