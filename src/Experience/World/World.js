@@ -221,17 +221,28 @@ export default class World {
         `)
 
         const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
-        const guide = _gl.elementFromHtml(`
-            <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
-                <svg class="book-icon icon" viewBox="0 0 21 24">
-                    <use href="#book"></use>
-                </svg>
-                <span>${_s.chapter.activityDescLabel}</span>
-            </a>`
-        )
 
-        if (!chapter.is_beta)
-            attachments.append(guide)
+        if (chapter.other_attachments.length) {
+            chapter.other_attachments.forEach(attachment => {
+                const link = attachment.link_to_file_of_other_attachment
+
+                if (link.includes('mentor')) {
+                    const linkParts = link.split('/')
+                    const pageSlug = linkParts[(linkParts.length - 2)]
+
+                    const guide = _gl.elementFromHtml(`
+                        <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg class="book-icon icon" viewBox="0 0 21 24">
+                                <use href="#book"></use>
+                            </svg>
+                            <span>${_s.chapter.activityDescLabel}</span>
+                        </a>`
+                    )
+
+                    attachments.append(guide)
+                }
+            })
+        }
 
         details.append(attachments)
 
