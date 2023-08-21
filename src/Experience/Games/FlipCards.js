@@ -35,7 +35,10 @@ export default class FlipCards {
     const game = _gl.elementFromHtml(`
             <section class="game flip-card flip-card-new">
                 <div class="container">
-                    <div class="cards"></div>
+                  <header class="game-header">
+                    <h2>${instance.data.title}</h2>
+                  </header>
+                  <div class="cards"></div>
                 </div>
                 <div class="overlay"></div>
             </section>
@@ -44,22 +47,22 @@ export default class FlipCards {
     if (instance.data.cards) {
       instance.data.cards.forEach((c) => {
         const card = _gl.elementFromHtml(`
-                    <article class="card">
-                        <div class="card-frame"></div>
-                        <div class="card-image">
-                            <div class="card-back" style="background-image: url('${c.image_back}')"></div>
-                            <div class="card-front" style="background-image: url('${c.image_front}')"></div>
-                        </div>
-                        <div class="card-input">
-                            <div class="icon">
-                                <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
-                                    <use href="#locked"></use>
-                                </svg>
-                            </div>
-                            <input type="number" placeholder="#" maxlength="${c.code.length}" />
-                        </div>
-                    </article>
-                `);
+          <article class="card">
+              <div class="card-frame"></div>
+              <div class="card-image">
+                  <div class="card-back" style="background-image: url('${c.image_back}')"></div>
+                  <div class="card-front" style="background-image: url('${c.image_front}')"></div>
+              </div>
+              <div class="card-input">
+                  <div class="icon">
+                      <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
+                          <use href="#locked"></use>
+                      </svg>
+                  </div>
+                  <input type="number" placeholder="#" maxlength="${c.code.length}" />
+              </div>
+          </article>
+      `);
 
         if (c.sound_effect) {
           const audio = _gl.elementFromHtml(`

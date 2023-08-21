@@ -283,6 +283,11 @@
 }
 
 .flip-card-new {
+    .game-header {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
     .cards {
         width: clamp(600px, 100vw - var(--app-padding), 90rem);
     }
