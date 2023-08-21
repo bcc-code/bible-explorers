@@ -2,6 +2,7 @@ import Experience from "../Experience.js";
 import _s from "../Utils/Strings.js";
 import _gl from "../Utils/Globals.js";
 import _e from "../Utils/Events.js";
+import Timer from "../Extras/Timer.js";
 
 import * as THREE from "three";
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
@@ -38,12 +39,6 @@ export default class MazeGame {
     this.setEventListeners();
 
     this.time.on("animation", () => {
-      if (
-        this.options.gameState == "congrats" ||
-        this.options.gameState == "game"
-      )
-        return;
-
       this.update();
     });
 
@@ -59,6 +54,7 @@ export default class MazeGame {
       gameLevel: 0,
       gameLevels: 5,
       mainGameEnded: false,
+      gameRepeat: false,
     };
 
     this.player = {
@@ -98,8 +94,41 @@ export default class MazeGame {
 
     actionButton.addEventListener("click", () => {
       this.options.gameState = "initialize";
-      this.newLevel();
+      this.disposeLevelAssets();
     });
+  }
+
+  timerWithTimeElapsed() {
+    const timerInMinutes = this.currentStepData.timer;
+    return timerInMinutes && this.timer.remainingSeconds == 0;
+  }
+
+  startTimer() {
+    const timerInMinutes = this.currentStepData.timer;
+
+    if (timerInMinutes > 0) {
+      this.timer = new Timer();
+
+      this.timer.setMinutes(timerInMinutes, ".maze-game .container");
+
+      document.addEventListener(
+        _e.ACTIONS.TIME_ELAPSED,
+        instance.onTimeElapsed
+      );
+    }
+  }
+
+  stopTimer() {
+    const timerInMinutes = this.currentStepData.timer;
+
+    if (timerInMinutes > 0) {
+      this.timer.destroy();
+
+      document.removeEventListener(
+        _e.ACTIONS.TIME_ELAPSED,
+        instance.onTimeElapsed
+      );
+    }
   }
 
   initHtml() {
@@ -391,6 +420,7 @@ export default class MazeGame {
   }
 
   destroy() {
+    instance.timer?.destroy();
     document.querySelector(".game")?.remove();
     instance.experience.gameIsOn = false;
 
@@ -399,7 +429,7 @@ export default class MazeGame {
       instance.experience.icons.next;
   }
 
-  newLevel() {
+  disposeLevelAssets() {
     // Traverse the whole scene
     this.scene.traverse((child) => {
       // Test if it's a mesh
@@ -514,24 +544,26 @@ export default class MazeGame {
   }
 
   endLevel() {
-    if (this.options.gameState == "congrats") {
-      document
-        .querySelector(".maze-game")
-        ?.classList.add("popup-visible", "congrats");
-    } else if (this.options.gameState == "repeat") {
-      document
-        .querySelector(".maze-game")
-        ?.classList.add("popup-visible", "repeat");
+    instance.timer?.destroy();
 
+    if (this.options.gameState == "congrats") {
+      this.options.gameLevel++;
+      document.querySelector(".game-popup h1").textContent =
+        _s.miniGames.completed.title;
+      document.querySelector(".game-popup button").textContent =
+        _s.miniGames.nextRound;
+    } else if (this.options.gameState == "repeat") {
       document.querySelector(".game-popup h1").textContent =
         _s.miniGames.timeElapsed.title;
-
       document.querySelector(".game-popup button").textContent =
         _s.miniGames.playAgain;
     } else if (this.options.gameState == "end game") {
-      document
-        .querySelector(".maze-game")
-        ?.classList.add("popup-visible", "game");
+      this.options.gameLevel++;
+
+      document.querySelector(".game-popup h1").textContent =
+        _s.miniGames.completed.title;
+      document.querySelector(".game-popup button").textContent =
+        _s.miniGames.nextRound;
 
       document.querySelector("#new-level")?.classList.remove("focused");
       instance.experience.navigation.container.style.display = "flex";
@@ -539,9 +571,58 @@ export default class MazeGame {
       instance.experience.navigation.next.classList.remove("less-focused");
       instance.experience.navigation.next.innerHTML =
         instance.experience.icons.next;
+
+      if (this.options.gameLevel == mazeArr.length - 1)
+        this.options.gameLevel = 1;
     }
 
-    document.querySelector(".game-popup").style.display = "block";
+    setTimeout(() => {
+      document.querySelector(".maze-game").classList.add("popup-visible");
+      document.querySelector(".game-popup").style.display = "block";
+    }, 500);
+  }
+
+  onTimeElapsed() {
+    instance.options.gameState = "fade out";
+    instance.options.gameRepeat = true;
+  }
+
+  checkCollision() {
+    this.bibleBoxBody.addEventListener("collide", (event) => {
+      if (event.body === this.playerBody) {
+        bibleBox = event.body;
+        this.options.gameState = "fade out";
+      }
+    });
+  }
+
+  endAnimation() {
+    this.bibleBoxAnimation.actions.open.play();
+
+    this.bibleBoxAnimation.mixer.addEventListener("finished", (e) => {
+      new TWEEN.Tween(instance.mazeMesh.position)
+        .to({ y: -0.5 }, 300)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .start();
+
+      new TWEEN.Tween(instance.bibleBoxMesh.scale)
+        .to({ x: 0, y: 0, z: 0 }, 300)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onComplete(() => {
+          if (this.options.gameRepeat) {
+            this.options.gameState = "repeat";
+            this.options.gameRepeat = false;
+          } else {
+            // If player wants to play more than 5 levels
+            if (this.options.gameLevel < this.options.gameLevels) {
+              this.options.gameState = "congrats";
+            } else {
+              this.options.gameState = "end game";
+            }
+          }
+        })
+        .start();
+    });
   }
 
   update() {
@@ -551,10 +632,12 @@ export default class MazeGame {
           // Setup
           this.initCannon();
           this.initScene();
+          this.startTimer();
           this.initCannonDebugger();
+          this.checkCollision();
+          this.endAnimation();
 
           this.light.intensity = 0;
-
           this.bibleBoxMesh.scale.set(1, 1, 1);
 
           document
@@ -562,23 +645,15 @@ export default class MazeGame {
             .classList.remove("popup-visible");
           document.querySelector(".game-popup").style.display = "none";
 
-          if (this.options.gameLevel == this.options.gameLevels)
-            this.options.mainGameEnded = true;
-
-          if (this.options.mainGameEnded) {
+          if (this.options.gameLevel < this.options.gameLevels) {
+            // Main 5 levels
+            document.querySelector(".game-rounds").innerHTML = `
+            ${_s.miniGames.level} ${this.options.gameLevel + 1} / 5`;
+          } else {
+            // Extra levels levels
             document.querySelector(".game-rounds").innerHTML = `
             ${_s.miniGames.level} ${this.options.gameLevel + 1}`;
-          } else {
-            document.querySelector(".game-rounds").innerHTML = `
-          ${_s.miniGames.level} ${this.options.gameLevel + 1} / 5`;
           }
-
-          if (this.options.gameLevel < mazeArr.length - 1) {
-            this.options.gameLevel++;
-          } else {
-            this.options.gameLevel = 1;
-          }
-
           this.options.gameState = "fade in";
           break;
 
@@ -597,13 +672,7 @@ export default class MazeGame {
         case "play":
           this.updateWorld();
 
-          this.bibleBoxBody.addEventListener("collide", (event) => {
-            if (event.body === this.playerBody) {
-              bibleBox = event.body;
-              this.options.gameState = "fade out";
-              this.timer?.destroy();
-            }
-          });
+          if (this.timerWithTimeElapsed()) this.onTimeElapsed();
 
           this.renderer.render(this.scene, this.camera);
           break;
@@ -611,35 +680,16 @@ export default class MazeGame {
         case "fade out":
           this.updateWorld();
 
+          this.light.intensity += 0.1 * (0.0 - this.light.intensity);
+
+          if (Math.abs(this.light.intensity - 0.0) < 0.1) {
+            this.light.intensity = 0.2;
+          }
+
           TWEEN.update();
           this.bibleBoxAnimation.mixer.update(this.time.delta * 0.005);
-          this.bibleBoxAnimation.actions.open.play();
 
-          this.bibleBoxAnimation.mixer.addEventListener("finished", (e) => {
-            new TWEEN.Tween(instance.bibleBoxMesh.scale)
-              .to({ x: 0, y: 0, z: 0 }, 300)
-              .easing(TWEEN.Easing.Quadratic.InOut)
-              .onComplete(() => {
-                this.light.intensity += 0.1 * (0.0 - this.light.intensity);
-                if (Math.abs(this.light.intensity - 0.0) < 0.1) {
-                  this.light.intensity = 0.2;
-                }
-
-                if (this.options.gameLevel < this.options.gameLevels) {
-                  this.options.gameState = "congrats";
-                } else {
-                  this.options.gameState = "end game";
-                }
-
-                this.endLevel();
-              })
-              .start();
-
-            new TWEEN.Tween(instance.mazeMesh.position)
-              .to({ y: -0.5 }, 200)
-              .easing(TWEEN.Easing.Quadratic.InOut)
-              .start();
-          });
+          this.endLevel();
 
           this.renderer.render(this.scene, this.camera);
           break;
