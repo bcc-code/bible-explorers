@@ -12,6 +12,7 @@ import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
+import ConfirmationScreen from '../Components/ConfirmationScreen.js'
 import _e from '../Utils/Events.js'
 
 let instance = null
@@ -42,6 +43,7 @@ export default class Program {
         instance.dialogue = new Dialogue()
         instance.message = new Message()
         instance.gameDescription = new GameDescription()
+        instance.confirmationScreen = new ConfirmationScreen()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -220,7 +222,6 @@ export default class Program {
                     || instance.taskType() == 'davids_refuge'
                     || instance.taskType() == 'labyrinth'
                 ) {
-
                     instance.gameDescription.show()
                 }
 
@@ -230,6 +231,10 @@ export default class Program {
 
                 else if (instance.taskType() == 'video_with_question') {
                     instance.videoWithQuestion.toggleVideoWithQuestion()
+                }
+
+                else if (instance.taskType() == 'confirmation_screen') {
+                    instance.confirmationScreen.show()
                 }
             }
 

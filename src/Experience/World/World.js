@@ -499,6 +499,7 @@ export default class World {
             instance.cacheFlipCardsMedia(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "flip_cards"))
             instance.cacheChooseNewKingMedia(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "choose_new_king"))
             instance.cacheDavidsRefugeImages(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "davids_refuge"))
+            instance.cacheConfirmationScreenImages(checkpoint.steps.filter(step => step.details && step.details.step_type == "task" && step.details.task_type == "confirmation_screen"))
         })
     }
 
@@ -594,6 +595,13 @@ export default class World {
         if (steps.length == 0) return
         steps.forEach(step => {
             step.davids_refuge.characters.forEach(character => instance.fetchAndCacheAsset(character.image))
+        })
+    }
+
+    cacheConfirmationScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach(step => {
+            instance.fetchAndCacheAsset(step.confirmation_screen.image)
         })
     }
 
