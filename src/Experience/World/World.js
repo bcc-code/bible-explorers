@@ -478,10 +478,14 @@ export default class World {
     fetchBgMusic() {
         if (instance.selectedChapter.background_music) {
             instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
-                if (instance.selectedChapter.lobby_video_loop)
-                    instance.audio.fadeOutBgMusic()
-                else
+                if (instance.selectedChapter.lobby_video_loop) {
+                    instance.audio.fadeOutBgMusic(() => {
+                        instance.audio.changeBgMusic(chapter.background_music)
+                    })
+                }
+                else {
                     instance.audio.changeBgMusic(chapter.background_music)
+                }
             })
         }
     }
@@ -751,11 +755,9 @@ export default class World {
     }
 
     hideLoading() {
-
         // instance.welcome.loading.style.display = "none"
         // instance.welcome.topBar.style.display = "flex"
         // instance.welcome.loadingScreen.classList.add('visible')
-
     }
 
     finishJourney() {
@@ -782,7 +784,6 @@ export default class World {
     resize() {
         if (this.points)
             this.points.resize()
-
     }
 
     update() {
@@ -794,6 +795,5 @@ export default class World {
 
         if (this.glitch)
             this.glitch.update()
-
     }
 }

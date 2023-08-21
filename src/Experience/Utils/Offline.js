@@ -466,7 +466,7 @@ export default class Offline {
                     const blob = offline.getArrayBufferBlob(e)
                     const videoUrl = URL.createObjectURL(blob)
 
-                    firstCase(videoName, videoUrl)
+                    firstCase(videoName, videoUrl, callback)
                 }
 
                 r.readAsArrayBuffer(item.video)
@@ -535,6 +535,7 @@ export default class Offline {
     }
 
     fetchScreenTexture = function (videoName, callback = () => {}) {
+        // Only add it once
         if (Object.keys(offline.experience.resources.customTextureItems).includes(videoName))
             return
 
@@ -548,8 +549,9 @@ export default class Offline {
         )
     }
 
-    loadScreenTextureLocally(videoName, videoUrl) {
+    loadScreenTextureLocally(videoName, videoUrl, callback) {
         offline.experience.resources.loadVideoTexture(videoName, videoUrl)
+        callback()
     }
 
     async loadScreenTextureOnline(videoName, callback) {

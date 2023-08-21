@@ -68,71 +68,6 @@ export default class Audio {
         }
     }
 
-    togglePlayBgMusic() {
-        if (!audio.experience.settings.soundOn) return
-
-        audio.disableToggleBtn()
-
-        if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
-            audio.loadAndPlay(audio.bgMusicAudios.default)
-        }
-        else {
-            if (audio.bgMusicAudios.state == _STATE.PLAYING) {
-                audio.bgMusicAudios.state = _STATE.PAUSED
-                audio.pauseBgMusic()
-            }
-            else if (audio.bgMusicAudios.state == _STATE.PAUSED) {
-                audio.bgMusicAudios.state = _STATE.PLAYING
-                audio.playBgMusic()
-            }
-        }
-    }
-
-    loadAndPlay(soundtrack) {
-        audio.loadBgMusic(
-            soundtrack,
-            audio.playBgMusic
-        )
-    }
-
-    loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => { }) {
-        if (!audio.alreadyFetched(soundtrack)) {
-            audio.disableToggleBtn()
-
-            audio.bgMusicAudios.state = _STATE.PLAYING
-            audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
-            audio.bgMusicAudios.objs[soundtrack].setLoop(true)
-            audio.bgMusicAudios.objs[soundtrack].setVolume(0)
-            audio.bgMusicAudios.objs[soundtrack].pause()
-
-            audio.audioLoader.load(soundtrack, function (buffer) {
-                audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
-                audio.enableToggleBtn()
-
-                // Another bg music has started in the meantime (while loading this audio) so simply return
-                if (audio.bgMusic && audio.bgMusic.isPlaying)
-                    return
-
-                audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
-                callback()
-            })
-        }
-        else {
-            audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
-            callback()
-        }
-    }
-
-    playBgMusic() {
-        audio.fadeInBgMusic()
-        audio.setSoundIconOn()
-    }
-
-    pauseBgMusic() {
-        audio.fadeOutBgMusic()
-        audio.setSoundIconOff()
-    }
-
     setOtherAudioIsPlaying(value) {
         audio.bgMusicAudios.otherAudioIsPlaying = value
     }
@@ -174,24 +109,6 @@ export default class Audio {
         }, 10)
     }
 
-    setSoundIconOn() {
-        audio.btn.setAttribute('is-playing', '')
-    }
-    setSoundIconOff() {
-        audio.btn.removeAttribute('is-playing')
-    }
-
-    disableToggleBtn() {
-        audio.btn.classList.add('pointer-events-none')
-    }
-    enableToggleBtn() {
-        audio.btn.classList.remove('pointer-events-none')
-    }
-
-    alreadyFetched(soundtrack) {
-        return audio.bgMusicAudios.objs[soundtrack]
-    }
-
     togglePlayTaskDescription(url) {
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.audioLoader.load(url, function (buffer) {
@@ -212,33 +129,10 @@ export default class Audio {
         }
     }
 
-    playTaskDescription(url) {
-        audio.taskDescriptionAudios[url].play()
-        audio.setOtherAudioIsPlaying(true)
-        audio.fadeOutBgMusic()
-    }
-
-    stopTaskDescription(url) {
-        if (audio.taskDescriptionAudios.hasOwnProperty(url))
-            audio.taskDescriptionAudios[url].stop()
-
-        audio.setOtherAudioIsPlaying(false)
-        audio.fadeInBgMusic()
-    }
-
     stopAllTaskDescriptions() {
         // Stop other task descriptions
         for (let url in audio.taskDescriptionAudios)
             audio.stopTaskDescription(url)
-    }
-
-    addEventListeners() {
-        audio.btn.addEventListener('click', audio.togglePlayBgMusic)
-        audio.musicRange.addEventListener('input', function () {
-            if (!audio.bgMusic) return
-            audio.bgMusic.setVolume(audio.bgMusicVolume())
-        })
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)
     }
 
     playSound(sound) {
@@ -283,5 +177,112 @@ export default class Audio {
         else {
             audio.notes[note].play()
         }
+    }
+
+    loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => { }) {
+        if (!audio.alreadyFetched(soundtrack)) {
+            audio.disableToggleBtn()
+
+            audio.bgMusicAudios.state = _STATE.PLAYING
+            audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
+            audio.bgMusicAudios.objs[soundtrack].setLoop(true)
+            audio.bgMusicAudios.objs[soundtrack].setVolume(0)
+            audio.bgMusicAudios.objs[soundtrack].pause()
+
+            audio.audioLoader.load(soundtrack, function (buffer) {
+                audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
+                audio.enableToggleBtn()
+
+                // Another bg music has started in the meantime (while loading this audio) so simply return
+                if (audio.bgMusic && audio.bgMusic.isPlaying)
+                    return
+
+                audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
+                callback()
+            })
+        }
+        else {
+            audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
+            callback()
+        }
+    }
+    
+    // Private functions
+
+    togglePlayBgMusic() {
+        if (!audio.experience.settings.soundOn) return
+
+        audio.disableToggleBtn()
+
+        if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
+            audio.loadAndPlay(audio.bgMusicAudios.default)
+        }
+        else {
+            if (audio.bgMusicAudios.state == _STATE.PLAYING) {
+                audio.bgMusicAudios.state = _STATE.PAUSED
+                audio.pauseBgMusic()
+            }
+            else if (audio.bgMusicAudios.state == _STATE.PAUSED) {
+                audio.bgMusicAudios.state = _STATE.PLAYING
+                audio.playBgMusic()
+            }
+        }
+    }
+
+    loadAndPlay(soundtrack) {
+        audio.loadBgMusic(
+            soundtrack,
+            audio.playBgMusic
+        )
+    }
+
+    playBgMusic() {
+        audio.fadeInBgMusic()
+        audio.setSoundIconOn()
+    }
+    pauseBgMusic() {
+        audio.fadeOutBgMusic()
+        audio.setSoundIconOff()
+    }
+
+    setSoundIconOn() {
+        audio.btn.setAttribute('is-playing', '')
+    }
+    setSoundIconOff() {
+        audio.btn.removeAttribute('is-playing')
+    }
+
+    disableToggleBtn() {
+        audio.btn.classList.add('pointer-events-none')
+    }
+    enableToggleBtn() {
+        audio.btn.classList.remove('pointer-events-none')
+    }
+
+    alreadyFetched(soundtrack) {
+        return audio.bgMusicAudios.objs[soundtrack]
+    }
+
+    playTaskDescription(url) {
+        audio.taskDescriptionAudios[url].play()
+        audio.setOtherAudioIsPlaying(true)
+        audio.fadeOutBgMusic()
+    }
+
+    stopTaskDescription(url) {
+        if (audio.taskDescriptionAudios.hasOwnProperty(url))
+            audio.taskDescriptionAudios[url].stop()
+
+        audio.setOtherAudioIsPlaying(false)
+        audio.fadeInBgMusic()
+    }
+
+    addEventListeners() {
+        audio.btn.addEventListener('click', audio.togglePlayBgMusic)
+        audio.musicRange.addEventListener('input', function () {
+            if (!audio.bgMusic) return
+            audio.bgMusic.setVolume(audio.bgMusicVolume())
+        })
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)
     }
 }

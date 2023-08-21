@@ -64,7 +64,6 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
         instance.experience.navigation.next.addEventListener('click', instance.skipVideo)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-       
     }
 
     skipVideo() {
@@ -80,6 +79,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.removeEventListener('click', instance.skipVideo)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
         instance.experience.navigation.next.classList.add('focused')

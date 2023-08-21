@@ -159,7 +159,6 @@ export default class Program {
     }
 
     startTask() {
-
         if (instance.stepType() == 'video') {
             instance.video.load(instance.currentVideo())
 
@@ -175,7 +174,6 @@ export default class Program {
                 })
             }
         }
-
         else {
             instance.video.videoPlayIcon.visible = false
 
@@ -190,7 +188,6 @@ export default class Program {
                     ? instance.camera.updateCameraTo('irisWithOptions', instance.message.show)
                     : instance.message.show()
             }
-
             else if (instance.stepType() == 'task') {
                 if (instance.taskType() == 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
@@ -321,7 +318,6 @@ export default class Program {
     }
 
     startAction() {
-
         if (instance.clickedObject == 'tv_16x9_screen') {
             instance.clickCallback()
             instance.clickCallback = () => { }
