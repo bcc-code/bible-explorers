@@ -79,6 +79,7 @@ export default class Program {
                     || instance.taskType() == 'davids_refuge'
                     || instance.taskType() == 'video_with_question'
                     || instance.taskType() == 'labyrinth'
+                    || instance.taskType() == 'confirmation_screen'
                 ) {
                     return 'irisCloseLook'
                 }

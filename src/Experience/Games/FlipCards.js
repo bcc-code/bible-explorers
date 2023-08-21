@@ -20,32 +20,103 @@ export default class FlipCards {
   toggleGame() {
     instance.program = instance.world.program;
     instance.stepData = instance.program.getCurrentStepData();
-    instance.data = instance.stepData.flip_cards;
-
-    instance.gameHTML();
-    instance.useCorrectAssetsSrc();
-
-    instance.setEventListeners();
+    instance.flipCards = instance.stepData.flip_cards;
+    instance.confirmationScreen = instance.stepData.confirmation_screen
 
     instance.audio.setOtherAudioIsPlaying(true);
     instance.audio.fadeOutBgMusic();
+
+    instance.toggleConfirmationScreen();
   }
 
-  gameHTML() {
-    const game = _gl.elementFromHtml(`
-            <section class="game flip-card flip-card-new">
-                <div class="container">
-                  <header class="game-header">
-                    <h2>${instance.data.title}</h2>
-                  </header>
-                  <div class="cards"></div>
-                </div>
-                <div class="overlay"></div>
-            </section>
-        `);
+  toggleConfirmationScreen() {
+    instance.destroyFlipCards();
+    instance.confirmationScreenHTML();
+    instance.useCorrectAssetsSrcConfirmationScreen();
+    instance.setConfirmationScreenEventListeners();
+  }
 
-    if (instance.data.cards) {
-      instance.data.cards.forEach((c) => {
+  confirmationScreenHTML() {
+    const startGame = _gl.elementFromHtml(`
+      <button class="btn default focused pulsate">${instance.confirmationScreen.button}</button>
+    `)
+    startGame.addEventListener("click", instance.toggleFlipCards)
+
+    const task = _gl.elementFromHtml(`
+      <section class="task">
+        <div class="container">
+          <div class="content">
+            <header class="game-header">
+              <h2>${instance.confirmationScreen.title}</h2>
+            </header>
+            <div class="game-tutorial">
+                <img src="${instance.confirmationScreen.image}" width="100%" height="100%" />
+            </div>
+            <div class="game-description">
+              ${instance.confirmationScreen.description}
+            </div>
+          </div>
+        </div>
+        <div class="overlay"></div>
+      </section>
+    `)
+
+    task.querySelector(".content").append(startGame)
+    document.querySelector(".ui-container").append(task)
+
+    instance.experience.navigation.next.classList.remove("focused")
+
+    if (instance.debug.developer || instance.debug.onPreviewMode()) {
+      instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+      instance.experience.navigation.next.classList.add("less-focused")
+      instance.experience.navigation.container.style.display = "flex"
+    }
+    else {
+      instance.experience.navigation.container.style.display = "none"
+    }
+  }
+
+  useCorrectAssetsSrcConfirmationScreen() {
+    instance.offline.fetchChapterAsset(instance.confirmationScreen, "image", (data) => {
+      document.querySelector(".game-tutorial img").src = data.image
+    })
+  }
+
+  setConfirmationScreenEventListeners() {
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroyConfirmationScreen)
+    instance.experience.navigation.next.addEventListener('click', instance.toggleFlipCards)
+  }
+
+  destroyConfirmationScreen() {
+    document.querySelector("section.task")?.remove()
+
+    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroyConfirmationScreen)
+    instance.experience.navigation.next.removeEventListener('click', instance.toggleFlipCards)
+  }
+
+
+  toggleFlipCards() {
+    instance.destroyConfirmationScreen();
+    instance.flipCardsHTML();
+    instance.useCorrectAssetsSrcFlipCards();
+    instance.setFlipCardsEventListeners();
+  }
+
+  flipCardsHTML() {
+    const game = _gl.elementFromHtml(`
+      <section class="game flip-card flip-card-new">
+          <div class="container">
+            <header class="game-header">
+              <h2>${instance.flipCards.title}</h2>
+            </header>
+            <div class="cards"></div>
+          </div>
+          <div class="overlay"></div>
+      </section>
+    `);
+
+    if (instance.flipCards.cards) {
+      instance.flipCards.cards.forEach((c) => {
         const card = _gl.elementFromHtml(`
           <article class="card">
               <div class="card-frame"></div>
@@ -90,10 +161,10 @@ export default class FlipCards {
     }
   }
 
-  useCorrectAssetsSrc() {
-    if (!instance.data.cards) return;
+  useCorrectAssetsSrcFlipCards() {
+    if (!instance.flipCards.cards) return;
 
-    instance.data.cards.forEach((card, index) => {
+    instance.flipCards.cards.forEach((card, index) => {
       instance.offline.fetchChapterAsset(card, "image_back", (data) => {
         card.image_back = data.image_back;
         document.querySelectorAll("article.card .card-back")[
@@ -109,8 +180,9 @@ export default class FlipCards {
     });
   }
 
-  setEventListeners() {
-    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
+  setFlipCardsEventListeners() {
+    instance.experience.navigation.prev.addEventListener('click', instance.toggleConfirmationScreen)
+    instance.experience.navigation.next.addEventListener('click', instance.destroyFlipCards)
 
     const cards = gsap.utils.toArray(".flip-card .card");
     cards.forEach((card, index) => {
@@ -137,7 +209,7 @@ export default class FlipCards {
           e.target.value = e.target.value.slice(0, e.target.maxLength);
 
         if (e.target.value.length == e.target.maxLength) {
-          if (e.target.value == instance.data.cards[index].code) {
+          if (e.target.value == instance.flipCards.cards[index].code) {
             card.classList.add("flipped");
             flipAnimation.play();
 
@@ -150,7 +222,7 @@ export default class FlipCards {
             // All cards are flipped
             const flippedCards = document.querySelectorAll(".flipped");
 
-            if (flippedCards.length == instance.data.cards.length) {
+            if (flippedCards.length == instance.flipCards.cards.length) {
               instance.experience.navigation.container.style.display = "flex";
               instance.experience.navigation.next.classList.remove(
                 "less-focused"
@@ -178,12 +250,14 @@ export default class FlipCards {
     });
   }
 
-  destroy() {
+  destroyFlipCards() {
     document.querySelector(".game")?.remove();
 
     instance.experience.navigation.next.classList.add("focused");
     instance.experience.navigation.next.classList.remove("less-focused");
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
+
+    instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
+    instance.experience.navigation.next.removeEventListener('click', instance.destroyFlipCards)
   }
 }
