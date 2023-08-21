@@ -244,11 +244,11 @@ export default class Offline {
     }
 
     startTextureDownload = async function(index) {
-        const video = await offline.getEpisodeLowQualityDownloadUrl(offline.btvVideos[index])
+        const video = await offline.getEpisodeDesiredQualityDownloadUrl(offline.btvVideos[index])
         offline.downloadScreenTexture(offline.btvVideos[index], video)
     }
 
-    getEpisodeLowQualityDownloadUrl = async function (episodeId) {
+    getEpisodeDesiredQualityDownloadUrl = async function (episodeId) {
         let locale = _lang.getLanguageCode()
         locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
 
@@ -258,9 +258,7 @@ export default class Offline {
         const myLanguageVideos = allLanguagesVideos.filter(file => { return file.audioLanguage == locale })
         if (!myLanguageVideos.length) return
 
-        const lowQualityVideo = myLanguageVideos.reduce((prev, current) => (prev.size < current.size) ? prev : current)
-
-        return lowQualityVideo
+        return offline.getSelectedQualityVideo(myLanguageVideos)
     }
 
     getEpisodeData = async function(episodeId) {
@@ -555,7 +553,7 @@ export default class Offline {
     }
 
     async loadScreenTextureOnline(videoName, callback) {
-        const video = await offline.getEpisodeLowQualityDownloadUrl(videoName)
+        const video = await offline.getEpisodeDesiredQualityDownloadUrl(videoName)
         offline.experience.resources.loadVideoTexture(videoName, video.url)
         callback()
     }
