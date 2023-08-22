@@ -28,8 +28,6 @@ export default class SimonSays {
     };
 
     instance.config = {
-      fails: 0,
-      showSkipAfterNoOfTries: 3,
       rounds:
         instance.world.selectedChapter.category == "6-8"
           ? explorersOne.noOfRounds
@@ -71,18 +69,9 @@ export default class SimonSays {
     document.querySelector(".ui-container").append(game);
 
     instance.experience.navigation.next.classList.remove("focused");
-
-    if (
-      instance.debug.developer ||
-      instance.debug.onPreviewMode() ||
-      instance.config.fails >= instance.config.showSkipAfterNoOfTries
-    ) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.container.style.display = "flex";
-    } else {
-      instance.experience.navigation.container.style.display = "none";
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.container.style.display = "flex";
 
     for (let i = 0; i < instance.config.rounds; i++) {
       const ticker = document.createElement("div");
@@ -232,8 +221,6 @@ export default class SimonSays {
 
     // Add event listeners
     resetBTN.addEventListener("click", () => {
-      instance.config.fails++;
-
       instance.destroy();
       instance.toggleSimonSays();
     });
@@ -241,7 +228,6 @@ export default class SimonSays {
 
   toggleGameComplete() {
     instance.blockPlaying();
-    instance.config.fails = 0;
 
     const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">

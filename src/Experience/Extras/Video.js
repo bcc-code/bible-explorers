@@ -132,20 +132,14 @@ export default class Video {
 
         // Add event listener on video update
         this.video().on('timeupdate', function () {
-            if (instance.showSkipBtn()) {
-                if (instance.hasSkipBtn()) return
+            if (instance.hasSkipBtn()) return
 
-                const skipVideo = document.createElement('div')
-                skipVideo.className = 'skip-video btn default less-focused'
-                skipVideo.innerText = _s.miniGames.skip
+            const skipVideo = document.createElement('div')
+            skipVideo.className = 'skip-video btn default less-focused'
+            skipVideo.innerText = _s.miniGames.skip
 
-                skipVideo.addEventListener('click', instance.finish)
-                instance.videoJsEl().appendChild(skipVideo)
-            }
-            else {
-                if (!instance.hasSkipBtn()) return
-                instance.getSkipBtn().remove()
-            }
+            skipVideo.addEventListener('click', instance.finish)
+            instance.videoJsEl().appendChild(skipVideo)
         })
 
         // Add event listener on fullscreen change
@@ -243,17 +237,6 @@ export default class Video {
             default:
                 return 1080
         }
-    }
-
-    showSkipBtn() {
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            return true
-
-        const secondsToSkip = 10
-        const currentTime = instance.video().currentTime()
-        const duration = instance.video().duration()
-
-        return duration - currentTime < secondsToSkip
     }
 }
 

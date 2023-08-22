@@ -35,7 +35,7 @@ export default class FlipCards {
 
   confirmationScreenHTML() {
     const startGame = _gl.elementFromHtml(`
-      <button class="btn default focused pulsate">${instance.confirmationScreen.button}</button>
+      <button class="btn default focused pulsate">${instance.confirmationScreen.cs_button}</button>
     `)
     startGame.addEventListener("click", instance.toggleFlipCards)
 
@@ -44,13 +44,13 @@ export default class FlipCards {
         <div class="container">
           <div class="content">
             <header class="game-header">
-              <h2>${instance.confirmationScreen.title}</h2>
+              <h2>${instance.confirmationScreen.cs_title}</h2>
             </header>
             <div class="game-tutorial">
-                <img src="${instance.confirmationScreen.image}" width="100%" height="100%" />
+                <img src="${instance.confirmationScreen.cs_image}" width="100%" height="100%" />
             </div>
             <div class="game-description">
-              ${instance.confirmationScreen.description}
+              ${instance.confirmationScreen.cs_description}
             </div>
           </div>
         </div>
@@ -62,15 +62,9 @@ export default class FlipCards {
     document.querySelector(".ui-container").append(task)
 
     instance.experience.navigation.next.classList.remove("focused")
-
-    if (instance.debug.developer || instance.debug.onPreviewMode()) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-      instance.experience.navigation.next.classList.add("less-focused")
-      instance.experience.navigation.container.style.display = "flex"
-    }
-    else {
-      instance.experience.navigation.container.style.display = "none"
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+    instance.experience.navigation.next.classList.add("less-focused")
+    instance.experience.navigation.container.style.display = "flex"
   }
 
   useCorrectAssetsSrcConfirmationScreen() {
@@ -148,14 +142,9 @@ export default class FlipCards {
     document.querySelector(".ui-container").append(game);
 
     instance.experience.navigation.next.classList.remove("focused");
-
-    if (instance.debug.developer || instance.debug.onPreviewMode()) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.container.style.display = "flex";
-    } else {
-      instance.experience.navigation.container.style.display = "none";
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.container.style.display = "flex";
   }
 
   useCorrectAssetsSrcFlipCards() {

@@ -5,11 +5,7 @@ import Experience from '../Experience'
 class Debug {
     constructor() {
         this.experience = new Experience()
-
         this.developer = window.location.hash === '#debug'
-        this.addPreviewMode = () => document.querySelector('body').classList.add('preview-mode')
-        this.removePreviewMode = () => document.querySelector('body').classList.remove('preview-mode')
-        this.onPreviewMode = () => document.querySelector('body').classList.contains('preview-mode')
 
         if (this.developer) {
             this.ui = new GUI()

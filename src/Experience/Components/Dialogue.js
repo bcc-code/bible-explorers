@@ -46,14 +46,9 @@ export default class Dialogue {
     document.querySelector(".ui-container").append(dialogue);
 
     instance.experience.navigation.next.classList.remove("focused");
-
-    if (instance.debug.developer || instance.debug.onPreviewMode()) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.next.disabled = false;
-    } else {
-      instance.experience.navigation.next.disabled = true;
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.next.disabled = false;
   }
 
   setEventListeners() {

@@ -49,7 +49,6 @@ export default class HeartDefense {
       probability: 0.02,
       thoughtVariants: 3,
       pointsToCompleteLevel: 4,
-      showSkipAfterNoOfTries: 3,
       thoughts: {
         width: 200,
         height: 200,
@@ -68,8 +67,7 @@ export default class HeartDefense {
       lives: 3,
       points: 0,
       heartClosed: true,
-      level: 1,
-      fails: 0,
+      level: 1
     };
 
     instance.thoughtObjs = [];
@@ -96,15 +94,9 @@ export default class HeartDefense {
 
     document.querySelector(".ui-container").append(game);
 
-    if (
-      instance.debug.developer ||
-      instance.debug.onPreviewMode() ||
-      instance.stats.fails >= instance.config.showSkipAfterNoOfTries
-    ) {
-      instance.experience.navigation.next.classList.remove("focused");
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-    }
+    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
   }
 
   startGame() {
@@ -733,12 +725,6 @@ export default class HeartDefense {
 
     document.querySelector(".heart-defense .container").append(gameOverHTML);
     document.querySelector(".heart-defense").classList.add("popup-visible");
-
-    if (++instance.stats.fails == 3) {
-      instance.experience.navigation.next.classList.remove("focused");
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.container.style.display = "flex";
-    }
 
     instance.stats.lives = instance.config.maxLives;
 

@@ -137,14 +137,9 @@ export default class Quiz {
     document.querySelector(".ui-container").append(quiz);
 
     instance.experience.navigation.next.classList.remove("focused");
-
-    if (instance.debug.developer || instance.debug.onPreviewMode()) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.container.style.display = "flex";
-    } else {
-      instance.experience.navigation.container.style.display = "none";
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.container.style.display = "flex";
 
     let questionsAnswered = 0;
     let quizProgress = 0;

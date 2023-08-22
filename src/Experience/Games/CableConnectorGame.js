@@ -17,7 +17,6 @@ export default class CableConnector {
     this.debug = this.experience.debug;
 
     instance = this;
-    instance.fails = 0;
   }
 
   toggleCableConnector() {
@@ -41,18 +40,9 @@ export default class CableConnector {
     document.querySelector(".ui-container").append(game);
 
     instance.experience.navigation.next.classList.remove("focused");
-
-    if (
-      instance.debug.developer ||
-      instance.debug.onPreviewMode() ||
-      instance.fails >= 3
-    ) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.container.style.display = "flex";
-    } else {
-      instance.experience.navigation.container.style.display = "none";
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.container.style.display = "flex";
 
     const spriteW = 180;
     const spriteH = 100;
@@ -615,14 +605,12 @@ export default class CableConnector {
 
     // Add event listeners
     resetBTN.addEventListener("click", () => {
-      instance.fails++;
       instance.destroy();
       instance.toggleCableConnector();
     });
   }
 
   finishGame() {
-    instance.fails = 0;
     instance.timer?.destroy();
 
     instance.toggleGameComplete();

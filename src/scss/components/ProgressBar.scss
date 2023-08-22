@@ -31,10 +31,6 @@
         color: var(--clr-text);
     }
 
-    body:not(.preview-mode) & [aria-label="checkpoint"].locked {
-        filter: grayscale(1);
-    }
-
     .percentageBar {
         position: absolute;
         top: 2rem;

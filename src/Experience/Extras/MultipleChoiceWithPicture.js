@@ -116,13 +116,9 @@ export default class MultipleChoiceWithPicture {
     document.querySelector(".ui-container").append(multipleChoiceWithPicture);
 
     instance.experience.navigation.next.classList.remove("focused");
-    instance.experience.navigation.next.disabled = true;
-
-    if (instance.debug.developer || instance.debug.onPreviewMode()) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.next.disabled = false;
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.next.disabled = false;
   }
 
   setEventListeners() {

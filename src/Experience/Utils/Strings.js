@@ -22,10 +22,6 @@ const strings = {
             "back": "Back",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "preview": {
-                "title": "Preview",
-                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
-            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -173,10 +169,6 @@ const strings = {
             "back": "Tilbake",
             "attachments": "Vedlegg",
             "homescreen": "Ferdig",
-            "preview": {
-                "title": "Preview",
-                "info": "Bruk denne knappen for en rask gjennomgang av kapitlet. Her kan du hoppe over oppgavene og skaffe deg oversikt over innholdet."
-            },
             "pause": {
                 "title": "Del 1 fullført",
                 "message": "Barna kan ta en pause før tidsreisen fortsetter."
@@ -324,10 +316,6 @@ const strings = {
             "back": "Zurück",
             "attachments": "Anhang",
             "homescreen": "Fertig",
-            "preview": {
-                "title": "Vorschau",
-                "info": "Mit diesem Button kannst du schnell durch die Kapitel springen. Du kannst Aufgaben überspringen und dir so einen Überblick verschaffen."
-            },
             "pause": {
                 "title": "Teil 1 abgeschlossen",
                 "message": "Die Kinder können eine Pause machen, bevor die Zeitreise weitergeht."
@@ -475,10 +463,6 @@ const strings = {
             "back": "Terug",
             "attachments": "Bijlagen",
             "homescreen": "Klaar",
-            "preview": {
-                "title": "Preview",
-                "info": "Gebruik deze knop om snel door het hoofdstuk te gaan. Hiermee kan je opdrachten overslaan en een overzicht krijgen van de inhoud."
-            },
             "pause": {
                 "title": "Deel 1 voltooid",
                 "message": "De kinderen kunnen even pauzeren voordat de tijdreis verder gaat."
@@ -626,10 +610,6 @@ const strings = {
             "back": "Retour",
             "attachments": "Pièces jointes",
             "homescreen": "Terminé",
-            "preview": {
-                "title": "Aperçu",
-                "info": "Utilise ce bouton pour parcourir rapidement le chapitre. Tu peux sauter les tâches et obtenir un aperçu du contenu."
-            },
             "pause": {
                 "title": "Partie 1 terminée",
                 "message": "Les enfants peuvent faire une pause avant de continuer le voyage dans le temps."
@@ -777,10 +757,6 @@ const strings = {
             "back": "Powrót",
             "attachments": "Załączniki",
             "homescreen": "Gotowe",
-            "preview": {
-                "title": "Przegląd",
-                "info": "Kliknij w ten przycisk celem szybkiego przeglądu rozdziału. Tutaj możesz przeskoczyć zadania i przejrzeć z czego składa się ten rozdział."
-            },
             "pause": {
                 "title": "Cześć 1 ukończona",
                 "message": "Dzieci mogą zrobić sobie przerwę przed dalszą podróżą w czasie."
@@ -928,10 +904,6 @@ const strings = {
             "back": "Înapoi",
             "attachments": "Fișiere",
             "homescreen": "Finalizare",
-            "preview": {
-                "title": "Preview",
-                "info": "Folosește acest buton pentru a trece rapid prin capitol. Poți sări peste sarcini ca să vezi conținutul capitolului."
-            },
             "pause": {
                 "title": "Partea 1 finalizată",
                 "message": "Copiii pot lua o pauză înainte de a continua călătoria în timp."
@@ -1079,10 +1051,6 @@ const strings = {
             "back": "Regresar",
             "attachments": "Adjunto",
             "homescreen": "Listo",
-            "preview": {
-                "title": "Vista previa",
-                "info": "Usa este botón para una revisión rápida del capítulo. Aquí puedes omitir las tareas y obtener una descripción general del contenido."
-            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1230,10 +1198,6 @@ const strings = {
             "back": "Voltar",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "preview": {
-                "title": "Visualização",
-                "info": "Utilize este botão para uma navegação rápida pelo capítulo. Aqui você poderá saltar as tarefas e ter uma visão apla do conteúdo."
-            },
             "pause": {
                 "title": "Parte 1 completa",
                 "message": "As crianças podem fazer uma pausa antes que a viagem do tempo continue."
@@ -1381,10 +1345,6 @@ const strings = {
             "back": "Indietro",
             "attachments": "Allegati",
             "homescreen": "Fatto",
-            "preview": {
-                "title": "Preview",
-                "info": "Utilizzate questo pulsante per una rapida lettura del capitolo. È possibile saltare le attività e ottenere una panoramica dei contenuti."
-            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1532,10 +1492,6 @@ const strings = {
             "back": "Назад",
             "attachments": "Вложения",
             "homescreen": "Готово",
-            "preview": {
-                "title": "Предв. просмотр",
-                "info": "Используйте эту кнопку, чтобы быстро просмотреть главу. Вы можете пропустить задания и ознакомиться с содержанием."
-            },
             "pause": {
                 "title": "Часть 1 завершена",
                 "message": "Дети могут передохнуть, прежде чем путешествие во времени продолжится."
@@ -1683,10 +1639,6 @@ const strings = {
             "back": "Takaisin",
             "attachments": "Liitteet",
             "homescreen": "Valmis",
-            "preview": {
-                "title": "Esikatselu",
-                "info": "Paina tästä napista nähdäksesi koko jakson sisällön. Voit hypätä tehtävien yli ja näet yleiskuvan koko sisällöstä."
-            },
             "pause": {
                 "title": "Osa 1 valmis",
                 "message": "Lapset voivat pitää tauon ennen kuin aikamatka jatkuu."
@@ -1834,10 +1786,6 @@ const strings = {
             "back": "Vissza",
             "attachments": "Csatolmányok",
             "homescreen": "Kész",
-            "preview": {
-                "title": "Preview",
-                "info": "Use this button for a quick run through of the chapter. You can skip the tasks and get an overview of the content."
-            },
             "pause": {
                 "title": "Part 1 completed",
                 "message": "The children can take a break before the time travel continues."
@@ -1985,10 +1933,6 @@ const strings = {
             "back": "Tilbage",
             "attachments": "Attachments",
             "homescreen": "Done",
-            "preview": {
-                "title": "Preview",
-                "info": "Brug denne knap for en hurtig gennemgang af kapitlet. Her kan du hoppe over opgaverne og få oversigt over indholdet."
-            },
             "pause": {
                 "title": "Del 1 afsluttet",
                 "message": "Børnene kan holde en pause, inden tidsrejsen fortsætter."

@@ -50,14 +50,9 @@ export default class QuestionAndCode {
     document.querySelector(".ui-container").append(answersWrapper);
 
     instance.experience.navigation.next.classList.remove("focused");
-
-    if (instance.debug.developer || instance.debug.onPreviewMode()) {
-      instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-      instance.experience.navigation.next.classList.add("less-focused");
-      instance.experience.navigation.container.style.display = "flex";
-    } else {
-      instance.experience.navigation.container.style.display = "none";
-    }
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.container.style.display = "flex";
 
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 

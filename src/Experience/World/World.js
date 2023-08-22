@@ -50,7 +50,7 @@ export default class World {
         })
 
         this.placeholderChapterData()
-        this.chapterProgress = () => parseInt(localStorage.getItem(this.getId())) || 0
+        this.chapterProgress = () => 0
 
         this.selectedQuality = this.experience.settings.videoQuality
 
@@ -65,10 +65,7 @@ export default class World {
             // contact: document.querySelector('[aria-label="Contact"]'),
             home: document.querySelector('[aria-label="Home"]'),
             guide: document.querySelector('[aria-label="Guide"]'),
-            preview: document.querySelector('[aria-label="Preview chapter"]')
         }
-
-        this.buttons.preview.querySelector('span').innerHTML = _s.journey.preview.title
 
         this.buttons.home.style.display = 'none'
         this.buttons.home.addEventListener("click", this.goHome)
@@ -281,17 +278,6 @@ export default class World {
 
         document.querySelector('.lobby').append(details)
         document.querySelector('.chapters').classList.add('chapter-selected')
-
-        this.buttons.preview.style.display = 'inline-flex'
-        this.buttons.preview.addEventListener("click", instance.previewChapter)
-
-        tippy('[aria-label="Preview chapter"]', {
-            theme: 'preview',
-            content: _s.journey.preview.info,
-            duration: [500, 200],
-            animation: 'shift-away',
-            placement: 'bottom-end',
-        })
 
         instance.experience.navigation.next.addEventListener("click", instance.startChapter)
     }
@@ -631,11 +617,6 @@ export default class World {
         })
     }
 
-    previewChapter() {
-        instance.debug.addPreviewMode()
-        instance.startChapter()
-    }
-
     startChapter() {
         // Reset chapter if completed
         if (instance.chapterProgress() == instance.selectedChapter.program.length)
@@ -666,7 +647,6 @@ export default class World {
 
         document.querySelector('.page').className = 'page page-home'
         document.querySelector('.cta').style.display = 'none'
-        instance.buttons.preview.style.display = 'none'
     }
 
     currentChapterLabel() {
@@ -715,13 +695,11 @@ export default class World {
         instance.buttons.guide.style.display = 'flex'
 
         document.querySelector('.cta').style.display = 'flex'
-        instance.buttons.preview.style.display = 'inline-flex'
 
         instance.camera.updateCameraTo(null)
         instance.controlRoom.irisTextureTransition()
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
-        instance.debug.removePreviewMode()
         instance.showLobby()
         instance.preselectChapter()
 
@@ -762,9 +740,6 @@ export default class World {
 
     finishJourney() {
         instance.audio.changeBgMusic()
-
-        if (instance.debug.onPreviewMode())
-            return
 
         _appInsights.trackEvent({
             name: "Finish chapter",
