@@ -429,9 +429,6 @@ export default class Offline {
                         r.onload = function (e) {
                             const blob = offline.getArrayBufferBlob(e)
                             const videoUrl = URL.createObjectURL(blob)
-                            const videoEl = document.createElement("div")
-                            videoEl.setAttribute('id', videoName)
-                            document.getElementById('videos-container').appendChild(videoEl)
     
                             callback(videoName, videoUrl, thumbnailUrl)
                         }
@@ -441,22 +438,38 @@ export default class Offline {
     
                     f.readAsArrayBuffer(item.thumbnail)
                 }
-                else {
-                    // Load video blob as array buffer
-                    var r = new FileReader()
+            }
+            else {
+                fallback(videoName)
+            }
+        }
+    }
 
-                    r.onload = function (e) {
-                        const blob = offline.getArrayBufferBlob(e)
-                        const videoUrl = URL.createObjectURL(blob)
-                        const videoEl = document.createElement("div")
-                        videoEl.setAttribute('id', videoName)
-                        document.getElementById('video-' + videoName).appendChild(videoEl)
+    loadVideoFromIndexedDb = function (videoName, callback, fallback) {
+        if (!offline.db) {
+            fallback(videoName)
+            return
+        }
 
-                        callback(videoName, videoUrl, null)
-                    }
+        offline.transaction = offline.db.transaction([offline.store], "readonly")
+        offline.objStore = offline.transaction.objectStore(offline.store)
+        const getItem = offline.objStore.get(videoName)
 
-                    r.readAsArrayBuffer(item.video)
+        getItem.onsuccess = function () {
+            if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+                const item = getItem.result
+
+                // Load video blob as array buffer
+                var r = new FileReader()
+
+                r.onload = function (e) {
+                    const blob = offline.getArrayBufferBlob(e)
+                    const videoUrl = URL.createObjectURL(blob)
+
+                    callback(videoName, videoUrl)
                 }
+
+                r.readAsArrayBuffer(item.video)
             }
             else {
                 fallback(videoName)

@@ -200,11 +200,27 @@ export default class Resources extends EventEmitter {
     }
 
     loadEpisodeTextures(videoName) {
+        resources.addVideoDivElementToContainer(videoName, 'videos-container')
         this.offline.loadEpisodeFromIndexedDb(
             videoName,
             this.loadTexturesLocally,
             this.loadTexturesOnline
         )
+    }
+
+    loadVideoInBtvPlayer(videoName) {
+        resources.addVideoDivElementToContainer(videoName, 'video-' + videoName)
+        this.offline.loadVideoFromIndexedDb(
+            videoName,
+            this.loadTexturesLocally,
+            this.loadTexturesOnline
+        )
+    }
+
+    addVideoDivElementToContainer(videoName, containerId) {
+        const videoEl = document.createElement("div")
+        videoEl.setAttribute('id', videoName)
+        document.getElementById(containerId).appendChild(videoEl)
     }
 
     async loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
@@ -243,10 +259,6 @@ export default class Resources extends EventEmitter {
     }
 
     async streamFromBtv(videoName) {
-        let btvContainer = document.createElement('div')
-        btvContainer.setAttribute('id', videoName)
-        document.getElementById('videos-container').appendChild(btvContainer)
-
         const episodeId = videoName.replace('episode-', '')
         const player = await resources.factory.create(videoName, {
             episodeId: episodeId,

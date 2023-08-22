@@ -49,7 +49,7 @@ export default class VideoWithQuestion {
         document.querySelector('.ui-container').append(container)
 
         // Load BTV Player
-        instance.resources.loadEpisodeTextures(instance.data.video)
+        instance.resources.loadVideoInBtvPlayer(instance.data.video)
 
         const playerInterval = setInterval(() => {
             if (instance.resources.videoPlayers[instance.data.video]) {
