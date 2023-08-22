@@ -191,17 +191,14 @@ export default class Video {
             .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .start()
-
     }
 
     defocus() {
         if (instance.video()) {
-
             instance.pause()
             instance.tablet.material.map.image.pause()
             instance.portalScreen.scale.set(0, 0, 0)
             instance.videoPlayIcon.visible = false
-
 
             if (this.video().isFullscreen_) {
                 instance.video().exitFullscreen()
@@ -215,8 +212,6 @@ export default class Video {
                     instance.audio.setOtherAudioIsPlaying(false)
                     instance.audio.fadeInBgMusic()
                 })
-
-
         }
 
         // instance.experience.navigation.next.disabled = false

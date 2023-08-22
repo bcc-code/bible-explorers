@@ -10,6 +10,7 @@ export default class VideoWithQuestion {
         instance = this
         instance.experience = new Experience()
         instance.debug = instance.experience.debug
+        instance.audio = instance.experience.world.audio
     }
 
     toggleVideoWithQuestion() {
@@ -17,6 +18,9 @@ export default class VideoWithQuestion {
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.video_with_question
+
+        instance.audio.setOtherAudioIsPlaying(true)
+        instance.audio.fadeOutBgMusic()
 
         const container = _gl.elementFromHtml(`
             <div class="view" id="video-with-question">
@@ -83,5 +87,8 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
         instance.experience.navigation.next.classList.add('focused')
+
+        instance.audio.setOtherAudioIsPlaying(false)
+        instance.audio.fadeInBgMusic()
     }
 }
