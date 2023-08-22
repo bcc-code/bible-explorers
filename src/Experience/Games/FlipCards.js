@@ -23,9 +23,6 @@ export default class FlipCards {
     instance.flipCards = instance.stepData.flip_cards;
     instance.confirmationScreen = instance.stepData.confirmation_screen
 
-    instance.audio.setOtherAudioIsPlaying(true);
-    instance.audio.fadeOutBgMusic();
-
     instance.toggleConfirmationScreen();
   }
 
