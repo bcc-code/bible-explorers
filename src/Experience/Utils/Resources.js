@@ -218,6 +218,7 @@ export default class Resources extends EventEmitter {
     }
 
     loadVideoThumbnail(videoName, thumbnailUrl) {
+        if (!thumbnailUrl) return
         this.loaders.textureLoader.load(
             thumbnailUrl,
             (texture) => {

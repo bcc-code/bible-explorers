@@ -412,15 +412,36 @@ export default class Offline {
         getItem.onsuccess = function () {
             if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
                 const item = getItem.result
-                let thumbnailUrl = null
 
-                // Load thumbnail
-                var f = new FileReader()
+                if (item.thumbnail) {
+                    let thumbnailUrl = null
 
-                f.onload = function (e) {
-                    const blob = offline.getArrayBufferBlob(e)
-                    thumbnailUrl = URL.createObjectURL(blob)
-
+                    // Load thumbnail
+                    var f = new FileReader()
+    
+                    f.onload = function (e) {
+                        const blob = offline.getArrayBufferBlob(e)
+                        thumbnailUrl = URL.createObjectURL(blob)
+    
+                        // Load video blob as array buffer
+                        var r = new FileReader()
+    
+                        r.onload = function (e) {
+                            const blob = offline.getArrayBufferBlob(e)
+                            const videoUrl = URL.createObjectURL(blob)
+                            const videoEl = document.createElement("div")
+                            videoEl.setAttribute('id', videoName)
+                            document.getElementById('videos-container').appendChild(videoEl)
+    
+                            callback(videoName, videoUrl, thumbnailUrl)
+                        }
+    
+                        r.readAsArrayBuffer(item.video)
+                    }
+    
+                    f.readAsArrayBuffer(item.thumbnail)
+                }
+                else {
                     // Load video blob as array buffer
                     var r = new FileReader()
 
@@ -429,15 +450,13 @@ export default class Offline {
                         const videoUrl = URL.createObjectURL(blob)
                         const videoEl = document.createElement("div")
                         videoEl.setAttribute('id', videoName)
-                        document.getElementById('videos-container').appendChild(videoEl)
+                        document.getElementById('video-' + videoName).appendChild(videoEl)
 
-                        callback(videoName, videoUrl, thumbnailUrl)
+                        callback(videoName, videoUrl, null)
                     }
 
                     r.readAsArrayBuffer(item.video)
                 }
-
-                f.readAsArrayBuffer(item.thumbnail)
             }
             else {
                 fallback(videoName)
