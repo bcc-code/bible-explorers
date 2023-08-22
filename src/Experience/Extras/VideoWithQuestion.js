@@ -26,6 +26,9 @@ export default class VideoWithQuestion {
         const container = _gl.elementFromHtml(`
             <div class="view" id="video-with-question">
                 <div class="container">
+                    <header class="game-header">
+                        <h2>${instance.stepData.details.title}</h2>
+                    </header>
                     <div class="row">
                         <div id="video-${instance.data.video}" class="video"></div>
                     </div>
