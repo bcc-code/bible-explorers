@@ -67,7 +67,7 @@ export default class Program {
 
         instance.currentLocation = () => {
             if (instance.stepType() == 'video') { return 'portal' }
-            else if (instance.stepType() == 'iris') { return 'irisCloseLook' }
+            else if (instance.stepType() == 'iris' || instance.stepType() == 'quiz') { return 'irisCloseLook' }
             else if (instance.stepType() == 'task') {
                 // Games
                 if (instance.taskType() == 'cables'
