@@ -23,7 +23,8 @@ export default class FlipCards {
     instance.flipCards = instance.stepData.flip_cards;
     instance.confirmationScreen = instance.stepData.confirmation_screen
 
-    instance.toggleConfirmationScreen();
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    instance.toggleConfirmationScreen()
   }
 
   toggleConfirmationScreen() {
@@ -74,14 +75,21 @@ export default class FlipCards {
   }
 
   setConfirmationScreenEventListeners() {
-    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroyConfirmationScreen)
+    instance.experience.navigation.prev.removeEventListener('click', instance.program.previousStep)
+    instance.experience.navigation.prev.addEventListener('click', instance.backToGameDescription)
     instance.experience.navigation.next.addEventListener('click', instance.toggleFlipCards)
+  }
+
+  backToGameDescription() {
+    instance.destroyConfirmationScreen()
+    instance.program.gameDescription.show()
+    instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep)
   }
 
   destroyConfirmationScreen() {
     document.querySelector("section.task")?.remove()
 
-    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroyConfirmationScreen)
+    instance.experience.navigation.prev.removeEventListener('click', instance.backToGameDescription)
     instance.experience.navigation.next.removeEventListener('click', instance.toggleFlipCards)
   }
 
@@ -168,7 +176,6 @@ export default class FlipCards {
 
   setFlipCardsEventListeners() {
     instance.experience.navigation.prev.addEventListener('click', instance.toggleConfirmationScreen)
-    instance.experience.navigation.next.addEventListener('click', instance.destroyFlipCards)
 
     const cards = gsap.utils.toArray(".flip-card .card");
     cards.forEach((card, index) => {
@@ -244,6 +251,12 @@ export default class FlipCards {
     instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
 
     instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
-    instance.experience.navigation.next.removeEventListener('click', instance.destroyFlipCards)
+  }
+
+  destroy() {
+    instance.destroyConfirmationScreen()
+    instance.destroyFlipCards()
+    instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep)
+    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
   }
 }
