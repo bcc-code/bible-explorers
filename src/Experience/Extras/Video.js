@@ -137,7 +137,6 @@ export default class Video {
             const skipVideo = document.createElement('div')
             skipVideo.className = 'skip-video btn default less-focused'
             skipVideo.innerText = _s.miniGames.skip
-
             skipVideo.addEventListener('click', instance.finish)
             instance.videoJsEl().appendChild(skipVideo)
         })
@@ -198,14 +197,8 @@ export default class Video {
                 instance.video().exitFullscreen()
             }
 
-            new TWEEN.Tween(instance.portalScreen.material)
-                .to({ color: new THREE.Color(0x131A43) }, 1000)
-                .easing(TWEEN.Easing.Quadratic.InOut)
-                .start()
-                .onComplete(() => {
-                    instance.audio.setOtherAudioIsPlaying(false)
-                    instance.audio.fadeInBgMusic()
-                })
+            instance.audio.setOtherAudioIsPlaying(false)
+            instance.audio.fadeInBgMusic()
         }
 
         // instance.experience.navigation.next.disabled = false
