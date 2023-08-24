@@ -28,7 +28,7 @@ export default class ConfirmationScreen {
   }
 
   useCorrectAssetsSrc() {
-    instance.offline.fetchChapterAsset(instance.data, "image", (data) => {
+    instance.offline.fetchChapterAsset(instance.data, "cs_image", (data) => {
       document.querySelector(".game-tutorial img").src = data.image
     })
   }

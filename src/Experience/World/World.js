@@ -692,6 +692,8 @@ export default class World {
     steps.forEach((step) => {
       if (!step.flip_cards.cards) return;
 
+      instance.fetchAndCacheAsset(step.confirmation_screen.cs_image);
+
       step.flip_cards.cards.forEach((card) => {
         instance.fetchAndCacheAsset(card.image_back);
         instance.fetchAndCacheAsset(card.image_front);
@@ -728,7 +730,7 @@ export default class World {
   cacheConfirmationScreenImages(steps) {
     if (steps.length == 0) return;
     steps.forEach((step) => {
-      instance.fetchAndCacheAsset(step.confirmation_screen.image);
+      instance.fetchAndCacheAsset(step.confirmation_screen.cs_image);
     });
   }
 

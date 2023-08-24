@@ -69,8 +69,8 @@ export default class FlipCards {
   }
 
   useCorrectAssetsSrcConfirmationScreen() {
-    instance.offline.fetchChapterAsset(instance.confirmationScreen, "image", (data) => {
-      document.querySelector(".game-tutorial img").src = data.image
+    instance.offline.fetchChapterAsset(instance.confirmationScreen, "cs_image", (data) => {
+      document.querySelector(".game-tutorial img").src = data.cs_image
     })
   }
 
