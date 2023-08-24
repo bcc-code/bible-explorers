@@ -224,7 +224,7 @@ export default class Program {
                 }
 
                 else if (instance.taskType() == 'multiple_choice_with_picture') {
-                    instance.multipleChoiceWithPicture.toggleMultipleChoiceWithPicture()
+                    instance.multipleChoiceWithPicture.show()
                 }
 
                 else if (instance.taskType() == 'video_with_question') {

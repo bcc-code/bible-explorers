@@ -611,6 +611,14 @@ export default class World {
             step.details.task_type == "davids_refuge"
         )
       );
+      instance.cacheMultipleChoiceWithPicture(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == "task" &&
+            step.details.task_type == "multiple_choice_with_picture"
+        )
+      );
       instance.cacheConfirmationScreenImages(
         checkpoint.steps.filter(
           (step) =>
@@ -724,6 +732,13 @@ export default class World {
       step.davids_refuge.characters.forEach((character) =>
         instance.fetchAndCacheAsset(character.image)
       );
+    });
+  }
+
+  cacheMultipleChoiceWithPicture(steps) {
+    if (steps.length == 0) return;
+    steps.forEach((step) => {
+      instance.fetchAndCacheAsset(step.multiple_choice_with_picture.image);
     });
   }
 

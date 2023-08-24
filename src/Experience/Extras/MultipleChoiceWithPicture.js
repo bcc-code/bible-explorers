@@ -1,3 +1,4 @@
+import Offline from "../Utils/Offline.js"
 import Experience from "../Experience.js";
 import _s from "../Utils/Strings.js";
 import _gl from "../Utils/Globals.js";
@@ -8,34 +9,35 @@ let instance = null;
 export default class MultipleChoiceWithPicture {
   constructor() {
     instance = this;
+
     instance.experience = new Experience();
+    instance.debug = instance.experience.debug;
+    instance.offline = new Offline()
   }
 
-  toggleMultipleChoiceWithPicture() {
+  show() {
     instance.world = instance.experience.world;
-    instance.debug = instance.experience.debug;
     instance.program = instance.world.program;
     instance.audio = instance.world.audio;
 
-    instance.multipleChoiceWithPictureHTML();
+    instance.setHtml();
+    instance.useCorrectAssetsSrc();
     instance.setEventListeners();
   }
 
-  multipleChoiceWithPictureHTML() {
-    let tries = 0,
-      answerFound = false;
-    const stepData =
-      instance.program.getCurrentStepData().multiple_choice_with_picture;
-
-    const question = instance.program.getCurrentStepData().details.title;
+  setHtml() {
+    let tries = 0
+    let answerFound = false
+    instance.stepData = instance.program.getCurrentStepData()
+    instance.data = instance.stepData.multiple_choice_with_picture
 
     const multipleChoiceWithPicture = _gl.elementFromHtml(`
             <div id="multiple-choice">
                 <div class="container">
-                    <h3>${question}</h3>
+                    <h3>${instance.stepData.details.title}</h3>
                     <div class="row">
                         <div class="col">
-                            <img src="${stepData.image}" class="multiple-choice-image" alt="picture" />
+                            <img src="${instance.data.image}" class="multiple-choice-image" alt="picture" />
                         </div>
                         <div class="col">
                             <ul class="multiple-choice-answers"></ul>
@@ -45,7 +47,7 @@ export default class MultipleChoiceWithPicture {
             </div>
         `);
 
-    stepData.choices.forEach((choice, cIdx) => {
+    instance.data.choices.forEach((choice, cIdx) => {
       const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
                 <li class="multiple-choice-answer">
                     <div class="label">
@@ -65,7 +67,7 @@ export default class MultipleChoiceWithPicture {
       .querySelectorAll(".multiple-choice-answers")
       .forEach((a) => {
         const htmlAnswers = a.querySelectorAll(".label");
-        const objAnswers = stepData.choices;
+        const objAnswers = instance.data.choices;
 
         htmlAnswers.forEach((a, i) => {
           a.addEventListener("click", () => {
@@ -119,6 +121,12 @@ export default class MultipleChoiceWithPicture {
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add("less-focused");
     instance.experience.navigation.next.disabled = false;
+  }
+
+  useCorrectAssetsSrc() {
+    instance.offline.fetchChapterAsset(instance.data, "image", (data) => {
+      document.querySelector("img.multiple-choice-image").src = data.image
+    })
   }
 
   setEventListeners() {
