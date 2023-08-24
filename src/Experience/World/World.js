@@ -17,7 +17,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-away.css";
 import _gl from "../Utils/Globals.js";
 import gsap from "gsap";
-import Glitch from "./Glitch.js";
+// import Glitch from "./Glitch.js";
 
 let instance = null;
 export default class World {
@@ -893,9 +893,7 @@ export default class World {
 
   update() {
     if (this.controlRoom) this.controlRoom.update();
-
     if (this.points) this.points.update();
-
-    if (this.glitch) this.glitch.update();
+    // if (this.glitch) this.glitch.update();
   }
 }
