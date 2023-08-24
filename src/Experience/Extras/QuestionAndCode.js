@@ -26,9 +26,6 @@ export default class QuestionAndCode {
   }
 
   toggleQuestion() {
-    instance.allAnswersFromTheme =
-      JSON.parse(localStorage.getItem(instance.localStorageId)) || {};
-
     const answersWrapper = _gl.elementFromHtml(`
         <div class="game answers">
             <div class="container">
@@ -61,12 +58,6 @@ export default class QuestionAndCode {
     instance.el = {};
     instance.el.inputs = document.querySelectorAll(".answers input");
     instance.el.inputs.forEach((input, index) => {
-      input.value = instance.allAnswersFromTheme.hasOwnProperty(
-        instance.currentCheckpoint
-      )
-        ? instance.allAnswersFromTheme[instance.currentCheckpoint][index]
-        : "";
-
       if (index == 0) input.focus();
       if (input.value.length != 0) allInputsEmpty = false;
 
@@ -87,42 +78,33 @@ export default class QuestionAndCode {
       });
     });
 
+    instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
+
     // if (allInputsEmpty)
     //     instance.experience.navigation.next.disabled = true
   }
 
   saveAnswers() {
-    const initialAnswers =
-      instance.allAnswersFromTheme[instance.currentCheckpoint];
-
-    // Save answers to Local Storage
     let thisTaskAnswers = [];
     instance.el.inputs.forEach((input) => {
       thisTaskAnswers.push(input.value);
     });
 
-    instance.allAnswersFromTheme[instance.currentCheckpoint] = thisTaskAnswers;
-    localStorage.setItem(
-      instance.localStorageId,
-      JSON.stringify(instance.allAnswersFromTheme)
-    );
-
-    if (JSON.stringify(initialAnswers) != JSON.stringify(thisTaskAnswers)) {
-      fetch(_api.saveAnswer(), {
-        method: "POST",
-        body: JSON.stringify({
-          answer: thisTaskAnswers,
-          chapterId: instance.selectedChapter.id,
-          chapterTitle: instance.selectedChapter.title,
-          language: _lang.getLanguageCode(),
-        }),
-      });
-    }
+    fetch(_api.saveAnswer(), {
+      method: "POST",
+      body: JSON.stringify({
+        answer: thisTaskAnswers,
+        chapterId: instance.selectedChapter.id,
+        chapterTitle: instance.selectedChapter.title,
+        language: _lang.getLanguageCode(),
+      }),
+    });
   }
 
   destroy() {
     document.querySelector(".game")?.remove();
-
+    
+    instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
     instance.experience.navigation.next.classList.add("focused");
     instance.experience.navigation.next.classList.remove("less-focused");
     instance.experience.navigation.next.innerHTML =

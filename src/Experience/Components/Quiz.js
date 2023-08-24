@@ -1,5 +1,7 @@
 import Experience from "../Experience.js";
 import _s from "../Utils/Strings.js";
+import _lang from "../Utils/Lang.js";
+import _api from "../Utils/Api.js";
 import _gl from "../Utils/Globals.js";
 import _e from "../Utils/Events.js";
 
@@ -13,6 +15,7 @@ export default class Quiz {
 
   toggleQuiz() {
     instance.world = instance.experience.world;
+    instance.selectedChapter = instance.world.selectedChapter
     instance.debug = instance.experience.debug;
     instance.program = instance.world.program;
     instance.audio = instance.world.audio;
@@ -51,7 +54,6 @@ export default class Quiz {
                                 <use href="#arrow-right"></use>
                             </svg>
                         </button>
-                        
                     </div>
                 </div>
                 <div class="overlay"></div>
@@ -61,6 +63,7 @@ export default class Quiz {
     const submitQuiz = quiz.querySelector('[aria-label="submit form"');
     submitQuiz.style.display = "none";
     submitQuiz.addEventListener("click", () => {
+      instance.saveAnswers()
       instance.destroy();
       instance.program.congrats.toggleSummary();
 
@@ -254,6 +257,24 @@ export default class Quiz {
 
   setEventListeners() {
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
+  }
+
+  saveAnswers() {
+    const answer = document.querySelector('section.quiz textarea').value
+    if (!answer) return
+
+    const data = {
+        taskTitle: "Quiz",
+        answer: [answer],
+        chapterId: instance.selectedChapter.id,
+        chapterTitle: instance.selectedChapter.title,
+        language: _lang.getLanguageCode(),
+    }
+
+    fetch(_api.saveAnswer(), {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
   }
 
   destroy() {

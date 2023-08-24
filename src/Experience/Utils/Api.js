@@ -7,10 +7,9 @@ const wpApiUrl = getWpApiUrl()
 
 const getBiexChapters = () => wpApiUrl + "/biex-chapters/get?lang=" + _lang.getLanguageCode()
 const getRoles = (personId) => wpApiUrl_production + '/roles/' + personId
-const saveAnswer = () => wpApiUrl_production + '/answer/save'
+const saveAnswer = () => wpApiUrl + '/answer/save'
 
 export default { getBiexChapters, getRoles, saveAnswer }
-
 
 function getWpApiUrl() {
     switch (window.location.hostname) {

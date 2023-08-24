@@ -1,5 +1,7 @@
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
+import _lang from "../Utils/Lang.js";
+import _api from "../Utils/Api.js";
 import _gl from '../Utils/Globals.js'
 import _e from "../Utils/Events.js"
 
@@ -16,6 +18,7 @@ export default class VideoWithQuestion {
 
     toggleVideoWithQuestion() {
         instance.world = instance.experience.world
+        instance.selectedChapter = instance.world.selectedChapter
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.video_with_question
@@ -62,6 +65,7 @@ export default class VideoWithQuestion {
         
         const submitQuestion = container.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {
+            instance.saveAnswers()
             instance.destroy()
             instance.program.nextStep()
         })
@@ -75,13 +79,33 @@ export default class VideoWithQuestion {
         instance.resources.videoPlayers[instance.data.video].pause()
         document.querySelectorAll('#video-with-question .hidden').forEach(item => item.classList.remove('hidden'))
 
+        instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         instance.experience.navigation.next.classList.remove('focused')
     }
 
+    saveAnswers() {
+        const answer = document.querySelector('#video-with-question textarea').value
+        if (!answer) return
+
+        const data = {
+            taskTitle: instance.stepData.details.title,
+            answer: [answer],
+            chapterId: instance.selectedChapter.id,
+            chapterTitle: instance.selectedChapter.title,
+            language: _lang.getLanguageCode(),
+        }
+
+        fetch(_api.saveAnswer(), {
+          method: "POST",
+          body: JSON.stringify(data)
+        })
+    }
+
     destroy() {
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
