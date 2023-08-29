@@ -258,6 +258,9 @@ export default class Offline {
         const myLanguageVideos = allLanguagesVideos.filter(file => { return file.audioLanguage == locale })
         if (!myLanguageVideos.length) return
 
+        if (this.experience.settings.videoQuality == 'high')
+            return median(myLanguageVideos)
+
         return offline.getSelectedQualityVideo(myLanguageVideos)
     }
 
