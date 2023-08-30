@@ -574,7 +574,7 @@ export default class MazeGame {
     }
 
     setTimeout(() => {
-      document.querySelector(".maze-game").classList.add("popup-visible");
+      document.querySelector(".maze-game")?.classList.add("popup-visible");
       document.querySelector(".game-popup").style.display = "block";
     }, 500);
   }
