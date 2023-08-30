@@ -580,6 +580,8 @@ export default class MazeGame {
   }
 
   onTimeElapsed() {
+    instance.experience.world.audio.playSound("wrong");
+
     instance.options.gameState = "fade out";
     instance.options.gameRepeat = true;
   }
@@ -589,6 +591,12 @@ export default class MazeGame {
       if (event.body === this.playerBody) {
         bibleBox = event.body;
         this.options.gameState = "fade out";
+
+        instance.experience.world.audio.playSound("congrats");
+        instance.experience.celebrate({
+          particleCount: 100,
+          spread: 160,
+        });
       }
     });
   }
