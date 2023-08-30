@@ -328,18 +328,6 @@
         opacity: 0.6;
         transform-origin: left top;
 
-        .chapter__states {
-            display: none;
-        }
-    }
-
-    body:not(.ak_leder) &.beta {
-        display: none;
-    }
-
-    body:not(.admin) &.locked {
-        filter: grayscale(1);
-
         .coming-soon {
             display: inline-flex;
         }
@@ -349,6 +337,9 @@
         }
     }
 
+    body:not(.ak_leder) &.beta {
+        display: none;
+    }
 }
 
 .coming-soon {
