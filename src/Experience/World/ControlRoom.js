@@ -166,7 +166,6 @@ export default class ControlRoom {
       }
 
       if (child.name === "Screen") {
-        console.log(child);
         child.material = new THREE.MeshBasicMaterial({
           map: this.resources.items.screen_hud,
         });
@@ -174,7 +173,6 @@ export default class ControlRoom {
 
       if (child.material.map) {
         child.material.map.flipY = false;
-        child.material.map.colorSpace = THREE.SRGBColorSpace;
       }
     });
 

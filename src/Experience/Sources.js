@@ -44,7 +44,7 @@ export default [
   {
     name: "screen_hud",
     type: "texture",
-    path: "textures/screen_default.jpg",
+    path: "textures/screen_hud.jpg",
   },
   // Maze game
   {
