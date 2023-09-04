@@ -27,14 +27,14 @@ export default [
     path: "textures/screen_default.jpg",
   },
   {
-    name: "map",
-    type: "videoTexture",
-    path: "textures/map_v2.mp4",
+    name: "map_default",
+    type: "texture",
+    path: "textures/map_default.jpg",
   },
   {
-    name: "codes",
-    type: "videoTexture",
-    path: "textures/codes_v2.mp4",
+    name: "code_default",
+    type: "texture",
+    path: "textures/code_default.jpg",
   },
   {
     name: "iris",
@@ -42,9 +42,9 @@ export default [
     path: "textures/iris_idle_v3.mp4",
   },
   {
-    name: "hud",
-    type: "videoTexture",
-    path: "textures/screen_hud_v2.mp4",
+    name: "screen_hud",
+    type: "texture",
+    path: "textures/screen_default.jpg",
   },
   // Maze game
   {
