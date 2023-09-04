@@ -64,8 +64,10 @@ export default class Experience {
     this.gameIsOn = false;
 
     this.time.on("animation", () => {
-      //   if (this.videoIsPlaying == false && this.gameIsOn == false)
-      this.update();
+      if (this.videoIsPlaying == false && this.gameIsOn == false)
+        // console.time("update");
+        this.update();
+      // console.timeEnd("update");
     });
 
     this.navigation = {
@@ -90,10 +92,10 @@ export default class Experience {
     );
     document.body.appendChild(celebrateCanvas);
 
-    // this.celebrate = confetti.create(celebrateCanvas, {
-    //   resize: true,
-    //   useWorker: true,
-    // });
+    this.celebrate = confetti.create(celebrateCanvas, {
+      resize: true,
+      useWorker: true,
+    });
   }
 
   resize() {
@@ -106,6 +108,9 @@ export default class Experience {
     this.camera.update();
     this.world.update();
     this.stats.update();
+
+    // console.time("render");
     this.renderer.update();
+    // console.timeEnd("render");
   }
 }
