@@ -54,19 +54,19 @@ export default class Resources extends EventEmitter {
 
       if (!document.querySelector(".loader")) return;
 
-      // this.loadingIcon = new rive.Rive({
-      //     src: 'textures/loading_icon.riv',
-      //     canvas: document.querySelector('#loading_icon'),
-      //     autoplay: true,
-      //     stateMachines: 'State Machine 1',
-      // })
+      this.loadingIcon = new rive.Rive({
+        src: "textures/loading_icon.riv",
+        canvas: document.querySelector("#loading_icon"),
+        autoplay: true,
+        stateMachines: "State Machine 1",
+      });
     };
 
     this.loadingManager.onLoad = () => {
       // console.log('Loading complete!')
       document.querySelector(".loader")?.remove();
       document.querySelector(".app-header").style.display = "flex";
-      // this.loadingIcon.cleanup();
+      this.loadingIcon.cleanup();
     };
 
     this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
@@ -74,12 +74,12 @@ export default class Resources extends EventEmitter {
 
       const progressRatio = Math.trunc((itemsLoaded / itemsTotal) * 100);
 
-      //   if (this.loadingIcon.loaded) {
-      //     const inputs = this.loadingIcon.stateMachineInputs("State Machine 1");
-      //     const progress = inputs.find((i) => i.name === "Progress");
+      if (this.loadingIcon.loaded) {
+        const inputs = this.loadingIcon.stateMachineInputs("State Machine 1");
+        const progress = inputs.find((i) => i.name === "Progress");
 
-      //     progress.runtimeInput.value = progressRatio;
-      //   }
+        progress.runtimeInput.value = progressRatio;
+      }
     };
 
     this.loadingManager.onError = function (url) {
