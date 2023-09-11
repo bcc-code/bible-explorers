@@ -61,6 +61,10 @@ export default class Timer {
         timer.stop();
         document.dispatchEvent(_e.EVENTS.TIME_ELAPSED);
       }
+
+      if (timer.remainingSeconds < 10) {
+        document.dispatchEvent(_e.EVENTS.TIME_LAST_SECONDS);
+      }
     }, 1000);
   }
 

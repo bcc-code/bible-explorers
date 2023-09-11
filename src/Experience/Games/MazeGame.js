@@ -70,26 +70,26 @@ export default class MazeGame {
 
   initHtml() {
     const game = _gl.elementFromHtml(`
-        <section class="game maze-game">
-            <div class="container">
-                <div class="game-rounds">
-                ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}
-                </div>
-                <div class="game-popup">
-                    <h1>${_s.miniGames.completed.title}</h1>
-                    <div class="buttons">
-                        <button class="btn default focused" id="new-level">
-                        ${_s.miniGames.nextRound}</button>
-                    </div>
-                </div>
-                <div class="game-labels">
-                    <span id="start-label"></span>
-                    <span id="exit-label"></span>
-                </div>
+      <section class="game maze-game">
+        <div class="container">
+          <div class="game-rounds">
+            ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}
+          </div>
+          <div class="game-popup">
+            <h1>${_s.miniGames.completed.title}</h1>
+            <div class="buttons">
+              <button class="btn default focused" id="new-level">
+              ${_s.miniGames.nextRound}</button>
             </div>
-            <div class="overlay"></div>
-            <div id="maze-canvas" class="game-canvas"></div>
-        </section>`);
+          </div>
+          <div class="game-labels">
+            <span id="start-label"></span>
+            <span id="exit-label"></span>
+          </div>
+        </div>
+        <div class="overlay"></div>
+        <div id="maze-canvas" class="game-canvas"></div>
+      </section>`);
 
     document.querySelector(".ui-container").append(game);
     document.querySelector(".game-popup").style.display = "none";
@@ -103,7 +103,6 @@ export default class MazeGame {
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, this.destroy);
 
     const actionButton = document.querySelector(".maze-game button");
-
     actionButton.addEventListener("click", () => {
       this.options.gameState = "initialize";
       this.disposeLevelAssets();
@@ -111,7 +110,7 @@ export default class MazeGame {
   }
 
   startTimer() {
-    const timerInMinutes = this.currentStepData.timer;
+    const timerInMinutes = 1/4//this.currentStepData.timer;
 
     if (timerInMinutes > 0) {
       this.timer = new Timer();
@@ -121,6 +120,11 @@ export default class MazeGame {
       document.addEventListener(
         _e.ACTIONS.TIME_ELAPSED,
         instance.onTimeElapsed
+      );
+
+      document.addEventListener(
+        _e.ACTIONS.TIME_LAST_SECONDS,
+        instance.onTimeLastSeconds
       );
     }
   }
@@ -146,6 +150,10 @@ export default class MazeGame {
   onTimeElapsed() {
     instance.options.gameState = "fade out";
     instance.options.gameRepeat = true;
+  }
+
+  onTimeLastSeconds() {
+    document.querySelector('.game-timer').classList.add('danger')
   }
 
   initScene() {
