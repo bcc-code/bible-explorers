@@ -259,7 +259,7 @@ export default class Offline {
         if (!myLanguageVideos.length) return
 
         if (this.experience.settings.videoQuality == 'high')
-            return median(myLanguageVideos)
+            return myLanguageVideos.find(video => video.resolution == '960x540')
 
         return offline.getSelectedQualityVideo(myLanguageVideos)
     }
@@ -280,6 +280,7 @@ export default class Offline {
                                 id
                                 audioLanguage
                                 size
+                                resolution
                                 url
                                 fileName
                             }
@@ -296,13 +297,13 @@ export default class Offline {
     getSelectedQualityVideo = function (arr) {
         switch (this.experience.settings.videoQuality) {
             case 'low':
-                return arr.reduce((prev, current) => (prev.size < current.size) ? prev : current)
+                return arr.find(video => video.resolution == '320x180')
 
             case 'medium':
-                return median(arr)
+                return arr.find(video => video.resolution == '960x540')
 
             case 'high':
-                return arr.reduce((prev, current) => (prev.size > current.size) ? prev : current)
+                return arr.find(video => video.resolution == '1920x1080')
         }
     }
 
