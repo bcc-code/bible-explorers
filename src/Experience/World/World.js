@@ -851,12 +851,16 @@ export default class World {
 
     document.querySelector(".page-title")?.remove();
 
-    if (instance.program.archive) instance.program.archive.remove();
+    if (instance.program.archive)
+      instance.program.archive.remove();
 
-    if (instance.program.pause) instance.program.pause.destroy();
+    if (instance.program.pause)
+      instance.program.pause.destroy();
 
     document.querySelector(".fullscreen-section input").checked = false;
-    if (document.fullscreenElement) document.exitFullscreen();
+
+    if (document.fullscreenElement)
+      document.exitFullscreen();
   }
 
   preselectChapter() {

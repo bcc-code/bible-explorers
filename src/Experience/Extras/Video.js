@@ -12,47 +12,48 @@ export default class Video {
         if (instance)
             return instance
 
-        this.experience = new Experience()
-        this.world = this.experience.world
-        this.debug = this.experience.debug
-        this.resources = this.experience.resources
-        this.camera = this.experience.camera
-        this.audio = this.experience.world.audio
-        this.scene = this.experience.scene
-        this.clickableObjects = this.world.controlRoom.clickableObjects
-
         instance = this
 
+        instance.experience = new Experience()
+        instance.world = instance.experience.world
+        instance.debug = instance.experience.debug
+        instance.resources = instance.experience.resources
+        instance.camera = instance.experience.camera
+        instance.audio = instance.world.audio
+        instance.scene = instance.experience.scene
+        instance.controlRoom = instance.world.controlRoom
+        instance.clickableObjects = instance.controlRoom.clickableObjects
+
         // Setup
-        this.portalScreen = this.world.controlRoom.tv_portal
-        this.tablet = this.world.controlRoom.tablet
-        this.videoPlayIcon = null
+        instance.portalScreen = instance.controlRoom.tv_portal
+        instance.tablet = instance.controlRoom.tablet
+        instance.videoPlayIcon = null
 
         instance.canvasTexture()
 
-        this.video = () => {
+        instance.video = () => {
             let id = instance.playingVideoId
             return instance.resources.videoPlayers[id]
         }
 
-        this.videoJsEl = () => {
+        instance.videoJsEl = () => {
             let id = 'videojs-' + instance.playingVideoId
             return document.getElementById(id)
         }
 
-        this.hasSkipBtn = () => {
+        instance.hasSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video') != null
         }
 
-        this.getSkipBtn = () => {
+        instance.getSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video')
         }
 
-        this.playingVideoId = null
+        instance.playingVideoId = null
     }
 
     canvasTexture() {
-        //create image
+        // create image
         const bitmap = createRetinaCanvas(1920, 1080, 1)
         const ctx = bitmap.getContext('2d', { antialias: false })
 
@@ -110,67 +111,50 @@ export default class Video {
     }
 
     load(id) {
-        this.playingVideoId = id
+        instance.playingVideoId = id
 
         // First, remove all previous event listeners - if any
-        this.video().off('ended', instance.waitAndFinish)
+        instance.video().off('ended', instance.waitAndFinish)
+        instance.video().off('play', instance.setFullscreenIfNecessary)
+        instance.video().off('fullscreenchange', instance.pauseOnFullscreenExit)
 
         // Always start new loaded videos from the beginning
-        this.video().currentTime(0)
+        instance.video().currentTime(0)
 
         // Set texture when starting directly on a video task type
-        if (this.portalScreen.material.map != this.resources.customTextureItems[id])
-            this.setTexture(id)
+        if (instance.portalScreen.material.map != instance.resources.customTextureItems[id])
+            instance.setTexture(id)
 
-        const videoQuality = this.getVideoQuality()
-        this.resources.videoPlayers[id].setVideoQuality(videoQuality)
+        const videoQuality = instance.getVideoQuality()
+        instance.resources.videoPlayers[id].setVideoQuality(videoQuality)
 
-        // Add event listener on play
-        this.video().on('play', function () {
-            this.requestFullscreen()
-        })
+        instance.video().on('play', instance.setFullscreenIfNecessary)
+        instance.video().on('fullscreenchange', instance.pauseOnFullscreenExit)
+        instance.video().on('ended', instance.waitAndFinish)
 
-        // Add event listener on video update
-        this.video().on('timeupdate', function () {
-            if (instance.hasSkipBtn()) return
-
-            const skipVideo = document.createElement('div')
-            skipVideo.className = 'skip-video btn default less-focused'
-            skipVideo.innerText = _s.miniGames.skip
-            skipVideo.addEventListener('click', instance.finish)
-            instance.videoJsEl().appendChild(skipVideo)
-        })
-
-        // Add event listener on fullscreen change
-        this.video().on('fullscreenchange', function () {
-            if (!this.isFullscreen_) {
-                instance.pause()
-            }
-        })
-
-        // Add event listener on video end
-        this.video().on('ended', instance.waitAndFinish)
-        this.focus()
+        instance.focus()
+        instance.addSkipBtn()
     }
 
     setTexture(id) {
-        if (!this.resources.customTextureItems.hasOwnProperty(id)) return
+        if (!instance.resources.customTextureItems.hasOwnProperty(id))
+            return
 
-        this.portalScreen.material.map = this.resources.customTextureItems[id]
-        this.portalScreen.material.map.flipY = false
-        this.portalScreen.material.needsUpdate = true
+        instance.portalScreen.material.map = instance.resources.customTextureItems[id]
+        instance.portalScreen.material.map.flipY = false
+        instance.portalScreen.material.needsUpdate = true
     }
 
     //#region Actions
 
     play() {
         instance.video().play()
-        this.experience.videoIsPlaying = true
+        instance.experience.videoIsPlaying = true
     }
 
     pause() {
         instance.video().pause()
-        this.experience.videoIsPlaying = false
+        instance.experience.videoIsPlaying = false
     }
 
     focus() {
@@ -193,9 +177,8 @@ export default class Video {
             instance.portalScreen.scale.set(0, 0, 0)
             instance.videoPlayIcon.visible = false
 
-            if (this.video().isFullscreen_) {
+            if (instance.video().isFullscreen_)
                 instance.video().exitFullscreen()
-            }
 
             instance.audio.setOtherAudioIsPlaying(false)
             instance.audio.fadeInBgMusic()
@@ -205,21 +188,22 @@ export default class Video {
     }
 
     waitAndFinish() {
-        if (instance.hasSkipBtn())
-            instance.getSkipBtn().remove()
-
         setTimeout(() => { instance.finish() }, 1000)
     }
 
     finish() {
+        if (instance.hasSkipBtn())
+            instance.getSkipBtn().remove()
+
         instance.defocus()
         instance.world.program.nextStep()
+        setTimeout(() => { instance.playingVideoId = null }, 1000)
     }
 
     //#endregion
 
     getVideoQuality() {
-        switch (this.world.selectedQuality) {
+        switch (instance.world.selectedQuality) {
             case 'low':
                 return 270
 
@@ -230,6 +214,27 @@ export default class Video {
             default:
                 return 1080
         }
+    }
+
+    setFullscreenIfNecessary() {
+        if (!this.isFullscreen_)
+            this.requestFullscreen()
+    }
+
+    pauseOnFullscreenExit() {
+        if (!this.isFullscreen_)
+            instance.pause()
+    }
+
+    addSkipBtn() {
+        if (instance.hasSkipBtn())
+            return
+
+        const skipVideo = document.createElement('div')
+        skipVideo.className = 'skip-video btn default less-focused'
+        skipVideo.innerText = _s.miniGames.skip
+        skipVideo.addEventListener('click', instance.finish)
+        instance.videoJsEl().appendChild(skipVideo)
     }
 }
 
@@ -243,7 +248,6 @@ const PIXEL_RATIO = (function () {
             ctx.backingStorePixelRatio || 1;
     return dpr / bsr;
 })();
-
 
 const createRetinaCanvas = function (w, h, ratio) {
     if (!ratio) { ratio = PIXEL_RATIO; }
