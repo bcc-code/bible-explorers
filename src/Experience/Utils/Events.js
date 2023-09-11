@@ -3,6 +3,7 @@ const ACTIONS = {
     AUDIO_TASK_DESCRIPTION_ENDED: 'audioTaskDescriptionEnded',
     NOTE_PLAYED: 'notePlayed',
     TIME_ELAPSED: 'timeElapsed',
+    TIME_LAST_SECONDS: 'timeLastSeconds',
     STEP_TOGGLED: 'stepToggled'
 }
 
@@ -11,6 +12,7 @@ const EVENTS = {
     AUDIO_TASK_DESCRIPTION_ENDED: new Event('audioTaskDescriptionEnded'),
     NOTE_PLAYED: new Event('notePlayed'),
     TIME_ELAPSED: new Event('timeElapsed'),
+    TIME_LAST_SECONDS: new Event('timeLastSeconds'),
     STEP_TOGGLED: new Event('stepToggled')
 }
 

@@ -48,6 +48,12 @@
     position: absolute;
     left: var(--app-padding);
     top: var(--app-padding);
+
+    &.danger {
+      border-color: red;
+      font-weight: bold;
+      color: red;
+    }
   }
 
   &-popup {
