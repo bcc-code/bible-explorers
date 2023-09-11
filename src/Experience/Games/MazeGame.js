@@ -110,7 +110,7 @@ export default class MazeGame {
   }
 
   startTimer() {
-    const timerInMinutes = 1/4//this.currentStepData.timer;
+    const timerInMinutes = this.currentStepData.timer;
 
     if (timerInMinutes > 0) {
       this.timer = new Timer();
@@ -153,7 +153,7 @@ export default class MazeGame {
   }
 
   onTimeLastSeconds() {
-    document.querySelector('.game-timer').classList.add('danger')
+    document.querySelector(".game-timer").classList.add("danger");
   }
 
   initScene() {
