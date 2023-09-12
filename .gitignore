@@ -4,4 +4,3 @@ dist
 .DS_store
 package-lock.json
 .prettierrc
-prettier.config.js
