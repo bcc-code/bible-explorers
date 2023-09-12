@@ -190,7 +190,6 @@ export default class Resources extends EventEmitter {
   }
 
   loadEpisodeTextures(videoName) {
-    console.log('update ch textures');
     resources.addVideoDivElementToContainer(videoName, 'videos-container');
     this.offline.loadEpisodeFromIndexedDb(
       videoName,
