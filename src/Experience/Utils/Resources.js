@@ -1,14 +1,14 @@
-import * as THREE from "three";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import EventEmitter from "./EventEmitter.js";
-import Experience from "../Experience.js";
-import Offline from "../Utils/Offline.js";
-import { PlayerFactory, createPlayer } from "bccm-video-player";
-import "bccm-video-player/css";
-import _c from "../Utils/Connection.js";
-import _lang from "../Utils/Lang.js";
-import _s from "../Utils/Strings.js";
+import * as THREE from 'three';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import EventEmitter from './EventEmitter.js';
+import Experience from '../Experience.js';
+import Offline from '../Utils/Offline.js';
+import { PlayerFactory, createPlayer } from 'bccm-video-player';
+import 'bccm-video-player/css';
+import _c from '../Utils/Connection.js';
+import _lang from '../Utils/Lang.js';
+import _s from '../Utils/Strings.js';
 
 let resources = null;
 
@@ -19,6 +19,7 @@ export default class Resources extends EventEmitter {
     this.offline = new Offline();
     this.experience = new Experience();
     this.loadingManager = new THREE.LoadingManager();
+    this.chapterLoadingManager = new THREE.LoadingManager();
     this.page = this.experience.page;
 
     resources = this;
@@ -44,46 +45,50 @@ export default class Resources extends EventEmitter {
     // BTV player factory
     this.factory = new PlayerFactory({
       tokenFactory: null,
-      endpoint: "https://api.brunstad.tv/query",
+      endpoint: 'https://api.brunstad.tv/query',
     });
   }
 
   loadManager() {
     this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-      // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-
-      if (!document.querySelector(".loader")) return;
+      if (!document.querySelector('.loader')) return;
 
       this.loadingIcon = new rive.Rive({
-        src: "textures/loading_icon.riv",
-        canvas: document.querySelector("#loading_icon"),
+        src: 'textures/loading_icon.riv',
+        canvas: document.querySelector('#loading_icon'),
         autoplay: true,
-        stateMachines: "State Machine 1",
+        stateMachines: 'State Machine 1',
       });
     };
 
     this.loadingManager.onLoad = () => {
-      // console.log('Loading complete!')
-      document.querySelector(".loader")?.remove();
-      document.querySelector(".app-header").style.display = "flex";
-      this.loadingIcon.cleanup();
+      console.log('Loading complete!');
+      document.querySelector('.loader')?.remove();
+      document.querySelector('.app-header').style.display = 'flex';
+
+      this.loadingIcon.cleanupInstances();
+      this.loadingIcon.reset();
     };
 
     this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-      // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+      console.log(
+        `Started loading file: ${url} .\nloaded ${itemsLoaded} of ${itemsTotal} files`,
+      );
 
       const progressRatio = Math.trunc((itemsLoaded / itemsTotal) * 100);
 
       if (this.loadingIcon.loaded) {
-        const inputs = this.loadingIcon.stateMachineInputs("State Machine 1");
-        const progress = inputs.find((i) => i.name === "Progress");
+        if (this.loadingIcon.stateMachineInputs('State Machine 1')) {
+          const inputs = this.loadingIcon.stateMachineInputs('State Machine 1');
+          const progress = inputs.find((i) => i.name === 'Progress');
 
-        progress.runtimeInput.value = progressRatio;
+          progress.runtimeInput.value = progressRatio;
+        }
       }
     };
 
     this.loadingManager.onError = function (url) {
-      console.log("There was an error loading " + url);
+      console.log('There was an error loading ' + url);
     };
   }
 
@@ -91,54 +96,54 @@ export default class Resources extends EventEmitter {
     this.loaders = {};
 
     this.loaders.dracoLoader = new DRACOLoader(this.loadingManager);
-    this.loaders.dracoLoader.setDecoderPath("draco/");
+    this.loaders.dracoLoader.setDecoderPath('draco/');
 
     this.loaders.gltfLoader = new GLTFLoader(this.loadingManager);
     this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager);
     this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(
-      this.loadingManager
+      this.loadingManager,
     );
   }
 
   startLoading() {
     // Load each source
     for (const source of this.sources) {
-      if (source.type === "gltfModel") {
+      if (source.type === 'gltfModel') {
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
         this.loaders.gltfLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === "texture") {
+      } else if (source.type === 'texture') {
         this.loaders.textureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === "cubeTexture") {
+      } else if (source.type === 'cubeTexture') {
         this.loaders.cubeTextureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === "videoTexture") {
-        this.loadVideoTexture(source.name, source.path, "default");
+      } else if (source.type === 'videoTexture') {
+        this.loadVideoTexture(source.name, source.path, 'default');
       }
     }
   }
 
   loadVideoTexture(name, url, type) {
-    const video = document.createElement("video");
-    video.addEventListener("canplay", this.onVideoLoad(video, url), false);
+    const video = document.createElement('video');
+    video.addEventListener('canplay', this.onVideoLoad(video, url), false);
 
-    video.setAttribute("id", name);
-    video.setAttribute("webkit-playsinline", "webkit-playsinline");
-    video.setAttribute("playsinline", "");
-    video.style.background = "white";
-    video.crossOrigin = "";
+    video.setAttribute('id', name);
+    video.setAttribute('webkit-playsinline', 'webkit-playsinline');
+    video.setAttribute('playsinline', '');
+    video.style.background = 'white';
+    video.crossOrigin = '';
     video.muted = false;
     video.loop = true;
     video.controls = false;
     video.autoplay = false;
-    video.preload = "auto";
+    video.preload = 'auto';
     video.src = url;
 
-    if (type == "default") video.autoplay = true;
+    if (type == 'default') video.autoplay = true;
 
     const texture = new THREE.VideoTexture(video);
     texture.flipY = false;
@@ -154,7 +159,7 @@ export default class Resources extends EventEmitter {
       naturalHeight: video.videoHeight || 1,
     };
 
-    type && type == "default"
+    type && type == 'default'
       ? (this.textureItems[name] = textureObject)
       : (this.customTextureItems[name] = textureObject);
 
@@ -162,7 +167,7 @@ export default class Resources extends EventEmitter {
   }
 
   onVideoLoad(video, url) {
-    video.removeEventListener("canplay", this.onVideoLoad, false);
+    video.removeEventListener('canplay', this.onVideoLoad, false);
     this.loadingManager.itemEnd(url);
     this.itemsLoaded++;
   }
@@ -172,7 +177,7 @@ export default class Resources extends EventEmitter {
     this.itemsLoaded++;
 
     if (this.itemsLoaded === this.toLoad) {
-      this.trigger("ready");
+      this.trigger('ready');
     }
   }
 
@@ -185,26 +190,27 @@ export default class Resources extends EventEmitter {
   }
 
   loadEpisodeTextures(videoName) {
-    resources.addVideoDivElementToContainer(videoName, "videos-container");
+    console.log('update ch textures');
+    resources.addVideoDivElementToContainer(videoName, 'videos-container');
     this.offline.loadEpisodeFromIndexedDb(
       videoName,
       this.loadTexturesLocally,
-      this.loadTexturesOnline
+      this.loadTexturesOnline,
     );
   }
 
   loadVideoInBtvPlayer(videoName) {
-    resources.addVideoDivElementToContainer(videoName, "video-" + videoName);
+    resources.addVideoDivElementToContainer(videoName, 'video-' + videoName);
     this.offline.loadVideoFromIndexedDb(
       videoName,
       this.loadTexturesLocally,
-      this.loadTexturesOnline
+      this.loadTexturesOnline,
     );
   }
 
   addVideoDivElementToContainer(videoName, containerId) {
-    const videoEl = document.createElement("div");
-    videoEl.setAttribute("id", videoName);
+    const videoEl = document.createElement('div');
+    videoEl.setAttribute('id', videoName);
     document.getElementById(containerId).appendChild(videoEl);
   }
 
@@ -228,7 +234,7 @@ export default class Resources extends EventEmitter {
   async streamLocally(videoName, videoUrl) {
     const player = await createPlayer(videoName, {
       src: {
-        type: "video/mp4",
+        type: 'video/mp4',
         src: videoUrl,
       },
       autoplay: false,
@@ -241,7 +247,7 @@ export default class Resources extends EventEmitter {
   }
 
   async streamFromBtv(videoName) {
-    const episodeId = videoName.replace("episode-", "");
+    const episodeId = videoName.replace('episode-', '');
     const player = await resources.factory.create(videoName, {
       episodeId: episodeId,
       overrides: {
@@ -271,13 +277,13 @@ export default class Resources extends EventEmitter {
         });
 
         // Save to cache for offline use
-        caches.open("apiResponses").then(function (cache) {
+        caches.open('apiResponses').then(function (cache) {
           cache.put(theUrl, responseClone);
         });
       })
       .catch(function () {
         resources.offline.setConnection(_c.OFFLINE);
-        caches.open("apiResponses").then(function (cache) {
+        caches.open('apiResponses').then(function (cache) {
           cache.match(theUrl).then((response) => {
             response.json().then(function (cachedData) {
               callback(cachedData);
