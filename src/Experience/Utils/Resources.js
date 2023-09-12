@@ -71,9 +71,9 @@ export default class Resources extends EventEmitter {
     };
 
     this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-      console.log(
-        `Started loading file: ${url} .\nloaded ${itemsLoaded} of ${itemsTotal} files`,
-      );
+      // console.log(
+      //   `Started loading file: ${url} .\nloaded ${itemsLoaded} of ${itemsTotal} files`,
+      // );
 
       const progressRatio = Math.trunc((itemsLoaded / itemsTotal) * 100);
 
