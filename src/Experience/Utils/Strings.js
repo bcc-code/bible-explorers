@@ -4,6 +4,7 @@ const strings = {
     "en": {
         "loading": "Loading",
         "initializing": "Initializing",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Join time travels and explore the book that can answer every question",
         "introduction": "Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers",
         "notAvailable": "No chapter available in the selected language",
@@ -151,6 +152,7 @@ const strings = {
     "no": {
         "loading": "Laster",
         "initializing": "Initialiserer",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål",
         "introduction": "Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers",
         "notAvailable": "Ingen kapitel tilgjengelig i det utvalgte språket",
@@ -298,6 +300,7 @@ const strings = {
     "de": {
         "loading": "Wird geladen",
         "initializing": "Inizialisieren",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Komm mit auf Zeitreise und erforsche das Buch, das alle Fragen beantworten kann",
         "introduction": "Jetzt können die Kinder von 6-12 Jahren auf fantastische Zeitreisen gehen und die Bibel ganz neu erleben – mit Explorers",
         "notAvailable": "Kein Kapitel in der gewählten Sprache verfügbar",
@@ -445,6 +448,7 @@ const strings = {
     "nl": {
         "loading": "Laden",
         "initializing": "Initialiseren",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
         "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
         "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
@@ -592,6 +596,7 @@ const strings = {
     "fr": {
         "loading": "Chargement",
         "initializing": "Initialisation",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Rejoins les voyages dans le temps et explore le livre qui peut répondre à toutes les questions",
         "introduction": "Les enfants de 6 à 12 ans peuvent maintenant participer à de fantastiques voyages dans le temps et découvrir la Bible d’une toute nouvelle manière – avec Explorers",
         "notAvailable": "Aucun chapitre disponible dans la langue sélectionnée",
@@ -739,6 +744,7 @@ const strings = {
     "pl": {
         "loading": "Ładowanie",
         "initializing": "Inicjuję",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Dołącz do podróży w czasie i odkryj książkę, która odpowie na każde pytanie",
         "introduction": "Od teraz dzieci w wieku 6-12 lat będą mogły uczestniczyć w niesamowitych podróżach w czasie i poznać Biblię w zupełnie nowy sposób – przez Explorers",
         "notAvailable": "Żaden rozdział nie jest dostępny w wybranym języku",
@@ -886,6 +892,7 @@ const strings = {
     "ro": {
         "loading": "Se încarcă",
         "initializing": "Inițializare",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
         "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
         "notAvailable": "Nici un capitol disponibil în limba selectată",
@@ -1033,6 +1040,7 @@ const strings = {
     "es": {
         "loading": "Cargando",
         "initializing": "Inicializando",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Unete a un viaje en el tiempo y explora el libro que puede responder todas las preguntas",
         "introduction": "Ahora los niños entre 6 a 12 años pueden unirse a un fantástico viaje en el tiempo y experimentar la biblia de una nueva forma - con los exploradores",
         "notAvailable": "No hay capítulos disponibles en el idioma seleccionado",
@@ -1180,6 +1188,7 @@ const strings = {
     "pt-pt": {
         "loading": "Carregando",
         "initializing": "Inicialização",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
         "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
         "notAvailable": "Nenhum capítulo disponível no idioma selecionado",
@@ -1327,6 +1336,7 @@ const strings = {
     "it": {
         "loading": "Caricamento",
         "initializing": "Inizializzazione",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Unisciti al viaggio nel tempo ed esplora il libro che può rispondere a ogni domanda",
         "introduction": "Ora i bambini di età compresa tra i 6 e i 12 anni possono partecipare a fantastici viaggi nel tempo e vivere la Bibbia in un modo del tutto nuovo, grazie a Explorers",
         "notAvailable": "Nessun capitolo disponibile nella lingua selezionata",
@@ -1474,6 +1484,7 @@ const strings = {
     "ru": {
         "loading": "Загрузка",
         "initializing": "Инициализация",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Присоединяйтесь к путешествию во времени и исследуйте книгу, способную ответить на все вопросы",
         "introduction": "Теперь дети в возрасте 6–12  лет могут присоединиться к фантастическим путешествиям во времени и переживать Библию совершенно по-новому – вместе с Explorers",
         "notAvailable": "Ни одна глава недоступна на выбранном языке",
@@ -1621,6 +1632,7 @@ const strings = {
     "fi": {
         "loading": "Ladataan",
         "initializing": "Alustaa",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Liity aikamatkalle ja tutki kirjaa josta saat vastaukset kaikkiin kysymyksiin",
         "introduction": "Nyt 6-12 vuotiaat lapset voivat osallistua mahtaville aikamatkoille ja kokea Raamatun kokonaan uudella tavalla – Explorersien kanssa",
         "notAvailable": "Valitsemallasi kielellä ei ole tarjolla yhtään jaksoa",
@@ -1768,6 +1780,7 @@ const strings = {
     "hu": {
         "loading": "Betöltés",
         "initializing": "Inicializálás",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Csatlakozz az időutazáshoz és fedezd fel a könyvet, amely minden kérdésre választ ad!",
         "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
         "notAvailable": "No chapter available in the selected language",
@@ -1915,6 +1928,7 @@ const strings = {
     "da": {
         "loading": "Loader",
         "initializing": "Initialiserer",
+        "fetching": "Fetching chapters",
         "conceptDescription": "Kom med på tidsrejsen og udforsk bogen, som kan besvare alle spørgsmål",
         "introduction": "Nu kan børnene i alderen 6-12 år komme med på en fantastisk tidsrejse og opleve bibelen på en helt ny måde – med Explorers",
         "notAvailable": "Intet tilgængeligt kapitel i det valgte sprog",

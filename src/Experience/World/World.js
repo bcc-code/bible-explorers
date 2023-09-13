@@ -35,11 +35,10 @@ export default class World {
 
     // Wait for resources
     this.resources.on('ready', () => {
+      instance.chaptersData = instance.resources.api[_api.getBiexChapters()]
+
       this.page.createIntro();
-      this.resources.fetchApiThenCache(
-        _api.getBiexChapters(),
-        this.setCategories,
-      );
+      this.setCategories();
 
       // Setup
       this.controlRoom = new ControlRoom();
@@ -56,10 +55,10 @@ export default class World {
     this.selectedQuality = this.experience.settings.videoQuality;
 
     // Chapters
+    this.chaptersData = []
     this.menu = {
       categories: document.querySelector('.categories.list'),
-      chapters: document.querySelector('.chapters'),
-      chaptersData: [],
+      chapters: document.querySelector('.chapters')
     };
 
     this.buttons = {
@@ -85,13 +84,7 @@ export default class World {
     instance.removeDescriptionHtml();
     instance.page.removeLobby();
     instance.page.createIntro();
-
-    !instance.menu.chaptersData
-      ? instance.resources.fetchApiThenCache(
-          _api.getBiexChapters(),
-          instance.setCategories,
-        )
-      : instance.setCategories(instance.menu.chaptersData);
+    instance.setCategories();
   }
 
   showLobby() {
@@ -104,13 +97,11 @@ export default class World {
     );
   }
 
-  setCategories(result) {
-    if (result.length == 0) instance.addNotAvailableInYourLanguageMessage();
-    if (result.hasOwnProperty('message')) return;
+  setCategories() {
+    if (instance.chaptersData.length == 0) instance.addNotAvailableInYourLanguageMessage();
+    if (instance.chaptersData.hasOwnProperty('message')) return;
 
-    instance.menu.chaptersData = result;
-
-    for (const [category, data] of Object.entries(instance.menu.chaptersData)) {
+    for (const [category, data] of Object.entries(instance.chaptersData)) {
       instance.setCategoryHtml({ name: data.name, slug: data.slug });
     }
 
@@ -142,7 +133,7 @@ export default class World {
   }
 
   setChapters() {
-    instance.menu.chaptersData[instance.selectedCategory]['chapters'].forEach(
+    instance.chaptersData[instance.selectedCategory]['chapters'].forEach(
       (chapter) => {
         instance.setChapterHtml(chapter);
       },
@@ -439,7 +430,7 @@ export default class World {
   updateSelectedChapterData(chapter) {
     const chapterId = chapter.getAttribute('data-id');
     const categorySlug = chapter.getAttribute('data-slug');
-    instance.selectedChapter = instance.menu.chaptersData[categorySlug][
+    instance.selectedChapter = instance.chaptersData[categorySlug][
       'chapters'
     ].find((chapter) => {
       return chapter.id == chapterId;
@@ -462,7 +453,7 @@ export default class World {
     let chapterEl = chapter.closest('.chapter');
     const chapterId = chapterEl.getAttribute('data-id');
     const categorySlug = chapterEl.getAttribute('data-slug');
-    const selectedChapter = instance.menu.chaptersData[categorySlug][
+    const selectedChapter = instance.chaptersData[categorySlug][
       'chapters'
     ].find((chapter) => {
       return chapter.id == chapterId;
@@ -482,7 +473,7 @@ export default class World {
     let chapterEl = chapter.closest('.chapter');
     const chapterId = chapterEl.getAttribute('data-id');
     const categorySlug = chapterEl.getAttribute('data-slug');
-    const selectedChapter = instance.menu.chaptersData[categorySlug][
+    const selectedChapter = instance.chaptersData[categorySlug][
       'chapters'
     ].find((chapter) => {
       return chapter.id == chapterId;

@@ -7,6 +7,7 @@ import Offline from '../Utils/Offline.js';
 import { PlayerFactory, createPlayer } from 'bccm-video-player';
 import 'bccm-video-player/css';
 import _c from '../Utils/Connection.js';
+import _api from '../Utils/Api.js';
 import _lang from '../Utils/Lang.js';
 import _s from '../Utils/Strings.js';
 
@@ -37,6 +38,7 @@ export default class Resources extends EventEmitter {
     this.customTextureItems = [];
     this.posterImages = [];
     this.videoPlayers = [];
+    this.api = [];
 
     this.loadManager();
     this.setLoaders();
@@ -61,15 +63,6 @@ export default class Resources extends EventEmitter {
       });
     };
 
-    this.loadingManager.onLoad = () => {
-      console.log('Loading complete!');
-      document.querySelector('.loader')?.remove();
-      document.querySelector('.app-header').style.display = 'flex';
-
-      this.loadingIcon.cleanupInstances();
-      this.loadingIcon.reset();
-    };
-
     this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
       // console.log(
       //   `Started loading file: ${url} .\nloaded ${itemsLoaded} of ${itemsTotal} files`,
@@ -85,6 +78,26 @@ export default class Resources extends EventEmitter {
           progress.runtimeInput.value = progressRatio;
         }
       }
+    };
+
+    this.loadingManager.onLoad = () => {
+      document.querySelector(".loader span").innerText = _s.fetching;
+
+      resources.fetchApiThenCache(
+        _api.getBiexChapters(),
+        (json) => {
+          this.api[_api.getBiexChapters()] = json
+
+          console.log('Loading complete!');
+          this.trigger('ready');
+
+          document.querySelector('.loader')?.remove();
+          document.querySelector('.app-header').style.display = 'flex';
+
+          this.loadingIcon.cleanupInstances();
+          this.loadingIcon.reset();
+        }
+      );
     };
 
     this.loadingManager.onError = function (url) {
@@ -106,22 +119,24 @@ export default class Resources extends EventEmitter {
   }
 
   startLoading() {
-    // Load each source
     for (const source of this.sources) {
       if (source.type === 'gltfModel') {
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
         this.loaders.gltfLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === 'texture') {
+      }
+      else if (source.type === 'texture') {
         this.loaders.textureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === 'cubeTexture') {
+      }
+      else if (source.type === 'cubeTexture') {
         this.loaders.cubeTextureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === 'videoTexture') {
+      }
+      else if (source.type === 'videoTexture') {
         this.loadVideoTexture(source.name, source.path, 'default');
       }
     }
@@ -175,10 +190,6 @@ export default class Resources extends EventEmitter {
   sourceLoaded(source, file) {
     this.items[source.name] = file;
     this.itemsLoaded++;
-
-    if (this.itemsLoaded === this.toLoad) {
-      this.trigger('ready');
-    }
   }
 
   updateBtvStreamWithDownloadedVersion(videoName) {
