@@ -35,7 +35,7 @@ export default class World {
 
     // Wait for resources
     this.resources.on('ready', () => {
-      instance.chaptersData = instance.resources.api[_api.getBiexChapters()]
+      instance.chaptersData = instance.resources.api[_api.getBiexChapters()];
 
       this.page.createIntro();
       this.setCategories();
@@ -55,10 +55,10 @@ export default class World {
     this.selectedQuality = this.experience.settings.videoQuality;
 
     // Chapters
-    this.chaptersData = []
+    this.chaptersData = [];
     this.menu = {
       categories: document.querySelector('.categories.list'),
-      chapters: document.querySelector('.chapters')
+      chapters: document.querySelector('.chapters'),
     };
 
     this.buttons = {
@@ -98,7 +98,8 @@ export default class World {
   }
 
   setCategories() {
-    if (instance.chaptersData.length == 0) instance.addNotAvailableInYourLanguageMessage();
+    if (instance.chaptersData.length == 0)
+      instance.addNotAvailableInYourLanguageMessage();
     if (instance.chaptersData.hasOwnProperty('message')) return;
 
     for (const [category, data] of Object.entries(instance.chaptersData)) {
