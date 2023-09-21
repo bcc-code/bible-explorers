@@ -201,6 +201,7 @@ export default class Video {
 
     instance.defocus();
     instance.world.program.nextStep();
+
     setTimeout(() => {
       instance.playingVideoId = null;
     }, 1000);

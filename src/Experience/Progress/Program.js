@@ -180,7 +180,6 @@ export default class Program {
 
             instance.updateCameraForCurrentStep(() => {
                 instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
-                instance.video.defocus()
                 instance.video.setTexture(instance.nextVideo())
             })
 
