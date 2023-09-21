@@ -316,13 +316,13 @@
         box-shadow: 0 0 1rem var(--clr-secondary);
     }
 
-    body.ak_leder & {
+    body.bcc_member & {
         .chapter__states {
             display: inline-flex;
         }
     }
 
-    body:not(.ak_leder) &.locked {
+    body:not(.bcc_member) &.locked {
         filter: grayscale(1);
         pointer-events: none;
         opacity: 0.6;
@@ -337,7 +337,7 @@
         }
     }
 
-    body:not(.ak_leder) &.beta {
+    body:not(.bcc_member) &.beta {
         display: none;
     }
 }

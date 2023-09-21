@@ -81,26 +81,23 @@ export default class Resources extends EventEmitter {
     };
 
     this.loadingManager.onLoad = () => {
-      const loader = document.querySelector(".loader span")
-      if (!loader) return
-        
-      loader.innerText = _s.fetching
+      const loader = document.querySelector('.loader span');
+      if (!loader) return;
 
-      resources.fetchApiThenCache(
-        _api.getBiexChapters(),
-        (json) => {
-          this.api[_api.getBiexChapters()] = json
+      loader.innerText = _s.fetching;
 
-          console.log('Loading complete!');
-          this.trigger('ready');
+      resources.fetchApiThenCache(_api.getBiexChapters(), (json) => {
+        this.api[_api.getBiexChapters()] = json;
 
-          document.querySelector('.loader')?.remove();
-          document.querySelector('.app-header').style.display = 'flex';
+        console.log('Loading complete!');
+        this.trigger('ready');
 
-          this.loadingIcon.cleanupInstances();
-          this.loadingIcon.reset();
-        }
-      );
+        document.querySelector('.loader')?.remove();
+        document.querySelector('.app-header').style.display = 'flex';
+
+        this.loadingIcon.cleanupInstances();
+        this.loadingIcon.reset();
+      });
     };
 
     this.loadingManager.onError = function (url) {
@@ -128,18 +125,15 @@ export default class Resources extends EventEmitter {
         this.loaders.gltfLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      }
-      else if (source.type === 'texture') {
+      } else if (source.type === 'texture') {
         this.loaders.textureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      }
-      else if (source.type === 'cubeTexture') {
+      } else if (source.type === 'cubeTexture') {
         this.loaders.cubeTextureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      }
-      else if (source.type === 'videoTexture') {
+      } else if (source.type === 'videoTexture') {
         this.loadVideoTexture(source.name, source.path, 'default');
       }
     }
