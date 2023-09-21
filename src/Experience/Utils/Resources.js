@@ -81,7 +81,10 @@ export default class Resources extends EventEmitter {
     };
 
     this.loadingManager.onLoad = () => {
-      document.querySelector(".loader span").innerText = _s.fetching;
+      const loader = document.querySelector(".loader span")
+      if (!loader) return
+        
+      loader.innerText = _s.fetching
 
       resources.fetchApiThenCache(
         _api.getBiexChapters(),
