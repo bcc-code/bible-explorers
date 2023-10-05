@@ -1,8 +1,8 @@
-import Offline from "../Utils/Offline.js";
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import Offline from '../Utils/Offline.js';
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 
@@ -40,39 +40,40 @@ export default class Dialogue {
                 <button class="question">
                     <p>${dialog.question}</p>
                 </button>`);
-      dialogue.querySelector(".content").append(option);
+      dialogue.querySelector('.content').append(option);
     });
 
-    document.querySelector(".ui-container").append(dialogue);
+    document.querySelector('.ui-container').append(dialogue);
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.next.classList.add('less-focused');
     instance.experience.navigation.next.disabled = false;
   }
 
   setEventListeners() {
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 
-    const buttons = document.querySelectorAll(".dialogue .content button");
+    const buttons = document.querySelectorAll('.dialogue .content button');
     buttons.forEach((button, index) => {
-      button.addEventListener("click", () => {
-        buttons.forEach((button) => button.classList.remove("current"));
+      button.addEventListener('click', () => {
+        buttons.forEach((button) => button.classList.remove('current'));
 
         // Remove previous message
-        document.querySelector(".message-from-dialogue")?.remove();
+        document.querySelector('.message-from-dialogue')?.remove();
 
         // Add visited class
-        button.classList.add("visited");
-        button.classList.add("current");
+        button.classList.add('visited');
+        button.classList.add('current');
 
         // Check if all were visited
         if (
-          document.querySelectorAll(".dialogue .content button.visited")
+          document.querySelectorAll('.dialogue .content button.visited')
             .length == buttons.length
         ) {
           instance.experience.navigation.next.disabled = false;
-          instance.experience.navigation.next.classList.add("focused");
+          instance.experience.navigation.next.classList.remove('less-focused');
+          instance.experience.navigation.next.classList.add('focused');
           instance.experience.navigation.next.innerHTML =
             instance.experience.icons.next;
         }
@@ -83,12 +84,12 @@ export default class Dialogue {
           // Fetch audio from blob or url
           instance.offline.fetchChapterAsset(
             instance.data[index],
-            "audio",
+            'audio',
             (data) => {
               instance.answerAudio = data.audio;
               instance.audio.stopAllTaskDescriptions();
               instance.audio.togglePlayTaskDescription(instance.answerAudio);
-            }
+            },
           );
         }
       });
@@ -96,7 +97,7 @@ export default class Dialogue {
   }
 
   setMessageHtml(text) {
-    document.querySelector(".ui-container").append(
+    document.querySelector('.ui-container').append(
       _gl.elementFromHtml(
         `<section class="message-from-dialogue">
                     <div class="container">
@@ -105,17 +106,17 @@ export default class Dialogue {
                             ${text}
                         </div>
                     </div>
-                </section>`
-      )
+                </section>`,
+      ),
     );
   }
 
   destroy() {
-    document.querySelector(".dialogue")?.remove();
-    document.querySelector(".message-from-dialogue")?.remove();
+    document.querySelector('.dialogue')?.remove();
+    document.querySelector('.message-from-dialogue')?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }

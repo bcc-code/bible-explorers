@@ -1,9 +1,9 @@
-import gsap from "gsap";
-import Offline from "../Utils/Offline.js";
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import gsap from 'gsap';
+import Offline from '../Utils/Offline.js';
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 
@@ -41,12 +41,12 @@ export default class DavidsRefuge {
             </section>
         `);
 
-    document.querySelector(".ui-container").append(game);
+    document.querySelector('.ui-container').append(game);
 
     instance.data.characters.forEach((goat) => {
-      const url = goat.image.split("/");
-      const fileName = url[url.length - 1].replace("goat-", "");
-      const color = fileName.split(".")[0];
+      const url = goat.image.split('/');
+      const fileName = url[url.length - 1].replace('goat-', '');
+      const color = fileName.split('.')[0];
 
       const item = _gl.elementFromHtml(`
                 <article class="goat" data-color="${color}">
@@ -58,27 +58,27 @@ export default class DavidsRefuge {
                 </article>
             `);
 
-      game.querySelector(".goats").append(item);
+      game.querySelector('.goats').append(item);
 
       gsap.to(item, { scale: 0.85 });
 
-      if (color === "blue") {
-        gsap.set(item, { x: "-100%" });
-      } else if (color === "yellow") {
-        gsap.set(item, { x: "100%" });
+      if (color === 'blue') {
+        gsap.set(item, { x: '-100%' });
+      } else if (color === 'yellow') {
+        gsap.set(item, { x: '100%' });
       }
     });
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
-    instance.experience.navigation.container.style.display = "flex";
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
   }
 
   useCorrectAssetsSrc() {
     instance.data.characters.forEach((character, index) => {
-      instance.offline.fetchChapterAsset(character, "image", (data) => {
-        document.querySelectorAll("article.goat img")[index].src = data.image;
+      instance.offline.fetchChapterAsset(character, 'image', (data) => {
+        document.querySelectorAll('article.goat img')[index].src = data.image;
       });
     });
   }
@@ -105,22 +105,22 @@ export default class DavidsRefuge {
         `);
 
     document
-      .querySelector(".davids-refuge .container")
+      .querySelector('.davids-refuge .container')
       .append(hintsToggle, hints);
 
-    const hintsList = hints.querySelector("ul");
+    const hintsList = hints.querySelector('ul');
 
-    gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: "top left" });
+    gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: 'top left' });
 
     const showHints = gsap
       .timeline({ paused: true })
       .to(hints, { scale: 1, autoAlpha: 1 });
 
-    hintsToggle.addEventListener("click", () => {
-      hints.style.opacity === "0" ? showHints.play() : showHints.reverse();
+    hintsToggle.addEventListener('click', () => {
+      hints.style.opacity === '0' ? showHints.play() : showHints.reverse();
     });
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener('click', (event) => {
       if (
         !hints.contains(event.target) &&
         !hintsToggle.contains(event.target) &&
@@ -131,11 +131,11 @@ export default class DavidsRefuge {
 
     let index = 1;
 
-    const getHint = hints.querySelector("button");
-    getHint.addEventListener("click", () => {
+    const getHint = hints.querySelector('button');
+    getHint.addEventListener('click', () => {
       if (index < instance.data.hints.length) {
         const hint = _gl.elementFromHtml(
-          `<li>${instance.data.hints[index].text}</li>`
+          `<li>${instance.data.hints[index].text}</li>`,
         );
         hintsList.appendChild(hint);
       }
@@ -150,34 +150,34 @@ export default class DavidsRefuge {
     // Goat selection
     const selectGoat = document.querySelector('[aria-label="select goat"]');
 
-    gsap.utils.toArray(".goat").forEach((item, index) => {
+    gsap.utils.toArray('.goat').forEach((item, index) => {
       const q = gsap.utils.selector(item);
-      const tooltip = q(".tooltip");
+      const tooltip = q('.tooltip');
 
-      item.addEventListener("click", () => {
+      item.addEventListener('click', () => {
         selectGoat.disabled = false;
 
-        if (item.classList.contains("is-active")) return;
-        document.querySelectorAll(".goat").forEach((goat) => {
-          goat.classList.remove("is-active");
+        if (item.classList.contains('is-active')) return;
+        document.querySelectorAll('.goat').forEach((goat) => {
+          goat.classList.remove('is-active');
           gsap.to(goat, { scale: 0.85 });
         });
 
-        item.classList.add("is-active");
+        item.classList.add('is-active');
         gsap.to(item, { scale: 1 });
       });
 
-      selectGoat.addEventListener("click", () => {
-        if (item.classList.contains("is-active")) {
-          item.classList.add("is-selected");
-          gsap.to(item, { x: "-50%" });
+      selectGoat.addEventListener('click', () => {
+        if (item.classList.contains('is-active')) {
+          item.classList.add('is-selected');
+          gsap.to(item, { x: '-50%' });
 
-          tooltip[0].className = "tooltip right";
+          tooltip[0].className = 'tooltip right';
 
           if (instance.data.characters[index].tells_the_truth) {
             tooltip[0].innerText = instance.data.correct_character_message;
 
-            instance.audio.playSound("correct");
+            instance.audio.playSound('correct');
             instance.experience.celebrate({
               particleCount: 100,
               spread: 160,
@@ -185,15 +185,18 @@ export default class DavidsRefuge {
 
             gsap.to(selectGoat, { autoAlpha: 0 });
 
-            instance.experience.navigation.container.style.display = "flex";
-            instance.experience.navigation.next.classList.add("focused");
+            instance.experience.navigation.container.style.display = 'flex';
+            instance.experience.navigation.next.classList.add('focused');
+            instance.experience.navigation.next.classList.remove(
+              'less-focused',
+            );
             instance.experience.navigation.next.innerHTML =
               instance.experience.icons.next;
           } else {
             tooltip[0].innerText = instance.data.wrong_character_message;
 
             selectGoat.innerText = _s.miniGames.tryAgain;
-            selectGoat.addEventListener("click", () => {
+            selectGoat.addEventListener('click', () => {
               instance.destroy();
               instance.toggleGame();
             });
@@ -206,20 +209,20 @@ export default class DavidsRefuge {
   }
 
   toggleQuestion() {
-    const overlay = document.createElement("div");
-    overlay.setAttribute("id", "overlay");
+    const overlay = document.createElement('div');
+    overlay.setAttribute('id', 'overlay');
 
     const message = this.messageModal(instance.data.start_message);
     document.body.append(overlay, message);
 
-    gsap.to("#dialogue", { y: 0, autoAlpha: 1 });
+    gsap.to('#dialogue', { y: 0, autoAlpha: 1 });
   }
 
   destroy() {
-    document.querySelector(".game")?.remove();
+    document.querySelector('.game')?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
   }

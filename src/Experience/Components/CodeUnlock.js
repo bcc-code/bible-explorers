@@ -198,6 +198,7 @@ export default class CodeUnlock {
 
       instance.experience.navigation.container.style.display = 'flex';
       instance.experience.navigation.next.classList.add('focused');
+      instance.experience.navigation.next.classList.remove('less-focused');
       instance.experience.navigation.next.innerHTML =
         instance.experience.icons.next;
     } else {

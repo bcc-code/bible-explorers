@@ -1,8 +1,8 @@
-import Konva from "konva";
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import Konva from 'konva';
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 
@@ -21,13 +21,13 @@ export default class HeartDefense {
       noOfThoughts: 28,
       levels: 5,
       maxLives: 3,
-      path: "games/heart-defense/",
-      heartStates: ["full", "3quarter", "half", "1quarter", "empty"],
-      doorStates: ["open", "closed"],
-      livesStates: ["active", "lost"],
+      path: 'games/heart-defense/',
+      heartStates: ['full', '3quarter', 'half', '1quarter', 'empty'],
+      doorStates: ['open', 'closed'],
+      livesStates: ['active', 'lost'],
       explosionWidth: spriteW,
       explosionHeight: spriteH,
-      explosion: "games/explosion.png",
+      explosion: 'games/explosion.png',
       animations: {
         explosion: [
           0,
@@ -67,7 +67,7 @@ export default class HeartDefense {
       lives: 3,
       points: 0,
       heartClosed: true,
-      level: 1
+      level: 1,
     };
 
     instance.thoughtObjs = [];
@@ -92,11 +92,11 @@ export default class HeartDefense {
             </section>
         `);
 
-    document.querySelector(".ui-container").append(game);
+    document.querySelector('.ui-container').append(game);
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
+    instance.experience.navigation.next.classList.add('less-focused');
   }
 
   startGame() {
@@ -111,8 +111,8 @@ export default class HeartDefense {
     instance.setUpAnimation();
     instance.setEventListeners();
 
-    document.querySelector(".game-popup")?.remove();
-    document.querySelector(".heart-defense")?.classList.remove("popup-visible");
+    document.querySelector('.game-popup')?.remove();
+    document.querySelector('.heart-defense')?.classList.remove('popup-visible');
 
     instance.experience.gameIsOn = true;
     instance.animation.start();
@@ -121,7 +121,7 @@ export default class HeartDefense {
 
   drawCanvas() {
     instance.stage = new Konva.Stage({
-      container: "heart-defense",
+      container: 'heart-defense',
       width: window.innerWidth,
       height: window.innerHeight,
     });
@@ -132,7 +132,7 @@ export default class HeartDefense {
     instance.overlay = new Konva.Rect({
       width: instance.stage.width(),
       height: instance.stage.height(),
-      fill: "#131a43",
+      fill: '#131a43',
       opacity: 0,
     });
     instance.layer.add(instance.overlay);
@@ -152,12 +152,12 @@ export default class HeartDefense {
 
   drawHeart() {
     const heartGroup = new Konva.Group({
-      id: "heart",
+      id: 'heart',
       x: instance.center.x,
       y: instance.center.y,
     });
     instance.layer.add(heartGroup);
-    instance.layer.findOne("#heart").zIndex(0);
+    instance.layer.findOne('#heart').zIndex(0);
 
     instance.config.heart.width = instance.stage.width() / 3;
     instance.config.heart.height = instance.config.heart.width / 1.1933174224;
@@ -166,7 +166,7 @@ export default class HeartDefense {
       const heartImage = new Image();
       heartImage.onload = () => {
         const heart = new Konva.Image({
-          id: "heart-" + instance.config.heartStates[i],
+          id: 'heart-' + instance.config.heartStates[i],
           image: heartImage,
           width: instance.config.heart.width,
           height: instance.config.heart.height,
@@ -176,25 +176,25 @@ export default class HeartDefense {
           },
           visible: i == instance.config.heartStates.length - 1,
         });
-        instance.layer.findOne("#heart").add(heart);
+        instance.layer.findOne('#heart').add(heart);
       };
       heartImage.src =
         instance.config.path +
-        "heart-" +
+        'heart-' +
         instance.config.heartStates[i] +
-        ".png";
+        '.png';
     }
   }
 
   drawDoor() {
     const doorGroup = new Konva.Group({
-      id: "door",
+      id: 'door',
       x: instance.center.x,
       y: instance.center.y,
     });
-    instance.layer.on("touchstart click", instance.openCloseDoor);
+    instance.layer.on('touchstart click', instance.openCloseDoor);
     instance.layer.add(doorGroup);
-    instance.layer.findOne("#door").zIndex(1);
+    instance.layer.findOne('#door').zIndex(1);
 
     instance.config.door.width = instance.config.heart.width / 5.2;
     instance.config.door.height = instance.config.door.width / 0.48;
@@ -203,7 +203,7 @@ export default class HeartDefense {
       const doorImage = new Image();
       doorImage.onload = () => {
         const door = new Konva.Image({
-          id: "door-" + instance.config.doorStates[i],
+          id: 'door-' + instance.config.doorStates[i],
           image: doorImage,
           width: instance.config.door.width,
           height: instance.config.door.height,
@@ -213,10 +213,10 @@ export default class HeartDefense {
           },
           visible: i == 1,
         });
-        instance.layer.findOne("#door").add(door);
+        instance.layer.findOne('#door').add(door);
       };
       doorImage.src =
-        instance.config.path + "door-" + instance.config.doorStates[i] + ".png";
+        instance.config.path + 'door-' + instance.config.doorStates[i] + '.png';
     }
   }
 
@@ -226,56 +226,56 @@ export default class HeartDefense {
       iconHeight = 33,
       spaceBetween = 5;
     const livesGroup = new Konva.Group({
-      id: "lives",
+      id: 'lives',
       x: padding,
       y: padding,
     });
     instance.layer.add(livesGroup);
-    instance.layer.findOne("#lives").zIndex(2);
+    instance.layer.findOne('#lives').zIndex(2);
 
     for (let i = 0; i < instance.config.maxLives; i++) {
       const lostLife = new Image();
       lostLife.onload = () => {
         const life = new Konva.Image({
-          id: "life-" + instance.config.livesStates[1] + i,
+          id: 'life-' + instance.config.livesStates[1] + i,
           image: lostLife,
           x: iconWidth * i + spaceBetween * i,
           width: iconWidth,
           height: iconHeight,
           visible: instance.stats.lives <= i,
         });
-        instance.layer.findOne("#lives").add(life);
+        instance.layer.findOne('#lives').add(life);
       };
       lostLife.src =
         instance.config.path +
-        "life-" +
+        'life-' +
         instance.config.livesStates[1] +
-        ".png";
+        '.png';
 
       const activeLife = new Image();
       activeLife.onload = () => {
         const life = new Konva.Image({
-          id: "life-" + instance.config.livesStates[0] + i,
+          id: 'life-' + instance.config.livesStates[0] + i,
           image: activeLife,
           x: iconWidth * i + spaceBetween * i,
           width: iconWidth,
           height: iconHeight,
           visible: instance.stats.lives > i,
         });
-        instance.layer.findOne("#lives").add(life);
+        instance.layer.findOne('#lives').add(life);
       };
       activeLife.src =
         instance.config.path +
-        "life-" +
+        'life-' +
         instance.config.livesStates[0] +
-        ".png";
+        '.png';
     }
   }
 
   setUpAnimation() {
-    const thoughtsGroup = new Konva.Group({ id: "thoughts" });
+    const thoughtsGroup = new Konva.Group({ id: 'thoughts' });
     instance.layer.add(thoughtsGroup);
-    instance.layer.findOne("#thoughts").zIndex(3);
+    instance.layer.findOne('#thoughts').zIndex(3);
 
     instance.animation = new Konva.Animation((frame) => {
       if (instance.thoughts.length < instance.getNoOfThoughts())
@@ -310,7 +310,7 @@ export default class HeartDefense {
         const diffFrames =
           getUpdatedFramesToCenterValue(
             estFramesToCenter,
-            framesBetweenEachThought
+            framesBetweenEachThought,
           ) - estFramesToCenter;
 
         // Updated values
@@ -321,7 +321,7 @@ export default class HeartDefense {
         estFramesToCenter = dX / distancePerFrame.x;
 
         const thought = new Konva.Image({
-          name: "thought",
+          name: 'thought',
           image: thoughtImage,
           x: x,
           y: y,
@@ -333,7 +333,7 @@ export default class HeartDefense {
           },
         });
 
-        instance.layer.findOne("#thoughts").add(thought);
+        instance.layer.findOne('#thoughts').add(thought);
         instance.thoughts.push({
           item: thought,
           speedX: distancePerFrame.x,
@@ -376,7 +376,7 @@ export default class HeartDefense {
               y: instance.center.y - instance.config.door.height / 4,
             },
             instance.config.door.width / 2,
-            instance.config.door.height / 2
+            instance.config.door.height / 2,
           )
         )
           return;
@@ -393,7 +393,7 @@ export default class HeartDefense {
           if (thought.badThought) {
             instance.stats.lives--;
             instance.updateLivesStatus();
-            instance.audio.playSound("heart-defense/lose-life");
+            instance.audio.playSound('heart-defense/lose-life');
 
             if (instance.stats.lives == 0) {
               instance.stopThoughtsAnimation();
@@ -402,7 +402,7 @@ export default class HeartDefense {
               }, 500);
             }
           } else {
-            instance.audio.playSound("correct");
+            instance.audio.playSound('correct');
             instance.updateHeartStatus();
             instance.stats.points++;
 
@@ -416,7 +416,7 @@ export default class HeartDefense {
             }
           }
         } else {
-          instance.audio.playSound("heart-defense/door-crash");
+          instance.audio.playSound('heart-defense/door-crash');
           instance.playExplosionAnimation(thought.item);
         }
 
@@ -492,7 +492,7 @@ export default class HeartDefense {
   playExplosionAnimation(obj) {
     const spriteObj = instance.setSprite(
       instance.config.explosion,
-      "explosion"
+      'explosion',
     );
     instance.layer.add(spriteObj);
 
@@ -502,11 +502,11 @@ export default class HeartDefense {
     instance.thoughtObjs.push(obj);
     instance.spriteAnimations.push(spriteObj);
 
-    spriteObj.on("frameIndexChange.konva", function () {
+    spriteObj.on('frameIndexChange.konva', function () {
       if (this.frameIndex() == 2) {
         spriteObj.stop();
         obj.destroy();
-        instance.layer.find(".explosion")[0].destroy();
+        instance.layer.find('.explosion')[0].destroy();
         instance.spriteAnimations.shift();
         instance.thoughtObjs.shift();
       }
@@ -521,7 +521,7 @@ export default class HeartDefense {
     instance.thoughtObjs = [];
 
     instance.layer
-      .find(".explosion")
+      .find('.explosion')
       .forEach((explosion) => explosion.destroy());
   }
 
@@ -538,13 +538,13 @@ export default class HeartDefense {
       x: -instance.config.thoughts.width / 2,
       y: instance.getRndBetween(
         -instance.config.thoughts.height / 2,
-        instance.stage.height() + instance.config.thoughts.height / 2
+        instance.stage.height() + instance.config.thoughts.height / 2,
       ),
     },
     {
       x: instance.getRndBetween(
         0,
-        instance.stage.width() - instance.config.thoughts.width / 2
+        instance.stage.width() - instance.config.thoughts.width / 2,
       ),
       y: -instance.config.thoughts.height / 2,
     },
@@ -552,13 +552,13 @@ export default class HeartDefense {
       x: instance.stage.width() + instance.config.thoughts.width / 2,
       y: instance.getRndBetween(
         -instance.config.thoughts.height / 2,
-        instance.stage.height() + instance.config.thoughts.height / 2
+        instance.stage.height() + instance.config.thoughts.height / 2,
       ),
     },
     {
       x: instance.getRndBetween(
         0,
-        instance.stage.width() - instance.config.thoughts.width / 2
+        instance.stage.width() - instance.config.thoughts.width / 2,
       ),
       y: instance.stage.height() + instance.config.thoughts.height / 2,
     },
@@ -570,18 +570,18 @@ export default class HeartDefense {
   getRndSpeed = () =>
     instance.getRndBetween(
       instance.config.lowestSpeed,
-      instance.config.highestSpeed
+      instance.config.highestSpeed,
     ) * Math.min(instance.stats.level, instance.config.levels);
   getRndBadThoughtSrc = () =>
     instance.config.path +
-    "bad-thought-" +
+    'bad-thought-' +
     instance.getRoundedRndBetween(1, instance.config.thoughtVariants) +
-    ".png";
+    '.png';
   getRndGoodThoughtSrc = () =>
     instance.config.path +
-    "good-thought-" +
+    'good-thought-' +
     instance.getRoundedRndBetween(1, instance.config.thoughtVariants) +
-    ".png";
+    '.png';
   getRndBetween = (min, max) => min + Math.random() * (max - min);
   getRoundedRndBetween = (min, max) =>
     Math.round(instance.getRndBetween(min, max));
@@ -592,7 +592,7 @@ export default class HeartDefense {
     height1,
     rect2,
     width2,
-    height2
+    height2,
   ) => {
     return (
       rect2.x < rect1.x + width1 &&
@@ -604,8 +604,8 @@ export default class HeartDefense {
 
   setEventListeners() {
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
-    document.addEventListener("keydown", instance.keyDownHandler);
-    window.addEventListener("resize", instance.updateStageDimension);
+    document.addEventListener('keydown', instance.keyDownHandler);
+    window.addEventListener('resize', instance.updateStageDimension);
   }
 
   keyDownHandler(e) {
@@ -618,8 +618,8 @@ export default class HeartDefense {
 
     if (!instance.stats.heartClosed) instance.stopExplosionAnimation();
 
-    const sound = instance.stats.heartClosed ? "close" : "open";
-    instance.audio.playSound("heart-defense/door-" + sound);
+    const sound = instance.stats.heartClosed ? 'close' : 'open';
+    instance.audio.playSound('heart-defense/door-' + sound);
   }
 
   updateStageDimension() {
@@ -628,31 +628,31 @@ export default class HeartDefense {
   }
 
   updateRoundsStatus() {
-    document.querySelector(".game-rounds .level").innerText =
+    document.querySelector('.game-rounds .level').innerText =
       instance.stats.level;
   }
 
   updateDoorStatus() {
     instance.layer
-      .findOne("#door-" + instance.config.doorStates[0])
+      .findOne('#door-' + instance.config.doorStates[0])
       .visible(!instance.stats.heartClosed);
     instance.layer
-      .findOne("#door-" + instance.config.doorStates[1])
+      .findOne('#door-' + instance.config.doorStates[1])
       .visible(instance.stats.heartClosed);
   }
 
   updateLivesStatus() {
-    instance.layer.findOne("#life-active" + instance.stats.lives).hide();
-    instance.layer.findOne("#life-lost" + instance.stats.lives).show();
+    instance.layer.findOne('#life-active' + instance.stats.lives).hide();
+    instance.layer.findOne('#life-lost' + instance.stats.lives).show();
   }
 
   updateHeartStatus() {
     const index = instance.config.pointsToCompleteLevel - instance.stats.points;
     instance.layer
-      .findOne("#heart-" + instance.config.heartStates[index])
+      .findOne('#heart-' + instance.config.heartStates[index])
       .hide();
     instance.layer
-      .findOne("#heart-" + instance.config.heartStates[index - 1])
+      .findOne('#heart-' + instance.config.heartStates[index - 1])
       .show();
   }
 
@@ -669,20 +669,20 @@ export default class HeartDefense {
             <button class="btn default focused pulsate">${_s.miniGames.nextRound}</button>
         `);
 
-    congratsHTML.querySelector(".buttons").append(nextLevelBTN);
+    congratsHTML.querySelector('.buttons').append(nextLevelBTN);
 
-    document.querySelector(".heart-defense .container").append(congratsHTML);
-    document.querySelector(".heart-defense").classList.add("popup-visible");
+    document.querySelector('.heart-defense .container').append(congratsHTML);
+    document.querySelector('.heart-defense').classList.add('popup-visible');
 
     instance.stats.level++;
     instance.stats.points = 0;
 
-    document.removeEventListener("keydown", instance.keyDownHandler);
+    document.removeEventListener('keydown', instance.keyDownHandler);
 
     // Add event listeners
     if (instance.stats.level <= instance.config.levels) {
       // Next level
-      nextLevelBTN.addEventListener("click", () => {
+      nextLevelBTN.addEventListener('click', () => {
         instance.newLevel();
         instance.startGame();
         instance.updateRoundsStatus();
@@ -690,20 +690,21 @@ export default class HeartDefense {
     } else {
       // All levels completed
       nextLevelBTN.innerText = _s.miniGames.anotherRound;
-      nextLevelBTN.addEventListener("click", () => {
+      nextLevelBTN.addEventListener('click', () => {
         instance.resetGame();
         instance.startGame();
       });
 
-      nextLevelBTN.classList.remove("focused", "pulsate");
-      instance.experience.navigation.container.style.display = "flex";
-      instance.experience.navigation.next.classList.add("focused");
+      nextLevelBTN.classList.remove('focused', 'pulsate');
+      instance.experience.navigation.container.style.display = 'flex';
+      instance.experience.navigation.next.classList.remove('less-focused');
+      instance.experience.navigation.next.classList.add('focused');
       instance.experience.navigation.next.innerHTML =
         instance.experience.icons.next;
-      document.querySelector(".game-rounds")?.remove();
+      document.querySelector('.game-rounds')?.remove();
     }
 
-    instance.audio.playSound("task-completed");
+    instance.audio.playSound('task-completed');
     instance.experience.celebrate({
       particleCount: 100,
       spread: 160,
@@ -721,33 +722,33 @@ export default class HeartDefense {
     const resetBTN = _gl.elementFromHtml(`
             <button class="btn default">${_s.miniGames.restartRound}</button>
         `);
-    gameOverHTML.querySelector(".buttons").append(resetBTN);
+    gameOverHTML.querySelector('.buttons').append(resetBTN);
 
-    document.querySelector(".heart-defense .container").append(gameOverHTML);
-    document.querySelector(".heart-defense").classList.add("popup-visible");
+    document.querySelector('.heart-defense .container').append(gameOverHTML);
+    document.querySelector('.heart-defense').classList.add('popup-visible');
 
     instance.stats.lives = instance.config.maxLives;
 
-    document.removeEventListener("keydown", instance.keyDownHandler);
+    document.removeEventListener('keydown', instance.keyDownHandler);
 
     // Add event listeners
-    resetBTN.addEventListener("click", () => {
+    resetBTN.addEventListener('click', () => {
       instance.newLevel();
       instance.startGame();
     });
   }
 
   resetGame() {
-    document.removeEventListener("keydown", instance.keyDownHandler);
-    window.removeEventListener("resize", instance.updateStageDimension);
+    document.removeEventListener('keydown', instance.keyDownHandler);
+    window.removeEventListener('resize', instance.updateStageDimension);
 
     instance.layer.destroy();
     instance.experience.gameIsOn = false;
   }
 
   newLevel() {
-    document.removeEventListener("keydown", instance.keyDownHandler);
-    window.removeEventListener("resize", instance.updateStageDimension);
+    document.removeEventListener('keydown', instance.keyDownHandler);
+    window.removeEventListener('resize', instance.updateStageDimension);
 
     instance.layer.destroy();
     instance.experience.gameIsOn = false;
@@ -757,12 +758,12 @@ export default class HeartDefense {
     instance.stopExplosionAnimation();
     instance.stopThoughtsAnimation();
 
-    document.removeEventListener("keydown", instance.keyDownHandler);
-    window.removeEventListener("resize", instance.updateStageDimension);
+    document.removeEventListener('keydown', instance.keyDownHandler);
+    window.removeEventListener('resize', instance.updateStageDimension);
 
-    document.querySelector(".game")?.remove();
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
+    document.querySelector('.game')?.remove();
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
     instance.experience.navigation.next.innerHTML =
       instance.experience.icons.next;
 
