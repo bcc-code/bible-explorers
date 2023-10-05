@@ -1,9 +1,9 @@
-import Offline from "../Utils/Offline.js";
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
-import gsap from "gsap";
+import Offline from '../Utils/Offline.js';
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
+import gsap from 'gsap';
 
 let instance = null;
 
@@ -21,10 +21,15 @@ export default class FlipCards {
     instance.program = instance.world.program;
     instance.stepData = instance.program.getCurrentStepData();
     instance.flipCards = instance.stepData.flip_cards;
-    instance.confirmationScreen = instance.stepData.confirmation_screen
+    instance.confirmationScreen = instance.stepData.confirmation_screen;
 
-    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-    instance.toggleConfirmationScreen()
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
+
+    if (instance.confirmationScreen.cs_description !== '') {
+      instance.toggleConfirmationScreen();
+    } else {
+      instance.toggleFlipCards();
+    }
   }
 
   toggleConfirmationScreen() {
@@ -37,8 +42,8 @@ export default class FlipCards {
   confirmationScreenHTML() {
     const startGame = _gl.elementFromHtml(`
       <button class="btn default focused pulsate">${instance.confirmationScreen.cs_button}</button>
-    `)
-    startGame.addEventListener("click", instance.toggleFlipCards)
+    `);
+    startGame.addEventListener('click', instance.toggleFlipCards);
 
     const task = _gl.elementFromHtml(`
       <section class="task">
@@ -57,42 +62,63 @@ export default class FlipCards {
         </div>
         <div class="overlay"></div>
       </section>
-    `)
+    `);
 
-    task.querySelector(".content").append(startGame)
-    document.querySelector(".ui-container").append(task)
+    task.querySelector('.content').append(startGame);
+    document.querySelector('.ui-container').append(task);
 
-    instance.experience.navigation.next.classList.remove("focused")
-    instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-    instance.experience.navigation.next.classList.add("less-focused")
-    instance.experience.navigation.container.style.display = "flex"
+    instance.experience.navigation.next.classList.remove('focused');
+    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
   }
 
   useCorrectAssetsSrcConfirmationScreen() {
-    instance.offline.fetchChapterAsset(instance.confirmationScreen, "cs_image", (data) => {
-      document.querySelector(".game-tutorial img").src = data.cs_image
-    })
+    instance.offline.fetchChapterAsset(
+      instance.confirmationScreen,
+      'cs_image',
+      (data) => {
+        document.querySelector('.game-tutorial img').src = data.cs_image;
+      },
+    );
   }
 
   setConfirmationScreenEventListeners() {
-    instance.experience.navigation.prev.removeEventListener('click', instance.program.previousStep)
-    instance.experience.navigation.prev.addEventListener('click', instance.backToGameDescription)
-    instance.experience.navigation.next.addEventListener('click', instance.toggleFlipCards)
+    instance.experience.navigation.prev.removeEventListener(
+      'click',
+      instance.program.previousStep,
+    );
+    instance.experience.navigation.prev.addEventListener(
+      'click',
+      instance.backToGameDescription,
+    );
+    instance.experience.navigation.next.addEventListener(
+      'click',
+      instance.toggleFlipCards,
+    );
   }
 
   backToGameDescription() {
-    instance.destroyConfirmationScreen()
-    instance.program.gameDescription.show()
-    instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep)
+    instance.destroyConfirmationScreen();
+    instance.program.gameDescription.show();
+    instance.experience.navigation.prev.addEventListener(
+      'click',
+      instance.program.previousStep,
+    );
   }
 
   destroyConfirmationScreen() {
-    document.querySelector("section.task")?.remove()
+    document.querySelector('section.task')?.remove();
 
-    instance.experience.navigation.prev.removeEventListener('click', instance.backToGameDescription)
-    instance.experience.navigation.next.removeEventListener('click', instance.toggleFlipCards)
+    instance.experience.navigation.prev.removeEventListener(
+      'click',
+      instance.backToGameDescription,
+    );
+    instance.experience.navigation.next.removeEventListener(
+      'click',
+      instance.toggleFlipCards,
+    );
   }
-
 
   toggleFlipCards() {
     instance.destroyConfirmationScreen();
@@ -140,34 +166,34 @@ export default class FlipCards {
                     `);
 
           card.append(audio);
-          card.classList.add("has-audio");
+          card.classList.add('has-audio');
         }
 
-        game.querySelector(".cards").append(card);
+        game.querySelector('.cards').append(card);
       });
     }
 
-    document.querySelector(".ui-container").append(game);
+    document.querySelector('.ui-container').append(game);
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
-    instance.experience.navigation.container.style.display = "flex";
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
   }
 
   useCorrectAssetsSrcFlipCards() {
     if (!instance.flipCards.cards) return;
 
     instance.flipCards.cards.forEach((card, index) => {
-      instance.offline.fetchChapterAsset(card, "image_back", (data) => {
+      instance.offline.fetchChapterAsset(card, 'image_back', (data) => {
         card.image_back = data.image_back;
-        document.querySelectorAll("article.card .card-back")[
+        document.querySelectorAll('article.card .card-back')[
           index
         ].style.backgroundImage = "url('" + data.image_back + "')";
       });
-      instance.offline.fetchChapterAsset(card, "image_front", (data) => {
+      instance.offline.fetchChapterAsset(card, 'image_front', (data) => {
         card.image_front = data.image_front;
-        document.querySelectorAll("article.card .card-front")[
+        document.querySelectorAll('article.card .card-front')[
           index
         ].style.backgroundImage = "url('" + data.image_front + "')";
       });
@@ -175,19 +201,22 @@ export default class FlipCards {
   }
 
   setFlipCardsEventListeners() {
-    instance.experience.navigation.prev.addEventListener('click', instance.toggleConfirmationScreen)
+    instance.experience.navigation.prev.addEventListener(
+      'click',
+      instance.toggleConfirmationScreen,
+    );
 
-    const cards = gsap.utils.toArray(".flip-card .card");
+    const cards = gsap.utils.toArray('.flip-card .card');
     cards.forEach((card, index) => {
       const q = gsap.utils.selector(card);
 
-      const cImage = q(".card-image");
-      const cAudio = q(".card-audio");
-      const cFront = q(".card-front");
-      const cInput = q(".card-input input");
+      const cImage = q('.card-image');
+      const cAudio = q('.card-audio');
+      const cFront = q('.card-front');
+      const cInput = q('.card-input input');
 
       gsap.set(cImage[0], {
-        transformStyle: "preserve-3d",
+        transformStyle: 'preserve-3d',
         transformPerspective: 1000,
       });
 
@@ -197,66 +226,73 @@ export default class FlipCards {
         .timeline({ paused: true })
         .to(cImage[0], { duration: 1, rotationY: 180 });
 
-      cInput[0].addEventListener("input", (e) => {
+      cInput[0].addEventListener('input', (e) => {
         if (e.target.value.length > e.target.maxLength)
           e.target.value = e.target.value.slice(0, e.target.maxLength);
 
         if (e.target.value.length == e.target.maxLength) {
           if (e.target.value == instance.flipCards.cards[index].code) {
-            card.classList.add("flipped");
+            card.classList.add('flipped');
             flipAnimation.play();
 
-            instance.audio.playSound("task-completed");
+            instance.audio.playSound('task-completed');
             instance.experience.celebrate({
               particleCount: 100,
               spread: 160,
             });
 
             // All cards are flipped
-            const flippedCards = document.querySelectorAll(".flipped");
+            const flippedCards = document.querySelectorAll('.flipped');
 
             if (flippedCards.length == instance.flipCards.cards.length) {
-              instance.experience.navigation.container.style.display = "flex";
+              instance.experience.navigation.container.style.display = 'flex';
               instance.experience.navigation.next.classList.remove(
-                "less-focused"
+                'less-focused',
               );
-              instance.experience.navigation.next.classList.add("focused");
+              instance.experience.navigation.next.classList.add('focused');
               instance.experience.navigation.next.innerHTML =
                 instance.experience.icons.next;
             }
           } else {
-            e.target.parentNode.classList.add("wrong-code");
-            instance.audio.playSound("wrong");
+            e.target.parentNode.classList.add('wrong-code');
+            instance.audio.playSound('wrong');
 
             setTimeout(() => {
-              e.target.parentNode.classList.remove("wrong-code");
-              e.target.value = "";
+              e.target.parentNode.classList.remove('wrong-code');
+              e.target.value = '';
             }, 1000);
           }
         }
       });
 
       if (cAudio.length)
-        cImage[0].addEventListener("click", () => {
+        cImage[0].addEventListener('click', () => {
           cAudio[0].play();
         });
     });
   }
 
   destroyFlipCards() {
-    document.querySelector(".game")?.remove();
+    document.querySelector('.game')?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
-    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
+    instance.experience.navigation.next.innerHTML =
+      instance.experience.icons.next;
 
-    instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
+    instance.experience.navigation.prev.removeEventListener(
+      'click',
+      instance.toggleConfirmationScreen,
+    );
   }
 
   destroy() {
-    instance.destroyConfirmationScreen()
-    instance.destroyFlipCards()
-    instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep)
-    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    instance.destroyConfirmationScreen();
+    instance.destroyFlipCards();
+    instance.experience.navigation.prev.addEventListener(
+      'click',
+      instance.program.previousStep,
+    );
+    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
   }
 }
