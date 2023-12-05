@@ -32,7 +32,10 @@ export default class Offline {
         let usage = 0;
         let message = '';
 
-        message = persistent == true ? 'Storage will NOT be cleared except by explicit user action.' : 'Storage may be cleared by the UA under storage pressure.';
+        message =
+          persistent == true
+            ? 'Storage will NOT be cleared except by explicit user action.'
+            : 'Storage may be cleared by the UA under storage pressure.';
 
         navigator.storage.estimate().then((estimate) => {
           quota = formatBytes(estimate.quota);
@@ -52,8 +55,17 @@ export default class Offline {
   }
 
   initialize = function () {
-    offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB;
-    offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction;
+    offline.indexedDB =
+      window.indexedDB ||
+      window.webkitIndexedDB ||
+      window.mozIndexedDB ||
+      window.OIndexedDB ||
+      window.msIndexedDB;
+    offline.IDBTransaction =
+      window.IDBTransaction ||
+      window.webkitIDBTransaction ||
+      window.OIDBTransaction ||
+      window.msIDBTransaction;
     offline.dbVersion = 3;
     offline.store = 'chaptersData';
     offline.db = null;
@@ -73,7 +85,11 @@ export default class Offline {
   };
 
   setUpDbConnection = function () {
-    if (!offline.request) offline.request = offline.indexedDB.open('Bible Kids Explorers', offline.dbVersion);
+    if (!offline.request)
+      offline.request = offline.indexedDB.open(
+        'Bible Kids Explorers',
+        offline.dbVersion,
+      );
 
     offline.request.onerror = function () {
       // console.log("Error creating/accessing IndexedDB database")
@@ -127,13 +143,19 @@ export default class Offline {
         }
 
         await offline.downloadEpisodesFromChapter(chapterId);
-      }
+      },
     );
   };
 
   downloadEpisodesFromChapter = async function (chapterId) {
-    let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId]);
-    const episodeUrls = await offline.getEpisodeDownloadUrls(notDownloadedEpisodes[0].id, chapterId);
+    let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(
+      offline.data[chapterId],
+      offline.downloaded[chapterId],
+    );
+    const episodeUrls = await offline.getEpisodeDownloadUrls(
+      notDownloadedEpisodes[0].id,
+      chapterId,
+    );
 
     if (episodeUrls) {
       notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl;
@@ -177,14 +199,17 @@ export default class Offline {
       });
 
       // There was a problem downloading the episode
-      const chapter = document.querySelector('.chapter[data-id="' + chapterId + '"]');
+      const chapter = document.querySelector(
+        '.chapter[data-id="' + chapterId + '"]',
+      );
       chapter.classList.remove('downloading');
       chapter.classList.add('failed');
 
       return;
     }
 
-    const selectedQualityVideo = offline.getSelectedQualityVideo(myLanguageVideos);
+    const selectedQualityVideo =
+      offline.getSelectedQualityVideo(myLanguageVideos);
 
     return {
       downloadUrl: selectedQualityVideo.url,
@@ -193,13 +218,20 @@ export default class Offline {
   };
 
   downloadScreenTextures = async function (chapter) {
-    if (chapter.lobby_video_loop) offline.btvVideos.push(chapter.lobby_video_loop);
+    if (chapter.lobby_video_loop)
+      offline.btvVideos.push(chapter.lobby_video_loop);
 
     chapter.program.forEach((checkpoint) => {
       checkpoint.steps.forEach((step) => {
-        if (step.details.step_type == 'iris' && step.message.video) offline.btvVideos.push(step.message.video);
+        if (step.details.step_type == 'iris' && step.message.video)
+          offline.btvVideos.push(step.message.video);
 
-        if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) offline.btvVideos.push(step.video_with_question.video);
+        if (
+          step.details.step_type == 'task' &&
+          step.details.task_type == 'video_with_question' &&
+          step.video_with_question.video
+        )
+          offline.btvVideos.push(step.video_with_question.video);
       });
     });
 
@@ -222,7 +254,7 @@ export default class Offline {
       () => {
         offline.onScreenTextureDownloadComplete(videoName, video, xhr);
       },
-      false
+      false,
     );
     xhr.send();
   };
@@ -246,7 +278,9 @@ export default class Offline {
   };
 
   startTextureDownload = async function (index) {
-    const video = await offline.getEpisodeDesiredQualityDownloadUrl(offline.btvVideos[index]);
+    const video = await offline.getEpisodeDesiredQualityDownloadUrl(
+      offline.btvVideos[index],
+    );
     offline.downloadScreenTexture(offline.btvVideos[index], video);
   };
 
@@ -262,7 +296,8 @@ export default class Offline {
     });
     if (!myLanguageVideos.length) return;
 
-    if (this.experience.settings.videoQuality == 'high') return myLanguageVideos.find((video) => video.resolution == '960x540');
+    if (this.experience.settings.videoQuality == 'high')
+      return myLanguageVideos.find((video) => video.resolution == '960x540');
 
     return offline.getSelectedQualityVideo(myLanguageVideos);
   };
@@ -319,7 +354,7 @@ export default class Offline {
       () => {
         offline.onThumbnailDownloadComplete(chapterId, currentEpisode, xhr);
       },
-      false
+      false,
     );
     xhr.send();
   };
@@ -350,20 +385,28 @@ export default class Offline {
       () => {
         offline.onVideoDownloadComplete(chapterId, currentEpisode, xhr);
       },
-      false
+      false,
     );
     xhr.send();
   };
 
   onVideoDownloadProgress = function (chapterId, e) {
     if (e.lengthComputable) {
-      var percentage = (offline.downloaded[chapterId].length * 100 + (e.loaded / e.total) * 100) / offline.data[chapterId].length;
+      var percentage =
+        (offline.downloaded[chapterId].length * 100 +
+          (e.loaded / e.total) * 100) /
+        offline.data[chapterId].length;
 
-      let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]');
+      let chapterEl = document.querySelector(
+        '.chapter[data-id="' + chapterId + '"]',
+      );
       if (chapterEl) {
         chapterEl.classList.add('downloading');
-        chapterEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + '%';
-        chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`;
+        chapterEl.querySelector('span.downloading-label').innerText =
+          parseFloat(percentage).toFixed() + '%';
+        chapterEl.querySelector('.progress-line').style.transform = `scaleX(${
+          percentage / 100
+        })`;
       }
     }
   };
@@ -379,7 +422,9 @@ export default class Offline {
   };
 
   setErrorMessage = function (chapterId) {
-    let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]');
+    let chapterEl = document.querySelector(
+      '.chapter[data-id="' + chapterId + '"]',
+    );
     if (chapterEl) {
       chapterEl.querySelector('span.title').innerText = 'Error!';
     }
@@ -391,10 +436,16 @@ export default class Offline {
       offline.putFileInDb(currentEpisode.data);
 
       offline.downloaded[chapterId].push(currentEpisode.data.name);
-      offline.experience.resources.updateBtvStreamWithDownloadedVersion(currentEpisode.data.name);
+      offline.experience.resources.updateBtvStreamWithDownloadedVersion(
+        currentEpisode.data.name,
+      );
 
-      if (offline.data[chapterId].length == offline.downloaded[chapterId].length) {
-        let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]');
+      if (
+        offline.data[chapterId].length == offline.downloaded[chapterId].length
+      ) {
+        let chapterEl = document.querySelector(
+          '.chapter[data-id="' + chapterId + '"]',
+        );
         chapterEl.classList.remove('downloading');
         chapterEl.classList.add('downloaded');
 
@@ -435,7 +486,10 @@ export default class Offline {
     const getItem = offline.objStore.get(videoName);
 
     getItem.onsuccess = function () {
-      if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+      if (
+        getItem.result &&
+        getItem.result.language == _lang.getLanguageCode()
+      ) {
         const item = getItem.result;
 
         if (item.thumbnail) {
@@ -480,7 +534,10 @@ export default class Offline {
     const getItem = offline.objStore.get(videoName);
 
     getItem.onsuccess = function () {
-      if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+      if (
+        getItem.result &&
+        getItem.result.language == _lang.getLanguageCode()
+      ) {
         const item = getItem.result;
 
         // Load video blob as array buffer
@@ -500,7 +557,12 @@ export default class Offline {
     };
   };
 
-  loadScreenTextureFromIndexedDb = function (videoName, firstCase, secondCase, callback) {
+  loadScreenTextureFromIndexedDb = function (
+    videoName,
+    firstCase,
+    secondCase,
+    callback,
+  ) {
     if (!offline.db) {
       secondCase(videoName, callback);
       return;
@@ -511,7 +573,10 @@ export default class Offline {
     const getItem = offline.objStore.get(videoName);
 
     getItem.onsuccess = function () {
-      if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+      if (
+        getItem.result &&
+        getItem.result.language == _lang.getLanguageCode()
+      ) {
         const item = getItem.result;
 
         // Load video blob as array buffer
@@ -543,9 +608,11 @@ export default class Offline {
       chapter.episodes.map((e) => e.type + '-' + e.id),
       (downloadedEpisodes) => {
         if (downloadedEpisodes.length == chapter.episodes.length) {
-          document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded');
+          document
+            .querySelector('.chapter[data-id="' + chapter.id + '"]')
+            .classList.add('downloaded');
         }
-      }
+      },
     );
   };
 
@@ -560,7 +627,11 @@ export default class Offline {
       var getItem = offline.objStore.get(id);
 
       getItem.onsuccess = function () {
-        if (getItem.result && getItem.result.language == _lang.getLanguageCode()) downloadedEpisodes.push(getItem.result.name);
+        if (
+          getItem.result &&
+          getItem.result.language == _lang.getLanguageCode()
+        )
+          downloadedEpisodes.push(getItem.result.name);
 
         if (index + 1 == episodes.length) callback(downloadedEpisodes);
       };
@@ -585,6 +656,42 @@ export default class Offline {
         }
       });
     });
+  }
+
+  fetchScreenTexture = function (videoName, callback = () => {}) {
+    // Only add it once
+    if (
+      Object.keys(offline.experience.resources.customTextureItems).includes(
+        videoName,
+      )
+    )
+      return;
+
+    offline.experience.resources.customTextureItems[videoName] = {};
+
+    offline.loadScreenTextureFromIndexedDb(
+      videoName,
+      this.loadScreenTextureLocally,
+      this.loadScreenTextureOnline,
+      callback,
+    );
+  };
+
+  loadScreenTextureLocally(videoName, videoUrl, callback) {
+    offline.experience.resources.loadVideoTexture(videoName, videoUrl);
+    callback();
+  }
+
+  async loadScreenTextureOnline(videoName, callback) {
+    const video = await offline.getEpisodeDesiredQualityDownloadUrl(videoName);
+    offline.experience.resources.loadVideoTexture(videoName, video.url);
+    callback();
+  }
+
+  setScreenTexture(videoName) {
+    offline.experience.world.controlRoom.tv_16x9.material.map =
+      offline.experience.resources.customTextureItems[videoName].item;
+    offline.experience.world.controlRoom.playCustomIrisTexture(videoName);
   }
 
   setConnection(mode) {

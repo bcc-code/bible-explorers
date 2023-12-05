@@ -20,10 +20,15 @@ export default class Video {
     instance.camera = instance.experience.camera;
     instance.audio = instance.world.audio;
     instance.scene = instance.experience.scene;
+    instance.controlRoom = instance.world.controlRoom;
+    instance.clickableObjects = instance.controlRoom.clickableObjects;
 
     // Setup
-
+    instance.portalScreen = instance.controlRoom.tv_portal;
+    instance.tablet = instance.controlRoom.tablet;
     instance.videoPlayIcon = null;
+
+    instance.canvasTexture();
 
     instance.video = () => {
       let id = instance.playingVideoId;
@@ -46,6 +51,68 @@ export default class Video {
     instance.playingVideoId = null;
   }
 
+  canvasTexture() {
+    // create image
+    const bitmap = createRetinaCanvas(1920, 1080, 1);
+    const ctx = bitmap.getContext('2d', { antialias: false });
+
+    const centerX = bitmap.width / 2;
+    const centerY = bitmap.height / 2;
+    const size = 40;
+    const circle = size * 2.5;
+
+    ctx.globalAlpha = 0.4;
+    ctx.beginPath();
+    ctx.rect(0, 0, 1920, 1080);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    ctx.globalAlpha = 1.0;
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = '#ffffff';
+    ctx.fillStyle = '#ffffff';
+
+    // make circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, circle, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.stroke();
+
+    // make play button
+    ctx.lineJoin = 'round';
+
+    ctx.beginPath();
+    ctx.moveTo(centerX - size + 10, centerY - size);
+    ctx.lineTo(centerX - size + 10, centerY + size);
+    ctx.lineTo(centerX + size + 5, centerY);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+
+    // canvas contents are used for
+    const texture = new THREE.Texture(bitmap);
+    texture.needsUpdate = true;
+
+    const material = new THREE.MeshBasicMaterial({
+      color: '#ffffff',
+      map: texture,
+      transparent: true,
+    });
+
+    const geometry = new THREE.PlaneGeometry(16, 9);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'play_video_icon';
+    this.scene.add(mesh);
+
+    mesh.position.copy(instance.portalScreen.position);
+    mesh.quaternion.copy(instance.portalScreen.quaternion);
+    mesh.position.x -= 0.01;
+    mesh.visible = false;
+
+    this.videoPlayIcon = mesh;
+    this.clickableObjects.push(mesh);
+  }
+
   load(id) {
     instance.playingVideoId = id;
 
@@ -58,7 +125,11 @@ export default class Video {
     instance.video().currentTime(0);
 
     // Set texture when starting directly on a video task type
-    if (instance.portalScreen.material.map != instance.resources.customTextureItems[id]) instance.setTexture(id);
+    if (
+      instance.portalScreen.material.map !=
+      instance.resources.customTextureItems[id]
+    )
+      instance.setTexture(id);
 
     const videoQuality = instance.getVideoQuality();
     instance.resources.videoPlayers[id].setVideoQuality(videoQuality);
@@ -74,7 +145,8 @@ export default class Video {
   setTexture(id) {
     if (!instance.resources.customTextureItems.hasOwnProperty(id)) return;
 
-    instance.portalScreen.material.map = instance.resources.customTextureItems[id];
+    instance.portalScreen.material.map =
+      instance.resources.customTextureItems[id];
     instance.portalScreen.material.map.flipY = false;
     instance.portalScreen.material.needsUpdate = true;
   }
@@ -114,6 +186,8 @@ export default class Video {
       instance.audio.setOtherAudioIsPlaying(false);
       instance.audio.fadeInBgMusic();
     }
+
+    // instance.experience.navigation.next.disabled = false
   }
 
   waitAndFinish() {
@@ -171,7 +245,13 @@ export default class Video {
 const PIXEL_RATIO = (function () {
   var ctx = document.createElement('canvas').getContext('2d'),
     dpr = window.devicePixelRatio || 1,
-    bsr = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
+    bsr =
+      ctx.webkitBackingStorePixelRatio ||
+      ctx.mozBackingStorePixelRatio ||
+      ctx.msBackingStorePixelRatio ||
+      ctx.oBackingStorePixelRatio ||
+      ctx.backingStorePixelRatio ||
+      1;
   return dpr / bsr;
 })();
 

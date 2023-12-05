@@ -1,18 +1,23 @@
-import Offline from './Utils/Offline.js';
-import Experience from './Experience.js';
-import Audio from './Extras/Audio.js';
-import Program from './Progress/Program.js';
-import ProgressBar from './Components/ProgressBar.js';
-import _s from './Utils/Strings.js';
-import _lang from './Utils/Lang.js';
-import _api from './Utils/Api.js';
-import _e from './Utils/Events.js';
-import _appInsights from './Utils/AppInsights.js';
+import Offline from '../Utils/Offline.js';
+import Experience from '../Experience.js';
+import ControlRoom from './ControlRoom.js';
+import Environment from './Environment.js';
+import Audio from '../Extras/Audio.js';
+import Program from '../Progress/Program.js';
+import ProgressBar from '../Components/ProgressBar.js';
+import _s from '../Utils/Strings.js';
+import _lang from '../Utils/Lang.js';
+import _api from '../Utils/Api.js';
+import Points from './Points.js';
+import Highlight from './Highlight.js';
+import _e from '../Utils/Events.js';
+import _appInsights from '../Utils/AppInsights.js';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/shift-away.css';
-import _gl from './Utils/Globals.js';
+import _gl from '../Utils/Globals.js';
 import gsap from 'gsap';
+// import Glitch from "./Glitch.js";
 
 let instance = null;
 export default class World {
@@ -20,16 +25,29 @@ export default class World {
     instance = this;
     this.offline = new Offline();
     this.experience = new Experience();
+    this.sizes = this.experience.sizes;
+    this.scene = this.experience.scene;
+    this.camera = this.experience.camera;
+    this.resources = this.experience.resources;
+    this.debug = this.experience.debug;
     this.page = this.experience.page;
+    this.time = this.experience.time;
 
     // Wait for resources
-    instance.chaptersData = _api.getBiexChapters();
+    this.resources.on('ready', () => {
+      instance.chaptersData = instance.resources.api[_api.getBiexChapters()];
 
-    this.page.createIntro();
-    this.setCategories();
+      this.page.createIntro();
+      this.setCategories();
 
-    // Setup
-    this.audio = new Audio();
+      // Setup
+      this.controlRoom = new ControlRoom();
+      //   this.glitch = new Glitch();
+      this.environment = new Environment();
+      this.points = new Points();
+      this.highlight = new Highlight();
+      this.audio = new Audio();
+    });
 
     this.placeholderChapterData();
     this.chapterProgress = () => 0;
@@ -44,6 +62,7 @@ export default class World {
     };
 
     this.buttons = {
+      // contact: document.querySelector('[aria-label="Contact"]'),
       home: document.querySelector('[aria-label="Home"]'),
       guide: document.querySelector('[aria-label="Guide"]'),
     };
@@ -72,11 +91,15 @@ export default class World {
     instance.page.removeIntro();
     instance.page.createLobby();
     instance.setChapters();
-    instance.experience.navigation.prev.addEventListener('click', instance.showIntro);
+    instance.experience.navigation.prev.addEventListener(
+      'click',
+      instance.showIntro,
+    );
   }
 
   setCategories() {
-    if (instance.chaptersData.length == 0) instance.addNotAvailableInYourLanguageMessage();
+    if (instance.chaptersData.length == 0)
+      instance.addNotAvailableInYourLanguageMessage();
     if (instance.chaptersData.hasOwnProperty('message')) return;
 
     for (const [category, data] of Object.entries(instance.chaptersData)) {
@@ -94,7 +117,9 @@ export default class World {
   }
 
   setCategoryHtml(category) {
-    const categoryBtn = _gl.elementFromHtml(`<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`);
+    const categoryBtn = _gl.elementFromHtml(
+      `<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`,
+    );
     document.querySelector('.categories').appendChild(categoryBtn);
   }
 
@@ -109,9 +134,11 @@ export default class World {
   }
 
   setChapters() {
-    instance.chaptersData[instance.selectedCategory]['chapters'].forEach((chapter) => {
-      instance.setChapterHtml(chapter);
-    });
+    instance.chaptersData[instance.selectedCategory]['chapters'].forEach(
+      (chapter) => {
+        instance.setChapterHtml(chapter);
+      },
+    );
 
     instance.experience.navigation.next.disabled = true;
     instance.chapterEventListeners();
@@ -163,7 +190,11 @@ export default class World {
     const chapters = document.querySelector('.chapters');
     chapters.appendChild(chapterHtml);
 
-    instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterBgImage);
+    instance.offline.fetchChapterAsset(
+      chapter,
+      'thumbnail',
+      instance.setChapterBgImage,
+    );
     instance.offline.markChapterIfAvailableOffline(chapter);
     instance.setStatesTooltips();
   }
@@ -175,9 +206,16 @@ export default class World {
     let numberOfQuizes = 0;
 
     chapter.program.forEach((checkpoint) => {
-      if (checkpoint.steps.some((step) => step.details.step_type == 'video')) numberOfEpisodes++;
-      else if (checkpoint.steps.some((step) => step.details.step_type == 'quiz')) numberOfQuizes++;
-      else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++;
+      if (checkpoint.steps.some((step) => step.details.step_type == 'video'))
+        numberOfEpisodes++;
+      else if (
+        checkpoint.steps.some((step) => step.details.step_type == 'quiz')
+      )
+        numberOfQuizes++;
+      else if (
+        checkpoint.steps.some((step) => step.details.step_type == 'task')
+      )
+        numberOfTasks++;
     });
 
     const details = _gl.elementFromHtml(`
@@ -199,7 +237,9 @@ export default class World {
           const pageSlug = linkParts[linkParts.length - 2];
 
           const guide = _gl.elementFromHtml(`
-                        <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                        <a class="link asset" href="https://biblekids.io/${localStorage.getItem(
+                          'lang',
+                        )}/${pageSlug}/" target="_blank">
                             <svg class="book-icon icon" viewBox="0 0 21 24">
                                 <use href="#book"></use>
                             </svg>
@@ -213,7 +253,9 @@ export default class World {
 
     details.append(attachments);
 
-    const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`);
+    const description = _gl.elementFromHtml(
+      `<div class="description">${chapter.content}</div>`,
+    );
     details.append(description);
 
     if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
@@ -222,26 +264,38 @@ export default class World {
       details.append(info);
 
       if (numberOfEpisodes != 1) {
-        const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`);
+        const videoLabel = _gl.elementFromHtml(
+          `<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`,
+        );
         info.append(videoLabel);
       } else {
-        const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`);
+        const videoLabel = _gl.elementFromHtml(
+          `<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`,
+        );
         info.append(videoLabel);
       }
 
       if (numberOfTasks != 1) {
-        const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`);
+        const taskLabel = _gl.elementFromHtml(
+          `<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`,
+        );
         info.append(taskLabel);
       } else {
-        const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`);
+        const taskLabel = _gl.elementFromHtml(
+          `<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`,
+        );
         info.append(taskLabel);
       }
 
       if (numberOfQuizes != 1) {
-        const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`);
+        const quizLabel = _gl.elementFromHtml(
+          `<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`,
+        );
         info.append(quizLabel);
       } else {
-        const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`);
+        const quizLabel = _gl.elementFromHtml(
+          `<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`,
+        );
         info.append(quizLabel);
       }
     }
@@ -249,18 +303,23 @@ export default class World {
     document.querySelector('.lobby').append(details);
     document.querySelector('.chapters').classList.add('chapter-selected');
 
-    instance.experience.navigation.next.addEventListener('click', instance.startChapter);
+    instance.experience.navigation.next.addEventListener(
+      'click',
+      instance.startChapter,
+    );
   }
 
   removeDescriptionHtml() {
     document.querySelector('.chapters').classList.remove('chapter-selected');
-    if (document.querySelector('.chapter-details')) document.querySelector('.chapter-details').remove();
+    if (document.querySelector('.chapter-details'))
+      document.querySelector('.chapter-details').remove();
   }
 
   chapterEventListeners() {
     document.querySelectorAll('.chapter').forEach((chapter) => {
       chapter.addEventListener('click', () => {
-        if (document.querySelector('.chapter-details')) document.querySelector('.chapter-details').remove();
+        if (document.querySelector('.chapter-details'))
+          document.querySelector('.chapter-details').remove();
 
         instance.updateSelectedChapterData(chapter);
         instance.addClassToSelectedChapter(chapter);
@@ -279,16 +338,20 @@ export default class World {
       });
     });
 
-    document.querySelectorAll('.chapter__downloaded').forEach(function (button) {
-      button.addEventListener('click', instance.confirmRedownload);
-    });
-
-    document.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
-      chapter.addEventListener('click', (event) => {
-        instance.downloadChapter(chapter);
-        event.stopPropagation();
+    document
+      .querySelectorAll('.chapter__downloaded')
+      .forEach(function (button) {
+        button.addEventListener('click', instance.confirmRedownload);
       });
-    });
+
+    document
+      .querySelectorAll('.chapter__download-failed')
+      .forEach(function (chapter) {
+        chapter.addEventListener('click', (event) => {
+          instance.downloadChapter(chapter);
+          event.stopPropagation();
+        });
+      });
   }
 
   setStatesTooltips() {
@@ -310,7 +373,9 @@ export default class World {
   }
 
   setChapterBgImage(chapter) {
-    document.querySelector('.chapter[data-id="' + chapter.id + '"]').style.backgroundImage = 'url("' + chapter.thumbnail + '")';
+    document.querySelector(
+      '.chapter[data-id="' + chapter.id + '"]',
+    ).style.backgroundImage = 'url("' + chapter.thumbnail + '")';
   }
 
   // Download
@@ -366,7 +431,9 @@ export default class World {
   updateSelectedChapterData(chapter) {
     const chapterId = chapter.getAttribute('data-id');
     const categorySlug = chapter.getAttribute('data-slug');
-    instance.selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
+    instance.selectedChapter = instance.chaptersData[categorySlug][
+      'chapters'
+    ].find((chapter) => {
       return chapter.id == chapterId;
     });
   }
@@ -387,7 +454,9 @@ export default class World {
     let chapterEl = chapter.closest('.chapter');
     const chapterId = chapterEl.getAttribute('data-id');
     const categorySlug = chapterEl.getAttribute('data-slug');
-    const selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
+    const selectedChapter = instance.chaptersData[categorySlug][
+      'chapters'
+    ].find((chapter) => {
       return chapter.id == chapterId;
     });
 
@@ -405,35 +474,58 @@ export default class World {
     let chapterEl = chapter.closest('.chapter');
     const chapterId = chapterEl.getAttribute('data-id');
     const categorySlug = chapterEl.getAttribute('data-slug');
-    const selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
+    const selectedChapter = instance.chaptersData[categorySlug][
+      'chapters'
+    ].find((chapter) => {
       return chapter.id == chapterId;
     });
 
-    selectedChapter['episodes'].forEach((episode) => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id));
+    selectedChapter['episodes'].forEach((episode) =>
+      this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id),
+    );
     chapterEl.classList.remove('downloaded');
+  }
+
+  fetchLobbyVideoLoop() {
+    const videoName = instance.selectedChapter.lobby_video_loop;
+    if (videoName) {
+      instance.offline.fetchScreenTexture(videoName, () => {
+        instance.offline.setScreenTexture(videoName);
+      });
+    }
   }
 
   fetchBtvVideos() {
     instance.selectedChapter.program.forEach((checkpoint) => {
       checkpoint.steps.forEach((step) => {
-        if (step.details.step_type == 'iris' && step.message?.video) instance.offline.fetchScreenTexture(step.message.video);
+        if (step.details.step_type == 'iris' && step.message?.video)
+          instance.offline.fetchScreenTexture(step.message.video);
 
-        if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) instance.offline.fetchScreenTexture(step.video_with_question.video);
+        if (
+          step.details.step_type == 'task' &&
+          step.details.task_type == 'video_with_question' &&
+          step.video_with_question.video
+        )
+          instance.offline.fetchScreenTexture(step.video_with_question.video);
       });
     });
   }
 
   fetchBgMusic() {
     if (instance.selectedChapter.background_music) {
-      instance.offline.fetchChapterAsset(instance.selectedChapter, 'background_music', (chapter) => {
-        if (instance.selectedChapter.lobby_video_loop) {
-          instance.audio.fadeOutBgMusic(() => {
+      instance.offline.fetchChapterAsset(
+        instance.selectedChapter,
+        'background_music',
+        (chapter) => {
+          if (instance.selectedChapter.lobby_video_loop) {
+            instance.audio.fadeOutBgMusic(() => {
+              instance.audio.changeBgMusic(chapter.background_music);
+            });
+          } else {
             instance.audio.changeBgMusic(chapter.background_music);
-          });
-        } else {
-          instance.audio.changeBgMusic(chapter.background_music);
-        }
-      });
+          }
+        },
+      );
     }
   }
 
@@ -451,18 +543,84 @@ export default class World {
     instance.cacheChapterArchiveImages(chapter.archive);
 
     chapter['program'].forEach((checkpoint) => {
-      instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio));
-      instance.cacheTaskDescriptionVideos(checkpoint.steps.filter((step) => step.message && step.message.video));
-      instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media));
-      instance.cacheSortingGameIcons(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'));
-      instance.cachePictureAndCodeImage(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'));
-      instance.cacheDialogueAudios(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'));
-      instance.cacheGameDescriptionTutorials(checkpoint.steps.filter((step) => step.details && step.details.tutorial));
-      instance.cacheFlipCardsMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'flip_cards'));
-      instance.cacheChooseNewKingMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'choose_new_king'));
-      instance.cacheDavidsRefugeImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'davids_refuge'));
-      instance.cacheMultipleChoiceWithPicture(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'multiple_choice_with_picture'));
-      instance.cacheConfirmationScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'confirmation_screen'));
+      instance.cacheTaskDescriptionAudios(
+        checkpoint.steps.filter((step) => step.message && step.message.audio),
+      );
+      instance.cacheTaskDescriptionVideos(
+        checkpoint.steps.filter((step) => step.message && step.message.video),
+      );
+      instance.cacheTaskDescriptionMedia(
+        checkpoint.steps.filter((step) => step.message && step.message.media),
+      );
+      instance.cacheSortingGameIcons(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'sorting',
+        ),
+      );
+      instance.cachePictureAndCodeImage(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'picture_and_code',
+        ),
+      );
+      instance.cacheDialogueAudios(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'dialog',
+        ),
+      );
+      instance.cacheGameDescriptionTutorials(
+        checkpoint.steps.filter(
+          (step) => step.details && step.details.tutorial,
+        ),
+      );
+      instance.cacheFlipCardsMedia(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'flip_cards',
+        ),
+      );
+      instance.cacheChooseNewKingMedia(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'choose_new_king',
+        ),
+      );
+      instance.cacheDavidsRefugeImages(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'davids_refuge',
+        ),
+      );
+      instance.cacheMultipleChoiceWithPicture(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'multiple_choice_with_picture',
+        ),
+      );
+      instance.cacheConfirmationScreenImages(
+        checkpoint.steps.filter(
+          (step) =>
+            step.details &&
+            step.details.step_type == 'task' &&
+            step.details.task_type == 'confirmation_screen',
+        ),
+      );
     });
   }
 
@@ -506,19 +664,23 @@ export default class World {
     sortingTasks.forEach((task) =>
       task.sorting.forEach((s) => {
         instance.fetchAndCacheAsset(s.icon);
-      })
+      }),
     );
   }
 
   cachePictureAndCodeImage(pictureAndCodeTasks) {
     if (pictureAndCodeTasks.length == 0) return;
-    pictureAndCodeTasks.forEach((task) => instance.fetchAndCacheAsset(task.picture_and_code.picture));
+    pictureAndCodeTasks.forEach((task) =>
+      instance.fetchAndCacheAsset(task.picture_and_code.picture),
+    );
   }
 
   cacheDialogueAudios(steps) {
     if (steps.length == 0) return;
     steps.forEach((step) => {
-      step.dialog.forEach((dialog) => instance.fetchAndCacheAsset(dialog.audio));
+      step.dialog.forEach((dialog) =>
+        instance.fetchAndCacheAsset(dialog.audio),
+      );
     });
   }
 
@@ -561,7 +723,9 @@ export default class World {
   cacheDavidsRefugeImages(steps) {
     if (steps.length == 0) return;
     steps.forEach((step) => {
-      step.davids_refuge.characters.forEach((character) => instance.fetchAndCacheAsset(character.image));
+      step.davids_refuge.characters.forEach((character) =>
+        instance.fetchAndCacheAsset(character.image),
+      );
     });
   }
 
@@ -591,12 +755,14 @@ export default class World {
 
   startChapter() {
     // Reset chapter if completed
-    if (instance.chapterProgress() == instance.selectedChapter.program.length) instance.resetChapter();
+    if (instance.chapterProgress() == instance.selectedChapter.program.length)
+      instance.resetChapter();
 
     instance.page.removeLobby();
     instance.removeLobbyEventListeners();
 
     instance.setUpChapter();
+    instance.fetchLobbyVideoLoop();
     instance.fetchBtvVideos();
     instance.fetchBgMusic();
     instance.fetchArchiveImage();
@@ -612,7 +778,8 @@ export default class World {
     });
 
     document.querySelector('.fullscreen-section input').checked = true;
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    if (!document.fullscreenElement)
+      document.documentElement.requestFullscreen();
 
     document.querySelector('.page').className = 'page page-home';
     document.querySelector('.cta').style.display = 'none';
@@ -637,8 +804,14 @@ export default class World {
   }
 
   removeLobbyEventListeners() {
-    instance.experience.navigation.prev.removeEventListener('click', instance.showIntro);
-    instance.experience.navigation.next.removeEventListener('click', instance.startChapter);
+    instance.experience.navigation.prev.removeEventListener(
+      'click',
+      instance.showIntro,
+    );
+    instance.experience.navigation.next.removeEventListener(
+      'click',
+      instance.startChapter,
+    );
   }
 
   setUpChapter() {
@@ -682,18 +855,28 @@ export default class World {
   }
 
   preselectChapter() {
-    document.querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']").click();
+    document
+      .querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']")
+      .click();
   }
 
   showActionButtons() {
-    instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length;
+    instance.experience.navigation.next.disabled =
+      this.chapterProgress() == this.selectedChapter.program.length;
   }
 
   hideMenu() {
     document.body.classList.remove('freeze');
     document.querySelector('.page').className = 'page page-home';
 
+    // instance.buttons.contact.style.display = 'none'
     instance.buttons.guide.style.display = 'none';
+  }
+
+  hideLoading() {
+    // instance.welcome.loading.style.display = "none"
+    // instance.welcome.topBar.style.display = "flex"
+    // instance.welcome.loadingScreen.classList.add('visible')
   }
 
   finishJourney() {
@@ -712,5 +895,15 @@ export default class World {
 
   getId() {
     return 'progress-theme-' + this.selectedChapter.id;
+  }
+
+  resize() {
+    if (this.points) this.points.resize();
+  }
+
+  update() {
+    if (this.controlRoom) this.controlRoom.update();
+    if (this.points) this.points.update();
+    // if (this.glitch) this.glitch.update();
   }
 }
