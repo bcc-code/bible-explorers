@@ -20,47 +20,147 @@
         />
       </symbol>
     </svg>
-    <div id="app" class="fixed inset-0 overflow-hidden">
+    <div id="app" class="group fixed inset-0 overflow-hidden">
       <div class="absolute inset-0 h-screen w-screen bg-cover" style="background-image: url('./app-background.png')"></div>
       <div class="absolute inset-0 h-screen w-screen bg-gradient-to-r from-bke-dark/80 to-bke-primary/80"></div>
 
       <div class="relative flex h-full flex-col">
-        <header id="app-header" class="bg-white">
-          <div class="flex items-center p-4">
-            <a href="#" class="text-bke-primary">
+        <header id="app-header" class="bg-transparent">
+          <div class="flex items-center justify-between p-4">
+            <a href="#" class="text-white">
               <svg height="3em" viewBox="0 0 692.31 183.84">
                 <use href="#logo-bible-explorers" fill="currentColor"></use>
               </svg>
             </a>
 
-            <nav class="ml-auto flex items-center gap-4">
-              <a href="#" class="inline-flex h-12 items-center justify-center gap-2 rounded-full px-3 text-bke-primary transition hover:bg-bke-accent">
+            <div class="app-progress">
+              <ul class="flex">
+                <li class="flex items-center after:inline-block after:h-0.5 after:w-20 after:bg-white/20">
+                  <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 text-lg font-bold text-white transition hover:bg-bke-accent hover:text-bke-primary">1</a>
+                </li>
+                <li class="flex items-center after:inline-block after:h-0.5 after:w-20 after:bg-white/20">
+                  <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 text-lg font-bold text-white transition hover:bg-bke-accent hover:text-bke-primary">2</a>
+                </li>
+                <li class="flex items-center after:inline-block after:h-0.5 after:w-20 after:bg-white/20">
+                  <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 text-lg font-bold text-white transition hover:bg-bke-accent hover:text-bke-primary">3</a>
+                </li>
+                <li class="flex items-center after:inline-block after:h-0.5 after:w-20 after:bg-white/20">
+                  <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 text-lg font-bold text-white transition hover:bg-bke-accent hover:text-bke-primary">4</a>
+                </li>
+                <li class="flex items-center after:inline-block after:h-0.5 after:w-20 after:bg-white/20">
+                  <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 text-lg font-bold text-white transition hover:bg-bke-accent hover:text-bke-primary">5</a>
+                </li>
+                <li>
+                  <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 text-lg font-bold text-white transition hover:bg-bke-accent hover:text-bke-primary">6</a>
+                </li>
+              </ul>
+            </div>
+
+            <nav class="flex items-center gap-4">
+              <a href="#" class="inline-flex h-12 items-center justify-center gap-2 rounded-full px-3 text-white transition hover:bg-bke-accent hover:text-bke-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512"><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z" fill="currentColor" /></svg>
                 <span class="text-lg font-semibold">How to guide</span>
               </a>
-              <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full text-bke-primary transition hover:bg-bke-accent">
+              <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full text-white transition hover:bg-bke-accent hover:text-bke-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1.75em" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM168 184c0-30.9 25.1-56 56-56h56.9c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4V288H232V264 250.5 236.6l12.1-6.9 44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H224c-4.4 0-8 3.6-8 8l0 6.5-48 0V184zm64 184V320h48v48H232z" fill="currentColor" /></svg>
               </a>
-              <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full text-bke-primary transition hover:bg-bke-accent">
+              <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full text-white transition hover:bg-bke-accent hover:text-bke-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z" fill="currentColor" /></svg>
               </a>
-              <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full text-bke-primary transition hover:bg-bke-accent">
+              <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full text-white transition hover:bg-bke-accent hover:text-bke-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" fill="currentColor" /></svg>
               </a>
             </nav>
           </div>
         </header>
-
         <main id="app-content" class="flex-1">
-          <div id="age-screen" class="hidden h-full flex-col items-center justify-center gap-8">
+          <article id="loading-screen"></article>
+          <article id="landing-screen" class="hidden h-full flex-col items-center justify-center gap-8">
             <h1 class="max-w-[32ch] text-center text-5xl font-semibold text-bke-accent">Join time travels and explore the book that can answer every question</h1>
             <div class="flex gap-4">
               <a href="#" class="inline-flex h-14 items-center justify-center gap-2 rounded-lg border-2 border-bke-outline bg-bke-primary px-6 text-xl font-semibold uppercase tracking-widest text-white transition hover:border-bke-accent hover:bg-bke-accent hover:text-bke-primary">6-8 years</a>
               <a href="#" class="inline-flex h-14 items-center justify-center gap-2 rounded-lg border-2 border-bke-outline bg-bke-primary px-6 text-xl font-semibold uppercase tracking-widest text-white transition hover:border-bke-accent hover:bg-bke-accent hover:text-bke-primary">9-11 years</a>
             </div>
+          </article>
+          <article id="lobby-screen" class="hidden h-full flex-col">
+            <div class="group my-8 flex gap-8 px-12">
+              <div class="flex-1">
+                <section class="relative h-40 rounded-xl border-2 border-bke-outline bg-bke-primary px-8 py-4">
+                  <div class="absolute right-0 top-0 h-full w-80 rounded-r-xl bg-cover after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-primary after:to-transparent" style="background-image: url('https://biblekids.io/wp-content/uploads/2022/12/BIEX_E04_banner.png')"></div>
+                  <header class="relative text-white">
+                    <h3 class="text-3xl font-bold">Josiah – true and righteous</h3>
+                    <p class="text-lg">19 september 2023</p>
+                  </header>
+                </section>
+              </div>
+              <div class="flex-1">
+                <section class="rounded-xl border-2 border-bke-outline bg-bke-primary px-8 py-4">
+                  <a href="#" class="inline-flex h-12 items-center justify-center gap-2 rounded-full px-3 text-white transition hover:bg-bke-accent hover:text-bke-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512"><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z" fill="currentColor" /></svg>
+                    <span class="text-lg font-semibold">Mentor guide - Josiah</span>
+                  </a>
+                  <hr class="my-4 opacity-20" />
+                  <p class="my-4 text-lg text-white/80">Glitch is bored in the control room. He would like to time travel with some new friends. Tommy wonders if it's really so bad to lie a little every now and then - after all, he's just a kid. But Iris knows of a story that shows just how important it is to be honest and true. She takes the children to the time of Josiah, a boy who became king when he was just 8 years old.</p>
+                  <hr class="my-4 opacity-20" />
+                  <ul class="flex flex-wrap gap-8">
+                    <li class="flex items-center gap-2 text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path
+                          d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM48 368v32c0 8.8 7.2 16 16 16H96c8.8 0 16-7.2 16-16V368c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16zm368-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V368c0-8.8-7.2-16-16-16H416zM48 240v32c0 8.8 7.2 16 16 16H96c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16zm368-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16H416zM48 112v32c0 8.8 7.2 16 16 16H96c8.8 0 16-7.2 16-16V112c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16zM416 96c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V112c0-8.8-7.2-16-16-16H416zM160 128v64c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V128c0-17.7-14.3-32-32-32H192c-17.7 0-32 14.3-32 32zm32 160c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V320c0-17.7-14.3-32-32-32H192z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                      <span>4 videos</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-white">3 tasks</li>
+                    <li class="flex items-center gap-2 text-white">1 quiz</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </article>
+          <div id="chapter-ui" class="grid h-full grid-cols-12 grid-rows-6 gap-4 text-white">
+            <article id="iris-placeholder-full" class="col-span-full row-span-5 hidden p-4">
+              <p>iris placeholder</p>
+            </article>
+            <article id="activity-placeholder" class="col-span-full row-span-5 hidden p-4">
+              <p>activity placeholder</p>
+            </article>
+            <article id="iris-placeholder" class="col-span-8 row-span-5 p-4">
+              <p>iris placeholder</p>
+            </article>
+            <article id="panel-placeholder" class="col-span-4 row-span-5 p-4">
+              <p>panel placeholder</p>
+            </article>
+            <article id="dialogue-placeholder" class="col-span-8 row-start-6 p-4">
+              <div class="h-full rounded-lg border-2 border-white/20 bg-gradient-to-r from-bke-dark to-bke-primary px-8 py-4">
+                <h3 class="text-xl font-semibold italic text-bke-outline">IRIS</h3>
+                <p class="mt-2 text-lg text-white/80">Welcome to the control room! Great that everyone has logged in … or … maybe we’re still waiting for YOU?</p>
+              </div>
+            </article>
+            <article id="actions-placeholder" class="col-span-4 col-start-9 row-start-6 p-4">
+              <div class="flex h-full items-end justify-end gap-4">
+                <a href="#" class="inline-flex h-12 items-center justify-center gap-2 rounded-full px-3 text-white transition hover:bg-bke-accent hover:text-bke-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" fill="currentColor" /></svg>
+                  <span class="text-lg font-medium">Prev</span>
+                </a>
+                <a href="#" class="inline-flex h-12 items-center justify-center gap-2 rounded-full px-3 text-white transition hover:bg-bke-accent hover:text-bke-primary">
+                  <span class="text-lg font-medium">Next</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" fill="currentColor" /></svg>
+                </a>
+              </div>
+            </article>
           </div>
-          <div class="chapters-screen" class="flex h-full flex-col"></div>
         </main>
+        <footer id="app-footer" class="hidden items-center justify-end gap-4 p-4">
+          <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full px-3 text-white transition hover:bg-bke-accent hover:text-bke-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" fill="currentColor" /></svg>
+          </a>
+          <a href="#" class="inline-flex h-12 w-12 items-center justify-center gap-2 rounded-full px-3 text-white transition hover:bg-bke-accent hover:text-bke-primary">
+            <span class="hidden text-lg font-semibold">Start time travel</span>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" fill="currentColor" /></svg>
+          </a>
+        </footer>
       </div>
     </div>
     <script type="module" src="index.js"></script>
