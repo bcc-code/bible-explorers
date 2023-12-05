@@ -20,7 +20,7 @@ import basicSsl from "@vitejs/plugin-basic-ssl"
 import { VitePWA } from "vite-plugin-pwa"
 
 export default {
-  root: "non3D/",
+  root: "src/",
   publicDir: "../static/",
   base: "./",
   server: {
