@@ -5,8 +5,6 @@ import Sizes from './Utils/Sizes.js';
 import Time from './Utils/Time.js';
 import Resources from './Utils/Resources.js';
 import MouseMove from './Utils/MouseMove.js';
-import Camera from './Camera.js';
-import Renderer from './Renderer.js';
 import sources from './Sources.js';
 import Menu from './Components/Menu.js';
 import World from './World/World.js';
@@ -40,24 +38,12 @@ export default class Experience {
     this.scene = new THREE.Scene();
     this.resources = new Resources(sources);
     this.pointer = new MouseMove();
-    this.camera = new Camera();
     this.world = new World();
-    this.raycaster = new THREE.Raycaster();
-    this.renderer = new Renderer();
     this.auth0 = {};
-
-    // Sizes resize event
-    this.sizes.on('resize', () => {
-      this.resize();
-    });
 
     // Time animation event
     this.videoIsPlaying = false;
     this.gameIsOn = false;
-
-    this.time.on('animation', () => {
-      if (this.videoIsPlaying == false && this.gameIsOn == false) this.update();
-    });
 
     this.navigation = {
       prev: document.querySelector('[aria-label="prev page"]'),
@@ -85,16 +71,8 @@ export default class Experience {
     });
   }
 
-  resize() {
-    this.camera.resize();
-    this.world.resize();
-    this.renderer.resize();
-  }
-
   update() {
-    this.camera.update();
     this.world.update();
     this.stats.update();
-    this.renderer.update();
   }
 }

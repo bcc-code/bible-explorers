@@ -689,8 +689,6 @@ export default class Offline {
   }
 
   setScreenTexture(videoName) {
-    offline.experience.world.controlRoom.tv_16x9.material.map =
-      offline.experience.resources.customTextureItems[videoName].item;
     offline.experience.world.controlRoom.playCustomIrisTexture(videoName);
   }
 

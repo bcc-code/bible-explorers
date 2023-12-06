@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import TWEEN from '@tweenjs/tween.js';
 import Experience from '../Experience.js';
 import _lang from '../Utils/Lang.js';
 import _s from '../Utils/Strings.js';
@@ -17,15 +16,12 @@ export default class Video {
     instance.world = instance.experience.world;
     instance.debug = instance.experience.debug;
     instance.resources = instance.experience.resources;
-    instance.camera = instance.experience.camera;
     instance.audio = instance.world.audio;
     instance.scene = instance.experience.scene;
     instance.controlRoom = instance.world.controlRoom;
     instance.clickableObjects = instance.controlRoom.clickableObjects;
 
     // Setup
-    instance.portalScreen = instance.controlRoom.tv_portal;
-    instance.tablet = instance.controlRoom.tablet;
     instance.videoPlayIcon = null;
 
     instance.canvasTexture();
@@ -104,9 +100,6 @@ export default class Video {
     mesh.name = 'play_video_icon';
     this.scene.add(mesh);
 
-    mesh.position.copy(instance.portalScreen.position);
-    mesh.quaternion.copy(instance.portalScreen.quaternion);
-    mesh.position.x -= 0.01;
     mesh.visible = false;
 
     this.videoPlayIcon = mesh;
@@ -124,13 +117,6 @@ export default class Video {
     // Always start new loaded videos from the beginning
     instance.video().currentTime(0);
 
-    // Set texture when starting directly on a video task type
-    if (
-      instance.portalScreen.material.map !=
-      instance.resources.customTextureItems[id]
-    )
-      instance.setTexture(id);
-
     const videoQuality = instance.getVideoQuality();
     instance.resources.videoPlayers[id].setVideoQuality(videoQuality);
 
@@ -140,15 +126,6 @@ export default class Video {
 
     instance.focus();
     instance.addSkipBtn();
-  }
-
-  setTexture(id) {
-    if (!instance.resources.customTextureItems.hasOwnProperty(id)) return;
-
-    instance.portalScreen.material.map =
-      instance.resources.customTextureItems[id];
-    instance.portalScreen.material.map.flipY = false;
-    instance.portalScreen.material.needsUpdate = true;
   }
 
   //#region Actions
@@ -164,21 +141,13 @@ export default class Video {
   }
 
   focus() {
-    instance.camera.zoomIn(2000);
-
     instance.audio.setOtherAudioIsPlaying(true);
     instance.audio.fadeOutBgMusic();
-
-    new TWEEN.Tween(instance.portalScreen.material)
-      .to({ color: new THREE.Color(0xffffff) }, 1000)
-      .easing(TWEEN.Easing.Quadratic.InOut)
-      .start();
   }
 
   defocus() {
     if (instance.video()) {
       instance.pause();
-      instance.portalScreen.scale.set(0, 0, 0);
       instance.videoPlayIcon.visible = false;
 
       if (instance.video().isFullscreen_) instance.video().exitFullscreen();

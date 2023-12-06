@@ -8,8 +8,6 @@ import ProgressBar from '../Components/ProgressBar.js';
 import _s from '../Utils/Strings.js';
 import _lang from '../Utils/Lang.js';
 import _api from '../Utils/Api.js';
-import Points from './Points.js';
-import Highlight from './Highlight.js';
 import _e from '../Utils/Events.js';
 import _appInsights from '../Utils/AppInsights.js';
 import tippy from 'tippy.js';
@@ -27,7 +25,6 @@ export default class World {
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
-    this.camera = this.experience.camera;
     this.resources = this.experience.resources;
     this.debug = this.experience.debug;
     this.page = this.experience.page;
@@ -44,8 +41,6 @@ export default class World {
       this.controlRoom = new ControlRoom();
       //   this.glitch = new Glitch();
       this.environment = new Environment();
-      this.points = new Points();
-      this.highlight = new Highlight();
       this.audio = new Audio();
     });
 
@@ -830,13 +825,11 @@ export default class World {
     document.body.classList.add('freeze');
     instance.program.destroy();
     instance.program.video.defocus();
-    instance.program.removeInteractivity();
     instance.buttons.home.style.display = 'none';
     instance.buttons.guide.style.display = 'flex';
 
     document.querySelector('.cta').style.display = 'flex';
 
-    instance.camera.updateCameraTo(null);
     instance.controlRoom.irisTextureTransition();
     instance.audio.stopAllTaskDescriptions();
     instance.audio.changeBgMusic();
@@ -895,15 +888,5 @@ export default class World {
 
   getId() {
     return 'progress-theme-' + this.selectedChapter.id;
-  }
-
-  resize() {
-    if (this.points) this.points.resize();
-  }
-
-  update() {
-    if (this.controlRoom) this.controlRoom.update();
-    if (this.points) this.points.update();
-    // if (this.glitch) this.glitch.update();
   }
 }
