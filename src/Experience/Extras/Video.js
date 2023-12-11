@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import Experience from '../Experience.js';
 import _lang from '../Utils/Lang.js';
 import _s from '../Utils/Strings.js';
@@ -22,10 +21,6 @@ export default class Video {
     instance.clickableObjects = instance.controlRoom.clickableObjects;
 
     // Setup
-    instance.videoPlayIcon = null;
-
-    instance.canvasTexture();
-
     instance.video = () => {
       let id = instance.playingVideoId;
       return instance.resources.videoPlayers[id];
@@ -45,65 +40,7 @@ export default class Video {
     };
 
     instance.playingVideoId = null;
-  }
-
-  canvasTexture() {
-    // create image
-    const bitmap = createRetinaCanvas(1920, 1080, 1);
-    const ctx = bitmap.getContext('2d', { antialias: false });
-
-    const centerX = bitmap.width / 2;
-    const centerY = bitmap.height / 2;
-    const size = 40;
-    const circle = size * 2.5;
-
-    ctx.globalAlpha = 0.4;
-    ctx.beginPath();
-    ctx.rect(0, 0, 1920, 1080);
-    ctx.fillStyle = 'black';
-    ctx.fill();
-
-    ctx.globalAlpha = 1.0;
-    ctx.lineWidth = 20;
-    ctx.strokeStyle = '#ffffff';
-    ctx.fillStyle = '#ffffff';
-
-    // make circle
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, circle, 0, 2 * Math.PI);
-    ctx.closePath();
-    ctx.stroke();
-
-    // make play button
-    ctx.lineJoin = 'round';
-
-    ctx.beginPath();
-    ctx.moveTo(centerX - size + 10, centerY - size);
-    ctx.lineTo(centerX - size + 10, centerY + size);
-    ctx.lineTo(centerX + size + 5, centerY);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-
-    // canvas contents are used for
-    const texture = new THREE.Texture(bitmap);
-    texture.needsUpdate = true;
-
-    const material = new THREE.MeshBasicMaterial({
-      color: '#ffffff',
-      map: texture,
-      transparent: true,
-    });
-
-    const geometry = new THREE.PlaneGeometry(16, 9);
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.name = 'play_video_icon';
-    this.scene.add(mesh);
-
-    mesh.visible = false;
-
-    this.videoPlayIcon = mesh;
-    this.clickableObjects.push(mesh);
+    instance.videosContainer = document.querySelector('#videos-container');
   }
 
   load(id) {
@@ -143,18 +80,27 @@ export default class Video {
   focus() {
     instance.audio.setOtherAudioIsPlaying(true);
     instance.audio.fadeOutBgMusic();
+
+    instance.videosContainer.style.display = 'block';
+    instance.videosContainer.querySelector(
+      '#' + instance.playingVideoId,
+    ).style.display = 'block';
   }
 
   defocus() {
-    if (instance.video()) {
-      instance.pause();
-      instance.videoPlayIcon.visible = false;
+    if (!instance.video()) return;
 
-      if (instance.video().isFullscreen_) instance.video().exitFullscreen();
+    instance.pause();
 
-      instance.audio.setOtherAudioIsPlaying(false);
-      instance.audio.fadeInBgMusic();
-    }
+    if (instance.video().isFullscreen_) instance.video().exitFullscreen();
+
+    instance.audio.setOtherAudioIsPlaying(false);
+    instance.audio.fadeInBgMusic();
+
+    instance.videosContainer.style.display = 'none';
+    instance.videosContainer.querySelector(
+      '#' + instance.playingVideoId,
+    ).style.display = 'none';
 
     // instance.experience.navigation.next.disabled = false
   }

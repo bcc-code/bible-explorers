@@ -76,39 +76,8 @@ export default class Program {
       ][field] = newValue;
     };
 
-    instance.currentLocation = () => {
-      if (instance.stepType() == 'video') {
-        return 'portal';
-      } else if (
-        instance.stepType() == 'iris' ||
-        instance.stepType() == 'quiz'
-      ) {
-        return 'irisCloseLook';
-      } else if (instance.stepType() == 'task') {
-        // Games
-        if (
-          instance.taskType() == 'cables' ||
-          instance.taskType() == 'sorting' ||
-          instance.taskType() == 'simon_says' ||
-          instance.taskType() == 'flip_cards' ||
-          instance.taskType() == 'choose_new_king' ||
-          instance.taskType() == 'heart_defense' ||
-          instance.taskType() == 'davids_refuge' ||
-          instance.taskType() == 'video_with_question' ||
-          instance.taskType() == 'labyrinth' ||
-          instance.taskType() == 'confirmation_screen'
-        ) {
-          return 'irisCloseLook';
-        } else {
-          return 'irisWithOptions';
-        }
-      } else {
-        return 'default';
-      }
-    };
-    instance.interactiveObjects = () => [];
+    instance.irisInteraction = document.querySelector('.iris-interaction');
     instance.totalCheckpoints = Object.keys(instance.programData).length;
-    instance.clickedObject = null;
     instance.clickCallback = () => {};
     instance.canClick = () =>
       !document.body.classList.contains('freeze') &&
@@ -129,13 +98,14 @@ export default class Program {
       'click',
       instance.nextStep,
     );
+
+    instance.irisInteraction.addEventListener('click', instance.startAction);
   }
 
   previousStep() {
     // If there is a multi-action step, go to the first step of the checkpoint instead of going to the previous step
     // if (instance.points.previousLabel) {
     //   instance.goToCheckpoint(instance.currentCheckpoint);
-    //   instance.points.delete();
     //   return;
     // }
 
@@ -144,13 +114,6 @@ export default class Program {
   }
 
   nextStep() {
-    // If there is any clickable item, trigger the action instead of going to the next step
-    // if (instance.points.currentLabel) {
-    //   instance.control(instance.points.currentLabel);
-    //   instance.points.delete();
-    //   return;
-    // }
-
     instance.currentStep++;
     instance.toggleStep();
   }
@@ -189,12 +152,8 @@ export default class Program {
 
       if (instance.getCurrentStepData().details.play_video_directly) {
         instance.video.play();
-      } else {
-        instance.video.videoPlayIcon.visible = true;
       }
     } else {
-      instance.video.videoPlayIcon.visible = false;
-
       if (instance.stepType() == 'iris') {
         instance.message.show();
       } else if (instance.stepType() == 'task') {
@@ -265,14 +224,13 @@ export default class Program {
   }
 
   startInteractivity() {
+    if (instance.stepType() != 'video') instance.video.defocus();
+
     if (instance.stepType() == 'iris') {
       setTimeout(function () {
         instance.world.progressBar.show();
+        instance.irisInteraction.style.display = 'flex';
       }, 1000);
-
-      instance.clickCallback = () => {
-        instance.world.progressBar.hide();
-      };
     } else if (instance.stepType() == 'pause') {
       instance.world.progressBar?.hide();
       instance.startTask();
@@ -282,10 +240,10 @@ export default class Program {
     }
   }
 
-  control(currentIntersect) {
-    if (!instance.canClick()) return;
-
-    instance.clickedObject = currentIntersect.name;
+  startAction() {
+    instance.world.progressBar.hide();
+    instance.irisInteraction.style.display = 'none';
+    instance.message.show();
   }
 
   currentVideo() {

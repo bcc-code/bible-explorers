@@ -1,7 +1,7 @@
-import Experience from "../Experience";
-import _s from "../Utils/Strings.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import Experience from '../Experience';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 
@@ -15,7 +15,7 @@ export default class Message {
     instance.navigation = instance.experience.navigation;
   }
 
-  show(text = "", character = "") {
+  show(text = '', character = '') {
     instance.destroy();
     instance.world = instance.experience.world;
     instance.program = instance.world.program;
@@ -24,7 +24,7 @@ export default class Message {
 
     if (!text) text = instance.data.text;
     if (!character)
-      character = instance.data ? instance.data.character : "iris";
+      character = instance.data ? instance.data.character : 'iris';
 
     instance.setHtml(text, character);
     instance.setEventListeners();
@@ -33,8 +33,6 @@ export default class Message {
       instance.audio.togglePlayTaskDescription(instance.data.audio);
 
     if (instance.data.video) {
-      instance.world.controlRoom.tv_16x9.material.map =
-        instance.resources.customTextureItems[instance.data.video].item;
       instance.world.controlRoom.playCustomIrisTexture(instance.data.video);
     }
   }
@@ -48,15 +46,15 @@ export default class Message {
                         ${text}
                     </div>
                 </div>
-            </section>`
+            </section>`,
     );
-    document.querySelector(".ui-container").append(message);
+    document.querySelector('.ui-container').append(message);
 
-    if (instance.data.character == "glitch") {
+    if (instance.data.character == 'glitch') {
       const glitch = _gl.elementFromHtml(
-        '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>'
+        '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>',
       );
-      document.querySelector("section.message .container").append(glitch);
+      document.querySelector('section.message .container').append(glitch);
     }
 
     if (instance.data.open_question === true) {
@@ -68,12 +66,12 @@ export default class Message {
                             <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
                         </div>
                     </div>
-                </section>`
+                </section>`,
       );
-      document.querySelector(".ui-container").append(openQuestion);
+      document.querySelector('.ui-container').append(openQuestion);
 
-      const textarea = openQuestion.querySelector("textarea");
-      textarea.addEventListener("input", (e) => {
+      const textarea = openQuestion.querySelector('textarea');
+      textarea.addEventListener('input', (e) => {
         instance.experience.navigation.next.disabled =
           e.target.value.length <= 2;
       });
@@ -85,7 +83,7 @@ export default class Message {
   }
 
   destroy() {
-    document.querySelector("section.message")?.remove();
-    document.querySelector("section.open-question")?.remove();
+    document.querySelector('section.message')?.remove();
+    document.querySelector('section.open-question')?.remove();
   }
 }

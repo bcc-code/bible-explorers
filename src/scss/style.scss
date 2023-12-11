@@ -39,8 +39,19 @@ textarea::placeholder {
     position: absolute;
     inset: 0;
     aspect-ratio: 16/9;
-    z-index: -1;
+    z-index: 7;
+    width: 720px;
+    height: 405px;
+    right: 1rem;
+    left: auto;
+    overflow: hidden;
+    top: 50%;
+    transform: translateY(-50%);
     display: none;
+
+    > * {
+        display: none;
+    }
 }
 
 .webgl {
@@ -69,6 +80,23 @@ textarea::placeholder {
     .btn:not(:first-child) {
         margin-left: 16px;
     }
+}
+
+.iris-interaction {
+    display: none;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    height: 150px;
+    background-color: var(--bg-default);
+    color: #fff;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .ui-container {
