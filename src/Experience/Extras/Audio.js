@@ -22,22 +22,15 @@ export default class Audio {
     };
 
     audio.notes = [];
-    audio.btn = document.querySelector('[aria-label="Background music"');
+    audio.btn = document.querySelector('#music-toggle');
     audio.musicRange = document.getElementById('musicRange');
     audio.fadeSteps = 15;
     audio.slideValueConversion = 3.33;
-    audio.bgMusicVolume = () =>
-      audio.musicRange.value / audio.slideValueConversion / 100; // audio volume value should be [0, 1]
+    audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100; // audio volume value should be [0, 1]
 
     audio.musicRange.oninput = function () {
       audio.musicRange.nextElementSibling.innerText = this.value;
-      this.value == 0
-        ? audio.musicRange.parentElement.parentElement.classList.add(
-            'sound-off',
-          )
-        : audio.musicRange.parentElement.parentElement.classList.remove(
-            'sound-off',
-          );
+      this.value == 0 ? audio.musicRange.parentElement.parentElement.classList.add('sound-off') : audio.musicRange.parentElement.parentElement.classList.remove('sound-off');
     };
 
     audio.initialize();
@@ -58,11 +51,7 @@ export default class Audio {
     if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
       audio.loadAndPlay(soundtrack);
     } else if (audio.bgMusicAudios.state == _STATE.PLAYING) {
-      if (
-        audio.alreadyFetched(soundtrack) &&
-        audio.bgMusicAudios.objs[soundtrack].isPlaying
-      )
-        return;
+      if (audio.alreadyFetched(soundtrack) && audio.bgMusicAudios.objs[soundtrack].isPlaying) return;
 
       audio.fadeOutBgMusic(() => {
         audio.loadAndPlay(soundtrack);
@@ -84,9 +73,7 @@ export default class Audio {
     audio.bgMusic.play();
 
     const fadeInAudio = setInterval(() => {
-      audio.bgMusic.setVolume(
-        audio.bgMusic.getVolume() + audio.bgMusicVolume() / audio.fadeSteps,
-      );
+      audio.bgMusic.setVolume(audio.bgMusic.getVolume() + audio.bgMusicVolume() / audio.fadeSteps);
 
       if (audio.bgMusic.getVolume() > audio.bgMusicVolume()) {
         clearInterval(fadeInAudio);
@@ -99,9 +86,7 @@ export default class Audio {
     if (!audio.bgMusic) return;
 
     const fadeOutAudio = setInterval(() => {
-      audio.bgMusic.setVolume(
-        audio.bgMusic.getVolume() - audio.bgMusicVolume() / audio.fadeSteps,
-      );
+      audio.bgMusic.setVolume(audio.bgMusic.getVolume() - audio.bgMusicVolume() / audio.fadeSteps);
 
       if (audio.bgMusic.getVolume() < audio.bgMusicVolume() / audio.fadeSteps) {
         clearInterval(fadeOutAudio);
@@ -157,15 +142,11 @@ export default class Audio {
   loadMelodyNotes(notes) {
     notes.forEach((note) => {
       if (!audio.notes[note]) {
-        audio.audioLoader.load(
-          'sounds/notes/' + note + '.mp3',
-          function (buffer) {
-            audio.notes[note] = new THREE.Audio(audio.listener);
-            audio.notes[note].setBuffer(buffer);
-            audio.notes[note].onEnded = () =>
-              document.dispatchEvent(_e.EVENTS.NOTE_PLAYED);
-          },
-        );
+        audio.audioLoader.load('sounds/notes/' + note + '.mp3', function (buffer) {
+          audio.notes[note] = new THREE.Audio(audio.listener);
+          audio.notes[note].setBuffer(buffer);
+          audio.notes[note].onEnded = () => document.dispatchEvent(_e.EVENTS.NOTE_PLAYED);
+        });
       }
     });
   }
@@ -241,10 +222,10 @@ export default class Audio {
   }
 
   setSoundIconOn() {
-    audio.btn.setAttribute('is-playing', '');
+    audio.btn.classList.add('is-playing');
   }
   setSoundIconOff() {
-    audio.btn.removeAttribute('is-playing');
+    audio.btn.classList.remove('is-playing');
   }
 
   disableToggleBtn() {
@@ -265,8 +246,7 @@ export default class Audio {
   }
 
   stopTaskDescription(url) {
-    if (audio.taskDescriptionAudios.hasOwnProperty(url))
-      audio.taskDescriptionAudios[url].stop();
+    if (audio.taskDescriptionAudios.hasOwnProperty(url)) audio.taskDescriptionAudios[url].stop();
 
     audio.setOtherAudioIsPlaying(false);
     audio.fadeInBgMusic();
@@ -278,9 +258,6 @@ export default class Audio {
       if (!audio.bgMusic) return;
       audio.bgMusic.setVolume(audio.bgMusicVolume());
     });
-    document.addEventListener(
-      _e.ACTIONS.STEP_TOGGLED,
-      audio.stopAllTaskDescriptions,
-    );
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions);
   }
 }

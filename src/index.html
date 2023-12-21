@@ -163,60 +163,55 @@
       </symbol>
     </svg>
 
-    <main class="ui">
-      <header class="app-header">
-        <svg class="logo" viewBox="0 0 692.31 183.84">
-          <use href="#logo-bible-explorers" fill="currentColor"></use>
-        </svg>
-
+    <div id="app" class="fixed inset-0 overflow-hidden">
+      <div class="fixed inset-0 z-0 bg-gradient-to-br from-bke-dark to-bke-primary"></div>
+      <header id="app-header" class="group relative z-10 hidden items-center justify-between p-4">
+        <a href="javascript:void(0)" id="home-button" class="text-white">
+          <svg height="2.5rem" viewBox="0 0 692.31 183.84"><use href="#logo-bible-explorers" fill="currentColor"></use></svg>
+        </a>
         <div class="progress-bar relative"></div>
-
-        <div class="buttons">
-          <a href="#" target="_blank" class="btn default flex-shrink-0" aria-label="Guide">
-            <svg class="book-icon icon" viewBox="0 0 21 24">
-              <use href="#book"></use>
+        <div class="flex gap-2">
+          <button id="music-toggle" class="group flex h-10 w-10 items-center justify-center rounded-full border-2 border-white text-white">
+            <svg class="mr-0.5 group-[.is-playing]:hidden" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+              <path d="M512 31c0-17.1-13.9-31-31-31c-3.1 0-6.2 .5-9.1 1.4l-311 95.7C150.9 100.2 144 109.5 144 120V240 362.7c-14.1-6.8-30.5-10.7-48-10.7c-53 0-96 35.8-96 80s43 80 96 80s96-35.8 96-80V260.2l272-83.7V298.7c-14.1-6.8-30.5-10.7-48-10.7c-53 0-96 35.8-96 80s43 80 96 80s96-35.8 96-80V144.6c0-.4 0-.7 0-1.1V31zM464 368c0 9.8-12.9 32-48 32s-48-22.2-48-32s12.9-32 48-32s48 22.2 48 32zM144 432c0 9.8-12.9 32-48 32s-48-22.2-48-32s12.9-32 48-32s48 22.2 48 32zM464 126.3L192 210V137.7L464 54v72.2z" fill="currentColor" />
             </svg>
-            <span>How to</span>
-          </a>
-          <button class="btn focused flex-shrink-0 rounded" aria-label="Home">
-            <svg class="home-icon icon" viewBox="0 0 27 24">
-              <use href="#home"></use>
-            </svg>
-          </button>
-          <button class="btn focused flex-shrink-0 rounded" aria-label="FAQ">
-            <svg class="question-circle-icon icon" viewBox="0 0 24 24">
-              <use href="#question-circle"></use>
+            <svg class="mr-0.5 hidden group-[.is-playing]:block" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
+              <path
+                d="M545 0c17.1 0 31 13.9 31 31V143.5c0 .4 0 .7 0 1.1V368c0 16.7-6.2 32.2-16.7 45.1l71.5 56c10.4 8.2 12.3 23.3 4.1 33.7s-23.3 12.3-33.7 4.1L9.2 42.9C-1.2 34.7-3.1 19.6 5.1 9.2S28.4-3.1 38.8 5.1L208 137.7V120c0-10.5 6.9-19.8 16.9-22.9l311-95.7c3-.9 6-1.4 9.1-1.4zM256 175.3l31.7 24.9L528 126.3V54L256 137.7v37.6zm77.7 60.9l87.4 68.5C437.4 294.3 457.8 288 480 288c17.5 0 33.9 3.9 48 10.7V176.5L333.7 236.3zM463.4 337.9l58 45.4c4.6-5.6 6.6-11.4 6.6-15.3c0-9.8-12.9-32-48-32c-6.2 0-11.7 .7-16.6 1.9zM208 259.9l48 37.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c17.5 0 33.9 3.9 48 10.7V259.9zM160 400c-35.1 0-48 22.2-48 32s12.9 32 48 32s48-22.2 48-32s-12.9-32-48-32z"
+                fill="currentColor"
+              />
             </svg>
           </button>
-          <button class="btn focused flex-shrink-0 rounded" aria-label="Background music">
-            <svg class="music-on icon" viewBox="0 0 24 24">
-              <use href="#music-on"></use>
-            </svg>
-            <svg class="music-off icon" viewBox="0 0 32 25">
-              <use href="#music-off"></use>
-            </svg>
+          <button id="nav-toggle" class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M0 88C0 74.7 10.7 64 24 64H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24C10.7 112 0 101.3 0 88zM0 248c0-13.3 10.7-24 24-24H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24c-13.3 0-24-10.7-24-24zM448 408c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H424c13.3 0 24 10.7 24 24z" fill="currentColor" /></svg>
           </button>
-          <button class="btn focused flex-shrink-0 rounded" aria-label="Open menu">
-            <div class="burger">
-              <div class="bar bar-1"></div>
-              <div class="bar bar-2"></div>
-              <div class="bar bar-3"></div>
-            </div>
-          </button>
+          <ul id="nav-dropdown" class="fixed right-4 top-20 hidden flex-col gap-2 text-right group-[.nav-dropdown-visible]:block">
+            <li>
+              <a href="javascript:void(0)" id="open-faq" class="text-white">FAQ</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" id="open-menu" class="text-white">Settings</a>
+            </li>
+            <li>
+              <a href="#" target="_blank" id="guide-link" class="text-white">How to</a>
+            </li>
+          </ul>
         </div>
       </header>
 
-      <aside class="menu side-modal">
-        <div class="container">
-          <header class="header">
+      <main id="app-content" class="relative"></main>
+    </div>
+
+    <div id="app-modals" class="group w-full overflow-hidden">
+      <aside id="app-menu" class="absolute right-0 top-0 hidden h-full w-96 bg-bke-primary p-4 text-white group-[.menu-is-open]:block">
+        <div class="flex h-full flex-col gap-4">
+          <header class="flex items-center justify-between">
             <h2>Settings</h2>
-            <button class="btn rounded" aria-label="Close menu">
-              <svg class="close-icon icon" viewBox="0 0 17 16">
-                <use href="#xmark"></use>
-              </svg>
+            <button id="close-menu" class="flex h-10 w-10 items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M41 39C31.6 29.7 16.4 29.7 7 39S-2.3 63.6 7 73l183 183L7 439c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l183-183L407 473c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-183-183L441 73c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-183 183L41 39z" fill="currentColor" /></svg>
             </button>
           </header>
-          <div class="content">
+          <div class="flex flex-col gap-8">
             <section class="select-language">
               <span class="heading">Language</span>
               <button aria-label="current language">English</button>
@@ -232,7 +227,7 @@
               </ul>
             </section>
             <section class="background-music">
-              <div class="heading">
+              <div class="heading flex items-center gap-2">
                 <span>Background music</span>
                 <svg class="music-on icon" viewBox="0 0 24 24">
                   <use href="#music-on"></use>
@@ -246,14 +241,14 @@
                 <span id="rangeValue">50</span>
               </div>
             </section>
-            <section class="sound-effects">
+            <section class="sound-effects flex items-center gap-2">
               <span class="heading">Sound effects</span>
               <div class="toggle">
                 <input type="checkbox" id="sound-checkbox" />
                 <label for="sound-checkbox"></label>
               </div>
             </section>
-            <section class="fullscreen-section">
+            <section class="fullscreen-section flex items-center gap-2">
               <span class="heading">Full screen mode</span>
               <div class="toggle">
                 <input type="checkbox" id="fullscreen-checkbox" />
@@ -261,7 +256,7 @@
               </div>
             </section>
           </div>
-          <div class="footer">
+          <div class="mt-auto">
             <section class="login">
               <header>
                 <p aria-label="Logged in"></p>
@@ -273,29 +268,26 @@
                 <button class="btn default" aria-label="Logout button" disabled="true">Log out</button>
               </div>
             </section>
-            <aside class="copyright"></aside>
+            <div class="copyright"></div>
           </div>
         </div>
-        <div class="overlay"></div>
       </aside>
-
-      <aside class="faq side-modal">
-        <div class="container">
-          <header class="header">
+      <aside id="faq-block" class="faq absolute right-0 top-0 hidden h-full w-96 bg-bke-primary text-white group-[.faq-is-open]:block">
+        <div class="flex h-full flex-col">
+          <header class="flex items-center justify-between p-4">
             <h2>FAQ</h2>
-            <button class="btn rounded" aria-label="Close FAQ">
-              <svg class="close-icon icon" viewBox="0 0 17 16">
-                <use href="#xmark"></use>
-              </svg>
+            <button id="close-faq" class="flex h-10 w-10 items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M41 39C31.6 29.7 16.4 29.7 7 39S-2.3 63.6 7 73l183 183L7 439c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l183-183L407 473c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-183-183L441 73c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-183 183L41 39z" fill="currentColor" /></svg>
             </button>
           </header>
-          <div class="content">
-            <ul></ul>
+          <div class="content overflow-y-auto p-4">
+            <ul class="flex flex-col gap-4"></ul>
           </div>
         </div>
-        <div class="overlay"></div>
       </aside>
+    </div>
 
+    <main class="hidden">
       <aside class="page page-loader">
         <div class="container">
           <a href="javascript:void(0)" class="iris-interaction"> Talk with Iris </a>

@@ -1,49 +1,47 @@
-import Experience from "../Experience.js"
-import _s from '../Utils/Strings.js'
-import _gl from '../Utils/Globals.js'
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
 
-let instance = null
+let instance = null;
 export default class FAQ {
-    constructor() {
+  constructor() {
+    instance = this;
+    instance.experience = new Experience();
 
-        instance = this
-        instance.experience = new Experience()
+    instance.generateItems();
+    instance.setEventListeners();
+  }
 
-        instance.generateItems()
-        instance.setEventListeners()
-    }
+  generateItems() {
+    const list = document.querySelector('#faq-block ul');
 
-    generateItems() {
-        const list = document.querySelector('.faq ul')
+    const faqQuestions = Object.values(_s.faq.questions);
+    const faqAnswers = Object.values(_s.faq.answers);
 
-        const faqQuestions = Object.values(_s.faq.questions)
-        const faqAnswers = Object.values(_s.faq.answers)
-
-        for (let i = 0; i < faqQuestions.length; i++) {
-            const listItem = _gl.elementFromHtml(`
+    for (let i = 0; i < faqQuestions.length; i++) {
+      const listItem = _gl.elementFromHtml(`
                 <li>
                     <p>${faqQuestions[i]}</p>
                     <p>${faqAnswers[i]}</p>
                 </li>
-            `)
+            `);
 
-            list.append(listItem)
-        }
-
-        document.querySelector('.faq h2').innerText = _s.settings.faq
+      list.append(listItem);
     }
 
-    setEventListeners() {
-        document.querySelector('.faq .overlay').addEventListener('click', instance.close)
-        document.querySelector('[aria-label="FAQ"]').addEventListener('click', instance.open)
-        document.querySelector('[aria-label="Close FAQ"]')?.addEventListener('click', instance.close)
-    }
+    document.querySelector('#faq-block h2').innerText = _s.settings.faq;
+  }
 
-    open() {
-        document.querySelector('.faq').classList.add('is-open');
-    }
+  setEventListeners() {
+    document.querySelector('#open-faq').addEventListener('click', instance.open);
+    document.querySelector('#close-faq')?.addEventListener('click', instance.close);
+  }
 
-    close() {
-        document.querySelector('.faq').classList.remove('is-open');
-    }
+  open() {
+    document.querySelector('#app-modals').classList.add('faq-is-open');
+  }
+
+  close() {
+    document.querySelector('#app-modals').classList.remove('faq-is-open');
+  }
 }

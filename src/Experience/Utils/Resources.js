@@ -93,7 +93,7 @@ export default class Resources extends EventEmitter {
         this.trigger('ready');
 
         document.querySelector('.loader')?.remove();
-        document.querySelector('.app-header').style.display = 'flex';
+        document.querySelector('#app-header').style.display = 'flex';
 
         this.loadingIcon.cleanupInstances();
         this.loadingIcon.reset();
@@ -113,9 +113,7 @@ export default class Resources extends EventEmitter {
 
     this.loaders.gltfLoader = new GLTFLoader(this.loadingManager);
     this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager);
-    this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(
-      this.loadingManager,
-    );
+    this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.loadingManager);
   }
 
   startLoading() {
@@ -171,9 +169,7 @@ export default class Resources extends EventEmitter {
       naturalHeight: video.videoHeight || 1,
     };
 
-    type && type == 'default'
-      ? (this.textureItems[name] = textureObject)
-      : (this.customTextureItems[name] = textureObject);
+    type && type == 'default' ? (this.textureItems[name] = textureObject) : (this.customTextureItems[name] = textureObject);
 
     this.loadingManager.itemStart(url);
   }
@@ -199,20 +195,12 @@ export default class Resources extends EventEmitter {
 
   loadEpisodeTextures(videoName) {
     resources.addVideoDivElementToContainer(videoName, 'videos-container');
-    this.offline.loadEpisodeFromIndexedDb(
-      videoName,
-      this.loadTexturesLocally,
-      this.loadTexturesOnline,
-    );
+    this.offline.loadEpisodeFromIndexedDb(videoName, this.loadTexturesLocally, this.loadTexturesOnline);
   }
 
   loadVideoInBtvPlayer(videoName) {
     resources.addVideoDivElementToContainer(videoName, 'video-' + videoName);
-    this.offline.loadVideoFromIndexedDb(
-      videoName,
-      this.loadTexturesLocally,
-      this.loadTexturesOnline,
-    );
+    this.offline.loadVideoFromIndexedDb(videoName, this.loadTexturesLocally, this.loadTexturesOnline);
   }
 
   loadTextureInBtvPlayer(id) {

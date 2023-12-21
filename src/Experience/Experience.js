@@ -15,7 +15,7 @@ import _gl from './Utils/Globals.js';
 let instance = null;
 
 export default class Experience {
-  constructor(canvas) {
+  constructor() {
     // Singleton
     if (instance) return instance;
 
@@ -25,7 +25,6 @@ export default class Experience {
     window.experience = this;
 
     // Options
-    this.canvas = canvas;
     this.faq = new FAQ();
 
     // Setup
@@ -60,9 +59,7 @@ export default class Experience {
             </svg>`,
     };
 
-    const celebrateCanvas = _gl.elementFromHtml(
-      `<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`,
-    );
+    const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`);
     document.body.appendChild(celebrateCanvas);
 
     this.celebrate = confetti.create(celebrateCanvas, {
