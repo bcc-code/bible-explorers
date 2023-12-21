@@ -76,7 +76,6 @@ export default class Program {
       ][field] = newValue;
     };
 
-    instance.irisInteraction = document.querySelector('.iris-interaction');
     instance.totalCheckpoints = Object.keys(instance.programData).length;
     instance.clickCallback = () => {};
     instance.canClick = () =>
@@ -99,17 +98,33 @@ export default class Program {
       instance.nextStep,
     );
 
-    instance.irisInteraction.addEventListener('click', instance.startAction);
+    document.addEventListener(
+      _e.ACTIONS.STEP_TOGGLED,
+      instance.disablePrevBtnOnStart,
+    );
+  }
+
+  disablePrevBtnOnStart() {
+    instance.experience.navigation.prev.disabled =
+      instance.currentCheckpoint == 0 && instance.currentStep == 0;
   }
 
   previousStep() {
-    // If there is a multi-action step, go to the first step of the checkpoint instead of going to the previous step
-    // if (instance.points.previousLabel) {
-    //   instance.goToCheckpoint(instance.currentCheckpoint);
-    //   return;
-    // }
-
     instance.currentStep--;
+
+    if (instance.currentStep < 0) {
+      instance.toggleStep();
+      return;
+    }
+
+    while (
+      instance.programData[instance.currentCheckpoint].steps[
+        instance.currentStep
+      ].type == 'video'
+    ) {
+      instance.currentStep--;
+    }
+
     instance.toggleStep();
   }
 
@@ -119,8 +134,6 @@ export default class Program {
   }
 
   toggleStep() {
-    instance.world.progressBar.hide();
-
     if (instance.currentStep < 0) {
       // Back to previous checkpoint
       instance.previousCheckpoint();
@@ -128,7 +141,8 @@ export default class Program {
       instance.startInteractivity();
     } else {
       if (
-        instance.currentStep == instance.getCurrentCheckpointData().steps.length
+        instance.currentStep ==
+        instance.getCurrentCheckpointData()?.steps.length
       ) {
         // Advance to next checkpoint
         instance.nextCheckpoint();
@@ -203,7 +217,7 @@ export default class Program {
   previousCheckpoint() {
     instance.updateCurrentCheckpoint(--instance.currentCheckpoint);
     instance.currentStep =
-      instance.programData[instance.currentCheckpoint].steps.length - 1;
+      instance.programData[instance.currentCheckpoint]?.steps.length - 1;
   }
 
   nextCheckpoint() {
@@ -228,22 +242,11 @@ export default class Program {
 
     if (instance.stepType() == 'iris') {
       setTimeout(function () {
-        instance.world.progressBar.show();
-        instance.irisInteraction.style.display = 'flex';
+        instance.message.show();
       }, 1000);
-    } else if (instance.stepType() == 'pause') {
-      instance.world.progressBar?.hide();
-      instance.startTask();
     } else {
-      instance.world.progressBar?.hide();
       instance.startTask();
     }
-  }
-
-  startAction() {
-    instance.world.progressBar.hide();
-    instance.irisInteraction.style.display = 'none';
-    instance.message.show();
   }
 
   currentVideo() {
@@ -287,6 +290,11 @@ export default class Program {
     instance.experience.navigation.next.removeEventListener(
       'click',
       instance.nextStep,
+    );
+
+    document.removeEventListener(
+      _e.ACTIONS.STEP_TOGGLED,
+      instance.disablePrevBtnOnStart,
     );
   }
 

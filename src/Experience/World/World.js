@@ -512,13 +512,7 @@ export default class World {
         instance.selectedChapter,
         'background_music',
         (chapter) => {
-          if (instance.selectedChapter.lobby_video_loop) {
-            instance.audio.fadeOutBgMusic(() => {
-              instance.audio.changeBgMusic(chapter.background_music);
-            });
-          } else {
-            instance.audio.changeBgMusic(chapter.background_music);
-          }
+          instance.audio.changeBgMusic(chapter.background_music);
         },
       );
     }
@@ -777,7 +771,10 @@ export default class World {
       document.documentElement.requestFullscreen();
 
     document.querySelector('.page').className = 'page page-home';
-    document.querySelector('.cta').style.display = 'none';
+
+    setTimeout(function () {
+      instance.progressBar.show();
+    }, 1000);
   }
 
   currentChapterLabel() {
@@ -824,6 +821,7 @@ export default class World {
   goHome() {
     document.body.classList.add('freeze');
     instance.program.destroy();
+    instance.progressBar.hide();
     instance.program.video.defocus();
     instance.buttons.home.style.display = 'none';
     instance.buttons.guide.style.display = 'flex';
@@ -839,7 +837,6 @@ export default class World {
     document.querySelector('.page-title')?.remove();
 
     if (instance.program.archive) instance.program.archive.remove();
-
     if (instance.program.pause) instance.program.pause.destroy();
 
     document.querySelector('.fullscreen-section input').checked = false;
