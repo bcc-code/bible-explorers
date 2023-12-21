@@ -1,4 +1,5 @@
 .progress-bar {
+    pointer-events: all;
     transition: var(--transition-duration) var(--transition-timing);
     opacity: 0;
 

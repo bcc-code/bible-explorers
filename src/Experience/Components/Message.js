@@ -38,13 +38,13 @@ export default class Message {
   setHtml(text, character) {
     const message = _gl.elementFromHtml(
       `<section class="message">
-            <div class="absolute inset-0 pointer-events-auto grid grid-cols-12 grid-rows-6">
-                <div class="col-span-full row-span-4 row-start-2 p-4">
+            <div class="absolute inset-0 grid grid-cols-12 grid-rows-6">
+                <div class="col-span-full row-span-4 row-start-2 p-4 pointer-events-auto">
                   <div class="border-2 border-bke-outline rounded-lg bg-white/40 h-full">
                     // Video iframe from IRIS
                   </div>
                 </div>
-                <div class="col-span-8 row-start-6 p-4">
+                <div class="col-span-8 row-start-6 p-4 pointer-events-auto">
                   <div class="h-full rounded-lg border-2 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-6 py-4">
                     <h3 class="text-lg italic text-bke-outline uppercase">${character}</h3>
                     <div class="mt-1 text-lg text-white/80">${text}</div>
