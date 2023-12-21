@@ -23,14 +23,12 @@ export default class Message {
     instance.data = instance.stepData.message;
 
     if (!text) text = instance.data.text;
-    if (!character)
-      character = instance.data ? instance.data.character : 'iris';
+    if (!character) character = instance.data ? instance.data.character : 'iris';
 
     instance.setHtml(text, character);
     instance.setEventListeners();
 
-    if (instance.data.audio)
-      instance.audio.togglePlayTaskDescription(instance.data.audio);
+    if (instance.data.audio) instance.audio.togglePlayTaskDescription(instance.data.audio);
 
     if (instance.data.video) {
       instance.world.controlRoom.playCustomIrisTexture(instance.data.video);
@@ -40,20 +38,25 @@ export default class Message {
   setHtml(text, character) {
     const message = _gl.elementFromHtml(
       `<section class="message">
-                <div class="container">
-                    <div class="content">
-                        <h2>${character}</h2>
-                        ${text}
-                    </div>
+            <div class="absolute inset-0 pointer-events-auto grid grid-cols-12 grid-rows-6">
+                <div class="col-span-full row-span-4 row-start-2 p-4">
+                  <div class="border-2 border-bke-outline rounded-lg bg-white/40 h-full">
+                    // Video iframe from IRIS
+                  </div>
                 </div>
-            </section>`,
+                <div class="col-span-8 row-start-6 p-4">
+                  <div class="h-full rounded-lg border-2 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-6 py-4">
+                    <h3 class="text-lg italic text-bke-outline uppercase">${character}</h3>
+                    <div class="mt-1 text-lg text-white/80">${text}</div>
+                  </div>
+                </div>
+            </div>
+        </section>`
     );
     document.querySelector('.ui-container').append(message);
 
     if (instance.data.character == 'glitch') {
-      const glitch = _gl.elementFromHtml(
-        '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>',
-      );
+      const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>');
       document.querySelector('section.message .container').append(glitch);
     }
 
@@ -66,14 +69,13 @@ export default class Message {
                             <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
                         </div>
                     </div>
-                </section>`,
+                </section>`
       );
       document.querySelector('.ui-container').append(openQuestion);
 
       const textarea = openQuestion.querySelector('textarea');
       textarea.addEventListener('input', (e) => {
-        instance.experience.navigation.next.disabled =
-          e.target.value.length <= 2;
+        instance.experience.navigation.next.disabled = e.target.value.length <= 2;
       });
     }
   }
