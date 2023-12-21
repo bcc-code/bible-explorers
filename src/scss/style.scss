@@ -42,17 +42,14 @@ textarea::placeholder {
 }
 
 #videos-container {
-    position: absolute;
+    position: relative;
     inset: 0;
     aspect-ratio: 16/9;
     z-index: 7;
-    width: 720px;
-    height: 405px;
-    right: 1rem;
-    left: auto;
+    width: 1024px;
+    height: 576px;
+    left: 1rem;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(-50%);
     display: none;
 
     >* {

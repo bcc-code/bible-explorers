@@ -319,6 +319,7 @@ export default class World {
         instance.updateSelectedChapterData(chapter);
         instance.addClassToSelectedChapter(chapter);
         instance.loadChapterTextures();
+        instance.fetchBtvVideos();
         instance.showActionButtons();
         instance.setDescriptionHtml();
 
@@ -436,10 +437,27 @@ export default class World {
   loadChapterTextures() {
     instance.selectedChapter.episodes.forEach((episode) => {
       const fileName = episode.type + '-' + episode.id;
-
       if (instance.resources.videoPlayers.hasOwnProperty(fileName)) return;
 
       instance.resources.loadEpisodeTextures(fileName);
+    });
+  }
+
+  fetchBtvVideos() {
+    instance.selectedChapter.program.forEach((checkpoint) => {
+      checkpoint.steps.forEach((step) => {
+        if (step.details.step_type == 'iris' && step.message?.video)
+          instance.resources.loadTextureInBtvPlayer(step.message.video);
+
+        if (
+          step.details.step_type == 'task' &&
+          step.details.task_type == 'video_with_question' &&
+          step.video_with_question.video
+        )
+          instance.resources.loadTextureInBtvPlayer(
+            step.video_with_question.video,
+          );
+      });
     });
   }
 
@@ -479,31 +497,6 @@ export default class World {
       this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id),
     );
     chapterEl.classList.remove('downloaded');
-  }
-
-  fetchLobbyVideoLoop() {
-    const videoName = instance.selectedChapter.lobby_video_loop;
-    if (videoName) {
-      instance.offline.fetchScreenTexture(videoName, () => {
-        instance.offline.setScreenTexture(videoName);
-      });
-    }
-  }
-
-  fetchBtvVideos() {
-    instance.selectedChapter.program.forEach((checkpoint) => {
-      checkpoint.steps.forEach((step) => {
-        if (step.details.step_type == 'iris' && step.message?.video)
-          instance.offline.fetchScreenTexture(step.message.video);
-
-        if (
-          step.details.step_type == 'task' &&
-          step.details.task_type == 'video_with_question' &&
-          step.video_with_question.video
-        )
-          instance.offline.fetchScreenTexture(step.video_with_question.video);
-      });
-    });
   }
 
   fetchBgMusic() {
@@ -619,11 +612,6 @@ export default class World {
   }
 
   cacheChapterBgMusic(url) {
-    if (!url) return;
-    instance.fetchAndCacheAsset(url);
-  }
-
-  cacheChapterLobbyVideoLoop(url) {
     if (!url) return;
     instance.fetchAndCacheAsset(url);
   }
@@ -751,8 +739,6 @@ export default class World {
     instance.removeLobbyEventListeners();
 
     instance.setUpChapter();
-    instance.fetchLobbyVideoLoop();
-    instance.fetchBtvVideos();
     instance.fetchBgMusic();
     instance.fetchArchiveImage();
 

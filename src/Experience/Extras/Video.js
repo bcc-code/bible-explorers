@@ -47,9 +47,7 @@ export default class Video {
     instance.playingVideoId = id;
 
     // First, remove all previous event listeners - if any
-    instance.video().off('ended', instance.waitAndFinish);
-    instance.video().off('play', instance.setFullscreenIfNecessary);
-    instance.video().off('fullscreenchange', instance.pauseOnFullscreenExit);
+    instance.video().off('ended', instance.finish);
 
     // Always start new loaded videos from the beginning
     instance.video().currentTime(0);
@@ -57,9 +55,7 @@ export default class Video {
     const videoQuality = instance.getVideoQuality();
     instance.resources.videoPlayers[id].setVideoQuality(videoQuality);
 
-    instance.video().on('play', instance.setFullscreenIfNecessary);
-    instance.video().on('fullscreenchange', instance.pauseOnFullscreenExit);
-    instance.video().on('ended', instance.waitAndFinish);
+    instance.video().on('ended', instance.finish);
 
     instance.focus();
     instance.addSkipBtn();
@@ -92,8 +88,6 @@ export default class Video {
 
     instance.pause();
 
-    if (instance.video().isFullscreen_) instance.video().exitFullscreen();
-
     instance.audio.setOtherAudioIsPlaying(false);
     instance.audio.fadeInBgMusic();
 
@@ -103,12 +97,6 @@ export default class Video {
     ).style.display = 'none';
 
     // instance.experience.navigation.next.disabled = false
-  }
-
-  waitAndFinish() {
-    setTimeout(() => {
-      instance.finish();
-    }, 1000);
   }
 
   finish() {
@@ -136,14 +124,6 @@ export default class Video {
       default:
         return 1080;
     }
-  }
-
-  setFullscreenIfNecessary() {
-    if (!this.isFullscreen_) this.requestFullscreen();
-  }
-
-  pauseOnFullscreenExit() {
-    if (!this.isFullscreen_) instance.pause();
   }
 
   addSkipBtn() {

@@ -44,7 +44,6 @@ export default class ControlRoom {
 
   irisTextureTransition() {
     instance.stopAllCustomIrisTextures();
-    instance.setDefaultIrisTexture();
   }
 
   // Set textures
@@ -71,17 +70,6 @@ export default class ControlRoom {
     if (this.texture instanceof VideoTexture) {
       this.texture.image.play();
     }
-  }
-
-  setDefaultIrisTexture() {}
-
-  playCustomIrisTexture(textureName) {
-    if (!instance.resources.customTextureItems[textureName].item) return;
-
-    instance.resources.customTextureItems[
-      textureName
-    ].item.source.data.currentTime = 0;
-    instance.resources.customTextureItems[textureName].item.source.data.play();
   }
 
   stopAllCustomIrisTextures() {

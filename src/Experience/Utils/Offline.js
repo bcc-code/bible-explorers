@@ -658,40 +658,6 @@ export default class Offline {
     });
   }
 
-  fetchScreenTexture = function (videoName, callback = () => {}) {
-    // Only add it once
-    if (
-      Object.keys(offline.experience.resources.customTextureItems).includes(
-        videoName,
-      )
-    )
-      return;
-
-    offline.experience.resources.customTextureItems[videoName] = {};
-
-    offline.loadScreenTextureFromIndexedDb(
-      videoName,
-      this.loadScreenTextureLocally,
-      this.loadScreenTextureOnline,
-      callback,
-    );
-  };
-
-  loadScreenTextureLocally(videoName, videoUrl, callback) {
-    offline.experience.resources.loadVideoTexture(videoName, videoUrl);
-    callback();
-  }
-
-  async loadScreenTextureOnline(videoName, callback) {
-    const video = await offline.getEpisodeDesiredQualityDownloadUrl(videoName);
-    offline.experience.resources.loadVideoTexture(videoName, video.url);
-    callback();
-  }
-
-  setScreenTexture(videoName) {
-    offline.experience.world.controlRoom.playCustomIrisTexture(videoName);
-  }
-
   setConnection(mode) {
     offline.isOnline = mode;
 

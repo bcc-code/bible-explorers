@@ -215,6 +215,16 @@ export default class Resources extends EventEmitter {
     );
   }
 
+  loadTextureInBtvPlayer(id) {
+    const textureName = 'texture-' + id;
+    resources.addVideoDivElementToContainer(textureName, 'videos-container');
+    this.offline.loadVideoFromIndexedDb(
+      textureName,
+      this.loadTexturesLocally,
+      this.loadTexturesOnline,
+    );
+  }
+
   addVideoDivElementToContainer(videoName, containerId) {
     const videoEl = document.createElement('div');
     videoEl.setAttribute('id', videoName);
@@ -254,7 +264,8 @@ export default class Resources extends EventEmitter {
   }
 
   async streamFromBtv(videoName) {
-    const episodeId = videoName.replace('episode-', '');
+    const episodeId = videoName.replace('episode-', '').replace('texture-', '');
+
     const player = await resources.factory.create(videoName, {
       episodeId: episodeId,
       overrides: {
