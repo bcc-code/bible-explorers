@@ -61,8 +61,8 @@ export default class GameDescription {
     const task = _gl.elementFromHtml(`
       <section class="task">
         <div class="absolute inset-0 pointer-events-auto grid grid-cols-12 grid-rows-6">
-          <div class="col-span-full row-span-4 row-start-2 p-4">
-            <div class="border-2 border-bke-outline rounded-lg bg-gradient-to-r from-bke-dark to-bke-primary px-6 py-4 h-full flex flex-col items-center justify-center" id="task-content">
+          <div class="col-span-full row-span-4 row-start-2">
+            <div class=" bg-white/10 h-full flex flex-col items-center justify-center" id="task-content">
               <h2>${instance.data.title}</h2>
               <div id="task-tutorial">
                 ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
