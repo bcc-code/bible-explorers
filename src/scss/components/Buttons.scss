@@ -45,7 +45,7 @@
         margin-right: 0.5rem;
     }
 
-    &:disabled{
+    &:disabled {
         filter: grayscale(1);
         pointer-events: none;
         opacity: 0.4;

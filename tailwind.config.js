@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js, scss}'],
+  content: ['./src/**/*.{html,js}'],
   corePlugins: {
     container: false,
   },

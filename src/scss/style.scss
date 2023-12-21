@@ -4,7 +4,9 @@
 
 @import "./globals/variables.scss";
 @import "./globals/mixins.scss";
-@import "./globals/main.scss";
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 
 @import "./components/Buttons.scss";
 @import "./components/Header.scss";
@@ -23,6 +25,10 @@
 @import "./components/Unlock.scss";
 @import "./components/Quiz.scss";
 @import "./components/Views.scss";
+
+@import "tailwindcss/utilities";
+@import "./globals/main.scss";
+
 
 button[aria-label="skip-button"] {
     position: absolute;
