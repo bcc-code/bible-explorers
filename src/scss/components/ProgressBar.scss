@@ -1,7 +1,4 @@
 .progress-bar {
-    padding: var(--app-padding);
-    pointer-events: all;
-    width: 100%;
     transition: var(--transition-duration) var(--transition-timing);
     opacity: 0;
 
@@ -14,6 +11,7 @@
         position: relative;
         display: flex;
         justify-content: space-between;
+        gap: 8px;
     }
 
     [aria-label="checkpoint"] {
@@ -27,7 +25,7 @@
 
     .percentageBar {
         position: absolute;
-        top: 2rem;
+        top: 1rem;
         left: 2rem;
         right: 2rem;
         bottom: 1rem;
