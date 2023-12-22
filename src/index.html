@@ -199,7 +199,36 @@
         </div>
       </header>
 
-      <main id="app-content" class="relative"></main>
+      <main id="app-content" class="relative">
+        <div class="page page-loader">
+          <div class="container">
+            <a href="javascript:void(0)" class="iris-interaction"> Talk with Iris </a>
+            <section class="loader">
+              <canvas id="loading_icon" width="240" height="240"></canvas>
+              <div class="loading">
+                <span></span>
+                <div class="dots">
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="overlay"></div>
+        </div>
+        <div class="ui-container">
+          <div class="cta">
+            <button class="btn default back" aria-label="prev page">
+              <svg class="prev-icon icon" viewBox="0 0 25 16">
+                <use href="#arrow-left"></use>
+              </svg>
+            </button>
+            <button class="btn default next focused" aria-label="next page"></button>
+          </div>
+        </div>
+      </main>
     </div>
 
     <div id="app-modals" class="group w-full overflow-hidden">
@@ -286,38 +315,6 @@
         </div>
       </aside>
     </div>
-
-    <main class="hidden">
-      <aside class="page page-loader">
-        <div class="container">
-          <a href="javascript:void(0)" class="iris-interaction"> Talk with Iris </a>
-          <section class="loader">
-            <canvas id="loading_icon" width="240" height="240"></canvas>
-            <div class="loading">
-              <span></span>
-              <div class="dots">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-              </div>
-            </div>
-          </section>
-        </div>
-        <div class="overlay"></div>
-      </aside>
-
-      <aside class="ui-container">
-        <div class="cta">
-          <button class="btn default back" aria-label="prev page">
-            <svg class="prev-icon icon" viewBox="0 0 25 16">
-              <use href="#arrow-left"></use>
-            </svg>
-          </button>
-          <button class="btn default next focused" aria-label="next page"></button>
-        </div>
-      </aside>
-    </main>
 
     <aside id="videos-container" class="page-videos"></aside>
 
