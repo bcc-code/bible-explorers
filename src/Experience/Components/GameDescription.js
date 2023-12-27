@@ -60,15 +60,13 @@ export default class GameDescription {
 
     const task = _gl.elementFromHtml(`
       <section class="task">
-        <div class="absolute inset-0 pointer-events-auto grid grid-cols-12 grid-rows-6">
-          <div class="col-span-full row-span-4 row-start-2">
-            <div class=" bg-white/10 h-full flex flex-col items-center justify-center" id="task-content">
-              <h2>${instance.data.title}</h2>
-              <div id="task-tutorial">
-                ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
-              </div>
-              ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
+        <div class="absolute inset-0 my-32">
+          <div class=" bg-white/10 h-full flex flex-col items-center justify-center pointer-events-auto" id="task-content">
+            <h2>${instance.data.title}</h2>
+            <div id="task-tutorial" class="h-2/3">
+              ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
             </div>
+            ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
           </div>
         </div>
       </section>
@@ -109,7 +107,7 @@ export default class GameDescription {
     const ext = url.split('.').pop().toLowerCase();
 
     if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" width="100%" height="100%" frameBorder="0" autoplay loop></video>`;
-    else return `<img src="" />`;
+    else return `<img src="" wdith="100%" height="100%" />`;
   }
 
   destroy() {

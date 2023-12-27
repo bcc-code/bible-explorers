@@ -42,19 +42,17 @@ textarea::placeholder {
 }
 
 #videos-container {
-    position: relative;
-    inset: 0;
-    aspect-ratio: 16/9;
-    z-index: 7;
-    width: 1024px;
-    height: 576px;
-    left: 1rem;
-    overflow: hidden;
-    display: none;
-
     >* {
         display: none;
+        height: 100%;
+        aspect-ratio: 16/9;
+        pointer-events: all;
     }
+
+    video {
+        border: 4px solid var(--clr-secondary);
+    }
+
 }
 
 .webgl {

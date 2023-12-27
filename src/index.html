@@ -316,7 +316,11 @@
       </aside>
     </div>
 
-    <aside id="videos-container" class="page-videos"></aside>
+    <div id="app-videos" class="pointer-events-none">
+      <div class="absolute inset-0 my-32">
+        <div id="videos-container" class="relative h-full w-full items-center justify-center overflow-hidden"></div>
+      </div>
+    </div>
 
     <script src="https://unpkg.com/@rive-app/canvas@1.0.102/rive.js"></script>
     <script type="module" src="./script.js"></script>
