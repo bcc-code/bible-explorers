@@ -9,39 +9,23 @@ export default class FAQ {
     instance.experience = new Experience();
 
     instance.generateItems();
-    instance.setEventListeners();
   }
 
   generateItems() {
-    const list = document.querySelector('#faq-block ul');
+    const list = document.querySelector('#faq-content');
 
     const faqQuestions = Object.values(_s.faq.questions);
     const faqAnswers = Object.values(_s.faq.answers);
 
     for (let i = 0; i < faqQuestions.length; i++) {
       const listItem = _gl.elementFromHtml(`
-                <li>
-                    <p>${faqQuestions[i]}</p>
-                    <p>${faqAnswers[i]}</p>
-                </li>
+                <div>
+                    <h3 class="text-white">${faqQuestions[i]}</h3>
+                    <p class="text-white/80">${faqAnswers[i]}</p>
+                </div>
             `);
 
       list.append(listItem);
     }
-
-    document.querySelector('#faq-block h2').innerText = _s.settings.faq;
-  }
-
-  setEventListeners() {
-    document.querySelector('#open-faq').addEventListener('click', instance.open);
-    document.querySelector('#close-faq')?.addEventListener('click', instance.close);
-  }
-
-  open() {
-    document.querySelector('#app-modals').classList.add('faq-is-open');
-  }
-
-  close() {
-    document.querySelector('#app-modals').classList.remove('faq-is-open');
   }
 }

@@ -27,9 +27,6 @@ export default class Menu {
   init() {
     _appInsights.trackPageView({ name: 'Settings' });
 
-    const settingsTitle = document.querySelector('#app-menu header h2');
-    settingsTitle.innerText = _s.settings.title;
-
     const selectLang = document.querySelector('.select-language');
     const selectLangLabel = selectLang.querySelector('.heading');
     const selectLangCurrent = selectLang.querySelector('button');
@@ -78,14 +75,70 @@ export default class Menu {
     bibleExplorersGuide.innerText = _s.howTo;
     bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`);
 
-    const copyrightFooter = document.querySelector('.copyright');
+    const copyrightFooter = document.querySelector('#copyright');
     copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank">BCC Media STI</a>`;
   }
 
+  menuOpenClose() {
+    const open = document.querySelector('#open-menu');
+    const close = document.querySelector('#close-menu');
+    const wrapper = document.querySelector('#main-menu');
+
+    open.addEventListener('click', () => {
+      wrapper.classList.add('visible');
+      wrapper.closest('#app-modals').classList.add('opened');
+    });
+
+    close.addEventListener('click', () => {
+      wrapper.classList.remove('visible');
+      wrapper.closest('#app-modals').classList.remove('opened');
+
+      if (document.querySelector('#settings').classList.contains('visible')) {
+        document.querySelector('#settings').classList.remove('visible');
+      }
+
+      if (document.querySelector('#faq').classList.contains('visible')) {
+        document.querySelector('#faq').classList.remove('visible');
+      }
+    });
+  }
+
+  settingsOpenClose() {
+    const open = document.querySelector('#open-settings');
+    const back = document.querySelector('#back-from-settings');
+    const wrapper = document.querySelector('#settings');
+
+    open.addEventListener('click', () => {
+      wrapper.classList.add('visible');
+      wrapper.closest('#app-modals').classList.add('opened');
+    });
+
+    back.addEventListener('click', () => {
+      wrapper.classList.remove('visible');
+      document.querySelector('#main-menu').classList.add('visible');
+    });
+  }
+
+  faqOpenClose() {
+    const open = document.querySelector('#open-faq');
+    const back = document.querySelector('#back-from-faq');
+    const wrapper = document.querySelector('#faq');
+
+    open.addEventListener('click', () => {
+      wrapper.classList.add('visible');
+      wrapper.closest('#app-modals').classList.add('opened');
+    });
+
+    back.addEventListener('click', () => {
+      wrapper.classList.remove('visible');
+      document.querySelector('#main-menu').classList.add('visible');
+    });
+  }
+
   eventListeners() {
-    document.querySelector('#nav-toggle').addEventListener('click', instance.toggleNav);
-    document.querySelector('#open-menu').addEventListener('click', instance.open);
-    document.querySelector('#close-menu').addEventListener('click', instance.close);
+    instance.menuOpenClose();
+    instance.settingsOpenClose();
+    instance.faqOpenClose();
 
     const languageBtn = document.querySelector('[aria-label="current language"]');
     const languageItems = document.querySelectorAll('.select-language .dropdown li');
@@ -185,11 +238,6 @@ export default class Menu {
       returnTo: window.location.origin,
     });
   };
-
-  toggleNav() {
-    const element = document.getElementById('nav-dropdown');
-    element.closest('#app-header').classList.toggle('nav-dropdown-visible');
-  }
 
   open() {
     document.querySelector('#app-modals').classList.add('menu-is-open');
