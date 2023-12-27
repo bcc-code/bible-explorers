@@ -107,7 +107,7 @@ export default class GameDescription {
     const ext = url.split('.').pop().toLowerCase();
 
     if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" width="100%" height="100%" frameBorder="0" autoplay loop></video>`;
-    else return `<img src="" wdith="100%" height="100%" />`;
+    else return `<img src="" wdith="100%" height="100%" class="h-full" />`;
   }
 
   destroy() {
