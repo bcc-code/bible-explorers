@@ -31,13 +31,13 @@ export default class Video {
       return document.getElementById(id);
     };
 
-    instance.hasSkipBtn = () => {
-      return instance.videoJsEl().querySelector('.skip-video') != null;
-    };
+    // instance.hasSkipBtn = () => {
+    //   return instance.videoJsEl().querySelector('.skip-video') != null;
+    // };
 
-    instance.getSkipBtn = () => {
-      return instance.videoJsEl().querySelector('.skip-video');
-    };
+    // instance.getSkipBtn = () => {
+    //   return instance.videoJsEl().querySelector('.skip-video');
+    // };
 
     instance.playingVideoId = null;
     instance.videosContainer = document.querySelector('#videos-container');
@@ -96,7 +96,7 @@ export default class Video {
   }
 
   finish() {
-    if (instance.hasSkipBtn()) instance.getSkipBtn().remove();
+    // if (instance.hasSkipBtn()) instance.getSkipBtn().remove();
 
     instance.defocus();
     instance.world.program.nextStep();
