@@ -41,18 +41,11 @@ textarea::placeholder {
     opacity: 0.6;
 }
 
-#videos-container {
-    >* {
-        display: none;
-        height: 100%;
-        aspect-ratio: 16/9;
-        pointer-events: all;
-    }
-
-    video {
-        // border: 4px solid var(--clr-secondary);
-    }
-
+#videos-container>* {
+    display: none;
+    height: 100%;
+    aspect-ratio: 16/9;
+    pointer-events: all;
 }
 
 .webgl {
