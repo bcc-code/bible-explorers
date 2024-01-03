@@ -206,11 +206,7 @@ export default class Resources extends EventEmitter {
   loadTextureInBtvPlayer(id) {
     const textureName = 'texture-' + id;
     resources.addVideoDivElementToContainer(textureName, 'videos-container');
-    this.offline.loadVideoFromIndexedDb(
-      textureName,
-      this.loadTexturesLocally,
-      this.loadTexturesOnline,
-    );
+    this.offline.loadVideoFromIndexedDb(textureName, this.loadTexturesLocally, this.loadTexturesOnline);
   }
 
   addVideoDivElementToContainer(videoName, containerId) {
