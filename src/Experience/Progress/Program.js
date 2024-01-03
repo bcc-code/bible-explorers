@@ -51,37 +51,20 @@ export default class Program {
     // Get instance variables
     instance.chapterProgress = () => 0;
     instance.currentCheckpoint = 0;
-    instance.getCurrentCheckpointData = () =>
-      instance.currentCheckpoint in instance.programData
-        ? instance.programData[instance.currentCheckpoint]
-        : null;
+    instance.getCurrentCheckpointData = () => (instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null);
 
     instance.currentStep = 0;
-    instance.getCurrentStepData = () =>
-      instance.getCurrentCheckpointData()
-        ? instance.getCurrentCheckpointData().steps[instance.currentStep]
-        : null;
-    instance.stepType = () =>
-      instance.getCurrentStepData()
-        ? instance.getCurrentStepData().details.step_type
-        : null;
-    instance.taskType = () =>
-      instance.getCurrentStepData()
-        ? instance.getCurrentStepData().details.task_type
-        : null;
+    instance.getCurrentStepData = () => (instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null);
+    instance.stepType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null);
+    instance.taskType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null);
 
     instance.updateAssetInProgramData = (field, newValue) => {
-      instance.programData[instance.currentCheckpoint].steps[
-        instance.currentStep
-      ][field] = newValue;
+      instance.programData[instance.currentCheckpoint].steps[instance.currentStep][field] = newValue;
     };
 
     instance.totalCheckpoints = Object.keys(instance.programData).length;
     instance.clickCallback = () => {};
-    instance.canClick = () =>
-      !document.body.classList.contains('freeze') &&
-      !document.body.classList.contains('modal-on') &&
-      !document.body.classList.contains('camera-is-moving');
+    instance.canClick = () => !document.body.classList.contains('freeze') && !document.body.classList.contains('modal-on') && !document.body.classList.contains('camera-is-moving');
 
     instance.startInteractivity();
     instance.addEventListeners();
@@ -89,24 +72,14 @@ export default class Program {
   }
 
   addEventListeners() {
-    instance.experience.navigation.prev.addEventListener(
-      'click',
-      instance.previousStep,
-    );
-    instance.experience.navigation.next.addEventListener(
-      'click',
-      instance.nextStep,
-    );
+    instance.experience.navigation.prev.addEventListener('click', instance.previousStep);
+    instance.experience.navigation.next.addEventListener('click', instance.nextStep);
 
-    document.addEventListener(
-      _e.ACTIONS.STEP_TOGGLED,
-      instance.disablePrevBtnOnStart,
-    );
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.disablePrevBtnOnStart);
   }
 
   disablePrevBtnOnStart() {
-    instance.experience.navigation.prev.disabled =
-      instance.currentCheckpoint == 0 && instance.currentStep == 0;
+    instance.experience.navigation.prev.disabled = instance.currentCheckpoint == 0 && instance.currentStep == 0;
   }
 
   previousStep() {
@@ -117,11 +90,7 @@ export default class Program {
       return;
     }
 
-    while (
-      instance.programData[instance.currentCheckpoint].steps[
-        instance.currentStep
-      ].type == 'video'
-    ) {
+    while (instance.programData[instance.currentCheckpoint].steps[instance.currentStep].type == 'video') {
       instance.currentStep--;
     }
 
@@ -140,10 +109,7 @@ export default class Program {
       instance.stepToggled();
       instance.startInteractivity();
     } else {
-      if (
-        instance.currentStep ==
-        instance.getCurrentCheckpointData()?.steps.length
-      ) {
+      if (instance.currentStep == instance.getCurrentCheckpointData()?.steps.length) {
         // Advance to next checkpoint
         instance.nextCheckpoint();
         instance.stepToggled();
@@ -184,16 +150,7 @@ export default class Program {
         }
 
         // Games
-        else if (
-          instance.taskType() == 'cables' ||
-          instance.taskType() == 'sorting' ||
-          instance.taskType() == 'simon_says' ||
-          instance.taskType() == 'flip_cards' ||
-          instance.taskType() == 'choose_new_king' ||
-          instance.taskType() == 'heart_defense' ||
-          instance.taskType() == 'davids_refuge' ||
-          instance.taskType() == 'labyrinth'
-        ) {
+        else if (instance.taskType() == 'cables' || instance.taskType() == 'sorting' || instance.taskType() == 'simon_says' || instance.taskType() == 'flip_cards' || instance.taskType() == 'choose_new_king' || instance.taskType() == 'heart_defense' || instance.taskType() == 'davids_refuge' || instance.taskType() == 'labyrinth') {
           instance.gameDescription.show();
         } else if (instance.taskType() == 'multiple_choice_with_picture') {
           instance.multipleChoiceWithPicture.show();
@@ -210,14 +167,12 @@ export default class Program {
     }
 
     // Check if it was the last step in the last checkpoint
-    if (instance.currentCheckpoint == instance.totalCheckpoints)
-      instance.congrats.toggleBibleCardsReminder();
+    if (instance.currentCheckpoint == instance.totalCheckpoints) instance.congrats.toggleBibleCardsReminder();
   }
 
   previousCheckpoint() {
     instance.updateCurrentCheckpoint(--instance.currentCheckpoint);
-    instance.currentStep =
-      instance.programData[instance.currentCheckpoint]?.steps.length - 1;
+    instance.currentStep = instance.programData[instance.currentCheckpoint]?.steps.length - 1;
   }
 
   nextCheckpoint() {
@@ -252,30 +207,15 @@ export default class Program {
   currentVideo() {
     if (instance.currentCheckpoint >= instance.programData.length) return null;
 
-    return instance.programData[instance.currentCheckpoint].steps[
-      instance.currentStep
-    ].videoId;
+    return instance.programData[instance.currentCheckpoint].steps[instance.currentStep].videoId;
   }
 
   nextVideo() {
-    for (
-      let checkpoint = instance.currentCheckpoint;
-      checkpoint < instance.totalCheckpoints;
-      checkpoint++
-    ) {
-      const startingStep =
-        checkpoint == instance.currentCheckpoint ? instance.currentStep : 0;
+    for (let checkpoint = instance.currentCheckpoint; checkpoint < instance.totalCheckpoints; checkpoint++) {
+      const startingStep = checkpoint == instance.currentCheckpoint ? instance.currentStep : 0;
 
-      for (
-        let step = startingStep;
-        step < instance.programData[checkpoint].steps.length;
-        step++
-      ) {
-        if (
-          instance.programData[checkpoint].steps[step].details.step_type ==
-          'video'
-        )
-          return instance.programData[checkpoint].steps[step].videoId;
+      for (let step = startingStep; step < instance.programData[checkpoint].steps.length; step++) {
+        if (instance.programData[checkpoint].steps[step].details.step_type == 'video') return instance.programData[checkpoint].steps[step].videoId;
       }
     }
 
@@ -283,19 +223,10 @@ export default class Program {
   }
 
   removeEventListeners() {
-    instance.experience.navigation.prev.removeEventListener(
-      'click',
-      instance.previousStep,
-    );
-    instance.experience.navigation.next.removeEventListener(
-      'click',
-      instance.nextStep,
-    );
+    instance.experience.navigation.prev.removeEventListener('click', instance.previousStep);
+    instance.experience.navigation.next.removeEventListener('click', instance.nextStep);
 
-    document.removeEventListener(
-      _e.ACTIONS.STEP_TOGGLED,
-      instance.disablePrevBtnOnStart,
-    );
+    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.disablePrevBtnOnStart);
   }
 
   destroy() {
