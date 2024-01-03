@@ -86,7 +86,7 @@ export default class Menu {
     bibleExplorersGuide.querySelector('span').innerText = _s.howTo;
     bibleExplorersGuide.setAttribute(
       'href',
-      `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`,
+      `https://biblekids.io/${_lang.getLanguageCode()}/explorers-user-guide/`,
     );
 
     const copyrightFooter = document.querySelector('aside.copyright');
