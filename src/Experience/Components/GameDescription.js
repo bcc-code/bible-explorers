@@ -61,7 +61,7 @@ export default class GameDescription {
     const task = _gl.elementFromHtml(`
       <section class="task">
         <div class="absolute inset-0 my-32">
-          <div class=" bg-white/10 h-full flex flex-col items-center justify-center pointer-events-auto" id="task-content">
+          <div class="h-full flex flex-col items-center justify-center pointer-events-auto" id="task-content">
             <h2>${instance.data.title}</h2>
             <div id="task-tutorial" class="h-2/3">
               ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
