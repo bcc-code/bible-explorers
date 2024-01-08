@@ -45,10 +45,6 @@
   }
 
   &-timer {
-    position: absolute;
-    left: var(--app-padding);
-    top: var(--app-padding);
-
     &.danger {
       border-color: red;
       font-weight: bold;
@@ -738,7 +734,7 @@
   }
 }
 
-img.lazyloaded ~ div.img-loader {
+img.lazyloaded~div.img-loader {
   display: none;
 }
 

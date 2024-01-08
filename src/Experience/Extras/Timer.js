@@ -1,5 +1,5 @@
-import _e from "../Utils/Events.js";
-import _gl from "../Utils/Globals.js";
+import _e from '../Utils/Events.js';
+import _gl from '../Utils/Globals.js';
 
 let timer = null;
 
@@ -11,12 +11,12 @@ export default class Timer {
   }
 
   setMinutes(minutes, container) {
-    if (document.querySelector(".timer")) return;
+    if (document.querySelector('.timer')) return;
 
     const time = timer.getMinutesAndSeconds(minutes * 60);
 
     timer.htmlEl = _gl.elementFromHtml(`
-            <div class="game-timer">
+            <div class="game-timer absolute left-4 bottom-4">
                 <span class="minutes">${time.minutes}</span>
                 <div>:</div>
                 <span class="seconds">${time.seconds}</span>
@@ -26,8 +26,8 @@ export default class Timer {
     document.querySelector(container).appendChild(timer.htmlEl);
 
     timer.el = {
-      minutes: timer.htmlEl.querySelector(".minutes"),
-      seconds: timer.htmlEl.querySelector(".seconds"),
+      minutes: timer.htmlEl.querySelector('.minutes'),
+      seconds: timer.htmlEl.querySelector('.seconds'),
     };
 
     timer.start(minutes);
@@ -37,8 +37,8 @@ export default class Timer {
     return {
       minutes: Math.floor(thisTimer / 60)
         .toString()
-        .padStart(2, "0"),
-      seconds: (thisTimer % 60).toString().padStart(2, "0"),
+        .padStart(2, '0'),
+      seconds: (thisTimer % 60).toString().padStart(2, '0'),
     };
   }
 
