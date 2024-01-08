@@ -42,7 +42,7 @@ export default class Message {
       `<section class="message">
           <div class="absolute inset-0">
             <div class="absolute left-4 bottom-4 w-2/3">
-              <div class="rounded-lg border-2 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-6 py-4">
+              <div class="rounded-lg border-4 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-6 py-4">
                 <h3 class="text-lg italic text-bke-outline uppercase">${character}</h3>
                 <div class="mt-1 text-lg text-white/80">${text}</div>
               </div>
