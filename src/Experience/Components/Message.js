@@ -24,12 +24,14 @@ export default class Message {
     instance.data = instance.stepData.message;
 
     if (!text) text = instance.data.text;
-    if (!character) character = instance.data ? instance.data.character : 'iris';
+    if (!character)
+      character = instance.data ? instance.data.character : 'iris';
 
     instance.setHtml(text, character);
     instance.setEventListeners();
 
-    if (instance.data.audio) instance.audio.togglePlayTaskDescription(instance.data.audio);
+    if (instance.data.audio)
+      instance.audio.togglePlayTaskDescription(instance.data.audio);
 
     if (instance.data.video) {
       instance.video.load('texture-' + instance.data.video);
@@ -48,12 +50,14 @@ export default class Message {
               </div>
             </div>
           </div>
-        </section>`
+        </section>`,
     );
     document.querySelector('.ui-container').append(message);
 
     if (instance.data.character == 'glitch') {
-      const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>');
+      const glitch = _gl.elementFromHtml(
+        '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>',
+      );
       document.querySelector('section.message .container').append(glitch);
     }
 
@@ -66,13 +70,14 @@ export default class Message {
               <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
             </div>
           </div>
-        </section>`
+        </section>`,
       );
       document.querySelector('.ui-container').append(openQuestion);
 
       const textarea = openQuestion.querySelector('textarea');
       textarea.addEventListener('input', (e) => {
-        instance.experience.navigation.next.disabled = e.target.value.length <= 2;
+        instance.experience.navigation.next.disabled =
+          e.target.value.length <= 2;
       });
     }
   }

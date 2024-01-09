@@ -78,7 +78,9 @@ export default class Video {
     instance.audio.fadeOutBgMusic();
 
     instance.videosContainer.style.display = 'flex';
-    instance.videosContainer.querySelector('#' + instance.playingVideoId).style.display = 'flex';
+    instance.videosContainer.querySelector(
+      '#' + instance.playingVideoId,
+    ).style.display = 'flex';
   }
 
   defocus() {
@@ -90,7 +92,9 @@ export default class Video {
     instance.audio.fadeInBgMusic();
 
     instance.videosContainer.style.display = 'none';
-    instance.videosContainer.querySelector('#' + instance.playingVideoId).style.display = 'none';
+    instance.videosContainer.querySelector(
+      '#' + instance.playingVideoId,
+    ).style.display = 'none';
 
     // instance.experience.navigation.next.disabled = false
   }
@@ -100,10 +104,6 @@ export default class Video {
 
     instance.defocus();
     instance.world.program.nextStep();
-
-    setTimeout(() => {
-      instance.playingVideoId = null;
-    }, 1000);
   }
 
   //#endregion
@@ -136,7 +136,13 @@ export default class Video {
 const PIXEL_RATIO = (function () {
   var ctx = document.createElement('canvas').getContext('2d'),
     dpr = window.devicePixelRatio || 1,
-    bsr = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
+    bsr =
+      ctx.webkitBackingStorePixelRatio ||
+      ctx.mozBackingStorePixelRatio ||
+      ctx.msBackingStorePixelRatio ||
+      ctx.oBackingStorePixelRatio ||
+      ctx.backingStorePixelRatio ||
+      1;
   return dpr / bsr;
 })();
 
