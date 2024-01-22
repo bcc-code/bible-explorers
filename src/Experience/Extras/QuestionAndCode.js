@@ -1,9 +1,9 @@
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _lang from "../Utils/Lang.js";
-import _api from "../Utils/Api.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _lang from '../Utils/Lang.js';
+import _api from '../Utils/Api.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 
@@ -21,7 +21,7 @@ export default class QuestionAndCode {
     instance.selectedChapter = instance.world.selectedChapter;
     instance.currentStepData = instance.program.getCurrentStepData();
     instance.question = instance.currentStepData.question_and_code;
-    instance.localStorageId = "answers-theme-" + instance.selectedChapter.id;
+    instance.localStorageId = 'answers-theme-' + instance.selectedChapter.id;
     instance.toggleQuestion();
   }
 
@@ -44,41 +44,38 @@ export default class QuestionAndCode {
             <div class="overlay"></div>
         </div>`);
 
-    document.querySelector(".ui-container").append(answersWrapper);
+    document.querySelector('.app-container').append(answersWrapper);
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
-    instance.experience.navigation.container.style.display = "flex";
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
 
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 
     let allInputsEmpty = true;
 
     instance.el = {};
-    instance.el.inputs = document.querySelectorAll(".answers input");
+    instance.el.inputs = document.querySelectorAll('.answers input');
     instance.el.inputs.forEach((input, index) => {
       if (index == 0) input.focus();
       if (input.value.length != 0) allInputsEmpty = false;
 
-      input.addEventListener("input", () => {
-        const val = [...instance.el.inputs].filter(
-          (input) => input.value.length == 0
-        ).length;
+      input.addEventListener('input', () => {
+        const val = [...instance.el.inputs].filter((input) => input.value.length == 0).length;
 
         if (val == 0) {
-          instance.experience.navigation.container.style.display = "flex";
-          instance.experience.navigation.next.classList.add("focused");
-          instance.experience.navigation.next.innerHTML =
-            instance.experience.icons.next;
+          instance.experience.navigation.container.style.display = 'flex';
+          instance.experience.navigation.next.classList.add('focused');
+          instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
         } else {
-          instance.experience.navigation.next.classList.remove("focused");
+          instance.experience.navigation.next.classList.remove('focused');
           instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
         }
       });
     });
 
-    instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
+    instance.experience.navigation.next.addEventListener('click', instance.saveAnswers);
 
     // if (allInputsEmpty)
     //     instance.experience.navigation.next.disabled = true
@@ -91,7 +88,7 @@ export default class QuestionAndCode {
     });
 
     fetch(_api.saveAnswer(), {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         answer: thisTaskAnswers,
         chapterId: instance.selectedChapter.id,
@@ -102,12 +99,11 @@ export default class QuestionAndCode {
   }
 
   destroy() {
-    document.querySelector(".game")?.remove();
-    
-    instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    document.querySelector('.game')?.remove();
+
+    instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers);
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }

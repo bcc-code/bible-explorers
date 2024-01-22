@@ -92,7 +92,7 @@ export default class Resources extends EventEmitter {
         console.log('Loading complete!');
         this.trigger('ready');
 
-        document.querySelector('.loader')?.remove();
+        document.querySelector('#app-loader')?.remove();
         document.querySelector('#app-header').style.display = 'flex';
 
         this.loadingIcon.cleanupInstances();

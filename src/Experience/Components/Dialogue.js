@@ -43,7 +43,7 @@ export default class Dialogue {
       dialogue.querySelector('.content').append(option);
     });
 
-    document.querySelector('.ui-container').append(dialogue);
+    document.querySelector('.app-container').append(dialogue);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
@@ -67,37 +67,29 @@ export default class Dialogue {
         button.classList.add('current');
 
         // Check if all were visited
-        if (
-          document.querySelectorAll('.dialogue .content button.visited')
-            .length == buttons.length
-        ) {
+        if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length) {
           instance.experience.navigation.next.disabled = false;
           instance.experience.navigation.next.classList.remove('less-focused');
           instance.experience.navigation.next.classList.add('focused');
-          instance.experience.navigation.next.innerHTML =
-            instance.experience.icons.next;
+          instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
         }
 
         instance.setMessageHtml(instance.data[index].answer);
 
         if (instance.data[index].audio) {
           // Fetch audio from blob or url
-          instance.offline.fetchChapterAsset(
-            instance.data[index],
-            'audio',
-            (data) => {
-              instance.answerAudio = data.audio;
-              instance.audio.stopAllTaskDescriptions();
-              instance.audio.togglePlayTaskDescription(instance.answerAudio);
-            },
-          );
+          instance.offline.fetchChapterAsset(instance.data[index], 'audio', (data) => {
+            instance.answerAudio = data.audio;
+            instance.audio.stopAllTaskDescriptions();
+            instance.audio.togglePlayTaskDescription(instance.answerAudio);
+          });
         }
       });
     });
   }
 
   setMessageHtml(text) {
-    document.querySelector('.ui-container').append(
+    document.querySelector('.app-container').append(
       _gl.elementFromHtml(
         `<section class="message-from-dialogue">
                     <div class="container">
@@ -106,8 +98,8 @@ export default class Dialogue {
                             ${text}
                         </div>
                     </div>
-                </section>`,
-      ),
+                </section>`
+      )
     );
   }
 
@@ -117,7 +109,6 @@ export default class Dialogue {
 
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.classList.remove('less-focused');
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }

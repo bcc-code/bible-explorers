@@ -157,8 +157,9 @@
       </symbol>
     </svg>
 
-    <div id="app" class="fixed inset-0 overflow-hidden">
+    <div id="app" class="fixed inset-0 flex flex-col overflow-hidden">
       <div class="fixed inset-0 z-0 bg-gradient-to-br from-bke-dark to-bke-primary"></div>
+
       <header id="app-header" class="group relative z-50 hidden items-center justify-between p-4">
         <a href="javascript:void(0)" id="home-button" class="text-white">
           <svg height="2.5rem" viewBox="0 0 692.31 183.84"><use href="#logo-bible-explorers" fill="currentColor"></use></svg>
@@ -182,42 +183,65 @@
         </div>
       </header>
 
-      <main id="app-content" class="relative">
-        <div class="page page-loader">
-          <div class="container">
-            <a href="javascript:void(0)" class="iris-interaction"> Talk with Iris </a>
-            <section class="loader">
-              <canvas id="loading_icon" width="240" height="240"></canvas>
-              <div class="loading">
-                <span></span>
-                <div class="dots">
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                </div>
+      <main id="app-content" class="relative grid flex-1 overflow-y-auto py-8 pb-20">
+        <div id="app-loader">
+          <div class="loader">
+            <canvas id="loading_icon" width="240" height="240"></canvas>
+            <div class="loading">
+              <span></span>
+              <div class="dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
               </div>
-            </section>
+            </div>
           </div>
-          <div class="overlay"></div>
         </div>
-        <div class="ui-container">
-          <div class="cta">
+        <div id="app-age_category" class="hidden items-center justify-center">
+          <div class="max-w-prose">
+            <h3 class="text-center text-3xl font-medium text-bke-accent">Join time travels and explore the book that can answer every question</h3>
+            <ul class="mt-4 flex items-center justify-center gap-4"></ul>
+          </div>
+        </div>
+        <div id="app-chapters" class="hidden flex-col items-center justify-center">
+          <div class="flex w-full justify-center gap-4 px-4">
+            <div id="chapters-cards" class="w-1/2 max-w-prose"></div>
+            <div id="chapters-description" class="w-1/2 max-w-prose"></div>
+          </div>
+          <div class="fixed bottom-4 right-4">
+            <button class="btn default back" id="back-to-age-category">
+              <svg class="prev-icon icon" viewBox="0 0 25 16">
+                <use href="#arrow-left"></use>
+              </svg>
+            </button>
+            <button class="btn default next focused" id="start-chapter">
+              <svg class="next-icon icon" viewBox="0 0 25 16">
+                <use href="#arrow-right"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="chapter-container" class="hidden">
+          <section id="chapter-videos">
+            <div id="videos-container"></div>
+          </section>
+          <section id="chapter-tasks"></section>
+          <section id="chapter-dialogue"></section>
+          <section id="chapter-navigation">
             <button class="btn default back" aria-label="prev page">
               <svg class="prev-icon icon" viewBox="0 0 25 16">
                 <use href="#arrow-left"></use>
               </svg>
             </button>
-            <button class="btn default next focused" aria-label="next page"></button>
-          </div>
+            <button class="btn default next focused" aria-label="next page">
+              <svg class="next-icon icon" viewBox="0 0 25 16">
+                <use href="#arrow-right"></use>
+              </svg>
+            </button>
+          </section>
         </div>
       </main>
-    </div>
-
-    <div id="app-videos" class="pointer-events-none">
-      <div class="absolute inset-0 z-0 mb-52 mt-32">
-        <div id="videos-container" class="relative h-full w-full items-center justify-center overflow-hidden"></div>
-      </div>
     </div>
 
     <div id="app-modals" class="group w-full overflow-hidden">

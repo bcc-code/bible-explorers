@@ -1,32 +1,32 @@
-import Experience from '../Experience.js'
-import _s from '../Utils/Strings.js'
-import _lang from "../Utils/Lang.js";
-import _api from "../Utils/Api.js";
-import _gl from '../Utils/Globals.js'
-import _e from "../Utils/Events.js"
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _lang from '../Utils/Lang.js';
+import _api from '../Utils/Api.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
-let instance = null
+let instance = null;
 
 export default class VideoWithQuestion {
-    constructor() {
-        instance = this
-        instance.experience = new Experience()
-        instance.resources = instance.experience.resources
-        instance.debug = instance.experience.debug
-        instance.audio = instance.experience.world.audio
-    }
+  constructor() {
+    instance = this;
+    instance.experience = new Experience();
+    instance.resources = instance.experience.resources;
+    instance.debug = instance.experience.debug;
+    instance.audio = instance.experience.world.audio;
+  }
 
-    toggleVideoWithQuestion() {
-        instance.world = instance.experience.world
-        instance.selectedChapter = instance.world.selectedChapter
-        instance.program = instance.world.program
-        instance.stepData = instance.program.getCurrentStepData()
-        instance.data = instance.stepData.video_with_question
+  toggleVideoWithQuestion() {
+    instance.world = instance.experience.world;
+    instance.selectedChapter = instance.world.selectedChapter;
+    instance.program = instance.world.program;
+    instance.stepData = instance.program.getCurrentStepData();
+    instance.data = instance.stepData.video_with_question;
 
-        instance.audio.setOtherAudioIsPlaying(true)
-        instance.audio.fadeOutBgMusic()
+    instance.audio.setOtherAudioIsPlaying(true);
+    instance.audio.fadeOutBgMusic();
 
-        const container = _gl.elementFromHtml(`
+    const container = _gl.elementFromHtml(`
             <div class="view" id="video-with-question">
                 <div class="container">
                     <header class="game-header">
@@ -47,73 +47,72 @@ export default class VideoWithQuestion {
                 </div>
                 <div class="overlay"></div>
             </div>
-        `)
+        `);
 
-        document.querySelector('.ui-container').append(container)
+    document.querySelector('.app-container').append(container);
 
-        // Load BTV Player
-        instance.resources.loadVideoInBtvPlayer(instance.data.video)
+    // Load BTV Player
+    instance.resources.loadVideoInBtvPlayer(instance.data.video);
 
-        const playerInterval = setInterval(() => {
-            if (instance.resources.videoPlayers[instance.data.video]) {
-                clearInterval(playerInterval)
+    const playerInterval = setInterval(() => {
+      if (instance.resources.videoPlayers[instance.data.video]) {
+        clearInterval(playerInterval);
 
-                instance.resources.videoPlayers[instance.data.video]
-                    .on('ended', instance.toggleQuestion)
-            }
-        }, 100)
-        
-        const submitQuestion = container.querySelector('[aria-label="submit question"')
-        submitQuestion.addEventListener('click', () => {
-            instance.saveAnswers()
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        instance.resources.videoPlayers[instance.data.video].on('ended', instance.toggleQuestion);
+      }
+    }, 100);
 
-        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.addEventListener('click', instance.toggleQuestion)
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-    }
+    const submitQuestion = container.querySelector('[aria-label="submit question"');
+    submitQuestion.addEventListener('click', () => {
+      instance.saveAnswers();
+      instance.destroy();
+      instance.program.nextStep();
+    });
 
-    toggleQuestion() {
-        instance.resources.videoPlayers[instance.data.video].pause()
-        document.querySelectorAll('#video-with-question .hidden').forEach(item => item.classList.remove('hidden'))
+    instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep);
+    instance.experience.navigation.next.addEventListener('click', instance.toggleQuestion);
+    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
+  }
 
-        instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
-        instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
-        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.classList.remove('focused')
-    }
+  toggleQuestion() {
+    instance.resources.videoPlayers[instance.data.video].pause();
+    document.querySelectorAll('#video-with-question .hidden').forEach((item) => item.classList.remove('hidden'));
 
-    saveAnswers() {
-        const answer = document.querySelector('#video-with-question textarea').value
-        if (!answer) return
+    instance.experience.navigation.next.addEventListener('click', instance.saveAnswers);
+    instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion);
+    instance.experience.navigation.next.addEventListener('click', instance.program.nextStep);
+    instance.experience.navigation.next.classList.remove('focused');
+  }
 
-        const data = {
-            taskTitle: instance.stepData.details.title,
-            answer: [answer],
-            chapterId: instance.selectedChapter.id,
-            chapterTitle: instance.selectedChapter.title,
-            language: _lang.getLanguageCode(),
-        }
+  saveAnswers() {
+    const answer = document.querySelector('#video-with-question textarea').value;
+    if (!answer) return;
 
-        fetch(_api.saveAnswer(), {
-          method: "POST",
-          body: JSON.stringify(data)
-        })
-    }
+    const data = {
+      taskTitle: instance.stepData.details.title,
+      answer: [answer],
+      chapterId: instance.selectedChapter.id,
+      chapterTitle: instance.selectedChapter.title,
+      language: _lang.getLanguageCode(),
+    };
 
-    destroy() {
-        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
-        instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        document.getElementById('video-with-question')?.remove()
-        instance.experience.navigation.next.classList.add('focused')
+    fetch(_api.saveAnswer(), {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
 
-        instance.audio.setOtherAudioIsPlaying(false)
-        instance.audio.fadeInBgMusic()
-    }
+  destroy() {
+    instance.experience.navigation.prev.removeEventListener('click', instance.destroy);
+    instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers);
+    instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion);
+    instance.experience.navigation.next.removeEventListener('click', instance.destroy);
+    document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
+    instance.experience.navigation.next.addEventListener('click', instance.program.nextStep);
+    document.getElementById('video-with-question')?.remove();
+    instance.experience.navigation.next.classList.add('focused');
+
+    instance.audio.setOtherAudioIsPlaying(false);
+    instance.audio.fadeInBgMusic();
+  }
 }

@@ -59,9 +59,7 @@ export default class CodeUnlock {
         deleteKey.disabled = true;
         unlockScreen.querySelector('.code-unlock-keyboard').append(deleteKey);
       } else if (i == 11) {
-        const key = _gl.elementFromHtml(
-          `<button class="code-unlock-key">0</button>`,
-        );
+        const key = _gl.elementFromHtml(`<button class="code-unlock-key">0</button>`);
         unlockScreen.querySelector('.code-unlock-keyboard').append(key);
       } else if (i == 12) {
         const confirmKey = _gl.elementFromHtml(`
@@ -75,9 +73,7 @@ export default class CodeUnlock {
         confirmKey.disabled = true;
         unlockScreen.querySelector('.code-unlock-keyboard').append(confirmKey);
       } else {
-        const key = _gl.elementFromHtml(
-          `<button class="code-unlock-key">${i}</button>`,
-        );
+        const key = _gl.elementFromHtml(`<button class="code-unlock-key">${i}</button>`);
         unlockScreen.querySelector('.code-unlock-keyboard').append(key);
       }
     }
@@ -93,7 +89,7 @@ export default class CodeUnlock {
       unlockScreen.querySelector('.code-unlock-code').append(asterix);
     }
 
-    document.querySelector('.ui-container').append(unlockScreen);
+    document.querySelector('.app-container').append(unlockScreen);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
@@ -109,8 +105,7 @@ export default class CodeUnlock {
 
     instance.el.numbers.forEach(function (number) {
       number.addEventListener('click', () => {
-        if (number.matches('.delete-number') || number.matches('.confirm-code'))
-          return;
+        if (number.matches('.delete-number') || number.matches('.confirm-code')) return;
         instance.add(number.textContent);
       });
     });
@@ -119,24 +114,12 @@ export default class CodeUnlock {
     instance.el.confirm.addEventListener('click', instance.checkCode);
 
     document.onkeydown = (e) => {
-      if (
-        e.key === '1' ||
-        e.key === '2' ||
-        e.key === '3' ||
-        e.key === '4' ||
-        e.key === '5' ||
-        e.key === '6' ||
-        e.key === '7' ||
-        e.key === '8' ||
-        e.key === '9' ||
-        e.key === '0'
-      ) {
+      if (e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' || e.key === '5' || e.key === '6' || e.key === '7' || e.key === '8' || e.key === '9' || e.key === '0') {
         instance.add(e.key);
       } else if (e.key === 'Backspace') {
         if (instance.data.currentNumberIndex > 0) instance.remove();
       } else if (e.key === 'Enter') {
-        if (instance.data.currentNumberIndex == instance.data.codeLength)
-          instance.checkCode();
+        if (instance.data.currentNumberIndex == instance.data.codeLength) instance.checkCode();
       }
     };
   }
@@ -144,11 +127,9 @@ export default class CodeUnlock {
   add(num) {
     if (instance.data.currentNumberIndex == instance.data.codeLength) return;
 
-    if (instance.data.currentNumberIndex == instance.data.codeLength - 1)
-      instance.el.confirm.disabled = false;
+    if (instance.data.currentNumberIndex == instance.data.codeLength - 1) instance.el.confirm.disabled = false;
 
-    if (instance.data.currentNumberIndex == 1)
-      instance.el.backspace.disabled = false;
+    if (instance.data.currentNumberIndex == 1) instance.el.backspace.disabled = false;
 
     const numbers = instance.el.code.querySelectorAll('div');
     numbers[instance.data.currentNumberIndex].textContent = num;
@@ -159,9 +140,7 @@ export default class CodeUnlock {
   remove() {
     if (instance.data.currentNumberIndex == 0) return;
 
-    document
-      .querySelector('.code-unlock.correct-code')
-      ?.classList.remove('correct-code');
+    document.querySelector('.code-unlock.correct-code')?.classList.remove('correct-code');
 
     const asterisk = _gl.elementFromHtml(`
                 <svg class="asterisk-icon icon" width="20" height="22" viewBox="0 0 20 22">
@@ -173,14 +152,12 @@ export default class CodeUnlock {
     numbers[instance.data.currentNumberIndex - 1].textContent = '';
     numbers[instance.data.currentNumberIndex - 1].appendChild(asterisk);
 
-    if (instance.data.currentNumberIndex == 1)
-      instance.el.backspace.disabled = true;
+    if (instance.data.currentNumberIndex == 1) instance.el.backspace.disabled = true;
 
     instance.data.enteredCode.splice(instance.data.currentNumberIndex - 1, 1);
     instance.data.currentNumberIndex--;
 
-    if (instance.data.currentNumberIndex != instance.data.codeLength)
-      instance.el.confirm.disabled = true;
+    if (instance.data.currentNumberIndex != instance.data.codeLength) instance.el.confirm.disabled = true;
   }
 
   checkCode() {
@@ -199,8 +176,7 @@ export default class CodeUnlock {
       instance.experience.navigation.container.style.display = 'flex';
       instance.experience.navigation.next.classList.add('focused');
       instance.experience.navigation.next.classList.remove('less-focused');
-      instance.experience.navigation.next.innerHTML =
-        instance.experience.icons.next;
+      instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
     } else {
       instance.data.fails++;
       instance.data.currentNumberIndex = 0;
@@ -237,7 +213,6 @@ export default class CodeUnlock {
 
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.classList.remove('less-focused');
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }

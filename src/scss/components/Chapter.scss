@@ -95,8 +95,6 @@
     background-size: auto 120%;
     background-position: right;
     background-repeat: no-repeat;
-    border-radius: 1rem;
-    border: var(--app-border-size) solid var(--clr-primary);
     cursor: pointer;
     min-height: 156px;
     pointer-events: all;
@@ -309,12 +307,9 @@
     }
 
     .chapter-selected &.selected {
-        box-shadow: 0 0 1rem var(--clr-secondary);
+        border-color: var(--clr-secondary);
     }
 
-    &:hover:not(.selected) {
-        box-shadow: 0 0 1rem var(--clr-secondary);
-    }
 
     body.bcc_member & {
         .chapter__states {

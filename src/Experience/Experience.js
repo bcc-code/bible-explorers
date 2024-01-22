@@ -8,7 +8,6 @@ import MouseMove from './Utils/MouseMove.js';
 import sources from './Sources.js';
 import Menu from './Components/Menu.js';
 import World from './World/World.js';
-import Page from './Components/Page.js';
 import FAQ from './Components/FAQ.js';
 import _gl from './Utils/Globals.js';
 
@@ -28,7 +27,6 @@ export default class Experience {
     this.faq = new FAQ();
 
     // Setup
-    this.page = new Page();
     this.settings = new Menu();
     this.debug = new Debug();
     this.stats = new StatsModule();
@@ -47,7 +45,7 @@ export default class Experience {
     this.navigation = {
       prev: document.querySelector('[aria-label="prev page"]'),
       next: document.querySelector('[aria-label="next page"]'),
-      container: document.querySelector('.cta'),
+      container: document.querySelector('.chapter-navigation'),
     };
 
     this.icons = {

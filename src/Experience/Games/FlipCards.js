@@ -65,7 +65,7 @@ export default class FlipCards {
     `);
 
     task.querySelector('.content').append(startGame);
-    document.querySelector('.ui-container').append(task);
+    document.querySelector('.app-container').append(task);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
@@ -151,7 +151,7 @@ export default class FlipCards {
       });
     }
 
-    document.querySelector('.ui-container').append(game);
+    document.querySelector('.app-container').append(game);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;

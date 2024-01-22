@@ -59,7 +59,7 @@ export default class ConfirmationScreen {
     `);
 
     task.querySelector('.content').append(startGame);
-    document.querySelector('.ui-container').append(task);
+    document.querySelector('.app-container').append(task);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;

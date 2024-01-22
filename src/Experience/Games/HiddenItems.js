@@ -1,9 +1,9 @@
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _lang from "../Utils/Lang.js";
-import _api from "../Utils/Api.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _lang from '../Utils/Lang.js';
+import _api from '../Utils/Api.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 const circleSize = 96;
@@ -22,8 +22,7 @@ export default class HiddenItems {
     instance.selectedChapter = instance.world.selectedChapter;
     instance.stepData = instance.program.getCurrentStepData();
     instance.data = instance.stepData.picture_and_code;
-    instance.circlesVisible =
-      instance.program.gamesData.pictureAndCode.circles.length;
+    instance.circlesVisible = instance.program.gamesData.pictureAndCode.circles.length;
     instance.lastKnownScrollPosition = 0;
 
     instance.togglePicture();
@@ -31,9 +30,7 @@ export default class HiddenItems {
   }
 
   togglePicture() {
-    instance.offline.fetchChapterAsset(instance.data, "picture", (data) =>
-      instance.setPicture(data.picture)
-    );
+    instance.offline.fetchChapterAsset(instance.data, 'picture', (data) => instance.setPicture(data.picture));
 
     const game = _gl.elementFromHtml(`
             <section class="game hidden-items">
@@ -46,50 +43,41 @@ export default class HiddenItems {
                 <div class="overlay"></div>
             </section>`);
 
-    document.querySelector(".ui-container").append(game);
+    document.querySelector('.app-container').append(game);
 
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
-    instance.experience.navigation.container.style.display = "flex";
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
   }
 
   setEventListeners() {
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 
     if (instance.circlesVisible == 4) {
-      instance.experience.navigation.container.style.display = "flex";
-      instance.experience.navigation.next.classList.add("focused");
-      instance.experience.navigation.next.innerHTML =
-        instance.experience.icons.next;
+      instance.experience.navigation.container.style.display = 'flex';
+      instance.experience.navigation.next.classList.add('focused');
+      instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
     } else {
-      instance.experience.navigation.next.classList.remove("focused");
+      instance.experience.navigation.next.classList.remove('focused');
       instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     }
 
     instance.addExistingCircles();
 
-    document
-      .querySelector(".hidden-items .box")
-      .addEventListener("scroll", (e) => {
-        instance.lastKnownScrollPosition = e.target.scrollTop;
-      });
+    document.querySelector('.hidden-items .box').addEventListener('scroll', (e) => {
+      instance.lastKnownScrollPosition = e.target.scrollTop;
+    });
 
-    document
-      .querySelector(".hidden-items .box")
-      .addEventListener("click", instance.addCirclesOnClick);
+    document.querySelector('.hidden-items .box').addEventListener('click', instance.addCirclesOnClick);
   }
 
   setPicture(url) {
     instance.data.picture = url;
-    document
-      .querySelector(".hidden-items img")
-      .setAttribute("data-src", instance.data.picture);
+    document.querySelector('.hidden-items img').setAttribute('data-src', instance.data.picture);
   }
 
   addExistingCircles() {
-    instance.program.gamesData.pictureAndCode.circles.forEach((circle) =>
-      instance.addCircle(circle.x, circle.y)
-    );
+    instance.program.gamesData.pictureAndCode.circles.forEach((circle) => instance.addCircle(circle.x, circle.y));
   }
 
   newScrollPosition(scrollPos) {
@@ -99,7 +87,7 @@ export default class HiddenItems {
   addCirclesOnClick(event) {
     const maxCirclesToAdd = 4;
 
-    if (event.target.classList.contains("circle")) {
+    if (event.target.classList.contains('circle')) {
       instance.removeCircle(event);
       instance.circlesVisible--;
     } else if (instance.circlesVisible < maxCirclesToAdd) {
@@ -112,12 +100,11 @@ export default class HiddenItems {
     }
 
     if (instance.circlesVisible == maxCirclesToAdd) {
-      instance.experience.navigation.container.style.display = "flex";
-      instance.experience.navigation.next.classList.add("focused");
-      instance.experience.navigation.next.innerHTML =
-        instance.experience.icons.next;
+      instance.experience.navigation.container.style.display = 'flex';
+      instance.experience.navigation.next.classList.add('focused');
+      instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
     } else {
-      instance.experience.navigation.next.classList.remove("focused");
+      instance.experience.navigation.next.classList.remove('focused');
       instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     }
   }
@@ -126,32 +113,24 @@ export default class HiddenItems {
     const el = _gl.elementFromHtml(`<div class="circle"></div>`);
     el.style.left = `${x}px`;
     el.style.top = `${y}px`;
-    document.querySelector(".hidden-items .box").appendChild(el);
+    document.querySelector('.hidden-items .box').appendChild(el);
   };
 
   removeCircle = (mouseClick) => {
     mouseClick.target.remove();
-    const index = instance.program.gamesData.pictureAndCode.circles.findIndex(
-      (circle) => instance.intersected(mouseClick, circle)
-    );
+    const index = instance.program.gamesData.pictureAndCode.circles.findIndex((circle) => instance.intersected(mouseClick, circle));
     instance.program.gamesData.pictureAndCode.circles.splice(index, 1);
   };
 
   intersected(r1, r2) {
-    return !(
-      r2.x > r1.x + circleSize ||
-      r2.x + circleSize < r1.x ||
-      r2.y > r1.y + circleSize ||
-      r2.y + circleSize < r1.y
-    );
+    return !(r2.x > r1.x + circleSize || r2.x + circleSize < r1.x || r2.y > r1.y + circleSize || r2.y + circleSize < r1.y);
   }
 
   destroy() {
-    document.querySelector(".game")?.remove();
+    document.querySelector('.game')?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }

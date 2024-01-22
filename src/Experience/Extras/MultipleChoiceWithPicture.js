@@ -106,7 +106,7 @@ export default class MultipleChoiceWithPicture {
       });
     });
 
-    document.querySelector('.ui-container').append(multipleChoiceWithPicture);
+    document.querySelector('.app-container').append(multipleChoiceWithPicture);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;

@@ -91,7 +91,7 @@ export default class MazeGame {
         <div id="maze-canvas" class="game-canvas"></div>
       </section>`);
 
-    document.querySelector('.ui-container').append(game);
+    document.querySelector('.app-container').append(game);
     document.querySelector('.game-popup').style.display = 'none';
 
     instance.experience.navigation.next.classList.remove('focused');

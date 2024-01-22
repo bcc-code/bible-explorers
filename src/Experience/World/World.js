@@ -34,8 +34,14 @@ export default class World {
     this.resources.on('ready', () => {
       instance.chaptersData = instance.resources.api[_api.getBiexChapters()];
 
-      this.page.createIntro();
+      this.ageCategory = document.getElementById('app-age_category');
+      this.appChapters = document.getElementById('app-chapters');
+
+      // Select age category
+      this.ageCategory.querySelector('h3').innerText = _s.conceptDescription;
       this.setCategories();
+      this.ageCategory.classList.remove('hidden');
+      this.ageCategory.classList.add('flex');
 
       // Setup
       this.controlRoom = new ControlRoom();
@@ -50,18 +56,18 @@ export default class World {
 
     // Chapters
     this.chaptersData = [];
-    this.menu = {
-      categories: document.querySelector('.categories.list'),
-      chapters: document.querySelector('.chapters'),
-    };
 
     this.buttons = {
       // contact: document.querySelector('[aria-label="Contact"]'),
       home: document.querySelector('#home-button'),
       guide: document.querySelector('#guide-button'),
+      startChapter: document.querySelector('#start-chapter'),
+      backToAgeCateogry: document.querySelector('#back-to-age-category'),
     };
 
     this.buttons.home.addEventListener('click', this.goHome);
+    this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro);
+    this.buttons.startChapter.addEventListener('click', this.startChapter);
   }
 
   placeholderChapterData() {
@@ -75,16 +81,42 @@ export default class World {
   showIntro() {
     instance.placeholderChapterData();
     instance.removeDescriptionHtml();
-    instance.page.removeLobby();
-    instance.page.createIntro();
+
+    // Hide chapter content/cards
+    instance.appChapters.classList.remove('flex');
+    instance.appChapters.classList.add('hidden');
+
+    // Remove if existing categories
+    if (instance.ageCategory.querySelector('ul').childNodes.length !== 0) {
+      instance.ageCategory.querySelectorAll('li').forEach((item) => {
+        item.remove();
+      });
+    }
+
+    // Show age category
+    instance.ageCategory.classList.remove('hidden');
+    instance.ageCategory.classList.add('flex');
     instance.setCategories();
   }
 
   showLobby() {
-    instance.page.removeIntro();
-    instance.page.createLobby();
+    // Hide age category
+    instance.ageCategory.classList.remove('flex');
+    instance.ageCategory.classList.add('hidden');
+
+    // Remove if existing chapters
+    if (instance.appChapters.querySelector('#chapters-cards').childNodes.length !== 0) {
+      instance.appChapters.querySelectorAll('.chapter').forEach((item) => {
+        item.remove();
+      });
+    }
+
+    // Set chapter content/cards
+    instance.appChapters.classList.remove('hidden');
+    instance.appChapters.classList.add('flex');
     instance.setChapters();
-    instance.experience.navigation.prev.addEventListener('click', instance.showIntro);
+
+    instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`;
   }
 
   setCategories() {
@@ -106,8 +138,8 @@ export default class World {
   }
 
   setCategoryHtml(category) {
-    const categoryBtn = _gl.elementFromHtml(`<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`);
-    document.querySelector('.categories').appendChild(categoryBtn);
+    const categoryBtn = _gl.elementFromHtml(`<li><button class="category btn default" data-slug="${category.slug}">${category.name}</button></li>`);
+    this.ageCategory.querySelector('ul').appendChild(categoryBtn);
   }
 
   selectCategoryListeners() {
@@ -125,14 +157,14 @@ export default class World {
       instance.setChapterHtml(chapter);
     });
 
-    instance.experience.navigation.next.disabled = true;
+    instance.buttons.startChapter.disabled = true;
     instance.chapterEventListeners();
   }
 
   setChapterHtml(chapter) {
     let chapterHtml = document.createElement('article');
 
-    let chapterClasses = 'chapter';
+    let chapterClasses = 'chapter rounded-lg border-4 border-bke-outline';
     chapterClasses += chapter.status == 'future' ? ' locked' : '';
     chapterClasses += chapter.is_beta === true ? ' beta' : '';
     chapterHtml.className = chapterClasses;
@@ -172,8 +204,7 @@ export default class World {
             </div>
         `;
 
-    const chapters = document.querySelector('.chapters');
-    chapters.appendChild(chapterHtml);
+    this.appChapters.querySelector('#chapters-cards').appendChild(chapterHtml);
 
     instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterBgImage);
     instance.offline.markChapterIfAvailableOffline(chapter);
@@ -192,13 +223,10 @@ export default class World {
       else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++;
     });
 
-    const details = _gl.elementFromHtml(`
-            <section class="chapter-details">
-                <header>
-                    <h2>${chapter.title}</h2>
-                </header>
-            </section>
-        `);
+    const details = _gl.elementFromHtml(` <div id="chapter-description" class="rounded-lg border-4 border-bke-accent p-4"></div>`);
+    const header = _gl.elementFromHtml(`<h2 class="text-white">${chapter.title}</h2>`);
+
+    details.append(header);
 
     const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`);
 
@@ -211,12 +239,12 @@ export default class World {
           const pageSlug = linkParts[linkParts.length - 2];
 
           const guide = _gl.elementFromHtml(`
-                        <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="book-icon icon" viewBox="0 0 21 24">
-                                <use href="#book"></use>
-                            </svg>
-                            <span>${_s.chapter.activityDescLabel}</span>
-                        </a>`);
+            <a class="inline-flex items-center text-white text-sm px-2 py-1 border-2 gap-1 border-bke-accent rounded-lg hover:bg-bke-accent hover:text-bke-primary" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                <svg class="book-icon icon" viewBox="0 0 21 24" height="1em">
+                    <use href="#book"></use>
+                </svg>
+                <span>${_s.chapter.activityDescLabel}</span>
+            </a>`);
 
           attachments.append(guide);
         }
@@ -225,54 +253,54 @@ export default class World {
 
     details.append(attachments);
 
-    const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`);
+    const description = _gl.elementFromHtml(`<div class="mb-6 py-4 border-b-2 border-white/10">${chapter.content}</div>`);
     details.append(description);
 
     if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-      const info = _gl.elementFromHtml(`<div class="info"></div>`);
+      const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-4 my-4"></ul>`);
 
       details.append(info);
 
       if (numberOfEpisodes != 1) {
-        const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`);
+        const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`);
         info.append(videoLabel);
       } else {
-        const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`);
+        const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`);
         info.append(videoLabel);
       }
 
       if (numberOfTasks != 1) {
-        const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`);
+        const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`);
         info.append(taskLabel);
       } else {
-        const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`);
+        const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`);
         info.append(taskLabel);
       }
 
       if (numberOfQuizes != 1) {
-        const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`);
+        const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`);
         info.append(quizLabel);
       } else {
-        const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`);
+        const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`);
         info.append(quizLabel);
       }
     }
 
-    document.querySelector('.lobby').append(details);
-    document.querySelector('.chapters').classList.add('chapter-selected');
+    this.appChapters.querySelector('#chapters-description').append(details);
+    this.appChapters.querySelector('#chapters-cards').classList.add('chapter-selected');
 
     instance.experience.navigation.next.addEventListener('click', instance.startChapter);
   }
 
   removeDescriptionHtml() {
-    document.querySelector('.chapters').classList.remove('chapter-selected');
-    if (document.querySelector('.chapter-details')) document.querySelector('.chapter-details').remove();
+    this.appChapters.querySelector('#chapters-cards').classList.remove('chapter-selected');
+    if (this.appChapters.querySelector('#chapter-description')) this.appChapters.querySelector('#chapter-description').remove();
   }
 
   chapterEventListeners() {
-    document.querySelectorAll('.chapter').forEach((chapter) => {
+    this.appChapters.querySelectorAll('.chapter').forEach((chapter) => {
       chapter.addEventListener('click', () => {
-        if (document.querySelector('.chapter-details')) document.querySelector('.chapter-details').remove();
+        if (document.querySelector('#chapter-description')) document.querySelector('#chapter-description').remove();
 
         instance.updateSelectedChapterData(chapter);
         instance.addClassToSelectedChapter(chapter);
@@ -281,22 +309,22 @@ export default class World {
         instance.showActionButtons();
         instance.setDescriptionHtml();
 
-        instance.experience.navigation.next.disabled = false;
+        instance.buttons.startChapter.disabled = false;
       });
     });
 
-    document.querySelectorAll('.chapter__offline').forEach(function (chapter) {
+    this.appChapters.querySelectorAll('.chapter__offline').forEach(function (chapter) {
       chapter.addEventListener('click', (event) => {
         instance.downloadChapter(chapter);
         event.stopPropagation();
       });
     });
 
-    document.querySelectorAll('.chapter__downloaded').forEach(function (button) {
+    this.appChapters.querySelectorAll('.chapter__downloaded').forEach(function (button) {
       button.addEventListener('click', instance.confirmRedownload);
     });
 
-    document.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
+    this.appChapters.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
       chapter.addEventListener('click', (event) => {
         instance.downloadChapter(chapter);
         event.stopPropagation();
@@ -594,8 +622,9 @@ export default class World {
     // Reset chapter if completed
     if (instance.chapterProgress() == instance.selectedChapter.program.length) instance.resetChapter();
 
-    instance.page.removeLobby();
-    instance.removeLobbyEventListeners();
+    // Hide chapter content/cards
+    instance.appChapters.classList.remove('flex');
+    instance.appChapters.classList.add('hidden');
 
     instance.setUpChapter();
     instance.fetchBgMusic();
@@ -613,8 +642,6 @@ export default class World {
 
     document.querySelector('.fullscreen-section input').checked = true;
     if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-
-    document.querySelector('.page').className = 'page page-home';
 
     setTimeout(function () {
       instance.progressBar.show();
@@ -639,13 +666,9 @@ export default class World {
     }, 10000);
   }
 
-  removeLobbyEventListeners() {
-    instance.experience.navigation.prev.removeEventListener('click', instance.showIntro);
-    instance.experience.navigation.next.removeEventListener('click', instance.startChapter);
-  }
-
   setUpChapter() {
-    instance.hideMenu();
+    document.body.classList.remove('freeze');
+
     instance.program = new Program();
     instance.progressBar = new ProgressBar();
   }
@@ -657,15 +680,17 @@ export default class World {
 
   goHome() {
     document.body.classList.add('freeze');
-    instance.program.destroy();
-    instance.progressBar.hide();
-    instance.program.video.defocus();
 
-    document.querySelector('.cta').style.display = 'flex';
+    if (instance.program) {
+      instance.program.destroy();
+      instance.program.video.defocus();
+      instance.progressBar.hide();
+    }
 
     instance.controlRoom.irisTextureTransition();
     instance.audio.stopAllTaskDescriptions();
     instance.audio.changeBgMusic();
+
     instance.showLobby();
     instance.preselectChapter();
 
@@ -684,18 +709,7 @@ export default class World {
   }
 
   showActionButtons() {
-    instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length;
-  }
-
-  hideMenu() {
-    document.body.classList.remove('freeze');
-    document.querySelector('.page').className = 'page page-home';
-  }
-
-  hideLoading() {
-    // instance.welcome.loading.style.display = "none"
-    // instance.welcome.topBar.style.display = "flex"
-    // instance.welcome.loadingScreen.classList.add('visible')
+    this.buttons.startChapter.disabled = this.chapterProgress() == this.selectedChapter.program.length;
   }
 
   finishJourney() {

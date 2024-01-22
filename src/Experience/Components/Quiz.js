@@ -1,9 +1,9 @@
-import Experience from "../Experience.js";
-import _s from "../Utils/Strings.js";
-import _lang from "../Utils/Lang.js";
-import _api from "../Utils/Api.js";
-import _gl from "../Utils/Globals.js";
-import _e from "../Utils/Events.js";
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _lang from '../Utils/Lang.js';
+import _api from '../Utils/Api.js';
+import _gl from '../Utils/Globals.js';
+import _e from '../Utils/Events.js';
 
 let instance = null;
 
@@ -15,7 +15,7 @@ export default class Quiz {
 
   toggleQuiz() {
     instance.world = instance.experience.world;
-    instance.selectedChapter = instance.world.selectedChapter
+    instance.selectedChapter = instance.world.selectedChapter;
     instance.debug = instance.experience.debug;
     instance.program = instance.world.program;
     instance.audio = instance.world.audio;
@@ -38,9 +38,7 @@ export default class Quiz {
                         <ul class="quiz-steps"></ul>
                     </div>
                     <ul class="quiz-items"></ul>
-                    <div class="quiz-nav ${
-                      questions.length == 1 ? "hide - nav" : ""
-                    }">
+                    <div class="quiz-nav ${questions.length == 1 ? 'hide - nav' : ''}">
                         <button class="btn rounded" aria-label="prev question">
                             <svg class="prev-icon icon" width="25" height="16" viewBox="0 0 25 16">
                                 <use href="#arrow-left"></use>
@@ -61,38 +59,25 @@ export default class Quiz {
         `);
 
     const submitQuiz = quiz.querySelector('[aria-label="submit form"');
-    submitQuiz.style.display = "none";
-    submitQuiz.addEventListener("click", () => {
-      instance.saveAnswers()
+    submitQuiz.style.display = 'none';
+    submitQuiz.addEventListener('click', () => {
+      instance.saveAnswers();
       instance.destroy();
       instance.program.congrats.toggleSummary();
 
-      const message = _gl.elementFromHtml(
-        `<p>${
-          instance.correctAnswers +
-          instance.openQuestions +
-          " / " +
-          questions.length
-        }</p>`
-      );
-      document.querySelector(".modal .summary").append(message);
+      const message = _gl.elementFromHtml(`<p>${instance.correctAnswers + instance.openQuestions + ' / ' + questions.length}</p>`);
+      document.querySelector('.modal .summary').append(message);
 
-      instance.experience.navigation.container.style.display = "flex";
+      instance.experience.navigation.container.style.display = 'flex';
     });
 
     const prev = quiz.querySelector('[aria-label="prev question"');
     const next = quiz.querySelector('[aria-label="next question"');
 
     questions.forEach((q, qIdx) => {
-      const quizStep = _gl.elementFromHtml(
-        `<li class="quiz-step btn rounded  focused ${
-          qIdx === 0 ? "current" : ""
-        }" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`
-      );
+      const quizStep = _gl.elementFromHtml(`<li class="quiz-step btn rounded  focused ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`);
       const quizItem = _gl.elementFromHtml(`
-                <li class="quiz-item ${
-                  qIdx === 0 ? "visible" : ""
-                }" data-index="${qIdx + 1}">
+                <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
                     <div class="quiz-question">
                         <svg class="question-mark-icon" viewBox="0 0 15 22">
                             <use href="#question-mark"></use>
@@ -130,85 +115,79 @@ export default class Quiz {
                 `);
 
         quizAnswers.append(quizAnswer);
-        quizAnswers.closest(".quiz-item").classList.add("textarea");
+        quizAnswers.closest('.quiz-item').classList.add('textarea');
       }
 
-      quiz.querySelector(".quiz-steps").append(quizStep);
-      quiz.querySelector(".quiz-items").append(quizItem);
+      quiz.querySelector('.quiz-steps').append(quizStep);
+      quiz.querySelector('.quiz-items').append(quizItem);
     });
 
-    document.querySelector(".ui-container").append(quiz);
+    document.querySelector('.app-container').append(quiz);
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
-    instance.experience.navigation.container.style.display = "flex";
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
 
     let questionsAnswered = 0;
     let quizProgress = 0;
     const quizStepWidth = 100 / (questions.length - 1);
 
     prev.disabled = true;
-    prev.addEventListener("click", () => {
-      const current = quiz.querySelector(".quiz-item.visible");
-      const currentCheckpoint = quiz.querySelector(".quiz-step.current");
+    prev.addEventListener('click', () => {
+      const current = quiz.querySelector('.quiz-item.visible');
+      const currentCheckpoint = quiz.querySelector('.quiz-step.current');
 
-      current.classList.remove("visible");
-      currentCheckpoint.classList.remove("current");
-      current.previousElementSibling.classList.add("visible");
-      currentCheckpoint.previousElementSibling?.classList.add("current");
+      current.classList.remove('visible');
+      currentCheckpoint.classList.remove('current');
+      current.previousElementSibling.classList.add('visible');
+      currentCheckpoint.previousElementSibling?.classList.add('current');
 
-      next.disabled =
-        !current.previousElementSibling.classList.contains("done");
+      next.disabled = !current.previousElementSibling.classList.contains('done');
 
-      if (current.getAttribute("data-index") == 2) prev.disabled = true;
+      if (current.getAttribute('data-index') == 2) prev.disabled = true;
     });
 
     next.disabled = true;
-    next.addEventListener("click", () => {
-      const current = quiz.querySelector(".quiz-item.visible");
-      const currentCheckpoint = quiz.querySelector(".quiz-step.current");
+    next.addEventListener('click', () => {
+      const current = quiz.querySelector('.quiz-item.visible');
+      const currentCheckpoint = quiz.querySelector('.quiz-step.current');
 
-      current.classList.remove("visible");
-      currentCheckpoint.classList.remove("current");
+      current.classList.remove('visible');
+      currentCheckpoint.classList.remove('current');
 
       if (current.nextElementSibling) {
-        current.nextElementSibling.classList.add("visible");
-        currentCheckpoint.nextElementSibling.classList.add("current");
+        current.nextElementSibling.classList.add('visible');
+        currentCheckpoint.nextElementSibling.classList.add('current');
 
         prev.disabled = false;
-        next.disabled = !current.nextElementSibling.classList.contains("done");
+        next.disabled = !current.nextElementSibling.classList.contains('done');
       }
 
-      if (questionsAnswered < questions.length)
-        quizUpdateProgress(questionsAnswered);
+      if (questionsAnswered < questions.length) quizUpdateProgress(questionsAnswered);
 
-      if (
-        current.nextElementSibling.getAttribute("data-index") ==
-        questions.length
-      )
-        next.disabled = true;
+      if (current.nextElementSibling.getAttribute('data-index') == questions.length) next.disabled = true;
     });
 
-    quiz.querySelectorAll(".quiz-item").forEach((q, i) => {
-      const htmlAnswers = q.querySelectorAll(".label");
+    quiz.querySelectorAll('.quiz-item').forEach((q, i) => {
+      const htmlAnswers = q.querySelectorAll('.label');
       const objAnswers = questions[i].answers;
 
       htmlAnswers.forEach((a, i) => {
-        a.addEventListener("click", () => {
+        a.addEventListener('click', () => {
           htmlAnswers.forEach((answer) => {
-            answer.parentNode.classList.remove("wrong");
-            answer.style.pointerEvents = "none";
+            answer.parentNode.classList.remove('wrong');
+            answer.style.pointerEvents = 'none';
           });
 
           const correctIndex = objAnswers.findIndex((a) => a.correct_wrong);
-          htmlAnswers[correctIndex].parentNode.classList.add("correct");
+          htmlAnswers[correctIndex].parentNode.classList.add('correct');
 
           if (!objAnswers[i].correct_wrong) {
-            instance.audio.playSound("wrong");
-            a.parentNode.classList.add("wrong");
+            instance.audio.playSound('wrong');
+            a.parentNode.classList.add('wrong');
           } else {
-            instance.audio.playSound("correct");
+            instance.audio.playSound('correct');
             instance.correctAnswers++;
             instance.experience.celebrate({
               particleCount: 100,
@@ -216,32 +195,32 @@ export default class Quiz {
             });
           }
 
-          if (q.getAttribute("data-index") !== questions.length) {
+          if (q.getAttribute('data-index') !== questions.length) {
             next.disabled = false;
           }
 
-          if (q.getAttribute("data-index") == questions.length) {
-            submitQuiz.style.display = "inline-flex";
+          if (q.getAttribute('data-index') == questions.length) {
+            submitQuiz.style.display = 'inline-flex';
             next.disabled = true;
           }
 
-          const currentCheckpoint = quiz.querySelector(".quiz-step.current");
-          const current = quiz.querySelector(".quiz-item.visible");
-          currentCheckpoint.classList.add("done");
-          current.classList.add("done");
+          const currentCheckpoint = quiz.querySelector('.quiz-step.current');
+          const current = quiz.querySelector('.quiz-item.visible');
+          currentCheckpoint.classList.add('done');
+          current.classList.add('done');
           questionsAnswered++;
         });
       });
 
-      if (q.classList.contains("textarea")) {
-        const input = q.querySelector(".quiz-textarea");
-        input.addEventListener("input", (e) => {
+      if (q.classList.contains('textarea')) {
+        const input = q.querySelector('.quiz-textarea');
+        input.addEventListener('input', (e) => {
           if (e.target.value.length > 0) {
             questionsAnswered = questions.length;
-            submitQuiz.style.display = "inline-flex";
+            submitQuiz.style.display = 'inline-flex';
           } else {
             questionsAnswered = questions.length - 1;
-            submitQuiz.style.display = "none";
+            submitQuiz.style.display = 'none';
           }
         });
       }
@@ -250,8 +229,8 @@ export default class Quiz {
     let quizUpdateProgress = (answers) => {
       quizProgress = quizStepWidth * answers;
 
-      const quizProgressBar = quiz.querySelector(".quiz-progress-bar div");
-      quizProgressBar.style.width = quizProgress + "%";
+      const quizProgressBar = quiz.querySelector('.quiz-progress-bar div');
+      quizProgressBar.style.width = quizProgress + '%';
     };
   }
 
@@ -260,30 +239,29 @@ export default class Quiz {
   }
 
   saveAnswers() {
-    const answer = document.querySelector('section.quiz textarea').value
-    if (!answer) return
+    const answer = document.querySelector('section.quiz textarea').value;
+    if (!answer) return;
 
     const data = {
-        taskTitle: "Quiz",
-        answer: [answer],
-        chapterId: instance.selectedChapter.id,
-        chapterTitle: instance.selectedChapter.title,
-        language: _lang.getLanguageCode(),
-    }
+      taskTitle: 'Quiz',
+      answer: [answer],
+      chapterId: instance.selectedChapter.id,
+      chapterTitle: instance.selectedChapter.title,
+      language: _lang.getLanguageCode(),
+    };
 
     fetch(_api.saveAnswer(), {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
   }
 
   destroy() {
-    document.querySelector(".quiz")?.remove();
-    document.querySelector(".modal")?.remove();
+    document.querySelector('.quiz')?.remove();
+    document.querySelector('.modal')?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }

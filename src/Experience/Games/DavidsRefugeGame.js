@@ -41,7 +41,7 @@ export default class DavidsRefuge {
             </section>
         `);
 
-    document.querySelector('.ui-container').append(game);
+    document.querySelector('.app-container').append(game);
 
     instance.data.characters.forEach((goat) => {
       const url = goat.image.split('/');
@@ -104,29 +104,20 @@ export default class DavidsRefuge {
             </button>
         `);
 
-    document
-      .querySelector('.davids-refuge .container')
-      .append(hintsToggle, hints);
+    document.querySelector('.davids-refuge .container').append(hintsToggle, hints);
 
     const hintsList = hints.querySelector('ul');
 
     gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: 'top left' });
 
-    const showHints = gsap
-      .timeline({ paused: true })
-      .to(hints, { scale: 1, autoAlpha: 1 });
+    const showHints = gsap.timeline({ paused: true }).to(hints, { scale: 1, autoAlpha: 1 });
 
     hintsToggle.addEventListener('click', () => {
       hints.style.opacity === '0' ? showHints.play() : showHints.reverse();
     });
 
     document.addEventListener('click', (event) => {
-      if (
-        !hints.contains(event.target) &&
-        !hintsToggle.contains(event.target) &&
-        !getHint.contains(event.target)
-      )
-        showHints.reverse();
+      if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target)) showHints.reverse();
     });
 
     let index = 1;
@@ -134,9 +125,7 @@ export default class DavidsRefuge {
     const getHint = hints.querySelector('button');
     getHint.addEventListener('click', () => {
       if (index < instance.data.hints.length) {
-        const hint = _gl.elementFromHtml(
-          `<li>${instance.data.hints[index].text}</li>`,
-        );
+        const hint = _gl.elementFromHtml(`<li>${instance.data.hints[index].text}</li>`);
         hintsList.appendChild(hint);
       }
 
@@ -187,11 +176,8 @@ export default class DavidsRefuge {
 
             instance.experience.navigation.container.style.display = 'flex';
             instance.experience.navigation.next.classList.add('focused');
-            instance.experience.navigation.next.classList.remove(
-              'less-focused',
-            );
-            instance.experience.navigation.next.innerHTML =
-              instance.experience.icons.next;
+            instance.experience.navigation.next.classList.remove('less-focused');
+            instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
           } else {
             tooltip[0].innerText = instance.data.wrong_character_message;
 
@@ -223,7 +209,6 @@ export default class DavidsRefuge {
 
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.classList.remove('less-focused');
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }

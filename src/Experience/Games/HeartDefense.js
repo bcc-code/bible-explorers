@@ -29,20 +29,7 @@ export default class HeartDefense {
       explosionHeight: spriteH,
       explosion: 'games/explosion.png',
       animations: {
-        explosion: [
-          0,
-          0,
-          spriteW,
-          spriteH,
-          spriteW * 2,
-          0,
-          spriteW,
-          spriteH,
-          spriteW * 3,
-          0,
-          spriteW,
-          spriteH,
-        ],
+        explosion: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
       },
       highestSpeed: 3.2,
       lowestSpeed: 1.2,
@@ -92,7 +79,7 @@ export default class HeartDefense {
             </section>
         `);
 
-    document.querySelector('.ui-container').append(game);
+    document.querySelector('.app-container').append(game);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
@@ -178,11 +165,7 @@ export default class HeartDefense {
         });
         instance.layer.findOne('#heart').add(heart);
       };
-      heartImage.src =
-        instance.config.path +
-        'heart-' +
-        instance.config.heartStates[i] +
-        '.png';
+      heartImage.src = instance.config.path + 'heart-' + instance.config.heartStates[i] + '.png';
     }
   }
 
@@ -215,8 +198,7 @@ export default class HeartDefense {
         });
         instance.layer.findOne('#door').add(door);
       };
-      doorImage.src =
-        instance.config.path + 'door-' + instance.config.doorStates[i] + '.png';
+      doorImage.src = instance.config.path + 'door-' + instance.config.doorStates[i] + '.png';
     }
   }
 
@@ -246,11 +228,7 @@ export default class HeartDefense {
         });
         instance.layer.findOne('#lives').add(life);
       };
-      lostLife.src =
-        instance.config.path +
-        'life-' +
-        instance.config.livesStates[1] +
-        '.png';
+      lostLife.src = instance.config.path + 'life-' + instance.config.livesStates[1] + '.png';
 
       const activeLife = new Image();
       activeLife.onload = () => {
@@ -264,11 +242,7 @@ export default class HeartDefense {
         });
         instance.layer.findOne('#lives').add(life);
       };
-      activeLife.src =
-        instance.config.path +
-        'life-' +
-        instance.config.livesStates[0] +
-        '.png';
+      activeLife.src = instance.config.path + 'life-' + instance.config.livesStates[0] + '.png';
     }
   }
 
@@ -278,8 +252,7 @@ export default class HeartDefense {
     instance.layer.findOne('#thoughts').zIndex(3);
 
     instance.animation = new Konva.Animation((frame) => {
-      if (instance.thoughts.length < instance.getNoOfThoughts())
-        createThought();
+      if (instance.thoughts.length < instance.getNoOfThoughts()) createThought();
 
       animateThoughts();
     });
@@ -307,11 +280,7 @@ export default class HeartDefense {
         let estFramesToCenter = dX / distancePerFrame.x;
 
         // Adjust distance if necessary
-        const diffFrames =
-          getUpdatedFramesToCenterValue(
-            estFramesToCenter,
-            framesBetweenEachThought,
-          ) - estFramesToCenter;
+        const diffFrames = getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) - estFramesToCenter;
 
         // Updated values
         x -= diffFrames * distancePerFrame.x;
@@ -344,9 +313,7 @@ export default class HeartDefense {
           rotateDirection: Math.random() < 0.5 ? -1 : 1,
         });
       };
-      thoughtImage.src = badThought
-        ? instance.getRndBadThoughtSrc()
-        : instance.getRndGoodThoughtSrc();
+      thoughtImage.src = badThought ? instance.getRndBadThoughtSrc() : instance.getRndGoodThoughtSrc();
     }
 
     function animateThoughts() {
@@ -376,7 +343,7 @@ export default class HeartDefense {
               y: instance.center.y - instance.config.door.height / 4,
             },
             instance.config.door.width / 2,
-            instance.config.door.height / 2,
+            instance.config.door.height / 2
           )
         )
           return;
@@ -406,9 +373,7 @@ export default class HeartDefense {
             instance.updateHeartStatus();
             instance.stats.points++;
 
-            if (
-              instance.stats.points == instance.config.pointsToCompleteLevel
-            ) {
+            if (instance.stats.points == instance.config.pointsToCompleteLevel) {
               instance.stopThoughtsAnimation();
               setTimeout(() => {
                 instance.toggleLevelCompleted();
@@ -490,10 +455,7 @@ export default class HeartDefense {
   }
 
   playExplosionAnimation(obj) {
-    const spriteObj = instance.setSprite(
-      instance.config.explosion,
-      'explosion',
-    );
+    const spriteObj = instance.setSprite(instance.config.explosion, 'explosion');
     instance.layer.add(spriteObj);
 
     spriteObj.position(obj.position());
@@ -520,9 +482,7 @@ export default class HeartDefense {
     instance.thoughtObjs.forEach((obj) => obj.destroy());
     instance.thoughtObjs = [];
 
-    instance.layer
-      .find('.explosion')
-      .forEach((explosion) => explosion.destroy());
+    instance.layer.find('.explosion').forEach((explosion) => explosion.destroy());
   }
 
   stopThoughtsAnimation() {
@@ -531,75 +491,35 @@ export default class HeartDefense {
   }
 
   // Helpers
-  getRndPosition = () =>
-    instance.possiblePositions()[instance.getRoundedRndBetween(0, 3)];
+  getRndPosition = () => instance.possiblePositions()[instance.getRoundedRndBetween(0, 3)];
   possiblePositions = () => [
     {
       x: -instance.config.thoughts.width / 2,
-      y: instance.getRndBetween(
-        -instance.config.thoughts.height / 2,
-        instance.stage.height() + instance.config.thoughts.height / 2,
-      ),
+      y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2),
     },
     {
-      x: instance.getRndBetween(
-        0,
-        instance.stage.width() - instance.config.thoughts.width / 2,
-      ),
+      x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
       y: -instance.config.thoughts.height / 2,
     },
     {
       x: instance.stage.width() + instance.config.thoughts.width / 2,
-      y: instance.getRndBetween(
-        -instance.config.thoughts.height / 2,
-        instance.stage.height() + instance.config.thoughts.height / 2,
-      ),
+      y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2),
     },
     {
-      x: instance.getRndBetween(
-        0,
-        instance.stage.width() - instance.config.thoughts.width / 2,
-      ),
+      x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
       y: instance.stage.height() + instance.config.thoughts.height / 2,
     },
   ];
 
-  getNoOfThoughts = () =>
-    instance.config.noOfThoughts *
-    Math.min(instance.stats.level, instance.config.levels);
-  getRndSpeed = () =>
-    instance.getRndBetween(
-      instance.config.lowestSpeed,
-      instance.config.highestSpeed,
-    ) * Math.min(instance.stats.level, instance.config.levels);
-  getRndBadThoughtSrc = () =>
-    instance.config.path +
-    'bad-thought-' +
-    instance.getRoundedRndBetween(1, instance.config.thoughtVariants) +
-    '.png';
-  getRndGoodThoughtSrc = () =>
-    instance.config.path +
-    'good-thought-' +
-    instance.getRoundedRndBetween(1, instance.config.thoughtVariants) +
-    '.png';
+  getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels);
+  getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * Math.min(instance.stats.level, instance.config.levels);
+  getRndBadThoughtSrc = () => instance.config.path + 'bad-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png';
+  getRndGoodThoughtSrc = () => instance.config.path + 'good-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png';
   getRndBetween = (min, max) => min + Math.random() * (max - min);
-  getRoundedRndBetween = (min, max) =>
-    Math.round(instance.getRndBetween(min, max));
+  getRoundedRndBetween = (min, max) => Math.round(instance.getRndBetween(min, max));
 
-  isIntersectingRectangleWithRectangle = (
-    rect1,
-    width1,
-    height1,
-    rect2,
-    width2,
-    height2,
-  ) => {
-    return (
-      rect2.x < rect1.x + width1 &&
-      rect2.x + width2 > rect1.x &&
-      rect2.y < rect1.y + height1 &&
-      rect2.y + height2 > rect1.y
-    );
+  isIntersectingRectangleWithRectangle = (rect1, width1, height1, rect2, width2, height2) => {
+    return rect2.x < rect1.x + width1 && rect2.x + width2 > rect1.x && rect2.y < rect1.y + height1 && rect2.y + height2 > rect1.y;
   };
 
   setEventListeners() {
@@ -628,17 +548,12 @@ export default class HeartDefense {
   }
 
   updateRoundsStatus() {
-    document.querySelector('.game-rounds .level').innerText =
-      instance.stats.level;
+    document.querySelector('.game-rounds .level').innerText = instance.stats.level;
   }
 
   updateDoorStatus() {
-    instance.layer
-      .findOne('#door-' + instance.config.doorStates[0])
-      .visible(!instance.stats.heartClosed);
-    instance.layer
-      .findOne('#door-' + instance.config.doorStates[1])
-      .visible(instance.stats.heartClosed);
+    instance.layer.findOne('#door-' + instance.config.doorStates[0]).visible(!instance.stats.heartClosed);
+    instance.layer.findOne('#door-' + instance.config.doorStates[1]).visible(instance.stats.heartClosed);
   }
 
   updateLivesStatus() {
@@ -648,12 +563,8 @@ export default class HeartDefense {
 
   updateHeartStatus() {
     const index = instance.config.pointsToCompleteLevel - instance.stats.points;
-    instance.layer
-      .findOne('#heart-' + instance.config.heartStates[index])
-      .hide();
-    instance.layer
-      .findOne('#heart-' + instance.config.heartStates[index - 1])
-      .show();
+    instance.layer.findOne('#heart-' + instance.config.heartStates[index]).hide();
+    instance.layer.findOne('#heart-' + instance.config.heartStates[index - 1]).show();
   }
 
   toggleLevelCompleted() {
@@ -699,8 +610,7 @@ export default class HeartDefense {
       instance.experience.navigation.container.style.display = 'flex';
       instance.experience.navigation.next.classList.remove('less-focused');
       instance.experience.navigation.next.classList.add('focused');
-      instance.experience.navigation.next.innerHTML =
-        instance.experience.icons.next;
+      instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
       document.querySelector('.game-rounds')?.remove();
     }
 
@@ -764,8 +674,7 @@ export default class HeartDefense {
     document.querySelector('.game')?.remove();
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.classList.remove('less-focused');
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
 
     instance.layer?.destroy();
     instance.experience.gameIsOn = false;

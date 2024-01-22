@@ -1,22 +1,22 @@
-import Experience from "../Experience.js"
-import _s from '../Utils/Strings.js'
-import _gl from '../Utils/Globals.js'
+import Experience from '../Experience.js';
+import _s from '../Utils/Strings.js';
+import _gl from '../Utils/Globals.js';
 
-let instance = null
+let instance = null;
 
 export default class Congrats {
-    constructor() {
-        instance = this
-        instance.experience = new Experience()
-        instance.world = instance.experience.world
-    }
+  constructor() {
+    instance = this;
+    instance.experience = new Experience();
+    instance.world = instance.experience.world;
+  }
 
-    toggleSummary() {
-        instance.destroy()
-        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
-        instance.world.audio.playSound('task-completed')
+  toggleSummary() {
+    instance.destroy();
+    instance.experience.navigation.prev.addEventListener('click', instance.destroy);
+    instance.world.audio.playSound('task-completed');
 
-        const summary = _gl.elementFromHtml(`
+    const summary = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
                     <div class="summary">
@@ -27,18 +27,18 @@ export default class Congrats {
                 </div>
                 <div class="overlay"></div>
             </div>
-        `)
+        `);
 
-        document.querySelector('.ui-container').append(summary)
-    }
+    document.querySelector('.app-container').append(summary);
+  }
 
-    toggleBibleCardsReminder() {
-        instance.destroy()
-        instance.world.program.destroy()
+  toggleBibleCardsReminder() {
+    instance.destroy();
+    instance.world.program.destroy();
 
-        instance.experience.navigation.next.addEventListener('click', instance.toggleCongrats)
+    instance.experience.navigation.next.addEventListener('click', instance.toggleCongrats);
 
-        const bibleCards = _gl.elementFromHtml(`
+    const bibleCards = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
                     <div class="bibleCards">
@@ -50,20 +50,20 @@ export default class Congrats {
                 </div>
                 <div class="overlay"></div>
             </div>
-        `)
+        `);
 
-        document.querySelector('.ui-container').append(bibleCards)
-    }
+    document.querySelector('.app-container').append(bibleCards);
+  }
 
-    toggleCongrats() {
-        instance.destroy()
-        instance.experience.navigation.next.addEventListener('click', instance.finishChapter)
-        instance.world.audio.playSound('congrats')
-        instance.experience.celebrate({
-            particleCount: 100,
-            spread: 160
-        })
-        const chapterCongrats = _gl.elementFromHtml(`
+  toggleCongrats() {
+    instance.destroy();
+    instance.experience.navigation.next.addEventListener('click', instance.finishChapter);
+    instance.world.audio.playSound('congrats');
+    instance.experience.celebrate({
+      particleCount: 100,
+      spread: 160,
+    });
+    const chapterCongrats = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
                     <div class="chapter-progress">
@@ -95,21 +95,21 @@ export default class Congrats {
                 </div>
                 <div class="overlay"></div>
             </div>
-        `)
+        `);
 
-        document.querySelector('.ui-container').append(chapterCongrats)
-    }
+    document.querySelector('.app-container').append(chapterCongrats);
+  }
 
-    finishChapter() {
-        instance.destroy()
-        instance.world.goHome()
-    }
+  finishChapter() {
+    instance.destroy();
+    instance.world.goHome();
+  }
 
-    destroy() {
-        document.querySelector('.modal')?.remove()
-        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.next.removeEventListener('click', instance.toggleCongrats)
-        instance.experience.navigation.next.removeEventListener('click', instance.finishChapter)
-    }
+  destroy() {
+    document.querySelector('.modal')?.remove();
+    instance.experience.navigation.prev.removeEventListener('click', instance.destroy);
+    instance.experience.navigation.next.removeEventListener('click', instance.destroy);
+    instance.experience.navigation.next.removeEventListener('click', instance.toggleCongrats);
+    instance.experience.navigation.next.removeEventListener('click', instance.finishChapter);
+  }
 }

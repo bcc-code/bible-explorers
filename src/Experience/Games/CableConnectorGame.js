@@ -1,9 +1,9 @@
-import Experience from "../Experience.js";
-import Konva from "konva";
-import Timer from "../Extras/Timer.js";
-import _s from "../Utils/Strings.js";
-import _e from "../Utils/Events.js";
-import _gl from "../Utils/Globals.js";
+import Experience from '../Experience.js';
+import Konva from 'konva';
+import Timer from '../Extras/Timer.js';
+import _s from '../Utils/Strings.js';
+import _e from '../Utils/Events.js';
+import _gl from '../Utils/Globals.js';
 
 let instance = null;
 
@@ -37,12 +37,12 @@ export default class CableConnector {
             <div id="cable-connect" class="game-canvas"></div>
         </section>`);
 
-    document.querySelector(".ui-container").append(game);
+    document.querySelector('.app-container').append(game);
 
-    instance.experience.navigation.next.classList.remove("focused");
+    instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add("less-focused");
-    instance.experience.navigation.container.style.display = "flex";
+    instance.experience.navigation.next.classList.add('less-focused');
+    instance.experience.navigation.container.style.display = 'flex';
 
     const spriteW = 180;
     const spriteH = 100;
@@ -66,48 +66,22 @@ export default class CableConnector {
         },
       },
       color: {
-        name: ["lightBlue", "darkBlue", "yellow", "pink", "purple"],
-        hex: ["#2c90cf", "#373e93", "#f9c662", "#ff6ea9", "#af4eaa"],
-        stroke: ["#2b78c3", "#23307a", "#fcb04e", "#f75b99", "#9f4096"],
-        default: "#cccccc",
-        defaultStroke: "#bbbbbb",
+        name: ['lightBlue', 'darkBlue', 'yellow', 'pink', 'purple'],
+        hex: ['#2c90cf', '#373e93', '#f9c662', '#ff6ea9', '#af4eaa'],
+        stroke: ['#2b78c3', '#23307a', '#fcb04e', '#f75b99', '#9f4096'],
+        default: '#cccccc',
+        defaultStroke: '#bbbbbb',
       },
       sprite: {
         src: {
-          sparkles: "games/sparkles.png",
-          explosion: "games/explosion.png",
+          sparkles: 'games/sparkles.png',
+          explosion: 'games/explosion.png',
         },
         width: spriteW,
         height: spriteH,
         animations: {
-          sparkle: [
-            0,
-            0,
-            spriteW,
-            spriteH,
-            spriteW * 2,
-            0,
-            spriteW,
-            spriteH,
-            spriteW * 3,
-            0,
-            spriteW,
-            spriteH,
-          ],
-          explosion: [
-            0,
-            0,
-            spriteW,
-            spriteH,
-            spriteW * 2,
-            0,
-            spriteW,
-            spriteH,
-            spriteW * 3,
-            0,
-            spriteW,
-            spriteH,
-          ],
+          sparkle: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
+          explosion: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
         },
       },
       itemsLength: 5,
@@ -123,7 +97,7 @@ export default class CableConnector {
     };
 
     this.stage = new Konva.Stage({
-      container: "cable-connect",
+      container: 'cable-connect',
       width: instance.data.canvas.width,
       height: instance.data.canvas.height,
     });
@@ -141,14 +115,14 @@ export default class CableConnector {
       height: this.data.canvas.height,
     });
 
-    const cablesGroup = new Konva.Group({ name: "cables" });
-    const outletsGroup = new Konva.Group({ name: "outlets" });
+    const cablesGroup = new Konva.Group({ name: 'cables' });
+    const outletsGroup = new Konva.Group({ name: 'outlets' });
 
     this.container = containerObj._draw();
     layer.add(this.container);
 
-    this.triangle = containerObj.item.findOne(".triangle");
-    const background = containerObj.item.findOne(".background");
+    this.triangle = containerObj.item.findOne('.triangle');
+    const background = containerObj.item.findOne('.background');
     const outletWidth = background.width() / 12 / 2.5;
     const outletHeight = background.height() / 5 - 30;
     const cableWidth = background.width() / 2;
@@ -158,11 +132,9 @@ export default class CableConnector {
     this.data.cable.pin.height = outletHeight / 6;
     this.data.cable.pin.width = outletWidth - 4;
 
-    const spaceLeft =
-      containerObj.height - outletHeight * this.data.itemsLength;
+    const spaceLeft = containerObj.height - outletHeight * this.data.itemsLength;
     const spaceBetween = spaceLeft / (this.data.itemsLength + 1);
-    const getY = (index) =>
-      spaceBetween + index * (outletHeight + spaceBetween);
+    const getY = (index) => spaceBetween + index * (outletHeight + spaceBetween);
     const cableX = containerObj.width / 2 - cableWidth / 2;
 
     for (let i = 0; i < 5; i++) {
@@ -174,7 +146,7 @@ export default class CableConnector {
         width: outletWidth,
         height: outletHeight,
         fill: this.data.color.default,
-        name: "left",
+        name: 'left',
       });
 
       const outlet_r = new Outlet({
@@ -185,7 +157,7 @@ export default class CableConnector {
         width: outletWidth,
         height: outletHeight,
         fill: this.data.color.default,
-        name: "right",
+        name: 'right',
       });
 
       const cable = new Cable({
@@ -209,98 +181,63 @@ export default class CableConnector {
     containerObj.item.add(cablesGroup);
     containerObj.item.add(outletsGroup);
 
-    const sparkleSprite = this.setSprite(
-      this.data.sprite.src.sparkles,
-      "sparkle"
-    );
-    const explosionSprite = this.setSprite(
-      this.data.sprite.src.explosion,
-      "explosion"
-    );
+    const sparkleSprite = this.setSprite(this.data.sprite.src.sparkles, 'sparkle');
+    const explosionSprite = this.setSprite(this.data.sprite.src.explosion, 'explosion');
     containerObj.item.add(sparkleSprite);
     containerObj.item.add(explosionSprite);
 
     this.cables.forEach((cable) => {
-      cable.item.on("dragstart", () => {
+      cable.item.on('dragstart', () => {
         cable.item.zIndex(4);
       });
 
       cable.item.children
-        .filter((c) => c.name().includes("plug"))
+        .filter((c) => c.name().includes('plug'))
         .forEach((plug) => {
-          plug.on("mouseover", () => {
+          plug.on('mouseover', () => {
             if (plug.draggable()) {
               cable.item.opacity(0.98);
-              document.body.style.cursor = "pointer";
+              document.body.style.cursor = 'pointer';
             }
           });
 
-          plug.on("mouseout", () => {
+          plug.on('mouseout', () => {
             if (plug.draggable()) {
               cable.item.opacity(1);
-              document.body.style.cursor = "default";
+              document.body.style.cursor = 'default';
             }
           });
 
-          plug.on("dragmove", () => {
+          plug.on('dragmove', () => {
             cable._updateDottedLines();
 
-            const maxX =
-              plug.getParent().x() -
-              containerObj.sideWidth -
-              containerObj.bandWidth;
+            const maxX = plug.getParent().x() - containerObj.sideWidth - containerObj.bandWidth;
             const maxY = plug.getParent().y();
 
-            const minX =
-              plug.getParent().x() -
-              containerObj.width +
-              containerObj.sideWidth +
-              containerObj.bandWidth;
-            const minY =
-              plug.getParent().y() -
-              containerObj.height +
-              plug.height() -
-              spaceBetween;
+            const minX = plug.getParent().x() - containerObj.width + containerObj.sideWidth + containerObj.bandWidth;
+            const minY = plug.getParent().y() - containerObj.height + plug.height() - spaceBetween;
 
             plug.x(Math.min(Math.max(plug.x(), -maxX), -minX));
             plug.y(Math.min(Math.max(plug.y(), -maxY), -minY));
           });
 
-          plug.on("dragend", () => {
+          plug.on('dragend', () => {
             if (instance.timerWithTimeElapsed()) return;
 
-            const direction = plug.name().replace("plug_", "");
+            const direction = plug.name().replace('plug_', '');
             const plugPosition = {
               x: cable.item.x() + plug.x(),
               y: cable.item.y() + plug.y(),
             };
-            instance.correspondingOutlet = instance.outlets.find(
-              (o) => o.color == cable.color && o.name === direction
-            );
+            instance.correspondingOutlet = instance.outlets.find((o) => o.color == cable.color && o.name === direction);
 
-            if (
-              instance.connectedToOutlet(
-                plugPosition,
-                instance.correspondingOutlet
-              )
-            ) {
-              instance.audio.playSound("correct");
-              instance.playAnimation(
-                instance.correspondingOutlet,
-                sparkleSprite
-              );
+            if (instance.connectedToOutlet(plugPosition, instance.correspondingOutlet)) {
+              instance.audio.playSound('correct');
+              instance.playAnimation(instance.correspondingOutlet, sparkleSprite);
 
               const plugInPosition = {
-                x:
-                  direction == "left"
-                    ? instance.correspondingOutlet.position.x +
-                      instance.correspondingOutlet.width
-                    : instance.correspondingOutlet.position.x -
-                      instance.correspondingOutlet.width,
-                y:
-                  instance.correspondingOutlet.position.y +
-                  instance.correspondingOutlet.height / 2 -
-                  instance.data.cable.plug.height / 2,
+                x: direction == 'left' ? instance.correspondingOutlet.position.x + instance.correspondingOutlet.width : instance.correspondingOutlet.position.x - instance.correspondingOutlet.width,
+                y: instance.correspondingOutlet.position.y + instance.correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2,
               };
 
               plug.move({
@@ -325,12 +262,11 @@ export default class CableConnector {
               instance.outlets
                 .filter((o) => o.color != cable.color && o.name === direction)
                 .forEach((otherOutlet) => {
-                  if (instance.connectedToOutlet(plugPosition, otherOutlet))
-                    outletConnectedTo = otherOutlet;
+                  if (instance.connectedToOutlet(plugPosition, otherOutlet)) outletConnectedTo = otherOutlet;
                 });
 
               if (outletConnectedTo) {
-                instance.audio.playSound("wrong");
+                instance.audio.playSound('wrong');
                 instance.playAnimation(outletConnectedTo, explosionSprite);
               }
             }
@@ -339,18 +275,18 @@ export default class CableConnector {
     });
 
     this.outlets.forEach((outlet) => {
-      outlet.item.on("mouseover", () => {
+      outlet.item.on('mouseover', () => {
         if (outlet.colorFound) return;
-        document.body.style.cursor = "pointer";
+        document.body.style.cursor = 'pointer';
         outlet.item.shadowBlur(10);
       });
 
-      outlet.item.on("mouseout", () => {
-        document.body.style.cursor = "default";
+      outlet.item.on('mouseout', () => {
+        document.body.style.cursor = 'default';
         outlet.item.shadowBlur(0);
       });
 
-      outlet.item.on("touchstart click", (event) => {
+      outlet.item.on('touchstart click', (event) => {
         if (!outlet.canClick) return;
         if (outlet.colorFound) return;
         if (outlet.connected) return;
@@ -360,9 +296,7 @@ export default class CableConnector {
         if (outlet.isVisible) {
           instance.deselectOutlet(outlet);
         } else {
-          const currentVisible = instance.outlets.find(
-            (o) => o.isVisible === true && o.colorFound === false
-          );
+          const currentVisible = instance.outlets.find((o) => o.isVisible === true && o.colorFound === false);
           instance.selectOutlet(outlet, index);
 
           if (!currentVisible) return;
@@ -373,11 +307,9 @@ export default class CableConnector {
             currentVisible.canClick = false;
             outlet.colorFound = true;
             currentVisible.colorFound = true;
-            instance.audio.playSound("correct");
+            instance.audio.playSound('correct');
 
-            instance.colorCable(
-              this.cables.find((c) => c.color === outlet.color)
-            );
+            instance.colorCable(this.cables.find((c) => c.color === outlet.color));
           } else {
             // Different colors
             if (outlet.name === currentVisible.name) {
@@ -385,9 +317,9 @@ export default class CableConnector {
             } else {
               // Opposite sides. Show wrong animation
               instance.stopOutletClick();
-              instance.audio.playSound("wrong");
+              instance.audio.playSound('wrong');
 
-              instance.animateIcon(this.triangle, "#fe7968", layer, () => {
+              instance.animateIcon(this.triangle, '#fe7968', layer, () => {
                 instance.deselectOutlet(currentVisible);
                 instance.deselectOutlet(outlet);
                 instance.startOutletClick();
@@ -407,9 +339,7 @@ export default class CableConnector {
     const centerX = 0;
 
     const animation = new Konva.Animation((frame) => {
-      obj.x(
-        amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX
-      );
+      obj.x(amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX);
       obj.fill(fill);
       obj.opacity(1);
     }, layer);
@@ -421,7 +351,7 @@ export default class CableConnector {
       duration: 1,
       easing: Konva.Easings.EaseInOut,
       onFinish: () => {
-        obj.fill("#fbaf4e");
+        obj.fill('#fbaf4e');
         obj.opacity(0.35);
         animation.stop();
         callback();
@@ -432,9 +362,7 @@ export default class CableConnector {
   }
 
   timerWithTimeElapsed() {
-    return (
-      instance.currentStepData.timer && instance.timer.remainingSeconds == 0
-    );
+    return instance.currentStepData.timer && instance.timer.remainingSeconds == 0;
   }
 
   startTimerIfNecessary() {
@@ -443,11 +371,8 @@ export default class CableConnector {
 
     if (timerInMinutes > 0) {
       this.timer = new Timer();
-      this.timer.setMinutes(timerInMinutes, ".cable-connect .container");
-      document.addEventListener(
-        _e.ACTIONS.TIME_ELAPSED,
-        instance.onTimeElapsed
-      );
+      this.timer.setMinutes(timerInMinutes, '.cable-connect .container');
+      document.addEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed);
     }
   }
 
@@ -456,10 +381,7 @@ export default class CableConnector {
 
     if (timerInMinutes > 0) {
       this.timer.destroy();
-      document.removeEventListener(
-        _e.ACTIONS.TIME_ELAPSED,
-        instance.onTimeElapsed
-      );
+      document.removeEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed);
     }
   }
 
@@ -467,14 +389,14 @@ export default class CableConnector {
     instance.toggleTryAgain();
 
     instance.cables.forEach((cable) => {
-      cable.item.find(".plug").forEach((plug) => plug.stopDrag());
+      cable.item.find('.plug').forEach((plug) => plug.stopDrag());
     });
   }
 
   colorCable(cable) {
     const index = instance.data.color.name.indexOf(cable.color);
-    const plugs = cable.item.find(".plug");
-    const cord = cable.item.findOne(".cord");
+    const plugs = cable.item.find('.plug');
+    const cord = cable.item.findOne('.cord');
 
     plugs.forEach((plug) => {
       plug.fill(instance.data.color.hex[index]);
@@ -509,10 +431,7 @@ export default class CableConnector {
   playAnimation(obj, spriteObj) {
     const direction = obj.name;
     const newPosition = {
-      x:
-        direction == "left"
-          ? obj.position.x + obj.width + 15
-          : obj.position.x - obj.width - 15,
+      x: direction == 'left' ? obj.position.x + obj.width + 15 : obj.position.x - obj.width - 15,
       y: obj.position.y + obj.height / 2,
     };
 
@@ -527,7 +446,7 @@ export default class CableConnector {
     animation.visible(true);
     animation.start();
 
-    animation.on("frameIndexChange.konva", function () {
+    animation.on('frameIndexChange.konva', function () {
       if (this.frameIndex() == 2) {
         animation.stop();
         animation.visible(false);
@@ -558,26 +477,15 @@ export default class CableConnector {
   }
 
   connectedToOutlet(plugPosition, correspondingOutlet) {
-    return (
-      Math.abs(plugPosition.x - correspondingOutlet.position.x) <
-        correspondingOutlet.width + 20 &&
-      Math.abs(plugPosition.y - correspondingOutlet.position.y) <
-        correspondingOutlet.height / 2
-    );
+    return Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 20 && Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height / 2;
   }
 
   bothPlugsConnected(cable) {
-    return (
-      instance.outlets.filter((o) => o.color == cable.color && o.connected)
-        .length == 2
-    );
+    return instance.outlets.filter((o) => o.color == cable.color && o.connected).length == 2;
   }
 
   allCablesConnected() {
-    return (
-      instance.outlets.filter((o) => o.connected).length ==
-      instance.data.itemsLength * 2
-    );
+    return instance.outlets.filter((o) => o.connected).length == instance.data.itemsLength * 2;
   }
 
   setEventListeners() {
@@ -598,13 +506,13 @@ export default class CableConnector {
             <button class="btn default">${_s.miniGames.playAgain}</button>
         `);
 
-    gameOverHTML.querySelector(".buttons").append(resetBTN);
+    gameOverHTML.querySelector('.buttons').append(resetBTN);
 
-    document.querySelector(".cable-connect .container").append(gameOverHTML);
-    document.querySelector(".cable-connect").classList.add("popup-visible");
+    document.querySelector('.cable-connect .container').append(gameOverHTML);
+    document.querySelector('.cable-connect').classList.add('popup-visible');
 
     // Add event listeners
-    resetBTN.addEventListener("click", () => {
+    resetBTN.addEventListener('click', () => {
       instance.destroy();
       instance.toggleCableConnector();
     });
@@ -614,7 +522,7 @@ export default class CableConnector {
     instance.timer?.destroy();
 
     instance.toggleGameComplete();
-    instance.audio.playSound("task-completed");
+    instance.audio.playSound('task-completed');
   }
 
   toggleGameComplete() {
@@ -625,15 +533,14 @@ export default class CableConnector {
             </div>
         `);
 
-    instance.experience.navigation.container.style.display = "flex";
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.container.style.display = 'flex';
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
 
-    document.querySelector(".cable-connect .container").append(congratsHTML);
-    document.querySelector(".cable-connect").classList.add("popup-visible");
+    document.querySelector('.cable-connect .container').append(congratsHTML);
+    document.querySelector('.cable-connect').classList.add('popup-visible');
 
-    instance.audio.playSound("task-completed");
+    instance.audio.playSound('task-completed');
     instance.experience.celebrate({
       particleCount: 100,
       spread: 160,
@@ -650,12 +557,11 @@ export default class CableConnector {
   }
 
   destroy() {
-    document.querySelector(".game")?.remove();
+    document.querySelector('.game')?.remove();
 
-    instance.experience.navigation.next.classList.add("focused");
-    instance.experience.navigation.next.classList.remove("less-focused");
-    instance.experience.navigation.next.innerHTML =
-      instance.experience.icons.next;
+    instance.experience.navigation.next.classList.add('focused');
+    instance.experience.navigation.next.classList.remove('less-focused');
+    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
   }
 }
 
@@ -664,7 +570,7 @@ class Container {
     this.position = { x, y };
     this.width = width;
     this.height = height;
-    this.stroke = "#cbcbcb";
+    this.stroke = '#cbcbcb';
     this.radius = 30;
     this.sideWidth = (width * 1.5) / 12;
     this.bandWidth = this.sideWidth / 4;
@@ -674,7 +580,7 @@ class Container {
     this.item = new Konva.Group({
       x: this.position.x,
       y: this.position.y,
-      name: "container",
+      name: 'container',
     });
 
     this.item.add(this._bg());
@@ -691,8 +597,8 @@ class Container {
       width: (this.width * 10) / 12,
       height: this.height,
       fillLinearGradientEndPointY: this.height,
-      fillLinearGradientColorStops: [0, "#1a1a1a", 1, "#4d4d4d"],
-      name: "background",
+      fillLinearGradientColorStops: [0, '#1a1a1a', 1, '#4d4d4d'],
+      name: 'background',
     });
 
     return background;
@@ -702,23 +608,23 @@ class Container {
     const icon = new Konva.Group({
       x: this.width / 2,
       y: this.height / 2,
-      name: "warningSign",
+      name: 'warningSign',
     });
 
     const triangle = new Konva.RegularPolygon({
       sides: 3,
       radius: this.width / 10,
-      fill: "#fbaf4e",
+      fill: '#fbaf4e',
       cornerRadius: this.radius,
       rotation: 20,
       opacity: 0.35,
-      lineJoin: "round",
-      name: "triangle",
+      lineJoin: 'round',
+      name: 'triangle',
     });
 
     icon.add(triangle);
 
-    Konva.Image.fromURL("games/volt.svg", (image) => {
+    Konva.Image.fromURL('games/volt.svg', (image) => {
       icon.add(image);
       image.setAttrs({
         width: triangle.radius() / 2,
@@ -736,7 +642,7 @@ class Container {
     const side = new Konva.Group({
       x: x,
       y: y,
-      name: "side",
+      name: 'side',
     });
 
     side.add(
@@ -744,12 +650,12 @@ class Container {
         width: this.sideWidth,
         height: this.height,
         fillLinearGradientEndPointX: this.sideWidth,
-        fillLinearGradientColorStops: [0, "#989898", 1, "#666666"],
+        fillLinearGradientColorStops: [0, '#989898', 1, '#666666'],
         cornerRadius: [this.radius, 0, 0, this.radius],
       })
     );
 
-    Konva.Image.fromURL("games/band.png", (image) => {
+    Konva.Image.fromURL('games/band.png', (image) => {
       side.add(image);
       image.setAttrs({
         x: this.sideWidth - this.bandWidth,
@@ -784,9 +690,9 @@ class Outlet {
       width: this.width,
       height: this.height,
       fill: this.fill,
-      name: "outlet_" + this.color,
+      name: 'outlet_' + this.color,
       cornerRadius: [0, 4, 4, 0],
-      shadowColor: "white",
+      shadowColor: 'white',
     });
 
     this.item = outlet;
@@ -815,29 +721,12 @@ class Cable {
       y: this.position.y,
     });
 
-    this.plug_l = this._plug({ x: 0, y: 0 }, "left");
-    this.controlOne = this._controlPoint(
-      { x: this.width / 4, y: instance.data.cable.plug.height / 2 },
-      "one"
-    );
-    this.controlTwo = this._controlPoint(
-      { x: this.width / 1.33, y: instance.data.cable.plug.height / 2 },
-      "two"
-    );
-    this.plug_r = this._plug({ x: this.width, y: 0 }, "right").scaleX(-1);
+    this.plug_l = this._plug({ x: 0, y: 0 }, 'left');
+    this.controlOne = this._controlPoint({ x: this.width / 4, y: instance.data.cable.plug.height / 2 }, 'one');
+    this.controlTwo = this._controlPoint({ x: this.width / 1.33, y: instance.data.cable.plug.height / 2 }, 'two');
+    this.plug_r = this._plug({ x: this.width, y: 0 }, 'right').scaleX(-1);
 
-    this.cord = this._cord([
-      this.plug_l.x() + instance.data.cable.plug.width,
-      instance.data.cable.plug.height / 2,
-      this.plug_l.x() + instance.data.cable.plug.width + 60,
-      instance.data.cable.plug.height / 2,
-      (this.plug_l.x() + this.plug_r.x()) / 2,
-      instance.data.cable.plug.height / 2,
-      this.plug_r.x() - instance.data.cable.plug.width - 60,
-      instance.data.cable.plug.height / 2,
-      this.plug_r.x() - instance.data.cable.plug.width,
-      instance.data.cable.plug.height / 2,
-    ]);
+    this.cord = this._cord([this.plug_l.x() + instance.data.cable.plug.width, instance.data.cable.plug.height / 2, this.plug_l.x() + instance.data.cable.plug.width + 60, instance.data.cable.plug.height / 2, (this.plug_l.x() + this.plug_r.x()) / 2, instance.data.cable.plug.height / 2, this.plug_r.x() - instance.data.cable.plug.width - 60, instance.data.cable.plug.height / 2, this.plug_r.x() - instance.data.cable.plug.width, instance.data.cable.plug.height / 2]);
 
     this.bezierLine = this._bezierLine();
 
@@ -852,15 +741,13 @@ class Cable {
       y,
       width: instance.data.cable.plug.width + instance.data.cable.pin.width,
       height: instance.data.cable.plug.height + instance.data.cable.pin.height,
-      name: "plug_" + position,
+      name: 'plug_' + position,
     });
 
     // Add cable pins
-    const spaceLeft =
-      instance.data.cable.plug.height - instance.data.cable.pin.height * 2; // 2 is item length
+    const spaceLeft = instance.data.cable.plug.height - instance.data.cable.pin.height * 2; // 2 is item length
     const spaceBetween = spaceLeft / (2 + 1);
-    const getY = (index) =>
-      spaceBetween + index * (instance.data.cable.pin.height + spaceBetween);
+    const getY = (index) => spaceBetween + index * (instance.data.cable.pin.height + spaceBetween);
 
     for (let i = 0; i < 2; i++) {
       plug.add(
@@ -869,14 +756,9 @@ class Cable {
           y: getY(i),
           width: instance.data.cable.pin.width,
           height: instance.data.cable.pin.height,
-          fill: "#dcdcdc",
-          cornerRadius: [
-            instance.data.cable.pin.radius,
-            0,
-            0,
-            instance.data.cable.pin.radius,
-          ],
-          name: "pin",
+          fill: '#dcdcdc',
+          cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
+          name: 'pin',
         })
       );
     }
@@ -887,13 +769,8 @@ class Cable {
         width: instance.data.cable.plug.width,
         height: instance.data.cable.plug.height,
         fill: this.fill,
-        cornerRadius: [
-          4,
-          instance.data.cable.plug.radius,
-          instance.data.cable.plug.radius,
-          4,
-        ],
-        name: "plug",
+        cornerRadius: [4, instance.data.cable.plug.radius, instance.data.cable.plug.radius, 4],
+        name: 'plug',
       })
     );
 
@@ -904,7 +781,7 @@ class Cable {
     return new Konva.Group({
       x,
       y,
-      name: "controlPoint_" + id,
+      name: 'controlPoint_' + id,
     });
   }
 
@@ -912,7 +789,7 @@ class Cable {
     return new Konva.Shape({
       stroke: this.stroke,
       strokeWidth: this.strokeWidth,
-      name: "cord",
+      name: 'cord',
       sceneFunc: (ctx, shape) => {
         const b = this._getBezierPoints();
         ctx.beginPath();
