@@ -45,7 +45,7 @@ export default class GameDescription {
       // Fetch details tutorial from blob or url
       instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
         instance.program.updateAssetInProgramData('details', data);
-        document.querySelector('#task-tutorial > *').src = data.tutorial;
+        document.querySelector('#image-tutorial > *').src = data.tutorial;
       });
     }
 
@@ -54,31 +54,29 @@ export default class GameDescription {
 
   setHtml() {
     const startGame = _gl.elementFromHtml(`
-      <button class="btn default focused pulsate">${_s.miniGames.startGame}</button>
+      <button class="btn default focused pulsate w-full mt-4">${_s.miniGames.startGame}</button>
     `);
     startGame.addEventListener('click', instance.startGame);
 
-    const task = _gl.elementFromHtml(`
-      <section class="task">
-        <div class="absolute inset-0 my-32">
-          <div class="h-full flex flex-col items-center justify-center pointer-events-auto" id="task-content">
-            <h2>${instance.data.title}</h2>
-            <div id="task-tutorial" class="h-2/3">
-              ${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}
-            </div>
-            ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
-          </div>
-        </div>
-      </section>
+    const taskImage = _gl.elementFromHtml(`
+      <div class="aspect-video bg-bke-primary p-12 flex items-center justify-center" id="image-tutorial">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>
     `);
 
-    task.querySelector('#task-content').append(startGame);
-    document.querySelector('.app-container').append(task);
+    const taskContent = _gl.elementFromHtml(`
+      <div>
+        <h3 class="text-bke-accent font-semibold text-2xl">${instance.data.title}</h2>
+        <p class="my-8">Welcome to "Maze Explorer: Quest for the Bible Box"! In this exciting adventure, you take on the role of Glitch, a small and determined robot on a mission to find the elusive Bible Box hidden deep within a maze. Your goal is to navigate Glitch through the twists and turns of the maze, using either the arrow keys or the WASD keys to guide him to the coveted treasure.</p>
+        <p class="text-white/60">Are you ready to help Glitch on his quest? Put your maze-solving skills to the test in "Maze Explorer: Quest for the Bible Box" and see if you can beat the clock to claim the ultimate prize!</p>
+        ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
+      </div>
+    `);
+
+    document.querySelector('#chapter-videos').append(taskImage);
+    document.querySelector('#chapter-tasks div').append(taskContent, startGame);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
   }
 
   startGame() {
@@ -111,7 +109,8 @@ export default class GameDescription {
   }
 
   destroy() {
-    document.querySelector('section.task')?.remove();
+    document.querySelector('#image-tutorial')?.remove();
+    document.querySelector('#chapter-tasks div').innerHTML = '';
 
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.classList.remove('less-focused');

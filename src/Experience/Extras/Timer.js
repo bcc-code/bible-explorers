@@ -16,7 +16,7 @@ export default class Timer {
     const time = timer.getMinutesAndSeconds(minutes * 60);
 
     timer.htmlEl = _gl.elementFromHtml(`
-            <div class="game-timer absolute left-4 bottom-4">
+            <div class="game-timer absolute bottom-4 left-1/2 -translate-x-1/2">
                 <span class="minutes">${time.minutes}</span>
                 <div>:</div>
                 <span class="seconds">${time.seconds}</span>

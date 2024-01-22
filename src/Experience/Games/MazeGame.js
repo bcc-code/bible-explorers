@@ -32,6 +32,8 @@ export default class MazeGame {
     instance.program = instance.world.program;
     instance.currentStepData = instance.program.getCurrentStepData();
 
+    document.querySelector('#app-games').classList.remove('hidden');
+
     this.experience.gameIsOn = true;
 
     this.initSettings();
@@ -72,12 +74,12 @@ export default class MazeGame {
     const game = _gl.elementFromHtml(`
       <section class="game maze-game">
         <div class="container">
-          <div class="absolute left-4 bottom-16 game-rounds">
+          <div class="absolute left-4 bottom-4 game-rounds text-white/80">
             ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}
           </div>
-          <div class="game-popup">
-            <h1>${_s.miniGames.completed.title}</h1>
-            <div class="buttons">
+          <div class="game-popup" id="game-popup">
+            <h3 class="text-bke-accent text-2xl font-semibold">${_s.miniGames.completed.title}</h3>
+            <div class="mt-4">
               <button class="btn default focused" id="new-level">
               ${_s.miniGames.nextRound}</button>
             </div>
@@ -91,8 +93,8 @@ export default class MazeGame {
         <div id="maze-canvas" class="game-canvas"></div>
       </section>`);
 
-    document.querySelector('.app-container').append(game);
-    document.querySelector('.game-popup').style.display = 'none';
+    document.querySelector('#app-games').append(game);
+    document.querySelector('#game-popup').style.display = 'none';
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
@@ -462,7 +464,7 @@ export default class MazeGame {
         this.bibleBoxMesh.scale.set(1, 1, 1);
 
         document.querySelector('.maze-game').classList.remove('popup-visible');
-        document.querySelector('.game-popup').style.display = 'none';
+        document.querySelector('#game-popup').style.display = 'none';
 
         if (this.options.currentLevel <= this.options.minLevels) {
           // Main levels
@@ -557,16 +559,16 @@ export default class MazeGame {
 
     if (this.options.gameState == 'congrats') {
       this.options.currentLevel++;
-      document.querySelector('.game-popup h1').textContent = _s.miniGames.completed.title;
-      document.querySelector('.game-popup button').textContent = _s.miniGames.nextRound;
+      document.querySelector('#game-popup h3').textContent = _s.miniGames.completed.title;
+      document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound;
     } else if (this.options.gameState == 'repeat') {
-      document.querySelector('.game-popup h1').textContent = _s.miniGames.timeElapsed.title;
-      document.querySelector('.game-popup button').textContent = _s.miniGames.playAgain;
+      document.querySelector('#game-popup h3').textContent = _s.miniGames.timeElapsed.title;
+      document.querySelector('#game-popup button').textContent = _s.miniGames.playAgain;
     } else if (this.options.gameState == 'end game') {
       this.options.currentLevel++;
 
-      document.querySelector('.game-popup h1').textContent = _s.miniGames.completed.title;
-      document.querySelector('.game-popup button').textContent = _s.miniGames.nextRound;
+      document.querySelector('#game-popup h3').textContent = _s.miniGames.completed.title;
+      document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound;
 
       document.querySelector('#new-level')?.classList.remove('focused');
       instance.experience.navigation.container.style.display = 'flex';
@@ -579,7 +581,7 @@ export default class MazeGame {
 
     setTimeout(() => {
       document.querySelector('.maze-game').classList.add('popup-visible');
-      document.querySelector('.game-popup').style.display = 'block';
+      document.querySelector('#game-popup').style.display = 'block';
     }, 500);
   }
 
@@ -609,6 +611,7 @@ export default class MazeGame {
 
   destroy() {
     instance.timer?.destroy();
+    document.querySelector('#app-games').classList.add('hidden');
     document.querySelector('.game')?.remove();
 
     instance.options.gameState = null;

@@ -14,6 +14,10 @@ export default {
           outline: '#0396e3',
         },
       },
+      backgroundImage: {
+        'control-room': "url('../../static/HighresScreenshot00070.png')",
+        'chapter-room': "url('../../static/HighresScreenshot00071.png')",
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

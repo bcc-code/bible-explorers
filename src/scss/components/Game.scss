@@ -30,7 +30,6 @@
     pointer-events: all;
   }
 
-  &-rounds,
   &-timer {
     color: #fff;
     background-color: var(--bg-dark-color);
@@ -99,17 +98,6 @@
     .game-canvas {
       pointer-events: none;
     }
-  }
-}
-
-.heart-defense {
-  .container {
-    text-align: center;
-  }
-
-  .game-popup .buttons {
-    display: flex;
-    justify-content: center;
   }
 }
 
@@ -675,11 +663,6 @@
 
   .game-popup {
     position: absolute;
-  }
-
-  .game-popup .buttons {
-    display: flex;
-    justify-content: center;
   }
 }
 

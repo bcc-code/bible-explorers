@@ -36,6 +36,7 @@ export default class World {
 
       this.ageCategory = document.getElementById('app-age_category');
       this.appChapters = document.getElementById('app-chapters');
+      this.chapterWrapper = document.getElementById('chapter-wrapper');
 
       // Select age category
       this.ageCategory.querySelector('h3').innerText = _s.conceptDescription;
@@ -117,6 +118,9 @@ export default class World {
     instance.setChapters();
 
     instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`;
+
+    // Change background
+    document.querySelector('#bg-chapter').classList.add('hidden');
   }
 
   setCategories() {
@@ -223,7 +227,7 @@ export default class World {
       else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++;
     });
 
-    const details = _gl.elementFromHtml(` <div id="chapter-description" class="rounded-lg border-4 border-bke-accent p-4"></div>`);
+    const details = _gl.elementFromHtml(` <div id="chapter-description" class="rounded-lg border-4 border-bke-accent p-4 bg-bke-primary"></div>`);
     const header = _gl.elementFromHtml(`<h2 class="text-white">${chapter.title}</h2>`);
 
     details.append(header);
@@ -288,8 +292,6 @@ export default class World {
 
     this.appChapters.querySelector('#chapters-description').append(details);
     this.appChapters.querySelector('#chapters-cards').classList.add('chapter-selected');
-
-    instance.experience.navigation.next.addEventListener('click', instance.startChapter);
   }
 
   removeDescriptionHtml() {
@@ -626,6 +628,13 @@ export default class World {
     instance.appChapters.classList.remove('flex');
     instance.appChapters.classList.add('hidden');
 
+    // Show chapter wrapper
+    instance.chapterWrapper.classList.remove('hidden');
+    instance.chapterWrapper.classList.add('flex');
+
+    // Change background
+    document.querySelector('#bg-chapter').classList.remove('hidden');
+
     instance.setUpChapter();
     instance.fetchBgMusic();
     instance.fetchArchiveImage();
@@ -690,6 +699,10 @@ export default class World {
     instance.controlRoom.irisTextureTransition();
     instance.audio.stopAllTaskDescriptions();
     instance.audio.changeBgMusic();
+
+    // Hide chapter wrapper
+    instance.chapterWrapper.classList.remove('flex');
+    instance.chapterWrapper.classList.add('hidden');
 
     instance.showLobby();
     instance.preselectChapter();

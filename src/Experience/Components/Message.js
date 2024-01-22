@@ -39,36 +39,26 @@ export default class Message {
 
   setHtml(text, character) {
     const message = _gl.elementFromHtml(
-      `<section class="message">
-          <div class="absolute inset-0">
-            <div class="absolute left-4 bottom-4 w-2/3">
-              <div class="rounded-lg border-4 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-6 py-4">
-                <h3 class="text-lg italic text-bke-outline uppercase">${character}</h3>
-                <div class="mt-1 text-lg text-white/80">${text}</div>
-              </div>
-            </div>
-          </div>
-        </section>`
+      `<div class="rounded-lg border-4 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-3 py-2 w-full" id="iris-message">
+        <h3 class="text-lg italic text-bke-outline uppercase">${character}</h3>
+        <div class="mt-1 text-lg text-white/80">${text}</div>
+      </div>`
     );
-    document.querySelector('.app-container').append(message);
+    document.querySelector('#chapter-dialogue div').append(message);
 
     if (instance.data.character == 'glitch') {
       const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>');
-      document.querySelector('section.message .container').append(glitch);
+      document.querySelector('#chapter-dialogue').append(glitch);
     }
 
     if (instance.data.open_question === true) {
       // instance.experience.navigation.next.disabled = true
       const openQuestion = _gl.elementFromHtml(
-        `<section class="open-question">
-          <div class="container">
-            <div class="content">
+        `<div id="open-question">
               <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
-            </div>
-          </div>
-        </section>`
+        </div`
       );
-      document.querySelector('.app-container').append(openQuestion);
+      document.querySelector('#chapter-dialogue div').append(openQuestion);
 
       const textarea = openQuestion.querySelector('textarea');
       textarea.addEventListener('input', (e) => {
@@ -83,7 +73,7 @@ export default class Message {
 
   destroy() {
     instance.video?.defocus();
-    document.querySelector('section.message')?.remove();
-    document.querySelector('section.open-question')?.remove();
+    document.querySelector('#iris-message')?.remove();
+    document.querySelector('#open-question')?.remove();
   }
 }
