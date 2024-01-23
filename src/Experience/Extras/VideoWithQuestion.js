@@ -26,30 +26,20 @@ export default class VideoWithQuestion {
     instance.audio.setOtherAudioIsPlaying(true);
     instance.audio.fadeOutBgMusic();
 
-    const container = _gl.elementFromHtml(`
-            <div class="view" id="video-with-question">
-                <div class="container">
-                    <header class="game-header">
-                        <h2>${instance.stepData.details.title}</h2>
-                    </header>
-                    <div class="row">
-                        <div id="video-${instance.data.video}" class="video"></div>
-                    </div>
-                    <div class="row hidden">
-                        <div class="col">
-                            <span class="title">${instance.data.question}</span>
-                        </div>
-                        <div class="col">
-                            <textarea></textarea>
-                            <button class="btn default focused" type="submit" aria-label="submit question">${_s.task.submit}</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        `);
+    const video = _gl.elementFromHtml(`<div id="video-question" class="aspect-video"><div id="video-${instance.data.video}" class="video"></div></div>`);
 
-    document.querySelector('.app-container').append(container);
+    const title = _gl.elementFromHtml(`<h2>${instance.stepData.details.title}</h2>`);
+
+    const content = _gl.elementFromHtml(`
+      <div id="video-with-question">
+        <p class="mb-2">${instance.data.question}</p>
+        <textarea class="w-full text-bke-dark px-3 py-2 rounded-md outline-none"></textarea>
+        <button class="btn default focused w-full mt-4" type="submit" aria-label="submit question">${_s.task.submit}</button>
+      </div>
+    `);
+
+    document.querySelector('#chapter-videos').append(video);
+    document.querySelector('#chapter-tasks div').append(content);
 
     // Load BTV Player
     instance.resources.loadVideoInBtvPlayer(instance.data.video);
@@ -62,7 +52,7 @@ export default class VideoWithQuestion {
       }
     }, 100);
 
-    const submitQuestion = container.querySelector('[aria-label="submit question"');
+    const submitQuestion = content.querySelector('[aria-label="submit question"');
     submitQuestion.addEventListener('click', () => {
       instance.saveAnswers();
       instance.destroy();
@@ -110,6 +100,7 @@ export default class VideoWithQuestion {
     document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
     instance.experience.navigation.next.addEventListener('click', instance.program.nextStep);
     document.getElementById('video-with-question')?.remove();
+    document.getElementById('video-question')?.remove();
     instance.experience.navigation.next.classList.add('focused');
 
     instance.audio.setOtherAudioIsPlaying(false);

@@ -33,26 +33,15 @@ export default class MultipleChoiceWithPicture {
 
     const multipleChoiceWithPicture = _gl.elementFromHtml(`
             <div id="multiple-choice">
-                <div class="absolute inset-0 my-32">
-                  <div class="h-full flex flex-col items-center justify-center pointer-events-auto">
-                      <h3>${instance.stepData.details.title}</h3>
-                      <div class="row">
-                          <div class="col">
-                              <img src="${instance.data.image}" class="multiple-choice-image" alt="picture" />
-                          </div>
-                          <div class="col">
-                              <ul class="multiple-choice-answers"></ul>
-                          </div>
-                      </div>
-                    </div>
-                </div>
+                <h3 class="text-white text-2xl font-semibold">${instance.stepData.details.title}</h3>
+                <ul class="multiple-choice-answers mt-8"></ul>
             </div>
         `);
 
     instance.data.choices.forEach((choice, cIdx) => {
       const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
-                <li class="multiple-choice-answer">
-                    <div class="label">
+                <li class="multiple-choice-answer mb-2 rounded-md">
+                    <div class="label text-white">
                         <label for="answer-${cIdx}"></label>
                         <input type="radio" id="answer-${cIdx}" name="multiple-choice"/>
                         <span>${choice.answer}</span>
@@ -106,7 +95,7 @@ export default class MultipleChoiceWithPicture {
       });
     });
 
-    document.querySelector('.app-container').append(multipleChoiceWithPicture);
+    document.querySelector('#chapter-tasks div').append(multipleChoiceWithPicture);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;

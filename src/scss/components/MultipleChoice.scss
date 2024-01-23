@@ -1,47 +1,7 @@
 #multiple-choice {
-  .container {
-    position: absolute;
-    right: 0;
-    bottom: 5rem;
-    padding: var(--app-padding);
-    width: 45vw;
-
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-end;
-  }
-
-  h3 {
-    background-color: var(--bg-with-opacity);
-    border-radius: calc(var(--app-padding) / 2);
-    margin-bottom: 1rem;
-    padding: var(--app-padding);
-  }
-
-  .row {
-    display: flex;
-    flex-flow: row nowrap;
-
-    > *:not(:last-child) {
-      margin-bottom: 0.5rem;
-    }
-  }
-
-  .multiple-choice-image {
-    max-width: 200px;
-    border-top-left-radius: calc(var(--app-padding) / 2);
-    border-bottom-left-radius: calc(var(--app-padding) / 2);
-  }
-
-  .multiple-choice-answers {
-    background-color: var(--bg-with-opacity);
-    border-radius: calc(var(--app-padding) / 2);
-  }
 
   .multiple-choice-answer {
-    color: #fff;
     position: relative;
-    pointer-events: all;
     border: var(--app-border-size) solid transparent;
     counter-increment: answers;
     transition: var(--transition-duration) var(--transition-timing);
@@ -91,18 +51,9 @@
     }
 
     &:hover {
-      box-shadow: 0 0 10px 0 var(--clr-secondary);
       border-color: var(--clr-secondary);
       animation: none;
     }
 
-    &:first-child {
-      border-top-right-radius: calc(var(--app-padding) / 2);
-    }
-
-    &:last-child {
-      border-bottom-left-radius: calc(var(--app-padding) / 2);
-      border-bottom-right-radius: calc(var(--app-padding) / 2);
-    }
   }
 }
