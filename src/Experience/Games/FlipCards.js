@@ -25,6 +25,8 @@ export default class FlipCards {
 
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 
+    document.querySelector('#app-games').classList.remove('hidden');
+
     if (instance.confirmationScreen.cs_description !== '') {
       instance.toggleConfirmationScreen();
     } else {
@@ -50,9 +52,9 @@ export default class FlipCards {
         <div class="container">
           <div class="content">
             <header class="game-header">
-              <h2>${instance.confirmationScreen.cs_title}</h2>
+              <h3 class="text-bke-accent text-2xl font-semibold">${instance.confirmationScreen.cs_title}</h3>
             </header>
-            <div class="game-tutorial">
+            <div class="game-tutorial my-4">
                 <img src="${instance.confirmationScreen.cs_image}" width="100%" height="100%" class="h-full" />
             </div>
             <div class="game-description text-white mb-2">
@@ -65,12 +67,11 @@ export default class FlipCards {
     `);
 
     task.querySelector('.content').append(startGame);
-    document.querySelector('.app-container').append(task);
+    document.querySelector('#app-games').append(task);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
   }
 
   useCorrectAssetsSrcConfirmationScreen() {
@@ -110,7 +111,7 @@ export default class FlipCards {
       <section class="game flip-card flip-card-new">
           <div class="container">
             <header class="game-header">
-              <h2>${instance.flipCards.title}</h2>
+              <h3 class="text-bke-accent text-2xl font-semibold">${instance.flipCards.title}</h3>
             </header>
             <div class="cards"></div>
           </div>
@@ -151,12 +152,11 @@ export default class FlipCards {
       });
     }
 
-    document.querySelector('.app-container').append(game);
+    document.querySelector('#app-games').append(game);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
   }
 
   useCorrectAssetsSrcFlipCards() {
@@ -248,6 +248,7 @@ export default class FlipCards {
   }
 
   destroy() {
+    document.querySelector('#app-games').classList.add('hidden');
     instance.destroyConfirmationScreen();
     instance.destroyFlipCards();
     instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep);
