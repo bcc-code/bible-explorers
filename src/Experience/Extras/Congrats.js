@@ -25,11 +25,12 @@ export default class Congrats {
                         </header>
                     </div>
                 </div>
-                <div class="overlay"></div>
             </div>
         `);
 
-    document.querySelector('.app-container').append(summary);
+    document.querySelector('#app-games').append(summary);
+    document.querySelector('#app-games').classList.remove('hidden');
+    document.querySelector('#bg-chapter').classList.add('hidden');
   }
 
   toggleBibleCardsReminder() {
@@ -43,16 +44,17 @@ export default class Congrats {
                 <div class="container">
                     <div class="bibleCards">
                         <header>
-                            <h1>${_s.journey.bibleCards.message}</h1>
+                            <h3 class="text-bke-accent text-2xl font-semibold"${_s.journey.bibleCards.message}</h1>
                         </header>
                         <video id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
                     </div>
                 </div>
-                <div class="overlay"></div>
             </div>
         `);
 
-    document.querySelector('.app-container').append(bibleCards);
+    document.querySelector('#app-games').append(bibleCards);
+    document.querySelector('#app-games').classList.remove('hidden');
+    document.querySelector('#bg-chapter').classList.add('hidden');
   }
 
   toggleCongrats() {
@@ -93,11 +95,12 @@ export default class Congrats {
                         <p>${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong></p>
                     </div>
                 </div>
-                <div class="overlay"></div>
             </div>
         `);
 
-    document.querySelector('.app-container').append(chapterCongrats);
+    document.querySelector('#app-games').append(chapterCongrats);
+    document.querySelector('#app-games').classList.remove('hidden');
+    document.querySelector('#bg-chapter').classList.add('hidden');
   }
 
   finishChapter() {
@@ -107,6 +110,8 @@ export default class Congrats {
 
   destroy() {
     document.querySelector('.modal')?.remove();
+    document.querySelector('#app-games').classList.add('hidden');
+
     instance.experience.navigation.prev.removeEventListener('click', instance.destroy);
     instance.experience.navigation.next.removeEventListener('click', instance.destroy);
     instance.experience.navigation.next.removeEventListener('click', instance.toggleCongrats);

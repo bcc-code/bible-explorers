@@ -20,6 +20,8 @@ export default class Quiz {
     instance.program = instance.world.program;
     instance.audio = instance.world.audio;
 
+    document.querySelector('#app-games').classList.remove('hidden');
+
     instance.correctAnswers = 0;
     instance.openQuestions = 0;
     instance.quizHTML();
@@ -54,7 +56,6 @@ export default class Quiz {
                         </button>
                     </div>
                 </div>
-                <div class="overlay"></div>
             </section>
         `);
 
@@ -67,8 +68,6 @@ export default class Quiz {
 
       const message = _gl.elementFromHtml(`<p>${instance.correctAnswers + instance.openQuestions + ' / ' + questions.length}</p>`);
       document.querySelector('.modal .summary').append(message);
-
-      instance.experience.navigation.container.style.display = 'flex';
     });
 
     const prev = quiz.querySelector('[aria-label="prev question"');
@@ -122,12 +121,11 @@ export default class Quiz {
       quiz.querySelector('.quiz-items').append(quizItem);
     });
 
-    document.querySelector('.app-container').append(quiz);
+    document.querySelector('#app-games').append(quiz);
 
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
 
     let questionsAnswered = 0;
     let quizProgress = 0;
@@ -259,6 +257,7 @@ export default class Quiz {
   destroy() {
     document.querySelector('.quiz')?.remove();
     document.querySelector('.modal')?.remove();
+    document.querySelector('#app-games').classList.add('hidden');
 
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.classList.remove('less-focused');
