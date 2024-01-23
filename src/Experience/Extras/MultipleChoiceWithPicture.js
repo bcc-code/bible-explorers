@@ -21,7 +21,7 @@ export default class MultipleChoiceWithPicture {
     instance.audio = instance.world.audio;
 
     instance.setHtml();
-    instance.useCorrectAssetsSrc();
+    // instance.useCorrectAssetsSrc();
     instance.setEventListeners();
   }
 
