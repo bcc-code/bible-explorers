@@ -29,12 +29,31 @@
 @import "tailwindcss/utilities";
 @import "./globals/main.scss";
 
-
-button[aria-label="skip-button"] {
-    position: absolute;
-    top: var(--app-padding);
-    right: var(--app-padding);
+#border-tasks {
+    position: relative;
+    border: 40px solid;
+    border-image: url('../../static/border-new.svg') 60;
 }
+
+.border-videos {
+    position: relative;
+    border: 50px solid;
+    border-image: url('../../static/border-new.svg') 100;
+}
+
+
+
+// .border-videos {
+//     // padding: 100px;
+// }
+
+// #border-tasks {
+//     background-image: url('../../static/border-new.svg');
+//     background-repeat: no-repeat;
+//     background-size: 100% 100%;
+// }
+
+
 
 textarea::placeholder {
     color: #fff;
@@ -49,57 +68,6 @@ textarea::placeholder {
     pointer-events: all;
 }
 
-.webgl {
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-    cursor: grab;
-}
-
-.cta {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 22;
-    padding: var(--app-padding);
-    display: none;
-}
-
-.categories {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .btn:not(:first-child) {
-        margin-left: 16px;
-    }
-}
-
-.iris-interaction {
-    display: none;
-    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 300px;
-    height: 150px;
-    background-color: var(--bg-default);
-    color: #fff;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-.app-container {
-    position: fixed;
-    z-index: 10;
-    inset: 0;
-    pointer-events: none;
-}
 
 .pause {
     .container {
@@ -142,15 +110,6 @@ textarea::placeholder {
     }
 }
 
-.highlight-circle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1rem;
-    height: 1rem;
-    pointer-events: none;
-    @include pulsate()
-}
 
 .intercom-namespace .intercom-messenger-frame {
     right: var(--app-padding) !important;
@@ -160,71 +119,6 @@ textarea::placeholder {
     pointer-events: none;
 }
 
-.fade-in {
-    opacity: 1;
-}
-
-.fade-out {
-    opacity: 0;
-}
-
-.not-available {
-    color: var(--clr-secondary);
-    font-weight: bold;
-}
-
-.skip-video {
-    font-size: 1rem;
-    right: var(--app-padding);
-    top: var(--app-padding);
-    position: absolute;
-    display: flex;
-    align-items: center;
-    z-index: 1;
-}
-
-.skip-navigation {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0;
-    z-index: 9999;
-
-    button {
-        display: block;
-        background-color: var(--clr-text);
-        width: 2.5rem;
-        height: 2.5rem;
-        border: none;
-        z-index: 99;
-        pointer-events: all;
-        cursor: pointer;
-
-        &[disabled] {
-            opacity: 0.2;
-            pointer-events: none;
-        }
-    }
-
-    button:nth-child(1) {
-        margin-bottom: 4px;
-    }
-
-    button svg {
-        pointer-events: none;
-    }
-
-    button:hover {
-        background-color: var(--clr-secondary);
-    }
-
-}
-
-button[aria-label="skip-button"] {
-    position: absolute;
-    top: var(--app-padding);
-    right: var(--app-padding);
-}
 
 .chapter-progress {
     width: 480px;

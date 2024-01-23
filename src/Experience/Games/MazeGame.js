@@ -89,7 +89,6 @@ export default class MazeGame {
             <span id="exit-label"></span>
           </div>
         </div>
-        <div class="overlay"></div>
         <div id="maze-canvas" class="game-canvas"></div>
       </section>`);
 

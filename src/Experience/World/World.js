@@ -136,7 +136,7 @@ export default class World {
 
   addNotAvailableInYourLanguageMessage() {
     const notAvailableEl = document.createElement('div');
-    notAvailableEl.className = 'not-available';
+    notAvailableEl.className = 'text-bke-accent font-bold';
     notAvailableEl.innerText = _s.notAvailable;
     instance.menu.categories.appendChild(notAvailableEl);
   }
