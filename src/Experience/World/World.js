@@ -178,8 +178,8 @@ export default class World {
 
     chapterHtml.innerHTML = `
             <header class="chapter__heading">
-                <h2 class="chapter__title">${chapter.title}</h2>
-                <span class="chapter__date">${chapter.date}</span>
+                <h2 class="chapter__title text-xl">${chapter.title}</h2>
+                <span class="chapter__date text-sm opacity-70">${chapter.date}</span>
             </header>
             <div class="coming-soon">Coming soon</div>
             <div class="chapter__states">
@@ -228,7 +228,7 @@ export default class World {
     });
 
     const details = _gl.elementFromHtml(` <div id="chapter-description" class="rounded-lg border-4 border-bke-accent p-4 bg-bke-primary"></div>`);
-    const header = _gl.elementFromHtml(`<h2 class="text-white">${chapter.title}</h2>`);
+    const header = _gl.elementFromHtml(`<h2 class="text-white text-xl">${chapter.title}</h2>`);
 
     details.append(header);
 
