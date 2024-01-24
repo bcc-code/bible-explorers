@@ -29,35 +29,10 @@
 @import "tailwindcss/utilities";
 @import "./globals/main.scss";
 
-#border-tasks {
-    position: relative;
-    border: 40px solid;
-    border-image: url('../../static/border-new.svg') 60;
-}
-
-.border-videos {
-    position: relative;
-    border: 50px solid;
-    border-image: url('../../static/border-new.svg') 100;
-}
-
-
-
-// .border-videos {
-//     // padding: 100px;
-// }
-
-// #border-tasks {
-//     background-image: url('../../static/border-new.svg');
-//     background-repeat: no-repeat;
-//     background-size: 100% 100%;
-// }
-
-
-
-textarea::placeholder {
-    color: #fff;
-    opacity: 0.6;
+@layer utilities {
+    .clip-task-wrapper {
+        clip-path: url(#tasks-wrapper);
+    }
 }
 
 #videos-container>* {
@@ -73,7 +48,7 @@ textarea::placeholder {
     .container {
         position: fixed;
         top: 0;
-        left: 0;
+        top: 0;
         z-index: 6;
         width: 100%;
         height: 100%;
