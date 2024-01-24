@@ -184,9 +184,7 @@ export default class World {
             <div class="coming-soon">Coming soon</div>
             <div class="chapter__states">
                 <div class="chapter__offline">
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <use href="#download"></use>
-                    </svg>
+                    <svg class="h-2 w-3"><use href="#download-solid" fill="currentColor"></use></svg>
                     <span>${_s.offline.download.title}</span>
                 </div>
                 <div class="chapter__downloading">
@@ -200,9 +198,7 @@ export default class World {
                     <span>${_s.offline.downloadFailed}</span>
                 </div>
                 <div class="chapter__downloaded">
-                    <svg class="check-mark-icon" viewBox="0 0 23 16">
-                        <use href="#check-mark"></use>
-                    </svg>
+                    <svg class="h-2 w-3"><use href="#check-solid" fill="currentColor"></use></svg>
                     <span>${_s.offline.availableOffline.title}</span>
                 </div>
             </div>
@@ -244,9 +240,7 @@ export default class World {
 
           const guide = _gl.elementFromHtml(`
             <a class="inline-flex items-center text-white text-sm px-2 py-1 border-2 gap-1 border-bke-accent rounded-lg hover:bg-bke-accent hover:text-bke-primary" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                <svg class="book-icon icon" viewBox="0 0 21 24" height="1em">
-                    <use href="#book"></use>
-                </svg>
+                <svg class="h-3 w-3"><use href="#book-solid" fill="currentColor"></use></svg>
                 <span>${_s.chapter.activityDescLabel}</span>
             </a>`);
 
@@ -266,26 +260,26 @@ export default class World {
       details.append(info);
 
       if (numberOfEpisodes != 1) {
-        const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`);
+        const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`);
         info.append(videoLabel);
       } else {
-        const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`);
+        const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`);
         info.append(videoLabel);
       }
 
       if (numberOfTasks != 1) {
-        const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`);
+        const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`);
         info.append(taskLabel);
       } else {
-        const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`);
+        const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`);
         info.append(taskLabel);
       }
 
       if (numberOfQuizes != 1) {
-        const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`);
+        const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`);
         info.append(quizLabel);
       } else {
-        const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`);
+        const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center"><svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`);
         info.append(quizLabel);
       }
     }

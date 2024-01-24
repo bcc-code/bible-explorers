@@ -70,37 +70,27 @@ export default class ProgressBar {
     for (let i = 0; i < instance.program.totalCheckpoints; i++) {
       if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'video')) {
         generatedHTML += `<button class="btn rounded focused opacity-50 group-hover/progress-bar:opacity-100" aria-label="checkpoint" data-index="${i}">
-                        <svg class="film-icon icon"viewBox="0 0 24 22">
-                            <use href="#film"></use>
-                        </svg>
-                    </button>`;
+                              <svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg>
+                          </button>`;
       } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'quiz')) {
         generatedHTML += `<button class="btn rounded focused opacity-50 group-hover/progress-bar:opacity-100" aria-label="checkpoint" data-index="${i}">
-                        <svg class="question-mark-icon icon" viewBox="0 0 15 22">
-                            <use href="#question-mark"></use>
-                        </svg>
-                    </button>`;
+                              <svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg>
+                          </button>`;
       } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'pause')) {
         generatedHTML += `<button class="btn rounded focused opacity-50 group-hover/progress-bar:opacity-100" aria-label="checkpoint" data-index="${i}">
-                        <svg class="pause-icon icon" viewBox="0 0 15 18">
-                            <use href="#pause"></use>
-                        </svg>
-                    </button>`;
+                              <svg class="h-4 w-4"><use href="#pause-solid" fill="currentColor"></use></svg
+                          </button>`;
       } else {
         generatedHTML += `<button class="btn rounded focused opacity-50 group-hover/progress-bar:opacity-100" aria-label="checkpoint" data-index="${i}">
-                    <svg class="task-icon icon" viewBox="0 0 25 25">
-                        <use href="#pen-to-square"></use>
-                    </svg>
-                </button>`;
+                              <svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg
+                          </button>`;
       }
     }
 
     generatedHTML += `<button class="btn rounded focused opacity-50 group-hover/progress-bar:opacity-100" aria-label="checkpoint">
-                <svg class="star-icon icon" viewBox="0 0 29 29">
-                    <use href="#star"></use>
-                </svg>
-            </button>
-        </div>`;
+                          <svg class="h-4 w-4"><use href="#star-solid" fill="currentColor"></use></svg
+                      </button>
+                  </div>`;
 
     return generatedHTML;
   }
