@@ -42,17 +42,13 @@ export default class Quiz {
                     <ul class="quiz-items"></ul>
                     <div class="quiz-nav ${questions.length == 1 ? 'hide - nav' : ''}">
                         <button class="btn rounded" aria-label="prev question">
-                            <svg class="prev-icon icon" width="25" height="16" viewBox="0 0 25 16">
-                                <use href="#arrow-left"></use>
-                            </svg>
+                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <button type="submit" class="btn default focused" aria-label="submit form">
                             ${_s.task.submit}
                         </button>
                         <button class="btn rounded focused" aria-label="next question">
-                            <svg class="next-icon icon" width="25" height="16" viewBox="0 0 25 16">
-                                <use href="#arrow-right"></use>
-                            </svg>
+                            <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </div>
@@ -78,8 +74,8 @@ export default class Quiz {
       const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
                     <div class="quiz-question">
-                        <svg class="question-mark-icon" viewBox="0 0 15 22">
-                            <use href="#question-mark"></use>
+                        <svg class="question-mark-icon">
+                            <use href="#question-solid"></use>
                         </svg>
                         <h2>${q.question}</h2>
                     </div>

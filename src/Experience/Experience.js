@@ -49,12 +49,8 @@ export default class Experience {
     };
 
     this.icons = {
-      prev: `<svg class="prev-icon icon" viewBox="0 0 25 16">
-                <use href="#arrow-left"></use>
-            </svg>`,
-      next: `<svg class="next-icon icon" viewBox="0 0 25 16">
-                <use href="#arrow-right"></use>
-            </svg>`,
+      prev: `<svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
+      next: `<svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
     };
 
     const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`);

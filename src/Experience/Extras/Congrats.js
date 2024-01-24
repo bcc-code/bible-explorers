@@ -21,7 +21,7 @@ export default class Congrats {
                 <div class="container">
                     <div class="summary">
                         <header>
-                            <h1>${_s.miniGames.completed.title}</h1>
+                            <h3 class="text-bke-accent text-2xl font-semibold">${_s.miniGames.completed.title}</h3>
                         </header>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ export default class Congrats {
                 <div class="container">
                     <div class="bibleCards">
                         <header>
-                            <h3 class="text-bke-accent text-2xl font-semibold"${_s.journey.bibleCards.message}</h1>
+                            <h3 class="text-bke-accent text-2xl font-semibold">${_s.journey.bibleCards.message}</h1>
                         </header>
                         <video id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
                     </div>
@@ -72,27 +72,21 @@ export default class Congrats {
                         <progress max="3" value="3"></progress>
                         <ul>
                             <li class="filled">
-                                <svg viewBox="0 0 29 29">
-                                    <use href="#star"></use>
-                                </svg>
+                                <svg class="w-12 h-12"><use href="#star-solid"  fill="currentColor"></use></svg>
                             </li>
                             <li class="filled">
-                                <svg viewBox="0 0 29 29">
-                                    <use href="#star"></use>
-                                </svg>
+                                <svg class="w-12 h-12"><use href="#star-solid"  fill="currentColor"></use></svg>
                             </li>
                             <li class="filled">
-                                <svg viewBox="0 0 29 29">
-                                    <use href="#star"></use>
-                                </svg>
+                                <svg class="w-12 h-12"><use href="#star-solid"  fill="currentColor"></use></svg>
                             </li>
                         </ul>
                     </div>
                     <div class="congrats">
                         <header>
-                            <h1>${_s.journey.congrats}</h1>
+                            <h3 class="text-bke-accent text-2xl font-semibold">${_s.journey.congrats}</h3>
                         </header>
-                        <p>${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong></p>
+                        <p class="text-xl">${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong></p>
                     </div>
                 </div>
             </div>
