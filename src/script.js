@@ -9,11 +9,23 @@ import _appInsights from './Experience/Utils/AppInsights.js';
 import _gl from './Experience/Utils/Globals.js';
 import lazySizes from 'lazysizes';
 
+// Load icons
+
+const ajax = new XMLHttpRequest();
+ajax.open('GET', 'https://biblekids.io/wp-content/uploads/2024/01/biex-sprite.svg', true);
+ajax.send();
+ajax.onload = function () {
+  const div = document.createElement('div');
+  div.className = 'w-0 h-0 hidden';
+  div.setAttribute('id', 'biex-icons');
+  div.innerHTML = ajax.responseText;
+  document.body.insertBefore(div, document.body.childNodes[0]);
+};
+
 // Application Insights
 _appInsights.loadAppInsights();
 _appInsights.trackPageView({ name: 'Home' });
 
-document.querySelector('.icons-spritesheet').style.display = 'none';
 document.querySelector('.loader span').innerText = _s.initializing;
 
 // Start 3D experience
