@@ -77,7 +77,7 @@ export default class Quiz {
                         <svg class="question-mark-icon">
                             <use href="#question-solid"></use>
                         </svg>
-                        <h1 class="text-4xl font-semibold">${q.question}</h1>
+                        <h1 class="text-3xl font-semibold">${q.question}</h1>
                     </div>
                 </li>
             `)
@@ -89,10 +89,10 @@ export default class Quiz {
                 q.answers.forEach((a, aIdx) => {
                     const quizAnswer = _gl.elementFromHtml(`
                         <li class="quiz-answer">
-                            <div class="label text-2xl leading-normal">
+                            <div class="label">
                                 <label for="question-${qIdx}_answer-${aIdx}"></label>
                                 <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
-                                <span>${a.answer}</span>
+                                <span class="text-2xl  leading-normal">${a.answer}</span>
                             </div>
                         </li>
                     `)
@@ -105,7 +105,7 @@ export default class Quiz {
 
                 const quizAnswer = _gl.elementFromHtml(`
                     <li class="quiz-answer p-4">
-                        <textarea rows="8" placeholder="${q.placeholder}" class="quiz-textarea text-2xl w-full text-bke-purple"></textarea>
+                        <textarea rows="8" placeholder="${q.placeholder}" class="quiz-textarea w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-2xl"></textarea>
                     </li>
                 `)
 
