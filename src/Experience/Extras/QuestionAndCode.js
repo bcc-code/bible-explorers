@@ -49,7 +49,6 @@ export default class QuestionAndCode {
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
 
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 
@@ -65,7 +64,6 @@ export default class QuestionAndCode {
         const val = [...instance.el.inputs].filter((input) => input.value.length == 0).length;
 
         if (val == 0) {
-          instance.experience.navigation.container.style.display = 'flex';
           instance.experience.navigation.next.classList.add('focused');
           instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
         } else {

@@ -65,7 +65,6 @@ export default class SimonSays {
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
 
     for (let i = 0; i < instance.config.rounds; i++) {
       const ticker = document.createElement('div');
@@ -220,7 +219,6 @@ export default class SimonSays {
             </div>
         `);
 
-    instance.experience.navigation.container.style.display = 'flex';
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
 

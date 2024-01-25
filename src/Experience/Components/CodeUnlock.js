@@ -94,7 +94,6 @@ export default class CodeUnlock {
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
 
     instance.el = {
       code: unlockScreen.querySelector('.code-unlock-code'),
@@ -173,7 +172,6 @@ export default class CodeUnlock {
         spread: 160,
       });
 
-      instance.experience.navigation.container.style.display = 'flex';
       instance.experience.navigation.next.classList.add('focused');
       instance.experience.navigation.next.classList.remove('less-focused');
       instance.experience.navigation.next.innerHTML = instance.experience.icons.next;

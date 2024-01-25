@@ -72,7 +72,6 @@ export default class DavidsRefuge {
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
   }
 
   useCorrectAssetsSrc() {
@@ -174,7 +173,6 @@ export default class DavidsRefuge {
 
             gsap.to(selectGoat, { autoAlpha: 0 });
 
-            instance.experience.navigation.container.style.display = 'flex';
             instance.experience.navigation.next.classList.add('focused');
             instance.experience.navigation.next.classList.remove('less-focused');
             instance.experience.navigation.next.innerHTML = instance.experience.icons.next;

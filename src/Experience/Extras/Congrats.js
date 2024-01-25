@@ -1,71 +1,69 @@
-import Experience from '../Experience.js';
-import _s from '../Utils/Strings.js';
-import _gl from '../Utils/Globals.js';
+import Experience from '../Experience.js'
+import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
 
-let instance = null;
+let instance = null
 
 export default class Congrats {
-  constructor() {
-    instance = this;
-    instance.experience = new Experience();
-    instance.world = instance.experience.world;
-  }
+    constructor() {
+        instance = this
+        instance.experience = new Experience()
+        instance.world = instance.experience.world
+    }
 
-  toggleSummary() {
-    instance.destroy();
-    instance.experience.navigation.prev.addEventListener('click', instance.destroy);
-    instance.world.audio.playSound('task-completed');
+    toggleSummary() {
+        instance.destroy()
+        instance.experience.navigation.prev.addEventListener('click', instance.destroy)
+        instance.world.audio.playSound('task-completed')
 
-    const summary = _gl.elementFromHtml(`
+        instance.experience.setAppView('game')
+
+        const summary = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
                     <div class="summary">
-                        <header>
-                            <h3 class="text-bke-accent text-2xl font-semibold">${_s.miniGames.completed.title}</h3>
-                        </header>
+                        <h1 class="text-4xl font-semibold">${_s.miniGames.completed.title}</h1>
                     </div>
                 </div>
             </div>
-        `);
+        `)
 
-    document.querySelector('#app-games').append(summary);
-    document.querySelector('#app-games').classList.remove('hidden');
-    document.querySelector('#bg-chapter').classList.add('hidden');
-  }
+        instance.experience.interface.gameContainer.append(summary)
+    }
 
-  toggleBibleCardsReminder() {
-    instance.destroy();
-    instance.world.program.destroy();
+    toggleBibleCardsReminder() {
+        instance.destroy()
+        instance.world.program.destroy()
+        instance.experience.navigation.next.addEventListener('click', instance.toggleCongrats)
 
-    instance.experience.navigation.next.addEventListener('click', instance.toggleCongrats);
+        instance.experience.setAppView('game')
 
-    const bibleCards = _gl.elementFromHtml(`
+        const bibleCards = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
                     <div class="bibleCards">
-                        <header>
-                            <h3 class="text-bke-accent text-2xl font-semibold">${_s.journey.bibleCards.message}</h1>
-                        </header>
-                        <video id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
+                        <h1 class="text-4xl font-semibold">${_s.journey.bibleCards.message}</h1>
+                        <video class="mt-8" id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
                     </div>
                 </div>
             </div>
-        `);
+        `)
 
-    document.querySelector('#app-games').append(bibleCards);
-    document.querySelector('#app-games').classList.remove('hidden');
-    document.querySelector('#bg-chapter').classList.add('hidden');
-  }
+        instance.experience.interface.gameContainer.append(bibleCards)
+    }
 
-  toggleCongrats() {
-    instance.destroy();
-    instance.experience.navigation.next.addEventListener('click', instance.finishChapter);
-    instance.world.audio.playSound('congrats');
-    instance.experience.celebrate({
-      particleCount: 100,
-      spread: 160,
-    });
-    const chapterCongrats = _gl.elementFromHtml(`
+    toggleCongrats() {
+        instance.destroy()
+        instance.experience.navigation.next.addEventListener('click', instance.finishChapter)
+        instance.world.audio.playSound('congrats')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160,
+        })
+
+        instance.experience.setAppView('game')
+
+        const chapterCongrats = _gl.elementFromHtml(`
             <div class="modal">
                 <div class="container">
                     <div class="chapter-progress">
@@ -83,32 +81,29 @@ export default class Congrats {
                         </ul>
                     </div>
                     <div class="congrats">
-                        <header>
-                            <h3 class="text-bke-accent text-2xl font-semibold">${_s.journey.congrats}</h3>
-                        </header>
-                        <p class="text-xl">${_s.journey.completed}:<br /><strong>${instance.world.selectedChapter.title}</strong></p>
+                        <h1 class="text-4xl font-semibold">${_s.journey.congrats}</h1>
+                        <p class="text-2xl mt-8">${_s.journey.completed}:<br /><strong class="text-bke-orange">${instance.world.selectedChapter.title}</strong></p>
                     </div>
                 </div>
             </div>
-        `);
+        `)
 
-    document.querySelector('#app-games').append(chapterCongrats);
-    document.querySelector('#app-games').classList.remove('hidden');
-    document.querySelector('#bg-chapter').classList.add('hidden');
-  }
+        instance.experience.interface.gameContainer.append(chapterCongrats)
+    }
 
-  finishChapter() {
-    instance.destroy();
-    instance.world.goHome();
-  }
+    finishChapter() {
+        instance.destroy()
+        instance.world.goHome()
+    }
 
-  destroy() {
-    document.querySelector('.modal')?.remove();
-    document.querySelector('#app-games').classList.add('hidden');
+    destroy() {
+        document.querySelector('.modal')?.remove()
 
-    instance.experience.navigation.prev.removeEventListener('click', instance.destroy);
-    instance.experience.navigation.next.removeEventListener('click', instance.destroy);
-    instance.experience.navigation.next.removeEventListener('click', instance.toggleCongrats);
-    instance.experience.navigation.next.removeEventListener('click', instance.finishChapter);
-  }
+        instance.experience.setAppView('chapter')
+
+        instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.next.removeEventListener('click', instance.toggleCongrats)
+        instance.experience.navigation.next.removeEventListener('click', instance.finishChapter)
+    }
 }

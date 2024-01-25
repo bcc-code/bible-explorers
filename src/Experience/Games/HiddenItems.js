@@ -47,14 +47,12 @@ export default class HiddenItems {
 
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
   }
 
   setEventListeners() {
     document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
 
     if (instance.circlesVisible == 4) {
-      instance.experience.navigation.container.style.display = 'flex';
       instance.experience.navigation.next.classList.add('focused');
       instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
     } else {
@@ -100,7 +98,6 @@ export default class HiddenItems {
     }
 
     if (instance.circlesVisible == maxCirclesToAdd) {
-      instance.experience.navigation.container.style.display = 'flex';
       instance.experience.navigation.next.classList.add('focused');
       instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
     } else {

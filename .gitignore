@@ -3,4 +3,3 @@ dist
 .vercel
 .DS_store
 package-lock.json
-.prettierrc

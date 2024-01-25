@@ -1,69 +1,80 @@
-import * as THREE from 'three';
-import confetti from 'canvas-confetti';
-import { Debug, StatsModule } from './Utils/Debug.js';
-import Sizes from './Utils/Sizes.js';
-import Time from './Utils/Time.js';
-import Resources from './Utils/Resources.js';
-import MouseMove from './Utils/MouseMove.js';
-import sources from './Sources.js';
-import Menu from './Components/Menu.js';
-import World from './World/World.js';
-import FAQ from './Components/FAQ.js';
-import _gl from './Utils/Globals.js';
+import * as THREE from 'three'
+import confetti from 'canvas-confetti'
+import { Debug, StatsModule } from './Utils/Debug.js'
+import Sizes from './Utils/Sizes.js'
+import Time from './Utils/Time.js'
+import Resources from './Utils/Resources.js'
+import MouseMove from './Utils/MouseMove.js'
+import sources from './Sources.js'
+import Menu from './Components/Menu.js'
+import World from './World/World.js'
+import FAQ from './Components/FAQ.js'
+import _gl from './Utils/Globals.js'
 
-let instance = null;
+let instance = null
 
 export default class Experience {
-  constructor() {
-    // Singleton
-    if (instance) return instance;
+    constructor() {
+        // Singleton
+        if (instance) return instance
 
-    instance = this;
+        instance = this
 
-    // Global access
-    window.experience = this;
+        // Global access
+        window.experience = this
 
-    // Options
-    this.faq = new FAQ();
+        // Options
+        this.faq = new FAQ()
 
-    // Setup
-    this.settings = new Menu();
-    this.debug = new Debug();
-    this.stats = new StatsModule();
-    this.sizes = new Sizes();
-    this.time = new Time();
-    this.scene = new THREE.Scene();
-    this.resources = new Resources(sources);
-    this.pointer = new MouseMove();
-    this.world = new World();
-    this.auth0 = {};
+        // Setup
+        this.settings = new Menu()
+        this.debug = new Debug()
+        this.stats = new StatsModule()
+        this.sizes = new Sizes()
+        this.time = new Time()
+        this.scene = new THREE.Scene()
+        this.resources = new Resources(sources)
+        this.pointer = new MouseMove()
+        this.world = new World()
+        this.auth0 = {}
 
-    // Time animation event
-    this.videoIsPlaying = false;
-    this.gameIsOn = false;
+        // Time animation event
+        this.videoIsPlaying = false
+        this.gameIsOn = false
 
-    this.navigation = {
-      prev: document.querySelector('[aria-label="prev page"]'),
-      next: document.querySelector('[aria-label="next page"]'),
-      container: document.querySelector('#chapter-navigation'),
-    };
+        this.navigation = {
+            prev: document.querySelector('[aria-label="prev page"]'),
+            next: document.querySelector('[aria-label="next page"]'),
+            container: document.querySelector('#chapter-navigation'),
+        }
 
-    this.icons = {
-      prev: `<svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
-      next: `<svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
-    };
+        this.icons = {
+            prev: `<svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
+            next: `<svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
+        }
 
-    const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`);
-    document.body.appendChild(celebrateCanvas);
+        this.interface = {
+            bigScreen: document.querySelector('#big-screen'),
+            smallScreen: document.querySelector('#small-screen'),
+            closedCaption: document.querySelector('#closed-caption'),
+            gameContainer: document.querySelector('#games-wrapper'),
+        }
 
-    this.celebrate = confetti.create(celebrateCanvas, {
-      resize: true,
-      useWorker: true,
-    });
-  }
+        const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`)
+        document.body.appendChild(celebrateCanvas)
 
-  update() {
-    this.world.update();
-    this.stats.update();
-  }
+        this.celebrate = confetti.create(celebrateCanvas, {
+            resize: true,
+            useWorker: true,
+        })
+    }
+
+    setAppView(attr) {
+        document.querySelector('#app').setAttribute('data-view', attr)
+    }
+
+    update() {
+        this.world.update()
+        this.stats.update()
+    }
 }

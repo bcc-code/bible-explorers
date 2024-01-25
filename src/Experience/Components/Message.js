@@ -38,13 +38,8 @@ export default class Message {
   }
 
   setHtml(text, character) {
-    const message = _gl.elementFromHtml(
-      `<div class="rounded-lg border-4 border-bke-outline bg-gradient-to-r from-bke-dark to-bke-primary px-3 py-2 w-full" id="iris-message">
-        <h3 class="text-lg italic text-bke-outline uppercase">${character}</h3>
-        <div class="mt-1 text-lg text-white/80">${text}</div>
-      </div>`
-    );
-    document.querySelector('#chapter-dialogue div').append(message);
+    const message = _gl.elementFromHtml(`<div id="iris-cc" class="text-2xl text-center mx-auto max-w-screen-lg">${text}</div>`);
+    instance.experience.interface.closedCaption.append(message);
 
     if (instance.data.character == 'glitch') {
       const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>');
@@ -58,7 +53,7 @@ export default class Message {
               <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
         </div`
       );
-      document.querySelector('#chapter-dialogue div').append(openQuestion);
+      document.querySelector('#chapter-dialogue').append(openQuestion);
 
       const textarea = openQuestion.querySelector('textarea');
       textarea.addEventListener('input', (e) => {
@@ -73,7 +68,7 @@ export default class Message {
 
   destroy() {
     instance.video?.defocus();
-    document.querySelector('#iris-message')?.remove();
+    document.querySelector('#iris-cc')?.remove();
     document.querySelector('#open-question')?.remove();
   }
 }

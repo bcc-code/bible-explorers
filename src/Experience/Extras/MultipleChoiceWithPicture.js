@@ -1,122 +1,123 @@
-import Offline from '../Utils/Offline.js';
-import Experience from '../Experience.js';
-import _s from '../Utils/Strings.js';
-import _gl from '../Utils/Globals.js';
-import _e from '../Utils/Events.js';
+import Offline from '../Utils/Offline.js'
+import Experience from '../Experience.js'
+import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
+import _e from '../Utils/Events.js'
 
-let instance = null;
+let instance = null
 
 export default class MultipleChoiceWithPicture {
-  constructor() {
-    instance = this;
+    constructor() {
+        instance = this
 
-    instance.experience = new Experience();
-    instance.debug = instance.experience.debug;
-    instance.offline = new Offline();
-  }
+        instance.experience = new Experience()
+        instance.debug = instance.experience.debug
+        instance.offline = new Offline()
+    }
 
-  show() {
-    instance.world = instance.experience.world;
-    instance.program = instance.world.program;
-    instance.audio = instance.world.audio;
+    show() {
+        instance.world = instance.experience.world
+        instance.program = instance.world.program
+        instance.audio = instance.world.audio
 
-    instance.setHtml();
-    // instance.useCorrectAssetsSrc();
-    instance.setEventListeners();
-  }
+        instance.setHtml()
+        instance.useCorrectAssetsSrc()
+        instance.setEventListeners()
+    }
 
-  setHtml() {
-    let tries = 0;
-    let answerFound = false;
-    instance.stepData = instance.program.getCurrentStepData();
-    instance.data = instance.stepData.multiple_choice_with_picture;
+    setHtml() {
+        let tries = 0
+        let answerFound = false
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.multiple_choice_with_picture
 
-    const multipleChoiceWithPicture = _gl.elementFromHtml(`
-            <div id="multiple-choice">
-                <h3 class="text-white text-2xl font-semibold">${instance.stepData.details.title}</h3>
+        const multipleChoiceWithPicture = _gl.elementFromHtml(`
+            <div id="multiple-choice" class="p-8">
+                <h1 class="text-4xl font-semibold">${instance.stepData.details.title}</h1>
                 <ul class="multiple-choice-answers mt-8"></ul>
             </div>
-        `);
+        `)
 
-    instance.data.choices.forEach((choice, cIdx) => {
-      const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
+        instance.data.choices.forEach((choice, cIdx) => {
+            const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
                 <li class="multiple-choice-answer mb-2 rounded-md">
-                    <div class="label text-white">
+                    <div class="label text-xl leading-normal bg-white/10 rounded-md">
                         <label for="answer-${cIdx}"></label>
-                        <input type="radio" id="answer-${cIdx}" name="multiple-choice"/>
+                        <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
                         <span>${choice.answer}</span>
                     </div>
                 </li>
-            `);
+            `)
 
-      multipleChoiceWithPicture.querySelector('.multiple-choice-answers').append(multipleChoiceWithPictureAnswer);
-    });
+            multipleChoiceWithPicture.querySelector('.multiple-choice-answers').append(multipleChoiceWithPictureAnswer)
+        })
 
-    multipleChoiceWithPicture.querySelectorAll('.multiple-choice-answers').forEach((a) => {
-      const htmlAnswers = a.querySelectorAll('.label');
-      const objAnswers = instance.data.choices;
+        multipleChoiceWithPicture.querySelectorAll('.multiple-choice-answers').forEach((a) => {
+            const htmlAnswers = a.querySelectorAll('.label')
+            const objAnswers = instance.data.choices
 
-      htmlAnswers.forEach((a, i) => {
-        a.addEventListener('click', () => {
-          tries++;
-          a.style.pointerEvents = 'none';
+            htmlAnswers.forEach((a, i) => {
+                a.addEventListener('click', () => {
+                    tries++
+                    a.style.pointerEvents = 'none'
 
-          if (!objAnswers[i].correct_wrong) {
-            instance.audio.playSound('wrong');
-            a.parentNode.classList.add('wrong');
-          } else {
-            answerFound = true;
-            instance.audio.playSound('correct');
-            instance.experience.celebrate({
-              particleCount: 100,
-              spread: 160,
-            });
+                    if (!objAnswers[i].correct_wrong) {
+                        instance.audio.playSound('wrong')
+                        a.parentNode.classList.add('wrong')
+                    } else {
+                        answerFound = true
+                        instance.audio.playSound('correct')
+                        instance.experience.celebrate({
+                            particleCount: 100,
+                            spread: 160,
+                        })
 
-            instance.experience.navigation.next.disabled = false;
-            instance.experience.navigation.next.classList.remove('less-focused');
-            instance.experience.navigation.next.classList.add('focused');
-            instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
-          }
+                        instance.experience.navigation.next.disabled = false
+                        instance.experience.navigation.next.className = 'button-next focused'
+                        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+                    }
 
-          if (tries == 2 || answerFound) {
-            const correctIndex = objAnswers.findIndex((a) => a.correct_wrong);
-            htmlAnswers[correctIndex].parentNode.classList.add('correct');
+                    if (tries == 2 || answerFound) {
+                        const correctIndex = objAnswers.findIndex((a) => a.correct_wrong)
+                        htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
-            instance.experience.navigation.next.disabled = false;
-            instance.experience.navigation.next.classList.remove('less-focused');
-            instance.experience.navigation.next.classList.add('focused');
-            instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
-          }
+                        instance.experience.navigation.next.disabled = false
+                        instance.experience.navigation.next.className = 'button-next focused'
+                        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+                    }
 
-          htmlAnswers.forEach((answer) => {
-            if (tries == 2 || answerFound) answer.style.pointerEvents = 'none';
-          });
-        });
-      });
-    });
+                    htmlAnswers.forEach((answer) => {
+                        if (tries == 2 || answerFound) answer.style.pointerEvents = 'none'
+                    })
+                })
+            })
+        })
 
-    document.querySelector('#chapter-tasks div').append(multipleChoiceWithPicture);
+        const imageTask = _gl.elementFromHtml(`<div id="task-image" class="p-8 grid place-items-center"><img src="${instance.data.image}" class="multiple-choice-image w-[400px]" alt="picture" /></div>`)
 
-    instance.experience.navigation.next.classList.remove('focused');
-    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.next.disabled = false;
-  }
+        instance.experience.interface.bigScreen.append(imageTask)
+        instance.experience.interface.smallScreen.append(multipleChoiceWithPicture)
 
-  useCorrectAssetsSrc() {
-    instance.offline.fetchChapterAsset(instance.data, 'image', (data) => {
-      document.querySelector('img.multiple-choice-image').src = data.image;
-    });
-  }
+        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.disabled = false
+    }
 
-  setEventListeners() {
-    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
-  }
+    useCorrectAssetsSrc() {
+        instance.offline.fetchChapterAsset(instance.data, 'image', (data) => {
+            document.querySelector('img.multiple-choice-image').src = data.image
+        })
+    }
 
-  destroy() {
-    document.getElementById('multiple-choice')?.remove();
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
 
-    instance.experience.navigation.next.classList.remove('less-focused');
-    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
-  }
+    destroy() {
+        document.getElementById('multiple-choice')?.remove()
+        document.getElementById('task-image')?.remove()
+
+        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+    }
 }

@@ -42,7 +42,6 @@ export default class CableConnector {
     instance.experience.navigation.next.classList.remove('focused');
     instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
     instance.experience.navigation.next.classList.add('less-focused');
-    instance.experience.navigation.container.style.display = 'flex';
 
     const spriteW = 180;
     const spriteH = 100;
@@ -533,7 +532,6 @@ export default class CableConnector {
             </div>
         `);
 
-    instance.experience.navigation.container.style.display = 'flex';
     instance.experience.navigation.next.classList.add('focused');
     instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
 

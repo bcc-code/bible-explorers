@@ -3,16 +3,12 @@
 }
 
 @import "./globals/variables.scss";
-@import "./globals/mixins.scss";
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
-@import "./components/Buttons.scss";
-@import "./components/Header.scss";
-@import "./components/SideModal.scss";
-@import "./components/Menu.scss";
-@import "./components/Page.scss";
+// @import "./components/Menu.scss";
+// @import "./components/Page.scss";
 @import "./components/Chapter.scss";
 @import "./components/Tooltip.scss";
 @import "./components/Modal.scss";
@@ -27,11 +23,70 @@
 @import "./components/Views.scss";
 
 @import "tailwindcss/utilities";
-@import "./globals/main.scss";
 
-@layer utilities {
-    .clip-task-wrapper {
-        clip-path: url(#tasks-wrapper);
+@layer components {
+    .button-round {
+        @apply grid h-14 w-14 place-items-center rounded-full bg-bke-purple transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+    }
+
+    .button-default {
+        @apply min-w-[12em] rounded-md bg-bke-purple px-4 py-3 text-2xl font-medium uppercase tracking-widest transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+    }
+
+    .button-prev {
+        @apply grid h-14 min-w-[3.5rem] cursor-pointer place-content-center rounded-full bg-bke-purple px-4 uppercase tracking-wider transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+    }
+
+    .button-next {
+        @apply grid h-14 min-w-[3.5rem] cursor-pointer place-content-center rounded-full bg-bke-purple px-4 text-lg uppercase tracking-wider transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+    }
+
+    .button-action {
+        @apply w-full rounded-md border-2 border-transparent bg-bke-orange px-4 py-3 text-2xl font-medium uppercase tracking-widest text-bke-purple transition hover:border-bke-orange hover:bg-bke-purple hover:text-bke-orange;
+    }
+
+    .focused {
+        @apply border-2 border-bke-orange;
+    }
+
+    .less-focused {
+        @apply opacity-40 hover:opacity-100;
+    }
+
+}
+
+#app[data-view="main-menu"],
+#app[data-view="faq"],
+#app[data-view="settings"] {
+
+    #music-toggle,
+    #open-menu {
+        display: none;
+    }
+
+    #close-menu {
+        display: grid;
+    }
+}
+
+#app[data-view="faq"] #back-from-faq,
+#app[data-view="settings"] #back-from-settings {
+    display: grid;
+}
+
+#app[data-view="chapter"] {
+
+    #music-toggle,
+    #open-menu {
+        @apply opacity-40 hover:opacity-100;
+    }
+}
+
+#app[data-view="game"] {
+
+    #music-toggle,
+    #open-menu {
+        display: none;
     }
 }
 
@@ -43,55 +98,8 @@
     pointer-events: all;
 }
 
-
-.pause {
-    .container {
-        position: fixed;
-        top: 0;
-        top: 0;
-        z-index: 6;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 5;
-        width: 100%;
-        height: 100%;
-        opacity: 0.8;
-        background: var(--gradient-dark);
-        transition: .3s var(--transition-timing);
-    }
-
-    span {
-        color: var(--clr-secondary);
-        font-size: 2rem;
-        font-weight: bold;
-    }
-
-    p {
-        color: #fff;
-        font-size: 1.5rem;
-        margin-block: 1rem;
-        max-width: 42ch;
-    }
-}
-
-
 .intercom-namespace .intercom-messenger-frame {
     right: var(--app-padding) !important;
-}
-
-.pointer-events-none {
-    pointer-events: none;
 }
 
 
