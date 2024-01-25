@@ -44,14 +44,6 @@ export default class VideoWithQuestion {
         // Load BTV Player
         instance.resources.loadVideoInBtvPlayer(instance.data.video)
 
-        // const playerInterval = setInterval(() => {
-        //     if (instance.resources.videoPlayers[instance.data.video]) {
-        //         clearInterval(playerInterval)
-
-        //         instance.resources.videoPlayers[instance.data.video].on('ended', instance.toggleQuestion)
-        //     }
-        // }, 100)
-
         const submitQuestion = content.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {
             instance.saveAnswers()
@@ -59,8 +51,6 @@ export default class VideoWithQuestion {
             instance.program.nextStep()
         })
 
-        // instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
-        // instance.experience.navigation.next.addEventListener('click', instance.toggleQuestion)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
