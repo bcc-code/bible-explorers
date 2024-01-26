@@ -1,4 +1,5 @@
 .chapter {
+
     // position: relative;
     // transition: var(--transition-duration) var(--transition-timing);
     // background-color: var(--bg-with-opacity);
@@ -139,22 +140,23 @@
     //     }
     // }
 
-    &-selected+&__content {
-        opacity: 1;
-        visibility: visible;
-    }
+    // &-selected+&__content {
+    //     opacity: 1;
+    //     visibility: visible;
+    // }
 
-    .chapter-selected &:not(.selected) {
-        opacity: 0.25;
-    }
+    // .chapter-selected &:not(.selected) {
+    //     opacity: 0.25;
+    // }
 
-    .chapter-selected &:hover {
-        opacity: 1;
-    }
+    // .chapter-selected &:hover {
+    //     opacity: 1;
+    // }
 
-    .chapter-selected &.selected {
-        border-color: var(--clr-secondary);
-    }
+    // .chapter-selected &.selected {
+    //     border-color: var(--clr-secondary);
+    // }
+
 
 
     body.bcc_member & {

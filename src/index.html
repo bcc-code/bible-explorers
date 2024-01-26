@@ -63,13 +63,15 @@
                         </div>
                     </div>
                 </div>
-                <div id="app-chapters" class="hidden group-data-[view='lobby']/app:block">
+                <div id="chapter-select" class="hidden group-data-[view='lobby']/app:block">
                     <div class="fixed inset-0 bg-control-room bg-cover bg-center">
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
                     <div class="relative mx-auto flex max-w-[1980px] gap-8 px-8 py-48">
-                        <div id="chapters-cards" class="w-1/2"></div>
-                        <div id="chapters-description" class="w-1/2"></div>
+                        <div id="chapters-list" class="h-[70vh] w-1/2">
+                            <ul class="flex h-full flex-col overflow-y-auto px-4"></ul>
+                        </div>
+                        <div id="chapters-description" class="h-[70vh] w-1/2"></div>
                     </div>
                     <div class="fixed bottom-8 right-8 flex gap-4">
                         <button class="button-prev" id="back-to-age-category">
@@ -85,11 +87,11 @@
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
                     <div class="mt-48 flex justify-center gap-8 px-8 group-data-[view='game']/app:hidden">
-                        <div id="big-screen" class="bg-big-screen relative isolate h-[848] w-[1480px] bg-[length:100%_100%] bg-no-repeat p-4 drop-shadow-lg">
+                        <div id="big-screen" class="bg-big-screen relative isolate h-[848px] w-[1480px] bg-[length:100%_100%] bg-no-repeat p-4 drop-shadow-lg">
                             <div class="absolute bottom-full left-1/2 h-48 w-32 -translate-x-1/2 bg-bke-purple"></div>
                             <div id="videos-container"></div>
                         </div>
-                        <div id="small-screen" class="bg-small-screen relative isolate h-[848] w-[500px] bg-[length:100%_100%] bg-no-repeat p-4 drop-shadow-lg">
+                        <div id="small-screen" class="bg-small-screen relative isolate h-[848px] w-[500px] bg-[length:100%_100%] bg-no-repeat p-4 drop-shadow-lg">
                             <div class="absolute bottom-full left-1/2 h-48 w-28 -translate-x-1/2 bg-bke-purple"></div>
                         </div>
                     </div>

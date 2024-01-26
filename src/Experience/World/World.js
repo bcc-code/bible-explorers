@@ -35,7 +35,7 @@ export default class World {
             instance.chaptersData = instance.resources.api[_api.getBiexChapters()]
 
             this.ageCategory = document.getElementById('app-age_category')
-            this.appChapters = document.getElementById('app-chapters')
+            this.chapterSelectWrapper = document.getElementById('chapter-select')
             this.chapterWrapper = document.getElementById('chapter-wrapper')
 
             // Select age category
@@ -83,10 +83,6 @@ export default class World {
         instance.placeholderChapterData()
         instance.removeDescriptionHtml()
 
-        // Hide chapter content/cards
-        instance.appChapters.classList.remove('flex')
-        instance.appChapters.classList.add('hidden')
-
         // Remove if existing categories
         if (instance.ageCategory.querySelector('ul').childNodes.length !== 0) {
             instance.ageCategory.querySelectorAll('li').forEach((item) => {
@@ -103,8 +99,8 @@ export default class World {
         instance.experience.setAppView('lobby')
 
         // Remove if existing chapters
-        if (instance.appChapters.querySelector('#chapters-cards').childNodes.length !== 0) {
-            instance.appChapters.querySelectorAll('.chapter').forEach((item) => {
+        if (instance.experience.interface.chaptersList.querySelector('ul').childNodes.length !== 0) {
+            instance.chapterSelectWrapper.querySelectorAll('.chapter').forEach((item) => {
                 item.remove()
             })
         }
@@ -158,43 +154,37 @@ export default class World {
     }
 
     setChapterHtml(chapter) {
-        let chapterHtml = document.createElement('article')
-
-        let chapterClasses = 'chapter rounded-lg cursor-pointer relative p-8 flex flex-col gap-2 h-48 mb-8 group overflow-hidden isolate border-2 border-transparent bg-bke-purple hover:shadow-lg hover:border-bke-orange'
-        chapterClasses += chapter.status == 'future' ? ' locked' : ''
-        chapterClasses += chapter.is_beta === true ? ' beta' : ''
-        chapterHtml.className = chapterClasses
+        let chapterHtml = _gl.elementFromHtml(
+            `<li class="chapter group mb-8 ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
+                <div class="h-40 p-6 relative cursor-pointer transition bg-bke-purple group-hover:brightness-75 group-[.selected]:shadow-[-6px_8px_0_#fcb04e]">
+                    <div class="chapter-image absolute right-0 top-0 w-40 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
+                    <h1 class="text-4xl font-bold">${chapter.title}</h1>
+                    <div class="text-xl font-medium opacity-70">${chapter.date}</div>
+                    <button class="chapter__offline button-round absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
+                        <svg class="h-5 w-5"><use href="#download-solid" fill="currentColor"></use></svg>
+                    </button>
+                    <div class="chapter__downloading w-1/2 hidden group-[.downloading]:flex items-center gap-2">
+                        <span class="title">${_s.offline.downloading}</span>
+                        <span class="downloading-progress">
+                            <span class="progress-line"></span>
+                        </span>
+                        <span class="downloading-label"></span>
+                    </div>
+                    <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange">${_s.offline.downloadFailed}</div>
+                    <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple mt-4 px-2 py-1 rounded-md">
+                        <svg class="h-4 w-4"><use href="#check-solid" fill="currentColor"></use></svg>
+                        <span>${_s.offline.availableOffline.title}</span>
+                    </div>
+                </div>
+            </li>`
+        )
 
         chapterHtml.setAttribute('data-id', chapter.id)
         chapterHtml.setAttribute('data-slug', chapter.category)
 
         // <span>${_s.offline.download.title}</span>
 
-        chapterHtml.innerHTML = `
-            <div class="bg-[length:auto_120%] bg-right bg-no-repeat absolute inset-0 -z-10 after:transition after:duration-300 after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple after:from-50% after:to-transparent"></div>
-            <h2 class="text-3xl font-bold">${chapter.title}</h2>
-            <div class="text-lg opacity-70">${chapter.date}</div>
-            <button class="chapter__offline button-round focused absolute right-8 bottom-8 group-[.downloaded]:hidden">
-                <svg class="h-5 w-5"><use href="#download-solid" fill="currentColor"></use></svg>
-            </button>
-            <div class="chapter__downloading w-1/2 absolute left-8 bottom-8 hidden group-[.downloading]:flex items-center gap-2">
-                <span class="title">${_s.offline.downloading}</span>
-                <span class="downloading-progress">
-                    <span class="progress-line"></span>
-                </span>
-                <span class="downloading-label"></span>
-            </div>
-            <div class="chapter__download-failed absolute left-8 bottom-8 hidden group-[.failed]:block text-bke-orange">
-                <span>${_s.offline.downloadFailed}</span>
-            </div>
-            <div class="chapter__downloaded absolute left-8 bottom-8 w-auto items-center gap-2 hidden group-[.downloaded]:flex text-bke-orange ">
-                <svg class="h-4 w-4"><use href="#check-solid" fill="currentColor"></use></svg>
-                <span>${_s.offline.availableOffline.title}</span>
-            </div>
-        `
-
-        this.appChapters.querySelector('#chapters-cards').appendChild(chapterHtml)
-
+        instance.experience.interface.chaptersList.querySelector('ul').appendChild(chapterHtml)
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterBgImage)
         instance.offline.markChapterIfAvailableOffline(chapter)
         instance.setStatesTooltips()
@@ -212,12 +202,14 @@ export default class World {
             else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++
         })
 
-        const details = _gl.elementFromHtml(` <div id="chapter-description" class="rounded-lg border-2 border-bke-orange p-4 bg-bke-purple"></div>`)
-        const header = _gl.elementFromHtml(`<h2 class="text-3xl font-bold">${chapter.title}</h2>`)
-
-        details.append(header)
-
-        const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
+        const details = _gl.elementFromHtml(`
+            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple shadow-[-6px_8px_0_#fcb04e]">
+                <h2 class="text-3xl font-bold my-4">${chapter.title}</h2>
+                    <div class="mb-6 py-4 border-b-2 border-white/20 text-xl">
+                    <div>${chapter.content}</div>
+                    <div class="attachments my-4"></div>
+                </div>
+            </div>`)
 
         if (chapter.other_attachments.length) {
             chapter.other_attachments.forEach((attachment) => {
@@ -228,20 +220,15 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-            <a class="inline-flex items-center text-xl mt-4 px-2 py-1 border-2 gap-1 border-bke-orange rounded-lg hover:bg-bke-orange hover:text-bke-purple" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                <svg class="h-4 w-4"><use href="#book-solid" fill="currentColor"></use></svg>
-                <span>${_s.chapter.activityDescLabel}</span>
-            </a>`)
+                        <a class="inline-flex items-center text-xl mt-4 px-2 py-1 border-2 gap-1 border-bke-orange rounded-lg hover:bg-bke-orange hover:text-bke-purple" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg class="h-4 w-4"><use href="#book-solid" fill="currentColor"></use></svg>
+                            <span>${_s.chapter.activityDescLabel}</span>
+                        </a>`)
 
-                    attachments.append(guide)
+                    details.querySelector('.attachments').append(guide)
                 }
             })
         }
-
-        details.append(attachments)
-
-        const description = _gl.elementFromHtml(`<div class="mb-6 py-4 border-b-2 border-white/10 text-xl">${chapter.content}</div>`)
-        details.append(description)
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
             const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-4 my-4"></ul>`)
@@ -273,17 +260,18 @@ export default class World {
             }
         }
 
-        this.appChapters.querySelector('#chapters-description').append(details)
-        this.appChapters.querySelector('#chapters-cards').classList.add('chapter-selected')
+        instance.experience.interface.chaptersDescription.append(details)
+        instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
+        instance.experience.interface.chaptersList.classList.add('chapter-selected')
     }
 
     removeDescriptionHtml() {
-        this.appChapters.querySelector('#chapters-cards').classList.remove('chapter-selected')
-        if (this.appChapters.querySelector('#chapter-description')) this.appChapters.querySelector('#chapter-description').remove()
+        instance.experience.interface.chaptersList.classList.add('chapter-selected')
+        if (this.chapterSelectWrapper.querySelector('#chapter-description')) this.chapterSelectWrapper.querySelector('#chapter-description').remove()
     }
 
     chapterEventListeners() {
-        this.appChapters.querySelectorAll('.chapter').forEach((chapter) => {
+        this.chapterSelectWrapper.querySelectorAll('.chapter').forEach((chapter) => {
             chapter.addEventListener('click', () => {
                 if (document.querySelector('#chapter-description')) document.querySelector('#chapter-description').remove()
 
@@ -298,18 +286,18 @@ export default class World {
             })
         })
 
-        this.appChapters.querySelectorAll('.chapter__offline').forEach(function (chapter) {
+        this.chapterSelectWrapper.querySelectorAll('.chapter__offline').forEach(function (chapter) {
             chapter.addEventListener('click', (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
 
-        this.appChapters.querySelectorAll('.chapter__downloaded').forEach(function (button) {
+        this.chapterSelectWrapper.querySelectorAll('.chapter__downloaded').forEach(function (button) {
             button.addEventListener('click', instance.confirmRedownload)
         })
 
-        this.appChapters.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
+        this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
             chapter.addEventListener('click', (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
@@ -336,7 +324,13 @@ export default class World {
     }
 
     setChapterBgImage(chapter) {
-        document.querySelector('.chapter[data-id="' + chapter.id + '"] .bg-right').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
+        const img = _gl.elementFromHtml(`<img src="${chapter.thumbnail}" class="object-cover w-full h-full" />`)
+        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-image`).append(img)
+    }
+
+    setChapterDescriptionBgImage(chapter) {
+        const img = _gl.elementFromHtml(`<img src="${chapter.thumbnail}" class="object-cover aspect-[16/5]" />`)
+        document.querySelector('#chapter-description').prepend(img)
     }
 
     // Download
@@ -630,6 +624,7 @@ export default class World {
     }
 
     currentChapterLabel() {
+        selectedChapter
         const el = _gl.elementFromHtml(`
             <div class="page-title">
                 <p>Chapter: <span>${instance.selectedChapter.title}</span></p>

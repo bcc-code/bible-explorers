@@ -58,6 +58,8 @@ export default class Experience {
             smallScreen: document.querySelector('#small-screen'),
             closedCaption: document.querySelector('#closed-caption'),
             gameContainer: document.querySelector('#games-wrapper'),
+            chaptersList: document.querySelector('#chapters-list'),
+            chaptersDescription: document.querySelector('#chapters-description'),
         }
 
         const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`)
