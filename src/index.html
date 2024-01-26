@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="./scss/style.scss" />
     </head>
 
-    <body>
+    <body class="group/body">
         <div id="app" class="group/app fixed inset-0 overflow-hidden">
             <header id="header" class="absolute left-0 top-0 hidden w-full">
                 <div class="flex w-full justify-between p-8">
@@ -50,7 +50,7 @@
                 <div id="loading_text" class="bottom-8 left-8 text-2xl">Loading...</div>
             </div>
 
-            <main id="app-content">
+            <main id="app-content" class="relative h-full overflow-y-auto">
                 <div id="app-age_category" class="hidden group-data-[view='age-category']/app:block">
                     <div class="fixed inset-0 bg-control-room bg-cover bg-center">
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
@@ -67,7 +67,7 @@
                     <div class="fixed inset-0 bg-control-room bg-cover bg-center">
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
-                    <div class="max-w-screen-[1920px] relative mx-auto mt-48 flex gap-8 px-8">
+                    <div class="max-w-screen-[1920px] relative mx-auto flex gap-8 px-8 py-48">
                         <div id="chapters-cards" class="w-1/2"></div>
                         <div id="chapters-description" class="w-1/2"></div>
                     </div>

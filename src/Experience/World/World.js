@@ -160,7 +160,7 @@ export default class World {
     setChapterHtml(chapter) {
         let chapterHtml = document.createElement('article')
 
-        let chapterClasses = 'chapter rounded-lg '
+        let chapterClasses = 'chapter rounded-lg cursor-pointer relative p-8 flex flex-col gap-2 h-48 mb-8 group overflow-hidden isolate border-2 border-transparent bg-bke-purple hover:shadow-lg hover:border-bke-orange'
         chapterClasses += chapter.status == 'future' ? ' locked' : ''
         chapterClasses += chapter.is_beta === true ? ' beta' : ''
         chapterHtml.className = chapterClasses
@@ -168,31 +168,28 @@ export default class World {
         chapterHtml.setAttribute('data-id', chapter.id)
         chapterHtml.setAttribute('data-slug', chapter.category)
 
+        // <span>${_s.offline.download.title}</span>
+
         chapterHtml.innerHTML = `
-            <header class="chapter__heading">
-                <h2 class="chapter__title text-3xl">${chapter.title}</h2>
-                <span class="chapter__date text-lg opacity-70">${chapter.date}</span>
-            </header>
-            <div class="coming-soon">Coming soon</div>
-            <div class="chapter__states">
-                <div class="chapter__offline">
-                    <svg class="h-2 w-3"><use href="#download-solid" fill="currentColor"></use></svg>
-                    <span>${_s.offline.download.title}</span>
-                </div>
-                <div class="chapter__downloading">
-                    <span class="title">${_s.offline.downloading}</span>
-                    <span class="downloading-progress">
-                        <span class="progress-line"></span>
-                    </span>
-                    <span class="downloading-label"></span>
-                </div>
-                <div class="chapter__download-failed">
-                    <span>${_s.offline.downloadFailed}</span>
-                </div>
-                <div class="chapter__downloaded">
-                    <svg class="h-2 w-3"><use href="#check-solid" fill="currentColor"></use></svg>
-                    <span>${_s.offline.availableOffline.title}</span>
-                </div>
+            <div class="bg-[length:auto_120%] bg-right bg-no-repeat absolute inset-0 -z-10 after:transition after:duration-300 after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple after:from-50% after:to-transparent"></div>
+            <h2 class="text-3xl font-bold">${chapter.title}</h2>
+            <div class="text-lg opacity-70">${chapter.date}</div>
+            <button class="chapter__offline button-round focused absolute right-8 bottom-8 group-[.downloaded]:hidden">
+                <svg class="h-5 w-5"><use href="#download-solid" fill="currentColor"></use></svg>
+            </button>
+            <div class="chapter__downloading w-1/2 absolute left-8 bottom-8 hidden group-[.downloading]:flex items-center gap-2">
+                <span class="title">${_s.offline.downloading}</span>
+                <span class="downloading-progress">
+                    <span class="progress-line"></span>
+                </span>
+                <span class="downloading-label"></span>
+            </div>
+            <div class="chapter__download-failed absolute left-8 bottom-8 hidden group-[.failed]:block text-bke-orange">
+                <span>${_s.offline.downloadFailed}</span>
+            </div>
+            <div class="chapter__downloaded absolute left-8 bottom-8 w-auto items-center gap-2 hidden group-[.downloaded]:flex text-bke-orange ">
+                <svg class="h-4 w-4"><use href="#check-solid" fill="currentColor"></use></svg>
+                <span>${_s.offline.availableOffline.title}</span>
             </div>
         `
 
@@ -216,7 +213,7 @@ export default class World {
         })
 
         const details = _gl.elementFromHtml(` <div id="chapter-description" class="rounded-lg border-2 border-bke-orange p-4 bg-bke-purple"></div>`)
-        const header = _gl.elementFromHtml(`<h2 class="text-3xl">${chapter.title}</h2>`)
+        const header = _gl.elementFromHtml(`<h2 class="text-3xl font-bold">${chapter.title}</h2>`)
 
         details.append(header)
 
@@ -231,7 +228,7 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-            <a class="inline-flex items-center text-xl mt-2 px-2 py-1 border-2 gap-1 border-bke-orange rounded-lg hover:bg-bke-orange hover:text-bke-purple" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+            <a class="inline-flex items-center text-xl mt-4 px-2 py-1 border-2 gap-1 border-bke-orange rounded-lg hover:bg-bke-orange hover:text-bke-purple" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
                 <svg class="h-4 w-4"><use href="#book-solid" fill="currentColor"></use></svg>
                 <span>${_s.chapter.activityDescLabel}</span>
             </a>`)
@@ -339,16 +336,14 @@ export default class World {
     }
 
     setChapterBgImage(chapter) {
-        document.querySelector('.chapter[data-id="' + chapter.id + '"]').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
+        document.querySelector('.chapter[data-id="' + chapter.id + '"] .bg-right').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
     }
 
     // Download
 
     setDownloadHtml(button) {
         button.innerHTML = `
-        <svg class="check-mark-icon" viewBox="0 0 23 16">
-            <use href="#check-mark"></use>
-        </svg>
+        <svg class="w-4 h-4"><use href="#check-solid" fill="currentColor"></use></svg>
         <span>${_s.offline.availableOffline.title}</span>
         `
         button.addEventListener('click', instance.confirmRedownload)
@@ -359,9 +354,9 @@ export default class World {
         button.removeEventListener('click', instance.confirmRedownload)
 
         button.innerHTML = `<span style="margin-right: 0.25rem">${_s.offline.redownloadConfirmation}</span>
-            <svg class="refuse | xmark-icon icon"  viewBox="0 0 17 16"><use href="#xmark"></use></svg>
+            <svg class="refuse w-3 h-3"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
             <span class="separator">/</span>
-            <svg class="redownload | check-mark-icon icon" viewBox="0 0 23 16"><use href="#check-mark"></use></svg>`
+            <svg class="redownload w-4 h-4"><use href="#check-solid" fill="currentColor"></use></svg>`
 
         button.querySelector('.refuse').addEventListener('click', (event) => {
             instance.setDownloadHtml(button)
