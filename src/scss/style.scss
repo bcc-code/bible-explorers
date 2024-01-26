@@ -26,23 +26,23 @@
 
 @layer components {
     .button-round {
-        @apply grid h-14 w-14 place-items-center rounded-full bg-bke-purple transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+        @apply grid h-14 w-14 place-items-center bg-bke-purple transition hover:shadow-[-3px_4px_0_#fcb04e] disabled:pointer-events-none disabled:opacity-20;
     }
 
     .button-default {
-        @apply min-w-[12em] rounded-md bg-bke-purple px-4 py-3 text-2xl font-medium uppercase tracking-widest transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+        @apply min-w-[12em] bg-bke-purple px-4 py-3 text-2xl font-medium uppercase tracking-widest transition hover:shadow-[-3px_4px_0_#fcb04e] disabled:pointer-events-none disabled:opacity-20;
     }
 
     .button-prev {
-        @apply grid h-14 min-w-[3.5rem] cursor-pointer place-content-center rounded-full bg-bke-purple px-4 uppercase tracking-wider transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+        @apply grid h-14 min-w-[3.5rem] cursor-pointer place-content-center bg-bke-purple px-4 uppercase tracking-wider transition hover:shadow-[-3px_4px_0_#fcb04e] disabled:pointer-events-none disabled:opacity-20;
     }
 
     .button-next {
-        @apply grid h-14 min-w-[3.5rem] cursor-pointer place-content-center rounded-full bg-bke-purple px-4 text-lg uppercase tracking-wider transition hover:bg-bke-orange hover:text-bke-purple disabled:pointer-events-none disabled:opacity-20;
+        @apply grid h-14 min-w-[3.5rem] cursor-pointer place-content-center bg-bke-purple px-4 text-lg uppercase tracking-wider transition hover:shadow-[-3px_4px_0_#fcb04e] disabled:pointer-events-none disabled:opacity-20;
     }
 
     .button-action {
-        @apply w-full rounded-md border-2 border-transparent bg-bke-orange px-4 py-3 text-2xl font-medium uppercase tracking-widest text-bke-purple transition hover:border-bke-orange hover:bg-bke-purple hover:text-bke-orange;
+        @apply w-full border-2 border-transparent bg-bke-orange px-4 py-3 text-2xl font-medium uppercase tracking-widest text-bke-purple transition hover:border-bke-orange hover:bg-bke-purple hover:text-bke-orange;
     }
 
     .focused {
