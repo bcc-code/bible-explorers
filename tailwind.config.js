@@ -20,6 +20,8 @@ export default {
             backgroundImage: {
                 'control-room': "url('../../static/HighresScreenshot00070.png')",
                 'chapter-room': "url('../../static/HighresScreenshot00071.png')",
+                'big-screen': "url('../../static/big-screen.svg')",
+                'small-screen': "url('../../static/small-screen.svg')",
             },
         },
     },
