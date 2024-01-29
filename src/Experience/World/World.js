@@ -205,7 +205,7 @@ export default class World {
         })
 
         const details = _gl.elementFromHtml(`
-            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
+            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple transition shadow-[0_0_0_2px_theme(colors.bke.orange)] hover:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
                 <h2 class="text-3xl font-bold my-4">${chapter.title}</h2>
                     <div class="mb-6 py-4 border-b-2 border-white/20 text-xl">
                     <div>${chapter.content}</div>

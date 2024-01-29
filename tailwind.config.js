@@ -9,7 +9,7 @@ export default {
             sans: ['Source Sans Pro', ' sans-serif'],
         },
         transitionDuration: {
-            DEFAULT: '500ms',
+            DEFAULT: '300ms',
         },
         extend: {
             colors: {
