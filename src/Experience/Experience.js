@@ -63,7 +63,7 @@ export default class Experience {
         }
 
         const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`)
-        document.body.appendChild(celebrateCanvas)
+        document.querySelector('#app').appendChild(celebrateCanvas)
 
         this.celebrate = confetti.create(celebrateCanvas, {
             resize: true,
