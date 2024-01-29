@@ -222,7 +222,7 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="inline-flex items-center text-xl mt-4 px-2 py-1 border-2 gap-1 border-bke-orange rounded-lg hover:bg-bke-orange hover:text-bke-purple" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                        <a class="inline-flex items-center mt-4 mr-4 gap-2 transition duration-300 text-bke-orange hover:text-bke-orange/80" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
                             <svg class="h-4 w-4"><use href="#book-solid" fill="currentColor"></use></svg>
                             <span>${_s.chapter.activityDescLabel}</span>
                         </a>`)
@@ -233,7 +233,7 @@ export default class World {
         }
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-            const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-4 my-4"></ul>`)
+            const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-8 my-4"></ul>`)
 
             details.append(info)
 

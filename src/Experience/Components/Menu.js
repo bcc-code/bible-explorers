@@ -31,10 +31,8 @@ export default class Menu {
         _appInsights.trackPageView({ name: 'Settings' })
 
         const selectLang = document.querySelector('#app-language')
-        const selectLangLabel = selectLang.querySelector('h5')
-        const selectLangCurrent = selectLang.querySelector('button')
+        const selectLangCurrent = selectLang.querySelector('button span')
         const selectLangDropdown = selectLang.querySelector('ul')
-        selectLangLabel.innerText = _s.settings.language + ':'
         selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
         selectLangDropdown.querySelectorAll('li').forEach((item) => {

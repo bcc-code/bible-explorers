@@ -45,7 +45,7 @@
         @apply w-full border-2 border-transparent bg-bke-orange px-4 py-3 text-2xl font-medium uppercase tracking-widest text-bke-purple transition hover:border-bke-orange hover:bg-bke-purple hover:text-bke-orange;
     }
 
-    .button-login {
+    .button-normal {
         @apply flex gap-4 h-14 min-w-[3.5rem] items-center cursor-pointer bg-bke-purple px-4 tracking-wider transition hover:shadow-[-3px_4px_0_#fcb04e];
     }
 
