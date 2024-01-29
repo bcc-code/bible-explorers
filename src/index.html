@@ -23,7 +23,7 @@
                     <a href="javascript:void(0)" id="home-button" class="z-50">
                         <img src="./textures/bible-kids-explorers.svg" alt="" class="h-16" />
                     </a>
-                    <div class="progress-bar relative z-10 group-data-[view='game']/app:hidden group-data-[view='main-menu']/app:hidden"></div>
+                    <div class="group/progress relative z-10 hidden px-7 pt-7 group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-4">
                         <button id="music-toggle" class="button-round">
                             <svg class="mr-0.5 h-4 w-4 group-[.is-playing]:hidden"><use href="#music-solid" fill="currentColor"></use></svg>
@@ -88,12 +88,12 @@
                     </div>
                     <div class="mx-auto mt-48 flex max-w-[1920px] items-stretch gap-12 px-8 group-data-[view='game']/app:hidden">
                         <div id="big-screen" class="group relative isolate aspect-[16/9] w-3/4 bg-bke-darkpurple" data-view="video">
-                            <div class="absolute bottom-full left-1/2 -z-10 h-48 w-32 -translate-x-1/2 bg-bke-purple"></div>
+                            <div class="absolute bottom-full left-1/2 -z-10 h-48 w-32 -translate-x-1/2 bg-bke-darkpurple"></div>
                             <div class="bg-big-screen-frame absolute -inset-4 -z-10 bg-[length:100%_100%] bg-no-repeat"></div>
-                            <div class="child:hidden child:w-full child:h-full p-2" id="videos-container"></div>
+                            <div class="*:hidden *:w-full *:h-full p-2" id="videos-container"></div>
                         </div>
                         <div id="small-screen" class="group relative isolate w-1/4 bg-bke-darkpurple" data-view="map">
-                            <div class="absolute bottom-full left-1/2 -z-10 h-48 w-28 -translate-x-1/2 bg-bke-purple"></div>
+                            <div class="absolute bottom-full left-1/2 -z-10 h-48 w-28 -translate-x-1/2 bg-bke-darkpurple"></div>
                             <div class="bg-small-screen-frame absolute -inset-4 -z-10 bg-[length:100%_100%] bg-no-repeat"></div>
                             <div class="bg-map-texture absolute inset-0 hidden bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
                             <div class="bg-map-texture absolute inset-0 hidden bg-[length:100%_100%] bg-no-repeat group-data-[view='lever']:block"></div>

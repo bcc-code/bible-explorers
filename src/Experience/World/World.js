@@ -617,10 +617,6 @@ export default class World {
 
         document.querySelector('#fullscreen-setting input').checked = true
         if (!document.fullscreenElement) document.documentElement.requestFullscreen()
-
-        setTimeout(function () {
-            instance.progressBar.show()
-        }, 1000)
     }
 
     currentChapterLabel() {
@@ -660,7 +656,6 @@ export default class World {
         if (instance.program) {
             instance.program.destroy()
             instance.program.video.defocus()
-            instance.progressBar.hide()
         }
 
         instance.controlRoom.irisTextureTransition()

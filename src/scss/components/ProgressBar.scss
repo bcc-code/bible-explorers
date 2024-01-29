@@ -1,48 +1,48 @@
-.progress-bar {
-    pointer-events: all;
-    transition: var(--transition-duration) var(--transition-timing);
-    opacity: 0;
+// .progress-bar {
+//     pointer-events: all;
+//     transition: var(--transition-duration) var(--transition-timing);
+//     opacity: 0;
 
-    &.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
+//     &.is-visible {
+//         opacity: 1;
+//         transform: translateY(0);
+//     }
 
-    .checkpoints {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-    }
+//     .checkpoints {
+//         position: relative;
+//         display: flex;
+//         justify-content: space-between;
+//         gap: 8px;
+//     }
 
-    [aria-label="checkpoint"] {
-        margin-right: 0;
-    }
+//     [aria-label="checkpoint"] {
+//         margin-right: 0;
+//     }
 
-    [aria-label="checkpoint"][currentCheckpoint] {
-        background-color: var(--clr-secondary);
-        color: var(--clr-text);
-    }
+//     [aria-label="checkpoint"][currentCheckpoint] {
+//         background-color: var(--clr-secondary);
+//         color: var(--clr-text);
+//     }
 
-    .percentageBar {
-        position: absolute;
-        top: 1.5rem;
-        left: 2rem;
-        right: 2rem;
-        height: 0.5rem;
-        background-color: var(--bg-with-opacity);
-        box-shadow: 0 0 0 0.1rem var(--clr-secondary);
+//     .percentageBar {
+//         position: absolute;
+//         top: 1.5rem;
+//         left: 2rem;
+//         right: 2rem;
+//         height: 0.5rem;
+//         background-color: var(--bg-with-opacity);
+//         box-shadow: 0 0 0 0.1rem var(--clr-secondary);
 
-        .passed {
-            float: left;
-            height: 100%;
-            background: var(--clr-secondary);
-            transition: var(--transition-duration) width var(--transition-timing);
-        }
-    }
+//         .passed {
+//             float: left;
+//             height: 100%;
+//             background: var(--clr-secondary);
+//             transition: var(--transition-duration) width var(--transition-timing);
+//         }
+//     }
 
-    .modal-on &,
-    .freeze & {
-        transform: translateY(100%);
-    }
-}
+//     .modal-on &,
+//     .freeze & {
+//         transform: translateY(100%);
+//     }
+// }

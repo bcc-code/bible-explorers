@@ -12,7 +12,7 @@
 @import "./components/Chapter.scss";
 @import "./components/Tooltip.scss";
 @import "./components/Modal.scss";
-@import "./components/ProgressBar.scss";
+// @import "./components/ProgressBar.scss";
 @import "./components/Message.scss";
 @import "./components/Dialogue.scss";
 @import "./components/MultipleChoice.scss";
@@ -49,6 +49,10 @@
         @apply border-2 border-bke-orange;
     }
 
+    [currentCheckpoint] {
+        box-shadow: 0 0 0 4px theme('colors.bke.orange');
+    }
+
     .less-focused {
         @apply opacity-40 hover:opacity-100;
     }
@@ -77,9 +81,11 @@
 #app[data-view="chapter"] {
 
     #music-toggle,
-    #open-menu {
+    #open-menu,
+    #progress-bar {
         @apply opacity-40 hover:opacity-100;
     }
+
 }
 
 #app[data-view="game"] {

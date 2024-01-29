@@ -18,7 +18,7 @@ export default class ProgressBar {
     init() {
         instance.checkpointWidth = 100 / instance.program.totalCheckpoints
 
-        instance.htmlEl = document.querySelector('.progress-bar')
+        instance.htmlEl = document.querySelector('#progress-bar')
         instance.htmlEl.innerHTML = ProgressBar.HTML()
 
         instance.el = {
@@ -36,19 +36,12 @@ export default class ProgressBar {
         })
     }
 
-    show() {
-        instance.htmlEl.classList.add('is-visible')
-    }
-
-    hide() {
-        instance.htmlEl.classList.remove('is-visible')
-    }
-
     refresh() {
         instance.el.passed.style.width = instance.checkpointWidth * instance.program.currentCheckpoint + '%'
 
         instance.el.checkpoints.forEach((checkpoint) => {
             checkpoint.removeAttribute('currentCheckpoint')
+            instance.htmlEl.setAttribute('data-checkpoint', '')
         })
 
         if (instance.program.currentCheckpoint < instance.el.checkpoints.length) {
@@ -62,33 +55,33 @@ export default class ProgressBar {
     }
 
     static HTML() {
-        let generatedHTML = `<div class="percentageBar transition">
-                <div class="passed" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
+        let generatedHTML = `<div class="percentageBar bg-bke-purple h-1 w-full">
+                <div class="passed bg-bke-orange w-0 h-full transition-[width] duration-500" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
             </div>
-            <div class="checkpoints">`
+            <div class="flex gap-8 -mx-7 -mt-7">`
 
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
             if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'video')) {
-                generatedHTML += `<button class="button-round focused" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg>
+                generatedHTML += `<button class="button-round duration-300" aria-label="checkpoint" data-index="${i}">
+                              <svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg>
                           </button>`
             } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'quiz')) {
-                generatedHTML += `<button class="button-round focused" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg>
+                generatedHTML += `<button class="button-round duration-300" aria-label="checkpoint" data-index="${i}">
+                              <svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg>
                           </button>`
             } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'pause')) {
-                generatedHTML += `<button class="button-round focused" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-4 w-4"><use href="#pause-solid" fill="currentColor"></use></svg
+                generatedHTML += `<button class="button-round duration-300" aria-label="checkpoint" data-index="${i}">
+                              <svg class="h-5 w-5"><use href="#pause-solid" fill="currentColor"></use></svg
                           </button>`
             } else {
-                generatedHTML += `<button class="button-round focused" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg
+                generatedHTML += `<button class="button-round duration-300" aria-label="checkpoint" data-index="${i}">
+                              <svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg
                           </button>`
             }
         }
 
-        generatedHTML += `<button class="button-round focused" aria-label="checkpoint">
-                          <svg class="h-4 w-4"><use href="#star-solid" fill="currentColor"></use></svg
+        generatedHTML += `<button class="button-round" aria-label="checkpoint">
+                          <svg class="h-5 w-5"><use href="#star-solid" fill="currentColor"></use></svg
                       </button>
                   </div>`
 
