@@ -156,7 +156,7 @@ export default class World {
     setChapterHtml(chapter) {
         let chapterHtml = _gl.elementFromHtml(
             `<li class="chapter group mb-8 ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
-                <div class="h-40 p-6 relative cursor-pointer transition bg-bke-purple group-hover:brightness-75 group-[.selected]:shadow-[-6px_8px_0_#fcb04e]">
+                <div class="h-40 p-6 relative cursor-pointer transition bg-bke-purple group-hover:shadow-[-6px_8px_0_theme(colors.bke.orange)] group-[.selected]:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]  ">
                     <div class="chapter-image absolute right-0 top-0 w-40 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
                     <h1 class="text-4xl font-bold">${chapter.title}</h1>
                     <div class="text-xl font-medium opacity-70">${chapter.date}</div>
@@ -205,7 +205,7 @@ export default class World {
         })
 
         const details = _gl.elementFromHtml(`
-            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple shadow-[-6px_8px_0_#fcb04e]">
+            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
                 <h2 class="text-3xl font-bold my-4">${chapter.title}</h2>
                     <div class="mb-6 py-4 border-b-2 border-white/20 text-xl">
                     <div>${chapter.content}</div>
