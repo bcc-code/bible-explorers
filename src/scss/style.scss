@@ -90,14 +90,6 @@
     }
 }
 
-#videos-container>* {
-    display: none;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 16/9;
-    pointer-events: all;
-}
-
 .intercom-namespace .intercom-messenger-frame {
     right: var(--app-padding) !important;
 }

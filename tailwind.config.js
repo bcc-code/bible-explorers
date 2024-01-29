@@ -20,12 +20,18 @@ export default {
             backgroundImage: {
                 'control-room': "url('../../static/textures/control-room.png')",
                 'chapter-room': "url('../../static/textures/control-room-2.png')",
-                'big-screen': "url('../../static/textures/big-screen.svg')",
-                'small-screen': "url('../../static/textures/small-screen.svg')",
-                'map-texture': "url('../../static/textures/map.png')",
+                'big-screen-frame': "url('../../static/textures/big-screen-frame.svg')",
+                'small-screen-frame': "url('../../static/textures/small-screen-frame.svg')",
+                'map-texture': "url('../../static/textures/map.jpg')",
                 'lever-texture': "url('../../static/textures/lever.png')",
             },
         },
     },
-    plugins: [require('@tailwindcss/typography')],
+    plugins: [
+        require('@tailwindcss/typography'),
+        function ({ addVariant }) {
+            addVariant('child', '& > *')
+            addVariant('child-hover', '& > *:hover')
+        },
+    ],
 }
