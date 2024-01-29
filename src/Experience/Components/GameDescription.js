@@ -59,9 +59,8 @@ export default class GameDescription {
         const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-8" id="task-image">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>`)
 
         const taskContent = _gl.elementFromHtml(`
-      <div class="p-16" id="task-content">
-        <h1 class="font-semibold text-4xl">${instance.data.title}</h2>
-        <p class="my-8 text-xl">Welcome to "Maze Explorer: Quest for the Bible Box"! In this exciting adventure, you take on the role of Glitch, a small and determined robot on a mission to find the elusive Bible Box hidden deep within a maze. Your goal is to navigate Glitch through the twists and turns of the maze, using either the arrow keys or the WASD keys to guide him to the coveted treasure.</p>
+      <div class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
+        <h1 class="font-semibold text-4xl mb-8">${instance.data.title}</h2>
         ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
       </div>
     `)
@@ -70,8 +69,7 @@ export default class GameDescription {
         instance.experience.interface.bigScreen.append(taskImage)
         instance.experience.interface.smallScreen.append(taskContent)
 
-        instance.experience.interface.bigScreen.setAttribute('data-view', 'game-description')
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-description')
+        instance.experience.interface.smallScreen.setAttribute('data-view', '')
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
         instance.experience.navigation.next.className = 'button-next less-focused'

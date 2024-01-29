@@ -28,18 +28,19 @@ export default class VideoWithQuestion {
 
         const video = _gl.elementFromHtml(`<div id="video-question" class="aspect-video"><div id="video-${instance.data.video}" class="video"></div></div>`)
 
-        const title = _gl.elementFromHtml(`<h2>${instance.stepData.details.title}</h2>`)
-
-        const content = _gl.elementFromHtml(`
-      <div id="video-with-question" class="p-8">
-        <h1 class="text-4xl font-semibold">${instance.data.question}</h1>
-        <textarea class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-xl"></textarea>
-        <button class="button-action" type="submit" aria-label="submit question">${_s.task.submit}</button>
-      </div>
-    `)
+        const content = _gl.elementFromHtml(
+            `<div id="video-with-question" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
+                <h1 class="text-4xl font-semibold">${instance.data.question}</h1>
+                <textarea class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-xl"></textarea>
+                <button class="button-action" type="submit" aria-label="submit question">${_s.task.submit}</button>
+            </div>
+            `
+        )
 
         instance.experience.interface.bigScreen.append(video)
         instance.experience.interface.smallScreen.append(content)
+
+        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-description')
 
         // Load BTV Player
         instance.resources.loadVideoInBtvPlayer(instance.data.video)

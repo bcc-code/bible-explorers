@@ -32,7 +32,8 @@ export default class MultipleChoiceWithPicture {
         instance.data = instance.stepData.multiple_choice_with_picture
 
         const multipleChoiceWithPicture = _gl.elementFromHtml(`
-            <div id="multiple-choice" class="p-8">
+            <div id="multiple-choice" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
+                <div id="task-image"><img src="${instance.data.image}" class="multiple-choice-image w-[280px]" alt="picture" /></div>
                 <h1 class="text-4xl font-semibold">${instance.stepData.details.title}</h1>
                 <ul class="multiple-choice-answers mt-8"></ul>
             </div>
@@ -93,10 +94,9 @@ export default class MultipleChoiceWithPicture {
             })
         })
 
-        const imageTask = _gl.elementFromHtml(`<div id="task-image" class="p-8 grid place-items-center"><img src="${instance.data.image}" class="multiple-choice-image w-[400px]" alt="picture" /></div>`)
-
-        instance.experience.interface.bigScreen.append(imageTask)
         instance.experience.interface.smallScreen.append(multipleChoiceWithPicture)
+
+        instance.experience.interface.smallScreen.setAttribute('data-view', '')
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
         instance.experience.navigation.next.className = 'button-next less-focused'
