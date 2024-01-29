@@ -25,20 +25,25 @@
                     </a>
                     <div class="group/progress relative z-10 hidden px-7 pt-7 group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-4">
-                        <button id="music-toggle" class="button-round">
+                        <button id="login-button" class="button-login disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
+                            <p aria-label="Logged in"></p>
+                            <svg class="h-4 w-4"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
+                        </button>
+                        <button id="logout-button" class="button-login disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
+                            <div class="leading-tight">
+                                <p aria-label="User"></p>
+                                <span aria-label="Role" class="text-bke-orange"></span>
+                            </div>
+                            <svg class="h-4 w-4"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
+                        </button>
+                        <button id="music-toggle" class="button-round" title="background music switch">
                             <svg class="mr-0.5 h-4 w-4 group-[.is-playing]:hidden"><use href="#music-solid" fill="currentColor"></use></svg>
                             <svg class="mr-0.5 hidden h-4 w-4 group-[.is-playing]:block"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="open-menu" class="button-round">
+                        <button id="open-menu" class="button-round" title="open menu">
                             <svg class="h-4 w-4"><use href="#bars-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="back-from-settings" class="button-round hidden">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button id="back-from-faq" class="button-round hidden">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button id="close-menu" class="button-round hidden">
+                        <button id="close-menu" class="button-round hidden" title="close menu">
                             <svg class="h-4 w-4"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
@@ -125,18 +130,7 @@
                         <li>
                             <a href="#" target="_blank" id="guide-link" class="text-3xl transition hover:text-bke-orange">How to</a>
                         </li>
-                        <li class="grid gap-4">
-                            <button class="button-default disabled:hidden" aria-label="Login button" disabled="true">Log in</button>
-                            <button class="button-default disabled:hidden" aria-label="Logout button" disabled="true">Log out</button>
-                        </li>
                     </ul>
-                </div>
-                <div id="login-info" class="absolute bottom-8 left-8">
-                    <p aria-label="Logged in" class="text-lg text-white/60"></p>
-                    <p class="text-2xl">
-                        <span aria-label="User"></span>
-                        <span aria-label="Role" class="text-bke-orange"></span>
-                    </p>
                 </div>
                 <div id="copyright" class="absolute bottom-8 right-8 text-sm"></div>
             </aside>
@@ -144,6 +138,9 @@
             <aside id="settings" class="hidden group-data-[view='settings']/app:block">
                 <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
                 <div class="absolute inset-0 grid place-content-center">
+                    <button id="back-from-settings" class="button-round" title="back to main menu">
+                        <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                    </button>
                     <div class="grid gap-12">
                         <section class="group/language relative" id="app-language">
                             <h5 class="mb-2 text-xl">Language:</h5>
@@ -188,6 +185,9 @@
             <aside id="faq" class="hidden group-data-[view='faq']/app:block">
                 <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
                 <div class="absolute inset-0 grid place-content-center">
+                    <button id="back-from-faq" class="button-round" title="back to main menu">
+                        <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                    </button>
                     <div class="h-full w-full overflow-y-auto py-20">
                         <div id="faq-content" class="prose-a:text-bke-accent hover:prose-a:text-bke-accent/80 prose mx-auto max-w-prose prose-a:underline"></div>
                     </div>

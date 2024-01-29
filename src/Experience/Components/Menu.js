@@ -70,10 +70,10 @@ export default class Menu {
         fullscreen.querySelector('input').checked = document.fullscreenElement !== null
         fullscreen.querySelector('label').innerText = !document.fullscreenElement ? _s.settings.off : _s.settings.on
 
-        const loginBtn = document.querySelector('[aria-label="Login button"]')
-        const logoutBtn = document.querySelector('[aria-label="Logout button"]')
-        loginBtn.innerText = _s.settings.logIn
-        logoutBtn.innerText = _s.settings.logOut
+        const loginBtn = document.querySelector('#login-button')
+        const logoutBtn = document.querySelector('#logout-button')
+        loginBtn.setAttribute('title', _s.settings.logIn)
+        logoutBtn.setAttribute('title', _s.settings.logOut)
 
         const bibleExplorersGuide = document.querySelector('#guide-link')
         bibleExplorersGuide.innerText = _s.howTo
@@ -175,8 +175,8 @@ export default class Menu {
             }
         })
 
-        const loginBtn = document.querySelector('[aria-label="Login button"]')
-        const logoutBtn = document.querySelector('[aria-label="Logout button"]')
+        const loginBtn = document.querySelector('#login-button')
+        const logoutBtn = document.querySelector('#logout-button')
 
         loginBtn.addEventListener('click', instance.login)
         logoutBtn.addEventListener('click', instance.logout)
@@ -186,8 +186,8 @@ export default class Menu {
         instance.logInLogOut.login = instance.experience.auth0.isAuthenticated
         instance.logInLogOut.logout = !instance.experience.auth0.isAuthenticated
 
-        const loginBtn = document.querySelector('[aria-label="Login button"]')
-        const logoutBtn = document.querySelector('[aria-label="Logout button"]')
+        const loginBtn = document.querySelector('#login-button')
+        const logoutBtn = document.querySelector('#logout-button')
 
         const loginText = document.querySelector('[aria-label="Logged in"]')
         const loginUser = document.querySelector('[aria-label="User"]')
