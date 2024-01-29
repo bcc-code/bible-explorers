@@ -32,14 +32,10 @@ _appInsights.trackPageView({ name: 'Home' })
 const experience = new Experience()
 
 // Auth0
-const fetchAuthConfig = () => fetch('/auth_config.json')
 const configureClient = async () => {
-    const response = await fetchAuthConfig()
-    const config = await response.json()
-
     experience.auth0 = await createAuth0Client({
-        domain: config.domain,
-        client_id: config.clientId,
+        domain: 'login.bcc.no',
+        client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
     })
 }
 const handleRedirectCallback = async () => {
