@@ -8,6 +8,9 @@ export default {
         fontFamily: {
             sans: ['Source Sans Pro', ' sans-serif'],
         },
+        transitionDuration: {
+            DEFAULT: '500ms',
+        },
         extend: {
             colors: {
                 bke: {

@@ -56,7 +56,7 @@ export default class ProgressBar {
 
     static HTML() {
         let generatedHTML = `<div class="percentageBar bg-bke-purple h-1 w-full">
-                <div class="passed bg-bke-orange w-0 h-full transition-[width] duration-500" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
+                <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
             </div>
             <div class="flex gap-8 -mx-7 -mt-7">`
 
