@@ -22,6 +22,8 @@ export default {
                 'chapter-room': "url('../../static/textures/control-room-2.png')",
                 'big-screen': "url('../../static/textures/big-screen.svg')",
                 'small-screen': "url('../../static/textures/small-screen.svg')",
+                'map-texture': "url('../../static/textures/map.png')",
+                'lever-texture': "url('../../static/textures/lever.png')",
             },
         },
     },
