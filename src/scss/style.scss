@@ -88,7 +88,6 @@
     #progress-bar {
         @apply opacity-40 hover:opacity-100;
     }
-
 }
 
 #app[data-view="game"] {
@@ -96,6 +95,12 @@
     #music-toggle,
     #open-menu {
         display: none;
+    }
+}
+
+body.bcc_member {
+    .chapter-status {
+        display: block;
     }
 }
 
