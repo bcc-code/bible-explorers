@@ -29,7 +29,6 @@ export default class Audio {
         audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
         audio.musicRange.oninput = function () {
-            console.log(this.value)
             document.getElementById('rangeValue').innerText = this.value
         }
 

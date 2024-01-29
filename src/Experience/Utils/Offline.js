@@ -261,14 +261,18 @@ export default class Offline {
 
   onScreenTextureDownloadComplete = async function (videoName, video, xhr) {
     if (xhr.status === 200) {
-      offline.putFileInDb({
+      const textureData = {
         language: video.audioLanguage,
-        name: videoName,
+        name: 'texture-' + videoName,
         quality: 'low',
         video: xhr.response,
-      });
+      };
 
-      offline.downloadedTextures.push(videoName);
+      offline.putFileInDb(textureData);
+      offline.downloadedTextures.push(textureData.name);
+      offline.experience.resources.updateBtvStreamTextureWithDownloadedVersion(
+        textureData.name,
+      );
 
       if (offline.downloadedTextures.length < offline.btvVideos.length) {
         // Next texture to download
@@ -309,22 +313,20 @@ export default class Offline {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: `
-                    query {
-                        episode(id: "${episodeId}") {
-                            id
-                            image
-                            files {
-                                id
-                                audioLanguage
-                                size
-                                resolution
-                                url
-                                fileName
-                            }
-                        }
-                    }
-                `,
+        query: `query {
+          episode(id: "${episodeId}") {
+            id
+            image
+            files {
+              id
+              audioLanguage
+              size
+              resolution
+              url
+              fileName
+            }
+          }
+        }`,
       }),
     });
 
@@ -436,7 +438,7 @@ export default class Offline {
       offline.putFileInDb(currentEpisode.data);
 
       offline.downloaded[chapterId].push(currentEpisode.data.name);
-      offline.experience.resources.updateBtvStreamWithDownloadedVersion(
+      offline.experience.resources.updateBtvStreamVideoWithDownloadedVersion(
         currentEpisode.data.name,
       );
 
@@ -663,20 +665,6 @@ export default class Offline {
 
     if (offline.isOnline == false) offline.experience.world.hideLoading();
   }
-}
-
-function median(values) {
-  if (values.length === 0) throw new Error('No inputs');
-
-  values.sort(function (a, b) {
-    return a.size - b.size;
-  });
-
-  var half = Math.floor(values.length / 2);
-
-  if (values.length % 2) return values[half];
-
-  return (values[half - 1] + values[half]) / 2.0;
 }
 
 function formatBytes(bytes, decimals = 0) {

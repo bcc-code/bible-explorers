@@ -185,11 +185,19 @@ export default class Resources extends EventEmitter {
         this.itemsLoaded++
     }
 
-    updateBtvStreamWithDownloadedVersion(videoName) {
+    updateBtvStreamVideoWithDownloadedVersion(videoName) {
         let videoEl = document.getElementById(videoName)
         if (videoEl) {
             videoEl.remove()
             this.loadEpisodeTextures(videoName)
+        }
+    }
+
+    updateBtvStreamTextureWithDownloadedVersion(videoName) {
+        let videoEl = document.getElementById(videoName)
+        if (videoEl) {
+            videoEl.remove()
+            this.loadTextureInBtvPlayer(videoName.replace('texture-', ''))
         }
     }
 
