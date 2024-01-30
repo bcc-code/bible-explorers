@@ -25,15 +25,6 @@
                     </a>
                     <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-4">
-                        <div class="group/languages relative group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" id="app-language">
-                            <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
-                                <svg class="pointer-events-none h-5 w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
-                                <span class="pointer-events-none">English</span>
-                            </button>
-                            <div class="shadow-focused absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-4 group-[.dropdown-is-visible]/languages:block">
-                                <ul></ul>
-                            </div>
-                        </div>
                         <button class="button-normal toggle-music group/audio">
                             <svg class="h-5 w-5 group-[.is-playing]/audio:hidden"><use href="#music-solid" fill="currentColor"></use></svg>
                             <svg class="hidden h-5 w-5 group-[.is-playing]/audio:block"><use href="#music-slash-solid" fill="currentColor"></use></svg>
@@ -70,6 +61,15 @@
                                 </section>
                             </div>
                         </div>
+                        <div class="group/languages relative group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" id="app-language">
+                            <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
+                                <svg class="pointer-events-none h-5 w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
+                                <span class="pointer-events-none">English</span>
+                            </button>
+                            <div class="shadow-focused absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-4 group-[.dropdown-is-visible]/languages:block">
+                                <ul></ul>
+                            </div>
+                        </div>
                         <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
                             <svg class="h-5 w-5"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                             <div class="leading-tight">
@@ -97,10 +97,7 @@
                     </div>
                     <div class="fixed inset-0 grid place-content-center text-center">
                         <h3 class="max-w-screen-lg text-5xl font-semibold leading-snug text-bke-orange drop-shadow-lg">Join time travels and explore the book that can answer every question</h3>
-                        <div class="mt-16">
-                            <p class="text-xl opacity-60">Choose age group:</p>
-                            <ul class="mt-4 grid gap-4"></ul>
-                        </div>
+                        <ul class="mt-16 flex justify-center gap-8"></ul>
                     </div>
                 </div>
                 <div id="chapter-select" class="hidden group-data-[view='lobby']/app:block">
@@ -114,10 +111,10 @@
                         <div id="chapters-description" class="h-[70vh] w-1/2 py-0.5"></div>
                     </div>
                     <div class="fixed bottom-8 right-8 flex gap-4">
-                        <button class="button-prev" id="back-to-age-category">
+                        <button class="button-normal" id="back-to-age-category">
                             <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-next shadow-border" id="start-chapter">
+                        <button class="button-normal shadow-border" id="start-chapter">
                             <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
@@ -141,10 +138,10 @@
                     </div>
                     <div id="closed-caption" class="fixed bottom-20 w-full px-8 pr-48 group-data-[view='game']/app:hidden"></div>
                     <div id="chapter-navigation" class="fixed bottom-8 right-8 z-30 flex gap-4">
-                        <button class="button-prev" aria-label="prev page">
+                        <button class="button-normal" aria-label="prev page">
                             <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-next shadow-border" aria-label="next page">
+                        <button class="button-normal shadow-border" aria-label="next page">
                             <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
@@ -156,7 +153,7 @@
                 <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
                 <div class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48">
                     <div class="flex gap-8">
-                        <button id="back-from-faq" class="button-round" title="back to main menu">
+                        <button id="back-from-faq" class="button-normal" title="back to main menu">
                             <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="mt-2">
@@ -167,9 +164,9 @@
                 </div>
             </aside>
 
-            <a href="#" target="_blank" id="guide-link" class="absolute bottom-2 left-8 transition hover:text-bke-orange group-data-[view='chapter']/app:hidden">How to</a>
+            <a href="#" target="_blank" id="guide-link" class="absolute bottom-2 left-8 transition hover:text-bke-orange group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden">How to</a>
 
-            <div id="copyright" class="absolute bottom-8 left-8 text-sm opacity-40 group-data-[view='chapter']/app:hidden"></div>
+            <div id="copyright" class="absolute bottom-8 left-8 text-sm opacity-40 group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden"></div>
         </div>
 
         <script src="https://unpkg.com/@rive-app/canvas@1.0.102/rive.js"></script>

@@ -74,7 +74,7 @@ export default class MultipleChoiceWithPicture {
                         })
 
                         instance.experience.navigation.next.disabled = false
-                        instance.experience.navigation.next.className = 'button-next focused'
+                        instance.experience.navigation.next.className = 'button-normal shadow-border'
                         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                     }
 
@@ -83,7 +83,7 @@ export default class MultipleChoiceWithPicture {
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
                         instance.experience.navigation.next.disabled = false
-                        instance.experience.navigation.next.className = 'button-next focused'
+                        instance.experience.navigation.next.className = 'button-normal shadow-border'
                         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
                     }
 
@@ -99,7 +99,7 @@ export default class MultipleChoiceWithPicture {
         instance.experience.interface.smallScreen.setAttribute('data-view', '')
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
         instance.experience.navigation.next.disabled = false
     }
 
@@ -117,7 +117,7 @@ export default class MultipleChoiceWithPicture {
         document.getElementById('multiple-choice')?.remove()
         document.getElementById('task-image')?.remove()
 
-        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

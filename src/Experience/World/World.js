@@ -130,7 +130,7 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-default" data-slug="${category.slug}">${category.name}</button></li>`)
+        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-normal min-w-40" data-slug="${category.slug}">${category.name}</button></li>`)
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 
@@ -160,8 +160,8 @@ export default class World {
                     <div class="chapter-image absolute right-0 top-0 w-40 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
                     <h1 class="text-4xl font-bold">${chapter.title}</h1>
                     <div class="text-xl font-medium opacity-70">${chapter.date}</div>
-                    <div class="hidden chapter-status">
-                        <button class="chapter__offline button-round absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
+                    <div class="hidden chapter-status mt-2">
+                        <button class="chapter__offline button-normal absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
                             <svg class="h-5 w-5"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="chapter__downloading w-1/2 hidden group-[.downloading]:flex items-center gap-2">
@@ -172,7 +172,7 @@ export default class World {
                             <span class="downloading-label"></span>
                         </div>
                         <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange">${_s.offline.downloadFailed}</div>
-                        <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple mt-4 px-2 py-1 rounded-md">
+                        <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple px-2 py-1 rounded-md">
                             <svg class="h-5 w-5"><use href="#check-solid" fill="currentColor"></use></svg>
                             <span>${_s.offline.availableOffline.title}</span>
                         </div>

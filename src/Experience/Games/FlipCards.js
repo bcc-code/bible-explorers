@@ -40,7 +40,7 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
-        const startGame = _gl.elementFromHtml(`<button class="button-action">${instance.confirmationScreen.cs_button}</button>`)
+        const startGame = _gl.elementFromHtml(`<button class="button-normal">${instance.confirmationScreen.cs_button}</button>`)
 
         startGame.addEventListener('click', instance.toggleFlipCards)
 
@@ -60,7 +60,7 @@ export default class FlipCards {
         instance.experience.interface.bigScreen.append(taskImage)
         instance.experience.interface.smallScreen.append(taskContent)
 
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
     }
 
@@ -147,7 +147,7 @@ export default class FlipCards {
         instance.experience.interface.gameContainer.append(game)
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
     }
 
     useCorrectAssetsSrcFlipCards() {
@@ -230,7 +230,7 @@ export default class FlipCards {
     destroyFlipCards() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)

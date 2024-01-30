@@ -36,7 +36,7 @@ export default class VideoWithQuestion {
             `<div id="video-with-question" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
                 <h1 class="text-4xl font-semibold">${instance.data.question}</h1>
                 <textarea class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-xl"></textarea>
-                <button class="button-action" type="submit" aria-label="submit question">${_s.task.submit}</button>
+                <button class="button-normal" type="submit" aria-label="submit question">${_s.task.submit}</button>
             </div>
             `
         )
@@ -61,7 +61,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
     }
 
     saveAnswers() {
@@ -91,7 +91,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
         document.getElementById('video-question')?.remove()
-        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
