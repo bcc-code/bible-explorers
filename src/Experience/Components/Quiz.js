@@ -44,10 +44,10 @@ export default class Quiz {
                         <button class="button-round" aria-label="prev question">
                             <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button type="submit" class="button-next focused" aria-label="submit form">
+                        <button type="submit" class="button-next shadow-border" aria-label="submit form">
                             ${_s.task.submit}
                         </button>
-                        <button class="button-round focused" aria-label="next question">
+                        <button class="button-round shadow-border" aria-label="next question">
                             <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>

@@ -23,35 +23,63 @@
                     <a href="javascript:void(0)" id="home-button" class="z-50">
                         <img src="./textures/bible-kids-explorers.svg" alt="" class="h-16" />
                     </a>
-                    <div class="group/progress relative z-10 hidden px-7 pt-7 group-data-[view='chapter']/app:block" id="progress-bar"></div>
+                    <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-4">
-                        <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
-                            <p aria-label="Logged in"></p>
-                            <svg class="h-4 w-4"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
+                        <div class="group/languages relative group-data-[view='chapter']/app:hidden" id="app-language">
+                            <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
+                                <svg class="pointer-events-none h-5 w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
+                                <span class="pointer-events-none">English</span>
+                            </button>
+                            <div class="shadow-focused absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-4 group-[.dropdown-is-visible]/languages:block">
+                                <ul></ul>
+                            </div>
+                        </div>
+                        <button class="button-normal toggle-music group/audio">
+                            <svg class="h-5 w-5 group-[.is-playing]/audio:hidden"><use href="#music-solid" fill="currentColor"></use></svg>
+                            <svg class="hidden h-5 w-5 group-[.is-playing]/audio:block"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
+                        <div class="group/settings relative">
+                            <button class="button-normal toggle-settings group-[.dropdown-is-visible]/settings:shadow-border" aria-pressed="false">
+                                <svg class="pointer-events-none h-5 w-5 group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
+                                <svg class="pointer-events-none hidden h-5 w-5 group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                            </button>
+                            <div class="shadow-focused absolute right-0 mt-4 hidden w-60 bg-bke-purple p-4 group-[.dropdown-is-visible]/settings:block">
+                                <section id="app-video-quality" class="group/video-quality">
+                                    <h5>Video quality:</h5>
+                                    <div class="mt-2 flex gap-2">
+                                        <button data-id="low" class="flex-1 bg-bke-purple bg-white/20 py-2 uppercase transition hover:bg-bke-orange hover:text-bke-purple group-data-[quality='low']/video-quality:bg-bke-orange group-data-[quality='low']/video-quality:text-bke-purple"></button>
+                                        <button data-id="medium" class="flex-1 bg-bke-purple bg-white/20 py-2 uppercase transition hover:bg-bke-orange hover:text-bke-purple group-data-[quality='medium']/video-quality:bg-bke-orange group-data-[quality='medium']/video-quality:text-bke-purple"></button>
+                                        <button data-id="high" class="flex-1 bg-bke-purple bg-white/20 py-2 uppercase transition hover:bg-bke-orange hover:text-bke-purple group-data-[quality='high']/video-quality:bg-bke-orange group-data-[quality='high']/video-quality:text-bke-purple"></button>
+                                    </div>
+                                </section>
+                                <section id="fullscreen-setting" class="mt-4">
+                                    <h5>Full screen:</h5>
+                                    <div class="mt-2 flex items-center">
+                                        <input type="checkbox" id="fullscreen-checkbox" class="sr-only" />
+                                        <label for="fullscreen-checkbox" class="cursor-pointer bg-white/20 px-3 py-2 uppercase transition hover:bg-bke-orange hover:text-bke-purple"></label>
+                                    </div>
+                                </section>
+                                <section id="bg-music-setting" class="hidden">
+                                    <h5 class="mb-2 text-xl">
+                                        <div class="inline-block">Background music:</div>
+                                        <span id="rangeValue" class="text-bke-orange">50</span>
+                                    </h5>
+                                    <div class="range">
+                                        <input type="range" min="0" max="100" value="50" id="musicRange" class="w-full" />
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
                         <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
-                            <svg class="h-4 w-4"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                             <div class="leading-tight">
                                 <span aria-label="User"></span>
                                 <span aria-label="Role" class="text-bke-orange"></span>
                             </div>
                         </button>
-                        <div class="group/language relative" id="app-language">
-                            <button aria-label="current language" class="button-normal">
-                                <svg class="h-4 w-4"><use href="#globe-solid" fill="currentColor"></use></svg>
-                                <span>English</span>
-                            </button>
-                            <ul class="absolute right-0 top-full z-10 mt-2 hidden max-h-96 w-56 overflow-y-auto bg-white text-bke-darkpurple group-[.is-open]/language:block"></ul>
-                        </div>
-                        <button id="music-toggle" class="button-normal" title="background music switch">
-                            <svg class="h-4 w-4 group-[.is-playing]:hidden"><use href="#music-solid" fill="currentColor"></use></svg>
-                            <svg class="hidden h-4 w-4 group-[.is-playing]:block"><use href="#music-slash-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button id="open-menu" class="button-normal" title="open menu">
-                            <svg class="h-4 w-4"><use href="#bars-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button id="close-menu" class="button-normal hidden" title="close menu">
-                            <svg class="h-4 w-4"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                        <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
+                            <svg class="h-5 w-5"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
+                            <span>Log in</span>
                         </button>
                     </div>
                 </div>
@@ -80,16 +108,16 @@
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
                     <div class="relative mx-auto flex max-w-[1980px] gap-8 px-8 py-48">
-                        <div id="chapters-list" class="h-[70vh] w-1/2">
-                            <ul class="flex h-full flex-col overflow-y-auto px-4"></ul>
+                        <div id="chapters-list" class="h-[70vh] w-1/2 overflow-y-auto py-0.5">
+                            <ul class="flex flex-col px-4"></ul>
                         </div>
-                        <div id="chapters-description" class="h-[70vh] w-1/2"></div>
+                        <div id="chapters-description" class="h-[70vh] w-1/2 py-0.5"></div>
                     </div>
                     <div class="fixed bottom-8 right-8 flex gap-4">
                         <button class="button-prev" id="back-to-age-category">
                             <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-next focused" id="start-chapter">
+                        <button class="button-next shadow-border" id="start-chapter">
                             <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
@@ -101,14 +129,14 @@
                     <div class="mx-auto mt-48 flex max-w-[1920px] items-stretch gap-12 px-8 group-data-[view='game']/app:hidden">
                         <div id="big-screen" class="group relative isolate aspect-[16/9] w-3/4 bg-bke-darkpurple" data-view="video">
                             <div class="absolute bottom-full left-1/2 -z-10 h-48 w-32 -translate-x-1/2 bg-bke-darkpurple"></div>
-                            <div class="bg-big-screen-frame absolute -inset-4 -z-10 bg-[length:100%_100%] bg-no-repeat"></div>
-                            <div class="*:hidden *:w-full *:h-full" id="videos-container"></div>
+                            <div class="absolute -inset-4 -z-10 bg-big-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
+                            <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
                         </div>
                         <div id="small-screen" class="group relative isolate max-h-[767px] w-1/4 bg-bke-darkpurple" data-view="map">
                             <div class="absolute bottom-full left-1/2 -z-10 h-48 w-28 -translate-x-1/2 bg-bke-darkpurple"></div>
-                            <div class="bg-small-screen-frame absolute -inset-4 -z-10 bg-[length:100%_100%] bg-no-repeat"></div>
-                            <div class="bg-map-texture absolute inset-0 hidden bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
-                            <div class="bg-map-texture absolute inset-0 hidden bg-[length:100%_100%] bg-no-repeat group-data-[view='lever']:block"></div>
+                            <div class="absolute -inset-4 -z-10 bg-small-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
+                            <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
+                            <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='lever']:block"></div>
                         </div>
                     </div>
                     <div id="closed-caption" class="fixed bottom-20 w-full px-8 pr-48 group-data-[view='game']/app:hidden"></div>
@@ -116,76 +144,13 @@
                         <button class="button-prev" aria-label="prev page">
                             <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-next focused" aria-label="next page">
+                        <button class="button-next shadow-border" aria-label="next page">
                             <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                     <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
                 </div>
             </main>
-
-            <aside id="main-menu" class="hidden group-data-[view='main-menu']/app:block">
-                <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
-                <div class="absolute inset-0 grid place-content-center">
-                    <ul class="grid gap-8 text-center">
-                        <li>
-                            <a href="javascript:void(0)" id="open-settings" class="text-3xl transition hover:text-bke-orange">Settings</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" id="open-faq" class="text-3xl transition hover:text-bke-orange">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank" id="guide-link" class="text-3xl transition hover:text-bke-orange">How to</a>
-                        </li>
-                    </ul>
-                </div>
-                <div id="copyright" class="absolute bottom-8 right-8 text-sm"></div>
-            </aside>
-
-            <aside id="settings" class="hidden group-data-[view='settings']/app:block">
-                <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
-                <div class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48">
-                    <div class="flex gap-8">
-                        <button id="back-from-settings" class="button-round" title="back to main menu">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <div class="mt-2 flex flex-col gap-12">
-                            <h3 class="text-3xl font-bold">Settings</h3>
-                            <section id="app-video-quality" class="group/video-quality relative">
-                                <h5 class="mb-2 text-xl">Video quality:</h5>
-                                <div class="flex gap-2">
-                                    <button data-id="low" class="bg-bke-purple px-3 py-2 text-xl font-medium uppercase tracking-wider hover:bg-bke-orange hover:text-bke-purple group-data-[quality='low']/video-quality:bg-bke-orange group-data-[quality='low']/video-quality:text-bke-purple"></button>
-                                    <button data-id="medium" class="bg-bke-purple px-3 py-2 text-xl font-medium uppercase tracking-wider hover:bg-bke-orange hover:text-bke-purple group-data-[quality='medium']/video-quality:bg-bke-orange group-data-[quality='medium']/video-quality:text-bke-purple"></button>
-                                    <button data-id="high" class="bg-bke-purple px-3 py-2 text-xl font-medium uppercase tracking-wider hover:bg-bke-orange hover:text-bke-purple group-data-[quality='high']/video-quality:bg-bke-orange group-data-[quality='high']/video-quality:text-bke-purple"></button>
-                                </div>
-                            </section>
-                            <section id="SFX-setting" class="flex items-center gap-2">
-                                <h5 class="text-xl">Sound effects:</h5>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="sound-checkbox" class="sr-only" />
-                                    <label for="sound-checkbox" class="cursor-pointer bg-bke-purple px-3 py-2 text-xl font-medium uppercase tracking-wider hover:bg-bke-orange hover:text-bke-purple"></label>
-                                </div>
-                            </section>
-                            <section id="fullscreen-setting" class="flex items-center gap-2">
-                                <h5 class="text-xl">Full screen:</h5>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="fullscreen-checkbox" class="sr-only" />
-                                    <label for="fullscreen-checkbox" class="cursor-pointer bg-bke-purple px-3 py-2 text-xl font-medium uppercase tracking-wider hover:bg-bke-orange hover:text-bke-purple"></label>
-                                </div>
-                            </section>
-                            <section id="bg-music-setting">
-                                <h5 class="mb-2 text-xl">
-                                    <div class="inline-block">Background music:</div>
-                                    <span id="rangeValue" class="text-bke-orange">50</span>
-                                </h5>
-                                <div class="range">
-                                    <input type="range" min="0" max="100" value="50" id="musicRange" class="w-full" />
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </aside>
 
             <aside id="faq" class="hidden group-data-[view='faq']/app:block">
                 <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
@@ -201,6 +166,10 @@
                     </div>
                 </div>
             </aside>
+
+            <a href="#" target="_blank" id="guide-link" class="absolute bottom-2 left-8 transition hover:text-bke-orange group-data-[view='chapter']/app:hidden">How to</a>
+
+            <div id="copyright" class="absolute bottom-8 left-8 text-sm opacity-40 group-data-[view='chapter']/app:hidden"></div>
         </div>
 
         <script src="https://unpkg.com/@rive-app/canvas@1.0.102/rive.js"></script>
