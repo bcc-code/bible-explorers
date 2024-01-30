@@ -403,9 +403,12 @@ export default class World {
     fetchBtvVideos() {
         instance.selectedChapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
-                if (step.details.step_type == 'iris' && step.message?.video) instance.resources.loadTextureInBtvPlayer(step.message.video)
-
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
+                if (step.details.step_type == 'iris' && step.message?.video) {
+                    instance.resources.loadTextureInBtvPlayer(step.message.video)
+                }
+                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
+                    instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
+                }
             })
         })
     }
