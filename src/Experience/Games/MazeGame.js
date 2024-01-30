@@ -79,7 +79,7 @@ export default class MazeGame {
           </div>
           <div class="game-popup w-full grid place-items-center" id="game-popup">
             <h1 class="text-4xl font-semibold mb-8">${_s.miniGames.completed.title}</h1>
-            <button class="button-next focused" id="new-level">${_s.miniGames.nextRound}</button>
+            <button class="button-next shadow-border" id="new-level">${_s.miniGames.nextRound}</button>
           </div>
         </div>
         <div id="maze-canvas" class="game-canvas"></div>

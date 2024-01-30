@@ -28,6 +28,11 @@ export default {
                 'map-texture': "url('../../static/textures/map.jpg')",
                 'lever-texture': "url('../../static/textures/lever.png')",
             },
+            boxShadow: {
+                hover: '-4px 6px 0 theme(colors.bke.orange)',
+                focused: '-6px 8px 0 theme(colors.bke.orange), 0 0 0 2px theme(colors.bke.orange)',
+                border: '0 0 0 2px theme(colors.bke.orange)',
+            },
         },
     },
     plugins: [require('@tailwindcss/typography')],

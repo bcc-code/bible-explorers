@@ -173,7 +173,7 @@ export default class World {
                         </div>
                         <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange">${_s.offline.downloadFailed}</div>
                         <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple mt-4 px-2 py-1 rounded-md">
-                            <svg class="h-4 w-4"><use href="#check-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#check-solid" fill="currentColor"></use></svg>
                             <span>${_s.offline.availableOffline.title}</span>
                         </div>
                     </div>
@@ -223,7 +223,7 @@ export default class World {
 
                     const guide = _gl.elementFromHtml(`
                         <a class="inline-flex items-center mt-4 mr-4 gap-2 transition duration-300 text-bke-orange hover:text-bke-orange/80" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="h-4 w-4"><use href="#book-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#book-solid" fill="currentColor"></use></svg>
                             <span>${_s.chapter.activityDescLabel}</span>
                         </a>`)
 
@@ -238,26 +238,26 @@ export default class World {
             details.append(info)
 
             if (numberOfEpisodes != 1) {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
                 info.append(videoLabel)
             } else {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
                 info.append(videoLabel)
             }
 
             if (numberOfTasks != 1) {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
                 info.append(taskLabel)
             } else {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
                 info.append(taskLabel)
             }
 
             if (numberOfQuizes != 1) {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
                 info.append(quizLabel)
             } else {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
                 info.append(quizLabel)
             }
         }
