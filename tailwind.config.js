@@ -14,10 +14,10 @@ export default {
         extend: {
             colors: {
                 bke: {
-                    darkpurple: '#0c0a16',
-                    purple: '#3e306d',
-                    orange: '#fcb04e',
-                    blue: '#0396e3',
+                    darkpurple: 'hsl(250, 38%, 6%)',
+                    purple: 'hsl(254, 39%, 31%)',
+                    orange: 'hsl(34, 97%, 65%)',
+                    blue: 'hsl(201, 97%, 45%)',
                 },
             },
             backgroundImage: {
