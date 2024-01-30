@@ -130,7 +130,7 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-default" data-slug="${category.slug}">${category.name}</button></li>`)
+        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-normal min-w-40" data-slug="${category.slug}">${category.name}</button></li>`)
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 
@@ -160,8 +160,8 @@ export default class World {
                     <div class="chapter-image absolute right-0 top-0 w-40 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
                     <h1 class="text-4xl font-bold">${chapter.title}</h1>
                     <div class="text-xl font-medium opacity-70">${chapter.date}</div>
-                    <div class="hidden chapter-status">
-                        <button class="chapter__offline button-round absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
+                    <div class="hidden chapter-status mt-2">
+                        <button class="chapter__offline button-normal absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
                             <svg class="h-5 w-5"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="chapter__downloading w-1/2 hidden group-[.downloading]:flex items-center gap-2">
@@ -172,8 +172,8 @@ export default class World {
                             <span class="downloading-label"></span>
                         </div>
                         <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange">${_s.offline.downloadFailed}</div>
-                        <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple mt-4 px-2 py-1 rounded-md">
-                            <svg class="h-4 w-4"><use href="#check-solid" fill="currentColor"></use></svg>
+                        <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple px-2 py-1 rounded-md">
+                            <svg class="h-5 w-5"><use href="#check-solid" fill="currentColor"></use></svg>
                             <span>${_s.offline.availableOffline.title}</span>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ export default class World {
         })
 
         const details = _gl.elementFromHtml(`
-            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
+            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple transition shadow-[0_0_0_2px_theme(colors.bke.orange)] hover:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
                 <h2 class="text-3xl font-bold my-4">${chapter.title}</h2>
                     <div class="mb-6 py-4 border-b-2 border-white/20 text-xl">
                     <div>${chapter.content}</div>
@@ -222,8 +222,8 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="inline-flex items-center text-xl mt-4 px-2 py-1 border-2 gap-1 border-bke-orange rounded-lg hover:bg-bke-orange hover:text-bke-purple" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="h-4 w-4"><use href="#book-solid" fill="currentColor"></use></svg>
+                        <a class="inline-flex items-center mt-4 mr-4 gap-2 transition duration-300 text-bke-orange hover:text-bke-orange/80" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg class="h-5 w-5"><use href="#book-solid" fill="currentColor"></use></svg>
                             <span>${_s.chapter.activityDescLabel}</span>
                         </a>`)
 
@@ -233,31 +233,31 @@ export default class World {
         }
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-            const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-4 my-4"></ul>`)
+            const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-8 my-4"></ul>`)
 
             details.append(info)
 
             if (numberOfEpisodes != 1) {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
                 info.append(videoLabel)
             } else {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
                 info.append(videoLabel)
             }
 
             if (numberOfTasks != 1) {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
                 info.append(taskLabel)
             } else {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
                 info.append(taskLabel)
             }
 
             if (numberOfQuizes != 1) {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
                 info.append(quizLabel)
             } else {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-4 w-4"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
                 info.append(quizLabel)
             }
         }
@@ -403,9 +403,12 @@ export default class World {
     fetchBtvVideos() {
         instance.selectedChapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
-                if (step.details.step_type == 'iris' && step.message?.video) instance.resources.loadTextureInBtvPlayer(step.message.video)
-
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
+                if (step.details.step_type == 'iris' && step.message?.video) {
+                    instance.resources.loadTextureInBtvPlayer(step.message.video)
+                }
+                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
+                    instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
+                }
             })
         })
     }

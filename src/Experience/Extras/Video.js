@@ -31,13 +31,13 @@ export default class Video {
             return document.getElementById(id)
         }
 
-        // instance.hasSkipBtn = () => {
-        //   return instance.videoJsEl().querySelector('.skip-video') != null;
-        // };
+        instance.hasSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video') != null
+        }
 
-        // instance.getSkipBtn = () => {
-        //   return instance.videoJsEl().querySelector('.skip-video');
-        // };
+        instance.getSkipBtn = () => {
+            return instance.videoJsEl().querySelector('.skip-video')
+        }
 
         instance.playingVideoId = null
         instance.videosContainer = document.querySelector('#videos-container')
@@ -47,6 +47,7 @@ export default class Video {
         instance.playingVideoId = id
 
         // First, remove all previous event listeners - if any
+        instance.video().off('play', instance.setFullscreenIfNecessary)
         instance.video().off('ended', instance.finish)
 
         // Always start new loaded videos from the beginning
@@ -55,10 +56,10 @@ export default class Video {
         const videoQuality = instance.getVideoQuality()
         instance.resources.videoPlayers[id].setVideoQuality(videoQuality)
 
+        instance.video().on('play', instance.setFullscreenIfNecessary)
         instance.video().on('ended', instance.finish)
 
         instance.focus()
-        // instance.addSkipBtn();
     }
 
     //#region Actions
@@ -86,6 +87,8 @@ export default class Video {
 
         instance.pause()
 
+        if (instance.video().isFullscreen_) instance.video().exitFullscreen()
+
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
 
@@ -96,7 +99,7 @@ export default class Video {
     }
 
     finish() {
-        // if (instance.hasSkipBtn()) instance.getSkipBtn().remove();
+        if (instance.hasSkipBtn()) instance.getSkipBtn().remove()
 
         instance.defocus()
         instance.world.program.nextStep()
@@ -118,11 +121,18 @@ export default class Video {
         }
     }
 
+    setFullscreenIfNecessary() {
+        if (!this.isFullscreen_ && [...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
+            this.requestFullscreen()
+            instance.addSkipBtn()
+        }
+    }
+
     addSkipBtn() {
         if (instance.hasSkipBtn()) return
 
         const skipVideo = document.createElement('div')
-        skipVideo.className = 'button-next less-focused'
+        skipVideo.className = 'skip-video button-normal less-focused z-10 absolute right-8 top-8'
         skipVideo.innerText = _s.miniGames.skip
         skipVideo.addEventListener('click', instance.finish)
         instance.videoJsEl().appendChild(skipVideo)

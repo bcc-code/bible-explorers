@@ -41,14 +41,14 @@ export default class Quiz {
                     </div>
                     <ul class="quiz-items"></ul>
                     <div class="quiz-nav ${questions.length == 1 ? 'hide - nav' : ''}">
-                        <button class="button-round" aria-label="prev question">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                        <button class="button-normal" aria-label="prev question">
+                            <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button type="submit" class="button-next focused" aria-label="submit form">
+                        <button type="submit" class="button-normal shadow-border" aria-label="submit form">
                             ${_s.task.submit}
                         </button>
-                        <button class="button-round focused" aria-label="next question">
-                            <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+                        <button class="button-normal shadow-border" aria-label="next question">
+                            <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ export default class Quiz {
         const next = quiz.querySelector('[aria-label="next question"')
 
         questions.forEach((q, qIdx) => {
-            const quizStep = _gl.elementFromHtml(`<li class="quiz-step button-round focused ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
+            const quizStep = _gl.elementFromHtml(`<li class="quiz-step button-normal shadow-border ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
             const quizItem = _gl.elementFromHtml(`
                 <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
                     <div class="quiz-question">
@@ -120,7 +120,7 @@ export default class Quiz {
         instance.experience.interface.gameContainer.append(quiz)
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
 
         let questionsAnswered = 0
         let quizProgress = 0
@@ -255,7 +255,7 @@ export default class Quiz {
 
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

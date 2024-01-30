@@ -20,30 +20,29 @@ export default class VideoWithQuestion {
         instance.world = instance.experience.world
         instance.selectedChapter = instance.world.selectedChapter
         instance.program = instance.world.program
+        instance.video = instance.program.video
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.video_with_question
 
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
 
-        const video = _gl.elementFromHtml(`<div id="video-question" class="aspect-video"><div id="video-${instance.data.video}" class="video"></div></div>`)
+        if (instance.data.video) {
+            instance.video.load('texture-' + instance.data.video)
+            instance.video.play()
+        }
 
         const content = _gl.elementFromHtml(
             `<div id="video-with-question" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
                 <h1 class="text-4xl font-semibold">${instance.data.question}</h1>
                 <textarea class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-xl"></textarea>
-                <button class="button-action" type="submit" aria-label="submit question">${_s.task.submit}</button>
+                <button class="button-normal" type="submit" aria-label="submit question">${_s.task.submit}</button>
             </div>
             `
         )
 
-        instance.experience.interface.bigScreen.append(video)
         instance.experience.interface.smallScreen.append(content)
-
         instance.experience.interface.smallScreen.setAttribute('data-view', 'game-description')
-
-        // Load BTV Player
-        instance.resources.loadVideoInBtvPlayer(instance.data.video)
 
         const submitQuestion = content.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {
@@ -62,7 +61,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
     }
 
     saveAnswers() {
@@ -92,7 +91,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
         document.getElementById('video-question')?.remove()
-        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

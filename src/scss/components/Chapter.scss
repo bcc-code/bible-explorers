@@ -1,58 +1,5 @@
 .chapter {
 
-    // position: relative;
-    // transition: var(--transition-duration) var(--transition-timing);
-    // background-color: var(--bg-with-opacity);
-    // background-size: auto 120%;
-    // background-position: right;
-    // background-repeat: no-repeat;
-    // cursor: pointer;
-    // min-height: 156px;
-    // pointer-events: all;
-
-    // &::before {
-    //     content: '';
-    //     position: absolute;
-    //     left: 0;
-    //     top: 0;
-    //     right: 0;
-    //     bottom: 0;
-    //     background: linear-gradient(to right, var(--clr-text) 55%, rgba(62, 48, 109, 0.001));
-    //     border-radius: 1rem;
-    // }
-
-    // &:not(:last-child) {
-    //     margin-bottom: 1rem;
-    // }
-
-
-    // &__states {
-    //     position: relative;
-    //     display: none;
-    //     margin-left: 2rem;
-    //     font-size: 0.8rem;
-    //     margin-bottom: 1rem;
-    // }
-
-    // &__offline {
-    //     display: inline-flex;
-    //     align-items: center;
-    //     color: #fff;
-    //     background-color: var(--clr-text);
-    //     box-shadow: 0 0 0 2px var(--clr-secondary);
-    //     padding: 0.25rem 0.5rem;
-    //     border-radius: 0.25rem;
-
-    //     svg {
-    //         margin-right: 0.25rem;
-    //     }
-
-    //     &:hover {
-    //         color: var(--clr-text);
-    //         background-color: var(--clr-secondary);
-    //     }
-    // }
-
     &__downloading {
         display: none;
         width: 100%;
@@ -93,69 +40,6 @@
         }
 
     }
-
-    // &__downloaded {
-    //     display: none;
-    //     align-items: center;
-    //     color: var(--clr-text);
-    //     background-color: var(--clr-secondary);
-    //     box-shadow: 0 0 0 2px var(--clr-secondary);
-    //     padding: 0.25rem 0.5rem;
-    //     border-radius: 0.25rem;
-
-    // }
-
-    // &.downloading {
-    //     .chapter__states {
-    //         width: clamp(300px, calc(100% - var(--app-padding)), 480px);
-    //     }
-
-    //     .chapter__offline {
-    //         display: none;
-    //     }
-
-    //     .chapter__downloading {
-    //         display: flex;
-    //     }
-    // }
-
-    // &.downloaded {
-
-    //     .chapter__offline,
-    //     .chapter__downloading {
-    //         display: none;
-    //     }
-
-    //     .chapter__downloaded {
-    //         display: inline-flex;
-
-    //         .icon,
-    //         .separator {
-    //             margin-left: 0.5rem;
-    //         }
-
-    //         .icon:hover {
-    //             font-weight: bold;
-    //         }
-    //     }
-    // }
-
-    // &-selected+&__content {
-    //     opacity: 1;
-    //     visibility: visible;
-    // }
-
-    // .chapter-selected &:not(.selected) {
-    //     opacity: 0.25;
-    // }
-
-    // .chapter-selected &:hover {
-    //     opacity: 1;
-    // }
-
-    // .chapter-selected &.selected {
-    //     border-color: var(--clr-secondary);
-    // }
 
 
 
