@@ -53,7 +53,7 @@ export default class GameDescription {
     }
 
     setHtml() {
-        const startGame = _gl.elementFromHtml(`<button class="button-normal">${_s.miniGames.startGame}</button>`)
+        const startGame = _gl.elementFromHtml(`<button class="button-normal w-full">${_s.miniGames.startGame}</button>`)
         startGame.addEventListener('click', instance.startGame)
 
         const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-8" id="task-image">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>`)
