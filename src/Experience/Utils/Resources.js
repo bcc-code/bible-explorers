@@ -255,6 +255,9 @@ export default class Resources extends EventEmitter {
             },
         })
 
+        // Hide controlbar for textures
+        if (!videoName.includes('episode')) player.controlBar.hide()
+
         resources.videoPlayers[videoName] = player
     }
 
