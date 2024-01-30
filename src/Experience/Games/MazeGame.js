@@ -79,7 +79,7 @@ export default class MazeGame {
           </div>
           <div class="game-popup w-full grid place-items-center" id="game-popup">
             <h1 class="text-4xl font-semibold mb-8">${_s.miniGames.completed.title}</h1>
-            <button class="button-next shadow-border" id="new-level">${_s.miniGames.nextRound}</button>
+            <button class="button-normal shadow-border" id="new-level">${_s.miniGames.nextRound}</button>
           </div>
         </div>
         <div id="maze-canvas" class="game-canvas"></div>
@@ -89,7 +89,7 @@ export default class MazeGame {
         document.querySelector('#game-popup').style.display = 'none'
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
     }
 
     setEventListeners() {
@@ -561,8 +561,8 @@ export default class MazeGame {
             document.querySelector('#game-popup h1').textContent = _s.miniGames.completed.title
             document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound
 
-            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-next focused'
-            instance.experience.navigation.next.className = 'button-next focused'
+            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-normal shadow-border'
+            instance.experience.navigation.next.className = 'button-normal shadow-border'
             instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1

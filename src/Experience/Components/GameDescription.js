@@ -53,7 +53,7 @@ export default class GameDescription {
     }
 
     setHtml() {
-        const startGame = _gl.elementFromHtml(`<button class="button-action">${_s.miniGames.startGame}</button>`)
+        const startGame = _gl.elementFromHtml(`<button class="button-normal">${_s.miniGames.startGame}</button>`)
         startGame.addEventListener('click', instance.startGame)
 
         const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-8" id="task-image">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>`)
@@ -72,7 +72,7 @@ export default class GameDescription {
         instance.experience.interface.smallScreen.setAttribute('data-view', '')
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-next less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused'
     }
 
     startGame() {
@@ -111,7 +111,7 @@ export default class GameDescription {
         instance.experience.interface.bigScreen.setAttribute('data-view', 'video')
         instance.experience.interface.smallScreen.setAttribute('data-view', 'map')
 
-        instance.experience.navigation.next.className = 'button-next focused'
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }
