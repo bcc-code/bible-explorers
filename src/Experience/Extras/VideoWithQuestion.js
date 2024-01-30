@@ -36,7 +36,7 @@ export default class VideoWithQuestion {
             `<div id="video-with-question" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
                 <h1 class="text-4xl font-semibold">${instance.data.question}</h1>
                 <textarea class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-xl"></textarea>
-                <button class="button-normal" type="submit" aria-label="submit question">${_s.task.submit}</button>
+                <button class="button-normal w-full" type="submit" aria-label="submit question">${_s.task.submit}</button>
             </div>
             `
         )

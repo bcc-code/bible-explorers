@@ -95,7 +95,6 @@ export default class MultipleChoiceWithPicture {
         })
 
         instance.experience.interface.smallScreen.append(multipleChoiceWithPicture)
-
         instance.experience.interface.smallScreen.setAttribute('data-view', '')
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
