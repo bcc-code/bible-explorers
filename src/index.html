@@ -25,7 +25,7 @@
                     </a>
                     <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-4">
-                        <div class="group/languages relative group-data-[view='chapter']/app:hidden" id="app-language">
+                        <div class="group/languages relative group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" id="app-language">
                             <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
                                 <svg class="pointer-events-none h-5 w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span class="pointer-events-none">English</span>
@@ -70,14 +70,14 @@
                                 </section>
                             </div>
                         </div>
-                        <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
+                        <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
                             <svg class="h-5 w-5"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                             <div class="leading-tight">
                                 <span aria-label="User"></span>
                                 <span aria-label="Role" class="text-bke-orange"></span>
                             </div>
                         </button>
-                        <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden" disabled="true">
+                        <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
                             <svg class="h-5 w-5"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
                             <span>Log in</span>
                         </button>
@@ -115,10 +115,10 @@
                     </div>
                     <div class="fixed bottom-8 right-8 flex gap-4">
                         <button class="button-prev" id="back-to-age-category">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <button class="button-next shadow-border" id="start-chapter">
-                            <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </div>
@@ -142,10 +142,10 @@
                     <div id="closed-caption" class="fixed bottom-20 w-full px-8 pr-48 group-data-[view='game']/app:hidden"></div>
                     <div id="chapter-navigation" class="fixed bottom-8 right-8 z-30 flex gap-4">
                         <button class="button-prev" aria-label="prev page">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <button class="button-next shadow-border" aria-label="next page">
-                            <svg class="h-4 w-4"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                     <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
@@ -157,7 +157,7 @@
                 <div class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48">
                     <div class="flex gap-8">
                         <button id="back-from-faq" class="button-round" title="back to main menu">
-                            <svg class="h-4 w-4"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="mt-2">
                             <h3 class="text-3xl font-bold">FAQ</h3>

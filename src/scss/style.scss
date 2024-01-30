@@ -57,7 +57,8 @@
     @apply shadow-border;
 }
 
-#app[data-view="chapter"] {
+#app[data-view="chapter"],
+#app[data-view="game"] {
 
     .toggle-music,
     .toggle-settings:not(.active),
