@@ -31,19 +31,6 @@
   }
 
   &-timer {
-    color: #fff;
-    background-color: var(--bg-dark-color);
-    position: relative;
-    padding: 0.5rem var(--app-padding);
-    border-radius: 0.5rem;
-    border: var(--app-border-size) solid var(--clr-primary);
-    display: flex;
-    justify-content: center;
-    gap: 0.25rem;
-    min-width: 6rem;
-  }
-
-  &-timer {
     &.danger {
       border-color: red;
       font-weight: bold;
