@@ -32,6 +32,8 @@ export default {
                 hover: '-4px 6px 0 theme(colors.bke.orange)',
                 focused: '-6px 8px 0 theme(colors.bke.orange), 0 0 0 2px theme(colors.bke.orange)',
                 border: '0 0 0 2px theme(colors.bke.orange)',
+                wrong: '-6px 8px 0 theme(colors.red.500), 0 0 0 2px theme(colors.red.500)',
+                correct: '-6px 8px 0 theme(colors.green.500), 0 0 0 2px theme(colors.green.500)',
             },
         },
     },

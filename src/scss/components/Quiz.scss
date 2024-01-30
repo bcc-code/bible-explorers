@@ -73,14 +73,6 @@
         width: clamp(600px, 80vw, 90em);
     }
 
-    &-item {
-        display: none;
-
-        &.visible {
-            display: flex;
-        }
-    }
-
     &-nav {
         margin-top: 1rem;
         width: clamp(600px, 80vw, 90em);
