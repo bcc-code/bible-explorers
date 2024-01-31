@@ -14,54 +14,42 @@ export default class Congrats {
     toggleSummary() {
         instance.destroy()
         instance.experience.navigation.prev.addEventListener('click', instance.destroy)
+        instance.experience.navigation.next.addEventListener('click', instance.destroy)
         instance.world.audio.playSound('task-completed')
 
-        instance.experience.setAppView('game')
-
         const summary = _gl.elementFromHtml(`
-            <div class="modal">
-                <div class="container">
-                    <div class="summary">
-                        <h1 class="text-4xl font-semibold">${_s.miniGames.completed.title}</h1>
-                    </div>
-                </div>
+            <div class="modal h-full grid place-items-center">
+                <h1 class="text-4xl font-semibold">${_s.miniGames.completed.title}</h1>
             </div>
         `)
 
-        instance.experience.interface.gameContainer.append(summary)
+        instance.experience.interface.bigScreen.append(summary)
     }
 
     toggleBibleCardsReminder() {
         instance.destroy()
         instance.world.program.destroy()
+        instance.experience.navigation.prev.addEventListener('click', instance.toggleSummary)
         instance.experience.navigation.next.addEventListener('click', instance.toggleCongrats)
-
-        instance.experience.setAppView('game')
 
         const bibleCards = _gl.elementFromHtml(`
             <div class="modal">
-                <div class="container">
-                    <div class="bibleCards">
-                        <h1 class="text-4xl font-semibold">${_s.journey.bibleCards.message}</h1>
-                        <video class="mt-8" id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
-                    </div>
-                </div>
+                <video class="aspect-video w-full" id="bibleCards" src="games/bible_cards.webm" muted autoplay loop></video>
             </div>
         `)
 
-        instance.experience.interface.gameContainer.append(bibleCards)
+        instance.experience.interface.bigScreen.append(bibleCards)
     }
 
     toggleCongrats() {
         instance.destroy()
+        instance.experience.navigation.prev.addEventListener('click', instance.toggleBibleCardsReminder)
         instance.experience.navigation.next.addEventListener('click', instance.finishChapter)
         instance.world.audio.playSound('congrats')
         instance.experience.celebrate({
             particleCount: 100,
             spread: 160,
         })
-
-        instance.experience.setAppView('game')
 
         const chapterCongrats = _gl.elementFromHtml(`
             <div class="modal">
@@ -88,7 +76,7 @@ export default class Congrats {
             </div>
         `)
 
-        instance.experience.interface.gameContainer.append(chapterCongrats)
+        instance.experience.interface.bigScreen.append(chapterCongrats)
     }
 
     finishChapter() {
@@ -98,8 +86,6 @@ export default class Congrats {
 
     destroy() {
         document.querySelector('.modal')?.remove()
-
-        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)

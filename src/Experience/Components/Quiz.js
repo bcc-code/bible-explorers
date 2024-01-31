@@ -121,6 +121,8 @@ export default class Quiz {
                             spread: 160,
                         })
 
+                        e.target.closest('.quiz-item').style.pointerEvents = 'none'
+
                         instance.nextQuestion.disabled = false
                     } else {
                         instance.audio.playSound('wrong')
