@@ -34,7 +34,7 @@
                                 <svg class="pointer-events-none h-5 w-5 group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
                                 <svg class="pointer-events-none hidden h-5 w-5 group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                             </button>
-                            <div class="shadow-focused absolute right-0 mt-4 hidden w-60 bg-bke-purple p-4 group-[.dropdown-is-visible]/settings:block">
+                            <div class="absolute right-0 mt-4 hidden w-60 bg-bke-purple p-4 shadow-focused group-[.dropdown-is-visible]/settings:block">
                                 <section id="app-video-quality" class="group/video-quality">
                                     <h5>Video quality:</h5>
                                     <div class="mt-2 flex gap-2">
@@ -66,7 +66,7 @@
                                 <svg class="pointer-events-none h-5 w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span class="pointer-events-none">English</span>
                             </button>
-                            <div class="shadow-focused absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-4 group-[.dropdown-is-visible]/languages:block">
+                            <div class="absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-4 shadow-focused group-[.dropdown-is-visible]/languages:block">
                                 <ul></ul>
                             </div>
                         </div>
@@ -136,10 +136,10 @@
                     </div>
                     <div id="closed-caption" class="fixed bottom-20 w-full px-8 pr-48 group-data-[view='game']/app:hidden"></div>
                     <div id="chapter-navigation" class="fixed bottom-8 right-8 z-30 flex gap-4">
-                        <button class="button-normal" aria-label="prev page">
+                        <button class="button-normal" id="prev-step">
                             <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-normal shadow-border" aria-label="next page">
+                        <button class="button-normal shadow-border" id="next-step">
                             <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>

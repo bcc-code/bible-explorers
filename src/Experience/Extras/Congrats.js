@@ -29,7 +29,6 @@ export default class Congrats {
     toggleBibleCardsReminder() {
         instance.destroy()
         instance.world.program.destroy()
-        instance.experience.navigation.prev.addEventListener('click', instance.toggleSummary)
         instance.experience.navigation.next.addEventListener('click', instance.toggleCongrats)
 
         const bibleCards = _gl.elementFromHtml(`
@@ -39,11 +38,11 @@ export default class Congrats {
         `)
 
         instance.experience.interface.bigScreen.append(bibleCards)
+        instance.experience.navigation.prev.disabled = true
     }
 
     toggleCongrats() {
         instance.destroy()
-        instance.experience.navigation.prev.addEventListener('click', instance.toggleBibleCardsReminder)
         instance.experience.navigation.next.addEventListener('click', instance.finishChapter)
         instance.world.audio.playSound('congrats')
         instance.experience.celebrate({

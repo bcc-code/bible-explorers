@@ -100,7 +100,7 @@ export default class World {
 
         // Remove if existing chapters
         if (instance.experience.interface.chaptersList.querySelector('ul').childNodes.length !== 0) {
-            instance.chapterSelectWrapper.querySelectorAll('.chapter').forEach((item) => {
+            instance.experience.interface.chaptersList.querySelectorAll('.chapter').forEach((item) => {
                 item.remove()
             })
         }
