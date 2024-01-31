@@ -43,8 +43,8 @@ export default class Experience {
         this.gameIsOn = false
 
         this.navigation = {
-            prev: document.querySelector('[aria-label="prev page"]'),
-            next: document.querySelector('[aria-label="next page"]'),
+            prev: document.querySelector('#prev-step'),
+            next: document.querySelector('#next-step'),
             container: document.querySelector('#chapter-navigation'),
         }
 
