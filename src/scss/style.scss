@@ -21,7 +21,7 @@
 @layer components {
 
     .button-normal {
-        @apply flex gap-4 h-14 min-w-14 items-center justify-center cursor-pointer text-lg bg-bke-purple px-4 tracking-wider transition hover:shadow-hover disabled:pointer-events-none disabled:opacity-20;
+        @apply flex gap-2 h-10 min-w-10 px-2 text-sm xl:px-4 xl:gap-4 xl:h-14 xl:min-w-14 xl:text-lg items-center justify-center cursor-pointer bg-bke-purple tracking-wider transition hover:shadow-hover disabled:pointer-events-none disabled:opacity-20;
     }
 
     .less-focused {

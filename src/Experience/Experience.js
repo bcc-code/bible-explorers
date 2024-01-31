@@ -49,8 +49,8 @@ export default class Experience {
         }
 
         this.icons = {
-            prev: `<svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
-            next: `<svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
+            prev: `<svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
+            next: `<svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
         }
 
         this.interface = {

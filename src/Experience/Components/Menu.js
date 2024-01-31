@@ -36,7 +36,7 @@ export default class Menu {
         selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
         selectLangDropdown.querySelectorAll('li').forEach((item) => {
-            item.className = 'py-2 px-3 text-xl font-medium cursor-pointer transition hover:bg-white/20'
+            item.className = 'px-2 py-1 xl:py-2 xl:px-3 text-base xl:text-xl font-medium cursor-pointer transition hover:bg-white/20'
         })
 
         const selectVQ = document.querySelector('#app-video-quality')

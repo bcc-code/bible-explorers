@@ -77,13 +77,13 @@ export default class Quiz {
 
         instance.prevQuestion = _gl.elementFromHtml(
             `<button class="button-normal" disabled>
-                <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
             </button>`
         )
 
         instance.nextQuestion = _gl.elementFromHtml(
             `<button class="button-normal" disabled>
-                <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+                <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
             </button>`
         )
 
