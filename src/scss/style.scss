@@ -8,13 +8,13 @@
 @import "tailwindcss/components";
 
 @import "./components/Chapter.scss";
-// @import "./components/Tooltip.scss";
+@import "./components/Tooltip.scss";
 @import "./components/Modal.scss";
 @import "./components/Dialogue.scss";
 @import "./components/MultipleChoice.scss";
 @import "./components/Task.scss";
-// @import "./components/Game.scss";
-// @import "./components/Unlock.scss";
+@import "./components/Game.scss";
+@import "./components/Unlock.scss";
 
 @import "tailwindcss/utilities";
 
