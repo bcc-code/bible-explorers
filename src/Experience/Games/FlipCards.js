@@ -44,14 +44,14 @@ export default class FlipCards {
 
         startGame.addEventListener('click', instance.toggleFlipCards)
 
-        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-2 xl:p-4 2xl:p-8" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>`)
+        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-2 xl:p-4 tv:p-8" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>`)
 
         const taskContent = _gl.elementFromHtml(
-            `<div class="p-2 xl:p-4 2xl:p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
-                <h1 class="text-2xl 2xl:text-3xl font-bold">
+            `<div class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
+                <h1 class="text-2xl tv:text-3xl font-bold">
                     ${instance.confirmationScreen.cs_title}
                 </h1>
-                <p class="my-4 2xl:my-8 2xl:text-xl">${instance.confirmationScreen.cs_description}</p>
+                <p class="my-4 tv:my-8 tv:text-xl">${instance.confirmationScreen.cs_description}</p>
             </div>`
         )
 
@@ -124,7 +124,7 @@ export default class FlipCards {
                       </div>
                       <div class="card-input bg-bke-purple">
                           <div class="icon">
-                              <svg class="w-3 h-3 2xl:w-5 2xl:h-5">
+                              <svg class="w-3 h-3 tv:w-5 tv:h-5">
                                   <use href="#book-solid" fill="currentColor"></use>
                               </svg>
                           </div>

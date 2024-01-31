@@ -12,6 +12,9 @@ export default {
             DEFAULT: '300ms',
         },
         extend: {
+            screens: {
+                tv: '1920px',
+            },
             colors: {
                 bke: {
                     darkpurple: 'hsl(250, 38%, 6%)',

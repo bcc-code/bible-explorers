@@ -19,20 +19,20 @@
     <body class="group/body">
         <div id="app" class="group/app fixed inset-0 overflow-hidden">
             <header id="header" class="absolute left-0 top-0 hidden w-full">
-                <div class="flex w-full justify-between p-4 xl:p-8">
+                <div class="tv:p-8 flex w-full justify-between p-4">
                     <a href="javascript:void(0)" id="home-button" class="z-50">
-                        <img src="./textures/bible-kids-explorers.svg" alt="" class="h-12 xl:h-16" />
+                        <img src="./textures/bible-kids-explorers.svg" alt="" class="tv:h-16 h-12" />
                     </a>
                     <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
-                    <div class="z-10 flex items-center gap-2 xl:gap-4">
+                    <div class="tv:gap-4 z-10 flex items-center gap-2">
                         <button class="button-normal toggle-music group/audio">
-                            <svg class="h-3 w-3 group-[.is-playing]/audio:hidden xl:h-5 xl:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
-                            <svg class="hidden h-3 w-3 group-[.is-playing]/audio:block xl:h-5 xl:w-5"><use href="#music-slash-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3 group-[.is-playing]/audio:hidden"><use href="#music-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 hidden h-3 w-3 group-[.is-playing]/audio:block"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="group/settings relative">
                             <button class="button-normal toggle-settings group-[.dropdown-is-visible]/settings:shadow-border" aria-pressed="false">
-                                <svg class="pointer-events-none h-3 w-3 group-[.dropdown-is-visible]/settings:hidden xl:h-5 xl:w-5"><use href="#gear-solid" fill="currentColor"></use></svg>
-                                <svg class="pointer-events-none hidden h-3 w-3 group-[.dropdown-is-visible]/settings:block xl:h-5 xl:w-5"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                                <svg class="tv:h-5 tv:w-5 pointer-events-none h-3 w-3 group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
+                                <svg class="tv:h-5 tv:w-5 pointer-events-none hidden h-3 w-3 group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                             </button>
                             <div class="absolute right-0 mt-4 hidden w-60 bg-bke-purple p-2 shadow-focused group-[.dropdown-is-visible]/settings:block xl:p-4">
                                 <section id="app-video-quality" class="group/video-quality">
@@ -60,14 +60,14 @@
                                     </div>
                                 </section>
                                 <a href="#" target="_blank" id="guide-link" class="mt-8 hidden items-center justify-center gap-2 bg-bke-purple bg-white/20 py-2 text-sm uppercase transition hover:bg-bke-orange hover:text-bke-purple xl:text-base">
-                                    <svg class="pointer-events-none h-3 w-3 xl:h-5 xl:w-5"><use href="#book-solid" fill="currentColor"></use></svg>
+                                    <svg class="tv:h-5 tv:w-5 pointer-events-none h-3 w-3"><use href="#book-solid" fill="currentColor"></use></svg>
                                     <span>How to</span>
                                 </a>
                             </div>
                         </div>
                         <div class="group/languages relative group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" id="app-language">
                             <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
-                                <svg class="pointer-events-none h-3 w-3 xl:h-5 xl:w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
+                                <svg class="tv:h-5 tv:w-5 pointer-events-none h-3 w-3"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span class="pointer-events-none">English</span>
                             </button>
                             <div class="absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-2 shadow-focused group-[.dropdown-is-visible]/languages:block xl:p-4">
@@ -75,14 +75,14 @@
                             </div>
                         </div>
                         <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                             <div class="leading-tight">
                                 <span aria-label="User"></span>
                                 <span aria-label="Role" class="text-bke-orange"></span>
                             </div>
                         </button>
                         <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
                             <span>Log in</span>
                         </button>
                     </div>
@@ -100,7 +100,7 @@
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
                     <article class="fixed inset-0 grid place-content-center text-balance text-center">
-                        <h1 class="max-w-screen-sm text-3xl font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md xl:text-4xl 2xl:max-w-screen-lg 2xl:text-5xl">Join time travels and explore the book that can answer every question</h1>
+                        <h1 class="tv:max-w-screen-lg tv:text-5xl max-w-screen-sm text-3xl font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md xl:text-4xl">Join time travels and explore the book that can answer every question</h1>
                         <ul class="mt-4 flex justify-center gap-4 xl:mt-8 xl:gap-8"></ul>
                     </article>
                 </div>
@@ -108,18 +108,18 @@
                     <div class="fixed inset-0 bg-control-room bg-cover bg-center">
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
-                    <div class="relative mx-auto flex max-w-[1980px] gap-4 px-4 py-24 xl:gap-6 xl:px-6 xl:py-32 2xl:gap-8 2xl:px-8 2xl:py-48">
+                    <div class="tv:gap-8 tv:px-8 tv:pt-32 relative mx-auto flex max-w-[1980px] gap-4 px-4 pb-4 pt-24">
                         <div id="chapters-list" class="h-[70vh] w-1/2 overflow-y-auto px-1.5 py-0.5">
                             <ul class="flex flex-col"></ul>
                         </div>
                         <div id="chapters-description" class="h-[70vh] w-1/2 py-0.5"></div>
                     </div>
-                    <div class="fixed bottom-4 right-4 flex gap-4 2xl:bottom-8 2xl:right-8">
+                    <div class="tv:bottom-8 tv:right-8 fixed bottom-4 right-4 flex gap-4">
                         <button class="button-normal" id="back-to-age-category">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <button class="button-normal shadow-border" id="start-chapter">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                     <div class="fixed inset-0 -z-10 bg-chapter-room bg-cover bg-center">
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
-                    <div class="mx-auto mt-24 flex max-w-[1920px] items-stretch gap-12 px-8 group-data-[view='game']/app:hidden xl:mt-32 2xl:mt-48">
+                    <div class="tv:mt-32 tv:px-8 mx-auto mt-24 flex max-w-[1920px] items-stretch gap-12 px-8 group-data-[view='game']/app:hidden">
                         <div id="big-screen" class="group relative isolate aspect-[16/9] w-3/4" data-view="video">
                             <div class="absolute -inset-4 -z-10 bg-big-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
                             <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
@@ -138,13 +138,13 @@
                             <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='lever']:block"></div>
                         </div>
                     </div>
-                    <div id="closed-caption" class="fixed bottom-4 w-3/4 px-8 group-data-[view='game']/app:hidden 2xl:bottom-8"></div>
-                    <div id="chapter-navigation" class="x fixed bottom-4 right-4 z-30 flex gap-4 2xl:bottom-8">
+                    <div id="closed-caption" class="tv:bottom-8 fixed bottom-4 w-3/4 px-8 group-data-[view='game']/app:hidden"></div>
+                    <div id="chapter-navigation" class="x tv:bottom-8 fixed bottom-4 right-4 z-30 flex gap-4">
                         <button class="button-normal" id="prev-step">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <button class="button-normal shadow-border" id="next-step">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                     <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
@@ -156,7 +156,7 @@
                 <div class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48">
                     <div class="flex gap-8">
                         <button id="back-from-faq" class="button-normal" title="back to main menu">
-                            <svg class="h-3 w-3 xl:h-5 xl:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="tv:h-5 tv:w-5 h-3 w-3"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="mt-2">
                             <h3 class="text-3xl font-bold">FAQ</h3>

@@ -19,7 +19,7 @@ export default class Congrats {
 
         const summary = _gl.elementFromHtml(`
             <div class="modal h-full grid place-items-center">
-                <h1 class="text-2xl 2xl:text-3xl font-bold">${_s.miniGames.completed.title}</h1>
+                <h1 class="text-2xl tv:text-3xl font-bold">${_s.miniGames.completed.title}</h1>
             </div>
         `)
 
@@ -68,8 +68,8 @@ export default class Congrats {
                         </ul>
                     </div>
                     <div class="congrats">
-                        <h1 class="text-2xl 2xl:text-3xl font-bold text-bke-orange">${_s.journey.congrats}</h1>
-                        <p class="text-xl 2xl:text-2xl mt-8">${_s.journey.completed}:<br /><strong class="text-bke-orange">${instance.world.selectedChapter.title}</strong></p>
+                        <h1 class="text-2xl tv:text-3xl font-bold text-bke-orange">${_s.journey.congrats}</h1>
+                        <p class="text-xl tv:text-2xl mt-8">${_s.journey.completed}:<br /><strong class="text-bke-orange">${instance.world.selectedChapter.title}</strong></p>
                     </div>
                 </div>
             </div>
