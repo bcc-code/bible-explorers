@@ -64,7 +64,7 @@ export default class Menu {
         loginBtn.setAttribute('title', _s.settings.logIn)
         logoutBtn.setAttribute('title', _s.settings.logOut)
 
-        const bibleExplorersGuide = document.querySelector('#guide-link')
+        const bibleExplorersGuide = document.querySelector('#guide-link span')
         bibleExplorersGuide.innerText = _s.howTo
         bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
