@@ -74,11 +74,11 @@ export default class MazeGame {
         const game = _gl.elementFromHtml(`
       <section class="game maze-game">
         <div class="container">
-          <div class="absolute left-8 bottom-8 game-rounds text-white/80 text-xl">
+          <div class="absolute left-4 bottom-4 2xl:left-8 2xl:bottom-8 game-rounds text-white/80 2xl:text-xl">
             ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}
           </div>
           <div class="game-popup w-full grid place-items-center" id="game-popup">
-            <h1 class="text-4xl font-semibold mb-8">${_s.miniGames.completed.title}</h1>
+            <h1 class="text-2xl 2xl:text-3xl font-bold mb-8">${_s.miniGames.completed.title}</h1>
             <button class="button-normal shadow-border" id="new-level">${_s.miniGames.nextRound}</button>
           </div>
         </div>

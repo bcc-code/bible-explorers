@@ -32,17 +32,17 @@ export default class MultipleChoiceWithPicture {
         instance.data = instance.stepData.multiple_choice_with_picture
 
         const multipleChoiceWithPicture = _gl.elementFromHtml(`
-            <div id="multiple-choice" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
-                <div id="task-image"><img src="${instance.data.image}" class="multiple-choice-image w-[280px]" alt="picture" /></div>
-                <h1 class="text-4xl font-semibold">${instance.stepData.details.title}</h1>
-                <ul class="multiple-choice-answers mt-8"></ul>
+            <div id="multiple-choice" class="p-2 xl:p-4 2xl:p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
+                <div id="task-image" class="hidden"><img src="${instance.data.image}" class="multiple-choice-image w-[280px]" alt="picture" /></div>
+                <h1 class="text-2xl 2xl:text-3xl font-bold">${instance.stepData.details.title}</h1>
+                <ul class="multiple-choice-answers mt-4 2xl:mt-8"></ul>
             </div>
         `)
 
         instance.data.choices.forEach((choice, cIdx) => {
             const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
-                <li class="multiple-choice-answer mb-2 rounded-md">
-                    <div class="label text-xl leading-normal bg-white/10 rounded-md">
+                <li class="multiple-choice-answer mb-2">
+                    <div class="label 2xl:text-xl leading-normal bg-bke-purple">
                         <label for="answer-${cIdx}"></label>
                         <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
                         <span>${choice.answer}</span>
@@ -64,9 +64,10 @@ export default class MultipleChoiceWithPicture {
 
                     if (!objAnswers[i].correct_wrong) {
                         instance.audio.playSound('wrong')
-                        a.parentNode.classList.add('wrong')
+                        a.parentNode.classList.add('shadow-wrong')
                     } else {
                         answerFound = true
+                        a.parentNode.classList.add('shadow-correct')
                         instance.audio.playSound('correct')
                         instance.experience.celebrate({
                             particleCount: 100,

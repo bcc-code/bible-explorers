@@ -56,11 +56,11 @@ export default class GameDescription {
         const startGame = _gl.elementFromHtml(`<button class="button-normal w-full">${_s.miniGames.startGame}</button>`)
         startGame.addEventListener('click', instance.startGame)
 
-        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-8" id="task-image">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>`)
+        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-2 xl:p-4 2xl:p-8" id="task-image">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>`)
 
         const taskContent = _gl.elementFromHtml(`
-      <div class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
-        <h1 class="font-semibold text-4xl mb-8">${instance.data.title}</h2>
+      <div class="p-2 xl:p-4 2xl:p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
+        <h1 class="text-2xl 2xl:text-3xl font-bold mb-4 2xl:mb-8">${instance.data.title}</h2>
         ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
       </div>
     `)

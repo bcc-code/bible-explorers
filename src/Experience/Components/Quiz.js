@@ -32,14 +32,14 @@ export default class Quiz {
     }
 
     quizHTML() {
-        const quizContainer = _gl.elementFromHtml('<div class="p-8 bg-bke-darkpurple h-full relative group/quiz" id="quiz-container"></div>')
+        const quizContainer = _gl.elementFromHtml('<div class="p-2 xl:p-4 2xl:p-8 bg-bke-darkpurple h-full relative group/quiz" id="quiz-container"></div>')
         const quizWrapper = _gl.elementFromHtml(`<div id="quiz-wrapper"></div>`)
 
         quizWrapper.setAttribute('data-question', 0)
 
         instance.questions.forEach((q, qIdx) => {
             const container = _gl.elementFromHtml(`<div class="quiz-item ${qIdx === 0 ? 'block' : 'hidden'}" data-index="${qIdx}"></div>`)
-            const question = _gl.elementFromHtml(`<h1 class="text-4xl font-semibold">${q.question}</h1>`)
+            const question = _gl.elementFromHtml(`<h1 class="text-2xl 2xl:text-3xl font-bold">${q.question}</h1>`)
 
             container.append(question)
 
@@ -48,9 +48,9 @@ export default class Quiz {
                     const answer = _gl.elementFromHtml(`
                         <div>
                             <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
-                            <label for="question-${qIdx}_answer-${aIdx}" class="bg-bke-purple flex items-center gap-8 px-8 py-4 mt-4 cursor-pointer transition hover:shadow-hover">
-                                <div class="text-3xl font-bold bg-white/20 rounded-full w-12 h-12 grid place-items-center">${aIdx + 1}</div>
-                                <p class="text-2xl">${a.answer}</p>
+                            <label for="question-${qIdx}_answer-${aIdx}" class="bg-bke-purple flex items-center gap-2 px-3 py-2 xl:gap-4 xl:px-4 2xl:gap-8 2xl:px-8 2xl:py-4 mt-4 cursor-pointer transition xl:hover:shadow-hover">
+                                <div class="text-lg 2xl:text-2xl font-bold border-2 border-bke-orange rounded-full w-8 h-8 2xl:w-12 2xl:h-12 grid place-items-center">${aIdx + 1}</div>
+                                <p class="text-lg 2xl:text-2xl">${a.answer}</p>
                             </label>
                         </div>
                     `)
@@ -63,7 +63,7 @@ export default class Quiz {
 
                 const selfAnswer = _gl.elementFromHtml(`
                     <div>
-                        <textarea rows="8" placeholder="${q.placeholder}" class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-2xl"></textarea>
+                        <textarea rows="8" placeholder="${q.placeholder}" class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-4 xl:my-6 2xl:my-8 text-xl 2xl:text-2xl"></textarea>
                     </div>
                 `)
 
@@ -73,7 +73,7 @@ export default class Quiz {
             quizWrapper.append(container)
         })
 
-        const quizNavigation = _gl.elementFromHtml(`<div id="quiz-navigation" class="${instance.questions.length == 1 ? 'hidden' : 'flex gap-8 absolute left-8 bottom-8'}"></div>`)
+        const quizNavigation = _gl.elementFromHtml(`<div id="quiz-navigation" class="${instance.questions.length == 1 ? 'hidden' : 'flex gap-4 xl:gap-6 2xl:gap-8 absolute bottom-2 left-2 xl:left-4 xl:bottom-4 2xl:left-8 2xl:bottom-8'}"></div>`)
 
         instance.prevQuestion = _gl.elementFromHtml(
             `<button class="button-normal" disabled>
@@ -87,7 +87,7 @@ export default class Quiz {
             </button>`
         )
 
-        instance.submitQuiz = _gl.elementFromHtml(`<button type="submit" class="button-normal shadow-border absolute right-8 bottom-8" disabled>${_s.task.submit}</button>`)
+        instance.submitQuiz = _gl.elementFromHtml(`<button type="submit" class="button-normal shadow-border absolute bottom-2 right-2 xl:right-4 xl:bottom-4 2xl:right-8 2xl:bottom-8" disabled>${_s.task.submit}</button>`)
 
         quizNavigation.append(instance.prevQuestion)
         quizNavigation.append(instance.nextQuestion)

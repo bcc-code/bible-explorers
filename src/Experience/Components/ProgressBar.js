@@ -58,7 +58,7 @@ export default class ProgressBar {
         let generatedHTML = `<div class="percentageBar bg-bke-purple h-1 w-full">
                 <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
             </div>
-            <div class="flex gap-8 -mx-7 -mt-7">`
+            <div class="flex gap-4 xl:gap-6 2xl:gap-8 -mx-7 -mt-7">`
 
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
             if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'video')) {

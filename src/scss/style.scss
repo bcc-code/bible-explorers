@@ -21,7 +21,7 @@
 @layer components {
 
     .button-normal {
-        @apply flex gap-2 h-10 min-w-10 px-2 text-sm xl:px-4 xl:gap-4 xl:h-14 xl:min-w-14 xl:text-lg items-center justify-center cursor-pointer bg-bke-purple tracking-wider transition hover:shadow-hover disabled:pointer-events-none disabled:opacity-20;
+        @apply flex gap-2 h-10 min-w-10 px-2 text-sm xl:px-4 xl:gap-4 xl:h-14 xl:min-w-14 xl:text-lg items-center justify-center cursor-pointer bg-bke-purple tracking-wider transition xl:hover:shadow-hover disabled:pointer-events-none disabled:opacity-20;
     }
 
     .less-focused {
@@ -67,30 +67,30 @@ body.bcc_member {
     @apply w-[480px] flex relative mb-8;
 
     progress {
-        @apply absolute top-2 left-0 w-full h-8 border-2 border-bke-orange p-1.5 rounded-full
+        @apply absolute top-2 left-0 w-full h-8 border-2 bg-white/20 p-1.5 rounded-full;
     }
 
     progress::-moz-progress-bar {
-        @apply overflow-hidden rounded-full
+        @apply overflow-hidden rounded-full;
     }
 
     progress::-webkit-progress-bar {
-        @apply overflow-hidden rounded-full bg-white/20
+        @apply overflow-hidden rounded-full bg-white/20;
     }
 
     progress::-webkit-progress-value {
-        @apply bg-bke-orange transition;
+        @apply bg-bke-blue transition;
     }
 
     svg {
-        @apply float-left h-12 drop-shadow-lg;
+        @apply ml-auto h-12 drop-shadow-lg;
     }
 
     ul {
         @apply w-full flex justify-end;
 
         li {
-            @apply flex-1
+            @apply flex-1;
         }
 
         li.filled {
