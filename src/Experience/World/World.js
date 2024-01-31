@@ -41,7 +41,7 @@ export default class World {
             // Select age category
             instance.experience.setAppView('age-category')
 
-            this.ageCategory.querySelector('h3').innerText = _s.conceptDescription
+            this.ageCategory.querySelector('h1').innerText = _s.conceptDescription
             this.setCategories()
 
             // Setup
