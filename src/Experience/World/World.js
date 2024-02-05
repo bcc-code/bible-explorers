@@ -15,6 +15,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
 import gsap from 'gsap'
+import FlappyBird from '../Games/FlappyBird.js'
 // import Glitch from "./Glitch.js";
 
 let instance = null

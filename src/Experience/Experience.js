@@ -10,6 +10,7 @@ import Menu from './Components/Menu.js'
 import World from './World/World.js'
 import FAQ from './Components/FAQ.js'
 import _gl from './Utils/Globals.js'
+import FlappyBird from './Games/FlappyBird.js'
 
 let instance = null
 
@@ -37,6 +38,8 @@ export default class Experience {
         this.pointer = new MouseMove()
         this.world = new World()
         this.auth0 = {}
+
+        this.flappyBird = new FlappyBird()
 
         // Time animation event
         this.videoIsPlaying = false
