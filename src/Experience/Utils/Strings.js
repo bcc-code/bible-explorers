@@ -1,4 +1,4 @@
-import _lang from '../Utils/Lang.js'
+import _lang from './Lang.js'
 
 const strings = {
     en: {

@@ -1,16 +1,23 @@
 # Bible Explorers
 
 ## Setup
+
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:
 
-``` bash
+```bash
 # Install dependencies (only the first time)
 npm install
 
-# Run the local server at localhost:8080
+# Develop the website (Vite)
 npm run dev
 
-# Build for production in the dist/ directory
+# Build the website for production in the dist/ directory
 npm run build
+
+# Develop the Electron app
+npm run start
+
+# Build the Electron app for production
+npm run make
 ```

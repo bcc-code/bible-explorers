@@ -1,57 +1,57 @@
 module.exports = {
-  packagerConfig: {
-    icon: 'dist/favicon',
-  },
-  rebuildConfig: {},
-  makers: [
-    {
-      name: '@electron-forge/maker-squirrel',
-      config: {
-        iconUrl: 'https://explorers.biblekids.io/favicon.ico',
-        setupIcon: 'dist/favicon-dark.ico',
-      },
+    packagerConfig: {
+        icon: 'static/favicon',
     },
-    {
-      name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
-    },
-    {
-      name: '@electron-forge/maker-deb',
-      config: {
-        options: {
-          icon: 'dist/favicon.png',
+    makers: [
+        {
+            name: '@electron-forge/maker-squirrel',
+            config: {
+                iconUrl: 'https://explorers.biblekids.io/favicon.ico',
+                setupIcon: 'static/favicon-dark.ico',
+            },
         },
-      },
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {},
-    },
-  ],
-  plugins: [
-    {
-      name: '@electron-forge/plugin-vite',
-      config: {
-        // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
-        // If you are familiar with Vite configuration, it will look really familiar.
-        build: [
-          {
-            // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
-            entry: 'src/main.js',
-            config: 'vite.main.config.mjs',
-          },
-          {
-            entry: 'src/preload.js',
-            config: 'vite.preload.config.mjs',
-          },
-        ],
-        renderer: [
-          {
-            name: 'main_window',
-            config: 'vite.renderer.config.mjs',
-          },
-        ],
-      },
-    },
-  ],
-};
+        {
+            name: '@electron-forge/maker-zip',
+            platforms: ['darwin'],
+        },
+        {
+            name: '@electron-forge/maker-deb',
+            config: {
+                options: {
+                    icon: 'static/favicon.png',
+                },
+            },
+        },
+        {
+            name: '@electron-forge/maker-rpm',
+            config: {},
+        },
+    ],
+    plugins: [
+        {
+            name: '@electron-forge/plugin-vite',
+            config: {
+                build: [
+                    {
+                        entry: 'index.html',
+                        config: 'vite.main.config.mjs',
+                    },
+                    {
+                        entry: 'main.js',
+                        config: 'vite.main.config.mjs',
+                    },
+                    {
+                        entry: 'preload.js',
+                        config: 'vite.preload.config.mjs',
+                    },
+                ],
+                renderer: [
+                    {
+                        name: 'main_window',
+                        config: 'vite.renderer.config.mjs',
+                    },
+                ],
+            },
+        },
+    ],
+}

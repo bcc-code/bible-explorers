@@ -10,18 +10,19 @@ const createWindow = () => {
         width: 1280,
         height: 1024,
         autoHideMenuBar: true,
-        // show: false,
         webPreferences: {
+            webSecurity: true,
             preload: path.join(__dirname, 'preload.js'),
         },
-        icon: 'dist/favicon.png',
+        // show: false,
+        icon: 'static/favicon.png',
     })
 
-    // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-    // } else {
-    mainWindow.loadFile('dist/index.html')
-    // }
+    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+        mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)
+    } else {
+        mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
+    }
 
     // mainWindow.maximize();
     // mainWindow.show();

@@ -3,13 +3,13 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
-import Offline from '../Utils/Offline.js'
+import Offline from './Offline.js'
 import { PlayerFactory, createPlayer } from 'bccm-video-player'
 import 'bccm-video-player/css'
-import _c from '../Utils/Connection.js'
-import _api from '../Utils/Api.js'
-import _lang from '../Utils/Lang.js'
-import _s from '../Utils/Strings.js'
+import _c from './Connection.js'
+import _api from './Api.js'
+import _lang from './Lang.js'
+import _s from './Strings.js'
 
 let resources = null
 

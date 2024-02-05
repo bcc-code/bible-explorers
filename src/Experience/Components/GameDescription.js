@@ -1,5 +1,5 @@
 import Offline from '../Utils/Offline.js'
-import Experience from '../Experience'
+import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
