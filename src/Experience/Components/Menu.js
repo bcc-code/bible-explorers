@@ -143,14 +143,12 @@ export default class Menu {
         const logoutBtn = document.querySelector('#logout-button')
 
         const loginUser = document.querySelector('[aria-label="User"]')
-        const loginRole = document.querySelector('[aria-label="Role"]')
 
         if (loginBtn) {
             loginBtn.disabled = instance.logInLogOut.login
             logoutBtn.disabled = instance.logInLogOut.logout
 
             loginUser.innerText = instance.experience.auth0.userData?.name || ''
-            loginRole.innerText = instance.experience.auth0.isAuthenticated && document.body.classList.contains('ak_leder') ? '(' + _s.settings.mentor + ')' : ''
         }
     }
 
