@@ -58,30 +58,30 @@ export default class ProgressBar {
         let generatedHTML = `<div class="percentageBar bg-bke-purple h-1 w-full">
                 <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
             </div>
-            <div class="flex gap-8 -mx-7 -mt-7">`
+            <div class="flex gap-4 xl:gap-6 tv:gap-8 -mx-6 -mt-6 tv:-mt-8">`
 
         for (let i = 0; i < instance.program.totalCheckpoints; i++) {
             if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'video')) {
                 generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg>
+                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg>
                           </button>`
             } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'quiz')) {
                 generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg>
+                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg>
                           </button>`
             } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'pause')) {
                 generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-5 w-5"><use href="#pause-solid" fill="currentColor"></use></svg
+                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pause-solid" fill="currentColor"></use></svg
                           </button>`
             } else {
                 generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg
+                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg
                           </button>`
             }
         }
 
         generatedHTML += `<button class="button-normal" aria-label="checkpoint">
-                          <svg class="h-5 w-5"><use href="#star-solid" fill="currentColor"></use></svg
+                          <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#star-solid" fill="currentColor"></use></svg
                       </button>
                   </div>`
 

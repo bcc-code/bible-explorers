@@ -27,17 +27,4 @@
     flex-shrink: 0;
   }
 
-  &.wrong {
-    border-color: red;
-  }
-
-  &.correct {
-    border-color: greenyellow;
-  }
-
-  &:hover {
-    border-color: var(--clr-secondary);
-    animation: none;
-  }
-
 }

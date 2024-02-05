@@ -174,12 +174,10 @@
 
     &-input {
       color: #fff;
-      background: var(--clr-primary);
       position: absolute;
       bottom: calc(var(--app-padding) + 8px);
       left: calc(var(--app-padding) + 8px);
       right: calc(var(--app-padding) + 8px);
-      border-radius: 0.25rem;
 
       display: flex;
       align-items: center;

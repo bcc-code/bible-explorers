@@ -43,14 +43,14 @@ export default class Experience {
         this.gameIsOn = false
 
         this.navigation = {
-            prev: document.querySelector('[aria-label="prev page"]'),
-            next: document.querySelector('[aria-label="next page"]'),
+            prev: document.querySelector('#prev-step'),
+            next: document.querySelector('#next-step'),
             container: document.querySelector('#chapter-navigation'),
         }
 
         this.icons = {
-            prev: `<svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
-            next: `<svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
+            prev: `<svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
+            next: `<svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
         }
 
         this.interface = {

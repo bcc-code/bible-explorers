@@ -36,7 +36,7 @@ export default class Menu {
         selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
         selectLangDropdown.querySelectorAll('li').forEach((item) => {
-            item.className = 'py-2 px-3 text-xl font-medium cursor-pointer transition hover:bg-white/20'
+            item.className = 'px-2 py-1 xl:py-2 xl:px-3 text-base xl:text-xl font-medium cursor-pointer transition hover:bg-white/20'
         })
 
         const selectVQ = document.querySelector('#app-video-quality')
@@ -64,12 +64,12 @@ export default class Menu {
         loginBtn.setAttribute('title', _s.settings.logIn)
         logoutBtn.setAttribute('title', _s.settings.logOut)
 
-        const bibleExplorersGuide = document.querySelector('#guide-link')
+        const bibleExplorersGuide = document.querySelector('#guide-link span')
         bibleExplorersGuide.innerText = _s.howTo
         bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
         const copyrightFooter = document.querySelector('#copyright')
-        copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank">BCC Media STI</a>`
+        copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition hover:text-bke-orange">BCC Media STI</a>`
     }
 
     eventListeners() {
@@ -143,14 +143,12 @@ export default class Menu {
         const logoutBtn = document.querySelector('#logout-button')
 
         const loginUser = document.querySelector('[aria-label="User"]')
-        const loginRole = document.querySelector('[aria-label="Role"]')
 
         if (loginBtn) {
             loginBtn.disabled = instance.logInLogOut.login
             logoutBtn.disabled = instance.logInLogOut.logout
 
             loginUser.innerText = instance.experience.auth0.userData?.name || ''
-            loginRole.innerText = instance.experience.auth0.isAuthenticated && document.body.classList.contains('ak_leder') ? '(' + _s.settings.mentor + ')' : ''
         }
     }
 

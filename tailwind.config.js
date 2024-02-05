@@ -12,12 +12,15 @@ export default {
             DEFAULT: '300ms',
         },
         extend: {
+            screens: {
+                tv: '1920px',
+            },
             colors: {
                 bke: {
-                    darkpurple: '#0c0a16',
-                    purple: '#3e306d',
-                    orange: '#fcb04e',
-                    blue: '#0396e3',
+                    darkpurple: 'hsl(250, 38%, 6%)',
+                    purple: 'hsl(254, 39%, 31%)',
+                    orange: 'hsl(34, 97%, 65%)',
+                    blue: 'hsl(201, 97%, 45%)',
                 },
             },
             backgroundImage: {
@@ -32,6 +35,8 @@ export default {
                 hover: '-4px 6px 0 theme(colors.bke.orange)',
                 focused: '-6px 8px 0 theme(colors.bke.orange), 0 0 0 2px theme(colors.bke.orange)',
                 border: '0 0 0 2px theme(colors.bke.orange)',
+                wrong: '-6px 8px 0 theme(colors.red.500), 0 0 0 2px theme(colors.red.500)',
+                correct: '-6px 8px 0 theme(colors.green.500), 0 0 0 2px theme(colors.green.500)',
             },
         },
     },

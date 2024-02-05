@@ -38,7 +38,7 @@ export default class Message {
     }
 
     setHtml(text, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc" class="text-2xl text-center mx-auto max-w-screen-lg">${text}</div>`)
+        const message = _gl.elementFromHtml(`<div id="iris-cc" class="text-xl xl:text-2xl tv:text-3xl text-center mx-auto max-w-screen-lg">${text}</div>`)
         instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {

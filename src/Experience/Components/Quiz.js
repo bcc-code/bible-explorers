@@ -20,219 +20,168 @@ export default class Quiz {
         instance.program = instance.world.program
         instance.audio = instance.world.audio
 
-        instance.experience.setAppView('game')
-
         instance.correctAnswers = 0
         instance.openQuestions = 0
+        instance.questions = instance.program.getCurrentStepData().quiz
+
+        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+        instance.experience.navigation.next.className = 'button-normal less-focused'
+
         instance.quizHTML()
         instance.setEventListeners()
     }
 
     quizHTML() {
-        const questions = instance.program.getCurrentStepData().quiz
-        const quiz = _gl.elementFromHtml(`
-            <section class="quiz">
-                <div class="container">
-                    <div class="quiz-progress">
-                        <div class="quiz-progress-bar">
-                            <div></div>
-                        </div>   
-                        <ul class="quiz-steps"></ul>
-                    </div>
-                    <ul class="quiz-items"></ul>
-                    <div class="quiz-nav ${questions.length == 1 ? 'hide - nav' : ''}">
-                        <button class="button-normal" aria-label="prev question">
-                            <svg class="h-5 w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button type="submit" class="button-normal shadow-border" aria-label="submit form">
-                            ${_s.task.submit}
-                        </button>
-                        <button class="button-normal shadow-border" aria-label="next question">
-                            <svg class="h-5 w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                    </div>
-                </div>
-            </section>
-        `)
+        const quizContainer = _gl.elementFromHtml('<div class="p-2 xl:p-4 tv:p-8 bg-bke-darkpurple h-full relative group/quiz" id="quiz-container"></div>')
+        const quizWrapper = _gl.elementFromHtml(`<div id="quiz-wrapper"></div>`)
 
-        const submitQuiz = quiz.querySelector('[aria-label="submit form"')
-        submitQuiz.style.display = 'none'
-        submitQuiz.addEventListener('click', () => {
-            instance.saveAnswers()
-            instance.destroy()
-            instance.program.congrats.toggleSummary()
+        quizWrapper.setAttribute('data-question', 0)
 
-            const message = _gl.elementFromHtml(`<p>${instance.correctAnswers + instance.openQuestions + ' / ' + questions.length}</p>`)
-            document.querySelector('.modal .summary').append(message)
-        })
+        instance.questions.forEach((q, qIdx) => {
+            const container = _gl.elementFromHtml(`<div class="quiz-item ${qIdx === 0 ? 'block' : 'hidden'}" data-index="${qIdx}"></div>`)
+            const question = _gl.elementFromHtml(`<h1 class="text-2xl tv:text-3xl font-bold">${q.question}</h1>`)
 
-        const prev = quiz.querySelector('[aria-label="prev question"')
-        const next = quiz.querySelector('[aria-label="next question"')
-
-        questions.forEach((q, qIdx) => {
-            const quizStep = _gl.elementFromHtml(`<li class="quiz-step button-normal shadow-border ${qIdx === 0 ? 'current' : ''}" data-index="${qIdx + 1}"><span>${qIdx + 1}</span></li>`)
-            const quizItem = _gl.elementFromHtml(`
-                <li class="quiz-item ${qIdx === 0 ? 'visible' : ''}" data-index="${qIdx + 1}">
-                    <div class="quiz-question">
-                        <svg class="question-mark-icon">
-                            <use href="#question-solid"></use>
-                        </svg>
-                        <h1 class="text-3xl font-semibold">${q.question}</h1>
-                    </div>
-                </li>
-            `)
-
-            const quizAnswers = _gl.elementFromHtml(`<ul class="quiz-answers"></ul>`)
-            quizItem.append(quizAnswers)
+            container.append(question)
 
             if (q.answers.length) {
                 q.answers.forEach((a, aIdx) => {
-                    const quizAnswer = _gl.elementFromHtml(`
-                        <li class="quiz-answer">
-                            <div class="label">
-                                <label for="question-${qIdx}_answer-${aIdx}"></label>
-                                <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
-                                <span class="text-2xl  leading-normal">${a.answer}</span>
-                            </div>
-                        </li>
+                    const answer = _gl.elementFromHtml(`
+                        <div>
+                            <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
+                            <label for="question-${qIdx}_answer-${aIdx}" class="bg-bke-purple flex items-center gap-2 px-3 py-2 xl:gap-4 xl:px-4 tv:gap-8 tv:px-8 tv:py-4 mt-4 cursor-pointer transition xl:hover:shadow-hover">
+                                <div class="text-lg tv:text-2xl font-bold border-2 border-bke-orange rounded-full w-8 h-8 tv:w-12 tv:h-12 grid place-items-center">${aIdx + 1}</div>
+                                <p class="text-lg tv:text-2xl">${a.answer}</p>
+                            </label>
+                        </div>
                     `)
 
-                    quizAnswers.append(quizAnswer)
+                    container.append(answer)
                 })
             } else {
                 // Add a textarea when there are no answers
                 instance.openQuestions++
 
-                const quizAnswer = _gl.elementFromHtml(`
-                    <li class="quiz-answer p-4">
-                        <textarea rows="8" placeholder="${q.placeholder}" class="quiz-textarea w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-2xl"></textarea>
-                    </li>
+                const selfAnswer = _gl.elementFromHtml(`
+                    <div>
+                        <textarea rows="8" placeholder="${q.placeholder}" class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-4 xl:my-6 tv:my-8 text-xl tv:text-2xl"></textarea>
+                    </div>
                 `)
 
-                quizAnswers.append(quizAnswer)
-                quizAnswers.closest('.quiz-item').classList.add('textarea')
+                container.append(selfAnswer)
             }
 
-            quiz.querySelector('.quiz-steps').append(quizStep)
-            quiz.querySelector('.quiz-items').append(quizItem)
+            quizWrapper.append(container)
         })
 
-        instance.experience.interface.gameContainer.append(quiz)
+        const quizNavigation = _gl.elementFromHtml(`<div id="quiz-navigation" class="${instance.questions.length == 1 ? 'hidden' : 'flex gap-4 xl:gap-6 tv:gap-8 absolute bottom-2 left-2 xl:left-4 xl:bottom-4 tv:left-8 tv:bottom-8'}"></div>`)
 
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.prevQuestion = _gl.elementFromHtml(
+            `<button class="button-normal" disabled>
+                <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+            </button>`
+        )
 
-        let questionsAnswered = 0
-        let quizProgress = 0
-        const quizStepWidth = 100 / (questions.length - 1)
+        instance.nextQuestion = _gl.elementFromHtml(
+            `<button class="button-normal" disabled>
+                <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
+            </button>`
+        )
 
-        prev.disabled = true
-        prev.addEventListener('click', () => {
-            const current = quiz.querySelector('.quiz-item.visible')
-            const currentCheckpoint = quiz.querySelector('.quiz-step.current')
+        instance.submitQuiz = _gl.elementFromHtml(`<button type="submit" class="button-normal shadow-border absolute bottom-2 right-2 xl:right-4 xl:bottom-4 tv:right-8 tv:bottom-8" disabled>${_s.task.submit}</button>`)
 
-            current.classList.remove('visible')
-            currentCheckpoint.classList.remove('current')
-            current.previousElementSibling.classList.add('visible')
-            currentCheckpoint.previousElementSibling?.classList.add('current')
+        quizNavigation.append(instance.prevQuestion)
+        quizNavigation.append(instance.nextQuestion)
 
-            next.disabled = !current.previousElementSibling.classList.contains('done')
+        quizContainer.append(quizWrapper)
+        quizContainer.append(quizNavigation)
+        quizContainer.append(instance.submitQuiz)
 
-            if (current.getAttribute('data-index') == 2) prev.disabled = true
-        })
+        instance.experience.interface.bigScreen.append(quizContainer)
+    }
 
-        next.disabled = true
-        next.addEventListener('click', () => {
-            const current = quiz.querySelector('.quiz-item.visible')
-            const currentCheckpoint = quiz.querySelector('.quiz-step.current')
+    setEventListeners() {
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
-            current.classList.remove('visible')
-            currentCheckpoint.classList.remove('current')
+        const questionItems = document.querySelectorAll('.quiz-item')
 
-            if (current.nextElementSibling) {
-                current.nextElementSibling.classList.add('visible')
-                currentCheckpoint.nextElementSibling.classList.add('current')
+        questionItems.forEach((item) => {
+            const options = item.querySelectorAll('label')
 
-                prev.disabled = false
-                next.disabled = !current.nextElementSibling.classList.contains('done')
-            }
+            options.forEach((option, idx) => {
+                option.addEventListener('click', (e) => {
+                    const currentQuestionIdx = e.target.closest('.quiz-item').getAttribute('data-index')
+                    const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex((item) => item.correct_wrong === true)
 
-            if (questionsAnswered < questions.length) quizUpdateProgress(questionsAnswered)
-
-            if (current.nextElementSibling.getAttribute('data-index') == questions.length) next.disabled = true
-        })
-
-        quiz.querySelectorAll('.quiz-item').forEach((q, i) => {
-            const htmlAnswers = q.querySelectorAll('.label')
-            const objAnswers = questions[i].answers
-
-            htmlAnswers.forEach((a, i) => {
-                a.addEventListener('click', () => {
-                    htmlAnswers.forEach((answer) => {
-                        answer.parentNode.classList.remove('wrong')
-                        answer.style.pointerEvents = 'none'
-                    })
-
-                    const correctIndex = objAnswers.findIndex((a) => a.correct_wrong)
-                    htmlAnswers[correctIndex].parentNode.classList.add('correct')
-
-                    if (!objAnswers[i].correct_wrong) {
-                        instance.audio.playSound('wrong')
-                        a.parentNode.classList.add('wrong')
-                    } else {
+                    if (idx === correctAnswerIdx) {
+                        e.target.closest('div').classList.add('shadow-correct')
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({
                             particleCount: 100,
                             spread: 160,
                         })
-                    }
 
-                    if (q.getAttribute('data-index') !== questions.length) {
-                        next.disabled = false
-                    }
+                        e.target.closest('.quiz-item').style.pointerEvents = 'none'
 
-                    if (q.getAttribute('data-index') == questions.length) {
-                        submitQuiz.style.display = 'grid'
-                        next.disabled = true
-                    }
+                        instance.nextQuestion.disabled = false
+                    } else {
+                        instance.audio.playSound('wrong')
+                        e.target.closest('div').classList.add('shadow-wrong')
 
-                    const currentCheckpoint = quiz.querySelector('.quiz-step.current')
-                    const current = quiz.querySelector('.quiz-item.visible')
-                    currentCheckpoint.classList.add('done')
-                    current.classList.add('done')
-                    questionsAnswered++
+                        setTimeout(() => {
+                            e.target.closest('div').classList.remove('shadow-wrong')
+                        }, 800)
+                    }
                 })
             })
-
-            if (q.classList.contains('textarea')) {
-                const input = q.querySelector('.quiz-textarea')
-                input.addEventListener('input', (e) => {
-                    if (e.target.value.length > 0) {
-                        questionsAnswered = questions.length
-                        submitQuiz.style.display = 'grid'
-                    } else {
-                        questionsAnswered = questions.length - 1
-                        submitQuiz.style.display = 'none'
-                    }
-                })
-            }
         })
 
-        let quizUpdateProgress = (answers) => {
-            quizProgress = quizStepWidth * answers
+        let questionIdx = document.querySelector('#quiz-wrapper').getAttribute('data-question')
 
-            const quizProgressBar = quiz.querySelector('.quiz-progress-bar div')
-            quizProgressBar.style.width = quizProgress + '%'
-        }
-    }
+        instance.nextQuestion.addEventListener('click', () => {
+            const currentQuestion = document.querySelector(`.quiz-item[data-index="${questionIdx}"`)
+            currentQuestion.className = 'quiz-item hidden'
+            currentQuestion.nextElementSibling.className = 'quiz-item block'
 
-    setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+            let isAnswered = false
+
+            currentQuestion.nextElementSibling.querySelectorAll('input').forEach((input) => {
+                if (input.checked) isAnswered = true
+            })
+
+            if (questionIdx < instance.questions.length) questionIdx++
+            if (questionIdx === instance.questions.length - 1 || !isAnswered) instance.nextQuestion.disabled = true
+            if (questionIdx > 0) instance.prevQuestion.disabled = false
+        })
+
+        instance.prevQuestion.addEventListener('click', () => {
+            const currentQuestion = document.querySelector(`.quiz-item[data-index="${questionIdx}"`)
+            currentQuestion.className = 'quiz-item hidden'
+            currentQuestion.previousElementSibling.className = 'quiz-item block'
+
+            if (questionIdx !== 0) questionIdx--
+            if (questionIdx < instance.questions.length) instance.nextQuestion.disabled = false
+            if (questionIdx === 0) instance.prevQuestion.disabled = true
+        })
+
+        const textarea = document.querySelector('.quiz-item textarea')
+
+        textarea.addEventListener('input', (e) => {
+            if (e.target.value.length > 0) instance.submitQuiz.disabled = false
+        })
+
+        instance.submitQuiz.addEventListener('click', () => {
+            instance.saveAnswers()
+            instance.destroy()
+            instance.program.congrats.toggleSummary()
+
+            // const message = _gl.elementFromHtml(`<p>${instance.correctAnswers + instance.openQuestions + ' / ' + questions.length}</p>`)
+            // document.querySelector('.modal .summary').append(message)
+        })
     }
 
     saveAnswers() {
-        const answer = document.querySelector('section.quiz textarea').value
+        const answer = document.querySelector('#quiz-container textarea').value
         if (!answer) return
 
         const data = {
@@ -250,11 +199,7 @@ export default class Quiz {
     }
 
     destroy() {
-        document.querySelector('.quiz')?.remove()
-        document.querySelector('.modal')?.remove()
-
-        instance.experience.setAppView('chapter')
-
+        document.querySelector('#quiz-container')?.remove()
         instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }

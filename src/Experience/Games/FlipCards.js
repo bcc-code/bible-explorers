@@ -40,18 +40,18 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
-        const startGame = _gl.elementFromHtml(`<button class="button-normal">${instance.confirmationScreen.cs_button}</button>`)
+        const startGame = _gl.elementFromHtml(`<button class="button-normal w-full">${instance.confirmationScreen.cs_button}</button>`)
 
         startGame.addEventListener('click', instance.toggleFlipCards)
 
-        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-8" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>`)
+        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-2 xl:p-4 tv:p-8" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>`)
 
         const taskContent = _gl.elementFromHtml(
-            `<div class="p-8" id="task-content">
-                <h1 class="text-4xl font-semibold">
+            `<div class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
+                <h1 class="text-2xl tv:text-3xl font-bold">
                     ${instance.confirmationScreen.cs_title}
                 </h1>
-                <p class="my-8 text-xl">${instance.confirmationScreen.cs_description}</p>
+                <p class="my-4 tv:my-8 tv:text-xl">${instance.confirmationScreen.cs_description}</p>
             </div>`
         )
 
@@ -59,6 +59,8 @@ export default class FlipCards {
 
         instance.experience.interface.bigScreen.append(taskImage)
         instance.experience.interface.smallScreen.append(taskContent)
+
+        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-intro')
 
         instance.experience.navigation.next.className = 'button-normal less-focused'
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
@@ -120,10 +122,10 @@ export default class FlipCards {
                           <div class="card-back" style="background-image: url('${c.image_back}')"></div>
                           <div class="card-front" style="background-image: url('${c.image_front}')"></div>
                       </div>
-                      <div class="card-input">
+                      <div class="card-input bg-bke-purple">
                           <div class="icon">
-                              <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
-                                  <use href="#locked"></use>
+                              <svg class="w-3 h-3 tv:w-5 tv:h-5">
+                                  <use href="#book-solid" fill="currentColor"></use>
                               </svg>
                           </div>
                           <input type="number" placeholder="#" maxlength="${c.code.length}" />

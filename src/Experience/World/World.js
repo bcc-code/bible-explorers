@@ -41,7 +41,7 @@ export default class World {
             // Select age category
             instance.experience.setAppView('age-category')
 
-            this.ageCategory.querySelector('h3').innerText = _s.conceptDescription
+            this.ageCategory.querySelector('h1').innerText = _s.conceptDescription
             this.setCategories()
 
             // Setup
@@ -100,7 +100,7 @@ export default class World {
 
         // Remove if existing chapters
         if (instance.experience.interface.chaptersList.querySelector('ul').childNodes.length !== 0) {
-            instance.chapterSelectWrapper.querySelectorAll('.chapter').forEach((item) => {
+            instance.experience.interface.chaptersList.querySelectorAll('.chapter').forEach((item) => {
                 item.remove()
             })
         }
@@ -130,7 +130,7 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-normal min-w-40" data-slug="${category.slug}">${category.name}</button></li>`)
+        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-normal uppercase font-medium min-w-40" data-slug="${category.slug}">${category.name}</button></li>`)
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 
@@ -155,26 +155,26 @@ export default class World {
 
     setChapterHtml(chapter) {
         let chapterHtml = _gl.elementFromHtml(
-            `<li class="chapter group mb-8 ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
-                <div class="h-40 p-6 relative cursor-pointer transition bg-bke-purple group-hover:shadow-[-6px_8px_0_theme(colors.bke.orange)] group-[.selected]:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]  ">
-                    <div class="chapter-image absolute right-0 top-0 w-40 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
-                    <h1 class="text-4xl font-bold">${chapter.title}</h1>
-                    <div class="text-xl font-medium opacity-70">${chapter.date}</div>
+            `<li class="chapter group mb-4 tv:mb-8 last:mb-0 ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
+                <div class="h-32 py-3 px-4 tv:h-40 tv:p-6 relative isolate cursor-pointer transition bg-bke-purple group-hover:shadow-[-6px_8px_0_theme(colors.bke.orange)] group-[.selected]:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]  ">
+                    <div class="chapter-image absolute right-0 top-0 w-32 tv:w-40 -z-10 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
+                    <h1 class="text-2xl tv:text-3xl font-bold">${chapter.title}</h1>
+                    <div class="tv:text-xl font-medium opacity-70">${chapter.date}</div>
                     <div class="hidden chapter-status mt-2">
                         <button class="chapter__offline button-normal absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
-                            <svg class="h-5 w-5"><use href="#download-solid" fill="currentColor"></use></svg>
+                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="chapter__downloading w-1/2 hidden group-[.downloading]:flex items-center gap-2">
-                            <span class="title">${_s.offline.downloading}</span>
+                            <span class="title text-sm tv:text-base">${_s.offline.downloading}</span>
                             <span class="downloading-progress">
                                 <span class="progress-line"></span>
                             </span>
-                            <span class="downloading-label"></span>
+                            <span class="downloading-label text-sm tv:text-base"></span>
                         </div>
-                        <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange">${_s.offline.downloadFailed}</div>
+                        <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange text-sm tv:text-base">${_s.offline.downloadFailed}</div>
                         <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple px-2 py-1 rounded-md">
-                            <svg class="h-5 w-5"><use href="#check-solid" fill="currentColor"></use></svg>
-                            <span>${_s.offline.availableOffline.title}</span>
+                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#check-solid" fill="currentColor"></use></svg>
+                            <span class="text-sm tv:text-base">${_s.offline.availableOffline.title}</span>
                         </div>
                     </div>
                 </div>
@@ -205,12 +205,12 @@ export default class World {
         })
 
         const details = _gl.elementFromHtml(`
-            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-8 bg-bke-purple transition shadow-[0_0_0_2px_theme(colors.bke.orange)] hover:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
-                <h2 class="text-3xl font-bold my-4">${chapter.title}</h2>
-                    <div class="mb-6 py-4 border-b-2 border-white/20 text-xl">
-                    <div>${chapter.content}</div>
-                    <div class="attachments my-4"></div>
-                </div>
+            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-3 tv:p-8 bg-bke-purple transition shadow-[0_0_0_2px_theme(colors.bke.orange)] hover:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
+                    <h1 class="text-2xl tv:text-3xl font-bold my-4">${chapter.title}</h1>
+                    <div class="mb-3 py-2 tv:mb-6 tv:py-4 border-b-2 border-white/20 tv:text-xl">
+                        <div>${chapter.content}</div>
+                        <div class="attachments my-2 tv:my-4"></div>
+                    </div>
             </div>`)
 
         if (chapter.other_attachments.length) {
@@ -222,8 +222,8 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="inline-flex items-center mt-4 mr-4 gap-2 transition duration-300 text-bke-orange hover:text-bke-orange/80" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="h-5 w-5"><use href="#book-solid" fill="currentColor"></use></svg>
+                        <a class="inline-flex items-center mt-2 mr-2 tv:mt-4 tv:mr-4 gap-2 transition duration-300 text-bke-orange hover:text-bke-orange/80" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#book-solid" fill="currentColor"></use></svg>
                             <span>${_s.chapter.activityDescLabel}</span>
                         </a>`)
 
@@ -238,26 +238,26 @@ export default class World {
             details.append(info)
 
             if (numberOfEpisodes != 1) {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
                 info.append(videoLabel)
             } else {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
                 info.append(videoLabel)
             }
 
             if (numberOfTasks != 1) {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
                 info.append(taskLabel)
             } else {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
                 info.append(taskLabel)
             }
 
             if (numberOfQuizes != 1) {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
                 info.append(quizLabel)
             } else {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center text-xl"><svg class="h-5 w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
                 info.append(quizLabel)
             }
         }
@@ -349,7 +349,7 @@ export default class World {
         const button = event.currentTarget
         button.removeEventListener('click', instance.confirmRedownload)
 
-        button.innerHTML = `<span style="margin-right: 0.25rem">${_s.offline.redownloadConfirmation}</span>
+        button.innerHTML = `<span class="text-sm tv:text-base mr-1">${_s.offline.redownloadConfirmation}</span>
             <svg class="refuse w-3 h-3"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
             <span class="separator">/</span>
             <svg class="redownload w-4 h-4"><use href="#check-solid" fill="currentColor"></use></svg>`

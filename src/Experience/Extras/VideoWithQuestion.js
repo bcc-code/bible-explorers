@@ -33,10 +33,10 @@ export default class VideoWithQuestion {
         }
 
         const content = _gl.elementFromHtml(
-            `<div id="video-with-question" class="p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
-                <h1 class="text-4xl font-semibold">${instance.data.question}</h1>
-                <textarea class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-8 text-xl"></textarea>
-                <button class="button-normal" type="submit" aria-label="submit question">${_s.task.submit}</button>
+            `<div id="video-with-question" class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
+                <h1 class="text-2xl tv:text-3xl font-bold">${instance.data.question}</h1>
+                <textarea class="w-full text-bke-purple px-3 py-2 outline-none my-4 tv:my-8 tv:text-xl"></textarea>
+                <button class="button-normal w-full" type="submit" aria-label="submit question">${_s.task.submit}</button>
             </div>
             `
         )
