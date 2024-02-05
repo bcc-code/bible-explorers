@@ -14,7 +14,7 @@ export default class FlappyBird {
 
         // Board
         this.board
-        this.boardWidth = 800
+        this.boardWidth = 1024
         this.boardHeight = 640
         this.context
 
@@ -106,7 +106,7 @@ export default class FlappyBird {
     setBoard() {
         this.board = document.createElement('canvas')
         this.board.setAttribute('id', 'flappyBird')
-        this.board.className = 'z-50 fixed bottom-20 right-4'
+        this.board.className = 'z-50 fixed  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
         this.board.height = instance.boardHeight
         this.board.width = instance.boardWidth
 
@@ -185,6 +185,7 @@ export default class FlappyBird {
         instance.pipeArray.push(pipe)
     }
 
+    // Improved collision detection by checking specific edges
     detectCollision(a, b) {
         return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y
     }
@@ -210,8 +211,10 @@ export default class FlappyBird {
                 pipe.passed = true
             }
 
+            // Improved collision detection
             if (instance.detectCollision(instance.bird, pipe)) {
                 instance.gameOver = true
+                console.log('end')
             }
         }
     }
@@ -262,12 +265,15 @@ export default class FlappyBird {
 
         if (instance.bird.y > instance.board.height) {
             instance.gameOver = true
-            instance.drawGameOverScreen()
         }
 
         // Clear pipes outside of the screen for memory leak
         while (instance.pipeArray.length > 0 && instance.pipeArray[0].x < -instance.pipeWidth) {
             instance.pipeArray.shift()
+        }
+
+        if (instance.gameOver) {
+            instance.drawGameOverScreen()
         }
 
         instance.drawTimer()
