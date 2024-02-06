@@ -33,6 +33,11 @@ export default class FlappyBird {
         this.score = 0
         this.initiated = false
 
+        // Add a property to keep track of whether the box should be drawn
+        this.drawBox = false
+        // Add a property to track whether the player has won
+        this.winRound = false
+
         // Timer
         this.startTime = null
         this.elapsedTime = 0
@@ -156,6 +161,18 @@ export default class FlappyBird {
             // Reset the timer for a new round
             instance.startTime = new Date().getTime()
         }
+
+        if (instance.winRound) {
+            instance.bird.y = instance.birdY
+            instance.pipeArray = []  
+            instance.score = 0
+            instance.gameOver = false
+            instance.drawBox = false
+            instance.winRound = false
+
+            // Reset the timer for a new round
+            instance.startTime = new Date().getTime()
+        }
     }
 
     placePipes() {
@@ -214,7 +231,6 @@ export default class FlappyBird {
             // Improved collision detection
             if (instance.detectCollision(instance.bird, pipe)) {
                 instance.gameOver = true
-                console.log('end')
             }
         }
     }
@@ -227,6 +243,7 @@ export default class FlappyBird {
     }
 
     drawGameOverScreen() {
+        instance.context.fillStyle = 'red' // Set the color of the box
         instance.context.fillText('Game over', instance.boardWidth / 2, instance.boardHeight / 2)
         instance.context.font = '16px sans-serif'
         instance.context.fillText('Press space to start again', instance.boardWidth / 2, instance.boardHeight / 2 + 40)
@@ -237,6 +254,44 @@ export default class FlappyBird {
         instance.context.fillStyle = 'white'
         instance.context.font = '24px sans-serif'
         instance.context.fillText(`${instance.elapsedTime}s`, 20, 40)
+    }
+
+    // Add a method to draw the middle box
+    drawMiddleBox() {
+        const topPipe = instance.pipeArray[0]
+        const bottomPipe = instance.pipeArray[1]
+
+        if (topPipe && bottomPipe) {
+            const middleSpace = (bottomPipe.y - (topPipe.y + topPipe.height)) / 2
+            const middleY = topPipe.y + topPipe.height + middleSpace - instance.boxHeight / 2
+
+            const box = {
+                x: topPipe.x,
+                y: middleY,
+                width: 64,
+                height: 64,
+            }
+
+            instance.context.fillStyle = 'red' // Set the color of the box
+            instance.context.fillRect(topPipe.x, middleY, 64, 64)
+
+            // Check for collision with the box
+            if (instance.detectCollision(instance.bird, box)) {
+                instance.winRound = true
+            }
+        }
+    }
+
+    // Add a method to handle the win condition
+    handleWinRound() {
+        instance.context.fillStyle = 'green'
+        instance.context.font = '48px sans-serif'
+        instance.context.fillText('You Win!', instance.boardWidth / 2, instance.boardHeight / 2)
+        instance.context.font = '16px sans-serif'
+        instance.context.fillText('Press space to start a new round', instance.boardWidth / 2, instance.boardHeight / 2 + 40)
+
+        // Add event listener to start a new round on 'Space' key press
+        document.addEventListener('keydown', instance.startGameOnEnter)
     }
 
     clearCanvas() {
@@ -253,6 +308,11 @@ export default class FlappyBird {
         const totalElapsedSeconds = Math.floor((currentTime - instance.startTime) / 1000) //in seconds
         instance.elapsedTime = totalElapsedSeconds % 60
 
+        // Check if 30 seconds have passed
+        if (instance.elapsedTime >= 7 && !instance.drawBox) {
+            instance.drawBox = true
+        }
+
         instance.clearCanvas()
 
         instance.velocityY += FlappyBird.GRAVITY
@@ -267,6 +327,11 @@ export default class FlappyBird {
             instance.gameOver = true
         }
 
+        // Draw the box if the condition is met
+        if (instance.drawBox) {
+            instance.drawMiddleBox()
+        }
+
         // Clear pipes outside of the screen for memory leak
         while (instance.pipeArray.length > 0 && instance.pipeArray[0].x < -instance.pipeWidth) {
             instance.pipeArray.shift()
@@ -274,6 +339,11 @@ export default class FlappyBird {
 
         if (instance.gameOver) {
             instance.drawGameOverScreen()
+        }
+
+        // Check if the player has won and handle accordingly
+        if (instance.winRound) {
+            instance.handleWinRound()
         }
 
         instance.drawTimer()

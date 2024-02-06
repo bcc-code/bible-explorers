@@ -10,7 +10,7 @@ import Menu from './Components/Menu.js'
 import World from './World/World.js'
 import FAQ from './Components/FAQ.js'
 import _gl from './Utils/Globals.js'
-import FlappyBird from './Games/FlappyBird.js'
+import { Game } from './Games/FlappyBirdV2.js'
 
 let instance = null
 
@@ -39,7 +39,7 @@ export default class Experience {
         this.world = new World()
         this.auth0 = {}
 
-        this.flappyBird = new FlappyBird()
+        const game = new Game()
 
         // Time animation event
         this.videoIsPlaying = false
