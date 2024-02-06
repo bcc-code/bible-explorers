@@ -12,7 +12,10 @@ class Bird {
     }
 
     flap() {
-        this.velocityY = this.jumpStrength
+        // Check if the bird is already at the top of the canvas
+        if (this.y - this.radius > 0) {
+            this.velocityY = this.jumpStrength
+        }
     }
 
     update() {
