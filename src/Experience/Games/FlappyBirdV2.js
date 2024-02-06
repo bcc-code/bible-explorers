@@ -156,6 +156,14 @@ export class Game {
                 }
             }
 
+            // Check if it's time to add a new pipe
+            const lastPipe = this.pipes[this.pipes.length - 1]
+            const minPipeSpacing = 300 // Adjust minimum spacing between pipes as needed
+            if (lastPipe && this.canvas.width - lastPipe.x > minPipeSpacing) {
+                const x = this.canvas.width // Position the new pipe off-screen to the right
+                this.pipes.push(new Pipe(this.canvas, x))
+            }
+
             // Check for game over condition (bird hits ground)
             if (this.bird.y + this.bird.radius >= this.canvas.height) {
                 console.log('Game over!')
