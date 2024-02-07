@@ -45,7 +45,7 @@ class Pipe {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
-        this.width = 50 // Adjust pipe width as needed
+        this.width = 64 // Adjust pipe width as needed
         this.color = 'green' // Adjust pipe color as needed
         this.speed = 2 // Adjust pipe speed as needed
         this.gap = 150 // Adjust gap between pipes as needed
@@ -75,24 +75,13 @@ class Pipe {
 export class Game {
     constructor() {
         this.canvas = document.createElement('canvas')
-        this.canvas.className = 'absolute z-50'
+        this.canvas.className = 'absolute top-0 left-0 z-50'
         this.ctx = this.canvas.getContext('2d')
-        document.body.appendChild(this.canvas)
-
-        // Set canvas dimensions
-        this.canvas.width = 800
-        this.canvas.height = 600
-
-        // Load background image
-        this.backgroundImage = new Image()
-        this.backgroundImage.src = 'games/flappybird/flappybirdbg.png'
+        document.querySelector('#app').appendChild(this.canvas)
 
         // Initialize game objects
         this.bird = new Bird(this.canvas)
         this.pipes = []
-
-        // Add initial pipes
-        this.addInitialPipes()
 
         // Initialize score
         this.score = 0
@@ -124,6 +113,31 @@ export class Game {
                 this.bird.flap()
             }
         })
+
+        // Initialize and bind resize event listener
+        window.addEventListener('resize', () => {
+            this.resizeCanvas()
+        })
+
+        // Resize canvas initially
+        this.resizeCanvas()
+    }
+
+    resizeCanvas() {
+        // Set canvas dimensions based on browser width
+        this.canvas.width = window.innerWidth
+        this.canvas.height = window.innerHeight
+
+        // Adjust initial positions and sizes of game objects
+        this.bird.y = this.canvas.height / 2
+        this.pipes.forEach((pipe) => {
+            pipe.canvas = this.canvas
+            pipe.upperHeight = Math.random() * (this.canvas.height - pipe.gap - 100) + 50
+            pipe.lowerHeight = this.canvas.height - pipe.upperHeight - pipe.gap
+        })
+
+        // Render the game after resizing
+        this.render()
     }
 
     addInitialPipes() {
@@ -185,9 +199,15 @@ export class Game {
         // Clear the canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-        // Draw background image
-        for (let x = 0; x < this.canvas.width; x += this.backgroundImage.width) {
-            this.ctx.drawImage(this.backgroundImage, x, 0, this.backgroundImage.width, this.canvas.height)
+        // Draw background image repeatedly on x-axis
+        const backgroundImage = new Image()
+        backgroundImage.src = 'games/flappybird/flappybirdbg.png'
+        const bgWidth = backgroundImage.width
+        const bgHeight = backgroundImage.height
+        let x = 0
+        while (x < this.canvas.width) {
+            this.ctx.drawImage(backgroundImage, x, 0, bgWidth, bgHeight)
+            x += bgWidth
         }
 
         // Render game objects if game is running
