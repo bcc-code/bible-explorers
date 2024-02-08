@@ -78,22 +78,21 @@ class FlappyBird {
             // Once the image is loaded, resize the canvas and draw the background
             this.resizeCanvas()
             this.drawBackground()
-            this.drawMenu()
+            this.drawStartScreen()
         })
 
         // Initialize and bind resize event listener
         window.addEventListener('resize', () => {
             this.resizeCanvas()
             this.drawBackground()
-            this.drawMenu()
+            this.drawStartScreen()
         })
 
-        // Listen for mouse clicks on the canvas
-        this.canvas.addEventListener('click', (event) => {
-            const mouseX = event.clientX - this.canvas.getBoundingClientRect().left
-            const mouseY = event.clientY - this.canvas.getBoundingClientRect().top
-            this.handleClick(mouseX, mouseY)
-        })
+        // Initialize the click event listener for starting the game
+        this.startGameClickHandler = () => {
+            this.startGame()
+        }
+        this.canvas.addEventListener('click', this.startGameClickHandler)
 
         // Player instance (will be added when "Start" is clicked)
         this.player = null
@@ -130,50 +129,19 @@ class FlappyBird {
         }
     }
 
-    drawMenu() {
-        // Draw menu options
+    drawStartScreen() {
+        // Draw start screen message
         this.ctx.fillStyle = 'white'
         this.ctx.font = '36px Arial' // Increase font size
-        const startText = 'Start'
-        const exitText = 'Exit'
+        const message = 'Click to start the game'
 
-        // Calculate the position to center the menu vertically and horizontally
+        // Calculate the position to center the message vertically and horizontally
         const centerX = this.canvas.width / 2
         const centerY = this.canvas.height / 2
+        const messageWidth = this.ctx.measureText(message).width
 
-        // Calculate the width of each text to center them properly
-        const startTextWidth = this.ctx.measureText(startText).width
-        const exitTextWidth = this.ctx.measureText(exitText).width
-
-        // Draw "Start" text
-        this.ctx.fillText(startText, centerX - startTextWidth / 2, centerY - 20)
-
-        // Draw "Exit" text
-        this.ctx.fillText(exitText, centerX - exitTextWidth / 2, centerY + 20)
-    }
-
-    handleClick(mouseX, mouseY) {
-        if (!this.gameStarted) {
-            // Check if the mouse click is within any menu option only if the game has not started
-            const centerX = this.canvas.width / 2
-            const centerY = this.canvas.height / 2
-            const startTextWidth = this.ctx.measureText('Start').width
-            const exitTextWidth = this.ctx.measureText('Exit').width
-
-            const startTextX = centerX - startTextWidth / 2
-            const startTextY = centerY - 20
-
-            const exitTextX = centerX - exitTextWidth / 2
-            const exitTextY = centerY + 20
-
-            if (mouseX > startTextX && mouseX < startTextX + startTextWidth && mouseY > startTextY - 30 && mouseY < startTextY) {
-                // Start option clicked
-                this.startGame()
-            } else if (mouseX > exitTextX && mouseX < exitTextX + exitTextWidth && mouseY > exitTextY - 30 && mouseY < exitTextY) {
-                // Exit option clicked
-                this.exitGame()
-            }
-        }
+        // Draw message
+        this.ctx.fillText(message, centerX - messageWidth / 2, centerY)
     }
 
     startGame() {
@@ -184,7 +152,7 @@ class FlappyBird {
         this.gameStarted = true
 
         // Remove click event listener
-        this.canvas.removeEventListener('click', this.handleClick)
+        this.canvas.removeEventListener('click', this.startGameClickHandler)
 
         // Create player instance
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this))
@@ -232,11 +200,6 @@ class FlappyBird {
         const centerY = this.canvas.height / 2
         const gameOverTextWidth = this.ctx.measureText(gameOverText).width
         this.ctx.fillText(gameOverText, centerX - gameOverTextWidth / 2, centerY)
-    }
-
-    exitGame() {
-        // Implement game exit logic here
-        console.log('Game exited!')
     }
 }
 
