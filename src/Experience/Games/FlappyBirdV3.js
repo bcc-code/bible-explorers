@@ -9,15 +9,53 @@ class Player {
         this.velocityY = 0
         this.gravity = 0.4
         this.jumpStrength = -6
-        // You should load the image of the player bird here
-        // this.image = new Image();
-        // this.image.src = 'path/to/playerImage.png';
+        this.spacePressed = false
+
+        // Add event listeners for keydown and keyup
+        document.addEventListener('keydown', this.handleKeyDown.bind(this))
+        document.addEventListener('keyup', this.handleKeyUp.bind(this))
     }
 
     draw() {
-        // Draw the bird
-        this.ctx.fillStyle = 'yellow' // Change color or use image
+        // Apply gravity
+        this.velocityY += this.gravity
+        this.y += this.velocityY
+
+        // Ensure the player stays within the canvas bounds
+        if (this.y < 0) {
+            this.y = 0 // Prevent player from going above the top edge
+            this.velocityY = 0 // Stop upward velocity
+        } else if (this.y + this.height > this.canvas.height) {
+            this.y = this.canvas.height - this.height // Prevent player from going below the bottom edge
+            this.velocityY = 0 // Stop downward velocity
+        }
+
+        // Draw the player
+        this.ctx.fillStyle = 'yellow'
         this.ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+
+    jump() {
+        this.velocityY = this.jumpStrength // Jump
+    }
+
+    handleKeyDown(event) {
+        if (event.key === ' ') {
+            this.spacePressed = true
+        }
+    }
+
+    handleKeyUp(event) {
+        if (event.key === ' ') {
+            this.spacePressed = false
+        }
+    }
+
+    update() {
+        if (this.spacePressed) {
+            this.jump()
+        }
+        this.draw()
     }
 }
 
@@ -53,6 +91,12 @@ class FlappyBird {
             const mouseY = event.clientY - this.canvas.getBoundingClientRect().top
             this.handleClick(mouseX, mouseY)
         })
+
+        // Player instance (will be added when "Start" is clicked)
+        this.player = null
+
+        // Game loop variable
+        this.gameLoop = null
     }
 
     resizeCanvas() {
@@ -127,14 +171,23 @@ class FlappyBird {
 
         // Create player instance
         this.player = new Player(this.canvas)
-        // Redraw the canvas with the player
-        this.drawBackground()
-        this.drawPlayer()
+
+        // Start the game loop
+        this.gameLoop = requestAnimationFrame(this.update.bind(this))
     }
 
-    drawPlayer() {
-        // Draw the player
-        this.player.draw()
+    update() {
+        // Clear the canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+        // Redraw the background image
+        this.drawBackground()
+
+        // Update game state
+        this.player.update()
+
+        // Request next frame
+        this.gameLoop = requestAnimationFrame(this.update.bind(this))
     }
 
     exitGame() {
