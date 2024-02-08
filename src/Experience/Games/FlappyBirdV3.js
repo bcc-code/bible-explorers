@@ -62,6 +62,36 @@ class Player {
     }
 }
 
+class Pipe {
+    constructor(canvas, x, y, gapHeight, speed, pipeTopImage, pipeBottomImage) {
+        this.canvas = canvas
+        this.ctx = canvas.getContext('2d')
+        this.x = x
+        this.y = y
+        this.gapHeight = gapHeight
+        this.width = 64
+        this.height = 512
+        this.speed = speed
+        this.pipeTopImage = pipeTopImage
+        this.pipeBottomImage = pipeBottomImage
+    }
+
+    draw() {
+        // Draw top pipe
+        this.ctx.drawImage(this.pipeTopImage, this.x, this.y - this.height, this.width, this.height)
+        // Draw bottom pipe
+        this.ctx.drawImage(this.pipeBottomImage, this.x, this.y + this.gapHeight, this.width, this.height)
+    }
+
+    move() {
+        this.x -= this.speed
+    }
+
+    isVisible() {
+        return this.x + this.width > 0
+    }
+}
+
 class FlappyBird {
     constructor() {
         this.canvas = document.createElement('canvas')
@@ -73,9 +103,15 @@ class FlappyBird {
         this.bgImage = new Image()
         this.bgImage.src = 'games/flappybird/flappybirdbg.png'
 
-        // Wait for the background image to load
-        loadImage(this.bgImage).then(() => {
-            // Once the image is loaded, resize the canvas and draw the background
+        // Load pipe images
+        this.pipeTopImage = new Image()
+        this.pipeTopImage.src = 'games/flappybird/toppipe.png'
+        this.pipeBottomImage = new Image()
+        this.pipeBottomImage.src = 'games/flappybird/bottompipe.png'
+
+        // Wait for all images to load
+        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage)]).then(() => {
+            // Once the images are loaded, resize the canvas and draw the background
             this.resizeCanvas()
             this.drawBackground()
             this.drawStartScreen()
@@ -97,6 +133,9 @@ class FlappyBird {
         // Player instance (will be added when "Start" is clicked)
         this.player = null
 
+        // Pipes array
+        this.pipes = []
+
         // Game over flag
         this.gameOver = false
 
@@ -105,6 +144,9 @@ class FlappyBird {
 
         // Flag to indicate whether the game has started
         this.gameStarted = false
+
+        // Store the pipe generation timeout ID
+        this.pipeGenerationTimeout = null
     }
 
     resizeCanvas() {
@@ -147,6 +189,9 @@ class FlappyBird {
         // Reset game over flag
         this.gameOver = false
 
+        // Reset pipes array
+        this.pipes = []
+
         // Set gameStarted flag to true
         this.gameStarted = true
 
@@ -156,8 +201,31 @@ class FlappyBird {
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this))
 
+        // Cancel any existing pipe generation timeout
+        if (this.pipeGenerationTimeout) {
+            clearTimeout(this.pipeGenerationTimeout)
+        }
+
+        // Start generating pipes
+        this.generatePipes()
+
         // Start the game loop
         this.gameLoop = requestAnimationFrame(this.update.bind(this))
+    }
+
+    generatePipes() {
+        const pipeGap = 150 // Gap between top and bottom pipes
+        const minPipeHeight = 100 // Minimum height of pipes
+        const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
+        const pipeSpeed = 3 // Speed of pipes
+
+        // Generate new pipes
+        const x = this.canvas.width
+        const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
+        this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage))
+
+        // Schedule next pipe generation
+        this.pipeGenerationTimeout = setTimeout(this.generatePipes.bind(this), 2000) // Change this value to adjust pipe generation interval
     }
 
     update() {
@@ -169,7 +237,12 @@ class FlappyBird {
 
         // Update game state if game is not over
         if (!this.gameOver) {
+            // Update player
             this.player.update()
+
+            // Update and draw pipes
+            this.updatePipes()
+            this.drawPipes()
         }
 
         // Request next frame if game is not over
@@ -178,10 +251,28 @@ class FlappyBird {
         }
     }
 
+    updatePipes() {
+        // Move pipes
+        this.pipes.forEach((pipe) => {
+            pipe.move()
+        })
+
+        // Remove pipes that are no longer visible
+        this.pipes = this.pipes.filter((pipe) => pipe.isVisible())
+    }
+
+    drawPipes() {
+        // Draw pipes
+        this.pipes.forEach((pipe) => {
+            pipe.draw()
+        })
+    }
+
     gameOverCallback() {
         // Game over logic
         this.gameOver = true
         console.log('Game over!')
+
         // Draw game over screen
         this.drawGameOverScreen()
         // Stop the game loop
