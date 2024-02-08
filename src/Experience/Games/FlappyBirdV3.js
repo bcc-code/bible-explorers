@@ -166,6 +166,10 @@ class FlappyBird {
 
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
+
+        // Timer properties
+        this.timer = 0
+        this.timerInterval = null
     }
 
     resizeCanvas() {
@@ -225,16 +229,32 @@ class FlappyBird {
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this)
 
-        // Cancel any existing pipe generation timeout
-        if (this.pipeGenerationTimeout) {
-            clearTimeout(this.pipeGenerationTimeout)
-        }
+        // Reset the timer
+        this.resetTimer()
+
+        // Start the timer
+        this.startTimer()
 
         // Start generating pipes
         this.generatePipes()
 
         // Start the game loop
         this.gameLoop = requestAnimationFrame(this.update.bind(this))
+    }
+
+    startTimer() {
+        this.timerInterval = setInterval(() => {
+            this.timer++
+        }, 1000) // Update the timer every second (1000 milliseconds)
+    }
+
+    stopTimer() {
+        clearInterval(this.timerInterval)
+    }
+
+    resetTimer() {
+        this.stopTimer()
+        this.timer = 0
     }
 
     generatePipes() {
@@ -272,6 +292,9 @@ class FlappyBird {
             this.drawGameOverScreen()
         }
 
+        // Draw timer
+        this.drawTimer()
+
         // Request next frame if game is not over
         if (!this.gameOver) {
             // Check for collisions
@@ -307,6 +330,9 @@ class FlappyBird {
         // Game over logic
         this.gameOver = true
         console.log('Game over!')
+
+        // Stop the timer
+        this.stopTimer()
 
         // Draw game over screen
         this.drawGameOverScreen()
@@ -362,6 +388,13 @@ class FlappyBird {
                 this.gameOverCallback()
             }
         })
+    }
+
+    drawTimer() {
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '24px Arial'
+        this.ctx.textAlign = 'right'
+        this.ctx.fillText(`Time: ${this.timer}s`, this.canvas.width - 10, 30)
     }
 }
 
