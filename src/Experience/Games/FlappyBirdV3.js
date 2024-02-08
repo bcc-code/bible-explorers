@@ -132,16 +132,12 @@ class FlappyBird {
     drawStartScreen() {
         // Draw start screen message
         this.ctx.fillStyle = 'white'
+        this.ctx.textAlign = 'center'
         this.ctx.font = '36px Arial' // Increase font size
         const message = 'Click to start the game'
 
-        // Calculate the position to center the message vertically and horizontally
-        const centerX = this.canvas.width / 2
-        const centerY = this.canvas.height / 2
-        const messageWidth = this.ctx.measureText(message).width
-
         // Draw message
-        this.ctx.fillText(message, centerX - messageWidth / 2, centerY)
+        this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2)
     }
 
     startGame() {
@@ -198,11 +194,9 @@ class FlappyBird {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.fillStyle = 'white'
         this.ctx.font = '36px Arial'
+        this.ctx.textAlign = 'center'
         const gameOverText = 'Game Over'
-        const centerX = this.canvas.width / 2
-        const centerY = this.canvas.height / 2
-        const gameOverTextWidth = this.ctx.measureText(gameOverText).width
-        this.ctx.fillText(gameOverText, centerX - gameOverTextWidth / 2, centerY)
+        this.ctx.fillText(gameOverText, this.canvas.width / 2, this.canvas.height / 2)
 
         // Add click event listener to restart the game
         this.canvas.addEventListener('click', () => {
