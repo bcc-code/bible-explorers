@@ -235,6 +235,9 @@ class FlappyBird {
         // Redraw the background image
         this.drawBackground()
 
+        // Draw pipes
+        this.drawPipes()
+
         // Update game state if game is not over
         if (!this.gameOver) {
             // Update player
@@ -242,7 +245,11 @@ class FlappyBird {
 
             // Update and draw pipes
             this.updatePipes()
-            this.drawPipes()
+        }
+
+        // Draw game over screen
+        if (this.gameOver) {
+            this.drawGameOverScreen()
         }
 
         // Request next frame if game is not over
