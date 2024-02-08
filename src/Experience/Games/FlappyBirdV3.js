@@ -267,15 +267,6 @@ class FlappyBird {
         // Draw pipes
         this.drawPipes()
 
-        // Update game state if game is not over
-        if (!this.gameOver) {
-            // Update player
-            this.player.update()
-
-            // Update and draw pipes
-            this.updatePipes()
-        }
-
         // Draw game over screen
         if (this.gameOver) {
             this.drawGameOverScreen()
@@ -283,6 +274,13 @@ class FlappyBird {
 
         // Request next frame if game is not over
         if (!this.gameOver) {
+            // Check for collisions
+            this.checkCollisions()
+            // Update player
+            this.player.update()
+
+            // Update and draw pipes
+            this.updatePipes()
             this.gameLoop = requestAnimationFrame(this.update.bind(this))
         }
     }
@@ -335,6 +333,34 @@ class FlappyBird {
 
     markDirty(x, y, width, height) {
         this.dirtyRects.push({ x, y, width, height })
+    }
+
+    detectCollision(a, b) {
+        return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y
+    }
+
+    checkCollisions() {
+        const player = this.player
+
+        this.pipes.forEach((pipe) => {
+            const topPipe = {
+                x: pipe.x,
+                y: pipe.y - pipe.height,
+                width: pipe.width,
+                height: pipe.height,
+            }
+            const bottomPipe = {
+                x: pipe.x,
+                y: pipe.y + pipe.gapHeight,
+                width: pipe.width,
+                height: pipe.height,
+            }
+
+            // Check collision with top pipe
+            if (this.detectCollision(player, topPipe) || this.detectCollision(player, bottomPipe)) {
+                this.gameOverCallback()
+            }
+        })
     }
 }
 
