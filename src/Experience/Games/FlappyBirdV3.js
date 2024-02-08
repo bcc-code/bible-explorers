@@ -1,5 +1,5 @@
 class Player {
-    constructor(canvas, gameOverCallback) {
+    constructor(canvas, gameOverCallback, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.width = 32
@@ -11,6 +11,7 @@ class Player {
         this.jumpStrength = -6
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
+        this.game = game // Reference to the game instance
 
         // Add event listeners for keydown and keyup
         document.addEventListener('keydown', this.handleKeyDown.bind(this))
@@ -18,6 +19,9 @@ class Player {
     }
 
     draw() {
+        // Mark the previous player position as dirty
+        this.game.markDirty(this.x, this.y, this.width, this.height)
+
         // Apply gravity
         this.velocityY += this.gravity
         this.y += this.velocityY
@@ -36,6 +40,9 @@ class Player {
         // Draw the player
         this.ctx.fillStyle = 'yellow'
         this.ctx.fillRect(this.x, this.y, this.width, this.height)
+
+        // Mark the current player position as dirty
+        this.game.markDirty(this.x, this.y, this.width, this.height)
     }
 
     jump() {
@@ -63,7 +70,7 @@ class Player {
 }
 
 class Pipe {
-    constructor(canvas, x, y, gapHeight, speed, pipeTopImage, pipeBottomImage) {
+    constructor(canvas, x, y, gapHeight, speed, pipeTopImage, pipeBottomImage, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
@@ -74,13 +81,22 @@ class Pipe {
         this.speed = speed
         this.pipeTopImage = pipeTopImage
         this.pipeBottomImage = pipeBottomImage
+        this.game = game // Reference to the game instance
     }
 
     draw() {
+        // Mark the previous pipe position as dirty
+        this.game.markDirty(this.x, this.y - this.height, this.width, this.height)
+        this.game.markDirty(this.x, this.y + this.gapHeight, this.width, this.height)
+
         // Draw top pipe
         this.ctx.drawImage(this.pipeTopImage, this.x, this.y - this.height, this.width, this.height)
         // Draw bottom pipe
         this.ctx.drawImage(this.pipeBottomImage, this.x, this.y + this.gapHeight, this.width, this.height)
+
+        // Mark the current pipe position as dirty
+        this.game.markDirty(this.x, this.y - this.height, this.width, this.height)
+        this.game.markDirty(this.x, this.y + this.gapHeight, this.width, this.height)
     }
 
     move() {
@@ -147,6 +163,9 @@ class FlappyBird {
 
         // Store the pipe generation timeout ID
         this.pipeGenerationTimeout = null
+
+        // Initialize dirty rectangles array
+        this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
     }
 
     resizeCanvas() {
@@ -156,8 +175,13 @@ class FlappyBird {
     }
 
     drawBackground() {
-        // Clear the canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        // Clear only the dirty rectangles
+        this.dirtyRects.forEach((rect) => {
+            this.ctx.clearRect(rect.x, rect.y, rect.width, rect.height)
+        })
+
+        // Clear the dirty rectangles array
+        this.dirtyRects = []
 
         // Draw the background image repeatedly on the X-axis
         const imgWidth = this.bgImage.width
@@ -199,7 +223,7 @@ class FlappyBird {
         this.canvas.removeEventListener('click', this.startGameClickHandler)
 
         // Reset player position and state
-        this.player = new Player(this.canvas, this.gameOverCallback.bind(this))
+        this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this)
 
         // Cancel any existing pipe generation timeout
         if (this.pipeGenerationTimeout) {
@@ -222,15 +246,20 @@ class FlappyBird {
         // Generate new pipes
         const x = this.canvas.width
         const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
-        this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage))
+        this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
 
         // Schedule next pipe generation
         this.pipeGenerationTimeout = setTimeout(this.generatePipes.bind(this), 2000) // Change this value to adjust pipe generation interval
     }
 
     update() {
-        // Clear the canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        // Clear only the dirty rectangles
+        this.dirtyRects.forEach((rect) => {
+            this.ctx.clearRect(rect.x, rect.y, rect.width, rect.height)
+        })
+
+        // Clear the dirty rectangles array
+        this.dirtyRects = []
 
         // Redraw the background image
         this.drawBackground()
@@ -302,6 +331,10 @@ class FlappyBird {
                 this.startGame()
             }
         })
+    }
+
+    markDirty(x, y, width, height) {
+        this.dirtyRects.push({ x, y, width, height })
     }
 }
 
