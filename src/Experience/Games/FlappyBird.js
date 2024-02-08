@@ -164,7 +164,7 @@ export default class FlappyBird {
 
         if (instance.winRound) {
             instance.bird.y = instance.birdY
-            instance.pipeArray = []  
+            instance.pipeArray = []
             instance.score = 0
             instance.gameOver = false
             instance.drawBox = false
