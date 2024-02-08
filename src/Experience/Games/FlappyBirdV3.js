@@ -276,6 +276,7 @@ class FlappyBird {
         if (!this.gameOver) {
             // Check for collisions
             this.checkCollisions()
+
             // Update player
             this.player.update()
 
