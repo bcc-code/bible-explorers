@@ -148,13 +148,16 @@ class FlappyBird {
         // Implement game start logic here
         console.log('Game started!')
 
+        // Reset game over flag
+        this.gameOver = false
+
         // Set gameStarted flag to true
         this.gameStarted = true
 
         // Remove click event listener
         this.canvas.removeEventListener('click', this.startGameClickHandler)
 
-        // Create player instance
+        // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this))
 
         // Start the game loop
@@ -200,6 +203,13 @@ class FlappyBird {
         const centerY = this.canvas.height / 2
         const gameOverTextWidth = this.ctx.measureText(gameOverText).width
         this.ctx.fillText(gameOverText, centerX - gameOverTextWidth / 2, centerY)
+
+        // Add click event listener to restart the game
+        this.canvas.addEventListener('click', () => {
+            if (this.gameOver) {
+                this.startGame()
+            }
+        })
     }
 }
 
