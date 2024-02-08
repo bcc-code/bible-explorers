@@ -161,14 +161,15 @@ class FlappyBird {
         // Flag to indicate whether the game has started
         this.gameStarted = false
 
-        // Store the pipe generation timeout ID
-        this.pipeGenerationTimeout = null
+        // Timer properties
+        this.timer = 0
+        this.lastPipeGenerationTime = 0
+        this.pipeGenerationInterval = 2000 // Interval between pipe generations (in milliseconds)
 
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
 
-        // Timer properties
-        this.timer = 0
+        // Initialize the timer
         this.timerInterval = null
     }
 
@@ -268,8 +269,8 @@ class FlappyBird {
         const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
         this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
 
-        // Schedule next pipe generation
-        this.pipeGenerationTimeout = setTimeout(this.generatePipes.bind(this), 2000) // Change this value to adjust pipe generation interval
+        // Update the last pipe generation time
+        this.lastPipeGenerationTime = Date.now()
     }
 
     update() {
@@ -305,6 +306,14 @@ class FlappyBird {
 
             // Update and draw pipes
             this.updatePipes()
+
+            // Generate pipes at regular intervals
+            const currentTime = Date.now()
+            if (currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
+                this.generatePipes()
+                this.lastPipeGenerationTime = currentTime
+            }
+
             this.gameLoop = requestAnimationFrame(this.update.bind(this))
         }
     }
