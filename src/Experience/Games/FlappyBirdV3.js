@@ -108,6 +108,27 @@ class Pipe {
     }
 }
 
+class Box {
+    constructor(canvas, x, y, width, height, speed) {
+        this.canvas = canvas
+        this.ctx = canvas.getContext('2d')
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        this.speed = speed
+    }
+
+    draw() {
+        this.ctx.fillStyle = 'red' // Change color as needed
+        this.ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+
+    move() {
+        this.x -= this.speed
+    }
+}
+
 class FlappyBird {
     constructor() {
         this.canvas = document.createElement('canvas')
@@ -171,6 +192,12 @@ class FlappyBird {
 
         // Initialize the timer
         this.timerInterval = null
+
+        // Flag to track if 30 seconds have passed
+        this.boxSpawned = false
+
+        // Box instance
+        this.box = null
     }
 
     resizeCanvas() {
@@ -221,6 +248,15 @@ class FlappyBird {
         // Reset pipes array
         this.pipes = []
 
+        // Reset game timer
+        this.resetTimer()
+
+        // Reset box spawn flag
+        this.boxSpawned = false
+
+        // Reset box instance
+        this.box = null
+
         // Set gameStarted flag to true
         this.gameStarted = true
 
@@ -229,9 +265,6 @@ class FlappyBird {
 
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this)
-
-        // Reset the timer
-        this.resetTimer()
 
         // Start the timer
         this.startTimer()
@@ -259,18 +292,21 @@ class FlappyBird {
     }
 
     generatePipes() {
-        const pipeGap = 150 // Gap between top and bottom pipes
-        const minPipeHeight = 100 // Minimum height of pipes
-        const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
-        const pipeSpeed = 3 // Speed of pipes
+        // Generate new pipes only if 30 seconds haven't passed
+        if (!this.boxSpawned) {
+            const pipeGap = 150 // Gap between top and bottom pipes
+            const minPipeHeight = 100 // Minimum height of pipes
+            const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
+            const pipeSpeed = 3 // Speed of pipes
 
-        // Generate new pipes
-        const x = this.canvas.width
-        const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
-        this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
+            // Generate new pipes
+            const x = this.canvas.width
+            const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
+            this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
 
-        // Update the last pipe generation time
-        this.lastPipeGenerationTime = Date.now()
+            // Update the last pipe generation time
+            this.lastPipeGenerationTime = Date.now()
+        }
     }
 
     update() {
@@ -309,9 +345,26 @@ class FlappyBird {
 
             // Generate pipes at regular intervals
             const currentTime = Date.now()
-            if (currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
+            if (!this.boxSpawned && currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
                 this.generatePipes()
                 this.lastPipeGenerationTime = currentTime
+            }
+
+            // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
+            if (this.timer >= 30 && !this.boxSpawned && !this.box) {
+                const boxX = this.canvas.width
+                const boxY = this.player.y + this.player.height / 2 // Place box in the middle of player's height
+                const boxWidth = 32 // Adjust dimensions as needed
+                const boxHeight = 32
+                const boxSpeed = 3 // Same speed as pipes
+                this.box = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
+                this.boxSpawned = true
+            }
+
+            // Move box towards the player if it exists
+            if (this.box) {
+                this.box.move()
+                this.box.draw()
             }
 
             this.gameLoop = requestAnimationFrame(this.update.bind(this))
@@ -340,11 +393,18 @@ class FlappyBird {
         this.gameOver = true
         console.log('Game over!')
 
-        // Stop the timer
+        // Stop timer
         this.stopTimer()
+
+        // Stop generating pipes after 30 seconds
+        this.boxSpawned = true
+
+        // Clear box instance
+        this.box = null
 
         // Draw game over screen
         this.drawGameOverScreen()
+
         // Stop the game loop
         cancelAnimationFrame(this.gameLoop)
     }
