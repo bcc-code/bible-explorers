@@ -176,6 +176,9 @@ class FlappyBird {
         // Game over flag
         this.gameOver = false
 
+        // Win game flag
+        this.gameWon = false
+
         // Store the requestAnimationFrame ID
         this.gameLoop = null
 
@@ -242,8 +245,9 @@ class FlappyBird {
         // Implement game start logic here
         console.log('Game started!')
 
-        // Reset game over flag
+        // Reset game over and win game flags
         this.gameOver = false
+        this.gameWon = false
 
         // Reset pipes array
         this.pipes = []
@@ -324,16 +328,18 @@ class FlappyBird {
         // Draw pipes
         this.drawPipes()
 
-        // Draw game over screen
+        // Draw game over or win game screen
         if (this.gameOver) {
             this.drawGameOverScreen()
+        } else if (this.gameWon) {
+            this.drawWinGameScreen()
         }
 
         // Draw timer
         this.drawTimer()
 
         // Request next frame if game is not over
-        if (!this.gameOver) {
+        if (!this.gameOver && !this.gameWon) {
             // Check for collisions
             this.checkCollisions()
 
@@ -351,11 +357,11 @@ class FlappyBird {
             }
 
             // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
-            if (this.timer >= 30 && !this.boxSpawned && !this.box) {
+            if (this.timer >= 10 && !this.boxSpawned && !this.box) {
                 const boxX = this.canvas.width
                 const boxY = this.player.y + this.player.height / 2 // Place box in the middle of player's height
-                const boxWidth = 32 // Adjust dimensions as needed
-                const boxHeight = 32
+                const boxWidth = 64 // Adjust dimensions as needed
+                const boxHeight = 64
                 const boxSpeed = 3 // Same speed as pipes
                 this.box = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
                 this.boxSpawned = true
@@ -409,6 +415,16 @@ class FlappyBird {
         cancelAnimationFrame(this.gameLoop)
     }
 
+    winGame() {
+        this.gameWon = true
+        console.log('You win!')
+        this.stopTimer()
+        this.boxSpawned = true
+        this.box = null
+        this.drawWinGameScreen()
+        cancelAnimationFrame(this.gameLoop)
+    }
+
     drawGameOverScreen() {
         // Draw game over screen
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
@@ -425,6 +441,17 @@ class FlappyBird {
                 this.startGame()
             }
         })
+    }
+
+    drawWinGameScreen() {
+        // Draw win game screen
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '36px Arial'
+        this.ctx.textAlign = 'center'
+        const winGameText = 'You Win!'
+        this.ctx.fillText(winGameText, this.canvas.width / 2, this.canvas.height / 2)
     }
 
     markDirty(x, y, width, height) {
@@ -457,6 +484,11 @@ class FlappyBird {
                 this.gameOverCallback()
             }
         })
+
+        // Check collision with box
+        if (this.box && this.detectCollision(player, this.box)) {
+            this.winGame()
+        }
     }
 
     drawTimer() {
