@@ -13,6 +13,7 @@ import _gl from './Utils/Globals.js'
 import FlappyBird from './Games/FlappyBirdV3.js'
 
 let instance = null
+let flappyBirdGame = null // Variable to hold the game instance
 
 export default class Experience {
     constructor() {
@@ -39,11 +40,23 @@ export default class Experience {
         this.world = new World()
         this.auth0 = {}
 
-        this.game = new FlappyBird()
-
         // Time animation event
         this.videoIsPlaying = false
         this.gameIsOn = false
+
+        // Get the button element
+        const tryButton = document.getElementById('try-game')
+
+        tryButton.addEventListener('click', () => {
+            if (flappyBirdGame) {
+                flappyBirdGame.remove()
+                flappyBirdGame = null
+                tryButton.textContent = 'Try flappy bird'
+            } else {
+                flappyBirdGame = new FlappyBird()
+                tryButton.textContent = 'Exit the game'
+            }
+        })
 
         this.navigation = {
             prev: document.querySelector('#prev-step'),

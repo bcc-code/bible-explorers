@@ -201,6 +201,10 @@ class FlappyBird {
 
         // Box instance
         this.box = null
+
+        // Initialize the round count and rounds completed count
+        this.roundCount = 0
+        this.roundsCompleted = 0
     }
 
     resizeCanvas() {
@@ -298,7 +302,7 @@ class FlappyBird {
     generatePipes() {
         // Generate new pipes only if 30 seconds haven't passed
         if (!this.boxSpawned) {
-            const pipeGap = 150 // Gap between top and bottom pipes
+            const pipeGap = 250 // Gap between top and bottom pipes
             const minPipeHeight = 100 // Minimum height of pipes
             const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
             const pipeSpeed = 3 // Speed of pipes
@@ -421,8 +425,17 @@ class FlappyBird {
         this.stopTimer()
         this.boxSpawned = true
         this.box = null
+        this.roundCount++
+        this.roundsCompleted++ // Increment rounds completed count
         this.drawWinGameScreen()
         cancelAnimationFrame(this.gameLoop)
+
+        // Check if rounds completed count equals 5
+        if (this.roundsCompleted === 5) {
+            // Perform actions for completing 5 rounds
+            console.log('Congratulations! You have completed 5 rounds.')
+            // You can add your custom actions here
+        }
     }
 
     drawGameOverScreen() {
@@ -448,10 +461,22 @@ class FlappyBird {
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.fillStyle = 'white'
-        this.ctx.font = '36px Arial'
         this.ctx.textAlign = 'center'
+        this.ctx.font = '20px Arial'
         const winGameText = 'You Win!'
-        this.ctx.fillText(winGameText, this.canvas.width / 2, this.canvas.height / 2)
+        this.ctx.font = '36px Arial'
+        this.ctx.fillText(winGameText, this.canvas.width / 2, this.canvas.height / 2 - 20)
+        const roundText = `Round: ${this.roundCount}` // Display the round count\
+        this.ctx.fillText(roundText, this.canvas.width / 2, this.canvas.height / 2 + 20) // Position the round count text
+        this.ctx.font = '16px Arial'
+        const winSubText = 'Click to start new round'
+        this.ctx.fillText(winSubText, this.canvas.width / 2, this.canvas.height / 2 + 80) // Position the round count text
+        // Add click event listener to restart the game
+        this.canvas.addEventListener('click', () => {
+            if (this.gameWon) {
+                this.startGame()
+            }
+        })
     }
 
     markDirty(x, y, width, height) {
@@ -496,6 +521,29 @@ class FlappyBird {
         this.ctx.font = '24px Arial'
         this.ctx.textAlign = 'right'
         this.ctx.fillText(`Time: ${this.timer}s`, this.canvas.width - 10, 30)
+    }
+
+    remove() {
+        // Clear canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+        // Remove canvas from the DOM
+        this.canvas.parentNode.removeChild(this.canvas)
+
+        // Stop timer if running
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval)
+        }
+
+        // Reset game loop
+        if (this.gameLoop) {
+            cancelAnimationFrame(this.gameLoop)
+        }
+
+        // Remove click event listener for starting the game
+        this.canvas.removeEventListener('click', this.startGameClickHandler)
+
+        // Clear any other resources as needed
     }
 }
 
