@@ -8,9 +8,10 @@ import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 import _gl from './Experience/Utils/Globals.js'
 import lazySizes from 'lazysizes'
+import isElectron from 'is-electron'
 
 // Loader text
-document.querySelector('#loading_text').innerHTML = `<p>${_s.initializing}...</p>`
+document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing}...</p>`
 
 // Load icons
 const ajax = new XMLHttpRequest()
@@ -31,46 +32,51 @@ _appInsights.trackPageView({ name: 'Home' })
 // Start 3D experience
 const experience = new Experience()
 
-// Auth0
-const configureClient = async () => {
-    experience.auth0 = await createAuth0Client({
-        domain: 'login.bcc.no',
-        client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
-    })
-}
-const handleRedirectCallback = async () => {
-    const query = window.location.search
-    if (query.includes('code=') && query.includes('state=')) {
-        await experience.auth0.handleRedirectCallback()
-        window.history.replaceState({}, document.title, '/')
+if (isElectron()) {
+    document.body.classList.add('electron')
+
+    document.body.classList.add('logged-in')
+    experience.auth0 = { isAuthenticated: true, userData: { name: 'Log out' } }
+    document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+} else {
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        })
     }
 
-    experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
-
-    if (experience.auth0.isAuthenticated) {
-        experience.auth0.userData = await experience.auth0.getUser()
-        let personId = experience.auth0.userData['https://login.bcc.no/claims/personId']
-
-        experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
-            // In some cases the function will return an object instead of an array
-            if (typeof roles === 'object') roles = Object.values(roles)
-
-            if (roles.includes('administrator') || roles.includes('editor')) {
-                document.body.classList.add('admin', 'ak_leder')
-            } else if (roles.includes('ak_leder') || roles.includes('translator') || roles.includes('manager')) {
-                document.body.classList.add('ak_leder')
-            }
-
-            experience.settings.updateUI()
-            document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+    // Auth0
+    const configureClient = async () => {
+        experience.auth0 = await createAuth0Client({
+            domain: 'login.bcc.no',
+            client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
         })
+    }
 
-        document.body.classList.add('bcc_member')
-    } else {
-        experience.settings.updateUI()
+    const handleRedirectCallback = async () => {
+        const query = window.location.search
+        if (query.includes('code=') && query.includes('state=')) {
+            await experience.auth0.handleRedirectCallback()
+            window.history.replaceState({}, document.title, '/')
+        }
+
+        experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+
+        if (experience.auth0.isAuthenticated) {
+            experience.auth0.userData = await experience.auth0.getUser()
+            document.body.classList.add('logged-in')
+        }
+
         document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
     }
+
+    window.onload = async () => {
+        await configureClient()
+        await handleRedirectCallback()
+    }
 }
+
 // Detect browser
 var browserName = (function (agent) {
     switch (true) {
@@ -96,16 +102,4 @@ var browserName = (function (agent) {
 if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification)
     // document.body.appendChild(_gl.elementFromHtml(`<span style="background: red; color: white; position: absolute; top: 7rem; left: 1rem; padding: 0.5rem; border-radius: 1rem; z-index: 99">You are using: ${browserName}</span>`));
-}
-
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js', { scope: '/' })
-    })
-}
-
-window.onload = async () => {
-    await configureClient()
-    await handleRedirectCallback()
 }

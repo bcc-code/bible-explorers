@@ -2,9 +2,12 @@ import _lang from './Lang.js'
 
 const strings = {
     en: {
-        loading: 'Loading',
-        initializing: 'Initializing',
-        fetching: 'Fetching chapters',
+        status: {
+            loading: 'Loading',
+            initializing: 'Initializing',
+            fetching: 'Fetching chapters',
+            noCacheNoInternet: "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet.",
+        },
         conceptDescription: 'Join time travels and explore the book that can answer every question',
         introduction: 'Now children aged 6-12 can join fantastic journeys in time and experience the Bible in a whole new way – with Explorers',
         notAvailable: 'No chapter available in the selected language',
@@ -143,9 +146,12 @@ const strings = {
         },
     },
     no: {
-        loading: 'Laster',
-        initializing: 'Initialiserer',
-        fetching: 'Fetching chapters',
+        status: {
+            loading: 'Laster',
+            initializing: 'Initialiserer',
+            fetching: 'Fetching chapters',
+            noCacheNoInternet: 'Beklager men det ser ut som vi kunne ikke finne kapitlene og du er ikke koblet til internet.',
+        },
         conceptDescription: 'Bli med på tidsreisen og utforsk boka som kan besvare alle spørsmål',
         introduction: 'Nå kan barn i alderen 6-12 år bli med på fantastiske tidsreiser og oppleve Bibelen på en helt ny måte – med Explorers',
         notAvailable: 'Ingen kapitel tilgjengelig i det utvalgte språket',

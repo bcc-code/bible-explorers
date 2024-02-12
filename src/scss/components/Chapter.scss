@@ -43,13 +43,13 @@
 
 
 
-    body.bcc_member & {
+    body.logged-in & {
         .chapter__states {
             display: inline-flex;
         }
     }
 
-    body:not(.bcc_member) &.locked {
+    body:not(.logged-in) &.locked {
         filter: grayscale(1);
         pointer-events: none;
         opacity: 0.6;
@@ -64,7 +64,7 @@
         }
     }
 
-    body:not(.bcc_member) &.beta {
+    body:not(.logged-in) &.beta {
         display: none;
     }
 }

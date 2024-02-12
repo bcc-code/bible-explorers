@@ -1,8 +1,10 @@
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
+import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
 import _lang from '../Utils/Lang.js'
 import _appInsights from '../Utils/AppInsights.js'
+import isElectron from 'is-electron'
 
 let instance = null
 
@@ -133,6 +135,8 @@ export default class Menu {
 
         loginBtn.addEventListener('click', instance.login)
         logoutBtn.addEventListener('click', instance.logout)
+
+        document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.updateUI)
     }
 
     updateUI = async () => {
@@ -159,8 +163,12 @@ export default class Menu {
     }
 
     logout = () => {
-        this.experience.auth0.logout({
-            returnTo: window.location.origin,
-        })
+        if (isElectron()) {
+            window.electronAPI.logoutWindow()
+        } else {
+            this.experience.auth0.logout({
+                returnTo: window.location.origin,
+            })
+        }
     }
 }

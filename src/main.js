@@ -1,20 +1,24 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+import { createAuthWindow, createLogoutWindow } from './authProcess.js'
+import dns from 'dns'
+import { refreshTokens } from './authService.js'
 
 if (require('electron-squirrel-startup')) {
     app.quit()
 }
-
-const createWindow = () => {
+export const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 1280,
         height: 1024,
         autoHideMenuBar: true,
         webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: true,
             webSecurity: true,
             preload: path.join(__dirname, 'preload.js'),
         },
-        // show: false,
+        show: false,
         icon: 'static/favicon.png',
     })
 
@@ -24,17 +28,42 @@ const createWindow = () => {
         mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
     }
 
-    // mainWindow.maximize();
-    // mainWindow.show();
+    mainWindow.maximize()
+    mainWindow.show()
+    // mainWindow.webContents.openDevTools()
+}
 
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools()
+export const showWindow = async () => {
+    let online = false
+
+    try {
+        await refreshTokens()
+        return createWindow()
+    } catch (error) {
+        // Needed when offline
+        dns.resolve('explorers.biblekids.io', (err) => {
+            online = !err
+            if (online) {
+                createAuthWindow()
+            } else {
+                createWindow()
+            }
+        })
+    }
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', showWindow)
+
+app.on('activate', () => {
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0) {
+        showWindow()
+    }
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -45,10 +74,21 @@ app.on('window-all-closed', () => {
     }
 })
 
-app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow()
+// Inter-Process Communication - Event listeners
+ipcMain.on('logout-window', (event, data) => {
+    createLogoutWindow()
+})
+
+ipcMain.on('login-window', (event, data) => {
+    BrowserWindow.getAllWindows().forEach((win) => win.close())
+    createAuthWindow()
+})
+
+ipcMain.handle('refresh-token', async () => {
+    try {
+        await refreshTokens()
+        return { result: getAccessToken() }
+    } catch (err) {
+        return { error: 'Unable to refresh token' }
     }
 })

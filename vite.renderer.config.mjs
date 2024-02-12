@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-    root: '.vite/build/',
+    root: 'src/',
+    publicDir: '../static/',
+    base: './',
     server: {
         host: true,
         port: 8080,

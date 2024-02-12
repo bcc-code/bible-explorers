@@ -84,7 +84,7 @@ export default class Resources extends EventEmitter {
             const loader = document.querySelector('#loading_text')
             if (!loader) return
 
-            loader.innerText = _s.fetching
+            loader.innerText = _s.status.fetching
 
             resources.fetchApiThenCache(_api.getBiexChapters(), (json) => {
                 this.api[_api.getBiexChapters()] = json
@@ -302,12 +302,21 @@ export default class Resources extends EventEmitter {
             })
             .catch(function () {
                 resources.offline.setConnection(_c.OFFLINE)
+
                 caches.open('apiResponses').then(function (cache) {
-                    cache.match(theUrl).then((response) => {
-                        response.json().then(function (cachedData) {
-                            callback(cachedData)
+                    cache
+                        .match(theUrl)
+                        .then((response) => {
+                            response.json().then(function (cachedData) {
+                                callback(cachedData)
+                            })
                         })
-                    })
+                        .catch(function () {
+                            const loader = document.querySelector('#loading_text')
+                            if (!loader) return
+
+                            loader.innerText = _s.status.noCacheNoInternet
+                        })
                 })
             })
     }

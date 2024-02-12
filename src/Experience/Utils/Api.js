@@ -20,10 +20,10 @@ function getWpApiUrl() {
             return wpApiUrl_staging
 
         case 'localhost':
-            return wpApiUrl_staging
+            return wpApiUrl_production
             return wpApiUrl_local
 
         default:
-            return wpApiUrl_staging
+            return wpApiUrl_production
     }
 }

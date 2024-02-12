@@ -277,19 +277,19 @@ export default class Offline {
             },
             body: JSON.stringify({
                 query: `query {
-          episode(id: "${episodeId}") {
-            id
-            image
-            files {
-              id
-              audioLanguage
-              size
-              resolution
-              url
-              fileName
-            }
-          }
-        }`,
+                    episode(id: "${episodeId}") {
+                        id
+                        image
+                        files {
+                            id
+                            audioLanguage
+                            size
+                            resolution
+                            url
+                            fileName
+                        }
+                    }
+                }`,
             }),
         })
 
@@ -589,8 +589,6 @@ export default class Offline {
 
     setConnection(mode) {
         offline.isOnline = mode
-
-        if (offline.isOnline == false) offline.experience.world.hideLoading()
     }
 }
 
