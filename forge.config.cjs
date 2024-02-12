@@ -7,7 +7,13 @@ module.exports = {
             name: '@electron-forge/maker-squirrel',
             config: {
                 iconUrl: 'https://explorers.biblekids.io/favicon.ico',
-                setupIcon: 'static/favicon-dark.ico',
+                setupIcon: 'static/favicon.ico',
+            },
+        },
+        {
+            name: '@electron-forge/maker-dmg',
+            config: {
+                icon: 'static/favicon.icns',
             },
         },
         {
