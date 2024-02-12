@@ -26,7 +26,7 @@
                     <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-2 tv:gap-4">
                         <button class="button-normal toggle-music group/audio">
-                            <svg class="h-3 w-3 hidden group-[.is-playing]/audio:block tv:h-5 tv:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
+                            <svg class="hidden h-3 w-3 group-[.is-playing]/audio:block tv:h-5 tv:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
                             <svg class="h-3 w-3 group-[.is-playing]/audio:hidden tv:h-5 tv:w-5"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="group/settings relative">
@@ -166,9 +166,9 @@
             </aside>
 
             <div id="copyright" class="absolute bottom-1 left-1 text-sm group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden"></div>
-        </div>
 
-        <div id="try-game" class="button-normal absolute bottom-8 right-4">Try flappy bird</div>
+            <div id="try-game" class="button-normal absolute bottom-4 right-4 hidden group-data-[view='age-category']/app:flex">Try flappy bird</div>
+        </div>
 
         <script src="https://unpkg.com/@rive-app/canvas@1.0.102/rive.js"></script>
         <script type="module" src="./script.js"></script>
