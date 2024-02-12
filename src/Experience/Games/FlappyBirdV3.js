@@ -361,7 +361,7 @@ class FlappyBird {
             }
 
             // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
-            if (this.timer >= 10 && !this.boxSpawned && !this.box) {
+            if (this.timer >= 30 && !this.boxSpawned && !this.box) {
                 const boxX = this.canvas.width
                 const boxY = this.player.y + this.player.height / 2 // Place box in the middle of player's height
                 const boxWidth = 64 // Adjust dimensions as needed
