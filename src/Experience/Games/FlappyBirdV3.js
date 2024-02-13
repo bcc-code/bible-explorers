@@ -2,8 +2,8 @@ class Player {
     constructor(canvas, gameOverCallback, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
-        this.width = 32
-        this.height = 24
+        this.width = 64
+        this.height = 48
         this.x = 50
         this.y = canvas.height / 2
         this.velocityY = 0
@@ -76,8 +76,8 @@ class Pipe {
         this.x = x
         this.y = y
         this.gapHeight = gapHeight
-        this.width = 64
-        this.height = 512
+        this.width = 96
+        this.height = 768
         this.speed = speed
         this.pipeTopImage = pipeTopImage
         this.pipeBottomImage = pipeBottomImage
@@ -447,6 +447,9 @@ class FlappyBird {
         this.ctx.textAlign = 'center'
         const gameOverText = 'Game Over'
         this.ctx.fillText(gameOverText, this.canvas.width / 2, this.canvas.height / 2)
+        this.ctx.font = '20px Arial'
+        const gameOverSubText = 'Click to restart'
+        this.ctx.fillText(gameOverSubText, this.canvas.width / 2, this.canvas.height / 2 + 40)
 
         // Add click event listener to restart the game
         this.canvas.addEventListener('click', () => {
