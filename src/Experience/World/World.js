@@ -280,6 +280,7 @@ export default class World {
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
                 instance.loadChapterTextures()
+                instance.fetchLobbyVideoLoop()
                 instance.fetchBtvVideos()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
@@ -398,6 +399,13 @@ export default class World {
 
             instance.resources.loadEpisodeTextures(fileName)
         })
+    }
+
+    fetchLobbyVideoLoop() {
+        const videoName = instance.selectedChapter.lobby_video_loop
+        if (videoName) {
+            instance.resources.loadLobbyVideoInBtvPlayer(videoName)
+        }
     }
 
     fetchBtvVideos() {

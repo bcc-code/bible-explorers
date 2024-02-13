@@ -49,6 +49,7 @@ export default class Congrats {
             particleCount: 100,
             spread: 160,
         })
+        instance.names = instance.world.program.waitingScreen.names
 
         const chapterCongrats = _gl.elementFromHtml(`
             <div class="modal">
@@ -75,7 +76,18 @@ export default class Congrats {
             </div>
         `)
 
+        const credits = _gl.elementFromHtml(
+            `<div class="w-full h-full overflow-hidden relative" id="credits">
+                <ul class="absolute w-full top-full animate-credits text-center">
+                    <h3 class="text-4xl">Credits:<h3>
+                    ${instance.names.map((name) => `<li class="mt-4 text-2xl">${name}</li>`).join('')}
+                </ul>
+            </div>`
+        )
+
         instance.experience.interface.bigScreen.append(chapterCongrats)
+        instance.experience.interface.smallScreen.append(credits)
+        instance.experience.interface.smallScreen.setAttribute('data-view', '')
     }
 
     finishChapter() {
@@ -85,6 +97,7 @@ export default class Congrats {
 
     destroy() {
         document.querySelector('.modal')?.remove()
+        document.querySelector('#credits')?.remove()
 
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
