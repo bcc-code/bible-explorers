@@ -109,14 +109,14 @@ class Pipe {
 }
 
 class Box {
-    constructor(canvas, x, y, width, height, speed) {
+    constructor(canvas, x, y) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
         this.y = y
-        this.width = width
-        this.height = height
-        this.speed = speed
+        this.width = 64 // Default width
+        this.height = 64 // Default height
+        this.speed = 3 // Same speed as pipes
     }
 
     draw() {
@@ -126,6 +126,28 @@ class Box {
 
     move() {
         this.x -= this.speed
+    }
+}
+
+class InvisibleWall {
+    constructor(canvas, x, speed) {
+        this.canvas = canvas
+        this.x = x
+        this.y = 0
+        this.width = 10 // Adjust width as needed
+        this.height = canvas.height // Same height as the canvas
+        this.speed = speed // Speed of the wall
+    }
+
+    move() {
+        // Move the wall towards the player
+        this.x -= this.speed
+    }
+
+    draw(ctx) {
+        // Draw the wall
+        ctx.fillStyle = 'transparent' // Set color to transparent
+        ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 }
 
@@ -205,6 +227,9 @@ class FlappyBird {
         // Initialize the round count and rounds completed count
         this.roundCount = 0
         this.roundsCompleted = 0
+
+        // Invisible wall instance
+        this.invisibleWall = null
     }
 
     resizeCanvas() {
@@ -264,6 +289,9 @@ class FlappyBird {
 
         // Reset box instance
         this.box = null
+
+        // Reset Invisible wall instance
+        this.invisibleWall = null
 
         // Set gameStarted flag to true
         this.gameStarted = true
@@ -332,6 +360,12 @@ class FlappyBird {
         // Draw pipes
         this.drawPipes()
 
+        // Draw the invisible wall if it exists and the box has spawned
+        if (this.invisibleWall && this.boxSpawned) {
+            this.invisibleWall.move()
+            this.invisibleWall.draw(this.ctx)
+        }
+
         // Draw game over or win game screen
         if (this.gameOver) {
             this.drawGameOverScreen()
@@ -363,12 +397,13 @@ class FlappyBird {
             // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
             if (this.timer >= 30 && !this.boxSpawned && !this.box) {
                 const boxX = this.canvas.width
-                const boxY = this.player.y + this.player.height / 2 // Place box in the middle of player's height
-                const boxWidth = 64 // Adjust dimensions as needed
-                const boxHeight = 64
-                const boxSpeed = 3 // Same speed as pipes
-                this.box = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
+                const boxY = this.canvas.height / 2 // Place box in the middle of player's height
+                this.box = new Box(this.canvas, boxX, boxY)
                 this.boxSpawned = true
+
+                // Create invisible wall instance after the box is created
+                const wallX = this.box.x + this.box.width // Position the wall just after the box
+                this.invisibleWall = new InvisibleWall(this.canvas, wallX, 3) // Adjust speed as needed
             }
 
             // Move box towards the player if it exists
@@ -465,15 +500,15 @@ class FlappyBird {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.fillStyle = 'white'
         this.ctx.textAlign = 'center'
-        this.ctx.font = '20px Arial'
-        const winGameText = 'You Win!'
         this.ctx.font = '36px Arial'
-        this.ctx.fillText(winGameText, this.canvas.width / 2, this.canvas.height / 2 - 20)
-        const roundText = `Round: ${this.roundCount}` // Display the round count\
-        this.ctx.fillText(roundText, this.canvas.width / 2, this.canvas.height / 2 + 20) // Position the round count text
+        const winGameText = 'You Win!'
+        this.ctx.fillText(winGameText, this.canvas.width / 2, this.canvas.height / 2)
         this.ctx.font = '16px Arial'
+        const roundText = `Round: ${this.roundCount}` // Display the round count
+        this.ctx.fillText(roundText, this.canvas.width / 2, this.canvas.height / 2 + 20)
+        this.ctx.font = '20px Arial'
         const winSubText = 'Click to start new round'
-        this.ctx.fillText(winSubText, this.canvas.width / 2, this.canvas.height / 2 + 80) // Position the round count text
+        this.ctx.fillText(winSubText, this.canvas.width / 2, this.canvas.height / 2 + 60)
         // Add click event listener to restart the game
         this.canvas.addEventListener('click', () => {
             if (this.gameWon) {
@@ -516,6 +551,11 @@ class FlappyBird {
         // Check collision with box
         if (this.box && this.detectCollision(player, this.box)) {
             this.winGame()
+        }
+
+        // Check collision with the invisible wall
+        if (this.invisibleWall && this.detectCollision(player, this.invisibleWall)) {
+            this.gameOverCallback()
         }
     }
 
