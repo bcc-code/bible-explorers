@@ -206,14 +206,24 @@ export default class Resources extends EventEmitter {
         this.offline.loadEpisodeFromIndexedDb(videoName, this.loadTexturesLocally, this.loadTexturesOnline)
     }
 
-    loadVideoInBtvPlayer(videoName) {
-        resources.addVideoDivElementToContainer(videoName, 'video-' + videoName)
+    loadLobbyVideoInBtvPlayer(id) {
+        const videoName = 'lobby-video-' + id
+        if (document.getElementById(videoName)) return
+
+        resources.addVideoDivElementToContainer(videoName, 'videos-container')
         this.offline.loadVideoFromIndexedDb(videoName, this.loadTexturesLocally, this.loadTexturesOnline)
+    }
+
+    loadVideoInBtvPlayer(id) {
+        const textureName = 'video-' + id
+        if (document.getElementById(textureName)) return
+
+        resources.addVideoDivElementToContainer(textureName, 'videos-container')
+        this.offline.loadVideoFromIndexedDb(textureName, this.loadTexturesLocally, this.loadTexturesOnline)
     }
 
     loadTextureInBtvPlayer(id) {
         const textureName = 'texture-' + id
-
         if (document.getElementById(textureName)) return
 
         resources.addVideoDivElementToContainer(textureName, 'videos-container')
@@ -262,7 +272,7 @@ export default class Resources extends EventEmitter {
     }
 
     async streamFromBtv(videoName) {
-        const episodeId = videoName.replace('episode-', '').replace('texture-', '')
+        const episodeId = videoName.replace('episode-', '').replace('texture-', '').replace('lobby-video-', '')
 
         const player = await resources.factory.create(videoName, {
             episodeId: episodeId,

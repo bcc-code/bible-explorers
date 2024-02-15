@@ -166,9 +166,10 @@ export default class Quiz {
 
         const textarea = document.querySelector('.quiz-item textarea')
 
-        textarea.addEventListener('input', (e) => {
-            if (e.target.value.length > 0) instance.submitQuiz.disabled = false
-        })
+        if (textarea)
+            textarea.addEventListener('input', (e) => {
+                if (e.target.value.length > 0) instance.submitQuiz.disabled = false
+            })
 
         instance.submitQuiz.addEventListener('click', () => {
             instance.saveAnswers()

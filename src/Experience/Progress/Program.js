@@ -13,6 +13,7 @@ import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
 import ConfirmationScreen from '../Components/ConfirmationScreen.js'
+import WaitingScreen from '../Components/WaitingScreen.js'
 import _e from '../Utils/Events.js'
 
 let instance = null
@@ -41,6 +42,7 @@ export default class Program {
         instance.message = new Message()
         instance.gameDescription = new GameDescription()
         instance.confirmationScreen = new ConfirmationScreen()
+        instance.waitingScreen = new WaitingScreen()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -189,12 +191,19 @@ export default class Program {
     }
 
     startInteractivity() {
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+            setTimeout(function () {
+                instance.waitingScreen.show()
+            }, 1000)
+            return
+        }
+
         if (instance.stepType() != 'video') instance.video.defocus()
 
         if (instance.stepType() == 'iris') {
             setTimeout(function () {
                 instance.message.show()
-            }, 1000)
+            }, 100)
         } else {
             instance.startTask()
         }
