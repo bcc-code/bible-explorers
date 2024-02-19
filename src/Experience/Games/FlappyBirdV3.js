@@ -2,20 +2,24 @@ class Player {
     constructor(canvas, gameOverCallback, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
-        this.width = 32
-        this.height = 24
-        this.x = 50
+        this.width = 32 * game.scaleX
+        this.height = this.width / 1.33
+        this.x = 50 * game.scaleX
         this.y = canvas.height / 2
         this.velocityY = 0
-        this.gravity = 0.4
-        this.jumpStrength = -6
+        this.gravity = 0.4 * game.scaleY
+        this.jumpStrength = -6 * game.scaleY
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance
 
-        // Add event listeners for keydown and keyup
-        document.addEventListener('keydown', this.handleKeyDown.bind(this))
-        document.addEventListener('keyup', this.handleKeyUp.bind(this))
+        // Storing bound functions for later removal
+        this.boundHandleKeyDown = this.handleKeyDown.bind(this)
+        this.boundHandleKeyUp = this.handleKeyUp.bind(this)
+
+        // Adding event listeners
+        document.addEventListener('keydown', this.boundHandleKeyDown)
+        document.addEventListener('keyup', this.boundHandleKeyUp)
     }
 
     draw() {
@@ -67,17 +71,23 @@ class Player {
         }
         this.draw()
     }
+
+    // Call this method when you need to clean up (e.g., player is destroyed, game over, etc.)
+    removeEventListeners() {
+        document.removeEventListener('keydown', this.boundHandleKeyDown)
+        document.removeEventListener('keyup', this.boundHandleKeyUp)
+    }
 }
 
 class Pipe {
-    constructor(canvas, x, y, gapHeight, speed, pipeTopImage, pipeBottomImage, game) {
+    constructor(canvas, x, y, width, height, gapHeight, speed, pipeTopImage, pipeBottomImage, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
         this.y = y
+        this.width = width
+        this.height = height
         this.gapHeight = gapHeight
-        this.width = 64
-        this.height = 512
         this.speed = speed
         this.pipeTopImage = pipeTopImage
         this.pipeBottomImage = pipeBottomImage
@@ -109,14 +119,14 @@ class Pipe {
 }
 
 class Box {
-    constructor(canvas, x, y) {
+    constructor(canvas, x, y, width, height, speed) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
         this.y = y
-        this.width = 64 // Default width
-        this.height = 64 // Default height
-        this.speed = 3 // Same speed as pipes
+        this.width = width
+        this.height = height
+        this.speed = speed // Same speed as pipes
     }
 
     draw() {
@@ -183,6 +193,13 @@ class FlappyBird {
             this.drawStartScreen()
         })
 
+        // Base resolution
+        this.baseWidth = 800
+        this.baseHeight = 600
+
+        // Adjusted in resizeCanvas method
+        this.resizeCanvas()
+
         // Initialize the click event listener for starting the game
         this.startGameClickHandler = () => {
             this.startGame()
@@ -210,7 +227,7 @@ class FlappyBird {
         // Timer properties
         this.timer = 0
         this.lastPipeGenerationTime = 0
-        this.pipeGenerationInterval = 2000 // Interval between pipe generations (in milliseconds)
+        this.pipeGenerationInterval = 1500
 
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
@@ -236,6 +253,13 @@ class FlappyBird {
         // Set canvas dimensions based on browser width
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
+
+        // Calculate scaling factors
+        this.scaleX = this.canvas.width / this.baseWidth
+        this.scaleY = this.canvas.height / this.baseHeight
+
+        console.log(this.canvas.height)
+        console.log(this.scaleY)
     }
 
     drawBackground() {
@@ -330,15 +354,18 @@ class FlappyBird {
     generatePipes() {
         // Generate new pipes only if 30 seconds haven't passed
         if (!this.boxSpawned) {
-            const pipeGap = 256 // Gap between top and bottom pipes
-            const minPipeHeight = this.canvas.height / 6 // Minimum height of pipes
+            const pipeWidth = 64 * this.scaleX
+            const pipeHeight = pipeWidth * 8
+
+            const pipeGap = this.canvas.height / 4 / this.scaleY // Gap between top and bottom pipes
+            const minPipeHeight = 100 * this.scaleY // Minimum height of pipes
             const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
-            const pipeSpeed = 3 // Speed of pipes
+            const pipeSpeed = 3 * this.scaleX // Speed of pipes
 
             // Generate new pipes
             const x = this.canvas.width
             const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
-            this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
+            this.pipes.push(new Pipe(this.canvas, x, y, pipeWidth, pipeHeight, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
 
             // Update the last pipe generation time
             this.lastPipeGenerationTime = Date.now()
@@ -398,12 +425,16 @@ class FlappyBird {
             if (this.timer >= 30 && !this.boxSpawned && !this.box) {
                 const boxX = this.canvas.width
                 const boxY = this.canvas.height / 2 // Place box in the middle of player's height
-                this.box = new Box(this.canvas, boxX, boxY)
+                const boxWidth = 64 * this.scaleX
+                const boxHeight = boxWidth
+                const boxSpeed = 3 * this.scaleX
+                this.box = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
                 this.boxSpawned = true
 
                 // Create invisible wall instance after the box is created
                 const wallX = this.box.x + this.box.width // Position the wall just after the box
-                this.invisibleWall = new InvisibleWall(this.canvas, wallX, 3) // Adjust speed as needed
+                const wallSpeed = 3 * this.scaleX
+                this.invisibleWall = new InvisibleWall(this.canvas, wallX, wallSpeed) // Adjust speed as needed
             }
 
             // Move box towards the player if it exists
@@ -449,6 +480,9 @@ class FlappyBird {
 
         // Draw game over screen
         this.drawGameOverScreen()
+
+        // Remove player's event listeners to prevent memory leaks or unintended behavior
+        this.player.removeEventListeners()
 
         // Stop the game loop
         cancelAnimationFrame(this.gameLoop)
