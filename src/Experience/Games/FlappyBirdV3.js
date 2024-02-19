@@ -2,8 +2,8 @@ class Player {
     constructor(canvas, gameOverCallback, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
-        this.width = 64
-        this.height = 48
+        this.width = 32
+        this.height = 24
         this.x = 50
         this.y = canvas.height / 2
         this.velocityY = 0
@@ -76,8 +76,8 @@ class Pipe {
         this.x = x
         this.y = y
         this.gapHeight = gapHeight
-        this.width = 96
-        this.height = 768
+        this.width = 64
+        this.height = 512
         this.speed = speed
         this.pipeTopImage = pipeTopImage
         this.pipeBottomImage = pipeBottomImage
