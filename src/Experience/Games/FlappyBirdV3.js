@@ -331,7 +331,7 @@ class FlappyBird {
         // Generate new pipes only if 30 seconds haven't passed
         if (!this.boxSpawned) {
             const pipeGap = 256 // Gap between top and bottom pipes
-            const minPipeHeight = 64 // Minimum height of pipes
+            const minPipeHeight = this.canvas.height / 6 // Minimum height of pipes
             const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
             const pipeSpeed = 3 // Speed of pipes
 
