@@ -51,7 +51,7 @@ export default class GameDescription {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
                 <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h2>
+                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h1>
                     ${instance.data.prompts ? `<p>${instance.data.prompts[0].prompt}</p>` : ''}
                     ${instance.data.tutorial ? `<div class="aspect-video max-w-[600px] mt-8">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
                     <div class="flex justify-center mt-8">
