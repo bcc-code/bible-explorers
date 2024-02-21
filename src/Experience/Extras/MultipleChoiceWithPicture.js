@@ -20,6 +20,8 @@ export default class MultipleChoiceWithPicture {
         instance.program = instance.world.program
         instance.audio = instance.world.audio
 
+        instance.experience.setAppView('game')
+
         instance.setHtml()
         instance.useCorrectAssetsSrc()
         instance.setEventListeners()
@@ -32,10 +34,12 @@ export default class MultipleChoiceWithPicture {
         instance.data = instance.stepData.multiple_choice_with_picture
 
         const multipleChoiceWithPicture = _gl.elementFromHtml(`
-            <div id="multiple-choice" class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
-                <div id="task-image" class="hidden"><img src="${instance.data.image}" class="multiple-choice-image w-[280px]" alt="picture" /></div>
-                <h1 class="text-2xl tv:text-3xl font-bold">${instance.stepData.details.title}</h1>
-                <ul class="multiple-choice-answers mt-4 tv:mt-8"></ul>
+            <div id="multiple-choice" class="absolute inset-0 bg-bke-darkpurple grid place-content-center">
+                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
+                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.stepData.details.title}</h1>
+                    ${instance.data.image ? `<div id="task-image"><img src="${instance.data.image}"/></div>` : ''}
+                    <ul class="multiple-choice-answers mt-4 tv:mt-8"></ul>
+                </div>
             </div>
         `)
 
@@ -95,8 +99,7 @@ export default class MultipleChoiceWithPicture {
             })
         })
 
-        instance.experience.interface.smallScreen.append(multipleChoiceWithPicture)
-        instance.experience.interface.smallScreen.setAttribute('data-view', '')
+        instance.experience.interface.gameContainer.append(multipleChoiceWithPicture)
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
         instance.experience.navigation.next.className = 'button-normal less-focused'
@@ -105,7 +108,7 @@ export default class MultipleChoiceWithPicture {
 
     useCorrectAssetsSrc() {
         instance.offline.fetchChapterAsset(instance.data, 'image', (data) => {
-            document.querySelector('img.multiple-choice-image').src = data.image
+            document.querySelector('#task-image img').src = data.image
         })
     }
 
@@ -115,7 +118,8 @@ export default class MultipleChoiceWithPicture {
 
     destroy() {
         document.getElementById('multiple-choice')?.remove()
-        document.getElementById('task-image')?.remove()
+
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
