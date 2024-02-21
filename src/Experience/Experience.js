@@ -74,6 +74,7 @@ export default class Experience {
             smallScreen: document.querySelector('#small-screen'),
             closedCaption: document.querySelector('#closed-caption'),
             gameContainer: document.querySelector('#games-wrapper'),
+            tasksDescription: document.querySelector('#tasks-description'),
             chaptersList: document.querySelector('#chapters-list'),
             chaptersDescription: document.querySelector('#chapters-description'),
         }

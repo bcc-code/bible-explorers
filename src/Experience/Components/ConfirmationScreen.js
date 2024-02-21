@@ -1,76 +1,71 @@
-import Offline from '../Utils/Offline.js';
-import Experience from '../Experience.js';
-import _s from '../Utils/Strings.js';
-import _gl from '../Utils/Globals.js';
-import _e from '../Utils/Events.js';
+'use strict'
 
-let instance = null;
+import Offline from '../Utils/Offline.js'
+import Experience from '../Experience.js'
+import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
+import _e from '../Utils/Events.js'
+
+let instance = null
 
 export default class ConfirmationScreen {
-  constructor() {
-    instance = this;
+    constructor() {
+        instance = this
 
-    instance.experience = new Experience();
-    instance.debug = instance.experience.debug;
-    instance.offline = new Offline();
-  }
+        instance.experience = new Experience()
+        instance.debug = instance.experience.debug
+        instance.offline = new Offline()
+    }
 
-  show() {
-    instance.world = instance.experience.world;
-    instance.program = instance.world.program;
-    instance.stepData = instance.program.getCurrentStepData();
-    instance.data = instance.stepData.confirmation_screen;
+    show() {
+        instance.world = instance.experience.world
+        instance.program = instance.world.program
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.confirmation_screen
 
-    instance.setHtml();
-    instance.useCorrectAssetsSrc();
+        instance.experience.setAppView('task-description')
 
-    document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy);
-  }
+        console.log(instance.data)
 
-  useCorrectAssetsSrc() {
-    instance.offline.fetchChapterAsset(instance.data, 'cs_image', (data) => {
-      document.querySelector('.game-tutorial img').src = data.cs_image;
-    });
-  }
+        instance.setHtml()
+        if (instance.data.cs_image) instance.useCorrectAssetsSrc()
 
-  setHtml() {
-    const startGame = _gl.elementFromHtml(`
-      <button class="btn default focused pulsate">${instance.data.button}</button>
-    `);
-    startGame.addEventListener('click', instance.program.nextStep);
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
 
-    const task = _gl.elementFromHtml(`
-      <section class="task">
-        <div class="container">
-          <div class="content">
-            <header class="game-header">
-              <h2>${instance.stepData.details.title}</h2>
-            </header>
-            <div class="game-tutorial">
-                <img src="${instance.data.image}" width="100%" height="100%" class="h-full" />
-            </div>
-            <div class="game-description text-white mb-2">
-              ${instance.stepData.details.prompts ? instance.stepData.details.prompts[0].prompt : ''}
-            </div>
-          </div>
-        </div>
-        <div class="overlay"></div>
-      </section>
-    `);
+    useCorrectAssetsSrc() {
+        instance.offline.fetchChapterAsset(instance.data, 'cs_image', (data) => {
+            document.querySelector('#task-image img').src = data.cs_image
+        })
+    }
 
-    task.querySelector('.content').append(startGame);
-    document.querySelector('.app-container').append(task);
+    setHtml() {
+        const container = _gl.elementFromHtml(
+            `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
+                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
+                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.stepData.details.title}</h2>
+                    ${instance.stepData.details.prompts ? `<p>${instance.stepData.details.prompts[0].prompt}</p>` : ''}
+                    ${instance.data.cs_image ? `<div class="aspect-video max-w-[600px] mt-8 mx-auto" id="task-image"><img src="${instance.data.cs_image}" width="100%" height="100%" class="h-full" /></div>` : ''}
+                    ${instance.data.cs_button !== '' ? `<div class="flex justify-center mt-8"><button class="button-normal">${instance.data.cs_button}</button></div>` : ''}
+                </div>
+            </div>`
+        )
 
-    instance.experience.navigation.next.classList.remove('focused');
-    instance.experience.navigation.next.innerHTML = _s.miniGames.skip;
-    instance.experience.navigation.next.classList.add('less-focused');
-  }
+        const nextStep = container.querySelector('button')
 
-  destroy() {
-    document.querySelector('section.task')?.remove();
+        if (nextStep) nextStep.addEventListener('click', instance.program.nextStep)
 
-    instance.experience.navigation.next.classList.add('focused');
-    instance.experience.navigation.next.classList.remove('less-focused');
-    instance.experience.navigation.next.innerHTML = instance.experience.icons.next;
-  }
+        instance.experience.interface.tasksDescription.append(container)
+
+        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+        instance.experience.navigation.next.className = 'button-normal less-focused'
+    }
+
+    destroy() {
+        document.querySelector('#task-container')?.remove()
+        instance.experience.setAppView('chapter')
+
+        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+    }
 }

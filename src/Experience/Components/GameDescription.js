@@ -39,37 +39,32 @@ export default class GameDescription {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.details
 
-        instance.setHtml()
+        instance.experience.setAppView('task-description')
 
-        if (instance.data.tutorial) {
-            // Fetch details tutorial from blob or url
-            instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
-                instance.program.updateAssetInProgramData('details', data)
-                document.querySelector('#task-image > *').src = data.tutorial
-            })
-        }
+        instance.setHtml()
+        if (instance.data.tutorial) instance.useCorrectAssetsSrc()
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     setHtml() {
-        const startGame = _gl.elementFromHtml(`<button class="button-normal w-full">${_s.miniGames.startGame}</button>`)
+        const container = _gl.elementFromHtml(
+            `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
+                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
+                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h2>
+                    ${instance.data.prompts ? `<p>${instance.data.prompts[0].prompt}</p>` : ''}
+                    ${instance.data.tutorial ? `<div class="aspect-video max-w-[600px] mt-8">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
+                    <div class="flex justify-center mt-8">
+                        <button class="button-normal">${_s.miniGames.startGame}</button>
+                    </div>
+                </div>
+            </div>`
+        )
+
+        const startGame = container.querySelector('button')
         startGame.addEventListener('click', instance.startGame)
 
-        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-2 xl:p-4 tv:p-8" id="task-image">${instance.data.tutorial != '' ? instance.getDomElement(instance.data.tutorial) : ''}</div>`)
-
-        const taskContent = _gl.elementFromHtml(`
-      <div class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
-        <h1 class="text-2xl tv:text-3xl font-bold mb-4 tv:mb-8">${instance.data.title}</h2>
-        ${instance.data.prompts ? instance.data.prompts[0].prompt : ''}
-      </div>
-    `)
-
-        taskContent.append(startGame)
-        instance.experience.interface.bigScreen.append(taskImage)
-        instance.experience.interface.smallScreen.append(taskContent)
-
-        instance.experience.interface.smallScreen.setAttribute('data-view', '')
+        instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
         instance.experience.navigation.next.className = 'button-normal less-focused'
@@ -104,12 +99,16 @@ export default class GameDescription {
         else return `<img src="" wdith="100%" height="100%" class="h-full" />`
     }
 
-    destroy() {
-        document.querySelector('#task-image')?.remove()
-        document.querySelector('#task-content')?.remove()
+    useCorrectAssetsSrc() {
+        instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
+            instance.program.updateAssetInProgramData('details', data)
+            document.querySelector('#task-image > *').src = data.tutorial
+        })
+    }
 
-        instance.experience.interface.bigScreen.setAttribute('data-view', 'video')
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'map')
+    destroy() {
+        document.querySelector('#task-container')?.remove()
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.className = 'button-normal shadow-border'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
