@@ -357,7 +357,7 @@ class FlappyBird {
             const pipeWidth = 64 * this.scaleX
             const pipeHeight = pipeWidth * 8
 
-            const pipeGap = this.canvas.height / 4 / this.scaleY // Gap between top and bottom pipes
+            const pipeGap = this.canvas.height / 4 // Gap between top and bottom pipes
             const minPipeHeight = 100 * this.scaleY // Minimum height of pipes
             const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
             const pipeSpeed = 3 * this.scaleX // Speed of pipes
