@@ -11,6 +11,7 @@ import ChooseNewKing from '../Games/ChooseNewKing.js'
 import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import MazeGame from '../Games/MazeGame.js'
+import DuckGame from '../Games/DuckGame.js'
 
 let instance = null
 
@@ -31,6 +32,7 @@ export default class GameDescription {
         instance.heartDefense = new HeartDefense()
         instance.davidsRefuge = new DavidsRefuge()
         instance.mazeGame = new MazeGame()
+        instance.duckGame = new DuckGame()
     }
 
     show() {
@@ -89,6 +91,8 @@ export default class GameDescription {
             instance.davidsRefuge.toggleGame()
         } else if (instance.program.taskType() == 'labyrinth') {
             instance.mazeGame.toggleGame()
+        } else if (instance.program.taskType() == 'duck_game') {
+            instance.duckGame.toggleGame()
         }
     }
 

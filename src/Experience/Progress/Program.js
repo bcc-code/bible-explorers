@@ -148,7 +148,7 @@ export default class Program {
                 }
 
                 // Games
-                else if (instance.taskType() == 'cables' || instance.taskType() == 'sorting' || instance.taskType() == 'simon_says' || instance.taskType() == 'flip_cards' || instance.taskType() == 'choose_new_king' || instance.taskType() == 'heart_defense' || instance.taskType() == 'davids_refuge' || instance.taskType() == 'labyrinth') {
+                else if (instance.taskType() == 'cables' || instance.taskType() == 'sorting' || instance.taskType() == 'simon_says' || instance.taskType() == 'flip_cards' || instance.taskType() == 'choose_new_king' || instance.taskType() == 'heart_defense' || instance.taskType() == 'davids_refuge' || instance.taskType() == 'labyrinth' || instance.taskType() == 'duck_game') {
                     instance.gameDescription.show()
                 } else if (instance.taskType() == 'multiple_choice_with_picture') {
                     instance.multipleChoiceWithPicture.show()
