@@ -63,6 +63,7 @@ export default class MessageWithSupportingScreens {
         // Handle the click event for the image here
         console.log('Lever was clicked!')
         instance.program.nextStep()
+        instance.destroy()
     }
 
     setEventListeners() {
