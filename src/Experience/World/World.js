@@ -414,6 +414,9 @@ export default class World {
                 if (step.details.step_type == 'iris' && step.message?.video) {
                     instance.resources.loadTextureInBtvPlayer(step.message.video)
                 }
+                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens?.video) {
+                    instance.resources.loadTextureInBtvPlayer(step.message_with_supporting_screens.video)
+                }
                 if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
                     instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
                 }
@@ -478,6 +481,9 @@ export default class World {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
             instance.cacheTaskDescriptionVideos(checkpoint.steps.filter((step) => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
+            instance.cacheTaskDescriptionWithSupportingScreensAudios(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.audio))
+            instance.cacheTaskDescriptionWithSupportingScreensVideos(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.video))
+            instance.cacheTaskDescriptionWithSupportingScreensMedia(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.media))
             instance.cacheSortingGameIcons(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'))
             instance.cacheDialogueAudios(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'))
@@ -507,19 +513,34 @@ export default class World {
         facts.forEach((fact) => instance.fetchAndCacheAsset(fact.image.url))
     }
 
-    cacheTaskDescriptionAudios(steps) {
+    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
     }
 
-    cacheTaskDescriptionVideos(steps) {
+    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.video))
     }
 
-    cacheTaskDescriptionMedia(steps) {
+    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
+    }
+
+    cacheTaskDescriptionAudios(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.audio))
+    }
+
+    cacheTaskDescriptionVideos(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.video))
+    }
+
+    cacheTaskDescriptionMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.media))
     }
 
     cacheSortingGameIcons(sortingTasks) {
