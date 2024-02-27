@@ -50,6 +50,8 @@ export default class MessageWithSupportingScreens {
             const image = _gl.elementFromHtml(`<img id="interactive-image" src="${instance.data.right_screen}" />`)
             instance.experience.interface.smallScreen.append(image)
 
+            instance.experience.interface.smallScreen.setAttribute('data-view', '')
+
             // Check for with_lever flag after appending the image
             if (instance.data.with_lever) {
                 document.getElementById('interactive-image').addEventListener('click', this.leverClickEvent)
@@ -72,6 +74,7 @@ export default class MessageWithSupportingScreens {
         if (interactiveImage) {
             interactiveImage.removeEventListener('click', this.leverClickEvent)
             interactiveImage.remove()
+            instance.experience.interface.smallScreen.setAttribute('data-view', 'map')
         }
 
         instance.video?.defocus()
