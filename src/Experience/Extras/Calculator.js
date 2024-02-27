@@ -4,14 +4,11 @@ import _gl from '../Utils/Globals'
 export default class Calculator {
     constructor() {
         this.experience = new Experience()
-
-        this.createRootElement()
-        this.displayElement = this.rootElement.querySelector('#display')
     }
 
     createRootElement() {
         this.rootElement = _gl.elementFromHtml(
-            `<div class="p-4 bg-bke-darkpurple border border-white  absolute top-20 left-20" id="calculator">
+            `<div class="p-4 bg-bke-darkpurple border border-white  absolute bottom-20 right-20" id="calculator">
                 <div class="display font-bold text-4xl bg-white text-bke-darkpurple p-2 mb-4 rounded-md" id="display">0</div>
                 <div class="grid grid-cols-4">
                     <button class="button bg-white rounded-full text-bke-darkpurple font-bold w-12 h-12 m-2 text-xl digit">7</button>
@@ -46,7 +43,7 @@ export default class Calculator {
 
         this.rootElement.querySelector('#equals').addEventListener('click', () => this.calculate())
         this.rootElement.querySelector('#clear').addEventListener('click', () => this.clear())
-        this.rootElement.querySelector('#decimal').addEventListener('click', () => this.appendDecimal())
+        // this.rootElement.querySelector('#decimal').addEventListener('click', () => this.appendDecimal())
     }
 
     appendNumber(number) {
@@ -106,7 +103,9 @@ export default class Calculator {
     }
 
     show() {
-        document.querySelector('#app').append(this.rootElement)
+        this.createRootElement()
+        this.displayElement = this.rootElement.querySelector('#display')
+        this.experience.interface.tasksDescription.append(this.rootElement)
 
         this.clear()
         this.bindEvents()

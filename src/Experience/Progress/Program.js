@@ -15,6 +15,8 @@ import GameDescription from '../Components/GameDescription.js'
 import ConfirmationScreen from '../Components/ConfirmationScreen.js'
 import WaitingScreen from '../Components/WaitingScreen.js'
 import _e from '../Utils/Events.js'
+import TaskDescriptionScreen from '../Components/TaskDescriptionScreen.js'
+import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWithCalculatorScreen.js'
 
 let instance = null
 
@@ -43,6 +45,8 @@ export default class Program {
         instance.gameDescription = new GameDescription()
         instance.confirmationScreen = new ConfirmationScreen()
         instance.waitingScreen = new WaitingScreen()
+        instance.taskDescriptionScreen = new TaskDescriptionScreen()
+        instance.taskDescriptionWithCalculatorScreen = new TaskDescriptionWithCalculatorScreen()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -125,6 +129,7 @@ export default class Program {
     }
 
     startTask() {
+        console.log(instance.taskType())
         if (instance.stepType() == 'video') {
             instance.video.load(instance.currentVideo())
 
@@ -156,6 +161,10 @@ export default class Program {
                     instance.videoWithQuestion.toggleVideoWithQuestion()
                 } else if (instance.taskType() == 'confirmation_screen') {
                     instance.confirmationScreen.show()
+                } else if (instance.taskType() == 'task_description_screen') {
+                    instance.taskDescriptionScreen.show()
+                } else if (instance.taskType() == 'calculator_screen') {
+                    instance.taskDescriptionWithCalculatorScreen.show()
                 }
             } else if (instance.stepType() == 'quiz') {
                 instance.quiz.toggleQuiz()
