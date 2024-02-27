@@ -487,6 +487,8 @@ export default class World {
             instance.cacheDavidsRefugeImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'davids_refuge'))
             instance.cacheMultipleChoiceWithPicture(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'multiple_choice_with_picture'))
             instance.cacheConfirmationScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'confirmation_screen'))
+            instance.cacheTaskDescriptionScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'task_description_screen'))
+            instance.cacheTaskDescriptionWithCalculatorScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'calculator_screen'))
         })
     }
 
@@ -595,6 +597,20 @@ export default class World {
         if (steps.length == 0) return
         steps.forEach((step) => {
             instance.fetchAndCacheAsset(step.confirmation_screen.cs_image)
+        })
+    }
+
+    cacheTaskDescriptionScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.task_description_screen.td_image)
+        })
+    }
+
+    cacheTaskDescriptionWithCalculatorScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.calculator_screen.td_image)
         })
     }
 
