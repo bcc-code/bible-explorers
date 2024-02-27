@@ -1,3 +1,5 @@
+'use strict'
+
 import Experience from '../Experience.js'
 import Archive from '../Components/Archive.js'
 import CodeUnlock from '../Components/CodeUnlock.js'
@@ -17,6 +19,7 @@ import WaitingScreen from '../Components/WaitingScreen.js'
 import _e from '../Utils/Events.js'
 import TaskDescriptionScreen from '../Components/TaskDescriptionScreen.js'
 import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWithCalculatorScreen.js'
+import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
 
 let instance = null
 
@@ -42,6 +45,7 @@ export default class Program {
         instance.pause = new Pause()
         instance.dialogue = new Dialogue()
         instance.message = new Message()
+        instance.messageWithSupportingScreens = new MessageWithSupportingScreens()
         instance.gameDescription = new GameDescription()
         instance.confirmationScreen = new ConfirmationScreen()
         instance.waitingScreen = new WaitingScreen()
@@ -61,6 +65,7 @@ export default class Program {
 
         instance.currentStep = 0
         instance.getCurrentStepData = () => (instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null)
+
         instance.stepType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null)
         instance.taskType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null)
 
@@ -129,17 +134,18 @@ export default class Program {
     }
 
     startTask() {
-        console.log(instance.taskType())
-        if (instance.stepType() == 'video') {
+        if (instance.stepType() === 'video') {
             instance.video.load(instance.currentVideo())
 
             if (instance.getCurrentStepData().details.play_video_directly) {
                 instance.video.play()
             }
         } else {
-            if (instance.stepType() == 'iris') {
+            if (instance.stepType() === 'iris') {
                 instance.message.show()
-            } else if (instance.stepType() == 'task') {
+            } else if (instance.stepType() === 'iris_with_supporting_screens') {
+                instance.messageWithSupportingScreens.show()
+            } else if (instance.stepType() === 'task') {
                 if (instance.taskType() == 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
                 } else if (instance.taskType() == 'picture_and_code') {
@@ -166,9 +172,9 @@ export default class Program {
                 } else if (instance.taskType() == 'calculator_screen') {
                     instance.taskDescriptionWithCalculatorScreen.show()
                 }
-            } else if (instance.stepType() == 'quiz') {
+            } else if (instance.stepType() === 'quiz') {
                 instance.quiz.toggleQuiz()
-            } else if (instance.stepType() == 'pause') {
+            } else if (instance.stepType() === 'pause') {
                 instance.pause.togglePause()
             }
         }
@@ -207,11 +213,15 @@ export default class Program {
             return
         }
 
-        if (instance.stepType() != 'video') instance.video.defocus()
+        if (instance.stepType() !== 'video') instance.video.defocus()
 
-        if (instance.stepType() == 'iris') {
+        if (instance.stepType() === 'iris') {
             setTimeout(function () {
                 instance.message.show()
+            }, 100)
+        } else if (instance.stepType() === 'iris_with_supporting_screens') {
+            setTimeout(function () {
+                instance.messageWithSupportingScreens.show()
             }, 100)
         } else {
             instance.startTask()
@@ -246,6 +256,7 @@ export default class Program {
     destroy() {
         instance.removeEventListeners()
         instance.message.destroy()
+        instance.messageWithSupportingScreens.destroy()
         instance.dialogue.destroy()
     }
 }
