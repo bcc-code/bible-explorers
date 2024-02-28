@@ -1,7 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
-import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
 import Program from '../Progress/Program.js'
 import ProgressBar from '../Components/ProgressBar.js'
@@ -46,7 +45,6 @@ export default class World {
 
             // Setup
             this.controlRoom = new ControlRoom()
-            this.environment = new Environment()
             this.audio = new Audio()
         })
 
