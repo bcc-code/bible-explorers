@@ -20,6 +20,7 @@ import _e from '../Utils/Events.js'
 import TaskDescriptionScreen from '../Components/TaskDescriptionScreen.js'
 import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWithCalculatorScreen.js'
 import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
+import SingleChoice from '../Components/SingleChoice.js'
 
 let instance = null
 
@@ -51,6 +52,7 @@ export default class Program {
         instance.waitingScreen = new WaitingScreen()
         instance.taskDescriptionScreen = new TaskDescriptionScreen()
         instance.taskDescriptionWithCalculatorScreen = new TaskDescriptionWithCalculatorScreen()
+        instance.singleChoice = new SingleChoice()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -146,30 +148,32 @@ export default class Program {
             } else if (instance.stepType() === 'iris_with_supporting_screens') {
                 instance.messageWithSupportingScreens.show()
             } else if (instance.stepType() === 'task') {
-                if (instance.taskType() == 'code_to_unlock') {
+                if (instance.taskType() === 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
-                } else if (instance.taskType() == 'picture_and_code') {
+                } else if (instance.taskType() === 'picture_and_code') {
                     instance.pictureAndCode.togglePictureAndCode()
-                } else if (instance.taskType() == 'question_and_code') {
+                } else if (instance.taskType() === 'question_and_code') {
                     instance.questionAndCode.toggleQuestionAndCode()
-                } else if (instance.taskType() == 'questions') {
+                } else if (instance.taskType() === 'questions') {
                     // instance.questions.toggleQuestions()
-                } else if (instance.taskType() == 'dialog') {
+                } else if (instance.taskType() === 'dialog') {
                     instance.dialogue.toggle()
+                } else if (instance.taskType() === 'single_choice') {
+                    instance.singleChoice.show()
                 }
 
                 // Games
-                else if (instance.taskType() == 'cables' || instance.taskType() == 'sorting' || instance.taskType() == 'simon_says' || instance.taskType() == 'flip_cards' || instance.taskType() == 'choose_new_king' || instance.taskType() == 'heart_defense' || instance.taskType() == 'davids_refuge' || instance.taskType() == 'labyrinth' || instance.taskType() == 'duck_game') {
+                else if (instance.taskType() === 'cables' || instance.taskType() === 'sorting' || instance.taskType() === 'simon_says' || instance.taskType() === 'flip_cards' || instance.taskType() === 'choose_new_king' || instance.taskType() === 'heart_defense' || instance.taskType() === 'davids_refuge' || instance.taskType() === 'labyrinth' || instance.taskType() === 'duck_game') {
                     instance.gameDescription.show()
-                } else if (instance.taskType() == 'multiple_choice_with_picture') {
+                } else if (instance.taskType() === 'multiple_choice_with_picture') {
                     instance.multipleChoiceWithPicture.show()
-                } else if (instance.taskType() == 'video_with_question') {
+                } else if (instance.taskType() === 'video_with_question') {
                     instance.videoWithQuestion.toggleVideoWithQuestion()
-                } else if (instance.taskType() == 'confirmation_screen') {
+                } else if (instance.taskType() === 'confirmation_screen') {
                     instance.confirmationScreen.show()
-                } else if (instance.taskType() == 'task_description_screen') {
+                } else if (instance.taskType() === 'task_description_screen') {
                     instance.taskDescriptionScreen.show()
-                } else if (instance.taskType() == 'calculator_screen') {
+                } else if (instance.taskType() === 'calculator_screen') {
                     instance.taskDescriptionWithCalculatorScreen.show()
                 }
             } else if (instance.stepType() === 'quiz') {
