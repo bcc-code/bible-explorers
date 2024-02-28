@@ -77,10 +77,11 @@ export default class SingleChoice {
     }
 
     destroy() {
-        // Remove event listeners from options
         document.querySelectorAll('.single-choice-option').forEach((option) => {
             option.removeEventListener('click', instance.handleOptionSelect)
         })
+
+        document.querySelector('#single-choice')?.remove()
 
         instance.experience.setAppView('chapter')
         instance.experience.navigation.next.className = 'button-normal shadow-border'
