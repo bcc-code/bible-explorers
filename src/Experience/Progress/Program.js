@@ -21,6 +21,7 @@ import TaskDescriptionScreen from '../Components/TaskDescriptionScreen.js'
 import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWithCalculatorScreen.js'
 import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
 import SingleChoice from '../Components/SingleChoice.js'
+import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
 
 let instance = null
 
@@ -53,6 +54,7 @@ export default class Program {
         instance.taskDescriptionScreen = new TaskDescriptionScreen()
         instance.taskDescriptionWithCalculatorScreen = new TaskDescriptionWithCalculatorScreen()
         instance.singleChoice = new SingleChoice()
+        instance.quizTrueFalse = new TrueFalsQuiz()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -158,6 +160,8 @@ export default class Program {
                     // instance.questions.toggleQuestions()
                 } else if (instance.taskType() === 'dialog') {
                     instance.dialogue.toggle()
+                } else if (instance.taskType() === 'truefalse_quiz') {
+                    instance.quizTrueFalse.show()
                 } else if (instance.taskType() === 'single_choice') {
                     instance.singleChoice.show()
                 }
