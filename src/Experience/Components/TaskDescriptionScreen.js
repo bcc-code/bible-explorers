@@ -1,5 +1,3 @@
-'use strict'
-
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'

@@ -1,5 +1,3 @@
-'use strict'
-
 import Experience from '../Experience.js'
 import Archive from '../Components/Archive.js'
 import CodeUnlock from '../Components/CodeUnlock.js'
