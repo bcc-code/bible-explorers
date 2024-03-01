@@ -16,7 +16,6 @@ export default class MessageWithSupportingScreens {
     }
 
     show(caption = '', character = '') {
-        instance.destroy()
         instance.world = instance.experience.world
         instance.program = instance.world.program
         instance.video = instance.program.video
@@ -52,7 +51,6 @@ export default class MessageWithSupportingScreens {
 
             instance.experience.interface.smallScreen.setAttribute('data-view', '')
 
-            // Check for with_lever flag after appending the image
             if (instance.data.with_lever) {
                 document.getElementById('interactive-image').addEventListener('click', this.leverClickEvent)
             }
@@ -60,10 +58,7 @@ export default class MessageWithSupportingScreens {
     }
 
     leverClickEvent = () => {
-        // Handle the click event for the image here
-        console.log('Lever was clicked!')
         instance.program.nextStep()
-        instance.destroy()
     }
 
     setEventListeners() {
