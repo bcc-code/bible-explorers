@@ -60,18 +60,19 @@ export default class TrueFalsQuiz {
 
     setHTMLForQuestion(index) {
         const question = instance.data.questions[index]
-        const questionContent = question.type === 'image' ? `<img src="${question.question_media}" alt="Question Image">` : `<p class="text-4xl">${question.question_text}</p>`
+        const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
+        const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p class="text-4xl">${question.question_text}</p>`
         const audioButton = question.question_audio ? `<button class="audio-button button-normal" data-audio="${question.question_audio.url}">Play Audio</button>` : ''
 
         const questionHTML = `
-            <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
-                ${audioButton}
-                ${questionContent}
-                <div class="flex gap-12 items-center">
-                    <button class="answer-button h-24 w-24 bg-red-600" data-answer="false">No</button>
-                    <button class="answer-button h-24 w-24 bg-green-600" data-answer="true">Yes</button>
-                </div>
-            </div>`
+                <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
+                    ${audioButton}
+                    ${questionContent}
+                    <div class="flex gap-12 items-center">
+                        <button class="answer-button h-24 w-24 bg-red-600" data-answer="false">No</button>
+                        <button class="answer-button h-24 w-24 bg-green-600" data-answer="true">Yes</button>
+                    </div>
+                </div>`
 
         // Update only the dynamic part of the content
         const quizContentContainer = document.querySelector('#quiz-content')
@@ -81,6 +82,14 @@ export default class TrueFalsQuiz {
 
     handleAnswer = (event) => {
         event.stopPropagation()
+
+        // If there's an audio playing, stop it
+        if (instance.quizAudio && !instance.quizAudio.paused) {
+            instance.quizAudio.pause()
+            instance.quizAudio.currentTime = 0 // Reset the audio playback to the start
+            instance.audio.fadeInBgMusic()
+        }
+
         const button = event.target
         const questionElement = button.closest('.question')
         const correctAnswer = questionElement.getAttribute('data-correct') === 'true'
@@ -126,7 +135,24 @@ export default class TrueFalsQuiz {
     handleAudioPlay(event) {
         const button = event.target
         const audioUrl = button.getAttribute('data-audio')
-        new Audio(audioUrl).play()
+
+        // Fade out background music
+        instance.audio.fadeOutBgMusic()
+
+        // If there's already an audio playing, pause it and reset the current time
+        if (instance.quizAudio && !instance.quizAudio.paused) {
+            instance.quizAudio.pause()
+            instance.quizAudio.currentTime = 0 // Reset the audio playback to the start
+        }
+
+        // Initialize the quiz audio with the new URL
+        instance.quizAudio = new Audio(audioUrl)
+        instance.quizAudio.play()
+
+        // Once the quiz audio ends, fade in the background music
+        instance.quizAudio.onended = () => {
+            instance.audio.fadeInBgMusic()
+        }
     }
 
     attachEventListeners() {
