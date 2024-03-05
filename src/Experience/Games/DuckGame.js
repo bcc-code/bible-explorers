@@ -11,18 +11,6 @@ export default class DuckGame {
         // Base resolution
         this.baseWidth = 800
         this.baseHeight = 600
-
-        // Timer properties
-        this.timer = 0
-        this.lastPipeGenerationTime = 0
-        this.pipeGenerationInterval = 1500
-
-        // Initialize the timer
-        this.timerInterval = null
-
-        // Initialize the round count and rounds completed count
-        this.roundCount = 0
-        this.roundsCompleted = 0
     }
 
     toggleGame() {
@@ -56,52 +44,56 @@ export default class DuckGame {
             this.drawBackground()
             this.drawStartScreen()
         })
+
         // Adjusted in resizeCanvas method
         this.resizeCanvas()
+
+        // Initialize the click event listener for starting the game
+        this.startGameClickHandler = () => {
+            this.startGame()
+        }
+        this.canvas.addEventListener('click', this.startGameClickHandler)
+
+        // Player instance (will be added when "Start" is clicked)
+        this.player = null
+
+        // Pipes array
+        this.pipes = []
+
+        // Game over flag
+        this.gameOver = false
+
+        // Win game flag
+        this.gameWon = false
+
+        // Store the requestAnimationFrame ID
+        this.gameLoop = null
+
+        // Flag to indicate whether the game has started
+        this.gameStarted = false
+
+        // Timer properties
+        this.lastPipeGenerationTime = 0
+        this.pipeGenerationInterval = 1500
 
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
 
-        this.startGame()
-    }
+        // Initialize the timer
+        this.timerInterval = null
 
-    startGame() {
-        // Implement game start logic here
-        console.log('Game started!')
-
-        // Reset game over and win game flags
-        this.gameOver = false
-        this.gameWon = false
-
-        // Reset pipes array
-        this.pipes = []
-
-        // Reset game timer
-        this.resetTimer()
-
-        // Reset box spawn flag
+        // Flag to track if 30 seconds have passed
         this.boxSpawned = false
 
-        // Reset box instance
+        // Box instance
         this.box = null
 
-        // Reset Invisible wall instance
+        // Initialize the round count and rounds completed count
+        this.roundCount = 0
+        this.roundsCompleted = 0
+
+        // Invisible wall instance
         this.invisibleWall = null
-
-        // Set gameStarted flag to true
-        this.gameStarted = true
-
-        // Reset player position and state
-        this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this)
-
-        // Start the timer
-        this.startTimer()
-
-        // Start generating pipes
-        this.generatePipes()
-
-        // Start the game loop
-        this.gameLoop = requestAnimationFrame(this.update.bind(this))
     }
 
     resizeCanvas() {
@@ -147,6 +139,48 @@ export default class DuckGame {
 
         // Draw message
         this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2)
+    }
+
+    startGame() {
+        // Implement game start logic here
+        console.log('Game started!')
+
+        // Reset game over and win game flags
+        this.gameOver = false
+        this.gameWon = false
+
+        // Reset pipes array
+        this.pipes = []
+
+        // Reset game timer
+        this.resetTimer()
+
+        // Reset box spawn flag
+        this.boxSpawned = false
+
+        // Reset box instance
+        this.box = null
+
+        // Reset Invisible wall instance
+        this.invisibleWall = null
+
+        // Set gameStarted flag to true
+        this.gameStarted = true
+
+        // Remove click event listener
+        this.canvas.removeEventListener('click', this.startGameClickHandler)
+
+        // Reset player position and state
+        this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this)
+
+        // Start the timer
+        this.startTimer()
+
+        // Start generating pipes
+        this.generatePipes()
+
+        // Start the game loop
+        this.gameLoop = requestAnimationFrame(this.update.bind(this))
     }
 
     startTimer() {
@@ -429,6 +463,9 @@ export default class DuckGame {
         if (this.gameLoop) {
             cancelAnimationFrame(this.gameLoop)
         }
+
+        // Remove click event listener for starting the game
+        this.canvas.removeEventListener('click', this.startGameClickHandler)
 
         this.experience.setAppView('chapter')
     }
