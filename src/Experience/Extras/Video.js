@@ -124,7 +124,7 @@ export default class Video {
     }
 
     setFullscreenIfNecessary() {
-        if (!this.isFullscreen_ && [...instance.video().el_.classList].filter((c) => c.includes('episode') || c.includes('lobby-video')).length) {
+        if (!this.isFullscreen_ && [...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
             this.requestFullscreen()
             instance.addSkipBtn()
         }
