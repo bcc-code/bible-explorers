@@ -87,7 +87,9 @@ export default class Video {
 
         instance.pause()
 
-        if (instance.video().isFullscreen_) instance.video().exitFullscreen()
+        if (instance.video().isFullscreen_) {
+            instance.video().exitFullscreen()
+        }
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
@@ -95,7 +97,7 @@ export default class Video {
         instance.videosContainer.style.display = 'none'
         instance.videosContainer.querySelector('#' + instance.playingVideoId).style.display = 'none'
 
-        // instance.experience.navigation.next.disabled = false
+        instance.playingVideoId = null
     }
 
     finish() {
