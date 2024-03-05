@@ -52,8 +52,8 @@ export default class GameDescription {
     setHtml() {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h1>
+                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32 text-center">
+                    <h1 class="text-2xl tv:text-3xl font-bold mb-4">${instance.data.title}</h1>
                     ${instance.data.prompts ? `<p>${instance.data.prompts[0].prompt}</p>` : ''}
                     ${instance.data.tutorial ? `<div class="aspect-video max-w-[600px] mt-8">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
                     <div class="flex justify-center mt-8">
@@ -105,10 +105,11 @@ export default class GameDescription {
 
     useCorrectAssetsSrc() {
         instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
-            instance.program.updateAssetInProgramData('details', data);
-            const imageElement = document.querySelector('#task-image > *');
-            if (imageElement) { // Check if the element exists
-                imageElement.src = data.tutorial;
+            instance.program.updateAssetInProgramData('details', data)
+            const imageElement = document.querySelector('#task-image > *')
+            if (imageElement) {
+                // Check if the element exists
+                imageElement.src = data.tutorial
             }
         })
     }
