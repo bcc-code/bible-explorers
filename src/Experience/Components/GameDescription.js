@@ -12,6 +12,7 @@ import HeartDefense from '../Games/HeartDefense.js'
 import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import MazeGame from '../Games/MazeGame.js'
 import DuckGame from '../Games/DuckGame.js'
+import CodeUnlock from './CodeUnlock.js'
 
 let instance = null
 
@@ -33,6 +34,7 @@ export default class GameDescription {
         instance.davidsRefuge = new DavidsRefuge()
         instance.mazeGame = new MazeGame()
         instance.duckGame = new DuckGame()
+        instance.codeUnlock = new CodeUnlock()
     }
 
     show() {
@@ -93,6 +95,8 @@ export default class GameDescription {
             instance.mazeGame.toggleGame()
         } else if (instance.program.taskType() == 'duck_game') {
             instance.duckGame.toggleGame()
+        } else if (instance.program.taskType() == 'code_to_unlock') {
+            instance.codeUnlock.toggleCodeUnlock()
         }
     }
 
