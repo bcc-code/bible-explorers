@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -94,6 +95,8 @@ export default class DuckGame {
 
         // Invisible wall instance
         this.invisibleWall = null
+
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy.bind(this))
     }
 
     resizeCanvas() {
@@ -447,7 +450,7 @@ export default class DuckGame {
         this.ctx.fillText(`Time: ${this.timer}s`, this.canvas.width - 10, 30)
     }
 
-    remove() {
+    destroy() {
         // Clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
@@ -466,8 +469,9 @@ export default class DuckGame {
 
         // Remove click event listener for starting the game
         this.canvas.removeEventListener('click', this.startGameClickHandler)
-
         this.experience.setAppView('chapter')
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy.bind(this))
     }
 }
 
