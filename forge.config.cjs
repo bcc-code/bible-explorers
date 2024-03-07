@@ -2,6 +2,18 @@ module.exports = {
     packagerConfig: {
         icon: 'static/favicon',
     },
+    publishers: [
+        {
+            name: '@electron-forge/publisher-github',
+            config: {
+                repository: {
+                    owner: 'bcc-code',
+                    name: 'bible-explorers',
+                },
+                prerelease: true,
+            },
+        },
+    ],
     makers: [
         {
             name: '@electron-forge/maker-squirrel',

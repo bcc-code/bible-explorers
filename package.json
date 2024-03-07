@@ -38,6 +38,7 @@
     "three": "^0.151.3",
     "tippy.js": "^6.3.7",
     "troika-three-text": "^0.45.1",
+    "update-electron-app": "^3.0.0",
     "workbox-cacheable-response": "^6.5.3",
     "workbox-precaching": "^6.5.3"
   },
