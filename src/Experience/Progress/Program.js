@@ -13,7 +13,13 @@ import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
 import ConfirmationScreen from '../Components/ConfirmationScreen.js'
+import WaitingScreen from '../Components/WaitingScreen.js'
 import _e from '../Utils/Events.js'
+import TaskDescriptionScreen from '../Components/TaskDescriptionScreen.js'
+import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWithCalculatorScreen.js'
+import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
+import SingleChoice from '../Components/SingleChoice.js'
+import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
 
 let instance = null
 
@@ -39,8 +45,14 @@ export default class Program {
         instance.pause = new Pause()
         instance.dialogue = new Dialogue()
         instance.message = new Message()
+        instance.messageWithSupportingScreens = new MessageWithSupportingScreens()
         instance.gameDescription = new GameDescription()
         instance.confirmationScreen = new ConfirmationScreen()
+        instance.waitingScreen = new WaitingScreen()
+        instance.taskDescriptionScreen = new TaskDescriptionScreen()
+        instance.taskDescriptionWithCalculatorScreen = new TaskDescriptionWithCalculatorScreen()
+        instance.singleChoice = new SingleChoice()
+        instance.quizTrueFalse = new TrueFalsQuiz()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -55,6 +67,7 @@ export default class Program {
 
         instance.currentStep = 0
         instance.getCurrentStepData = () => (instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null)
+
         instance.stepType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null)
         instance.taskType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null)
 
@@ -123,41 +136,51 @@ export default class Program {
     }
 
     startTask() {
-        if (instance.stepType() == 'video') {
+        if (instance.stepType() === 'video') {
             instance.video.load(instance.currentVideo())
 
             if (instance.getCurrentStepData().details.play_video_directly) {
                 instance.video.play()
             }
         } else {
-            if (instance.stepType() == 'iris') {
+            if (instance.stepType() === 'iris') {
                 instance.message.show()
-            } else if (instance.stepType() == 'task') {
-                if (instance.taskType() == 'code_to_unlock') {
+            } else if (instance.stepType() === 'iris_with_supporting_screens') {
+                instance.messageWithSupportingScreens.show()
+            } else if (instance.stepType() === 'task') {
+                if (instance.taskType() === 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
-                } else if (instance.taskType() == 'picture_and_code') {
+                } else if (instance.taskType() === 'picture_and_code') {
                     instance.pictureAndCode.togglePictureAndCode()
-                } else if (instance.taskType() == 'question_and_code') {
+                } else if (instance.taskType() === 'question_and_code') {
                     instance.questionAndCode.toggleQuestionAndCode()
-                } else if (instance.taskType() == 'questions') {
+                } else if (instance.taskType() === 'questions') {
                     // instance.questions.toggleQuestions()
-                } else if (instance.taskType() == 'dialog') {
+                } else if (instance.taskType() === 'dialog') {
                     instance.dialogue.toggle()
+                } else if (instance.taskType() === 'truefalse_quiz') {
+                    instance.quizTrueFalse.show()
+                } else if (instance.taskType() === 'single_choice') {
+                    instance.singleChoice.show()
                 }
 
                 // Games
-                else if (instance.taskType() == 'cables' || instance.taskType() == 'sorting' || instance.taskType() == 'simon_says' || instance.taskType() == 'flip_cards' || instance.taskType() == 'choose_new_king' || instance.taskType() == 'heart_defense' || instance.taskType() == 'davids_refuge' || instance.taskType() == 'labyrinth') {
+                else if (instance.taskType() === 'cables' || instance.taskType() === 'sorting' || instance.taskType() === 'simon_says' || instance.taskType() === 'flip_cards' || instance.taskType() === 'choose_new_king' || instance.taskType() === 'heart_defense' || instance.taskType() === 'davids_refuge' || instance.taskType() === 'labyrinth' || instance.taskType() === 'duck_game') {
                     instance.gameDescription.show()
-                } else if (instance.taskType() == 'multiple_choice_with_picture') {
+                } else if (instance.taskType() === 'multiple_choice_with_picture') {
                     instance.multipleChoiceWithPicture.show()
-                } else if (instance.taskType() == 'video_with_question') {
+                } else if (instance.taskType() === 'video_with_question') {
                     instance.videoWithQuestion.toggleVideoWithQuestion()
-                } else if (instance.taskType() == 'confirmation_screen') {
+                } else if (instance.taskType() === 'confirmation_screen') {
                     instance.confirmationScreen.show()
+                } else if (instance.taskType() === 'task_description_screen') {
+                    instance.taskDescriptionScreen.show()
+                } else if (instance.taskType() === 'calculator_screen') {
+                    instance.taskDescriptionWithCalculatorScreen.show()
                 }
-            } else if (instance.stepType() == 'quiz') {
+            } else if (instance.stepType() === 'quiz') {
                 instance.quiz.toggleQuiz()
-            } else if (instance.stepType() == 'pause') {
+            } else if (instance.stepType() === 'pause') {
                 instance.pause.togglePause()
             }
         }
@@ -189,12 +212,23 @@ export default class Program {
     }
 
     startInteractivity() {
-        if (instance.stepType() != 'video') instance.video.defocus()
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+            setTimeout(function () {
+                instance.waitingScreen.show()
+            }, 1000)
+            return
+        }
 
-        if (instance.stepType() == 'iris') {
+        if (instance.stepType() !== 'video') instance.video.defocus()
+
+        if (instance.stepType() === 'iris') {
             setTimeout(function () {
                 instance.message.show()
-            }, 1000)
+            }, 100)
+        } else if (instance.stepType() === 'iris_with_supporting_screens') {
+            setTimeout(function () {
+                instance.messageWithSupportingScreens.show()
+            }, 100)
         } else {
             instance.startTask()
         }
@@ -228,6 +262,7 @@ export default class Program {
     destroy() {
         instance.removeEventListeners()
         instance.message.destroy()
+        instance.messageWithSupportingScreens.destroy()
         instance.dialogue.destroy()
     }
 }

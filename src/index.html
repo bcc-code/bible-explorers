@@ -26,8 +26,8 @@
                     <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-2 tv:gap-4">
                         <button class="button-normal toggle-music group/audio">
-                            <svg class="h-3 w-3 group-[.is-playing]/audio:hidden tv:h-5 tv:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
-                            <svg class="hidden h-3 w-3 group-[.is-playing]/audio:block tv:h-5 tv:w-5"><use href="#music-slash-solid" fill="currentColor"></use></svg>
+                            <svg class="hidden h-3 w-3 group-[.is-playing]/audio:block tv:h-5 tv:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
+                            <svg class="h-3 w-3 group-[.is-playing]/audio:hidden tv:h-5 tv:w-5"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="group/settings relative">
                             <button class="button-normal toggle-settings group-[.dropdown-is-visible]/settings:shadow-border" aria-pressed="false">
@@ -65,7 +65,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="group/languages relative group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" id="app-language">
+                        <div class="group/languages relative group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden group-data-[view='task-description']/app:hidden" id="app-language">
                             <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
                                 <svg class="pointer-events-none h-3 w-3 tv:h-5 tv:w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span class="pointer-events-none">English</span>
@@ -74,13 +74,13 @@
                                 <ul></ul>
                             </div>
                         </div>
-                        <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
+                        <button id="logout-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden group-data-[view='task-description']/app:hidden" disabled="true">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                             <div class="leading-tight">
                                 <span aria-label="User"></span>
                             </div>
                         </button>
-                        <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden" disabled="true">
+                        <button id="login-button" class="button-normal disabled:hidden group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden group-data-[view='task-description']/app:hidden" disabled="true">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
                             <span>Log in</span>
                         </button>
@@ -122,7 +122,7 @@
                         </button>
                     </div>
                 </div>
-                <div id="chapter-wrapper" class="isolate hidden group-data-[view='chapter']/app:block group-data-[view='game']/app:block">
+                <div id="chapter-wrapper" class="isolate hidden group-data-[view='chapter']/app:block group-data-[view='game']/app:block group-data-[view='task-description']/app:block">
                     <div class="fixed inset-0 -z-10 bg-chapter-room bg-cover bg-center">
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
@@ -134,7 +134,6 @@
                         <div id="small-screen" class="group relative isolate max-h-[767px] w-1/4" data-view="map">
                             <div class="absolute -inset-4 -z-10 bg-small-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
                             <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
-                            <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='lever']:block"></div>
                         </div>
                     </div>
                     <div id="closed-caption" class="fixed bottom-4 w-3/4 px-8 group-data-[view='game']/app:hidden tv:bottom-8"></div>
@@ -147,6 +146,7 @@
                         </button>
                     </div>
                     <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
+                    <div id="tasks-description" class="fixed inset-0 hidden group-data-[view='task-description']/app:block"></div>
                 </div>
             </main>
 

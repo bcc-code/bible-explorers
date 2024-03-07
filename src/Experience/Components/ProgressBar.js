@@ -1,90 +1,102 @@
 import Experience from '../Experience.js'
 import _e from '../Utils/Events.js'
 
-let instance = null
-
 export default class ProgressBar {
+    static instance
+
+    experience = new Experience()
+    debug = this.experience.debug
+    program = this.experience.world.program
+    checkpointWidth = 100 / this.program.totalCheckpoints
+    htmlEl = document.querySelector('#progress-bar')
+    el = {}
+
     constructor() {
-        instance = this
+        if (ProgressBar.instance) {
+            return ProgressBar.instance
+        }
+        ProgressBar.instance = this
 
-        instance.experience = new Experience()
-        instance.debug = instance.experience.debug
-        instance.program = instance.experience.world.program
-
-        instance.init()
-        instance.setEventListeners()
+        this.init()
+        this.setEventListeners()
     }
 
     init() {
-        instance.checkpointWidth = 100 / instance.program.totalCheckpoints
+        this.htmlEl.innerHTML = ProgressBar.HTML(this.checkpointWidth, this.program)
+        const { passed, checkpoints } = this.getElements()
+        this.el = { passed, checkpoints }
 
-        instance.htmlEl = document.querySelector('#progress-bar')
-        instance.htmlEl.innerHTML = ProgressBar.HTML()
-
-        instance.el = {
-            passed: instance.htmlEl.querySelector('.percentageBar .passed'),
-            checkpoints: instance.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)"),
-        }
-
-        instance.el.checkpoints.forEach(function (checkpoint, index) {
-            checkpoint.addEventListener('click', () => {
-                let clickedCheckpoint = checkpoint.getAttribute('data-index')
-                instance.program.goToCheckpoint(clickedCheckpoint)
-            })
-
-            if (index == instance.program.currentCheckpoint) checkpoint.setAttribute('currentCheckpoint', '')
+        this.el.checkpoints.forEach((checkpoint, index) => {
+            checkpoint.addEventListener('click', this.handleCheckpointClick)
+            if (index === this.program.currentCheckpoint) checkpoint.setAttribute('currentCheckpoint', '')
         })
     }
 
-    refresh() {
-        instance.el.passed.style.width = instance.checkpointWidth * instance.program.currentCheckpoint + '%'
+    refresh = () => {
+        this.el.passed.style.width = `${this.checkpointWidth * this.program.currentCheckpoint}%`
 
-        instance.el.checkpoints.forEach((checkpoint) => {
+        this.el.checkpoints.forEach((checkpoint, index) => {
             checkpoint.removeAttribute('currentCheckpoint')
-            instance.htmlEl.setAttribute('data-checkpoint', '')
+            if (index < this.program.currentCheckpoint) {
+                checkpoint.classList.remove('locked')
+            }
+            if (index === this.program.currentCheckpoint) {
+                checkpoint.setAttribute('currentCheckpoint', '')
+            }
         })
-
-        if (instance.program.currentCheckpoint < instance.el.checkpoints.length) {
-            instance.el.checkpoints[instance.program.currentCheckpoint].classList.remove('locked')
-            instance.el.checkpoints[instance.program.currentCheckpoint].setAttribute('currentCheckpoint', '')
-        }
     }
 
     setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, this.refresh)
     }
 
-    static HTML() {
-        let generatedHTML = `<div class="percentageBar bg-bke-purple h-1 w-full">
-                <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${instance.checkpointWidth * instance.program.currentCheckpoint}%"></div>
+    handleCheckpointClick = (event) => {
+        const clickedCheckpoint = event.currentTarget.getAttribute('data-index')
+        this.program.goToCheckpoint(clickedCheckpoint)
+    }
+
+    getElements() {
+        return {
+            passed: this.htmlEl.querySelector('.percentageBar .passed'),
+            checkpoints: this.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)"),
+        }
+    }
+
+    static HTML(checkpointWidth, program) {
+        let generatedHTML = `
+            <div class="percentageBar bg-bke-purple h-1 w-full">
+                <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${checkpointWidth * program.currentCheckpoint}%"></div>
             </div>
             <div class="flex gap-4 xl:gap-6 tv:gap-8 -mx-6 -mt-6 tv:-mt-8">`
 
-        for (let i = 0; i < instance.program.totalCheckpoints; i++) {
-            if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'video')) {
-                generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg>
-                          </button>`
-            } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'quiz')) {
-                generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg>
-                          </button>`
-            } else if (instance.program.programData[i].steps.some((step) => step.details.step_type == 'pause')) {
-                generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pause-solid" fill="currentColor"></use></svg
-                          </button>`
-            } else {
-                generatedHTML += `<button class="button-normal duration-300" aria-label="checkpoint" data-index="${i}">
-                              <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg
-                          </button>`
+        program.programData.forEach((data, index) => {
+            const stepTypeIcon = {
+                video: '#film-solid',
+                quiz: '#question-solid',
+                pause: '#pause-solid',
+                default: '#pen-to-square-solid',
             }
-        }
 
-        generatedHTML += `<button class="button-normal" aria-label="checkpoint">
-                          <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#star-solid" fill="currentColor"></use></svg
-                      </button>
-                  </div>`
+            // Determine the dominant step type for the current data item
+            let dominantStepType = 'default'
+            for (let step of data.steps) {
+                if (stepTypeIcon[step.details.step_type]) {
+                    dominantStepType = step.details.step_type
+                    break // Assumes the first identifiable step type dictates the icon
+                }
+            }
 
-        return generatedHTML
+            const icon = stepTypeIcon[dominantStepType]
+            generatedHTML += `
+                <button class="button-normal duration-300" aria-label="checkpoint" data-index="${index}">
+                    <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="${icon}" fill="currentColor"></use></svg>
+                </button>`
+        })
+
+        return `${generatedHTML}
+            <button class="button-normal" aria-label="checkpoint">
+                <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#star-solid" fill="currentColor"></use></svg>
+            </button>
+        </div>`
     }
 }

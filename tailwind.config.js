@@ -38,6 +38,15 @@ export default {
                 wrong: '-6px 8px 0 theme(colors.red.500), 0 0 0 2px theme(colors.red.500)',
                 correct: '-6px 8px 0 theme(colors.green.500), 0 0 0 2px theme(colors.green.500)',
             },
+            keyframes: {
+                credits: {
+                    '0%': { top: '100%' },
+                    '100%': { top: '-500%' },
+                },
+            },
+            animation: {
+                credits: 'credits 60s linear infinite',
+            },
         },
     },
     plugins: [require('@tailwindcss/typography')],

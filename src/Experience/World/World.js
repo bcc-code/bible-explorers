@@ -1,7 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
-import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
 import Program from '../Progress/Program.js'
 import ProgressBar from '../Components/ProgressBar.js'
@@ -46,7 +45,6 @@ export default class World {
 
             // Setup
             this.controlRoom = new ControlRoom()
-            this.environment = new Environment()
             this.audio = new Audio()
         })
 
@@ -280,6 +278,7 @@ export default class World {
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
                 instance.loadChapterTextures()
+                instance.fetchLobbyVideoLoop()
                 instance.fetchBtvVideos()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
@@ -400,11 +399,21 @@ export default class World {
         })
     }
 
+    fetchLobbyVideoLoop() {
+        const videoName = instance.selectedChapter.lobby_video_loop
+        if (videoName) {
+            instance.resources.loadLobbyVideoInBtvPlayer(videoName)
+        }
+    }
+
     fetchBtvVideos() {
         instance.selectedChapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
                 if (step.details.step_type == 'iris' && step.message?.video) {
                     instance.resources.loadTextureInBtvPlayer(step.message.video)
+                }
+                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens?.video) {
+                    instance.resources.loadTextureInBtvPlayer(step.message_with_supporting_screens.video)
                 }
                 if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
                     instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
@@ -470,6 +479,9 @@ export default class World {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
             instance.cacheTaskDescriptionVideos(checkpoint.steps.filter((step) => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
+            instance.cacheTaskDescriptionWithSupportingScreensAudios(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.audio))
+            instance.cacheTaskDescriptionWithSupportingScreensVideos(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.video))
+            instance.cacheTaskDescriptionWithSupportingScreensMedia(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.media))
             instance.cacheSortingGameIcons(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'))
             instance.cacheDialogueAudios(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'))
@@ -479,6 +491,8 @@ export default class World {
             instance.cacheDavidsRefugeImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'davids_refuge'))
             instance.cacheMultipleChoiceWithPicture(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'multiple_choice_with_picture'))
             instance.cacheConfirmationScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'confirmation_screen'))
+            instance.cacheTaskDescriptionScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'task_description_screen'))
+            instance.cacheTaskDescriptionWithCalculatorScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'calculator_screen'))
         })
     }
 
@@ -497,19 +511,34 @@ export default class World {
         facts.forEach((fact) => instance.fetchAndCacheAsset(fact.image.url))
     }
 
-    cacheTaskDescriptionAudios(steps) {
+    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
     }
 
-    cacheTaskDescriptionVideos(steps) {
+    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.video))
     }
 
-    cacheTaskDescriptionMedia(steps) {
+    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
+    }
+
+    cacheTaskDescriptionAudios(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.audio))
+    }
+
+    cacheTaskDescriptionVideos(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.video))
+    }
+
+    cacheTaskDescriptionMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.media))
     }
 
     cacheSortingGameIcons(sortingTasks) {
@@ -587,6 +616,20 @@ export default class World {
         if (steps.length == 0) return
         steps.forEach((step) => {
             instance.fetchAndCacheAsset(step.confirmation_screen.cs_image)
+        })
+    }
+
+    cacheTaskDescriptionScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.task_description_screen.td_image)
+        })
+    }
+
+    cacheTaskDescriptionWithCalculatorScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.calculator_screen.td_image)
         })
     }
 
@@ -674,6 +717,7 @@ export default class World {
 
         if (instance.program.archive) instance.program.archive.remove()
         if (instance.program.pause) instance.program.pause.destroy()
+        if (instance.program.congrats) instance.program.congrats.destroy()
 
         document.querySelector('#fullscreen-setting input').checked = false
 
