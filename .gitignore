@@ -94,4 +94,3 @@ out/
 dist
 .vercel
 .DS_store
-package-lock.json
