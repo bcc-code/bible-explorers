@@ -38,6 +38,9 @@ if (isElectron()) {
     document.body.classList.add('logged-in')
     experience.auth0 = { isAuthenticated: true, userData: { name: 'Log out' } }
     document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+
+    window.electronAPI.appVersion()
+    window.electronAPI.appNotifications()
 } else {
     // Register Service Worker
     if ('serviceWorker' in navigator) {

@@ -35,6 +35,10 @@
     @apply shadow-border;
 }
 
+.electron #app[data-view="age-category"] #app-version {
+    display: block;
+}
+
 #app[data-view="chapter"],
 #app[data-view="game"] {
 

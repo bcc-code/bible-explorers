@@ -1,72 +1,13 @@
-const { app, BrowserWindow, ipcMain, autoUpdater, dialog } = require('electron')
+const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require('path')
 
+import { autoUpdater } from 'electron-updater'
 import { createAuthWindow, createLogoutWindow } from './authProcess.js'
 import dns from 'dns'
 import { refreshTokens } from './authService.js'
 
 if (require('electron-squirrel-startup')) {
     app.quit()
-}
-
-// Don't run the updater on dev
-if (app.isPackaged) {
-    console.log('Run the updater')
-
-    // Auto updater
-    const { updateElectronApp } = require('update-electron-app')
-    updateElectronApp()
-
-    const server = 'https://github.com/bcc-code/bible-explorers/releases/download'
-    const url = `${server}/v${app.getVersion()}/bible-explorers-app-${app.getVersion()}-${process.platform}`
-
-    autoUpdater.setFeedURL({ url })
-    console.log(url)
-
-    // Check for updates every minute
-    setInterval(
-        () => {
-            console.log('checkForUpdates')
-            // autoUpdater.checkForUpdates()
-        },
-        1 * 60 * 1000
-    )
-
-    autoUpdater.on('checking-for-update', () => {
-        console.log('checking-for-update')
-    })
-
-    autoUpdater.on('update-available', () => {
-        console.log('update-available')
-    })
-
-    autoUpdater.on('update-not-available', () => {
-        console.log('update-not-available')
-    })
-
-    // Notifying users when updates are available
-    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-        console.log('update-downloaded')
-
-        const dialogOpts = {
-            type: 'info',
-            buttons: ['Restart', 'Later'],
-            title: 'Application Update',
-            message: process.platform === 'win32' ? releaseNotes : releaseName,
-            detail: 'A new version has been downloaded. Restart the application to apply the updates.',
-        }
-
-        dialog.showMessageBox(dialogOpts).then((returnValue) => {
-            if (returnValue.response === 0) autoUpdater.quitAndInstall()
-        })
-    })
-
-    autoUpdater.on('error', (message) => {
-        console.error('There was a problem updating the application')
-        console.error(message)
-    })
-} else {
-    console.log("DON'T run the updater")
 }
 
 export const createWindow = () => {
@@ -92,7 +33,9 @@ export const createWindow = () => {
 
     mainWindow.maximize()
     mainWindow.show()
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
+
+    autoUpdater.checkForUpdatesAndNotify()
 }
 
 export const showWindow = async () => {
@@ -127,6 +70,32 @@ app.on('activate', () => {
     }
 })
 
+autoUpdater.on('checking-for-update', () => {
+    console.log('checking-for-update')
+})
+
+autoUpdater.on('update-available', () => {
+    console.log('update-available')
+    mainWindow.webContents.send('update_available')
+})
+autoUpdater.on('update-downloaded', () => {
+    console.log('update-downloaded')
+    mainWindow.webContents.send('update_downloaded')
+})
+
+autoUpdater.on('update-not-available', () => {
+    console.log('update-not-available')
+})
+
+autoUpdater.on('error', (message) => {
+    console.error('There was a problem updating the application')
+    console.error(message)
+})
+
+ipcMain.on('restart-app', () => {
+    autoUpdater.quitAndInstall()
+})
+
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
@@ -134,6 +103,10 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
+})
+
+ipcMain.on('app-version', (event) => {
+    event.sender.send('app-version', { version: app.getVersion() })
 })
 
 // Inter-Process Communication - Event listeners
