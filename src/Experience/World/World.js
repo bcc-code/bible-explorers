@@ -511,32 +511,32 @@ export default class World {
         facts.forEach((fact) => instance.fetchAndCacheAsset(fact.image.url))
     }
 
-    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
+    cacheTaskDescriptionAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
     }
 
-    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
+    cacheTaskDescriptionVideos(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.video))
     }
 
-    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
+    cacheTaskDescriptionMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
     }
 
-    cacheTaskDescriptionAudios(steps) {
+    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.audio))
     }
 
-    cacheTaskDescriptionVideos(steps) {
+    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.video))
     }
 
-    cacheTaskDescriptionMedia(steps) {
+    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.media))
     }
