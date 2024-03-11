@@ -254,6 +254,7 @@ export default class Resources extends EventEmitter {
     }
 
     async streamLocally(videoName, videoUrl) {
+        const loopVideo = videoName.includes('texture') || videoName.includes('lobby-video')
         const player = await createPlayer(videoName, {
             src: {
                 type: 'video/mp4',
@@ -262,6 +263,7 @@ export default class Resources extends EventEmitter {
             autoplay: false,
             videojs: {
                 autoplay: false,
+                loop: loopVideo,
             },
         })
 
@@ -272,8 +274,8 @@ export default class Resources extends EventEmitter {
     }
 
     async streamFromBtv(videoName) {
+        const loopVideo = videoName.includes('texture') || videoName.includes('lobby-video')
         const episodeId = videoName.replace('episode-', '').replace('texture-', '').replace('lobby-video-', '')
-
         const player = await resources.factory.create(videoName, {
             episodeId: episodeId,
             overrides: {
@@ -284,6 +286,7 @@ export default class Resources extends EventEmitter {
                 autoplay: false,
                 videojs: {
                     autoplay: false,
+                    loop: loopVideo,
                 },
             },
         })
