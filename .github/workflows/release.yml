@@ -75,7 +75,7 @@ jobs:
             - name: Build and publish the Electron app
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: npm run publish
+              run: npm run package
 
     close_pull_request_job:
         if: github.event_name == 'pull_request'
