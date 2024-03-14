@@ -23,6 +23,9 @@ export default {
                     blue: 'hsl(201, 97%, 45%)',
                 },
             },
+            gridTemplateColumns: {
+                'screens-layout': '40% 27% 33%',
+            },
             backgroundImage: {
                 'control-room': "url('../../static/textures/control-room.png')",
                 'chapter-room': "url('../../static/textures/control-room-2.png')",
@@ -30,6 +33,10 @@ export default {
                 'small-screen-frame': "url('../../static/textures/small-screen-frame.svg')",
                 'map-texture': "url('../../static/textures/map.jpg')",
                 'lever-texture': "url('../../static/textures/lever.png')",
+                'main-screen': "url('../../static/frames/Screen_1.png')",
+                'helper-screen': "url('../../static/frames/Screen_2.png')",
+                'top-mid-screen': "url('../../static/frames/Screen_3.png')",
+                'top-left-screen': "url('../../static/frames/Screen_4.png')",
             },
             boxShadow: {
                 hover: '-4px 6px 0 theme(colors.bke.orange)',

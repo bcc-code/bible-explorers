@@ -178,3 +178,27 @@ body.bcc_member {
     background: rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
+
+
+// Masks
+
+.mask-image {
+    mask-repeat: no-repeat;
+    mask-size: contain;
+}
+
+#top-left-screen .mask-image {
+    mask-image: url('../../static/frames/Screen_4_mask.png');
+}
+
+#top-mid-screen .mask-image {
+    mask-image: url('../../static/frames/Screen_3_mask.png');
+}
+
+#helper-screen .mask-image {
+    mask-image: url('../../static/frames/Screen_2_mask.png');
+}
+
+#main-screen .mask-image {
+    mask-image: url('../../static/frames/Screen_1_mask.png');
+}

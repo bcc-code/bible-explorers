@@ -126,12 +126,49 @@
                     <div class="fixed inset-0 -z-10 bg-chapter-room bg-cover bg-center">
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
-                    <div class="mx-auto mt-24 flex max-w-[1920px] items-stretch gap-12 px-8 group-data-[view='game']/app:hidden tv:mt-32 tv:px-8">
-                        <div id="big-screen" class="group relative isolate aspect-[16/9] w-3/4" data-view="video">
+                    <div class="mx-auto mt-24 flex justify-center px-8 group-data-[view='game']/app:hidden tv:mt-32">
+                        <div class="relative isolate grid w-[1400px]" style="grid-template-columns: 36% 30% 34%; grid-auto-rows: auto">
+                            <div class="absolute bottom-[20%] right-full w-[18%]">
+                                <img src="./frames/Camera.png" alt="" />
+                            </div>
+                            <div class="relative col-span-1 row-span-1 grid">
+                                <div id="top-left-screen" class="bg-top-left-screen relative mt-auto aspect-[578/471] w-full bg-contain bg-bottom bg-no-repeat">
+                                    <div class="absolute bottom-full left-[15%] -z-10 w-[50%]">
+                                        <img src="./frames/Handle_1.png" alt="" />
+                                    </div>
+                                    <div class="absolute bottom-[calc(100%_-40px)] left-[70%] -z-10 w-[50%]">
+                                        <img src="./frames/Handle_2.png" alt="" />
+                                    </div>
+                                    <div class="mask-image h-full w-full bg-red-200 p-[8%_9%]"></div>
+                                </div>
+                            </div>
+                            <div class="relative col-span-1 row-span-1 grid">
+                                <div id="top-mid-screen" class="bg-top-mid-screen relative mt-auto aspect-[479/547] w-full bg-contain bg-center bg-no-repeat">
+                                    <div class="absolute bottom-full left-1/2 -z-10 w-[60%] -translate-x-1/2">
+                                        <img src="./frames/Handle_3.png" alt="" />
+                                    </div>
+                                    <div class="mask-image h-full w-full bg-red-200 p-[10.2%_10.2%]"></div>
+                                </div>
+                            </div>
+                            <div class="relative col-span-1 row-span-2 grid">
+                                <div id="helper-screen" class="bg-helper-screen relative mt-auto aspect-[559/930] w-full bg-contain bg-center bg-no-repeat">
+                                    <div class="absolute bottom-full left-1/2 -z-10 w-[40%] -translate-x-1/2">
+                                        <img src="./frames/Handle_4.png" alt="" />
+                                    </div>
+                                    <div class="mask-image h-full w-full bg-red-200 p-[9.2%_8.8%]"></div>
+                                </div>
+                            </div>
+                            <div class="relative col-span-2 row-span-1 grid">
+                                <div id="main-screen" class="bg-main-screen relative aspect-[1060/616] w-full bg-contain bg-center bg-no-repeat">
+                                    <div class="mask-image h-full w-full bg-red-200 p-[4.5%_5%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="big-screen" class="group relative isolate hidden aspect-[16/9] w-3/4" data-view="video">
                             <div class="absolute -inset-4 -z-10 bg-big-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
                             <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
                         </div>
-                        <div id="small-screen" class="group relative isolate max-h-[767px] w-1/4" data-view="map">
+                        <div id="small-screen" class="group relative isolate hidden max-h-[767px] w-1/4" data-view="map">
                             <div class="absolute -inset-4 -z-10 bg-small-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
                             <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
                         </div>
