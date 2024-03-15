@@ -87,11 +87,10 @@ export default class DuckGame {
         // Initialize the timer
         this.timerInterval = null
 
-        // Flag to track if 30 seconds have passed
-        this.bibleBoxSpawned = false
-
         // Box instance
+        this.bibleBoxSpawned = false
         this.bibleBox = null
+        this.lastPipeX = 0
 
         // Initialize the round count and rounds completed count
         this.roundCount = 0
@@ -219,6 +218,8 @@ export default class DuckGame {
 
         this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
         this.lastPipeGenerationTime = Date.now()
+
+        this.lastPipeX = x
     }
 
     update() {
@@ -266,19 +267,22 @@ export default class DuckGame {
 
         // Generate pipes at regular intervals
         const currentTime = Date.now()
+
         if (!this.bibleBoxSpawned && currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
             this.generatePipes()
             this.lastPipeGenerationTime = currentTime
         }
 
+        const timeSinceLastPipe = currentTime - this.lastPipeGenerationTime
+        const lastPipeSpeed = this.pipes.length > 0 ? this.pipes[0].speed : 0 // Replace with default speed if no pipes exist
+        const distanceFromLastPipe = this.canvas.width - (this.lastPipeX - lastPipeSpeed * timeSinceLastPipe)
+        const boxSpawnDistance = this.pipeGenerationInterval * lastPipeSpeed
+
         // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
-        if (this.timer >= 5 && !this.bibleBoxSpawned && !this.bibleBox) {
-            const boxX = this.canvas.width
-            const boxY = this.canvas.height / 2 // Place box in the middle of player's height
-            const boxWidth = 64 * this.scaleX
-            const boxHeight = boxWidth
-            const boxSpeed = 3 * this.scaleX
-            this.bibleBox = new BibleBox(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
+        if (!this.bibleBoxSpawned && distanceFromLastPipe >= boxSpawnDistance) {
+            const bibleBoxX = this.canvas.width
+            const bibleBoxY = this.canvas.height / 2 // or any other y-position you want
+            this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, lastPipeSpeed, this.bibleBoxImage, this)
             this.bibleBoxSpawned = true
 
             // Create invisible wall instance after the box is created
@@ -495,10 +499,10 @@ class Player {
 
         const originalWidth = 111
         const originalHeight = 152
-        const aspectRatio = originalWidth / originalHeight
+        const aspectRatio = originalHeight / originalWidth
 
         this.width = 32 * game.scaleX
-        this.height = this.width / aspectRatio
+        this.height = this.width * aspectRatio
 
         // Storing bound functions for later removal
         this.boundHandleKeyDown = this.handleKeyDown.bind(this)
@@ -610,19 +614,26 @@ class Pipe {
 }
 
 class BibleBox {
-    constructor(canvas, x, y, width, height, speed) {
+    constructor(canvas, x, y, speed, bibleBoxImage, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
         this.y = y
-        this.width = width
-        this.height = height
+        this.game = game
+        this.bibleBoxImage = bibleBoxImage
+
         this.speed = speed // Same speed as pipes
+
+        const originalWidth = 1639
+        const originalHeight = 1088
+        const aspectRatio = originalHeight / originalWidth
+
+        this.width = 64 * game.scaleX
+        this.height = this.width * aspectRatio
     }
 
     draw() {
-        this.ctx.fillStyle = 'red' // Change color as needed
-        this.ctx.fillRect(this.x, this.y, this.width, this.height)
+        this.ctx.drawImage(this.bibleBoxImage, this.x, this.y, this.width, this.height)
     }
 
     move() {
