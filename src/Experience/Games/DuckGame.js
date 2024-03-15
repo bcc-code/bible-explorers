@@ -212,7 +212,10 @@ export default class DuckGame {
         const minTopPipeY = this.canvas.height / 6
         const maxTopPipY = this.canvas.height - pipeGap - minTopPipeY
         const x = this.canvas.width
-        const y = Math.random() * (maxTopPipY - minTopPipeY) + minTopPipeY
+
+        const yIncrement = 50
+        let y = Math.random() * (maxTopPipY - minTopPipeY) + minTopPipeY
+        y = Math.floor(y / yIncrement) * yIncrement
 
         this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
         this.lastPipeX = x
