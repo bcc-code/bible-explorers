@@ -113,3 +113,36 @@ window.onload = async () => {
     await configureClient()
     await handleRedirectCallback()
 }
+
+// adjust screens wrapper size
+const dynamicDiv = document.getElementById('screens-wrapper')
+const aspectRatio = 1.5
+const maxVW = 80
+const maxVH = 60
+const minPaddingTopPx = 72
+
+function adjustScreensWrapperSize() {
+    let vw = window.innerWidth * (maxVW / 100)
+    let vh = window.innerHeight * (maxVH / 100)
+
+    // Calculate the width and height based on maintaining the aspect ratio
+    let divWidth = vh * aspectRatio
+    let divHeight = vh
+
+    // If calculated width exceeds max VW, adjust both width and height to maintain aspect ratio
+    if (divWidth > vw) {
+        divWidth = vw
+        divHeight = divWidth / aspectRatio
+    }
+
+    const paddingTop = Math.max(minPaddingTopPx, window.innerHeight * 0.01)
+    // const totalHeight = divHeight + paddingTop
+
+    dynamicDiv.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
+    // dynamicDiv.style.height = `${Math.round(Math.min(totalHeight, window.innerHeight))}px`
+    dynamicDiv.style.paddingTop = `${paddingTop}px`
+}
+
+window.addEventListener('resize', adjustScreensWrapperSize)
+
+adjustScreensWrapperSize()
