@@ -241,6 +241,7 @@ export default class DuckGame {
             this.generatePipes() // Call your existing method to generate a new pipe
         }
     }
+
     update() {
         // Clear only the dirty rectangles
         this.dirtyRects.forEach((rect) => {
@@ -442,20 +443,20 @@ export default class DuckGame {
             }
 
             // Check collision with top pipe
-            if (this.detectCollision(player, topPipe) || this.detectCollision(player, bottomPipe)) {
+            if (this.detectCollision(player.boundingBox, topPipe) || this.detectCollision(player.boundingBox, bottomPipe)) {
                 this.gameOverCallback()
             }
         })
 
         // Check collision with box
-        if (this.bibleBox && this.detectCollision(player, this.bibleBox)) {
+        if (this.bibleBox && this.detectCollision(player.boundingBox, this.bibleBox)) {
             this.playerHasInteractedWithBox = true
             this.winGame()
         }
 
         // Check collision with the invisible wall
 
-        if (this.invisibleWall && this.detectCollision(player, this.invisibleWall)) {
+        if (this.invisibleWall && this.detectCollision(player.boundingBox, this.invisibleWall)) {
             if (!this.playerHasInteractedWithBox) {
                 console.log('Missed the box!')
                 this.gameOverCallback()
@@ -516,6 +517,14 @@ class Player {
         this.width = 32 * game.scaleX
         this.height = this.width * aspectRatio
 
+        // Define the bounding box
+        this.boundingBox = {
+            x: this.x,
+            y: this.y + this.height - this.width,
+            width: this.width,
+            height: this.width,
+        }
+
         // Storing bound functions for later removal
         this.boundHandleKeyDown = this.handleKeyDown.bind(this)
         this.boundHandleKeyUp = this.handleKeyUp.bind(this)
@@ -523,6 +532,12 @@ class Player {
         // Adding event listeners
         document.addEventListener('keydown', this.boundHandleKeyDown)
         document.addEventListener('keyup', this.boundHandleKeyUp)
+    }
+
+    updateBoundingBox() {
+        // Update bounding box position
+        this.boundingBox.x = this.x
+        this.boundingBox.y = this.y + this.height - this.width
     }
 
     draw() {
@@ -543,6 +558,10 @@ class Player {
             this.velocityY = 0 // Stop downward velocity
             this.gameOverCallback() // Notify game over
         }
+
+        // Draw bounding box (for debug purposes)
+        // this.ctx.strokeStyle = 'red' // Set the stroke color to red
+        // this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
 
         // Draw the player
         this.ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height)
@@ -572,6 +591,7 @@ class Player {
             this.jump()
         }
         this.draw()
+        this.updateBoundingBox()
     }
 
     // Call this method when you need to clean up (e.g., player is destroyed, game over, etc.)
@@ -597,14 +617,24 @@ class Pipe {
         const originalHeight = 2000
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 64 * game.scaleX
+        this.width = 48 * game.scaleX
         this.height = this.width * aspectRatio
     }
 
     draw() {
+        // Draw bounding box (for debug purposes)
+        // this.ctx.strokeStyle = 'red' // Set the stroke color to blue
+        // this.ctx.lineWidth = 2 // Set the line width for the rectangle
+
         // Mark the previous pipe position as dirty
         this.game.markDirty(this.x, this.y - this.height, this.width, this.height)
         this.game.markDirty(this.x, this.y + this.gapHeight, this.width, this.height)
+
+        // Draw bounding box for top pipe
+        this.ctx.strokeRect(this.x, this.y - this.height, this.width, this.height)
+
+        // Draw bounding box for bottom pipe
+        this.ctx.strokeRect(this.x, this.y + this.gapHeight, this.width, this.height)
 
         // Draw top pipe
         this.ctx.drawImage(this.pipeTopImage, this.x, this.y - this.height, this.width, this.height)
