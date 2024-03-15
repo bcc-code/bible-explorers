@@ -127,7 +127,7 @@
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
                     <div class="mx-auto flex justify-center px-8 group-data-[view='game']/app:hidden">
-                        <div class="relative isolate grid w-[767px] pt-24 tv:w-[1440px]" style="grid-template-columns: 36% 30% 34%; grid-auto-rows: auto">
+                        <div id="screens-wrapper" class="relative isolate grid aspect-[1440/1040] w-[90vh] min-w-[767px] pt-24" style="grid-template-columns: 36% 30% 34%; grid-auto-rows: auto">
                             <div class="absolute right-full top-0 w-[18%]">
                                 <img src="./frames/Camera.png" alt="" />
                             </div>
@@ -167,6 +167,7 @@
                             <div class="relative col-span-2 row-span-1 grid">
                                 <div id="main-screen" class="relative aspect-[1060/616] w-full bg-main-screen bg-contain bg-center bg-no-repeat">
                                     <div id="main-screen_content" class="mask-image h-full w-full bg-black">
+                                        <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
                                         <!-- p-[4.5%_5%] -->
                                     </div>
                                 </div>
@@ -174,7 +175,6 @@
                         </div>
                         <div id="big-screen" class="group relative isolate hidden aspect-[16/9] w-3/4" data-view="video">
                             <div class="absolute -inset-4 -z-10 bg-big-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
-                            <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
                         </div>
                         <div id="small-screen" class="group relative isolate hidden max-h-[767px] w-1/4" data-view="map">
                             <div class="absolute -inset-4 -z-10 bg-small-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
