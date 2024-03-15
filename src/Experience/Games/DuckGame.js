@@ -176,6 +176,7 @@ export default class DuckGame {
 
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this, this.playerImage)
+        this.playerHasInteractedWithBox = false
 
         // Start the timer
         this.startTimer()
@@ -206,20 +207,17 @@ export default class DuckGame {
         // Generate new pipes only if 30 seconds haven't passed
         if (this.bibleBoxSpawned) return
 
-        const pipeWidth = 64 * this.scaleX
-        const pipeHeight = pipeWidth * 8
+        const pipeGap = this.canvas.height / 3
+        const pipeSpeed = 3 * this.scaleX
 
-        const pipeGap = this.canvas.height / 3 // Gap between top and bottom pipes
-        const minPipeHeight = 100 * this.scaleY // Minimum height of pipes
-        const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
-        const pipeSpeed = 3 * this.scaleX // Speed of pipes
+        const minTopPipeY = this.canvas.height / 6
+        const maxTopPipY = this.canvas.height - pipeGap - minTopPipeY
 
         // Generate new pipes
         const x = this.canvas.width
-        const y = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
-        this.pipes.push(new Pipe(this.canvas, x, y, pipeWidth, pipeHeight, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
+        const y = Math.random() * (maxTopPipY - minTopPipeY) + minTopPipeY
 
-        // Update the last pipe generation time
+        this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
         this.lastPipeGenerationTime = Date.now()
     }
 
@@ -280,7 +278,7 @@ export default class DuckGame {
             const boxWidth = 64 * this.scaleX
             const boxHeight = boxWidth
             const boxSpeed = 3 * this.scaleX
-            this.bibleBox = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
+            this.bibleBox = new BibleBox(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
             this.bibleBoxSpawned = true
 
             // Create invisible wall instance after the box is created
@@ -435,12 +433,17 @@ export default class DuckGame {
 
         // Check collision with box
         if (this.bibleBox && this.detectCollision(player, this.bibleBox)) {
+            this.playerHasInteractedWithBox = true
             this.winGame()
         }
 
         // Check collision with the invisible wall
+
         if (this.invisibleWall && this.detectCollision(player, this.invisibleWall)) {
-            this.gameOverCallback()
+            if (!this.playerHasInteractedWithBox) {
+                console.log('Missed the box!')
+                this.gameOverCallback()
+            }
         }
     }
 
@@ -480,8 +483,6 @@ class Player {
     constructor(canvas, gameOverCallback, game, playerImage) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
-        this.width = 32 * game.scaleX
-        this.height = this.width / 1.33
         this.x = 50 * game.scaleX
         this.y = canvas.height / 2
         this.velocityY = 0
@@ -491,6 +492,13 @@ class Player {
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance
         this.playerImage = playerImage
+
+        const originalWidth = 111
+        const originalHeight = 152
+        const aspectRatio = originalWidth / originalHeight
+
+        this.width = 32 * game.scaleX
+        this.height = this.width / aspectRatio
 
         // Storing bound functions for later removal
         this.boundHandleKeyDown = this.handleKeyDown.bind(this)
@@ -558,18 +566,23 @@ class Player {
 }
 
 class Pipe {
-    constructor(canvas, x, y, width, height, gapHeight, speed, pipeTopImage, pipeBottomImage, game) {
+    constructor(canvas, x, y, gapHeight, speed, pipeTopImage, pipeBottomImage, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
         this.y = y
-        this.width = width
-        this.height = height
         this.gapHeight = gapHeight
         this.speed = speed
         this.pipeTopImage = pipeTopImage
         this.pipeBottomImage = pipeBottomImage
         this.game = game // Reference to the game instance
+
+        const originalWidth = 186
+        const originalHeight = 2000
+        const aspectRatio = originalHeight / originalWidth
+
+        this.width = 64 * game.scaleX
+        this.height = this.width * aspectRatio
     }
 
     draw() {
@@ -596,7 +609,7 @@ class Pipe {
     }
 }
 
-class Box {
+class BibleBox {
     constructor(canvas, x, y, width, height, speed) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
@@ -634,8 +647,8 @@ class InvisibleWall {
 
     draw(ctx) {
         // Draw the wall
-        ctx.fillStyle = 'transparent' // Set color to transparent
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        // ctx.fillStyle = 'transparent' // Set color to transparent
+        // ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 }
 
