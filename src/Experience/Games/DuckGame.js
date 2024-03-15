@@ -23,16 +23,20 @@ export default class DuckGame {
 
         // Load the background image
         this.bgImage = new Image()
-        this.bgImage.src = 'games/duck-game/duck-game-bg.png'
+        this.bgImage.src = 'games/duck-game/Dukk_BG.jpg'
 
         // Load pipe images
         this.pipeTopImage = new Image()
-        this.pipeTopImage.src = 'games/duck-game/top-pipe.png'
+        this.pipeTopImage.src = 'games/duck-game/Dukk_platform.png'
         this.pipeBottomImage = new Image()
-        this.pipeBottomImage.src = 'games/duck-game/bottom-pipe.png'
+        this.pipeBottomImage.src = 'games/duck-game/Dukk_platform.png'
+        this.playerImage = new Image()
+        this.playerImage.src = 'games/duck-game/Dukk_GLITCH.png'
+        this.bibleBoxImage = new Image()
+        this.bibleBoxImage.src = 'games/duck-game/Dukk_box.png'
 
         // Wait for all images to load
-        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage)]).then(() => {
+        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage)]).then(() => {
             // Once the images are loaded, resize the canvas and draw the background
             this.resizeCanvas()
             this.drawBackground()
@@ -84,10 +88,10 @@ export default class DuckGame {
         this.timerInterval = null
 
         // Flag to track if 30 seconds have passed
-        this.boxSpawned = false
+        this.bibleBoxSpawned = false
 
         // Box instance
-        this.box = null
+        this.bibleBox = null
 
         // Initialize the round count and rounds completed count
         this.roundCount = 0
@@ -107,9 +111,6 @@ export default class DuckGame {
         // Calculate scaling factors
         this.scaleX = this.canvas.width / this.baseWidth
         this.scaleY = this.canvas.height / this.baseHeight
-
-        console.log(this.canvas.height)
-        console.log(this.scaleY)
     }
 
     drawBackground() {
@@ -159,10 +160,10 @@ export default class DuckGame {
         this.resetTimer()
 
         // Reset box spawn flag
-        this.boxSpawned = false
+        this.bibleBoxSpawned = false
 
         // Reset box instance
-        this.box = null
+        this.bibleBox = null
 
         // Reset Invisible wall instance
         this.invisibleWall = null
@@ -174,7 +175,7 @@ export default class DuckGame {
         this.canvas.removeEventListener('click', this.startGameClickHandler)
 
         // Reset player position and state
-        this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this)
+        this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this, this.playerImage)
 
         // Start the timer
         this.startTimer()
@@ -203,12 +204,12 @@ export default class DuckGame {
 
     generatePipes() {
         // Generate new pipes only if 30 seconds haven't passed
-        if (this.boxSpawned) return
+        if (this.bibleBoxSpawned) return
 
         const pipeWidth = 64 * this.scaleX
         const pipeHeight = pipeWidth * 8
 
-        const pipeGap = this.canvas.height / 4 // Gap between top and bottom pipes
+        const pipeGap = this.canvas.height / 3 // Gap between top and bottom pipes
         const minPipeHeight = 100 * this.scaleY // Minimum height of pipes
         const maxPipeHeight = this.canvas.height - minPipeHeight - pipeGap // Maximum height of pipes
         const pipeSpeed = 3 * this.scaleX // Speed of pipes
@@ -238,7 +239,7 @@ export default class DuckGame {
         this.drawPipes()
 
         // Draw the invisible wall if it exists and the box has spawned
-        if (this.invisibleWall && this.boxSpawned) {
+        if (this.invisibleWall && this.bibleBoxSpawned) {
             this.invisibleWall.move()
             this.invisibleWall.draw(this.ctx)
         }
@@ -267,31 +268,31 @@ export default class DuckGame {
 
         // Generate pipes at regular intervals
         const currentTime = Date.now()
-        if (!this.boxSpawned && currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
+        if (!this.bibleBoxSpawned && currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
             this.generatePipes()
             this.lastPipeGenerationTime = currentTime
         }
 
         // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
-        if (this.timer >= 30 && !this.boxSpawned && !this.box) {
+        if (this.timer >= 5 && !this.bibleBoxSpawned && !this.bibleBox) {
             const boxX = this.canvas.width
             const boxY = this.canvas.height / 2 // Place box in the middle of player's height
             const boxWidth = 64 * this.scaleX
             const boxHeight = boxWidth
             const boxSpeed = 3 * this.scaleX
-            this.box = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
-            this.boxSpawned = true
+            this.bibleBox = new Box(this.canvas, boxX, boxY, boxWidth, boxHeight, boxSpeed)
+            this.bibleBoxSpawned = true
 
             // Create invisible wall instance after the box is created
-            const wallX = this.box.x + this.box.width // Position the wall just after the box
+            const wallX = this.bibleBox.x + this.bibleBox.width // Position the wall just after the box
             const wallSpeed = 3 * this.scaleX
             this.invisibleWall = new InvisibleWall(this.canvas, wallX, wallSpeed) // Adjust speed as needed
         }
 
         // Move box towards the player if it exists
-        if (this.box) {
-            this.box.move()
-            this.box.draw()
+        if (this.bibleBox) {
+            this.bibleBox.move()
+            this.bibleBox.draw()
         }
 
         this.gameLoop = requestAnimationFrame(this.update.bind(this))
@@ -323,10 +324,10 @@ export default class DuckGame {
         this.stopTimer()
 
         // Stop generating pipes after 30 seconds
-        this.boxSpawned = true
+        this.bibleBoxSpawned = true
 
         // Clear box instance
-        this.box = null
+        this.bibleBox = null
 
         // Draw game over screen
         this.drawGameOverScreen()
@@ -342,8 +343,8 @@ export default class DuckGame {
         this.gameWon = true
         console.log('You win!')
         this.stopTimer()
-        this.boxSpawned = true
-        this.box = null
+        this.bibleBoxSpawned = true
+        this.bibleBox = null
         this.roundCount++
         this.roundsCompleted++ // Increment rounds completed count
         this.drawWinGameScreen()
@@ -433,7 +434,7 @@ export default class DuckGame {
         })
 
         // Check collision with box
-        if (this.box && this.detectCollision(player, this.box)) {
+        if (this.bibleBox && this.detectCollision(player, this.bibleBox)) {
             this.winGame()
         }
 
@@ -476,7 +477,7 @@ export default class DuckGame {
 }
 
 class Player {
-    constructor(canvas, gameOverCallback, game) {
+    constructor(canvas, gameOverCallback, game, playerImage) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.width = 32 * game.scaleX
@@ -489,6 +490,7 @@ class Player {
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance
+        this.playerImage = playerImage
 
         // Storing bound functions for later removal
         this.boundHandleKeyDown = this.handleKeyDown.bind(this)
@@ -519,8 +521,7 @@ class Player {
         }
 
         // Draw the player
-        this.ctx.fillStyle = 'yellow'
-        this.ctx.fillRect(this.x, this.y, this.width, this.height)
+        this.ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height)
 
         // Mark the current player position as dirty
         this.game.markDirty(this.x, this.y, this.width, this.height)
