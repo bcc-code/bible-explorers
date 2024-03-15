@@ -80,6 +80,8 @@ export default class DuckGame {
         // Timer properties
         this.lastPipeGenerationTime = 0
         this.pipeGenerationInterval = 1500
+        this.pipesGeneratedCount = 0
+        this.pipesToWinRound = 5
 
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
@@ -204,22 +206,17 @@ export default class DuckGame {
     }
 
     generatePipes() {
-        // Generate new pipes only if 30 seconds haven't passed
         if (this.bibleBoxSpawned) return
 
         const pipeGap = this.canvas.height / 3
         const pipeSpeed = 3 * this.scaleX
-
         const minTopPipeY = this.canvas.height / 6
         const maxTopPipY = this.canvas.height - pipeGap - minTopPipeY
-
-        // Generate new pipes
         const x = this.canvas.width
         const y = Math.random() * (maxTopPipY - minTopPipeY) + minTopPipeY
 
         this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
         this.lastPipeGenerationTime = Date.now()
-
         this.lastPipeX = x
     }
 
@@ -279,10 +276,9 @@ export default class DuckGame {
         const distanceFromLastPipe = this.canvas.width - (this.lastPipeX - lastPipeSpeed * timeSinceLastPipe)
         const boxSpawnDistance = this.pipeGenerationInterval * lastPipeSpeed
 
-        // If 30 seconds have passed and the box hasn't spawned yet, create and move the box
         if (!this.bibleBoxSpawned && distanceFromLastPipe >= boxSpawnDistance) {
             const bibleBoxX = this.canvas.width
-            const bibleBoxY = this.canvas.height / 2 // or any other y-position you want
+            const bibleBoxY = this.canvas.height / 2
             this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, lastPipeSpeed, this.bibleBoxImage, this)
             this.bibleBoxSpawned = true
 
