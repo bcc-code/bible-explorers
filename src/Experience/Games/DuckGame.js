@@ -77,12 +77,6 @@ export default class DuckGame {
         // Flag to indicate whether the game has started
         this.gameStarted = false
 
-        // Timer properties
-        this.lastPipeGenerationTime = 0
-        this.pipeGenerationInterval = 1500
-        this.pipesGeneratedCount = 0
-        this.pipesToWinRound = 5
-
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
 
@@ -164,6 +158,7 @@ export default class DuckGame {
         this.bibleBoxSpawned = false
 
         // Reset box instance
+
         this.bibleBox = null
         this.lastPipeX = 0
 
@@ -184,6 +179,8 @@ export default class DuckGame {
         this.startTimer()
 
         // Start generating pipes
+        this.pipesGeneratedCount = 0
+        this.pipesToWinRound = 32
         this.generatePipes()
 
         // Start the game loop
@@ -206,7 +203,9 @@ export default class DuckGame {
     }
 
     generatePipes() {
-        if (this.bibleBoxSpawned) return
+        if (this.pipesGeneratedCount >= this.pipesToWinRound) {
+            return // Do not generate more pipes if the target has been reached
+        }
 
         const pipeGap = this.canvas.height / 3
         const pipeSpeed = 3 * this.scaleX
@@ -216,10 +215,32 @@ export default class DuckGame {
         const y = Math.random() * (maxTopPipY - minTopPipeY) + minTopPipeY
 
         this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
-        this.lastPipeGenerationTime = Date.now()
         this.lastPipeX = x
+
+        this.pipesGeneratedCount++
     }
 
+    generatePipesIfNeeded() {
+        // Ensure we haven't already generated the target number of pipes
+        if (this.pipesGeneratedCount >= this.pipesToWinRound) {
+            return
+        }
+
+        // Calculate the distance from the last pipe (if any exist)
+        let distanceFromLastPipe = this.canvas.width // Default to full width if no pipes exist
+        if (this.pipes.length > 0) {
+            const lastPipe = this.pipes[this.pipes.length - 1]
+            distanceFromLastPipe = this.canvas.width - lastPipe.x
+        }
+
+        // Define a minimum distance before generating a new pipe
+        const minDistance = 200 * this.scaleX // Adjust based on your game's difficulty and speed
+
+        // Check if it's time to generate a new pipe
+        if (distanceFromLastPipe >= minDistance) {
+            this.generatePipes() // Call your existing method to generate a new pipe
+        }
+    }
     update() {
         // Clear only the dirty rectangles
         this.dirtyRects.forEach((rect) => {
@@ -234,12 +255,6 @@ export default class DuckGame {
 
         // Draw pipes
         this.drawPipes()
-
-        // Draw the invisible wall if it exists and the box has spawned
-        if (this.invisibleWall && this.bibleBoxSpawned) {
-            this.invisibleWall.move()
-            this.invisibleWall.draw(this.ctx)
-        }
 
         // Draw game over or win game screen
         if (this.gameOver) {
@@ -262,36 +277,31 @@ export default class DuckGame {
 
         // Update and draw pipes
         this.updatePipes()
+        this.generatePipesIfNeeded()
 
-        // Generate pipes at regular intervals
-        const currentTime = Date.now()
-
-        if (!this.bibleBoxSpawned && currentTime - this.lastPipeGenerationTime > this.pipeGenerationInterval) {
-            this.generatePipes()
-            this.lastPipeGenerationTime = currentTime
-        }
-
-        const timeSinceLastPipe = currentTime - this.lastPipeGenerationTime
-        const lastPipeSpeed = this.pipes.length > 0 ? this.pipes[0].speed : 0 // Replace with default speed if no pipes exist
-        const distanceFromLastPipe = this.canvas.width - (this.lastPipeX - lastPipeSpeed * timeSinceLastPipe)
-        const boxSpawnDistance = this.pipeGenerationInterval * lastPipeSpeed
-
-        if (!this.bibleBoxSpawned && distanceFromLastPipe >= boxSpawnDistance) {
-            const bibleBoxX = this.canvas.width
-            const bibleBoxY = this.canvas.height / 2
-            this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, lastPipeSpeed, this.bibleBoxImage, this)
+        // Check if it's time to spawn the bible box and invisible wall
+        if (!this.bibleBoxSpawned && this.pipesGeneratedCount >= this.pipesToWinRound && this.pipes.length > 0) {
+            const lastPipe = this.pipes[this.pipes.length - 1]
+            const distanceBetweenPipes = 200 * this.scaleX // Adjust based on your game's design
+            const bibleBoxX = lastPipe.x + lastPipe.width + distanceBetweenPipes // Spawn after the last pipe at the same distance as between pipes
+            const bibleBoxY = this.canvas.height / 2 // Center vertically or adjust based on your game's design
+            this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, lastPipe.speed, this.bibleBoxImage, this)
             this.bibleBoxSpawned = true
 
-            // Create invisible wall instance after the box is created
-            const wallX = this.bibleBox.x + this.bibleBox.width // Position the wall just after the box
-            const wallSpeed = 3 * this.scaleX
-            this.invisibleWall = new InvisibleWall(this.canvas, wallX, wallSpeed) // Adjust speed as needed
+            // Create invisible wall at the same X position as the bible box for consistency
+            const invisibleWallX = bibleBoxX + 100 * this.scaleX
+            this.invisibleWall = new InvisibleWall(this.canvas, invisibleWallX, lastPipe.speed)
         }
 
-        // Move box towards the player if it exists
-        if (this.bibleBox) {
+        // Then, in your update method or a separate method, handle the movement and drawing of the bible box
+        if (this.bibleBoxSpawned && this.bibleBox) {
             this.bibleBox.move()
             this.bibleBox.draw()
+        }
+
+        if (this.invisibleWall && this.bibleBoxSpawned) {
+            this.invisibleWall.move()
+            this.invisibleWall.draw(this.ctx)
         }
 
         this.bgOffset -= this.bgSpeed
@@ -659,8 +669,9 @@ class InvisibleWall {
     }
 
     draw(ctx) {
+        // only for debug
         // Draw the wall
-        // ctx.fillStyle = 'transparent' // Set color to transparent
+        // ctx.fillStyle = 'red' // Set color to transparent
         // ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 }
