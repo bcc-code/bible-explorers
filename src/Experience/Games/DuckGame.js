@@ -99,6 +99,9 @@ export default class DuckGame {
         // Invisible wall instance
         this.invisibleWall = null
 
+        this.bgOffset = 0
+        this.bgSpeed = 0.5
+
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy.bind(this))
     }
 
@@ -121,15 +124,12 @@ export default class DuckGame {
         // Clear the dirty rectangles array
         this.dirtyRects = []
 
-        // Draw the background image repeatedly on the X-axis
-        const imgWidth = this.bgImage.width
-
         // Calculate the number of repetitions needed to cover the canvas width
-        const numRepetitions = Math.ceil(this.canvas.width / imgWidth)
+        const numRepetitions = Math.ceil(this.canvas.width / this.bgImage.width) + 1
 
         // Draw the background image for each repetition, maintaining full height
         for (let i = 0; i < numRepetitions; i++) {
-            this.ctx.drawImage(this.bgImage, i * imgWidth, 0, imgWidth, this.canvas.height)
+            this.ctx.drawImage(this.bgImage, this.bgOffset + i * this.bgImage.width, 0, this.bgImage.width, this.canvas.height)
         }
     }
 
@@ -163,6 +163,7 @@ export default class DuckGame {
 
         // Reset box instance
         this.bibleBox = null
+        this.lastPipeX = 0
 
         // Reset Invisible wall instance
         this.invisibleWall = null
@@ -295,6 +296,11 @@ export default class DuckGame {
         if (this.bibleBox) {
             this.bibleBox.move()
             this.bibleBox.draw()
+        }
+
+        this.bgOffset -= this.bgSpeed
+        if (this.bgOffset < -this.bgImage.width) {
+            this.bgOffset += this.bgImage.width
         }
 
         this.gameLoop = requestAnimationFrame(this.update.bind(this))
