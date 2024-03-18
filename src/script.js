@@ -118,9 +118,9 @@ window.onload = async () => {
 const dynamicDiv = document.getElementById('screens-wrapper')
 const closedCaption = document.getElementById('closed-caption')
 const aspectRatio = 1.5
-const maxVW = 80
-const maxVH = 60
-const minPaddingTopPx = 48
+const maxVW = 90
+const maxVH = 65
+const minPaddingTopPx = 12
 
 function adjustScreensWrapperSize() {
     let vw = window.innerWidth * (maxVW / 100)
