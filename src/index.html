@@ -20,11 +20,14 @@
         <div id="app" class="group/app fixed inset-0 overflow-hidden">
             <header id="header" class="absolute left-0 top-0 hidden w-full">
                 <div class="flex w-full justify-between p-4 tv:p-8">
-                    <a href="javascript:void(0)" id="home-button" class="z-50 hidden group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block">
+                    <div class="z-50 hidden group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block">
                         <img src="./textures/bible-kids-explorers.svg" alt="" class="h-12 tv:h-16" />
-                    </a>
+                    </div>
                     <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
                     <div class="z-10 flex items-center gap-2 tv:gap-4">
+                        <button id="home-button" class="button-normal hidden group-data-[view='chapter']/app:flex">
+                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#house-solid" fill="currentColor"></use></svg>
+                        </button>
                         <button class="button-normal toggle-music group/audio">
                             <svg class="hidden h-3 w-3 group-[.is-playing]/audio:block tv:h-5 tv:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
                             <svg class="h-3 w-3 group-[.is-playing]/audio:hidden tv:h-5 tv:w-5"><use href="#music-slash-solid" fill="currentColor"></use></svg>
@@ -127,13 +130,12 @@
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
                     <div class="mx-auto flex justify-center px-8 group-data-[view='game']/app:hidden">
-                        <div id="screens-wrapper" class="relative isolate grid border border-green-500" style="grid-template-columns: 38% 30% 32%; grid-auto-rows: auto">
+                        <div id="screens-wrapper" class="relative isolate grid" style="grid-template-columns: 38% 30% 32%; grid-auto-rows: auto">
                             <div class="absolute right-full top-0 w-[18%]">
                                 <img src="./frames/Camera.png" alt="" />
                             </div>
                             <div class="relative col-span-1 row-span-1 grid">
-                                <!-- <div id="top-left-screen" class="relative mt-auto border border-red-500 aspect-[578/471] w-full bg-top-left-screen bg-contain bg-bottom bg-no-repeat"> -->
-                                <div id="top-left-screen" class="relative mt-auto aspect-[4/3] w-full border border-red-500 bg-top-left-screen bg-contain bg-bottom bg-no-repeat">
+                                <div id="top-left-screen" class="relative mt-auto aspect-[4/3] w-full bg-top-left-screen bg-contain bg-bottom bg-no-repeat">
                                     <div class="absolute bottom-full left-[15%] -z-10 w-[50%]">
                                         <img src="./frames/Handle_1.png" alt="" />
                                     </div>
@@ -146,8 +148,7 @@
                                 </div>
                             </div>
                             <div class="relative col-span-1 row-span-1 grid">
-                                <!-- <div id="top-mid-screen" class="relative mt-auto border border-red-500 aspect-[479/547] w-full bg-top-mid-screen bg-contain bg-center bg-no-repeat"> -->
-                                <div id="top-mid-screen" class="relative mt-auto aspect-[3/4] w-full border border-red-500 bg-top-mid-screen bg-contain bg-center bg-no-repeat">
+                                <div id="top-mid-screen" class="relative mt-auto aspect-[3/4] w-full bg-top-mid-screen bg-contain bg-center bg-no-repeat">
                                     <div class="absolute bottom-full left-1/2 -z-10 w-[60%] -translate-x-1/2">
                                         <img src="./frames/Handle_3.png" alt="" />
                                     </div>
@@ -157,8 +158,7 @@
                                 </div>
                             </div>
                             <div class="relative col-span-1 row-span-2 grid">
-                                <!-- <div id="helper-screen" class="relative mt-auto border border-red-500 aspect-[559/930] w-full bg-helper-screen bg-contain bg-center bg-no-repeat"> -->
-                                <div id="helper-screen" class="relative mt-auto aspect-[9/16] w-full border border-red-500 bg-helper-screen bg-contain bg-center bg-no-repeat">
+                                <div id="helper-screen" class="relative mt-auto aspect-[9/16] w-full bg-helper-screen bg-contain bg-center bg-no-repeat">
                                     <div class="absolute bottom-full left-1/2 -z-10 w-[40%] -translate-x-1/2">
                                         <img src="./frames/Handle_4.png" alt="" />
                                     </div>
@@ -168,8 +168,7 @@
                                 </div>
                             </div>
                             <div class="relative col-span-2 row-span-1 grid">
-                                <!-- <div id="main-screen" class="relative aspect-[1060/616] w-full bg-main-screen bg-contain bg-center bg-no-repeat"> -->
-                                <div id="main-screen" class="relative aspect-[16/9] w-full border border-red-500 bg-main-screen bg-contain bg-center bg-no-repeat">
+                                <div id="main-screen" class="relative aspect-[16/9] w-full bg-main-screen bg-contain bg-center bg-no-repeat">
                                     <div id="main-screen_content" class="mask-image h-full w-full bg-black">
                                         <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
                                         <!-- p-[4.5%_5%] -->
