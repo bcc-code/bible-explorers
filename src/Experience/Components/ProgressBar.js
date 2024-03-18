@@ -22,7 +22,7 @@ export default class ProgressBar {
     }
 
     init() {
-        this.htmlEl.innerHTML = ProgressBar.HTML(this.checkpointWidth, this.program)
+        this.htmlEl.querySelector('div').innerHTML = ProgressBar.HTML(this.checkpointWidth, this.program)
         const { passed, checkpoints } = this.getElements()
         this.el = { passed, checkpoints }
 
@@ -64,11 +64,10 @@ export default class ProgressBar {
 
     static HTML(checkpointWidth, program) {
         let generatedHTML = `
-            <div class="percentageBar bg-bke-purple h-1 w-full">
+            <div class="percentageBar bg-bke-purple h-1">
                 <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${checkpointWidth * program.currentCheckpoint}%"></div>
             </div>
-            <div class="flex gap-4 xl:gap-6 tv:gap-8 -mx-6 -mt-6 tv:-mt-8">`
-
+            <div>`
         program.programData.forEach((data, index) => {
             const stepTypeIcon = {
                 video: '#film-solid',
@@ -88,13 +87,13 @@ export default class ProgressBar {
 
             const icon = stepTypeIcon[dominantStepType]
             generatedHTML += `
-                <button class="button-normal duration-300" aria-label="checkpoint" data-index="${index}">
+                <button class="button-normal duration-300 mb-2" aria-label="checkpoint" data-index="${index}">
                     <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="${icon}" fill="currentColor"></use></svg>
                 </button>`
         })
 
         return `${generatedHTML}
-            <button class="button-normal" aria-label="checkpoint">
+            <button class="button-normal mb-0" aria-label="checkpoint">
                 <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#star-solid" fill="currentColor"></use></svg>
             </button>
         </div>`

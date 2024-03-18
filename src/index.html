@@ -23,8 +23,7 @@
                     <div class="z-50 hidden group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block">
                         <img src="./textures/bible-kids-explorers.svg" alt="" class="h-12 tv:h-16" />
                     </div>
-                    <div class="group/progress relative z-10 hidden px-7 pt-7 transition group-data-[view='chapter']/app:block" id="progress-bar"></div>
-                    <div class="z-10 flex items-center gap-2 tv:gap-4">
+                    <div class="z-10 ml-auto flex items-center gap-2 tv:gap-4">
                         <button id="home-button" class="button-normal hidden group-data-[view='chapter']/app:flex">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#house-solid" fill="currentColor"></use></svg>
                         </button>
@@ -184,12 +183,15 @@
                             <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
                         </div>
                     </div>
-                    <div id="closed-caption" class="fixed bottom-4 w-3/4 px-8 group-data-[view='game']/app:hidden tv:bottom-8"></div>
-                    <div id="chapter-navigation" class="x fixed bottom-4 right-4 z-30 flex gap-4 tv:bottom-8">
-                        <button class="button-normal" id="prev-step">
+                    <div id="closed-caption" class="fixed bottom-4 left-1/2 w-3/4 -translate-x-1/2 group-data-[view='game']/app:hidden"></div>
+                    <div id="progress-bar" class="group/progress group-data-[view='game']/app:hidden">
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2"></div>
+                    </div>
+                    <div id="chapter-navigation" class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4">
+                        <button class="button-normal pointer-events-auto" id="prev-step">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-normal shadow-border" id="next-step">
+                        <button class="button-normal pointer-events-auto shadow-border" id="next-step">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
