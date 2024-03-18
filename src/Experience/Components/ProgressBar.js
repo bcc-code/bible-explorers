@@ -51,8 +51,15 @@ export default class ProgressBar {
     }
 
     handleCheckpointClick = (event) => {
-        const clickedCheckpoint = event.currentTarget.getAttribute('data-index')
-        this.program.goToCheckpoint(clickedCheckpoint)
+        const clickedCheckpointIndex = parseInt(event.currentTarget.getAttribute('data-index'))
+
+        // Update the program's current checkpoint
+        if (this.program.currentCheckpoint !== clickedCheckpointIndex) {
+            this.program.goToCheckpoint(clickedCheckpointIndex)
+
+            // Refresh the UI to reflect the change
+            this.refresh()
+        }
     }
 
     getElements() {
@@ -87,14 +94,14 @@ export default class ProgressBar {
 
             const icon = stepTypeIcon[dominantStepType]
             generatedHTML += `
-                <button class="button-cube button-cube-default duration-300 mb-2 grid" aria-label="checkpoint" data-index="${index}">
-                    <svg class="h-4 w-4"><use href="${icon}" fill="currentColor"></use></svg>
+                <button class="button-circle button-circle-default duration-300 mb-2 grid" aria-label="checkpoint" data-index="${index}">
+                    <svg class="h-3 w-3"><use href="${icon}" fill="currentColor"></use></svg>
                 </button>`
         })
 
         return `${generatedHTML}
-            <button class="button-cube button-cube-default mb-0 grid" aria-label="checkpoint">
-                <svg class="h-4 w-4"><use href="#star-solid" fill="currentColor"></use></svg>
+            <button class="button-circle button-circle-default mb-0 grid" aria-label="checkpoint">
+                <svg class="h-3 w-3"><use href="#star-solid" fill="currentColor"></use></svg>
             </button>
         </div>`
     }

@@ -30,38 +30,27 @@
 
 }
 
-[currentCheckpoint] {
-    @apply shadow-border;
-}
 
-#app {
-
-    #toggle-music,
-    #toggle-settings {
-        display: grid;
-    }
-
-}
-
-#app[data-view="lobby"] {
-    #toggle-languages {
-        display: grid;
-    }
-}
 
 #app[data-view="lobby"],
 #app[data-view="age-category"] {
-    #login-button {
-        display: grid;
-    }
 
-    #logout-button {
-        display: grid;
+    #home-button,
+    #toggle-settings {
+        display: none;
     }
 }
 
 
-#app[data-view="chapter"] {
+#app[data-view="chapter"],
+#app[data-view="task-description"] {
+
+    #logout-button,
+    #login-button,
+    #toggle-languages {
+        display: none;
+    }
+
     #home-button {
         display: grid;
     }
@@ -69,6 +58,10 @@
 
 #app[data-view="game"] {
 
+    #home-button,
+    #logout-button,
+    #login-button,
+    #toggle-languages,
     #toggle-music,
     #toggle-settings {
         display: none;
@@ -229,7 +222,7 @@ body.bcc_member {
 
 .button-cube {
     position: relative;
-    display: none;
+    display: grid;
     place-content: center;
     height: 48px;
     width: 48px;
@@ -259,8 +252,11 @@ body.bcc_member {
     background-repeat: no-repeat;
     background-size: contain;
     pointer-events: auto;
-
     cursor: pointer;
+
+    &[currentCheckpoint] {
+        background-image: url('../../static/interface/B_circle_action.png');
+    }
 
     &:hover {
         background-image: url('../../static/interface/B_circle_action.png');
