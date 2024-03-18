@@ -218,6 +218,17 @@ body.bcc_member {
     mask-image: url('../../static/frames/Screen_1_mask.png');
 }
 
+#videos-container .video-js .vjs-control-bar {
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 4%;
+    height: 4.5em;
+}
+
+#videos-container .video-js .vjs-tech {
+    padding: 2%;
+}
+
 // Buttons
 
 .button-cube {
