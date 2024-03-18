@@ -71,7 +71,7 @@ export default class GameDescription {
         instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
     }
 
     startGame() {
@@ -122,7 +122,7 @@ export default class GameDescription {
         document.querySelector('#task-container')?.remove()
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

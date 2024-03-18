@@ -84,7 +84,7 @@ export default class CodeUnlock {
 
         instance.experience.interface.gameContainer.append(unlockScreen)
 
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
 
         instance.el = {
@@ -164,7 +164,7 @@ export default class CodeUnlock {
                 spread: 160,
             })
 
-            instance.experience.navigation.next.className = 'button-normal less-focused'
+            instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
             instance.experience.navigation.next.innerHTML = instance.experience.icons.next
         } else {
             instance.data.fails++
@@ -202,7 +202,7 @@ export default class CodeUnlock {
 
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

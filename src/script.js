@@ -116,6 +116,7 @@ window.onload = async () => {
 
 // adjust screens wrapper size
 const dynamicDiv = document.getElementById('screens-wrapper')
+const closedCaption = document.getElementById('closed-caption')
 const aspectRatio = 1.5
 const maxVW = 80
 const maxVH = 60
@@ -139,7 +140,8 @@ function adjustScreensWrapperSize() {
     // const totalHeight = divHeight + paddingTop
 
     dynamicDiv.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
-    // dynamicDiv.style.height = `${Math.round(Math.min(totalHeight, window.innerHeight))}px`
+    closedCaption.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
+
     dynamicDiv.style.paddingTop = `${paddingTop}px`
 }
 

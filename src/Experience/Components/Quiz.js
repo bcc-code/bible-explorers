@@ -25,7 +25,7 @@ export default class Quiz {
         instance.questions = instance.program.getCurrentStepData().quiz
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
 
         instance.experience.setAppView('game')
 
@@ -48,7 +48,7 @@ export default class Quiz {
                                     <button class="button-normal" disabled id="next-question">
                                         <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                                     </button>
-                                    <button type="submit" id="submit-quiz" class="button-normal shadow-border ml-auto" disabled>
+                                    <button type="submit" id="submit-quiz" class="button-normal shadow-border pointer-events-auto ml-auto" disabled>
                                         ${_s.task.submit}
                                     </button>
                                 </div>`
@@ -316,7 +316,7 @@ export default class Quiz {
 
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }

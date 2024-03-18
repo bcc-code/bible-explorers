@@ -37,7 +37,7 @@ export default class MessageWithSupportingScreens {
     }
 
     setHtml(caption, character) {
-        const closedCaption = _gl.elementFromHtml(`<div id="iris-cc" class="text-xl xl:text-2xl tv:text-3xl text-center mx-auto max-w-screen-lg">${caption}</div>`)
+        const closedCaption = _gl.elementFromHtml(`<div id="iris-cc" class="grid aspect-[2495/439] place-content-center bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[4.5%_4%_2.5%_4%] ">${caption}</div>`)
         instance.experience.interface.closedCaption.append(closedCaption)
 
         if (instance.data.character == 'glitch') {

@@ -29,7 +29,7 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
@@ -128,7 +128,7 @@ export default class TrueFalsQuiz {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = completionHTML
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 
@@ -188,7 +188,7 @@ export default class TrueFalsQuiz {
         document.querySelector('#true-false-quiz')?.remove()
 
         instance.experience.setAppView('chapter')
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         // Reset any other states or data as needed

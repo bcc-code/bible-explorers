@@ -54,8 +54,8 @@ export default class Experience {
         }
 
         this.interface = {
-            bigScreen: document.querySelector('#big-screen'),
-            smallScreen: document.querySelector('#small-screen'),
+            bigScreen: document.querySelector('#main-screen_content'),
+            smallScreen: document.querySelector('#helper-screen_content'),
             closedCaption: document.querySelector('#closed-caption'),
             gameContainer: document.querySelector('#games-wrapper'),
             tasksDescription: document.querySelector('#tasks-description'),

@@ -119,7 +119,7 @@
                         <button class="button-normal" id="back-to-age-category">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-normal shadow-border" id="start-chapter">
+                        <button class="button-normal pointer-events-auto shadow-border" id="start-chapter">
                             <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
@@ -161,7 +161,7 @@
                                     <div class="absolute bottom-full left-1/2 -z-10 w-[40%] -translate-x-1/2">
                                         <img src="./frames/Handle_4.png" alt="" />
                                     </div>
-                                    <div id="helper-screen_content" class="mask-image h-full w-full bg-black">
+                                    <div id="helper-screen_content" class="mask-image h-full w-full bg-black p-[9.2%_8.8%]">
                                         <!-- p-[9.2%_8.8%] -->
                                     </div>
                                 </div>
@@ -175,15 +175,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="big-screen" class="group relative isolate hidden aspect-[16/9] w-3/4" data-view="video">
-                            <div class="absolute -inset-4 -z-10 bg-big-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
-                        </div>
-                        <div id="small-screen" class="group relative isolate hidden max-h-[767px] w-1/4" data-view="map">
-                            <div class="absolute -inset-4 -z-10 bg-small-screen-frame bg-[length:100%_100%] bg-no-repeat"></div>
-                            <div class="absolute inset-0 hidden bg-map-texture bg-[length:100%_100%] bg-no-repeat group-data-[view='map']:block"></div>
-                        </div>
                     </div>
-                    <div id="closed-caption" class="fixed bottom-4 left-1/2 w-3/4 -translate-x-1/2 group-data-[view='game']/app:hidden"></div>
+                    <div id="closed-caption" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-center text-[1.15vw] group-data-[view='game']/app:hidden"></div>
                     <div id="progress-bar" class="group/progress group-data-[view='game']/app:hidden">
                         <div class="absolute right-4 top-1/2 -translate-y-1/2"></div>
                     </div>
@@ -215,7 +208,7 @@
                 </div>
             </aside>
 
-            <div id="copyright" class="absolute bottom-1 left-1 text-sm group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden"></div>
+            <div id="copyright" class="absolute bottom-1 left-1 hidden text-xs opacity-50 group-data-[view='lobby']/app:block"></div>
         </div>
 
         <script src="https://unpkg.com/@rive-app/canvas@1.0.102/rive.js"></script>

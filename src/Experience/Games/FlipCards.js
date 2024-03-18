@@ -62,7 +62,7 @@ export default class FlipCards {
 
         instance.experience.interface.smallScreen.setAttribute('data-view', 'game-intro')
 
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
     }
 
@@ -149,7 +149,7 @@ export default class FlipCards {
         instance.experience.interface.gameContainer.append(game)
 
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
     }
 
     useCorrectAssetsSrcFlipCards() {
@@ -232,7 +232,7 @@ export default class FlipCards {
     destroyFlipCards() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
         instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)

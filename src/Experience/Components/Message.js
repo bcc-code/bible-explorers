@@ -38,7 +38,7 @@ export default class Message {
     }
 
     setHtml(text, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc" class="text-xl xl:text-2xl tv:text-3xl text-center mx-auto max-w-screen-lg">${text}</div>`)
+        const message = _gl.elementFromHtml(`<div id="iris-cc" class="grid place-content-center w-full aspect-[2495/439] bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[4.5%_4%_2.5%_4%] ">${text}</div>`)
         instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {
@@ -50,8 +50,8 @@ export default class Message {
             // instance.experience.navigation.next.disabled = true
             const openQuestion = _gl.elementFromHtml(
                 `<div id="open-question">
-              <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
-        </div`
+                    <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                </div`
             )
             document.querySelector('#chapter-dialogue').append(openQuestion)
 

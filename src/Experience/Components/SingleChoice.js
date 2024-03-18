@@ -23,7 +23,7 @@ export default class SingleChoice {
 
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
@@ -58,7 +58,7 @@ export default class SingleChoice {
             console.log('Correct answer!')
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
-            instance.experience.navigation.next.className = 'button-normal shadow-border'
+            instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
             instance.experience.navigation.next.innerHTML = instance.experience.icons.next
 
             // Disable further clicks on options
@@ -82,7 +82,7 @@ export default class SingleChoice {
         document.querySelector('#single-choice')?.remove()
 
         instance.experience.setAppView('chapter')
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
         instance.experience.navigation.next.innerHTML = instance.experience.icons.next
     }
 }
