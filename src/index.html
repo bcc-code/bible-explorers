@@ -23,18 +23,18 @@
                     <div class="z-50 hidden group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block">
                         <img src="./textures/bible-kids-explorers.svg" alt="" class="h-12 tv:h-16" />
                     </div>
-                    <div class="z-10 ml-auto flex items-center gap-2 tv:gap-4">
-                        <button id="home-button" class="button-normal hidden group-data-[view='chapter']/app:flex">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#house-solid" fill="currentColor"></use></svg>
+                    <div class="z-10 ml-auto flex items-center">
+                        <button id="home-button" class="button-cube button-cube-default">
+                            <svg class="h-4 w-4"><use href="#house-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-normal toggle-music group/audio">
-                            <svg class="hidden h-3 w-3 group-[.is-playing]/audio:block tv:h-5 tv:w-5"><use href="#music-solid" fill="currentColor"></use></svg>
-                            <svg class="h-3 w-3 group-[.is-playing]/audio:hidden tv:h-5 tv:w-5"><use href="#music-slash-solid" fill="currentColor"></use></svg>
+                        <button id="toggle-music" class="button-cube button-cube-default group/audio">
+                            <svg class="hidden h-4 w-4 group-[.is-playing]/audio:block"><use href="#music-solid" fill="currentColor"></use></svg>
+                            <svg class="h-4 w-4 group-[.is-playing]/audio:hidden"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="group/settings relative">
-                            <button class="button-normal toggle-settings group-[.dropdown-is-visible]/settings:shadow-border" aria-pressed="false">
-                                <svg class="pointer-events-none h-3 w-3 group-[.dropdown-is-visible]/settings:hidden tv:h-5 tv:w-5"><use href="#gear-solid" fill="currentColor"></use></svg>
-                                <svg class="pointer-events-none hidden h-3 w-3 group-[.dropdown-is-visible]/settings:block tv:h-5 tv:w-5"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                            <button id="toggle-settings" class="button-cube button-cube-default" aria-pressed="false">
+                                <svg class="pointer-events-none h-4 w-4 group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
+                                <svg class="pointer-events-none hidden h-4 w-4 group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                             </button>
                             <div class="absolute right-0 mt-4 hidden w-60 bg-bke-purple p-2 shadow-focused group-[.dropdown-is-visible]/settings:block xl:p-4">
                                 <section id="app-video-quality" class="group/video-quality">
@@ -67,24 +67,19 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="group/languages relative hidden group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block" id="app-language">
-                            <button class="button-normal toggle-languages group-[.dropdown-is-visible]/languages:shadow-border" aria-pressed="false">
-                                <svg class="pointer-events-none h-3 w-3 tv:h-5 tv:w-5"><use href="#globe-solid" fill="currentColor"></use></svg>
-                                <span class="pointer-events-none">English</span>
+                        <div class="group/languages relative" id="app-language">
+                            <button id="toggle-languages" class="button-cube button-cube-default" aria-pressed="false">
+                                <svg class="pointer-events-none h-4 w-4"><use href="#globe-solid" fill="currentColor"></use></svg>
                             </button>
                             <div class="absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-2 shadow-focused group-[.dropdown-is-visible]/languages:block xl:p-4">
                                 <ul></ul>
                             </div>
                         </div>
-                        <button id="logout-button" class="button-normal hidden disabled:!hidden group-data-[view='age-category']/app:flex group-data-[view='lobby']/app:flex" disabled="true">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
-                            <div class="leading-tight">
-                                <span aria-label="User"></span>
-                            </div>
+                        <button id="logout-button" class="button-cube button-cube-default disabled:!hidden" disabled="true">
+                            <svg class="h-4 w-4"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="login-button" class="button-normal hidden disabled:!hidden group-data-[view='age-category']/app:flex group-data-[view='lobby']/app:flex" disabled="true">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
-                            <span>Log in</span>
+                        <button id="login-button" class="button-cube button-cube-default disabled:!hidden" disabled="true">
+                            <svg class="h-4 w-4"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </div>
@@ -115,13 +110,9 @@
                         </div>
                         <div id="chapters-description" class="h-[70vh] w-1/2 py-0.5"></div>
                     </div>
-                    <div class="fixed bottom-4 right-4 flex gap-4 tv:bottom-8 tv:right-8">
-                        <button class="button-normal" id="back-to-age-category">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button class="button-normal pointer-events-auto shadow-border" id="start-chapter">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
-                        </button>
+                    <div class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4">
+                        <button class="button-arrow button-arrow-default scale-x-[-1]" id="back-to-age-category"></button>
+                        <button class="button-arrow button-arrow-default" id="start-chapter"></button>
                     </div>
                 </div>
                 <div id="chapter-wrapper" class="isolate hidden group-data-[view='chapter']/app:block group-data-[view='game']/app:block group-data-[view='task-description']/app:block">
@@ -169,7 +160,7 @@
                             <div class="relative col-span-2 row-span-1 grid">
                                 <div id="main-screen" class="relative aspect-[16/9] w-full bg-main-screen bg-contain bg-center bg-no-repeat">
                                     <div id="main-screen_content" class="mask-image h-full w-full bg-black">
-                                        <div class="*:hidden *:h-full *:w-full" id="videos-container"></div>
+                                        <div class="p-[2%] *:hidden *:h-full *:w-full" id="videos-container"></div>
                                         <!-- p-[4.5%_5%] -->
                                     </div>
                                 </div>
@@ -181,12 +172,8 @@
                         <div class="absolute right-4 top-1/2 -translate-y-1/2"></div>
                     </div>
                     <div id="chapter-navigation" class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4">
-                        <button class="button-normal pointer-events-auto" id="prev-step">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button class="button-normal pointer-events-auto shadow-border" id="next-step">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
-                        </button>
+                        <button class="button-arrow button-arrow-default scale-x-[-1]" id="prev-step"></button>
+                        <button class="button-arrow button-arrow-default" id="next-step"></button>
                     </div>
                     <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
                     <div id="tasks-description" class="fixed inset-0 hidden group-data-[view='task-description']/app:block"></div>

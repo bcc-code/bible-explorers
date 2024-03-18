@@ -55,8 +55,8 @@ export default class TaskDescriptionWithCalculatorScreen {
 
         instance.experience.interface.tasksDescription.append(container)
 
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
     }
 
     destroy() {
@@ -64,7 +64,7 @@ export default class TaskDescriptionWithCalculatorScreen {
         instance.experience.setAppView('chapter')
         instance.calculator.remove()
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
     }
 }

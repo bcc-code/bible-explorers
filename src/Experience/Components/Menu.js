@@ -3,6 +3,7 @@ import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _lang from '../Utils/Lang.js'
 import _appInsights from '../Utils/AppInsights.js'
+import { doc } from 'prettier'
 
 let instance = null
 
@@ -33,7 +34,7 @@ export default class Menu {
         const selectLang = document.querySelector('#app-language')
         const selectLangCurrent = selectLang.querySelector('button span')
         const selectLangDropdown = selectLang.querySelector('ul')
-        selectLangCurrent.innerText = _lang.getLanguageName()
+        // selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
         selectLangDropdown.querySelectorAll('li').forEach((item) => {
             item.className = 'px-2 py-1 xl:py-2 xl:px-3 text-base xl:text-xl font-medium cursor-pointer transition hover:bg-white/20'
@@ -75,20 +76,18 @@ export default class Menu {
     eventListeners() {
         let isToggled = false
 
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('toggle-settings')) {
-                isToggled = !isToggled
-                e.target.classList.toggle('active')
-                e.target.setAttribute('aria-pressed', isToggled)
-                e.target.parentElement.classList.toggle('dropdown-is-visible')
-            }
+        document.querySelector('#toggle-settings').addEventListener('click', (e) => {
+            isToggled = !isToggled
+            e.target.classList.toggle('active')
+            e.target.setAttribute('aria-pressed', isToggled)
+            e.target.parentElement.classList.toggle('dropdown-is-visible')
+        })
 
-            if (e.target.classList.contains('toggle-languages')) {
-                isToggled = !isToggled
-                e.target.classList.toggle('active')
-                e.target.setAttribute('aria-pressed', isToggled)
-                e.target.parentElement.classList.toggle('dropdown-is-visible')
-            }
+        document.querySelector('#toggle-languages').addEventListener('click', (e) => {
+            isToggled = !isToggled
+            e.target.classList.toggle('active')
+            e.target.setAttribute('aria-pressed', isToggled)
+            e.target.parentElement.classList.toggle('dropdown-is-visible')
         })
 
         const languageItems = document.querySelectorAll('#app-language li')
@@ -148,7 +147,7 @@ export default class Menu {
             loginBtn.disabled = instance.logInLogOut.login
             logoutBtn.disabled = instance.logInLogOut.logout
 
-            loginUser.innerText = instance.experience.auth0.userData?.name || ''
+            // loginUser.innerText = instance.experience.auth0.userData?.name || ''
         }
     }
 

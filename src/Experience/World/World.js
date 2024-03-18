@@ -106,7 +106,7 @@ export default class World {
         // Set chapter content/cards
         instance.setChapters()
 
-        instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
+        // instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
     }
 
     setCategories() {

@@ -24,8 +24,8 @@ export default class Quiz {
         instance.openQuestions = 0
         instance.questions = instance.program.getCurrentStepData().quiz
 
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
 
         instance.experience.setAppView('game')
 
@@ -316,7 +316,7 @@ export default class Quiz {
 
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
     }
 }

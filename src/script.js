@@ -120,7 +120,7 @@ const closedCaption = document.getElementById('closed-caption')
 const aspectRatio = 1.5
 const maxVW = 80
 const maxVH = 60
-const minPaddingTopPx = 72
+const minPaddingTopPx = 48
 
 function adjustScreensWrapperSize() {
     let vw = window.innerWidth * (maxVW / 100)

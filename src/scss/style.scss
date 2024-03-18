@@ -30,26 +30,47 @@
 
 }
 
-[aria-pressed="true"],
 [currentCheckpoint] {
     @apply shadow-border;
 }
 
-#app[data-view="chapter"],
-#app[data-view="game"] {
+#app {
 
-    #home-button,
-    .toggle-music,
-    .toggle-settings:not(.active),
-    #progress-bar {
-        @apply opacity-40 hover:opacity-100;
+    #toggle-music,
+    #toggle-settings {
+        display: grid;
+    }
+
+}
+
+#app[data-view="lobby"] {
+    #toggle-languages {
+        display: grid;
+    }
+}
+
+#app[data-view="lobby"],
+#app[data-view="age-category"] {
+    #login-button {
+        display: grid;
+    }
+
+    #logout-button {
+        display: grid;
+    }
+}
+
+
+#app[data-view="chapter"] {
+    #home-button {
+        display: grid;
     }
 }
 
 #app[data-view="game"] {
 
-    #music-toggle,
-    #open-menu {
+    #toggle-music,
+    #toggle-settings {
         display: none;
     }
 }
@@ -202,4 +223,92 @@ body.bcc_member {
 
 #main-screen .mask-image {
     mask-image: url('../../static/frames/Screen_1_mask.png');
+}
+
+// Buttons
+
+.button-cube {
+    position: relative;
+    display: none;
+    place-content: center;
+    height: 48px;
+    width: 48px;
+    background-image: url('../../static/interface/B_cube_active.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: auto;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url('../../static/interface/B_cube_action.png');
+    }
+
+    &:disabled {
+        background-image: url('../../static/interface/B_cube_innactive.png');
+        cursor: not-allowed;
+    }
+}
+
+.button-circle {
+    position: relative;
+    display: grid;
+    place-content: center;
+    height: 48px;
+    width: 48px;
+    background-image: url('../../static/interface/B_circle_active.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: auto;
+
+    cursor: pointer;
+
+    &:hover {
+        background-image: url('../../static/interface/B_circle_action.png');
+    }
+
+    &:disabled {
+        background-image: url('../../static/interface/B_circle_innactive.png');
+        cursor: not-allowed;
+    }
+}
+
+.button-arrow {
+    position: relative;
+    display: grid;
+    place-content: center;
+    aspect-ratio: 293/201;
+    height: 48px;
+    background-image: url('../../static/interface/arrow_active.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: auto;
+    cursor: pointer;
+
+
+    span {
+        position: absolute;
+        bottom: -0.5em;
+        right: 50%;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
+    &.skip-video {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+    }
+
+    &:hover {
+        background-image: url('../../static/interface/arrow_action.png');
+
+        span {
+            color: var(--clr-secondary)
+        }
+    }
+
+    &:disabled {
+        background-image: url('../../static/interface/arrow_innactive.png');
+        cursor: not-allowed;
+    }
 }

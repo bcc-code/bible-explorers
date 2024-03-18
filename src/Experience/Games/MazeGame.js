@@ -88,8 +88,8 @@ export default class MazeGame {
         instance.experience.interface.gameContainer.append(game)
         document.querySelector('#game-popup').style.display = 'none'
 
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused pointer-events-auto'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
     }
 
     setEventListeners() {
@@ -561,9 +561,9 @@ export default class MazeGame {
             document.querySelector('#game-popup h1').textContent = _s.miniGames.completed.title
             document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound
 
-            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-normal shadow-border pointer-events-auto'
-            instance.experience.navigation.next.className = 'button-normal shadow-border pointer-events-auto'
-            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-normal'
+
+            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
 
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1
         }
@@ -607,8 +607,8 @@ export default class MazeGame {
         instance.options.gameState = null
         instance.experience.gameIsOn = false
 
-        instance.experience.navigation.next.classList.add('focused')
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }

@@ -38,12 +38,12 @@ export default class Message {
     }
 
     setHtml(text, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc" class="grid place-content-center w-full aspect-[2495/439] bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[4.5%_4%_2.5%_4%] ">${text}</div>`)
+        const message = _gl.elementFromHtml(`<div id="iris-cc" class="grid place-content-center w-full aspect-[2495/439] bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[5%_4%_2.5%_4%]"><div class="absolute left-1/2 -translate-x-1/2 top-[10%] text-[1.5vw] text-bke-orange uppercase">${character} </div>${text}</div>`)
         instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {
             const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
-            document.querySelector('#chapter-dialogue').append(glitch)
+            document.querySelector('#closed-caption').append(glitch)
         }
 
         if (instance.data.open_question === true) {
@@ -53,7 +53,7 @@ export default class Message {
                     <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
                 </div`
             )
-            document.querySelector('#chapter-dialogue').append(openQuestion)
+            document.querySelector('#closed-caption').append(openQuestion)
 
             const textarea = openQuestion.querySelector('textarea')
             textarea.addEventListener('input', (e) => {

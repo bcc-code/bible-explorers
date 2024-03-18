@@ -22,7 +22,7 @@ export default class Audio {
         }
 
         audio.notes = []
-        audio.btn = document.querySelector('.toggle-music')
+        audio.btn = document.querySelector('#toggle-music')
         audio.musicRange = document.getElementById('musicRange')
         audio.fadeSteps = 15
         audio.slideValueConversion = 3.33

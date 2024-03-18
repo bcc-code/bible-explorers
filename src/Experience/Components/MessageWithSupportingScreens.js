@@ -37,12 +37,13 @@ export default class MessageWithSupportingScreens {
     }
 
     setHtml(caption, character) {
-        const closedCaption = _gl.elementFromHtml(`<div id="iris-cc" class="grid aspect-[2495/439] place-content-center bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[4.5%_4%_2.5%_4%] ">${caption}</div>`)
+        const closedCaption = _gl.elementFromHtml(`<div id="iris-cc" class="grid place-content-center w-full aspect-[2495/439] bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[5%_4%_2.5%_4%]"><div class="absolute left-1/2 -translate-x-1/2 top-[10%] text-[1.5vw] text-bke-orange uppercase">${character} </div>${caption}</div>`)
+
         instance.experience.interface.closedCaption.append(closedCaption)
 
         if (instance.data.character == 'glitch') {
             const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
-            document.querySelector('#chapter-dialogue').append(glitch)
+            document.querySelector('#closed-caption').append(glitch)
         }
 
         if (instance.data.right_screen) {
