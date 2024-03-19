@@ -48,7 +48,7 @@ export default class WaitingScreen {
 
         wrapper.append(instance.video, form, nameLabelContainer)
 
-        document.querySelector('#chapter-wrapper').append(wrapper)
+        document.querySelector('#chapter-wrapper').prepend(wrapper)
 
         form.querySelector('button').addEventListener('click', (e) => {
             e.preventDefault()
