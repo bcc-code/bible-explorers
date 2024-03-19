@@ -23,7 +23,7 @@ export default class Congrats {
             </div>
         `)
 
-        instance.experience.interface.bigScreen.append(summary)
+        instance.experience.interface.mainScreen.append(summary)
     }
 
     toggleBibleCardsReminder() {
@@ -37,7 +37,7 @@ export default class Congrats {
             </div>
         `)
 
-        instance.experience.interface.bigScreen.append(bibleCards)
+        instance.experience.interface.mainScreen.append(bibleCards)
         instance.experience.navigation.prev.disabled = true
     }
 
@@ -85,9 +85,9 @@ export default class Congrats {
             </div>`
         )
 
-        instance.experience.interface.bigScreen.append(chapterCongrats)
-        instance.experience.interface.smallScreen.append(credits)
-        instance.experience.interface.smallScreen.setAttribute('data-view', '')
+        instance.experience.interface.mainScreen.append(chapterCongrats)
+        instance.experience.interface.helperScreen.append(credits)
+        instance.experience.interface.helperScreen.setAttribute('data-view', '')
     }
 
     finishChapter() {

@@ -47,13 +47,13 @@ export default class MessageWithSupportingScreens {
         }
 
         if (instance.data.right_screen) {
-            const image = _gl.elementFromHtml(`<img id="interactive-image" src="${instance.data.right_screen}" />`)
-            instance.experience.interface.smallScreen.append(image)
-
-            instance.experience.interface.smallScreen.setAttribute('data-view', '')
-
             if (instance.data.with_lever) {
+                const image = _gl.elementFromHtml(`<img id="interactive-image" src="${instance.data.right_screen}" />`)
+
                 document.getElementById('interactive-image').addEventListener('click', this.leverClickEvent)
+            } else {
+                const image = _gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`)
+                instance.experience.interface.helperScreen.append(image)
             }
         }
     }
@@ -71,7 +71,7 @@ export default class MessageWithSupportingScreens {
         if (interactiveImage) {
             interactiveImage.removeEventListener('click', this.leverClickEvent)
             interactiveImage.remove()
-            instance.experience.interface.smallScreen.setAttribute('data-view', 'map')
+            instance.experience.interface.helperScreen.setAttribute('data-view', 'map')
         }
 
         instance.video?.defocus()

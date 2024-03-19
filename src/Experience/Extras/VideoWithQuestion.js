@@ -41,8 +41,8 @@ export default class VideoWithQuestion {
             `
         )
 
-        instance.experience.interface.smallScreen.append(content)
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-description')
+        instance.experience.interface.helperScreen.append(content)
+        instance.experience.interface.helperScreen.setAttribute('data-view', 'game-description')
 
         const submitQuestion = content.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {

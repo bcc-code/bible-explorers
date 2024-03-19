@@ -48,14 +48,9 @@ export default class Experience {
             container: document.querySelector('#chapter-navigation'),
         }
 
-        this.icons = {
-            prev: `<svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>`,
-            next: `<svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>`,
-        }
-
         this.interface = {
-            bigScreen: document.querySelector('#main-screen_content'),
-            smallScreen: document.querySelector('#helper-screen_content'),
+            mainScreen: document.querySelector('#main-screen_content'),
+            helperScreen: document.querySelector('#helper-screen_content'),
             closedCaption: document.querySelector('#closed-caption'),
             gameContainer: document.querySelector('#games-wrapper'),
             tasksDescription: document.querySelector('#tasks-description'),

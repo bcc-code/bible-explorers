@@ -57,10 +57,10 @@ export default class FlipCards {
 
         taskContent.append(startGame)
 
-        instance.experience.interface.bigScreen.append(taskImage)
-        instance.experience.interface.smallScreen.append(taskContent)
+        instance.experience.interface.mainScreen.append(taskImage)
+        instance.experience.interface.helperScreen.append(taskContent)
 
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-intro')
+        instance.experience.interface.helperScreen.setAttribute('data-view', 'game-intro')
 
         instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`

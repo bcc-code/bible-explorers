@@ -20,7 +20,7 @@ export default class WaitingScreen {
         instance.video.load('lobby-video-' + id)
         instance.video.play()
 
-        if (instance.experience.interface.smallScreen.querySelector('#add-names-form')) return
+        if (instance.experience.interface.helperScreen.querySelector('#add-names-form')) return
 
         const wrapper = _gl.elementFromHtml(`<div class="p-2 xl:p-4 tv:p-8 flex flex-col h-full" id="names-form"></div>`)
         const form = _gl.elementFromHtml(
@@ -33,8 +33,8 @@ export default class WaitingScreen {
         const nameLabelContainer = _gl.elementFromHtml('<ul class="mt-4 flex-1 overflow-y-auto" id="names-label"></ul>')
 
         wrapper.append(form, nameLabelContainer)
-        instance.experience.interface.smallScreen.setAttribute('data-view', '')
-        instance.experience.interface.smallScreen.append(wrapper)
+        instance.experience.interface.helperScreen.setAttribute('data-view', '')
+        instance.experience.interface.helperScreen.append(wrapper)
 
         form.querySelector('button').addEventListener('click', (e) => {
             e.preventDefault()
@@ -88,19 +88,19 @@ export default class WaitingScreen {
         instance.video?.defocus()
 
         // Remove form event listeners
-        const form = instance.experience.interface.smallScreen.querySelector('#add-names-form')
+        const form = instance.experience.interface.helperScreen.querySelector('#add-names-form')
         form.querySelector('button').removeEventListener('click', instance.handleFormSubmission)
         form.querySelector('input').removeEventListener('keyup', instance.handleFormSubmission)
 
         // Remove all nameLabel event listeners
-        const removeButtons = instance.experience.interface.smallScreen.querySelectorAll('span')
+        const removeButtons = instance.experience.interface.helperScreen.querySelectorAll('span')
         removeButtons.forEach((removeButton) => {
             removeButton.removeEventListener('click', instance.handleRemoveName)
         })
 
         // Remove all elements appended to smallScreen
-        instance.experience.interface.smallScreen.querySelector('#names-form').remove()
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'map')
+        instance.experience.interface.helperScreen.querySelector('#names-form').remove()
+        instance.experience.interface.helperScreen.setAttribute('data-view', 'map')
 
         instance.program.toggleStep()
     }
