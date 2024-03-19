@@ -98,7 +98,7 @@ export default class DuckGame {
         this.bgOffset = 0
         this.bgSpeed = 0.5
 
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy.bind(this))
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     resizeCanvas() {
@@ -476,26 +476,27 @@ export default class DuckGame {
 
     destroy() {
         // Clear canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
-        // Remove canvas from the DOM
-        this.canvas.parentNode.removeChild(this.canvas)
+        instance.ctx.clearRect(0, 0, instance.canvas.width, instance.canvas.height)
 
         // Stop timer if running
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval)
+        if (instance.timerInterval) {
+            clearInterval(instance.timerInterval)
         }
 
+        // Remove canvas from the DOM
+        instance.canvas.parentNode.removeChild(instance.canvas)
+
         // Reset game loop
-        if (this.gameLoop) {
-            cancelAnimationFrame(this.gameLoop)
+        if (instance.gameLoop) {
+            cancelAnimationFrame(instance.gameLoop)
         }
 
         // Remove click event listener for starting the game
-        this.canvas.removeEventListener('click', this.startGameClickHandler)
-        this.experience.setAppView('chapter')
+        instance.canvas.removeEventListener('click', instance.startGameClickHandler)
 
-        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy.bind(this))
+        instance.experience.setAppView('chapter')
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }
 

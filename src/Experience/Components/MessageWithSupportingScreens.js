@@ -49,8 +49,7 @@ export default class MessageWithSupportingScreens {
         if (instance.data.right_screen) {
             if (instance.data.with_lever) {
                 const image = _gl.elementFromHtml(`<img id="interactive-image" src="${instance.data.right_screen}" />`)
-
-                document.getElementById('interactive-image').addEventListener('click', this.leverClickEvent)
+                image.addEventListener('click', this.leverClickEvent)
             } else {
                 const image = _gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`)
                 instance.experience.interface.helperScreen.append(image)
@@ -76,5 +75,7 @@ export default class MessageWithSupportingScreens {
 
         instance.video?.defocus()
         document.querySelector('#iris-cc')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }
