@@ -62,7 +62,8 @@ export default class WaitingScreen {
             }
         })
 
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
+        instance.experience.navigation.next.addEventListener('click', instance.destroy)
     }
 
     handleFormSubmission(form, container) {
@@ -104,6 +105,9 @@ export default class WaitingScreen {
             removeButton.removeEventListener('click', instance.handleRemoveName)
         })
 
+        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
+
         // Remove the video element
         if (instance.video) {
             instance.video.pause() // Pause the video
@@ -112,7 +116,6 @@ export default class WaitingScreen {
 
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
-        instance.video?.defocus()
         instance.program.toggleStep()
     }
 }
