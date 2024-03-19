@@ -22,9 +22,9 @@ export default class WaitingScreen {
 
         if (document.querySelector('#childrenNames')) return
 
-        const wrapper = _gl.elementFromHtml(`<div class="fixed inset-0" id="waitingScreen"></div>`)
+        const wrapper = _gl.elementFromHtml(`<div class="fixed inset-0 bg-black/70" id="waitingScreen"></div>`)
         const form = _gl.elementFromHtml(
-            `<form id="childrenNames">
+            `<form id="childrenNames" class="max-w-screen-sm absolute bottom-6 left-1/2 -translate-x-1/2">
                 <input class="w-full h-12 bg-white text-bke-darkpurple outline-none text-lg px-4 mb-4"/>
                 <button type="submit" class="button-normal w-full">Submit name</button>
             </form>`
@@ -48,8 +48,7 @@ export default class WaitingScreen {
             }
         })
 
-        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     handleFormSubmission(form, container) {
@@ -82,24 +81,20 @@ export default class WaitingScreen {
     }
 
     destroy() {
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-
-        instance.video?.defocus()
-
         // Remove form event listeners
-        const form = instance.experience.interface.helperScreen.querySelector('#childrenNames')
+        const form = document.querySelector('#childrenNames')
         form.querySelector('button').removeEventListener('click', instance.handleFormSubmission)
         form.querySelector('input').removeEventListener('keyup', instance.handleFormSubmission)
 
         // Remove all nameLabel event listeners
-        const removeButtons = instance.experience.interface.helperScreen.querySelectorAll('span')
+        const removeButtons = document.querySelector('#chapter-wrapper').querySelectorAll('span')
         removeButtons.forEach((removeButton) => {
             removeButton.removeEventListener('click', instance.handleRemoveName)
         })
 
         // Remove all elements appended to smallScreen
-        instance.experience.interface.helperScreen.querySelector('#waitingScreen').remove()
+        document.querySelector('#waitingScreen').remove()
+        instance.video?.defocus()
         instance.program.toggleStep()
     }
 }
