@@ -22,7 +22,7 @@ export default class WaitingScreen {
 
         if (instance.experience.interface.helperScreen.querySelector('#add-names-form')) return
 
-        const wrapper = _gl.elementFromHtml(`<div class="p-2 xl:p-4 tv:p-8 flex flex-col h-full" id="names-form"></div>`)
+        const wrapper = _gl.elementFromHtml(`<div class="flex flex-col h-full" id="names-form"></div>`)
         const form = _gl.elementFromHtml(
             `<form id="add-names-form">
                 <input class="w-full h-12 bg-white text-bke-darkpurple outline-none text-lg px-4 mb-4"/>
