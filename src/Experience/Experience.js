@@ -58,7 +58,7 @@ export default class Experience {
             chaptersDescription: document.querySelector('#chapters-description'),
         }
 
-        const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}"  height="${this.sizes.height}"></canvas>`)
+        const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}" height="${this.sizes.height}"></canvas>`)
         document.querySelector('#app').appendChild(celebrateCanvas)
 
         this.celebrate = confetti.create(celebrateCanvas, {
