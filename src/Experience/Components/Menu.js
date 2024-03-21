@@ -76,14 +76,14 @@ export default class Menu {
     eventListeners() {
         let isToggled = false
 
-        document.querySelector('#toggle-settings').addEventListener('click', (e) => {
+        document.querySelector('#toggle-settings')?.addEventListener('click', (e) => {
             isToggled = !isToggled
             e.target.classList.toggle('active')
             e.target.setAttribute('aria-pressed', isToggled)
             e.target.parentElement.classList.toggle('dropdown-is-visible')
         })
 
-        document.querySelector('#toggle-languages').addEventListener('click', (e) => {
+        document.querySelector('#toggle-languages')?.addEventListener('click', (e) => {
             isToggled = !isToggled
             e.target.classList.toggle('active')
             e.target.setAttribute('aria-pressed', isToggled)
