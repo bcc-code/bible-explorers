@@ -62,8 +62,7 @@ export default class WaitingScreen {
             }
         })
 
-        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
+        instance.setEventListeners()
     }
 
     handleFormSubmission(form, container) {
@@ -95,6 +94,25 @@ export default class WaitingScreen {
         }
     }
 
+    setEventListeners() {
+        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
+        instance.experience.navigation.next.addEventListener('click', instance.goToFirstCheckpoint)
+
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
+
+    removeEventListeners() {
+        instance.experience.navigation.next.removeEventListener('click', instance.goToFirstCheckpoint)
+        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
+
+    goToFirstCheckpoint() {
+        instance.destroy()
+        instance.program.toggleStep()
+    }
+
     destroy() {
         const form = document.querySelector('#childrenNames')
         form.querySelector('button').removeEventListener('click', instance.handleFormSubmission)
@@ -105,8 +123,7 @@ export default class WaitingScreen {
             removeButton.removeEventListener('click', instance.handleRemoveName)
         })
 
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
-        instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
+        instance.removeEventListeners()
 
         // Remove the video element
         if (instance.video) {
@@ -116,6 +133,5 @@ export default class WaitingScreen {
 
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
-        instance.program.toggleStep()
     }
 }
