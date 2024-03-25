@@ -15,7 +15,7 @@ export default class Message {
         instance.navigation = instance.experience.navigation
     }
 
-    show(text = '', character = '') {
+    show(caption = '', character = '') {
         instance.destroy()
         instance.world = instance.experience.world
         instance.program = instance.world.program
@@ -23,10 +23,10 @@ export default class Message {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.message
 
-        if (!text) text = instance.data.text
+        if (!caption) caption = instance.data.text
         if (!character) character = instance.data ? instance.data.character : 'iris'
 
-        instance.setHtml(text, character)
+        instance.setHtml(caption, character)
         instance.setEventListeners()
 
         if (instance.data.audio) instance.audio.togglePlayTaskDescription(instance.data.audio)
@@ -37,8 +37,8 @@ export default class Message {
         }
     }
 
-    setHtml(text, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc" class="grid place-content-center w-full aspect-[2495/439] bg-[url('../../static/interface/Dialog_bar.png')] bg-contain bg-no-repeat p-[5%_4%_2.5%_4%]"><div class="absolute left-1/2 -translate-x-1/2 top-[10%] text-[1.5vw] text-bke-orange uppercase">${character} </div>${text}</div>`)
+    setHtml(caption, character) {
+        const message = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1>${caption}</div>`)
         instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {

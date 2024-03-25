@@ -153,13 +153,12 @@
     width: calc(100% - 60px);
 }
 
-.video-js:not(.vjs-fullscreen) .skip-video {
-    display: none;
+.video-js {
+    &:not(.vjs-fullscreen) .skip-video {
+        display: none;
+    }
 }
 
-#videos-container .video-js .vjs-tech {
-    padding: 2%;
-}
 
 /* #region App views */
 
@@ -303,6 +302,7 @@
         right: 50%;
         font-size: 1rem;
         text-transform: uppercase;
+        text-wrap: nowrap;
     }
 
     &.skip-video {
@@ -666,6 +666,37 @@ $themes: (
         }
     }
 }
+
+/* #endregion */
+
+/* #region Interface */
+
+#closed-caption {
+
+    #iris-cc {
+        background-image: url('../../static/interface/Dialog_bar.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 2495/439;
+        padding-bottom: 4%;
+
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    h1 {
+        padding-top: 2%;
+        font-size: clamp(1.15rem, 1.25vw, 2rem);
+    }
+
+    p {
+        font-size: clamp(1.15rem, 1.25vw, 1.75rem);
+        padding-inline: 4%;
+        flex: 1;
+        overflow-y: auto;
+    }
+}
+
 
 /* #endregion */
 
