@@ -163,13 +163,21 @@
 
 /* #region App views */
 
-.app-logo img {
-    width: clamp(180px, 16vw, 320px);
+.app-logo {
+    display: none;
+
+    img {
+        width: clamp(180px, 16vw, 320px);
+    }
 }
+
 
 #app[data-view="lobby"],
 #app[data-view="age-category"] {
 
+    .app-logo {
+        display: block;
+    }
 
     #home-button,
     #toggle-settings {
@@ -255,8 +263,12 @@
     cursor: pointer;
 
     svg {
-        width: clamp(16px, 1.25vw, 40px);
-        height: clamp(16px, 1.25vw, 40px);
+        width: clamp(16px, 1.25vw, 24px);
+        height: clamp(16px, 1.25vw, 24px);
+    }
+
+    &[checkpoint] {
+        margin-bottom: 2%;
     }
 
     &[currentCheckpoint] {
