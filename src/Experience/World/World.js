@@ -262,6 +262,14 @@ export default class World {
         instance.experience.interface.chaptersDescription.append(details)
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
+
+        tippy('.chapter-guide', {
+            theme: 'explorers',
+            content: _s.chapter.activityDescLabel,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'auto',
+        })
     }
 
     removeDescriptionHtml() {
@@ -311,15 +319,15 @@ export default class World {
             content: _s.offline.download.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'right',
+            placement: 'auto',
         })
 
-        tippy('.chapter__downloaded', {
+        tippy('.chapter__downloaded span', {
             theme: 'explorers',
             content: _s.offline.availableOffline.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'right',
+            placement: 'auto',
         })
     }
 

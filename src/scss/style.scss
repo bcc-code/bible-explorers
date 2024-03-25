@@ -7,7 +7,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
-@import "./components/Tooltip.scss";
 @import "./components/Modal.scss";
 @import "./components/Dialogue.scss";
 @import "./components/MultipleChoice.scss";
@@ -286,11 +285,6 @@
     pointer-events: auto;
     cursor: pointer;
 
-    svg {
-        width: 16px;
-        height: 16px;
-    }
-
     span {
         position: absolute;
         bottom: -0.5em;
@@ -301,8 +295,8 @@
 
     &.skip-video {
         position: absolute;
-        top: 24px;
-        right: 24px;
+        top: 5%;
+        right: 5%;
     }
 
     &:hover {
@@ -354,7 +348,6 @@
 }
 
 /* #endregion */
-
 
 /* #region Chapter */
 
@@ -620,6 +613,44 @@
     svg {
         transform: rotate(-45deg);
         width: 1rem;
+    }
+}
+
+/* #endregion */
+
+/* region Tooltip */
+
+$themes: (
+    explorers: var(--clr-secondary),
+    construction: #f7d211,
+    preview: var(--clr-primary),
+);
+
+@each $theme, $bgColor in $themes {
+    .tippy-box[data-theme~='#{$theme}'] {
+        color: var(--clr-text);
+        font-size: clamp(0.85rem, 1vw, 1.1rem);
+        background-color: $bgColor;
+        padding: 0.25rem;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 0.5rem var(--clr-text);
+
+        // Nest placement variations inside the theme block
+        &[data-placement^='top']>.tippy-arrow::before {
+            border-top-color: $bgColor;
+        }
+
+        &[data-placement^='bottom']>.tippy-arrow::before {
+            border-bottom-color: $bgColor;
+        }
+
+        &[data-placement^='left']>.tippy-arrow::before {
+            border-left-color: $bgColor;
+        }
+
+        &[data-placement^='right']>.tippy-arrow::before {
+            border-right-color: $bgColor;
+        }
     }
 }
 
