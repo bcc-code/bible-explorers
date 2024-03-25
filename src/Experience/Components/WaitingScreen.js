@@ -126,6 +126,9 @@ export default class WaitingScreen {
 
         instance.removeEventListeners()
 
+        // Remove names from the helper screen
+        instance.experience.interface.helperScreen.innerHTML = ''
+
         // Remove the video element
         if (instance.videoBG) {
             instance.videoBG.pause()
