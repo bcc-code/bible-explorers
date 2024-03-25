@@ -221,8 +221,8 @@
     cursor: pointer;
 
     svg {
-        width: clamp(16px, 1.25vw, 40px);
-        height: clamp(16px, 1.25vw, 40px);
+        width: clamp(16px, 1.1vw, 40px);
+        height: clamp(16px, 1.1vw, 40px);
     }
 
     &:hover {
@@ -437,17 +437,18 @@
 
             img {
                 width: 100%;
+                height: 100%;
                 object-fit: cover;
             }
         }
 
         &-heading {
             font-weight: bold;
-            font-size: 1.75vw;
+            font-size: clamp(1.15rem, 2vw, 2.25rem);
         }
 
         &-text {
-            font-size: 1.25vw;
+            font-size: clamp(0.85rem, 1.25vw, 1.5rem);
             margin-top: 4%;
             height: 60%;
             overflow-y: auto;
@@ -464,7 +465,7 @@
     &-content {
         top: 50%;
         height: 50%;
-        padding: 0.5% 5% 5%;
+        padding: 0.35% 5% 5%;
     }
 
     // States
@@ -618,7 +619,7 @@
 
 /* #endregion */
 
-/* region Tooltip */
+/* #region Tooltip */
 
 $themes: (
     explorers: var(--clr-secondary),
@@ -655,3 +656,5 @@ $themes: (
 }
 
 /* #endregion */
+
+.test {}
