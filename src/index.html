@@ -23,21 +23,21 @@
         <div id="app" class="group/app fixed inset-0 overflow-hidden">
             <header id="header" class="absolute left-0 top-0 hidden w-full">
                 <div class="flex w-full justify-between p-4 tv:p-8">
-                    <div class="z-50 hidden group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block">
-                        <img src="./textures/bible-kids-explorers.svg" alt="" class="h-12 tv:h-16" />
+                    <div class="app-logo z-10">
+                        <img src="./textures/bible-kids-explorers.svg" alt="" />
                     </div>
                     <div class="z-10 ml-auto flex items-center">
                         <button id="home-button" class="button-cube button-cube-default">
-                            <svg class="h-4 w-4"><use href="#house-solid" fill="currentColor"></use></svg>
+                            <svg><use href="#house-solid" fill="currentColor"></use></svg>
                         </button>
                         <button id="toggle-music" class="button-cube button-cube-default group/audio">
-                            <svg class="hidden h-4 w-4 group-[.is-playing]/audio:block"><use href="#music-solid" fill="currentColor"></use></svg>
-                            <svg class="h-4 w-4 group-[.is-playing]/audio:hidden"><use href="#music-slash-solid" fill="currentColor"></use></svg>
+                            <svg class="hidden group-[.is-playing]/audio:block"><use href="#music-solid" fill="currentColor"></use></svg>
+                            <svg class="group-[.is-playing]/audio:hidden"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="group/settings relative">
                             <button id="toggle-settings" class="button-cube button-cube-default" aria-pressed="false">
-                                <svg class="pointer-events-none h-4 w-4 group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
-                                <svg class="pointer-events-none hidden h-4 w-4 group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                                <svg class="pointer-events-none group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
+                                <svg class="pointer-events-none hidden group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                             </button>
                             <div class="absolute right-0 mt-4 hidden w-60 bg-bke-purple p-2 shadow-focused group-[.dropdown-is-visible]/settings:block xl:p-4">
                                 <section id="app-video-quality" class="group/video-quality">
@@ -79,10 +79,10 @@
                             </div>
                         </div>
                         <button id="logout-button" class="button-cube button-cube-default disabled:!hidden" disabled="true">
-                            <svg class="h-4 w-4"><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
+                            <svg><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                         </button>
                         <button id="login-button" class="button-cube button-cube-default disabled:!hidden" disabled="true">
-                            <svg class="h-4 w-4"><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
+                            <svg><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
                     <article class="fixed inset-0 grid place-content-center text-balance text-center">
-                        <h1 class="max-w-screen-sm text-3xl font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md xl:text-4xl tv:max-w-screen-lg tv:text-5xl">Join time travels and explore the book that can answer every question</h1>
+                        <h1 class="heading max-w-screen-sm font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md tv:max-w-screen-lg">Join time travels and explore the book that can answer every question</h1>
                         <ul class="mt-4 flex justify-center gap-4 xl:mt-8 xl:gap-8"></ul>
                     </article>
                 </div>

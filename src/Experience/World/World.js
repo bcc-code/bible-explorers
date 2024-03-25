@@ -158,25 +158,25 @@ export default class World {
                     <div class="chapter-mask">
                         <h1 class="chapter-heading">${chapter.title}</h1>
                         <div class="chapter-date">${chapter.date}</div>
-                        <div class="chapter-status">
-                            <div class="chapter__downloading w-1/2 hidden group-[.downloading]:flex items-center gap-2">
-                                <span class="title text-sm tv:text-base">${_s.offline.downloading}</span>
-                                <span class="downloading-progress">
-                                    <span class="progress-line"></span>
-                                </span>
-                                <span class="downloading-label text-sm tv:text-base"></span>
-                            </div>
-                            <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange text-sm tv:text-base">${_s.offline.downloadFailed}</div>
-                            <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple px-2 py-1 rounded-md">
-                                <svg class="h-3 w-3"><use href="#check-solid" fill="currentColor"></use></svg>
-                                <span class="text-sm tv:text-base">${_s.offline.availableOffline.title}</span>
-                            </div>
-                        </div>
                     </div>
                     <button class="chapter__offline button-cube button-cube-default">
-                        <svg class="h-3 w-3"><use href="#download-solid" fill="currentColor"></use></svg>
+                        <svg><use href="#download-solid" fill="currentColor"></use></svg>
                     </button>
                 </a>
+                <div class="chapter-status">
+                    <div class="chapter__downloading">
+                        <span class="downloading-title">${_s.offline.downloading}</span>
+                        <div class="downloading-progress">
+                            <span class="progress-line"></span>
+                        </div>
+                        <span class="downloading-label"></span>
+                    </div>
+                    <div class="chapter__download-failed">${_s.offline.downloadFailed}</div>
+                    <div class="chapter__downloaded">
+                        <svg><use href="#check-solid" fill="currentColor"></use></svg>
+                        <span>${_s.offline.availableOffline.title}</span>
+                    </div>
+                </div>
             </li>`
         )
 
@@ -207,7 +207,7 @@ export default class World {
             <div class="chapter-description">
                 <div class="chapter-content relative">
                     <h1 class="chapter-description-heading">${chapter.title}</h1>
-                    ${chapter.content}
+                    <div class="chapter-description-text"> ${chapter.content}</div>
                 </div>
             </div>`)
 
@@ -220,12 +220,11 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="inline-flex items-center chapter-guide gap-2" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="h-3 w-3"><use href="#book-solid" fill="currentColor"></use></svg>
-                            <span>${_s.chapter.activityDescLabel}</span>
+                        <a class="button-cube button-cube-default chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg><use href="#book-solid" fill="currentColor"></use></svg>
                         </a>`)
 
-                    details.querySelector('.chapter-content').append(guide)
+                    details.prepend(guide)
                 }
             })
         }
