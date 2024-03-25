@@ -118,12 +118,12 @@ window.onload = async () => {
 const dynamicDiv = document.getElementById('screens-wrapper')
 const closedCaption = document.getElementById('closed-caption')
 const aspectRatio = 1.5
-const maxVW = 90
+experience.maxVW = 90
 const maxVH = 65
 const minPaddingTopPx = 12
 
-function adjustScreensWrapperSize() {
-    let vw = window.innerWidth * (maxVW / 100)
+experience.adjustScreensWrapperSize = () => {
+    let vw = window.innerWidth * (experience.maxVW / 100)
     let vh = window.innerHeight * (maxVH / 100)
 
     // Calculate the width and height based on maintaining the aspect ratio
@@ -145,6 +145,6 @@ function adjustScreensWrapperSize() {
     dynamicDiv.style.paddingTop = `${paddingTop}px`
 }
 
-window.addEventListener('resize', adjustScreensWrapperSize)
+window.addEventListener('resize', experience.adjustScreensWrapperSize)
 
-adjustScreensWrapperSize()
+experience.adjustScreensWrapperSize()

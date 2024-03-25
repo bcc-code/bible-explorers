@@ -16,6 +16,9 @@ export default class WaitingScreen {
         instance.program = instance.world.program
         // instance.video = instance.program.video
 
+        instance.experience.maxVW = 40
+        instance.experience.adjustScreensWrapperSize()
+
         // const id = instance.world.selectedChapter.lobby_video_loop
         // instance.video.load('lobby-video-' + id)
         // instance.video.play()
@@ -133,5 +136,9 @@ export default class WaitingScreen {
 
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
+
+        // Adjust screen wrappers
+        instance.experience.maxVW = 90
+        instance.experience.adjustScreensWrapperSize()
     }
 }
