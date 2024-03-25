@@ -47,18 +47,28 @@ export default class MessageWithSupportingScreens {
         }
 
         if (instance.data.right_screen) {
+            instance.experience.interface.helperScreen.innerHTML = ''
+            let rightScreenEl = ''
+
             if (instance.data.with_lever) {
-                const image = _gl.elementFromHtml(`<img id="interactive-image" src="${instance.data.right_screen}" />`)
-                image.addEventListener('click', this.leverClickEvent)
+                rightScreenEl = _gl.elementFromHtml(`<video id="interactive-lever" src="textures/switch_action_ANIM.mp4" autoplay loop></video>`)
+                rightScreenEl.addEventListener('click', this.leverClickEvent)
             } else {
-                const image = _gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`)
-                instance.experience.interface.helperScreen.append(image)
+                rightScreenEl = _gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`)
             }
+
+            instance.experience.interface.helperScreen.append(rightScreenEl)
         }
     }
 
     leverClickEvent = () => {
-        instance.program.nextStep()
+        const interactiveLever = document.getElementById('interactive-lever')
+        interactiveLever.loop = false
+        interactiveLever.src = 'textures/switch_activate_ANIM.mp4'
+
+        interactiveLever.addEventListener('ended', function () {
+            instance.program.nextStep()
+        })
     }
 
     setEventListeners() {
@@ -66,7 +76,7 @@ export default class MessageWithSupportingScreens {
     }
 
     destroy() {
-        const interactiveImage = document.getElementById('interactive-image')
+        const interactiveImage = document.getElementById('interactive-lever')
         if (interactiveImage) {
             interactiveImage.removeEventListener('click', this.leverClickEvent)
             interactiveImage.remove()
