@@ -68,11 +68,7 @@
     }
 }
 
-body.bcc_member {
-    .chapter-status {
-        display: block;
-    }
-}
+
 
 .intercom-namespace .intercom-messenger-frame {
     right: var(--app-padding) !important;
@@ -252,6 +248,13 @@ body.bcc_member {
     &:disabled {
         background-image: url('../../static/interface/B_cube_innactive.png');
         cursor: not-allowed;
+    }
+
+    &.chapter__offline {
+        display: none;
+        position: absolute;
+        right: 2.5%;
+        bottom: 12%;
     }
 }
 
