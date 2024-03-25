@@ -118,9 +118,9 @@ window.onload = async () => {
 const dynamicDiv = document.getElementById('screens-wrapper')
 const closedCaption = document.getElementById('closed-caption')
 const aspectRatio = 1.5
-experience.maxVW = 90
+experience.maxVW = 36
 const maxVH = 65
-const minPaddingTopPx = 12
+const minPaddingTopVh = 6
 
 experience.adjustScreensWrapperSize = () => {
     let vw = window.innerWidth * (experience.maxVW / 100)
@@ -136,8 +136,7 @@ experience.adjustScreensWrapperSize = () => {
         divHeight = divWidth / aspectRatio
     }
 
-    const paddingTop = Math.max(minPaddingTopPx, window.innerHeight * 0.01)
-    // const totalHeight = divHeight + paddingTop
+    const paddingTop = Math.max(window.innerHeight * (minPaddingTopVh / 100), window.innerHeight * 0.01)
 
     dynamicDiv.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
     closedCaption.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`

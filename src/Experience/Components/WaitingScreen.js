@@ -16,7 +16,7 @@ export default class WaitingScreen {
         instance.program = instance.world.program
         // instance.video = instance.program.video
 
-        instance.experience.maxVW = 40
+        instance.experience.maxVW = 36
         instance.experience.adjustScreensWrapperSize()
 
         // const id = instance.world.selectedChapter.lobby_video_loop
@@ -24,7 +24,7 @@ export default class WaitingScreen {
         // instance.video.play()
 
         instance.video = document.createElement('video')
-        instance.video.setAttribute('src', './textures/CR_Loop.mp4')
+        instance.video.setAttribute('src', './textures/Waitingscreen V003.mp4')
         instance.video.setAttribute('playsinline', '')
         instance.video.setAttribute('muted', '')
         instance.video.setAttribute('autoplay', '')
@@ -47,9 +47,10 @@ export default class WaitingScreen {
             </form>`
         )
 
-        const nameLabelContainer = _gl.elementFromHtml('<ul class="absolute w-full h-full pointer-events-none p-4" id="names-label"></ul>')
+        const nameLabelContainer = _gl.elementFromHtml('<ul class="p-4 bg-black/40 overflow-y-auto h-full" id="names-label"></ul>')
 
-        wrapper.append(instance.video, form, nameLabelContainer)
+        wrapper.append(instance.video, form)
+        instance.experience.interface.helperScreen.append(nameLabelContainer)
 
         document.querySelector('#chapter-wrapper').prepend(wrapper)
 
@@ -69,20 +70,17 @@ export default class WaitingScreen {
     }
 
     handleFormSubmission(form, container) {
-        const inputVal = form.querySelector('input').value.trim() // Trim input value to remove leading/trailing spaces
+        const inputVal = form.querySelector('input').value.trim()
 
         // Check if input value is not empty and not already in the names array before appending
         if (inputVal && !instance.names.includes(inputVal)) {
             instance.names.push(inputVal)
-            const nameLabel = _gl.elementFromHtml(`<li class="relative bg-white text-bke-darkpurple text-lg px-6 py-3 mb-4 mr-4 inline-block">${inputVal}<span class="absolute top-0 right-0 px-2 cursor-pointer">×</span></li>`)
+            const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative text-white text-2xl mb-4 flex items-center gap-4">${inputVal}<span class="px-2 cursor-pointer hidden group-hover:block">×</span></li>`)
             container.append(nameLabel)
-            console.log(instance.names)
 
             const removeButton = nameLabel.querySelector('span')
             removeButton.addEventListener('click', () => {
                 instance.handleRemoveName(nameLabel, inputVal)
-
-                console.log(instance.names)
             })
         }
 
