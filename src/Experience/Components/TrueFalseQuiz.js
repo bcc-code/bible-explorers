@@ -41,10 +41,10 @@ export default class TrueFalsQuiz {
     setHTML() {
         if (!document.querySelector('#quiz-content')) {
             const staticHTML = `
-            <div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="true-false-quiz">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    ${instance.data.title ? `<h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h1>` : ''}
-                    ${instance.data.description ? `<p class="text-xl text-center">${instance.data.description}</p>` : ''}
+            <div class="absolute inset-0 grid place-content-center task-container" id="true-false-quiz">
+                <div class="relative mx-auto task-container_box text-center">
+                    ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
+                    ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
                     <div id="quiz-content" class="mt-24"></div> <!-- Container for dynamic question content -->
                 </div>
             </div>`
@@ -69,8 +69,8 @@ export default class TrueFalsQuiz {
                     ${audioButton}
                     ${questionContent}
                     <div class="flex gap-12 items-center">
-                        <button class="answer-button h-24 w-24 bg-red-600" data-answer="false">No</button>
-                        <button class="answer-button h-24 w-24 bg-green-600" data-answer="true">Yes</button>
+                        <button class="answer-button h-24 w-24 bg-[url('../../static/interface/wrong_icon.png')] bg-contain bg-no-repeat" data-answer="false"></button>
+                        <button class="answer-button h-24 w-24 bg-[url('../../static/interface/correct_icon.png')] bg-contain bg-no-repeat" data-answer="true"></button>
                     </div>
                 </div>`
 
