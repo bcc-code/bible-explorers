@@ -51,21 +51,24 @@ export default class WaitingScreen {
 
         wrapper.append(instance.videoBG, form)
         instance.experience.interface.helperScreen.append(nameLabelContainer)
-
         document.querySelector('#chapter-wrapper').prepend(wrapper)
 
-        form.querySelector('button').addEventListener('click', (e) => {
-            e.preventDefault()
-            instance.handleFormSubmission(form, nameLabelContainer)
-        })
-
-        form.querySelector('input').addEventListener('keyup', (e) => {
+        const inputField = form.querySelector('input')
+        inputField.addEventListener('keyup', (e) => {
             e.preventDefault()
             if (e.key === 'Enter') {
                 instance.handleFormSubmission(form, nameLabelContainer)
             }
         })
 
+        const submitBtn = form.querySelector('button')
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault()
+            instance.handleFormSubmission(form, nameLabelContainer)
+            inputField.focus()
+        })
+
+        inputField.focus()
         instance.setEventListeners()
     }
 
