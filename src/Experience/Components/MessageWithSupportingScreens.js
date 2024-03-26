@@ -48,14 +48,13 @@ export default class MessageWithSupportingScreens {
 
         if (instance.data.right_screen) {
             instance.experience.interface.helperScreen.innerHTML = ''
-            let rightScreenEl = ''
 
-            if (instance.data.with_lever) {
-                rightScreenEl = _gl.elementFromHtml(`<video id="interactive-lever" src="textures/switch_action_ANIM.mp4" autoplay loop></video>`)
-                rightScreenEl.addEventListener('click', this.leverClickEvent)
-            } else {
-                rightScreenEl = _gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`)
-            }
+            instance.experience.interface.helperScreen.append(_gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`))
+        } else if (instance.data.with_lever) {
+            instance.experience.interface.helperScreen.innerHTML = ''
+
+            const rightScreenEl = _gl.elementFromHtml(`<video id="interactive-lever" src="textures/switch_action_ANIM.mp4" autoplay loop></video>`)
+            rightScreenEl.addEventListener('click', this.leverClickEvent)
 
             instance.experience.interface.helperScreen.append(rightScreenEl)
         }
@@ -85,6 +84,8 @@ export default class MessageWithSupportingScreens {
 
         instance.video?.defocus()
         document.querySelector('#iris-cc')?.remove()
+
+        instance.experience.interface.helperScreen.innerHTML = ''
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
