@@ -5,15 +5,6 @@ let instance = null
 
 export default class ProgressBar {
     constructor() {
-        // Singleton
-        if (instance) {
-            // Re-set reference to program
-            instance.program = instance.experience.world.program
-            instance.checkpointWidth = 100 / instance.program.totalCheckpoints
-
-            return instance
-        }
-
         instance = this
 
         instance.experience = new Experience()
@@ -46,12 +37,21 @@ export default class ProgressBar {
     }
 
     setEventListeners() {
-        instance.el.checkpoints.forEach((checkpoint, index) => {
+        instance.el.checkpoints.forEach((checkpoint) => {
             checkpoint.addEventListener('click', instance.handleCheckpointClick)
         })
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
-        document.addEventListener(_e.ACTIONS.GO_HOME, instance.resetProgress)
+        document.addEventListener(_e.ACTIONS.GO_HOME, instance.removeEventListeners)
+    }
+
+    removeEventListeners() {
+        instance.el.checkpoints.forEach((checkpoint) => {
+            checkpoint.removeEventListener('click', instance.handleCheckpointClick)
+        })
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
+        document.removeEventListener(_e.ACTIONS.GO_HOME, instance.removeEventListeners)
     }
 
     handleCheckpointClick = (event) => {
@@ -68,11 +68,6 @@ export default class ProgressBar {
             passed: instance.htmlEl.querySelector('.percentageBar .passed'),
             checkpoints: instance.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)"),
         }
-    }
-
-    resetProgress = () => {
-        instance.program.currentCheckpoint = 0
-        instance.program.currentStep = 0
     }
 
     static HTML(checkpointWidth, program) {
