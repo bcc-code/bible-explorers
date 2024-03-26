@@ -429,9 +429,9 @@
     &-mask {
         aspect-ratio: 337/73;
         width: 100%;
+        mask-image: url('../../static/frames/chapter_bar_mask.png');
         mask-repeat: no-repeat;
         mask-size: contain;
-        mask-image: url('../../static/frames/chapter_bar_mask.png');
         padding: 5% 6%;
     }
 
@@ -439,8 +439,11 @@
         position: absolute;
         right: 0;
         top: 0;
-        width: 40%;
+        width: 100%;
         height: 100%;
+        mask-image: url('../../static/frames/chapter_bar_mask_T.png');
+        mask-repeat: no-repeat;
+        mask-size: contain;
         z-index: -1;
 
         img {
@@ -519,7 +522,7 @@
     &-content {
         top: 50%;
         height: 50%;
-        padding: 0.35% 5% 5%;
+        padding: 1% 5% 5%;
     }
 
     // States
