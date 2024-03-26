@@ -28,6 +28,9 @@
 
 }
 
+
+
+
 .intercom-namespace .intercom-messenger-frame {
     right: var(--app-padding) !important;
 }
@@ -183,6 +186,7 @@
     cursor: pointer;
 
     svg {
+        pointer-events: none;
         width: clamp(1.5rem, 1.1vw, 3rem);
         height: clamp(1.5rem, 1.1vw, 3rem);
     }
@@ -221,6 +225,7 @@
     cursor: pointer;
 
     svg {
+        pointer-events: none;
         width: clamp(1.25rem, 1.1vw, 1.75rem);
         height: clamp(1.25rem, 1.1vw, 1.75rem);
     }
@@ -282,6 +287,76 @@
     &:disabled {
         background-image: url('../../static/interface/arrow_innactive.png');
         cursor: not-allowed;
+    }
+}
+
+.button-cube-wide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    height: clamp(3rem, 4vw, 5rem);
+    background-image: url('../../static/interface/B_cube_wide_active.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: auto;
+    aspect-ratio: 565/258;
+    font-size: clamp(1.5rem, 1.1vw, 3rem);
+    cursor: pointer;
+
+    svg {
+        pointer-events: none;
+        width: clamp(1.5rem, 1.1vw, 3rem);
+        height: clamp(1.5rem, 1.1vw, 3rem);
+    }
+
+    &:hover {
+        background-image: url('../../static/interface/B_cube_wide_action.png');
+    }
+
+    &:disabled {
+        background-image: url('../../static/interface/B_cube_wide_innactive.png');
+        cursor: not-allowed;
+
+        svg {
+            opacity: .2;
+        }
+    }
+}
+
+.button-cube-wider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    height: clamp(3rem, 4vw, 5rem);
+    background-image: url('../../static/interface/B_cube_wide_2_active.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: auto;
+    aspect-ratio: 721/258;
+    font-size: clamp(1.5rem, 1.1vw, 2rem);
+    cursor: pointer;
+
+    svg {
+        pointer-events: none;
+        width: clamp(1.5rem, 1.1vw, 3rem);
+        height: clamp(1.5rem, 1.1vw, 3rem);
+    }
+
+    &:hover {
+        background-image: url('../../static/interface/B_cube_wide_2_action.png');
+    }
+
+    &:disabled {
+        background-image: url('../../static/interface/B_cube_wide_2_innactive.png');
+        cursor: not-allowed;
+
+        svg {
+            opacity: .2;
+        }
     }
 }
 

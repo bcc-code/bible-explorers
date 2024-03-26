@@ -128,7 +128,7 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-normal uppercase font-medium min-w-40" data-slug="${category.slug}">${category.name}</button></li>`)
+        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-cube-wider" data-slug="${category.slug}">${category.name}</button></li>`)
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 

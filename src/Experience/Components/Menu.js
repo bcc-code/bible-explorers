@@ -34,7 +34,7 @@ export default class Menu {
         const selectLang = document.querySelector('#app-language')
         const selectLangCurrent = selectLang.querySelector('button span')
         const selectLangDropdown = selectLang.querySelector('ul')
-        // selectLangCurrent.innerText = _lang.getLanguageName()
+        selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
         selectLangDropdown.querySelectorAll('li').forEach((item) => {
             item.className = 'px-2 py-1 xl:py-2 xl:px-3 text-base xl:text-xl font-medium cursor-pointer transition hover:bg-white/20'
@@ -62,6 +62,8 @@ export default class Menu {
 
         const loginBtn = document.querySelector('#login-button')
         const logoutBtn = document.querySelector('#logout-button')
+        loginBtn.querySelector('span').innerText = _s.settings.logIn
+        logoutBtn.querySelector('span').innerText = _s.settings.logOut
         loginBtn.setAttribute('title', _s.settings.logIn)
         logoutBtn.setAttribute('title', _s.settings.logOut)
 
