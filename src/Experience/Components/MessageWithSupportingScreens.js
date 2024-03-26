@@ -46,18 +46,24 @@ export default class MessageWithSupportingScreens {
             document.querySelector('#closed-caption').append(glitch)
         }
 
-        if (instance.data.right_screen) {
-            instance.experience.interface.helperScreen.innerHTML = ''
-
-            instance.experience.interface.helperScreen.append(_gl.elementFromHtml(`<img src="${instance.data.right_screen}" />`))
-        } else if (instance.data.with_lever) {
+        if (instance.data.with_lever) {
             instance.experience.interface.helperScreen.innerHTML = ''
 
             const rightScreenEl = _gl.elementFromHtml(`<video id="interactive-lever" src="textures/switch_action_ANIM.mp4" autoplay loop></video>`)
             rightScreenEl.addEventListener('click', this.leverClickEvent)
 
             instance.experience.interface.helperScreen.append(rightScreenEl)
+        } else if (instance.data.right_screen) {
+            instance.experience.interface.helperScreen.innerHTML = ''
+            instance.experience.interface.helperScreen.append(_gl.elementFromHtml(this.getDomElement(instance.data.right_screen)))
         }
+    }
+
+    getDomElement(url) {
+        const ext = url.split('.').pop().toLowerCase()
+
+        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        else return `<img src="${url}" />`
     }
 
     leverClickEvent = () => {
