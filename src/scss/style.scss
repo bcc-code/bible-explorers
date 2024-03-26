@@ -310,6 +310,13 @@
     mask-image: url('../../static/frames/Screen_1_mask.png');
 }
 
+.task-container_box .overlay {
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-image: url('../../static/frames/Quiz_window_alpha.png');
+
+}
+
 /* #endregion */
 
 /* #region Age category */

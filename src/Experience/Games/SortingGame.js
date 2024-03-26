@@ -42,7 +42,7 @@ export default class SortingGame {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     initCanvas() {
@@ -243,7 +243,7 @@ export default class SortingGame {
             </div>
         `)
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.querySelector('.sort-game .container').append(congratsHTML)
         document.querySelector('.sort-game').classList.add('popup-visible')
@@ -533,6 +533,6 @@ export default class SortingGame {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }
