@@ -62,7 +62,7 @@ export default class Quiz {
                 ${
                     instance.questions.length > 0
                         ? `
-                    <div id="quiz-navigation" class="flex gap-[1%] mt-auto">
+                    <div id="quiz-navigation" class="flex justify-center gap-[1%] mt-auto">
                         <button class="button-cube" id="prev-question" disabled>
                             <svg><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
                         </button>
@@ -91,9 +91,9 @@ export default class Quiz {
                     const answer = _gl.elementFromHtml(`
                         <div>
                             <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
-                            <label for="question-${qIdx}_answer-${aIdx}" class="bg-bke-purple flex items-center gap-2 px-3 py-2 xl:gap-4 xl:px-4 tv:gap-8 tv:px-8 tv:py-4 mt-4 cursor-pointer transition xl:hover:shadow-hover">
-                                <div class="text-lg tv:text-2xl font-bold border-2 border-bke-orange flex-shrink-0 rounded-full w-8 h-8 tv:w-12 tv:h-12 grid place-items-center">${aIdx + 1}</div>
-                                <p class="text-lg tv:text-2xl">${a.answer}</p>
+                            <label for="question-${qIdx}_answer-${aIdx}" class="question-label">
+                                <div class="font-bold button-circle">${aIdx + 1}</div>
+                                <p class="">${a.answer}</p>
                             </label>
                         </div>
                     `)
@@ -146,7 +146,7 @@ export default class Quiz {
                     const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex((item) => item.correct_wrong === true)
 
                     if (idx === correctAnswerIdx) {
-                        e.target.closest('div').classList.add('shadow-correct')
+                        e.target.closest('div').classList.add('correct')
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
@@ -160,9 +160,9 @@ export default class Quiz {
                         nextQuestion.disabled = currentQuestionIdx >= totalQuestions - 1
                     } else {
                         instance.audio.playSound('wrong')
-                        e.target.closest('div').classList.add('shadow-wrong')
+                        e.target.closest('div').classList.add('wrong')
                         setTimeout(() => {
-                            e.target.closest('div').classList.remove('shadow-wrong')
+                            e.target.closest('div').classList.remove('wrong')
                         }, 800)
                     }
 

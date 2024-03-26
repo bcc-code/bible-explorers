@@ -763,36 +763,37 @@ $themes: (
 
     .task-container_box {
         background-image: url('../../static/frames/Quiz_window.png');
-
         aspect-ratio: 3721/1879;
     }
 
-    .progress-bar-container {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 50%;
-    }
+    .progress-bar {
+        &-container {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 40%;
+        }
 
-    .progress-bar-background,
-    .progress-bar-foreground {
-        position: absolute;
-        left: 1rem;
-        right: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 0.5rem;
-        background-color: #ffffff20;
-    }
+        &-background,
+        &-foreground {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 0.5rem;
+            background-color: #ffffff20;
+        }
 
-    .progress-bar-foreground {
-        width: 0%;
-        background-image: linear-gradient();
-        transition: width 0.3s ease;
+        &-foreground {
+            width: 0%;
+            background-image: linear-gradient(to right, #fbc052, #fc774e);
+            transition: width 0.3s ease;
+        }
     }
 
     .progress-steps {
@@ -802,12 +803,23 @@ $themes: (
         justify-content: space-between;
         width: 100%;
         margin: 0;
-    }
 
-    .step-number {
-        color: white;
-        font-size: clamp(1rem, 1.1vw, 2rem);
-        font-weight: bold;
+        .progress-step {
+            &:first-child {
+                margin-left: -4%;
+            }
+
+            &:last-child {
+                margin-right: -4%;
+            }
+        }
+
+
+        .step-number {
+            color: white;
+            font-size: clamp(1rem, 1.1vw, 2rem);
+            font-weight: bold;
+        }
     }
 
     .overlay {
@@ -819,6 +831,58 @@ $themes: (
         background: rgba(0, 0, 0, 0.5);
         z-index: 2;
     }
+
+    .quiz-item {
+        >div {
+            margin-inline: auto;
+            width: clamp(20rem, 60vw, 80%);
+        }
+
+        .correct .question-label .button-circle {
+            background-image: url('../../static/interface/B_circle_action.png');
+        }
+
+        .wrong .question-label .button-circle {
+            background-image: url('../../static/interface/B_circle_innactive.png');
+        }
+
+    }
+
+    .question-label {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-image: url('../../static/frames/Quiz_answer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 1495/144;
+        padding-inline: 12% 5%;
+        cursor: pointer;
+
+        .button-circle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 4%;
+            font-size: clamp(1.25rem, 1.15vw, 2rem);
+
+            &:hover {
+                background-image: url('../../static/interface/B_circle_active.png');
+            }
+        }
+
+        p {
+            font-size: clamp(1.25rem, 1.15vw, 2rem);
+        }
+
+        &:hover .button-circle {
+            background-image: url('../../static/interface/B_circle_action.png');
+        }
+
+    }
+
+
+
 }
 
 /* #endregion */
