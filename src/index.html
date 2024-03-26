@@ -27,15 +27,15 @@
                         <img src="./textures/bible-kids-explorers.svg" alt="" />
                     </div>
                     <div class="z-10 ml-auto flex items-center">
-                        <button id="home-button" class="button-cube button-cube-default">
+                        <button id="home-button" class="button-cube">
                             <svg><use href="#house-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="toggle-music" class="button-cube button-cube-default group/audio">
+                        <button id="toggle-music" class="button-cube group/audio">
                             <svg class="hidden group-[.is-playing]/audio:block"><use href="#music-solid" fill="currentColor"></use></svg>
                             <svg class="group-[.is-playing]/audio:hidden"><use href="#music-slash-solid" fill="currentColor"></use></svg>
                         </button>
                         <div class="group/settings relative">
-                            <button id="toggle-settings" class="button-cube button-cube-default" aria-pressed="false">
+                            <button id="toggle-settings" class="button-cube" aria-pressed="false">
                                 <svg class="pointer-events-none group-[.dropdown-is-visible]/settings:hidden"><use href="#gear-solid" fill="currentColor"></use></svg>
                                 <svg class="pointer-events-none hidden group-[.dropdown-is-visible]/settings:block"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                             </button>
@@ -71,17 +71,17 @@
                             </div>
                         </div>
                         <div class="group/languages relative" id="app-language">
-                            <button id="toggle-languages" class="button-cube button-cube-default" aria-pressed="false">
+                            <button id="toggle-languages" class="button-cube" aria-pressed="false">
                                 <svg class="pointer-events-none h-4 w-4"><use href="#globe-solid" fill="currentColor"></use></svg>
                             </button>
                             <div class="absolute right-0 mt-4 hidden h-96 w-60 overflow-y-auto bg-bke-purple p-2 shadow-focused group-[.dropdown-is-visible]/languages:block xl:p-4">
                                 <ul></ul>
                             </div>
                         </div>
-                        <button id="logout-button" class="button-cube button-cube-default disabled:!hidden" disabled="true">
+                        <button id="logout-button" class="button-cube disabled:!hidden" disabled="true">
                             <svg><use href="#right-from-bracket-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="login-button" class="button-cube button-cube-default disabled:!hidden" disabled="true">
+                        <button id="login-button" class="button-cube disabled:!hidden" disabled="true">
                             <svg><use href="#right-to-bracket-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>

@@ -159,7 +159,7 @@ export default class World {
                         <h1 class="chapter-heading">${chapter.title}</h1>
                         <div class="chapter-date">${chapter.date}</div>
                     </div>
-                    <button class="chapter__offline button-cube button-cube-default">
+                    <button class="chapter__offline button-cube">
                         <svg><use href="#download-solid" fill="currentColor"></use></svg>
                     </button>
                 </a>
@@ -220,7 +220,7 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="button-cube button-cube-default chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                        <a class="button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
                             <svg><use href="#book-solid" fill="currentColor"></use></svg>
                         </a>`)
 
