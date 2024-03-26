@@ -38,7 +38,7 @@ export default class Message {
     }
 
     setHtml(caption, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1>${caption}</div>`)
+        const message = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`)
         instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {

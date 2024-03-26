@@ -307,8 +307,8 @@
 
     &.skip-video {
         position: absolute;
-        top: 5%;
-        right: 5%;
+        top: 3%;
+        right: 2%;
     }
 
     &:hover {
@@ -678,22 +678,30 @@ $themes: (
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 2495/439;
-        padding-bottom: 4%;
-
+        padding-top: 5%;
+        padding-bottom: 3%;
+        padding-inline: 4%;
         display: flex;
-        flex-flow: column nowrap;
+
+        div {
+            flex: 1;
+            overflow-y: auto;
+            display: grid;
+            place-content: center;
+        }
     }
 
     h1 {
-        padding-top: 2%;
-        font-size: clamp(1.15rem, 1.25vw, 2rem);
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(1.35rem, 2vw, 3rem);
+        font-style: italic;
     }
 
     p {
-        font-size: clamp(1.15rem, 1.25vw, 1.75rem);
-        padding-inline: 4%;
-        flex: 1;
-        overflow-y: auto;
+        font-size: clamp(1.35rem, 2vw, 3rem);
     }
 }
 
