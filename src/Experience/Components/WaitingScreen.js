@@ -1,4 +1,5 @@
 import Experience from '../Experience'
+import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals'
 import _e from '../Utils/Events.js'
 
@@ -43,7 +44,7 @@ export default class WaitingScreen {
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="max-w-screen-sm absolute bottom-6 left-1/2 -translate-x-1/2">
                 <input class="w-full h-12 bg-white text-bke-darkpurple outline-none text-lg px-4 mb-4"/>
-                <button type="submit" class="button-normal w-full">Submit name</button>
+                <button type="submit" class="button-normal w-full">${_s.waitingScreen.submit}</button>
             </form>`
         )
 

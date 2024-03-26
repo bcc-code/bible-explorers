@@ -10,6 +10,9 @@ const strings = {
         notAvailable: 'No chapter available in the selected language',
         browserNotification: 'Recommended browser for this concept is Chrome',
         howTo: 'How to guide',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Start the time travel',
             continue: 'Continue the time travel',
@@ -151,6 +154,9 @@ const strings = {
         notAvailable: 'Ingen kapitel tilgjengelig i det utvalgte språket',
         browserNotification: 'Anbefalt nettleser for dette konseptet er Chrome',
         howTo: 'Hvordan forberede seg',
+        waitingScreen: {
+            submit: 'Legg inn navn',
+        },
         journey: {
             start: 'Start tidsreisen',
             continue: 'Fortsett tidsreisen',
@@ -292,6 +298,9 @@ const strings = {
         notAvailable: 'Kein Kapitel in der gewählten Sprache verfügbar',
         browserNotification: 'Der empfohlene Browser für dieses Konzept ist Chrome',
         howTo: 'Wie man sich vorbereitet',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Zeitreise starten',
             continue: 'Zeitreise fortsetzen',
@@ -433,6 +442,9 @@ const strings = {
         notAvailable: 'Geen hoofdstuk beschikbaar in de gekozen taal',
         browserNotification: 'De aanbevolen browser voor dit concept is Chrome',
         howTo: 'Hoe bereid je je voor',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Start de tijdreis',
             continue: 'Ga door met de tijdreis',
@@ -715,6 +727,9 @@ const strings = {
         notAvailable: 'Żaden rozdział nie jest dostępny w wybranym języku',
         browserNotification: 'Zalecana przeglądarka dla tego programu to Chrome',
         howTo: 'Jak należy się przygotować',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Rozpocznij podróż w czasie',
             continue: 'Kontynuuj podróż',
@@ -856,6 +871,9 @@ const strings = {
         notAvailable: 'Nici un capitol disponibil în limba selectată',
         browserNotification: 'Browserul recomandat pentru acest concept este Chrome',
         howTo: 'Cum funcționează?',
+        waitingScreen: {
+            submit: 'Adaugă nume',
+        },
         journey: {
             start: 'Începe călătoria în timp',
             continue: 'Continuă călătoria în timp',
@@ -997,6 +1015,9 @@ const strings = {
         notAvailable: 'No hay capítulos disponibles en el idioma seleccionado',
         browserNotification: 'El navegador recomendado para este concepto es Chrome',
         howTo: 'Cómo prepararse',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Comenzar el viaje en el tiempo',
             continue: 'Continuar con el viaje en el tiempo',
@@ -1138,6 +1159,9 @@ const strings = {
         notAvailable: 'Nenhum capítulo disponível no idioma selecionado',
         browserNotification: 'O navegador recomendado para este conceito é o Chrome',
         howTo: 'Como se preparar',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Comece a viajem no tempo',
             continue: 'Continue a viajem no tempo',
@@ -1279,6 +1303,9 @@ const strings = {
         notAvailable: 'Nessun capitolo disponibile nella lingua selezionata',
         browserNotification: 'Il browser consigliato per questo concetto è Chrome',
         howTo: 'Come prepararsi',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Inizia il viaggio nel tempo',
             continue: 'Continua il viaggio nel tempo',
@@ -1420,6 +1447,9 @@ const strings = {
         notAvailable: 'Ни одна глава недоступна на выбранном языке',
         browserNotification: 'Рекомендуемый браузер - Chrome',
         howTo: 'Как подготовиться',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Начать путешествие во времени',
             continue: 'Продолжить путешествие во времени',
@@ -1561,6 +1591,9 @@ const strings = {
         notAvailable: 'Valitsemallasi kielellä ei ole tarjolla yhtään jaksoa',
         browserNotification: 'Suosittelemme Chrome selaimen käyttöä tässä konseptissa',
         howTo: 'Miten valmistautua tehtävää varten',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Aloita aikamatka',
             continue: 'Jatka aikamatkaa',
@@ -1702,6 +1735,9 @@ const strings = {
         notAvailable: 'No chapter available in the selected language',
         browserNotification: 'Recommended browser for this concept is Chrome',
         howTo: 'How to guide',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Időutazás elkezdése',
             continue: 'Időutazás folytatása ',
@@ -1843,6 +1879,9 @@ const strings = {
         notAvailable: 'Intet tilgængeligt kapitel i det valgte sprog',
         browserNotification: 'Den anbefalede browser til dette koncept er Chrome',
         howTo: 'Hvordan man forbereder sig',
+        waitingScreen: {
+            submit: 'Submit name',
+        },
         journey: {
             start: 'Start tidsrejsen',
             continue: 'Fortsæt tidsrejsen',
