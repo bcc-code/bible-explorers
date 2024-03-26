@@ -45,8 +45,6 @@ export default class GameDescription {
 
         instance.experience.setAppView('task-description')
 
-        console.log(instance.data.tutorial)
-
         instance.setHtml()
         if (instance.data.tutorial) instance.useCorrectAssetsSrc()
 

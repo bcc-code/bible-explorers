@@ -212,10 +212,11 @@ export default class Program {
     }
 
     startInteractivity() {
-        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop && instance.waitingScreen.names.length == 0) {
             setTimeout(function () {
                 instance.waitingScreen.show()
             }, 1000)
+
             return
         }
 
