@@ -1,72 +1,78 @@
 import Experience from '../Experience.js'
 import _e from '../Utils/Events.js'
 
+let instance = null
+
 export default class ProgressBar {
-    static instance
-
-    experience = new Experience()
-    debug = this.experience.debug
-    program = this.experience.world.program
-    checkpointWidth = 100 / this.program.totalCheckpoints
-    htmlEl = document.querySelector('#progress-bar')
-    el = {}
-
     constructor() {
-        if (ProgressBar.instance) {
-            return ProgressBar.instance
-        }
-        ProgressBar.instance = this
+        // Singleton
+        if (instance) {
+            // Re-set reference to program
+            instance.program = instance.experience.world.program
+            instance.checkpointWidth = 100 / instance.program.totalCheckpoints
 
-        this.init()
-        this.setEventListeners()
+            return instance
+        }
+
+        instance = this
+
+        instance.experience = new Experience()
+        instance.debug = instance.experience.debug
+        instance.program = instance.experience.world.program
+        instance.checkpointWidth = 100 / instance.program.totalCheckpoints
+        instance.htmlEl = document.querySelector('#progress-bar')
+        instance.el = {}
+
+        instance.init()
+        instance.refresh()
+        instance.setEventListeners()
     }
 
     init() {
-        this.htmlEl.querySelector('div').innerHTML = ProgressBar.HTML(this.checkpointWidth, this.program)
-        const { passed, checkpoints } = this.getElements()
-        this.el = { passed, checkpoints }
-
-        this.el.checkpoints.forEach((checkpoint, index) => {
-            checkpoint.addEventListener('click', this.handleCheckpointClick)
-            if (index === this.program.currentCheckpoint) checkpoint.setAttribute('currentCheckpoint', '')
-        })
+        instance.htmlEl.querySelector('div').innerHTML = ProgressBar.HTML(instance.checkpointWidth, instance.program)
+        instance.el = instance.getElements()
     }
 
     refresh = () => {
-        this.el.passed.style.width = `${this.checkpointWidth * this.program.currentCheckpoint}%`
+        instance.el.passed.style.width = `${instance.checkpointWidth * instance.program.currentCheckpoint}%`
 
-        this.el.checkpoints.forEach((checkpoint, index) => {
+        instance.el.checkpoints.forEach((checkpoint, index) => {
             checkpoint.removeAttribute('currentCheckpoint')
-            if (index < this.program.currentCheckpoint) {
-                checkpoint.classList.remove('locked')
-            }
-            if (index === this.program.currentCheckpoint) {
+
+            if (index === instance.program.currentCheckpoint) {
                 checkpoint.setAttribute('currentCheckpoint', '')
             }
         })
     }
 
     setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, this.refresh)
+        instance.el.checkpoints.forEach((checkpoint, index) => {
+            checkpoint.addEventListener('click', instance.handleCheckpointClick)
+        })
+
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
+        document.addEventListener(_e.ACTIONS.GO_HOME, instance.resetProgress)
     }
 
     handleCheckpointClick = (event) => {
         const clickedCheckpointIndex = parseInt(event.currentTarget.getAttribute('data-index'))
 
         // Update the program's current checkpoint
-        if (this.program.currentCheckpoint !== clickedCheckpointIndex) {
-            this.program.goToCheckpoint(clickedCheckpointIndex)
-
-            // Refresh the UI to reflect the change
-            this.refresh()
+        if (instance.program.currentCheckpoint !== clickedCheckpointIndex) {
+            instance.program.goToCheckpoint(clickedCheckpointIndex)
         }
     }
 
     getElements() {
         return {
-            passed: this.htmlEl.querySelector('.percentageBar .passed'),
-            checkpoints: this.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)"),
+            passed: instance.htmlEl.querySelector('.percentageBar .passed'),
+            checkpoints: instance.htmlEl.querySelectorAll("[aria-label='checkpoint']:not(:last-child)"),
         }
+    }
+
+    resetProgress = () => {
+        instance.program.currentCheckpoint = 0
+        instance.program.currentStep = 0
     }
 
     static HTML(checkpointWidth, program) {

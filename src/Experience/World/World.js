@@ -729,6 +729,8 @@ export default class World {
         document.querySelector('#fullscreen-setting input').checked = false
 
         if (document.fullscreenElement) document.exitFullscreen()
+
+        document.dispatchEvent(_e.EVENTS.GO_HOME)
     }
 
     preselectChapter() {

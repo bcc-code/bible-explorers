@@ -104,6 +104,7 @@ export default class WaitingScreen {
         instance.experience.navigation.next.addEventListener('click', instance.goToFirstCheckpoint)
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        document.addEventListener(_e.ACTIONS.GO_HOME, instance.destroy)
     }
 
     removeEventListeners() {
@@ -111,6 +112,7 @@ export default class WaitingScreen {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        document.removeEventListener(_e.ACTIONS.GO_HOME, instance.destroy)
     }
 
     goToFirstCheckpoint() {
