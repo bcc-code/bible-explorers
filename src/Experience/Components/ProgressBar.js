@@ -25,7 +25,7 @@ export default class ProgressBar {
     }
 
     refresh = () => {
-        instance.el.passed.style.width = `${instance.checkpointWidth * instance.program.currentCheckpoint}%`
+        instance.el.passed.style.height = `${instance.checkpointWidth * instance.program.currentCheckpoint}%`
 
         instance.el.checkpoints.forEach((checkpoint, index) => {
             checkpoint.removeAttribute('currentCheckpoint')
@@ -72,8 +72,8 @@ export default class ProgressBar {
 
     static HTML(checkpointWidth, program) {
         let generatedHTML = `
-            <div class="percentageBar bg-bke-purple h-1">
-                <div class="passed bg-bke-orange w-0 h-full transition-[width]" style="width: ${checkpointWidth * program.currentCheckpoint}%"></div>
+            <div class="percentageBar bg-bke-purple h-[calc(100%-2rem)] w-2 my-4 mx-auto absolute left-0 right-0">
+                <div class="passed bg-bke-orange w-full transition-[height]" style="height: ${checkpointWidth * program.currentCheckpoint}%"></div>
             </div>
             <div>`
         program.programData.forEach((data, index) => {
