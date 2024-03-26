@@ -32,42 +32,6 @@
     right: var(--app-padding) !important;
 }
 
-.chapter-progress {
-    @apply w-[480px] flex relative mb-8;
-
-    progress {
-        @apply absolute top-2 left-0 w-full h-8 border-2 bg-white/20 p-1.5 rounded-full;
-    }
-
-    progress::-moz-progress-bar {
-        @apply overflow-hidden rounded-full;
-    }
-
-    progress::-webkit-progress-bar {
-        @apply overflow-hidden rounded-full bg-white/20;
-    }
-
-    progress::-webkit-progress-value {
-        @apply bg-bke-blue transition;
-    }
-
-    svg {
-        @apply ml-auto h-12 drop-shadow-lg;
-    }
-
-    ul {
-        @apply w-full flex justify-end;
-
-        li {
-            @apply flex-1;
-        }
-
-        li.filled {
-            @apply text-bke-orange;
-        }
-    }
-}
-
 .celebrate {
     position: absolute;
     inset: 0;
@@ -159,7 +123,6 @@
     }
 }
 
-
 /* #region App views */
 
 .app-logo {
@@ -219,8 +182,8 @@
     position: relative;
     display: grid;
     place-content: center;
-    height: clamp(48px, 4vw, 72px);
-    width: clamp(48px, 4vw, 72px);
+    height: clamp(3rem, 4vw, 5rem);
+    width: clamp(3rem, 4vw, 5rem);
     background-image: url('../../static/interface/B_cube_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -228,8 +191,8 @@
     cursor: pointer;
 
     svg {
-        width: clamp(16px, 1.1vw, 40px);
-        height: clamp(16px, 1.1vw, 40px);
+        width: clamp(1.5rem, 1.1vw, 3rem);
+        height: clamp(1.5rem, 1.1vw, 3rem);
     }
 
     &:hover {
@@ -253,8 +216,8 @@
     position: relative;
     display: grid;
     place-content: center;
-    height: clamp(48px, 4vw, 72px);
-    width: clamp(48px, 4vw, 72px);
+    height: clamp(3rem, 4vw, 5rem);
+    width: clamp(3rem, 4vw, 5rem);
     background-image: url('../../static/interface/B_circle_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -262,8 +225,8 @@
     cursor: pointer;
 
     svg {
-        width: clamp(16px, 1.25vw, 24px);
-        height: clamp(16px, 1.25vw, 24px);
+        width: clamp(1.25rem, 1.1vw, 1.75rem);
+        height: clamp(1.25rem, 1.1vw, 1.75rem);
     }
 
     &[checkpoint] {
@@ -289,7 +252,7 @@
     display: grid;
     place-content: center;
     aspect-ratio: 293/201;
-    width: clamp(48px, 4vw, 72px);
+    width: clamp(3rem, 5vw, 6rem);
     background-image: url('../../static/interface/arrow_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -421,7 +384,7 @@
 
     &-heading {
         font-weight: bold;
-        font-size: clamp(1.15rem, 2vw, 2rem);
+        font-size: clamp(1.15rem, 2vw, 1.75rem);
     }
 
     &-date {
@@ -456,11 +419,11 @@
 
         &-heading {
             font-weight: bold;
-            font-size: clamp(1.15rem, 2vw, 2.25rem);
+            font-size: clamp(1.15rem, 2vw, 1.85rem);
         }
 
         &-text {
-            font-size: clamp(0.85rem, 1.25vw, 1.5rem);
+            font-size: clamp(0.85rem, 1.25vw, 1.35rem);
             margin-top: 4%;
             height: 60%;
             overflow-y: auto;
@@ -682,6 +645,7 @@ $themes: (
         padding-bottom: 3%;
         padding-inline: 4%;
         display: flex;
+        width: clamp(20rem, 80vw, 86rem);
 
         div {
             flex: 1;
@@ -696,18 +660,103 @@ $themes: (
         top: 10%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: clamp(1.35rem, 2vw, 3rem);
+        font-size: clamp(1.35rem, 1.5vw, 3rem);
         font-style: italic;
     }
 
     p {
-        font-size: clamp(1.35rem, 2vw, 3rem);
+        font-size: clamp(1.35rem, 1.35vw, 3rem);
+    }
+}
+
+#interactive-lever {
+    cursor: pointer;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.chapter-progress {
+    @apply w-[480px] flex relative mb-8;
+
+    progress {
+        @apply absolute top-2 left-0 w-full h-8 border-2 bg-white/20 p-1.5 rounded-full;
+    }
+
+    progress::-moz-progress-bar {
+        @apply overflow-hidden rounded-full;
+    }
+
+    progress::-webkit-progress-bar {
+        @apply overflow-hidden rounded-full bg-white/20;
+    }
+
+    progress::-webkit-progress-value {
+        @apply bg-bke-blue transition;
+    }
+
+    svg {
+        @apply ml-auto h-12 drop-shadow-lg;
+    }
+
+    ul {
+        @apply w-full flex justify-end;
+
+        li {
+            @apply flex-1;
+        }
+
+        li.filled {
+            @apply text-bke-orange;
+        }
+    }
+}
+
+.task-container {
+    background-image: url('../../static/textures/Task_BG.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &_box {
+        width: clamp(48rem, 75vw, 120rem);
+        background-image: url('../../static/frames/Task_Shape.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 974/529;
+        padding: 10% 5% 5%;
+    }
+
+    &_heading {
+        position: absolute;
+        top: 7.5%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(1.35rem, 1.5vw, 3rem);
+    }
+
+    &_prompts {
+        font-size: clamp(1.35rem, 1.5vw, 3rem);
+    }
+
+    &_tutorial {
+        width: clamp(20rem, 50%, 60rem);
+        aspect-ratio: 16/9;
+        text-align: center;
+
+        img {
+            display: inline-block;
+            max-height: 100%;
+        }
+    }
+}
+
+#helper-screen {
+    img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
 }
 
 
 /* #endregion */
-
-#interactive-lever {
-    cursor: pointer;
-}

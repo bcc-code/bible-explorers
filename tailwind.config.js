@@ -29,10 +29,7 @@ export default {
             backgroundImage: {
                 'control-room': "url('../../static/textures/control-room.png')",
                 'chapter-room': "url('../../static/textures/control-room-2.png')",
-                'big-screen-frame': "url('../../static/textures/big-screen-frame.svg')",
-                'small-screen-frame': "url('../../static/textures/small-screen-frame.svg')",
-                'map-texture': "url('../../static/textures/map.jpg')",
-                'lever-texture': "url('../../static/textures/lever.png')",
+                'task-background': "url('../../static/textures/Task_BG.jpg)",
                 'main-screen': "url('../../static/frames/Screen_1.png')",
                 'helper-screen': "url('../../static/frames/Screen_2.png')",
                 'top-mid-screen': "url('../../static/frames/Screen_3.png')",

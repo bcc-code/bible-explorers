@@ -139,7 +139,7 @@ experience.adjustScreensWrapperSize = () => {
     const paddingTop = Math.max(window.innerHeight * (minPaddingTopVh / 100), window.innerHeight * 0.01)
 
     dynamicDiv.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
-    closedCaption.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
+    // closedCaption.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
 
     dynamicDiv.style.paddingTop = `${paddingTop}px`
 }
