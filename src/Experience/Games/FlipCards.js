@@ -62,7 +62,7 @@ export default class FlipCards {
 
         instance.experience.interface.helperScreen.setAttribute('data-view', 'game-intro')
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
     }
 
@@ -149,7 +149,7 @@ export default class FlipCards {
         instance.experience.interface.gameContainer.append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     useCorrectAssetsSrcFlipCards() {
@@ -206,7 +206,7 @@ export default class FlipCards {
                         const flippedCards = document.querySelectorAll('.flipped')
 
                         if (flippedCards.length == instance.flipCards.cards.length) {
-                            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+                            instance.experience.navigation.next.className = 'button-arrow'
                         }
                     } else {
                         e.target.parentNode.classList.add('wrong-code')
@@ -230,7 +230,7 @@ export default class FlipCards {
     destroyFlipCards() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
     }
 

@@ -89,7 +89,7 @@ export default class MazeGame {
         document.querySelector('#game-popup').style.display = 'none'
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     setEventListeners() {
@@ -563,7 +563,7 @@ export default class MazeGame {
 
             if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-normal'
 
-            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+            instance.experience.navigation.next.className = 'button-arrow'
 
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1
         }
@@ -608,7 +608,7 @@ export default class MazeGame {
         instance.experience.gameIsOn = false
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }

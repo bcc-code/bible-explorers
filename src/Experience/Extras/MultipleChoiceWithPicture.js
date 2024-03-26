@@ -79,7 +79,7 @@ export default class MultipleChoiceWithPicture {
                         })
 
                         instance.experience.navigation.next.disabled = false
-                        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+                        instance.experience.navigation.next.className = 'button-arrow'
                     }
 
                     if (tries == 2 || answerFound) {
@@ -87,7 +87,7 @@ export default class MultipleChoiceWithPicture {
                         htmlAnswers[correctIndex].parentNode.classList.add('correct')
 
                         instance.experience.navigation.next.disabled = false
-                        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+                        instance.experience.navigation.next.className = 'button-arrow'
                     }
 
                     htmlAnswers.forEach((answer) => {
@@ -100,7 +100,7 @@ export default class MultipleChoiceWithPicture {
         instance.experience.interface.gameContainer.append(multipleChoiceWithPicture)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.next.disabled = false
     }
 
@@ -120,6 +120,6 @@ export default class MultipleChoiceWithPicture {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

@@ -70,7 +70,7 @@ export default class DavidsRefuge {
         })
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     useCorrectAssetsSrc() {
@@ -172,7 +172,7 @@ export default class DavidsRefuge {
 
                         gsap.to(selectGoat, { autoAlpha: 0 })
 
-                        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+                        instance.experience.navigation.next.className = 'button-arrow'
                     } else {
                         tooltip[0].innerText = instance.data.wrong_character_message
 
@@ -202,6 +202,6 @@ export default class DavidsRefuge {
     destroy() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

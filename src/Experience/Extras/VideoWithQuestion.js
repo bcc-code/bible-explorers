@@ -61,7 +61,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     saveAnswers() {
@@ -91,7 +91,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
         document.getElementById('video-question')?.remove()
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

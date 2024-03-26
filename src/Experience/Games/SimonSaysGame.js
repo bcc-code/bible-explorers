@@ -63,7 +63,7 @@ export default class SimonSays {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         for (let i = 0; i < instance.config.rounds; i++) {
             const ticker = document.createElement('div')
@@ -218,7 +218,7 @@ export default class SimonSays {
             </div>
         `)
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.querySelector('.simon-says .container').append(congratsHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')
@@ -259,6 +259,6 @@ export default class SimonSays {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

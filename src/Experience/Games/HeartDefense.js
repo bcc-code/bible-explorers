@@ -82,7 +82,7 @@ export default class HeartDefense {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     startGame() {
@@ -606,7 +606,7 @@ export default class HeartDefense {
             })
 
             nextLevelBTN.classList.remove('focused', 'pulsate')
-            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+            instance.experience.navigation.next.className = 'button-arrow'
             document.querySelector('.game-rounds')?.remove()
         }
 
@@ -670,7 +670,7 @@ export default class HeartDefense {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         instance.layer?.destroy()
         instance.experience.gameIsOn = false

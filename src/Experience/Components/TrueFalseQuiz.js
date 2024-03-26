@@ -29,7 +29,7 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
@@ -128,7 +128,7 @@ export default class TrueFalsQuiz {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = completionHTML
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     handleAudioPlay(event) {
@@ -188,7 +188,7 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('chapter')
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         // Reset any other states or data as needed
         instance.questionsAnsweredCorrectly = 0

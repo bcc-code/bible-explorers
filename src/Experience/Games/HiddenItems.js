@@ -53,7 +53,7 @@ export default class HiddenItems {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         if (instance.circlesVisible == 4) {
-            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+            instance.experience.navigation.next.className = 'button-arrow'
         } else {
             instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         }
@@ -96,7 +96,7 @@ export default class HiddenItems {
         }
 
         if (instance.circlesVisible == maxCirclesToAdd) {
-            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+            instance.experience.navigation.next.className = 'button-arrow'
         } else {
             instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         }
@@ -122,6 +122,6 @@ export default class HiddenItems {
     destroy() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

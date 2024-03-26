@@ -47,7 +47,7 @@ export default class QuestionAndCode {
         document.querySelector('.app-container').append(answersWrapper)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
@@ -64,7 +64,7 @@ export default class QuestionAndCode {
 
                 if (val == 0) {
                     instance.experience.navigation.next.innerHTML = ''
-                    instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+                    instance.experience.navigation.next.className = 'button-arrow'
                 } else {
                     instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
                 }
@@ -98,6 +98,6 @@ export default class QuestionAndCode {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

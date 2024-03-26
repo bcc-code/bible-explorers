@@ -40,7 +40,7 @@ export default class CableConnector {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         const spriteW = 180
         const spriteH = 100
@@ -531,7 +531,7 @@ export default class CableConnector {
             </div>
         `)
 
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.querySelector('.cable-connect .container').append(congratsHTML)
         document.querySelector('.cable-connect').classList.add('popup-visible')
@@ -556,7 +556,7 @@ export default class CableConnector {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }
 

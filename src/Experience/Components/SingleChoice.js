@@ -23,7 +23,7 @@ export default class SingleChoice {
 
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
@@ -59,7 +59,7 @@ export default class SingleChoice {
             console.log('Correct answer!')
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
-            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+            instance.experience.navigation.next.className = 'button-arrow'
 
             selectedOptionElement.classList.add('bg-white/10')
 
@@ -86,6 +86,6 @@ export default class SingleChoice {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

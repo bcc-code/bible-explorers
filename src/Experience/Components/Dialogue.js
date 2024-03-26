@@ -46,7 +46,7 @@ export default class Dialogue {
         document.querySelector('.app-container').append(dialogue)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.next.disabled = false
     }
 
@@ -68,7 +68,7 @@ export default class Dialogue {
                 // Check if all were visited
                 if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
-                    instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+                    instance.experience.navigation.next.className = 'button-arrow'
                 }
 
                 instance.setMessageHtml(instance.data[index].answer)
@@ -105,6 +105,6 @@ export default class Dialogue {
         document.querySelector('.message-from-dialogue')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

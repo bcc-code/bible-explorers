@@ -78,7 +78,7 @@ export default class ChooseNewKing {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     useCorrectAssetsSrc() {
@@ -183,7 +183,7 @@ export default class ChooseNewKing {
 
             instance.toggleGodVoice()
 
-            instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+            instance.experience.navigation.next.className = 'button-arrow'
         })
     }
 
@@ -231,6 +231,6 @@ export default class ChooseNewKing {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow button-arrow-default'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }
