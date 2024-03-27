@@ -3,7 +3,6 @@ import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _lang from '../Utils/Lang.js'
 import _appInsights from '../Utils/AppInsights.js'
-import { doc } from 'prettier'
 
 let instance = null
 
