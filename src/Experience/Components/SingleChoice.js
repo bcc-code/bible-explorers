@@ -56,7 +56,6 @@ export default class SingleChoice {
 
         if (selectedOption.option_statement) {
             // If the option is correct
-            console.log('Correct answer!')
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
             instance.experience.navigation.next.className = 'button-arrow'
@@ -71,7 +70,6 @@ export default class SingleChoice {
             })
         } else {
             // If the option is incorrect
-            console.log('Wrong answer!')
             instance.audio.playSound('wrong')
         }
     }

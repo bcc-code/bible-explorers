@@ -24,9 +24,6 @@ export default class TrueFalsQuiz {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.truefalse_quiz
 
-        console.log('true false quiz')
-        console.log(instance.data)
-
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
