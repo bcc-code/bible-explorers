@@ -41,6 +41,7 @@ export default class DuckGame {
             this.resizeCanvas()
             this.drawBackground()
             this.drawStartScreen()
+            this.drawModeInstructions()
         })
 
         // Initialize and bind resize event listener
@@ -48,6 +49,7 @@ export default class DuckGame {
             this.resizeCanvas()
             this.drawBackground()
             this.drawStartScreen()
+            this.drawModeInstructions()
         })
 
         // Adjusted in resizeCanvas method
@@ -98,6 +100,17 @@ export default class DuckGame {
         this.bgOffset = 0
         this.bgSpeed = 0.5
 
+        this.useGravity = true
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'm' || event.key === 'M') {
+                this.useGravity = !this.useGravity
+                console.log(`Gravity mode: ${this.useGravity ? 'ON' : 'OFF'}`)
+                // Redraw mode instructions with updated mode
+                this.drawModeInstructions()
+            }
+        })
+
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
@@ -109,35 +122,6 @@ export default class DuckGame {
         // Calculate scaling factors
         this.scaleX = this.canvas.width / this.baseWidth
         this.scaleY = this.canvas.height / this.baseHeight
-    }
-
-    drawBackground() {
-        // Clear only the dirty rectangles
-        this.dirtyRects.forEach((rect) => {
-            this.ctx.clearRect(rect.x, rect.y, rect.width, rect.height)
-        })
-
-        // Clear the dirty rectangles array
-        this.dirtyRects = []
-
-        // Calculate the number of repetitions needed to cover the canvas width
-        const numRepetitions = Math.ceil(this.canvas.width / this.bgImage.width) + 1
-
-        // Draw the background image for each repetition, maintaining full height
-        for (let i = 0; i < numRepetitions; i++) {
-            this.ctx.drawImage(this.bgImage, this.bgOffset + i * this.bgImage.width, 0, this.bgImage.width, this.canvas.height)
-        }
-    }
-
-    drawStartScreen() {
-        // Draw start screen message
-        this.ctx.fillStyle = 'white'
-        this.ctx.textAlign = 'center'
-        this.ctx.font = '36px Arial' // Increase font size
-        const message = 'Click to start the game'
-
-        // Draw message
-        this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2)
     }
 
     startGame() {
@@ -180,7 +164,7 @@ export default class DuckGame {
 
         // Start generating pipes
         this.pipesGeneratedCount = 0
-        this.pipesToWinRound = 32
+        this.pipesToWinRound = 24
         this.generatePipes()
 
         // Start the game loop
@@ -349,6 +333,9 @@ export default class DuckGame {
 
         // Draw game over screen
         this.drawGameOverScreen()
+        setTimeout(() => {
+            this.drawModeInstructions()
+        }, 100)
 
         // Remove player's event listeners to prevent memory leaks or unintended behavior
         this.player.removeEventListeners()
@@ -366,6 +353,9 @@ export default class DuckGame {
         this.roundCount++
         this.roundsCompleted++ // Increment rounds completed count
         this.drawWinGameScreen()
+        setTimeout(() => {
+            this.drawModeInstructions()
+        }, 100)
         cancelAnimationFrame(this.gameLoop)
 
         // Check if rounds completed count equals 5
@@ -374,6 +364,41 @@ export default class DuckGame {
             console.log('Congratulations! You have completed 5 rounds.')
             // You can add your custom actions here
         }
+    }
+
+    drawBackground() {
+        // Clear only the dirty rectangles
+        this.dirtyRects.forEach((rect) => {
+            this.ctx.clearRect(rect.x, rect.y, rect.width, rect.height)
+        })
+
+        // Clear the dirty rectangles array
+        this.dirtyRects = []
+
+        // Calculate the number of repetitions needed to cover the canvas width
+        const numRepetitions = Math.ceil(this.canvas.width / this.bgImage.width) + 1
+
+        // Draw the background image for each repetition, maintaining full height
+        for (let i = 0; i < numRepetitions; i++) {
+            this.ctx.drawImage(this.bgImage, this.bgOffset + i * this.bgImage.width, 0, this.bgImage.width, this.canvas.height)
+        }
+    }
+
+    drawStartScreen() {
+        const message = 'Click to start the game'
+        this.ctx.fillStyle = 'white'
+        this.ctx.textAlign = 'center'
+        this.ctx.font = '36px Arial'
+        this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2)
+    }
+
+    drawModeInstructions() {
+        const modeText = `Press M to switch mode: Gravity ${this.useGravity ? 'ON' : 'OFF'}`
+        this.ctx.font = '24px Arial'
+        this.ctx.fillStyle = 'white'
+        this.ctx.textAlign = 'center'
+        this.ctx.clearRect(0, this.canvas.height - 100, this.canvas.width, 100)
+        this.ctx.fillText(modeText, this.canvas.width / 2, this.canvas.height - 50)
     }
 
     drawGameOverScreen() {
@@ -549,8 +574,10 @@ class Player {
         this.game.markDirty(this.x, this.y, this.width, this.height)
 
         // Apply gravity
-        this.velocityY += this.gravity
-        this.y += this.velocityY
+        if (this.game.useGravity) {
+            this.velocityY += this.gravity
+            this.y += this.velocityY
+        }
 
         // Ensure the player stays within the canvas bounds
         if (this.y < 0) {
@@ -579,21 +606,52 @@ class Player {
     }
 
     handleKeyDown(event) {
-        if (event.key === ' ') {
-            this.spacePressed = true
+        switch (event.key) {
+            case ' ':
+                this.spacePressed = true
+                break
+            case 'ArrowUp':
+                this.upPressed = true
+                break
+            case 'ArrowDown':
+                this.downPressed = true
+                break
         }
     }
 
     handleKeyUp(event) {
-        if (event.key === ' ') {
-            this.spacePressed = false
+        switch (event.key) {
+            case ' ':
+                this.spacePressed = false
+                break
+            case 'ArrowUp':
+                this.upPressed = false
+                break
+            case 'ArrowDown':
+                this.downPressed = false
+                break
         }
     }
 
     update() {
-        if (this.spacePressed) {
-            this.jump()
+        if (this.game.useGravity) {
+            if (this.spacePressed) {
+                this.jump()
+            }
+        } else {
+            if (this.upPressed) {
+                this.y -= 5 * this.game.scaleY // Move up
+            } else if (this.downPressed) {
+                this.y += 5 * this.game.scaleY // Move down
+            }
         }
+
+        if (this.y < 0) {
+            this.y = 0
+        } else if (this.y + this.height > this.canvas.height) {
+            this.y = this.canvas.height - this.height
+        }
+
         this.draw()
         this.updateBoundingBox()
     }
