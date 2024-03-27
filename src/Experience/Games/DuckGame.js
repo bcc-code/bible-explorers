@@ -100,7 +100,7 @@ export default class DuckGame {
         this.bgOffset = 0
         this.bgSpeed = 0.5
 
-        this.useGravity = true
+        this.useGravity = false
 
         this.boundToggleGravityMode = this.toggleGravityMode.bind(this)
         document.addEventListener('keydown', this.boundToggleGravityMode)
