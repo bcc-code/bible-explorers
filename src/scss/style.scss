@@ -1,5 +1,12 @@
 :root {
     color-scheme: only light !important;
+
+    --button-image-path: '../../static/interface/';
+    --button-height: clamp(2rem, 3vw, 4rem);
+    --font-size-small: clamp(1rem, 0.75vw, 1.5rem);
+    --font-size-heading: clamp(1.35rem, 1.25vw, 3rem);
+    --font-size-text: clamp(1.15rem, 1.15vw, 2.5rem);
+
 }
 
 @import "./globals/variables.scss";
@@ -111,7 +118,7 @@
     display: none;
 
     img {
-        width: clamp(180px, 16vw, 320px);
+        width: clamp(6rem, 10vw, 12rem);
     }
 }
 
@@ -164,8 +171,8 @@
     position: relative;
     display: grid;
     place-content: center;
-    height: clamp(3rem, 4vw, 5rem);
-    width: clamp(3rem, 4vw, 5rem);
+    height: var(--button-height);
+    width: var(--button-height);
     background-image: url('../../static/interface/B_cube_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -174,8 +181,8 @@
 
     svg {
         pointer-events: none;
-        width: clamp(1.5rem, 1.1vw, 3rem);
-        height: clamp(1.5rem, 1.1vw, 3rem);
+        width: var(--font-size-small);
+        height: var(--font-size-small);
     }
 
     &:hover {
@@ -203,8 +210,8 @@
     position: relative;
     display: grid;
     place-content: center;
-    height: clamp(3rem, 4vw, 5rem);
-    width: clamp(3rem, 4vw, 5rem);
+    height: var(--button-height);
+    width: var(--button-height);
     background-image: url('../../static/interface/B_circle_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -213,8 +220,8 @@
 
     svg {
         pointer-events: none;
-        width: clamp(1.25rem, 1.1vw, 1.75rem);
-        height: clamp(1.25rem, 1.1vw, 1.75rem);
+        width: var(--font-size-small);
+        height: var(--font-size-small);
     }
 
     &[checkpoint] {
@@ -241,7 +248,7 @@
     display: grid;
     place-content: center;
     aspect-ratio: 293/201;
-    width: clamp(3rem, 5vw, 6rem);
+    width: var(--button-height);
     background-image: url('../../static/interface/arrow_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -283,20 +290,20 @@
     align-items: center;
     justify-content: center;
     gap: 5%;
-    height: clamp(3rem, 4vw, 5rem);
+    height: var(--button-height);
     background-image: url('../../static/interface/B_cube_wide_active.png');
     background-repeat: no-repeat;
     background-size: contain;
     pointer-events: auto;
     aspect-ratio: 565/258;
-    font-size: clamp(1.5rem, 1.1vw, 3rem);
+    font-size: var(--font-size-small);
     text-wrap: nowrap;
     cursor: pointer;
 
     svg {
         pointer-events: none;
-        width: clamp(1.5rem, 1.1vw, 3rem);
-        height: clamp(1.5rem, 1.1vw, 3rem);
+        width: var(--font-size-small);
+        height: var(--font-size-small);
     }
 
     &:hover {
@@ -319,20 +326,20 @@
     align-items: center;
     justify-content: center;
     gap: 5%;
-    height: clamp(3rem, 4vw, 5rem);
+    height: var(--button-height);
     background-image: url('../../static/interface/B_cube_wide_2_active.png');
     background-repeat: no-repeat;
     background-size: contain;
     pointer-events: auto;
     aspect-ratio: 721/258;
-    font-size: clamp(1.5rem, 1.1vw, 2rem);
+    font-size: var(--font-size-small);
     text-wrap: nowrap;
     cursor: pointer;
 
     svg {
         pointer-events: none;
-        width: clamp(1.5rem, 1.1vw, 3rem);
-        height: clamp(1.5rem, 1.1vw, 3rem);
+        width: var(--font-size-small);
+        height: var(--font-size-small);
     }
 
     &:hover {
@@ -375,10 +382,9 @@
 }
 
 .task-container_box .overlay {
+    mask-image: url('../../static/frames/Quiz_window_alpha.png');
     mask-repeat: no-repeat;
     mask-size: contain;
-    mask-image: url('../../static/frames/Quiz_window_alpha.png');
-
 }
 
 /* #endregion */
@@ -455,11 +461,11 @@
 
     &-heading {
         font-weight: bold;
-        font-size: clamp(1.15rem, 2vw, 1.75rem);
+        font-size: var(--font-size-heading);
     }
 
     &-date {
-        font-size: clamp(0.85rem, 1vw, 1.1rem);
+        font-size: var(--font-size-small);
         opacity: 0.4;
     }
 
@@ -489,12 +495,12 @@
         }
 
         &-heading {
+            font-size: var(--font-size-heading);
             font-weight: bold;
-            font-size: clamp(1.15rem, 2vw, 1.85rem);
         }
 
         &-text {
-            font-size: clamp(0.85rem, 1.25vw, 1.35rem);
+            font-size: var(--font-size-text);
             margin-top: 4%;
             height: 60%;
             overflow-y: auto;
@@ -676,7 +682,7 @@ $themes: (
 @each $theme, $bgColor in $themes {
     .tippy-box[data-theme~='#{$theme}'] {
         color: var(--clr-text);
-        font-size: clamp(0.85rem, 1vw, 1.1rem);
+        font-size: var(--font-size-small);
         background-color: $bgColor;
         padding: 0.25rem;
         border-radius: 0.25rem;
@@ -716,7 +722,7 @@ $themes: (
         padding-bottom: 3%;
         padding-inline: 4%;
         display: flex;
-        width: clamp(20rem, 80vw, 86rem);
+        width: clamp(439px, 50vw, 2495px);
 
         div {
             flex: 1;
@@ -728,15 +734,15 @@ $themes: (
 
     h1 {
         position: absolute;
-        top: 10%;
+        top: 12%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: clamp(1.35rem, 1.25vw, 3rem);
+        font-size: var(--font-size-heading);
         font-style: italic;
     }
 
     p {
-        font-size: clamp(1.15rem, 1.15vw, 2.5rem);
+        font-size: var(--font-size-text);
     }
 }
 
@@ -802,11 +808,11 @@ $themes: (
         top: 7.5%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: clamp(1.35rem, 1.5vw, 3rem);
+        font-size: var(--font-size-heading);
     }
 
     &_prompts {
-        font-size: clamp(1.35rem, 1.5vw, 3rem);
+        font-size: var(--font-size-text);
     }
 
     &_tutorial {
@@ -840,6 +846,10 @@ $themes: (
         aspect-ratio: 3721/1879;
     }
 
+    .task-container_prompts {
+        font-size: calc(var(--font-size-text) * 1.5);
+    }
+
     .progress-bar {
         &-container {
             position: absolute;
@@ -849,7 +859,7 @@ $themes: (
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 40%;
+            width: clamp(20rem, 30vw, 100%);
         }
 
         &-background,
@@ -891,7 +901,7 @@ $themes: (
 
         .step-number {
             color: white;
-            font-size: clamp(1rem, 1.1vw, 2rem);
+            font-size: var(--font-size-text);
             font-weight: bold;
         }
     }
@@ -909,7 +919,7 @@ $themes: (
     .quiz-item {
         >div {
             margin-inline: auto;
-            width: clamp(20rem, 60vw, 80%);
+            width: clamp(20rem, 45vw, 100%);
         }
 
         .correct .question-label .button-circle {
@@ -946,7 +956,7 @@ $themes: (
         }
 
         p {
-            font-size: clamp(1.25rem, 1.15vw, 2rem);
+            font-size: var(--font-size-text);
         }
 
         &:hover .button-circle {
@@ -955,8 +965,6 @@ $themes: (
 
     }
 
-
-
 }
 
 #childrenNames {
@@ -964,14 +972,15 @@ $themes: (
     background-repeat: no-repeat;
     background-size: cover;
     aspect-ratio: 2827/894;
-    width: clamp(20rem, 30vw, 60rem);
+    width: clamp(20rem, 17.5vw, 40rem);
 
     input {
         position: absolute;
         width: 58%;
         left: 10%;
-        bottom: 30%;
-        font-size: clamp(1.5rem, 1.25vw, 3rem);
+        bottom: 20%;
+        height: var(--button-height);
+        font-size: var(--font-size-small);
         background-color: transparent;
     }
 
@@ -987,9 +996,50 @@ $themes: (
     button {
         position: absolute;
         left: 72%;
-        bottom: 25%;
+        bottom: 20%;
 
     }
+}
+
+#single-choice {
+    ul li {
+        font-size: var(--font-size-text);
+    }
+}
+
+#true-false-quiz {
+
+    #quiz-content {
+        margin-top: 10%;
+    }
+
+    .question {
+        p {
+            font-size: calc(var(--font-size-text) * 1.5);
+        }
+    }
+
+    .quiz-completion-message {
+        font-size: calc(var(--font-size-text) * 1.5);
+    }
+
+    .answer-button {
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: clamp(10rem, 6vw, 24rem);
+        height: clamp(10rem, 6vw, 24rem);
+
+        &[data-answer="false"] {
+            background-image: url('../../static/interface/wrong_icon.png');
+        }
+
+        &[data-answer="true"] {
+            background-image: url('../../static/interface/correct_icon.png');
+        }
+    }
+
+
+
 }
 
 /* #endregion */

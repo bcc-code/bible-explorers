@@ -30,7 +30,7 @@ export default class SingleChoice {
     }
 
     setHTML() {
-        const optionsHtml = instance.data.options.map((o, index) => `<li class="single-choice-option cursor-pointer hover:bg-white/10 rounded-xl p-[5%]" data-index="${index}"><img src="${o.option_media}"/> <h2 class="mt-2 text-center">${o.option_text}</h2></li>`).join('')
+        const optionsHtml = instance.data.options.map((o, index) => `<li class="single-choice-option cursor-pointer hover:bg-white/10 rounded-xl p-[5%]" data-index="${index}"><img src="${o.option_media}"/> <h2 class="text-center">${o.option_text}</h2></li>`).join('')
 
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 grid place-content-center task-container" id="single-choice">

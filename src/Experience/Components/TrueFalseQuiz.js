@@ -45,7 +45,7 @@ export default class TrueFalsQuiz {
                 <div class="relative mx-auto task-container_box text-center">
                     ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
                     ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
-                    <div id="quiz-content" class="mt-24"></div> <!-- Container for dynamic question content -->
+                    <div id="quiz-content"></div> <!-- Container for dynamic question content -->
                 </div>
             </div>`
 
@@ -61,7 +61,7 @@ export default class TrueFalsQuiz {
     setHTMLForQuestion(index) {
         const question = instance.data.questions[index]
         const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
-        const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p class="text-4xl">${question.question_text}</p>`
+        const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p>${question.question_text}</p>`
         const audioButton = question.question_audio ? `<button class="audio-button button-cube-wider" data-audio="${question.question_audio.url}"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
 
         const questionHTML = `
@@ -69,8 +69,8 @@ export default class TrueFalsQuiz {
                     ${audioButton}
                     ${questionContent}
                     <div class="flex gap-12 items-center">
-                        <button class="answer-button h-24 w-24 bg-[url('../../static/interface/wrong_icon.png')] bg-contain bg-no-repeat" data-answer="false"></button>
-                        <button class="answer-button h-24 w-24 bg-[url('../../static/interface/correct_icon.png')] bg-contain bg-no-repeat" data-answer="true"></button>
+                        <button class="answer-button" data-answer="false"></button>
+                        <button class="answer-button" data-answer="true"></button>
                     </div>
                 </div>`
 
