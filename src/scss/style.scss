@@ -970,4 +970,37 @@ $themes: (
 
 }
 
+#childrenNames {
+    background-image: url('../../static/frames/LOGIN_bar.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    aspect-ratio: 2827/894;
+    width: clamp(20rem, 30vw, 60rem);
+
+    input {
+        position: absolute;
+        width: 58%;
+        left: 10%;
+        bottom: 30%;
+        font-size: clamp(1.5rem, 1.25vw, 3rem);
+        background-color: transparent;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    ::-webkit-input-placeholder {
+        color: #fff;
+        opacity: 0.4;
+    }
+
+    button {
+        position: absolute;
+        left: 72%;
+        bottom: 25%;
+
+    }
+}
+
 /* #endregion */
