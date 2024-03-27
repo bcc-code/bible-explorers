@@ -122,6 +122,11 @@ export default class DuckGame {
         // Calculate scaling factors
         this.scaleX = this.canvas.width / this.baseWidth
         this.scaleY = this.canvas.height / this.baseHeight
+
+        // Calculate aspect ratio and adjustment factor
+        const currentAspectRatio = this.canvas.width / this.canvas.height
+        const baseAspectRatio = this.baseWidth / this.baseHeight
+        this.aspectAdjustmentFactor = Math.min(1, baseAspectRatio / currentAspectRatio)
     }
 
     startGame() {
@@ -192,7 +197,7 @@ export default class DuckGame {
         }
 
         const basePipeSpeed = 2.5 // Base speed at 800x600 resolution
-        const pipeSpeed = basePipeSpeed * (this.canvas.width / this.baseWidth) // Adjust speed based on current canvas width
+        const pipeSpeed = basePipeSpeed * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
         const pipeGap = this.canvas.height / 3
         const minTopPipeY = this.canvas.height / 6
         const maxTopPipY = this.canvas.height - pipeGap - minTopPipeY
@@ -536,8 +541,8 @@ class Player {
         this.x = 50 * game.scaleX
         this.y = canvas.height / 2
         this.velocityY = 0
-        this.gravity = baseGravity * (canvas.height / 600)
-        this.jumpStrength = baseJumpStrength * (canvas.height / 600)
+        this.gravity = baseGravity * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor
+        this.jumpStrength = baseJumpStrength * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance
