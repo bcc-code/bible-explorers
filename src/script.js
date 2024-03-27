@@ -106,3 +106,37 @@ if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification)
     // document.body.appendChild(_gl.elementFromHtml(`<span style="background: red; color: white; position: absolute; top: 7rem; left: 1rem; padding: 0.5rem; border-radius: 1rem; z-index: 99">You are using: ${browserName}</span>`));
 }
+
+// adjust screens wrapper size
+const dynamicDiv = document.getElementById('screens-wrapper')
+const closedCaption = document.getElementById('closed-caption')
+const aspectRatio = 1.5
+experience.maxVW = 36
+const maxVH = 65
+const minPaddingTopVh = 6
+
+experience.adjustScreensWrapperSize = () => {
+    let vw = window.innerWidth * (experience.maxVW / 100)
+    let vh = window.innerHeight * (maxVH / 100)
+
+    // Calculate the width and height based on maintaining the aspect ratio
+    let divWidth = vh * aspectRatio
+    let divHeight = vh
+
+    // If calculated width exceeds max VW, adjust both width and height to maintain aspect ratio
+    if (divWidth > vw) {
+        divWidth = vw
+        divHeight = divWidth / aspectRatio
+    }
+
+    const paddingTop = Math.max(window.innerHeight * (minPaddingTopVh / 100), window.innerHeight * 0.01)
+
+    dynamicDiv.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
+    // closedCaption.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
+
+    dynamicDiv.style.paddingTop = `${paddingTop}px`
+}
+
+window.addEventListener('resize', experience.adjustScreensWrapperSize)
+
+experience.adjustScreensWrapperSize()

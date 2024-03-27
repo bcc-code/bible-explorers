@@ -53,13 +53,13 @@ export default class GameDescription {
 
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32 text-center">
-                    <h1 class="text-2xl tv:text-3xl font-bold mb-4">${instance.data.title}</h1>
-                    ${instance.data.prompts ? `<p>${instance.data.prompts[0].prompt}</p>` : ''}
-                    ${instance.data.tutorial ? `<div class="aspect-video max-w-[600px] mt-8">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
-                    <div class="flex justify-center mt-8">
-                        <button class="button-normal">${_s.miniGames.startGame}</button>
+            `<div class="absolute inset-0 grid place-content-center task-container" id="task-container">
+                <div class="relative mx-auto text-center task-container_box grid place-items-center gap-[4%]">
+                    <h1 class="task-container_heading">${instance.data.title}</h1>
+                    ${instance.data.prompts ? `<p class="task-container_prompts">${instance.data.prompts[0].prompt}</p>` : ''}
+                    ${instance.data.tutorial ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
+                    <div class="flex justify-center">
+                        <button class="button-cube-wider">${_s.miniGames.startGame}</button>
                     </div>
                 </div>
             </div>`
@@ -70,8 +70,8 @@ export default class GameDescription {
 
         instance.experience.interface.tasksDescription.append(container)
 
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     startGame() {
@@ -103,8 +103,8 @@ export default class GameDescription {
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
-        else return `<img src="" wdith="100%" height="100%" class="h-full" />`
+        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        else return `<img src="${url}" id="task-image" />`
     }
 
     useCorrectAssetsSrc() {
@@ -122,7 +122,7 @@ export default class GameDescription {
         document.querySelector('#task-container')?.remove()
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

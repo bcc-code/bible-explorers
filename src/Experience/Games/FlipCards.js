@@ -40,7 +40,7 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
-        const startGame = _gl.elementFromHtml(`<button class="button-normal w-full">${instance.confirmationScreen.cs_button}</button>`)
+        const startGame = _gl.elementFromHtml(`<button class="button-cube-wider w-full">${instance.confirmationScreen.cs_button}</button>`)
 
         startGame.addEventListener('click', instance.toggleFlipCards)
 
@@ -57,13 +57,13 @@ export default class FlipCards {
 
         taskContent.append(startGame)
 
-        instance.experience.interface.bigScreen.append(taskImage)
-        instance.experience.interface.smallScreen.append(taskContent)
+        instance.experience.interface.mainScreen.append(taskImage)
+        instance.experience.interface.helperScreen.append(taskContent)
 
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-intro')
+        instance.experience.interface.helperScreen.setAttribute('data-view', 'game-intro')
 
-        instance.experience.navigation.next.className = 'button-normal less-focused'
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
+        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
     }
 
     useCorrectAssetsSrcConfirmationScreen() {
@@ -148,8 +148,8 @@ export default class FlipCards {
 
         instance.experience.interface.gameContainer.append(game)
 
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     useCorrectAssetsSrcFlipCards() {
@@ -206,9 +206,7 @@ export default class FlipCards {
                         const flippedCards = document.querySelectorAll('.flipped')
 
                         if (flippedCards.length == instance.flipCards.cards.length) {
-                            instance.experience.navigation.next.classList.remove('less-focused')
-                            instance.experience.navigation.next.classList.add('focused')
-                            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+                            instance.experience.navigation.next.className = 'button-arrow'
                         }
                     } else {
                         e.target.parentNode.classList.add('wrong-code')
@@ -232,9 +230,7 @@ export default class FlipCards {
     destroyFlipCards() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
-
+        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
     }
 

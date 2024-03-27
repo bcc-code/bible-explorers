@@ -36,13 +36,13 @@ export default class VideoWithQuestion {
             `<div id="video-with-question" class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
                 <h1 class="text-2xl tv:text-3xl font-bold">${instance.data.question}</h1>
                 <textarea class="w-full text-bke-purple px-3 py-2 outline-none my-4 tv:my-8 tv:text-xl"></textarea>
-                <button class="button-normal w-full" type="submit" aria-label="submit question">${_s.task.submit}</button>
+                <button class="button-cube-wider w-full" type="submit" aria-label="submit question">${_s.task.submit}</button>
             </div>
             `
         )
 
-        instance.experience.interface.smallScreen.append(content)
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'game-description')
+        instance.experience.interface.helperScreen.append(content)
+        instance.experience.interface.helperScreen.setAttribute('data-view', 'game-description')
 
         const submitQuestion = content.querySelector('[aria-label="submit question"')
         submitQuestion.addEventListener('click', () => {
@@ -61,7 +61,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     saveAnswers() {
@@ -91,7 +91,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
         document.getElementById('video-with-question')?.remove()
         document.getElementById('video-question')?.remove()
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
+        instance.experience.navigation.next.className = 'button-arrow'
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

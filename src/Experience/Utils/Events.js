@@ -4,7 +4,8 @@ const ACTIONS = {
     NOTE_PLAYED: 'notePlayed',
     TIME_ELAPSED: 'timeElapsed',
     TIME_LAST_SECONDS: 'timeLastSeconds',
-    STEP_TOGGLED: 'stepToggled'
+    STEP_TOGGLED: 'stepToggled',
+    GO_HOME: 'goHome',
 }
 
 const EVENTS = {
@@ -13,7 +14,8 @@ const EVENTS = {
     NOTE_PLAYED: new Event('notePlayed'),
     TIME_ELAPSED: new Event('timeElapsed'),
     TIME_LAST_SECONDS: new Event('timeLastSeconds'),
-    STEP_TOGGLED: new Event('stepToggled')
+    STEP_TOGGLED: new Event('stepToggled'),
+    GO_HOME: new Event('goHome'),
 }
 
 export default { ACTIONS, EVENTS }

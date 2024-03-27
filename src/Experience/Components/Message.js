@@ -15,7 +15,7 @@ export default class Message {
         instance.navigation = instance.experience.navigation
     }
 
-    show(text = '', character = '') {
+    show(caption = '', character = '') {
         instance.destroy()
         instance.world = instance.experience.world
         instance.program = instance.world.program
@@ -23,10 +23,10 @@ export default class Message {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.message
 
-        if (!text) text = instance.data.text
+        if (!caption) caption = instance.data.text
         if (!character) character = instance.data ? instance.data.character : 'iris'
 
-        instance.setHtml(text, character)
+        instance.setHtml(caption, character)
         instance.setEventListeners()
 
         if (instance.data.audio) instance.audio.togglePlayTaskDescription(instance.data.audio)
@@ -37,23 +37,23 @@ export default class Message {
         }
     }
 
-    setHtml(text, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc" class="text-xl xl:text-2xl tv:text-3xl text-center mx-auto max-w-screen-lg">${text}</div>`)
+    setHtml(caption, character) {
+        const message = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`)
         instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {
             const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
-            document.querySelector('#chapter-dialogue').append(glitch)
+            document.querySelector('#closed-caption').append(glitch)
         }
 
         if (instance.data.open_question === true) {
             // instance.experience.navigation.next.disabled = true
             const openQuestion = _gl.elementFromHtml(
                 `<div id="open-question">
-              <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
-        </div`
+                    <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                </div`
             )
-            document.querySelector('#chapter-dialogue').append(openQuestion)
+            document.querySelector('#closed-caption').append(openQuestion)
 
             const textarea = openQuestion.querySelector('textarea')
             textarea.addEventListener('input', (e) => {

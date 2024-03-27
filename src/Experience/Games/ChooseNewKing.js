@@ -77,9 +77,8 @@ export default class ChooseNewKing {
 
         document.querySelector('.app-container').append(game)
 
-        instance.experience.navigation.next.classList.remove('focused')
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.classList.add('less-focused')
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     useCorrectAssetsSrc() {
@@ -184,9 +183,7 @@ export default class ChooseNewKing {
 
             instance.toggleGodVoice()
 
-            instance.experience.navigation.next.classList.remove('less-focused')
-            instance.experience.navigation.next.classList.add('focused')
-            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+            instance.experience.navigation.next.className = 'button-arrow'
         })
     }
 
@@ -233,8 +230,7 @@ export default class ChooseNewKing {
     destroy() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.classList.remove('less-focused')
-        instance.experience.navigation.next.classList.add('focused')
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

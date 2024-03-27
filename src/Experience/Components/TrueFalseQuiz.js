@@ -28,8 +28,8 @@ export default class TrueFalsQuiz {
         console.log(instance.data)
 
         instance.experience.setAppView('game')
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
@@ -41,10 +41,10 @@ export default class TrueFalsQuiz {
     setHTML() {
         if (!document.querySelector('#quiz-content')) {
             const staticHTML = `
-            <div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="true-false-quiz">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    ${instance.data.title ? `<h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h1>` : ''}
-                    ${instance.data.description ? `<p class="text-xl text-center">${instance.data.description}</p>` : ''}
+            <div class="absolute inset-0 grid place-content-center task-container" id="true-false-quiz">
+                <div class="relative mx-auto task-container_box text-center">
+                    ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
+                    ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
                     <div id="quiz-content" class="mt-24"></div> <!-- Container for dynamic question content -->
                 </div>
             </div>`
@@ -62,15 +62,15 @@ export default class TrueFalsQuiz {
         const question = instance.data.questions[index]
         const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
         const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p class="text-4xl">${question.question_text}</p>`
-        const audioButton = question.question_audio ? `<button class="audio-button button-normal" data-audio="${question.question_audio.url}">Play Audio</button>` : ''
+        const audioButton = question.question_audio ? `<button class="audio-button button-cube-wider" data-audio="${question.question_audio.url}"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
                     ${audioButton}
                     ${questionContent}
                     <div class="flex gap-12 items-center">
-                        <button class="answer-button h-24 w-24 bg-red-600" data-answer="false">No</button>
-                        <button class="answer-button h-24 w-24 bg-green-600" data-answer="true">Yes</button>
+                        <button class="answer-button h-24 w-24 bg-[url('../../static/interface/wrong_icon.png')] bg-contain bg-no-repeat" data-answer="false"></button>
+                        <button class="answer-button h-24 w-24 bg-[url('../../static/interface/correct_icon.png')] bg-contain bg-no-repeat" data-answer="true"></button>
                     </div>
                 </div>`
 
@@ -128,8 +128,7 @@ export default class TrueFalsQuiz {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = completionHTML
 
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     handleAudioPlay(event) {
@@ -188,8 +187,8 @@ export default class TrueFalsQuiz {
         document.querySelector('#true-false-quiz')?.remove()
 
         instance.experience.setAppView('chapter')
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
 
         // Reset any other states or data as needed
         instance.questionsAnsweredCorrectly = 0

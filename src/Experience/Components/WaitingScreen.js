@@ -1,4 +1,5 @@
 import Experience from '../Experience'
+import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals'
 import _e from '../Utils/Events.js'
 
@@ -16,57 +17,74 @@ export default class WaitingScreen {
         instance.program = instance.world.program
         instance.video = instance.program.video
 
+        instance.experience.maxVW = 36
+        instance.experience.adjustScreensWrapperSize()
+
         const id = instance.world.selectedChapter.lobby_video_loop
         instance.video.load('lobby-video-' + id)
         instance.video.play()
 
-        if (instance.experience.interface.smallScreen.querySelector('#add-names-form')) return
+        instance.videoBG = document.createElement('video')
+        instance.videoBG.setAttribute('src', './textures/Waitingscreen V003.mp4')
+        instance.videoBG.setAttribute('playsinline', '')
+        // instance.videoBG.setAttribute('muted', '')
+        instance.videoBG.setAttribute('autoplay', '')
+        instance.videoBG.setAttribute('loop', '')
+        instance.videoBG.style.position = 'fixed'
+        instance.videoBG.style.top = '0'
+        instance.videoBG.style.left = '0'
+        instance.videoBG.style.width = '100%'
+        instance.videoBG.style.height = '100%'
+        instance.videoBG.style.objectFit = 'cover'
+        instance.videoBG.style.zIndex = '-1'
 
-        const wrapper = _gl.elementFromHtml(`<div class="p-2 xl:p-4 tv:p-8 flex flex-col h-full" id="names-form"></div>`)
+        if (document.querySelector('#childrenNames')) return
+
+        const wrapper = _gl.elementFromHtml(`<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`)
         const form = _gl.elementFromHtml(
-            `<form id="add-names-form">
-                <input class="w-full h-12 bg-white text-bke-darkpurple outline-none text-lg px-4 mb-4"/>
-                <button type="submit" class="button-normal w-full">Submit name</button>
+            `<form id="childrenNames" class="absolute bottom-6 left-1/2 -translate-x-1/2">
+                <input placeholder="${_s.waitingScreen.submit}" />
+                <button type="submit" class="button-cube-wide">Add</button>
             </form>`
         )
 
-        const nameLabelContainer = _gl.elementFromHtml('<ul class="mt-4 flex-1 overflow-y-auto" id="names-label"></ul>')
+        const nameLabelContainer = _gl.elementFromHtml('<ul class="bg-black/40 overflow-y-auto h-full p-[12%]" id="names-label"></ul>')
 
-        wrapper.append(form, nameLabelContainer)
-        instance.experience.interface.smallScreen.setAttribute('data-view', '')
-        instance.experience.interface.smallScreen.append(wrapper)
+        wrapper.append(instance.videoBG, form)
+        instance.experience.interface.helperScreen.append(nameLabelContainer)
+        document.querySelector('#chapter-wrapper').prepend(wrapper)
 
-        form.querySelector('button').addEventListener('click', (e) => {
-            e.preventDefault()
-            instance.handleFormSubmission(form, nameLabelContainer)
-        })
-
-        form.querySelector('input').addEventListener('keyup', (e) => {
+        const inputField = form.querySelector('input')
+        inputField.addEventListener('keyup', (e) => {
             e.preventDefault()
             if (e.key === 'Enter') {
                 instance.handleFormSubmission(form, nameLabelContainer)
             }
         })
 
-        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.addEventListener('click', instance.destroy)
+        const submitBtn = form.querySelector('button')
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault()
+            instance.handleFormSubmission(form, nameLabelContainer)
+            inputField.focus()
+        })
+
+        inputField.focus()
+        instance.setEventListeners()
     }
 
     handleFormSubmission(form, container) {
-        const inputVal = form.querySelector('input').value.trim() // Trim input value to remove leading/trailing spaces
+        const inputVal = form.querySelector('input').value.trim()
 
         // Check if input value is not empty and not already in the names array before appending
         if (inputVal && !instance.names.includes(inputVal)) {
             instance.names.push(inputVal)
-            const nameLabel = _gl.elementFromHtml(`<li class="relative bg-white text-bke-darkpurple text-lg px-6 py-3 mb-4 mr-4 inline-block">${inputVal}<span class="absolute top-0 right-0 px-2 cursor-pointer">×</span></li>`)
+            const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative text-white text-2xl mb-4 flex items-center gap-4">${inputVal}<span class="px-2 cursor-pointer hidden group-hover:block">×</span></li>`)
             container.append(nameLabel)
-            console.log(instance.names)
 
             const removeButton = nameLabel.querySelector('span')
             removeButton.addEventListener('click', () => {
                 instance.handleRemoveName(nameLabel, inputVal)
-
-                console.log(instance.names)
             })
         }
 
@@ -81,27 +99,54 @@ export default class WaitingScreen {
         }
     }
 
-    destroy() {
-        instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+    setEventListeners() {
+        instance.experience.navigation.next.removeEventListener('click', instance.program.nextStep)
+        instance.experience.navigation.next.addEventListener('click', instance.goToFirstCheckpoint)
+
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        document.addEventListener(_e.ACTIONS.GO_HOME, instance.destroy)
+    }
+
+    removeEventListeners() {
+        instance.experience.navigation.next.removeEventListener('click', instance.goToFirstCheckpoint)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
 
-        instance.video?.defocus()
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        document.removeEventListener(_e.ACTIONS.GO_HOME, instance.destroy)
+    }
 
-        // Remove form event listeners
-        const form = instance.experience.interface.smallScreen.querySelector('#add-names-form')
+    goToFirstCheckpoint() {
+        instance.destroy()
+        instance.program.toggleStep()
+    }
+
+    destroy() {
+        const form = document.querySelector('#childrenNames')
         form.querySelector('button').removeEventListener('click', instance.handleFormSubmission)
         form.querySelector('input').removeEventListener('keyup', instance.handleFormSubmission)
 
-        // Remove all nameLabel event listeners
-        const removeButtons = instance.experience.interface.smallScreen.querySelectorAll('span')
+        const removeButtons = document.querySelector('#chapter-wrapper').querySelectorAll('span')
         removeButtons.forEach((removeButton) => {
             removeButton.removeEventListener('click', instance.handleRemoveName)
         })
 
-        // Remove all elements appended to smallScreen
-        instance.experience.interface.smallScreen.querySelector('#names-form').remove()
-        instance.experience.interface.smallScreen.setAttribute('data-view', 'map')
+        instance.removeEventListeners()
 
-        instance.program.toggleStep()
+        // Remove names from the helper screen
+        instance.experience.interface.helperScreen.innerHTML = ''
+
+        // Remove the video element
+        if (instance.videoBG) {
+            instance.videoBG.pause()
+            instance.videoBG.remove()
+        }
+        instance.video?.defocus()
+
+        // Remove all elements appended to smallScreen
+        document.querySelector('#waitingScreen').remove()
+
+        // Adjust screen wrappers
+        instance.experience.maxVW = 90
+        instance.experience.adjustScreensWrapperSize()
     }
 }

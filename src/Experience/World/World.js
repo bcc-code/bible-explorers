@@ -106,7 +106,7 @@ export default class World {
         // Set chapter content/cards
         instance.setChapters()
 
-        instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
+        // instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
     }
 
     setCategories() {
@@ -128,7 +128,7 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-normal uppercase font-medium min-w-40" data-slug="${category.slug}">${category.name}</button></li>`)
+        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-cube-wider" data-slug="${category.slug}">${category.name}</button></li>`)
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 
@@ -153,27 +153,28 @@ export default class World {
 
     setChapterHtml(chapter) {
         let chapterHtml = _gl.elementFromHtml(
-            `<li class="chapter group mb-4 tv:mb-8 last:mb-0 ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
-                <div class="h-32 py-3 px-4 tv:h-40 tv:p-6 relative isolate cursor-pointer transition bg-bke-purple group-hover:shadow-[-6px_8px_0_theme(colors.bke.orange)] group-[.selected]:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]  ">
-                    <div class="chapter-image absolute right-0 top-0 w-32 tv:w-40 -z-10 aspect-square after:absolute after:inset-0 after:bg-gradient-to-r after:from-bke-purple grid place-items-center"></div>
-                    <h1 class="text-2xl tv:text-3xl font-bold">${chapter.title}</h1>
-                    <div class="tv:text-xl font-medium opacity-70">${chapter.date}</div>
-                    <div class="hidden chapter-status mt-2">
-                        <button class="chapter__offline button-normal absolute right-4 bottom-4 group-[.downloaded]:hidden z-10">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#download-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <div class="chapter__downloading w-1/2 hidden group-[.downloading]:flex items-center gap-2">
-                            <span class="title text-sm tv:text-base">${_s.offline.downloading}</span>
-                            <span class="downloading-progress">
-                                <span class="progress-line"></span>
-                            </span>
-                            <span class="downloading-label text-sm tv:text-base"></span>
+            `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
+                <a href="javascript:void(0)" class="chapter-box">
+                    <div class="chapter-mask">
+                        <h1 class="chapter-heading">${chapter.title}</h1>
+                        <div class="chapter-date">${chapter.date}</div>
+                    </div>
+                    <button class="chapter__offline button-cube">
+                        <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                    </button>
+                </a>
+                <div class="chapter-status">
+                    <div class="chapter__downloading">
+                        <span class="downloading-title">${_s.offline.downloading}</span>
+                        <div class="downloading-progress">
+                            <span class="progress-line"></span>
                         </div>
-                        <div class="chapter__download-failed hidden group-[.failed]:block text-bke-orange text-sm tv:text-base">${_s.offline.downloadFailed}</div>
-                        <div class="chapter__downloaded hidden group-[.downloaded]:inline-flex items-center gap-2 bg-bke-orange text-bke-purple px-2 py-1 rounded-md">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#check-solid" fill="currentColor"></use></svg>
-                            <span class="text-sm tv:text-base">${_s.offline.availableOffline.title}</span>
-                        </div>
+                        <span class="downloading-label"></span>
+                    </div>
+                    <div class="chapter__download-failed">${_s.offline.downloadFailed}</div>
+                    <div class="chapter__downloaded">
+                        <svg><use href="#check-solid" fill="currentColor"></use></svg>
+                        <span>${_s.offline.availableOffline.title}</span>
                     </div>
                 </div>
             </li>`
@@ -203,12 +204,11 @@ export default class World {
         })
 
         const details = _gl.elementFromHtml(`
-            <div id="chapter-description" class="max-h-full relative overflow-y-auto p-3 tv:p-8 bg-bke-purple transition shadow-[0_0_0_2px_theme(colors.bke.orange)] hover:shadow-[-6px_8px_0_theme(colors.bke.orange),0_0_0_2px_theme(colors.bke.orange)]">
-                    <h1 class="text-2xl tv:text-3xl font-bold my-4">${chapter.title}</h1>
-                    <div class="mb-3 py-2 tv:mb-6 tv:py-4 border-b-2 border-white/20 tv:text-xl">
-                        <div>${chapter.content}</div>
-                        <div class="attachments my-2 tv:my-4"></div>
-                    </div>
+            <div class="chapter-description">
+                <div class="chapter-content relative">
+                    <h1 class="chapter-description-heading">${chapter.title}</h1>
+                    <div class="chapter-description-text"> ${chapter.content}</div>
+                </div>
             </div>`)
 
         if (chapter.other_attachments.length) {
@@ -220,18 +220,17 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="inline-flex items-center mt-2 mr-2 tv:mt-4 tv:mr-4 gap-2 transition duration-300 text-bke-orange hover:text-bke-orange/80" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#book-solid" fill="currentColor"></use></svg>
-                            <span>${_s.chapter.activityDescLabel}</span>
+                        <a class="button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg><use href="#book-solid" fill="currentColor"></use></svg>
                         </a>`)
 
-                    details.querySelector('.attachments').append(guide)
+                    details.prepend(guide)
                 }
             })
         }
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-            const info = _gl.elementFromHtml(`<ul class="text-bke-accent flex gap-8 my-4"></ul>`)
+            const info = _gl.elementFromHtml(`<ul class="text-bke-accent gap-8 hidden"></ul>`)
 
             details.append(info)
 
@@ -263,17 +262,25 @@ export default class World {
         instance.experience.interface.chaptersDescription.append(details)
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
+
+        tippy('.chapter-guide', {
+            theme: 'explorers',
+            content: _s.chapter.activityDescLabel,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'auto',
+        })
     }
 
     removeDescriptionHtml() {
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
-        if (this.chapterSelectWrapper.querySelector('#chapter-description')) this.chapterSelectWrapper.querySelector('#chapter-description').remove()
+        if (this.chapterSelectWrapper.querySelector('.chapter-description')) this.chapterSelectWrapper.querySelector('.chapter-description').remove()
     }
 
     chapterEventListeners() {
         this.chapterSelectWrapper.querySelectorAll('.chapter').forEach((chapter) => {
             chapter.addEventListener('click', () => {
-                if (document.querySelector('#chapter-description')) document.querySelector('#chapter-description').remove()
+                if (document.querySelector('.chapter-description')) document.querySelector('.chapter-description').remove()
 
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
@@ -312,26 +319,26 @@ export default class World {
             content: _s.offline.download.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'right',
+            placement: 'auto',
         })
 
-        tippy('.chapter__downloaded', {
+        tippy('.chapter__downloaded span', {
             theme: 'explorers',
             content: _s.offline.availableOffline.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'right',
+            placement: 'auto',
         })
     }
 
     setChapterBgImage(chapter) {
-        const img = _gl.elementFromHtml(`<img src="${chapter.thumbnail}" class="object-cover w-full h-full" />`)
-        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-image`).append(img)
+        const img = _gl.elementFromHtml(`<div class="chapter-image"><img src="${chapter.thumbnail}" /></div>`)
+        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-mask`).prepend(img)
     }
 
     setChapterDescriptionBgImage(chapter) {
-        const img = _gl.elementFromHtml(`<img src="${chapter.thumbnail}" class="object-cover aspect-[16/5]" />`)
-        document.querySelector('#chapter-description').prepend(img)
+        const img = _gl.elementFromHtml(`<div class="chapter-description-image"><img src="${chapter.thumbnail}"/></div>`)
+        document.querySelector('.chapter-description').prepend(img)
     }
 
     // Download
@@ -511,32 +518,32 @@ export default class World {
         facts.forEach((fact) => instance.fetchAndCacheAsset(fact.image.url))
     }
 
-    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
+    cacheTaskDescriptionAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
     }
 
-    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
+    cacheTaskDescriptionVideos(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.video))
     }
 
-    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
+    cacheTaskDescriptionMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
     }
 
-    cacheTaskDescriptionAudios(steps) {
+    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.audio))
     }
 
-    cacheTaskDescriptionVideos(steps) {
+    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.video))
     }
 
-    cacheTaskDescriptionMedia(steps) {
+    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.media))
     }
@@ -722,6 +729,8 @@ export default class World {
         document.querySelector('#fullscreen-setting input').checked = false
 
         if (document.fullscreenElement) document.exitFullscreen()
+
+        document.dispatchEvent(_e.EVENTS.GO_HOME)
     }
 
     preselectChapter() {

@@ -22,21 +22,21 @@ export default class SingleChoice {
         instance.data = instance.stepData.single_choice
 
         instance.experience.setAppView('game')
-        instance.experience.navigation.next.innerHTML = _s.miniGames.skip
-        instance.experience.navigation.next.className = 'button-normal less-focused'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
     }
 
     setHTML() {
-        const optionsHtml = instance.data.options.map((o, index) => `<li class="single-choice-option" data-index="${index}"><img src="${o.option_media}"/> <h2 class="mt-2 text-center">${o.option_text}</h2></li>`).join('')
+        const optionsHtml = instance.data.options.map((o, index) => `<li class="single-choice-option cursor-pointer hover:bg-white/10 rounded-xl p-[5%]" data-index="${index}"><img src="${o.option_media}"/> <h2 class="mt-2 text-center">${o.option_text}</h2></li>`).join('')
 
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="single-choice">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    ${instance.data.title ? `<h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.data.title}</h1>` : ''}
-                    ${instance.data.description ? `<p class="text-xl text-center">${instance.data.description}</p>` : ''}
+            `<div class="absolute inset-0 grid place-content-center task-container" id="single-choice">
+                <div class="relative mx-auto task-container_box grid place-content-center text-center">
+                    ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
+                    ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
                     ${optionsHtml ? `<ul class="flex gap-8 mt-8">${optionsHtml}</ul>` : ''}
                 </div>
             </div>`
@@ -51,6 +51,7 @@ export default class SingleChoice {
 
     handleOptionSelect = (event) => {
         const selectedIndex = event.currentTarget.dataset.index
+        const selectedOptionElement = event.currentTarget
         const selectedOption = instance.data.options[selectedIndex]
 
         if (selectedOption.option_statement) {
@@ -58,8 +59,9 @@ export default class SingleChoice {
             console.log('Correct answer!')
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
-            instance.experience.navigation.next.className = 'button-normal shadow-border'
-            instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+            instance.experience.navigation.next.className = 'button-arrow'
+
+            selectedOptionElement.classList.add('bg-white/10')
 
             // Disable further clicks on options
             document.querySelectorAll('.single-choice-option').forEach((option) => {
@@ -82,7 +84,8 @@ export default class SingleChoice {
         document.querySelector('#single-choice')?.remove()
 
         instance.experience.setAppView('chapter')
-        instance.experience.navigation.next.className = 'button-normal shadow-border'
-        instance.experience.navigation.next.innerHTML = instance.experience.icons.next
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

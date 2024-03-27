@@ -1,12 +1,12 @@
 :root {
 
-    --clr-primary: rgb(3, 150, 227);
-    --clr-secondary: rgb(252, 176, 78);
-    --clr-text: rgb(62, 48, 109);
+    --clr-primary: theme(colors.bke.blue);
+    --clr-secondary: theme(colors.bke.orange);
+    --clr-text: theme(colors.bke.purple);
 
-    --bg-default: rgb(62, 48, 109);
-    --bg-dark: rgb(12, 10, 22);
-    --bg-with-opacity: rgba(62, 48, 109, 0.8);
+    --bg-default: theme(colors.bke.purple);
+    --bg-dark: theme(colors.bke.darkpurple);
+    --bg-with-opacity: theme(colors.bke.purple);
 
     --gradient-dark: linear-gradient(90deg, var(--bg-dark), var(--bg-default));
 
