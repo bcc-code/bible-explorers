@@ -10,8 +10,8 @@ export default class DuckGame {
         this.experience = new Experience()
 
         // Base resolution
-        this.baseWidth = 800
-        this.baseHeight = 600
+        this.baseWidth = 1440
+        this.baseHeight = 900
     }
 
     toggleGame() {
@@ -102,14 +102,8 @@ export default class DuckGame {
 
         this.useGravity = true
 
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'm' || event.key === 'M') {
-                this.useGravity = !this.useGravity
-                console.log(`Gravity mode: ${this.useGravity ? 'ON' : 'OFF'}`)
-                // Redraw mode instructions with updated mode
-                this.drawModeInstructions()
-            }
-        })
+        this.boundToggleGravityMode = this.toggleGravityMode.bind(this)
+        document.addEventListener('keydown', this.boundToggleGravityMode)
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -159,6 +153,7 @@ export default class DuckGame {
 
         // Remove click event listener
         this.canvas.removeEventListener('click', this.startGameClickHandler)
+        document.removeEventListener('keydown', this.boundToggleGravityMode)
 
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this, this.playerImage)
@@ -169,7 +164,7 @@ export default class DuckGame {
 
         // Start generating pipes
         this.pipesGeneratedCount = 0
-        this.pipesToWinRound = 24
+        this.pipesToWinRound = 16
         this.generatePipes()
 
         // Start the game loop
@@ -196,15 +191,15 @@ export default class DuckGame {
             return // Do not generate more pipes if the target has been reached
         }
 
-        const basePipeSpeed = 2.5 // Base speed at 800x600 resolution
+        const basePipeSpeed = 4 // Base speed at 800x600 resolution
         const pipeSpeed = basePipeSpeed * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
         const pipeGap = this.canvas.height / 3
         const minTopPipeY = this.canvas.height / 6
-        const maxTopPipY = this.canvas.height - pipeGap - minTopPipeY
+        const maxTopPipeY = this.canvas.height - pipeGap - minTopPipeY
         const x = this.canvas.width
 
         const yIncrement = 50
-        let y = Math.random() * (maxTopPipY - minTopPipeY) + minTopPipeY
+        let y = Math.random() * (maxTopPipeY - minTopPipeY) + minTopPipeY
         y = Math.floor(y / yIncrement) * yIncrement
 
         this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
@@ -227,11 +222,12 @@ export default class DuckGame {
         }
 
         // Define a minimum distance before generating a new pipe
-        const minDistance = 200 * this.scaleX // Adjust based on your game's difficulty and speed
+        const originalMinDistance = 340
+        const minDistance = originalMinDistance * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
 
         // Check if it's time to generate a new pipe
         if (distanceFromLastPipe >= minDistance) {
-            this.generatePipes() // Call your existing method to generate a new pipe
+            this.generatePipes()
         }
     }
 
@@ -326,6 +322,7 @@ export default class DuckGame {
     gameOverCallback() {
         // Game over logic
         this.gameOver = true
+        document.addEventListener('keydown', this.boundToggleGravityMode)
         console.log('Game over!')
 
         // Stop timer
@@ -352,6 +349,8 @@ export default class DuckGame {
 
     winGame() {
         this.gameWon = true
+        document.addEventListener('keydown', this.boundToggleGravityMode)
+
         console.log('You win!')
         this.stopTimer()
         this.bibleBoxSpawned = true
@@ -359,9 +358,11 @@ export default class DuckGame {
         this.roundCount++
         this.roundsCompleted++ // Increment rounds completed count
         this.drawWinGameScreen()
+
         setTimeout(() => {
             this.drawModeInstructions()
         }, 100)
+
         cancelAnimationFrame(this.gameLoop)
 
         // Check if rounds completed count equals 5
@@ -505,6 +506,13 @@ export default class DuckGame {
         this.ctx.fillText(`Time: ${this.timer}s`, this.canvas.width - 10, 30)
     }
 
+    toggleGravityMode(event) {
+        if (event.key === 'm' || event.key === 'M') {
+            this.useGravity = !this.useGravity
+            // console.log(`Gravity mode: ${this.useGravity ? 'ON' : 'OFF'}`)
+            this.drawModeInstructions()
+        }
+    }
     destroy() {
         // Clear canvas
         instance.ctx.clearRect(0, 0, instance.canvas.width, instance.canvas.height)
@@ -533,8 +541,8 @@ export default class DuckGame {
 
 class Player {
     constructor(canvas, gameOverCallback, game, playerImage) {
-        const baseGravity = 0.4 // Adjusted for 800x600
-        const baseJumpStrength = -6 // Adjusted for 800x600
+        const baseGravity = 0.8
+        const baseJumpStrength = -10
 
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
@@ -552,7 +560,7 @@ class Player {
         const originalHeight = 152
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 32 * game.scaleX
+        this.width = 64 * game.scaleX
         this.height = this.width * aspectRatio
 
         // Define the bounding box
@@ -648,17 +656,12 @@ class Player {
                 this.jump()
             }
         } else {
+            const movementAdjustment = 8 * this.game.scaleY * this.game.aspectAdjustmentFactor
             if (this.upPressed) {
-                this.y -= 5 * this.game.scaleY // Move up
+                this.y -= movementAdjustment // Move up, adjusted for aspect ratio
             } else if (this.downPressed) {
-                this.y += 5 * this.game.scaleY // Move down
+                this.y += movementAdjustment // Move down, adjusted for aspect ratio
             }
-        }
-
-        if (this.y < 0) {
-            this.y = 0
-        } else if (this.y + this.height > this.canvas.height) {
-            this.y = this.canvas.height - this.height
         }
 
         this.draw()
@@ -688,7 +691,7 @@ class Pipe {
         const originalHeight = 2000
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 48 * game.scaleX
+        this.width = 80 * game.scaleX
         this.height = this.width * aspectRatio
     }
 
@@ -741,7 +744,7 @@ class BibleBox {
         const originalHeight = 1088
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 64 * game.scaleX
+        this.width = 96 * game.scaleX
         this.height = this.width * aspectRatio
     }
 
