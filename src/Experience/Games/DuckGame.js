@@ -100,7 +100,7 @@ export default class DuckGame {
         this.bgOffset = 0
         this.bgSpeed = 0.5
 
-        this.useGravity = true
+        this.useGravity = false
 
         this.boundToggleGravityMode = this.toggleGravityMode.bind(this)
         document.addEventListener('keydown', this.boundToggleGravityMode)
@@ -124,9 +124,6 @@ export default class DuckGame {
     }
 
     startGame() {
-        // Implement game start logic here
-        console.log('Game started!')
-
         // Reset game over and win game flags
         this.gameOver = false
         this.gameWon = false
@@ -164,7 +161,7 @@ export default class DuckGame {
 
         // Start generating pipes
         this.pipesGeneratedCount = 0
-        this.pipesToWinRound = 16
+        this.pipesToWinRound = 10
         this.generatePipes()
 
         // Start the game loop
@@ -323,7 +320,6 @@ export default class DuckGame {
         // Game over logic
         this.gameOver = true
         document.addEventListener('keydown', this.boundToggleGravityMode)
-        console.log('Game over!')
 
         // Stop timer
         this.stopTimer()
@@ -351,7 +347,6 @@ export default class DuckGame {
         this.gameWon = true
         document.addEventListener('keydown', this.boundToggleGravityMode)
 
-        console.log('You win!')
         this.stopTimer()
         this.bibleBoxSpawned = true
         this.bibleBox = null
@@ -368,8 +363,6 @@ export default class DuckGame {
         // Check if rounds completed count equals 5
         if (this.roundsCompleted === 5) {
             // Perform actions for completing 5 rounds
-            console.log('Congratulations! You have completed 5 rounds.')
-            // You can add your custom actions here
         }
     }
 
@@ -493,7 +486,6 @@ export default class DuckGame {
 
         if (this.invisibleWall && this.detectCollision(player.boundingBox, this.invisibleWall)) {
             if (!this.playerHasInteractedWithBox) {
-                console.log('Missed the box!')
                 this.gameOverCallback()
             }
         }
@@ -509,7 +501,6 @@ export default class DuckGame {
     toggleGravityMode(event) {
         if (event.key === 'm' || event.key === 'M') {
             this.useGravity = !this.useGravity
-            // console.log(`Gravity mode: ${this.useGravity ? 'ON' : 'OFF'}`)
             this.drawModeInstructions()
         }
     }

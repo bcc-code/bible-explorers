@@ -254,7 +254,6 @@ export default class Quiz {
             document.getElementById('loader').style.display = 'none'
 
             const responseData = await response.json()
-            console.log('Success:', responseData)
             return true
         } catch (error) {
             console.error('Error:', error)

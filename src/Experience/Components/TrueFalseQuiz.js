@@ -24,17 +24,12 @@ export default class TrueFalsQuiz {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.truefalse_quiz
 
-        console.log('true false quiz')
-        console.log(instance.data)
-
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
-        instance.attachEventListeners()
-
         instance.questionsAnsweredCorrectly = 0
     }
 
@@ -62,11 +57,12 @@ export default class TrueFalsQuiz {
         const question = instance.data.questions[index]
         const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
         const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p>${question.question_text}</p>`
-        const audioButton = question.question_audio ? `<button class="audio-button button-cube-wider" data-audio="${question.question_audio.url}"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
+        const audioButton = question.question_audio ? `<button class="audio-button button-cube-wider"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
                     ${audioButton}
+                    <audio id="quizAudio" class="hidden sr-only" preload="auto" crossOrigin="anonymous"></audio>
                     ${questionContent}
                     <div class="flex gap-12 items-center">
                         <button class="answer-button" data-answer="false"></button>
@@ -77,7 +73,24 @@ export default class TrueFalsQuiz {
         // Update only the dynamic part of the content
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = questionHTML
-        instance.attachEventListeners() // Reattach event listeners for the new content
+        instance.attachEventListeners()
+    }
+
+    moveToNextQuestion() {
+        instance.currentQuestionIndex += 1
+        if (instance.currentQuestionIndex < instance.data.questions.length) {
+            instance.setHTMLForQuestion(instance.currentQuestionIndex)
+        } else {
+            instance.handleQuizCompletion()
+        }
+    }
+
+    handleQuizCompletion() {
+        const completionHTML = `<div class="quiz-completion-message">Quiz completed! You answered ${instance.questionsAnsweredCorrectly} out of ${instance.data.questions.length} questions correctly.</div>`
+        const quizContentContainer = document.querySelector('#quiz-content')
+        quizContentContainer.innerHTML = completionHTML
+
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     handleAnswer = (event) => {
@@ -114,76 +127,62 @@ export default class TrueFalsQuiz {
         }, 500) // Adjust time as needed
     }
 
-    moveToNextQuestion() {
-        instance.currentQuestionIndex += 1
-        if (instance.currentQuestionIndex < instance.data.questions.length) {
-            instance.setHTMLForQuestion(instance.currentQuestionIndex)
-        } else {
-            instance.handleQuizCompletion()
-        }
-    }
-
-    handleQuizCompletion() {
-        const completionHTML = `<div class="quiz-completion-message">Quiz completed! You answered ${instance.questionsAnsweredCorrectly} out of ${instance.data.questions.length} questions correctly.</div>`
-        const quizContentContainer = document.querySelector('#quiz-content')
-        quizContentContainer.innerHTML = completionHTML
-
-        instance.experience.navigation.next.className = 'button-arrow'
-    }
-
     handleAudioPlay(event) {
-        const button = event.target
-        const audioUrl = button.getAttribute('data-audio')
+        const questionIndex = event.target.closest('.question').getAttribute('data-index')
+        const question = instance.data.questions[questionIndex]
 
-        // Fade out background music
+        if (!question.question_audio) {
+            console.error('No audio URL found for this question')
+            return
+        }
+
+        const audioUrl = question.question_audio.url
+        const button = event.target
+        const quizAudio = document.getElementById('quizAudio')
+
         instance.audio.fadeOutBgMusic()
 
-        // If there's already an audio playing, pause it and reset the current time
-        if (instance.quizAudio && !instance.quizAudio.paused) {
-            instance.quizAudio.pause()
-            instance.quizAudio.currentTime = 0 // Reset the audio playback to the start
+        if (quizAudio && !quizAudio.paused) {
+            return
+            // quizAudio.pause()
+            // quizAudio.currentTime = 0
         }
 
-        // Initialize the quiz audio with the new URL
-        instance.quizAudio = new Audio(audioUrl)
-        instance.quizAudio.play()
+        quizAudio.src = audioUrl
 
-        // Once the quiz audio ends, fade in the background music
-        instance.quizAudio.onended = () => {
+        button.disabled = true
+
+        quizAudio.onplay = () => {
+            button.disabled = false
+        }
+
+        quizAudio.onpause = () => {
+            button.disabled = false
+        }
+
+        quizAudio.play().catch((e) => {
+            console.error('Error playing audio:', e)
+        })
+
+        quizAudio.onended = () => {
+            button.disabled = false
             instance.audio.fadeInBgMusic()
         }
     }
 
     attachEventListeners() {
-        instance.answerListeners = []
-        instance.audioListeners = []
+        const gameContainer = instance.experience.interface.gameContainer
 
-        const answerButtons = document.querySelectorAll('.answer-button')
-        answerButtons.forEach((button) => {
-            button.removeEventListener('click', this.handleAnswer)
-            button.addEventListener('click', this.handleAnswer)
-        })
-
-        const audioButtons = document.querySelectorAll('.audio-button')
-        audioButtons.forEach((button) => {
-            button.removeEventListener('click', this.handleAudioPlay)
-            button.addEventListener('click', this.handleAudioPlay)
+        gameContainer.addEventListener('click', (event) => {
+            if (event.target.closest('.answer-button')) {
+                this.handleAnswer(event)
+            } else if (event.target.closest('.audio-button')) {
+                this.handleAudioPlay(event)
+            }
         })
     }
 
     destroy() {
-        instance.answerListeners.forEach(({ button, listener }) => {
-            button.removeEventListener('click', listener)
-        })
-
-        instance.audioListeners.forEach(({ button, listener }) => {
-            button.removeEventListener('click', listener)
-        })
-
-        // Clear references to prevent memory leaks
-        instance.answerListeners = []
-        instance.audioListeners = []
-
         document.querySelector('#true-false-quiz')?.remove()
 
         instance.experience.setAppView('chapter')
