@@ -1,5 +1,5 @@
 {
-  "name": "bible-explorers-app",
+  "name": "bible-explorers",
   "version": "1.2.1",
   "description": "App for Bible Explorers",
   "main": ".vite/build/main.js",
@@ -14,7 +14,8 @@
     "preview": "vite preview",
     "start": "electron-forge start",
     "package": "electron-builder --config=electron_builder.js",
-    "publish": "electron-forge publish"
+    "publish": "electron-builder --config=electron_builder.js --publish",
+    "publish:forge": "electron-forge publish"
   },
   "author": "BCC Media",
   "license": "GNU AGPLv3",
@@ -28,7 +29,7 @@
     "cannon-es": "^0.20.0",
     "cannon-es-debugger": "^1.0.0",
     "canvas-confetti": "^1.6.0",
-    "electron-fetch": "^1.9.1",
+    "electron-log": "^5.1.2",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.8",

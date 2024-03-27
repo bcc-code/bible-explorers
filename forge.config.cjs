@@ -52,16 +52,16 @@ module.exports = {
             config: {
                 build: [
                     {
+                        entry: 'preload/preload.js',
+                        config: 'vite.preload.config.mjs',
+                    },
+                    {
+                        entry: 'main/main.js',
+                        config: 'vite.main.config.mjs',
+                    },
+                    {
                         entry: 'index.html',
                         config: 'vite.main.config.mjs',
-                    },
-                    {
-                        entry: 'main.js',
-                        config: 'vite.main.config.mjs',
-                    },
-                    {
-                        entry: 'preload.js',
-                        config: 'vite.preload.config.mjs',
                     },
                 ],
                 renderer: [

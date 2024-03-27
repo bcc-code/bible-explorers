@@ -3,13 +3,12 @@
  * @type {import('electron-builder').Configuration}
  */
 const config = {
-    appId: 'media.bcc.bible-explorers',
-    productName: 'Bible Explorers App',
-    protocols: [{ name: 'Custom Bible-Explorers', schemes: ['bible-explorers'] }],
+    appId: 'io.biblekids.explorers',
+    productName: 'Bible Explorers',
     mac: {
-        category: 'public.app-category.music',
+        category: 'public.app-category.game',
         entitlements: 'build/entitlements.mac.plist',
-        icon: 'static/app.icns',
+        icon: 'static/favicon.icns',
         hardenedRuntime: true,
         darkModeSupport: true,
         gatekeeperAssess: true,
@@ -28,7 +27,7 @@ const config = {
         target: ['nsis', 'zip'],
     },
     linux: {
-        category: 'Player',
+        category: 'Game',
         desktop: {
             Keywords: 'bcc;bible;explorers;brunstad;christian;church;edification;faith;media',
             SingleMainWindow: true,
@@ -54,6 +53,16 @@ const config = {
         ],
         packageCategory: 'sound',
     },
+    publish: [
+        {
+            provider: 'github',
+            owner: 'bcc-code',
+            repo: 'bible-explorers',
+            releaseType: 'release',
+            private: true,
+            token: '',
+        },
+    ],
 }
 
 // To debug the auto update on Mac, you can right click on Bible-Explorers.app and "Show package contents".

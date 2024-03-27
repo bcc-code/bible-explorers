@@ -1,6 +1,5 @@
 import { jwtDecode } from 'jwt-decode'
 import url from 'url'
-import fetch from 'electron-fetch'
 import keyService from './keyService.js'
 
 const config = {
