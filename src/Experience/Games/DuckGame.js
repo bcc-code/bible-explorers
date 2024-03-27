@@ -164,7 +164,7 @@ export default class DuckGame {
 
         // Start generating pipes
         this.pipesGeneratedCount = 0
-        this.pipesToWinRound = 16
+        this.pipesToWinRound = 10
         this.generatePipes()
 
         // Start the game loop
