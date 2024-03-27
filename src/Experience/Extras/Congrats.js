@@ -33,7 +33,7 @@ export default class Congrats {
 
         const bibleCards = _gl.elementFromHtml(`
             <div class="modal">
-                <video class="aspect-video w-full" id="bibleCards" src="textures/Biblebox_Anim_V001.webm" muted autoplay loop></video>
+                <video class="aspect-video w-full" id="bibleCards" src="textures/Biblebox_Anim_V002.webm" muted autoplay loop></video>
             </div>
         `)
 
