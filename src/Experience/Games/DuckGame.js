@@ -222,7 +222,7 @@ export default class DuckGame {
         }
 
         // Define a minimum distance before generating a new pipe
-        const originalMinDistance = 340
+        const originalMinDistance = (this.canvas.width / 6) * this.aspectAdjustmentFactor
         const minDistance = originalMinDistance * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
 
         // Check if it's time to generate a new pipe
@@ -658,9 +658,9 @@ class Player {
         } else {
             const movementAdjustment = 8 * this.game.scaleY * this.game.aspectAdjustmentFactor
             if (this.upPressed) {
-                this.y -= movementAdjustment // Move up, adjusted for aspect ratio
+                this.y -= movementAdjustment
             } else if (this.downPressed) {
-                this.y += movementAdjustment // Move down, adjusted for aspect ratio
+                this.y += movementAdjustment
             }
         }
 
