@@ -191,8 +191,9 @@ export default class DuckGame {
             return // Do not generate more pipes if the target has been reached
         }
 
+        const basePipeSpeed = 2.5 // Base speed at 800x600 resolution
+        const pipeSpeed = basePipeSpeed * (this.canvas.width / this.baseWidth) // Adjust speed based on current canvas width
         const pipeGap = this.canvas.height / 3
-        const pipeSpeed = 3 * this.scaleX
         const minTopPipeY = this.canvas.height / 6
         const maxTopPipY = this.canvas.height - pipeGap - minTopPipeY
         const x = this.canvas.width
@@ -527,13 +528,16 @@ export default class DuckGame {
 
 class Player {
     constructor(canvas, gameOverCallback, game, playerImage) {
+        const baseGravity = 0.4 // Adjusted for 800x600
+        const baseJumpStrength = -6 // Adjusted for 800x600
+
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = 50 * game.scaleX
         this.y = canvas.height / 2
         this.velocityY = 0
-        this.gravity = 0.4 * game.scaleY
-        this.jumpStrength = -6 * game.scaleY
+        this.gravity = baseGravity * (canvas.height / 600)
+        this.jumpStrength = baseJumpStrength * (canvas.height / 600)
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance
