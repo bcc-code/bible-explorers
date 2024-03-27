@@ -56,7 +56,7 @@ export default class Quiz {
                         <button class="button-cube" id="next-question">
                             <svg><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="button-normal" id="submit-quiz" type="submit">
+                        <button class="button-cube-wider" id="submit-quiz" type="submit">
                             ${_s.task.submit}
                         </button>
                     </div>`
@@ -89,7 +89,7 @@ export default class Quiz {
                 })
             } else {
                 this.openQuestions++
-                const selfAnswer = _gl.elementFromHtml(`<div><textarea rows="8" placeholder="${q.placeholder}" class="w-full text-bke-purple px-3 py-2 rounded-md outline-none my-4 xl:my-6 tv:my-8 text-xl tv:text-2xl"></textarea></div>`)
+                const selfAnswer = _gl.elementFromHtml(`<div><textarea rows="8" placeholder="${q.placeholder}" class="w-full bg-transparent px-3 py-2 rounded-md outline-none my-4 xl:my-6 tv:my-8 text-xl tv:text-2xl"></textarea></div>`)
                 container.append(selfAnswer)
             }
 

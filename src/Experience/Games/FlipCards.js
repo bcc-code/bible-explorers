@@ -40,7 +40,7 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
-        const startGame = _gl.elementFromHtml(`<button class="button-normal w-full">${instance.confirmationScreen.cs_button}</button>`)
+        const startGame = _gl.elementFromHtml(`<button class="button-cube-wider w-full">${instance.confirmationScreen.cs_button}</button>`)
 
         startGame.addEventListener('click', instance.toggleFlipCards)
 

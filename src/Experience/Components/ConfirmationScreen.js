@@ -42,7 +42,7 @@ export default class ConfirmationScreen {
                     <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.stepData.details.title}</h1>
                     ${instance.stepData.details.prompts ? `<p>${instance.stepData.details.prompts[0].prompt}</p>` : ''}
                     ${instance.data.cs_image ? `<div class="aspect-video max-w-[600px] mt-8 mx-auto" id="task-image"><img src="${instance.data.cs_image}" width="100%" height="100%" class="h-full" /></div>` : ''}
-                    ${instance.data.cs_button !== '' ? `<div class="flex justify-center mt-8"><button class="button-normal">${instance.data.cs_button}</button></div>` : ''}
+                    ${instance.data.cs_button !== '' ? `<div class="flex justify-center mt-8"><button class="button-cube-wider">${instance.data.cs_button}</button></div>` : ''}
                 </div>
             </div>`
         )

@@ -62,7 +62,7 @@ export default class TrueFalsQuiz {
         const question = instance.data.questions[index]
         const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
         const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p class="text-4xl">${question.question_text}</p>`
-        const audioButton = question.question_audio ? `<button class="audio-button button-normal" data-audio="${question.question_audio.url}">Play Audio</button>` : ''
+        const audioButton = question.question_audio ? `<button class="audio-button button-cube-wider" data-audio="${question.question_audio.url}"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">

@@ -79,7 +79,7 @@ export default class MazeGame {
           </div>
           <div class="game-popup w-full grid place-items-center" id="game-popup">
             <h1 class="text-2xl tv:text-3xl font-bold mb-8">${_s.miniGames.completed.title}</h1>
-            <button class="button-normal shadow-border pointer-events-auto" id="new-level">${_s.miniGames.nextRound}</button>
+            <button class="button-cube-wider shadow-border pointer-events-auto" id="new-level">${_s.miniGames.nextRound}</button>
           </div>
         </div>
         <div id="maze-canvas" class="game-canvas"></div>
@@ -561,7 +561,7 @@ export default class MazeGame {
             document.querySelector('#game-popup h1').textContent = _s.miniGames.completed.title
             document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound
 
-            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-normal'
+            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-cube-wider'
 
             instance.experience.navigation.next.className = 'button-arrow'
 

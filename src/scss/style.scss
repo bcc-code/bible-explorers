@@ -16,20 +16,6 @@
 
 @import "tailwindcss/utilities";
 
-@layer components {
-
-    .button-normal {
-        @apply flex gap-2 h-10 min-w-10 px-2 text-sm tv:px-4 tv:gap-4 tv:h-14 tv:min-w-14 tv:text-lg items-center justify-center cursor-pointer bg-bke-purple tracking-wider transition xl:hover:shadow-hover disabled:pointer-events-none disabled:opacity-20;
-    }
-
-    .less-focused {
-        @apply opacity-40 hover:opacity-100;
-    }
-
-}
-
-
-
 
 .intercom-namespace .intercom-messenger-frame {
     right: var(--app-padding) !important;
@@ -105,8 +91,7 @@
     }
 }
 
-
-
+/* #region VideoAPI */
 #videos-container .video-js:not(.vjs-fullscreen) .vjs-control-bar {
     transform: translateX(30px) translateY(-30px);
     width: calc(100% - 60px);
@@ -117,6 +102,8 @@
         display: none;
     }
 }
+
+/* #endregion */
 
 /* #region App views */
 
@@ -303,6 +290,7 @@
     pointer-events: auto;
     aspect-ratio: 565/258;
     font-size: clamp(1.5rem, 1.1vw, 3rem);
+    text-wrap: nowrap;
     cursor: pointer;
 
     svg {
@@ -338,6 +326,7 @@
     pointer-events: auto;
     aspect-ratio: 721/258;
     font-size: clamp(1.5rem, 1.1vw, 2rem);
+    text-wrap: nowrap;
     cursor: pointer;
 
     svg {

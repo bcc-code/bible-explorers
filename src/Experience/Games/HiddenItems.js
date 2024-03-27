@@ -46,7 +46,6 @@ export default class HiddenItems {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.classList.add('less-focused')
     }
 
     setEventListeners() {

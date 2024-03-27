@@ -59,7 +59,7 @@ export default class GameDescription {
                     ${instance.data.prompts ? `<p class="task-container_prompts">${instance.data.prompts[0].prompt}</p>` : ''}
                     ${instance.data.tutorial ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
                     <div class="flex justify-center">
-                        <button class="button-normal">${_s.miniGames.startGame}</button>
+                        <button class="button-cube-wider">${_s.miniGames.startGame}</button>
                     </div>
                 </div>
             </div>`

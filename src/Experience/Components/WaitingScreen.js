@@ -48,7 +48,7 @@ export default class WaitingScreen {
             </form>`
         )
 
-        const nameLabelContainer = _gl.elementFromHtml('<ul class="p-4 bg-black/40 overflow-y-auto h-full" id="names-label"></ul>')
+        const nameLabelContainer = _gl.elementFromHtml('<ul class="bg-black/40 overflow-y-auto h-full p-[12%]" id="names-label"></ul>')
 
         wrapper.append(instance.videoBG, form)
         instance.experience.interface.helperScreen.append(nameLabelContainer)

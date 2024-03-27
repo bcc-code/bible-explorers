@@ -35,9 +35,9 @@ export default class CodeUnlock {
     unlockScreenHTML() {
         const title = instance.program.getCurrentStepData().details.title
         const unlockScreen = _gl.elementFromHtml(`
-            <div class="code-unlock absolute inset-0 bg-bke-darkpurple grid place-content-center" id="code-unlock">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${title}</h1>
+            <div class="code-unlock absolute inset-0 task-container grid place-content-center" id="code-unlock">
+                <div class="relative mx-auto task-container_box grid place-content-center">
+                    <h1 class="task-container_heading">${title}</h1>
                     <div class="code-unlock-device">
                         <div class="code-unlock-code"></div>
                         <div class="code-unlock-keyboard"></div>
