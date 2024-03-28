@@ -56,6 +56,8 @@ export default class WaitingScreen {
         instance.experience.interface.helperScreen.append(nameLabelContainer)
         document.querySelector('#chapter-wrapper').prepend(wrapper)
 
+        // Input field
+
         const inputField = form.querySelector('input')
         inputField.addEventListener('keyup', (e) => {
             e.preventDefault()
@@ -64,6 +66,10 @@ export default class WaitingScreen {
             }
         })
 
+        inputField.focus()
+
+        // Submit button
+
         const submitBtn = form.querySelector('button')
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault()
@@ -71,7 +77,12 @@ export default class WaitingScreen {
             inputField.focus()
         })
 
-        inputField.focus()
+        // Add initial names
+
+        instance.names.forEach((name) => {
+            nameLabelContainer.append(instance.generateNameLabel(name))
+        })
+
         instance.setEventListeners()
     }
 
@@ -81,16 +92,21 @@ export default class WaitingScreen {
         // Check if input value is not empty and not already in the names array before appending
         if (inputVal && !instance.names.includes(inputVal)) {
             instance.names.push(inputVal)
-            const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative flex items-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`)
-            container.append(nameLabel)
-
-            const removeButton = nameLabel.querySelector('span')
-            removeButton.addEventListener('click', () => {
-                instance.handleRemoveName(nameLabel, inputVal)
-            })
+            container.append(instance.generateNameLabel(inputVal))
         }
 
         form.querySelector('input').value = '' // Reset input field regardless of whether name was added or not
+    }
+
+    generateNameLabel(inputVal) {
+        const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative flex items-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`)
+
+        const removeButton = nameLabel.querySelector('span')
+        removeButton.addEventListener('click', () => {
+            instance.handleRemoveName(nameLabel, inputVal)
+        })
+
+        return nameLabel
     }
 
     handleRemoveName(nameLabel, name) {
