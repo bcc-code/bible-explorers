@@ -45,7 +45,7 @@ export default class Quiz {
                     <div class="progress-bar-background">
                         <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
                     </div>
-                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button-circle" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
+                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
                 </div>
                 <div class="overlay" id="overlay" style="display:none;"></div>
                 <div id="quiz-wrapper"><div id="loader" class="loader" style="display:none;"></div></div>
