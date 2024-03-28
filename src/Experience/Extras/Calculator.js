@@ -102,10 +102,11 @@ export default class Calculator {
         this.waitForSecondNumber = false
     }
 
-    show() {
+    show(parentElement = null) {
         this.createRootElement()
         this.displayElement = this.rootElement.querySelector('#display')
-        this.experience.interface.tasksDescription.append(this.rootElement)
+
+        if (parentElement) parentElement.append(this.rootElement)
 
         this.clear()
         this.bindEvents()

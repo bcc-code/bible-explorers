@@ -27,7 +27,6 @@ export default class TaskDescriptionWithCalculatorScreen {
         instance.setHtml()
         if (instance.data.cs_image) instance.useCorrectAssetsSrc()
 
-        instance.calculator.show()
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
@@ -50,10 +49,11 @@ export default class TaskDescriptionWithCalculatorScreen {
         )
 
         const nextStep = container.querySelector('button')
-
         if (nextStep) nextStep.addEventListener('click', instance.program.nextStep)
 
         instance.experience.interface.tasksDescription.append(container)
+
+        instance.calculator.show(container.querySelector('.task-container_box'))
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
