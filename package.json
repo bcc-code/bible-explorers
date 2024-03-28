@@ -57,5 +57,8 @@
     "tailwindcss": "^3.4.1",
     "vite": "^4.3.9",
     "vite-plugin-pwa": "^0.16.4"
+  },
+  "optionalDependencies": {
+    "dmg-license": "^1.0.11"
   }
 }
