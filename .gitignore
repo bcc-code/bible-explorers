@@ -91,6 +91,8 @@ typings/
 # Electron-Forge
 out/
 
-dist
+dist/
+dist-app/
 .vercel
 .DS_store
+package-lock.json

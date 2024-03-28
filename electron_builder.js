@@ -5,10 +5,19 @@
 const config = {
     appId: 'io.biblekids.explorers',
     productName: 'Bible Explorers',
+    files: ['!node_modules'],
+    icon: './static/favicon.png',
+    includeSubNodeModules: false,
+    directories: {
+        output: 'dist-app',
+    },
+    win: {
+        target: 'nsis',
+    },
     mac: {
         category: 'public.app-category.game',
         entitlements: 'build/entitlements.mac.plist',
-        icon: 'static/favicon.icns',
+        icon: './static/favicon.icns',
         hardenedRuntime: true,
         darkModeSupport: true,
         gatekeeperAssess: true,
@@ -22,9 +31,6 @@ const config = {
         notarize: {
             teamId: process.env.APPLE_TEAM_ID || '',
         },
-    },
-    win: {
-        target: ['nsis', 'zip'],
     },
     linux: {
         category: 'Game',
@@ -51,7 +57,7 @@ const config = {
             // > The Recommends field should list packages that would be found together with this one in all but unusual installations.
             'desktop-file-utils',
         ],
-        packageCategory: 'sound',
+        packageCategory: 'game',
     },
     publish: [
         {

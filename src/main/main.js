@@ -6,10 +6,6 @@ import { createAuthWindow, createLogoutWindow } from './authProcess.js'
 import dns from 'dns'
 import { refreshTokens } from './authService.js'
 
-if (require('electron-squirrel-startup')) {
-    app.quit()
-}
-
 export const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 1280,
@@ -25,10 +21,10 @@ export const createWindow = () => {
         icon: 'static/favicon.png',
     })
 
-    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-        mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)
+    if (!app.isPackaged && process.env['ELECTRON_RENDERER_URL']) {
+        mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
     } else {
-        mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
+        mainWindow.loadFile(path.join(__dirname, '../build/index.html'))
     }
 
     mainWindow.maximize()
@@ -53,13 +49,15 @@ export const showWindow = async () => {
         // Needed when offline
         dns.resolve('explorers.biblekids.io', (err) => {
             online = !err
-            if (online) {
-                createAuthWindow()
-            } else {
-                createWindow()
-            }
+            online ? createAuthWindow() : createWindow()
         })
     }
+}
+
+// Limit the app to a single instance and pass on arguments to the second instance (calls the "second-instance" event)
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+    app.quit()
 }
 
 // This method will be called when Electron has finished
