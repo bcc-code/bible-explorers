@@ -827,6 +827,11 @@ $themes: (
         aspect-ratio: 3721/1879;
     }
 
+    .task-container_heading {
+        width: max(100%, 100px);
+        text-align: center;
+    }
+
     .task-container_prompts {
         font-size: calc(var(--font-size-text) * 1.5);
     }
