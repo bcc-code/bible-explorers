@@ -153,9 +153,12 @@ export default class Quiz {
 
         submitQuiz.addEventListener('click', async () => {
             const wasSuccessful = await instance.saveAnswers()
+
             if (wasSuccessful) {
-                instance.destroy()
-                instance.program.nextStep()
+                instance.experience.celebrate({ particleCount: 100, spread: 160 })
+                instance.world.audio.playSound('task-completed')
+                submitQuiz.style.display = 'none'
+                document.getElementById('quiz-wrapper').innerHTML = `<p class="task-container_prompts text-center font-bold">${_s.miniGames.completed.title}</p>`
             }
         })
     }
@@ -235,9 +238,10 @@ export default class Quiz {
             }
 
             const responseData = await response.json()
-            console.log(responseData)
+            return true
         } catch (error) {
             console.error('Error:', error)
+            return false
         }
     }
 
