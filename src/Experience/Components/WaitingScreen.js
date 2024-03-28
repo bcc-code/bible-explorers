@@ -79,7 +79,7 @@ export default class WaitingScreen {
         // Check if input value is not empty and not already in the names array before appending
         if (inputVal && !instance.names.includes(inputVal)) {
             instance.names.push(inputVal)
-            const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative text-white text-2xl mb-4 flex items-center gap-4">${inputVal}<span class="px-2 cursor-pointer hidden group-hover:block">×</span></li>`)
+            const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative flex items-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`)
             container.append(nameLabel)
 
             const removeButton = nameLabel.querySelector('span')
