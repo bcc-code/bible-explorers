@@ -15,7 +15,7 @@
     "dev:electron": "electron-vite dev",
     "build:electron": "electron-vite build",
     "package": "electron-builder --config=electron_builder.js",
-    "publish": "electron-builder --config=electron_builder.js --publish"
+    "publish": "electron-builder --config=electron_builder.js --publish always"
   },
   "author": "BCC Media",
   "license": "GNU AGPLv3",

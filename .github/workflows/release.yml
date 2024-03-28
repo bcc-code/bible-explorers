@@ -84,7 +84,7 @@ jobs:
               run: npm run build:electron
 
             - name: Building the Electron app for Mac
-              run: npm run package
+              run: npm run publish
               if: matrix.os == 'macos-latest'
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -96,7 +96,7 @@ jobs:
                   APPLE_TEAM_ID: KJ6LCYQ3A8
 
             - name: Building the Electron app for Windows
-              run: npm run package
+              run: npm run publish
               if: matrix.os != 'macos-latest'
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
