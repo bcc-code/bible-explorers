@@ -12,9 +12,6 @@ export default class TrueFalsQuiz {
         instance.experience = new Experience()
         instance.debug = instance.experience.debug
         instance.offline = new Offline()
-
-        this.handleAnswer = this.handleAnswer.bind(this)
-        this.handleAudioPlay = this.handleAudioPlay.bind(this)
     }
 
     show() {
@@ -27,10 +24,11 @@ export default class TrueFalsQuiz {
         instance.experience.setAppView('game')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
         instance.questionsAnsweredCorrectly = 0
+
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     setHTML() {
@@ -48,7 +46,7 @@ export default class TrueFalsQuiz {
         }
 
         if (instance.data.questions.length > 0) {
-            instance.currentQuestionIndex = 0 // Start with the first question
+            instance.currentQuestionIndex = 0
             instance.setHTMLForQuestion(instance.currentQuestionIndex)
         }
     }
@@ -57,7 +55,7 @@ export default class TrueFalsQuiz {
         const question = instance.data.questions[index]
         const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
         const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p>${question.question_text}</p>`
-        const audioButton = question.question_audio ? `<button class="audio-button button-cube-wider"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
+        const audioButton = question.question_audio ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
@@ -65,12 +63,11 @@ export default class TrueFalsQuiz {
                     <audio id="quizAudio" class="hidden sr-only" preload="auto" crossOrigin="anonymous"></audio>
                     ${questionContent}
                     <div class="flex gap-12 items-center">
-                        <button class="answer-button" data-answer="false"></button>
-                        <button class="answer-button" data-answer="true"></button>
+                        <button class="answer-button" data-answer="false" id="answer-button-false"></button>
+                        <button class="answer-button" data-answer="true" id="answer-button-true"></button>
                     </div>
                 </div>`
 
-        // Update only the dynamic part of the content
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = questionHTML
         instance.attachEventListeners()
@@ -78,6 +75,7 @@ export default class TrueFalsQuiz {
 
     moveToNextQuestion() {
         instance.currentQuestionIndex += 1
+
         if (instance.currentQuestionIndex < instance.data.questions.length) {
             instance.setHTMLForQuestion(instance.currentQuestionIndex)
         } else {
@@ -96,35 +94,30 @@ export default class TrueFalsQuiz {
     handleAnswer = (event) => {
         event.stopPropagation()
 
-        // If there's an audio playing, stop it
+        const button = event.target
+        const questionElement = button.closest('.question')
+        questionElement.querySelectorAll('.answer-button').forEach((btn) => (btn.disabled = true))
+
         if (instance.quizAudio && !instance.quizAudio.paused) {
             instance.quizAudio.pause()
-            instance.quizAudio.currentTime = 0 // Reset the audio playback to the start
+            instance.quizAudio.currentTime = 0
             instance.audio.fadeInBgMusic()
         }
 
-        const button = event.target
-        const questionElement = button.closest('.question')
         const correctAnswer = questionElement.getAttribute('data-correct') === 'true'
         const userAnswer = button.getAttribute('data-answer') === 'true'
 
         if (userAnswer === correctAnswer) {
-            // Correct answer logic here
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
             instance.questionsAnsweredCorrectly += 1
         } else {
-            // Wrong answer logic here
             instance.audio.playSound('wrong')
         }
 
-        // Immediately disable the answer buttons to prevent multiple answers
-        questionElement.querySelectorAll('.answer-button').forEach((btn) => (btn.disabled = true))
-
-        // Wait a bit before moving to the next question to allow for any feedback/display updates
         setTimeout(() => {
             instance.moveToNextQuestion()
-        }, 500) // Adjust time as needed
+        }, 500)
     }
 
     handleAudioPlay(event) {
@@ -144,8 +137,6 @@ export default class TrueFalsQuiz {
 
         if (quizAudio && !quizAudio.paused) {
             return
-            // quizAudio.pause()
-            // quizAudio.currentTime = 0
         }
 
         quizAudio.src = audioUrl
@@ -171,14 +162,18 @@ export default class TrueFalsQuiz {
     }
 
     attachEventListeners() {
-        const gameContainer = instance.experience.interface.gameContainer
+        const answerButtons = document.querySelectorAll('.answer-button')
+        const buttonAudio = document.getElementById('button-audio')
 
-        gameContainer.addEventListener('click', (event) => {
-            if (event.target.closest('.answer-button')) {
-                this.handleAnswer(event)
-            } else if (event.target.closest('.audio-button')) {
-                this.handleAudioPlay(event)
-            }
+        buttonAudio.addEventListener('click', (event) => {
+            instance.handleAudioPlay(event)
+        })
+
+        answerButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                instance.handleAnswer(event)
+                button.removeEventListener('click', instance.handleAnswer)
+            })
         })
     }
 
@@ -189,7 +184,6 @@ export default class TrueFalsQuiz {
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'
 
-        // Reset any other states or data as needed
         instance.questionsAnsweredCorrectly = 0
     }
 }
