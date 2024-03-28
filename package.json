@@ -14,10 +14,6 @@
     "preview": "vite preview",
     "dev:electron": "electron-vite preview",
     "build:electron": "electron-vite build",
-    "start:forge": "electron-forge start --enable-logging --inspect-electron",
-    "package:forge": "electron-forge package",
-    "make:forge": "electron-forge make",
-    "publish:forge": "electron-forge publish",
     "package": "electron-builder --config=electron_builder.js",
     "publish": "electron-builder --config=electron_builder.js --publish"
   },
@@ -25,7 +21,6 @@
   "license": "GNU AGPLv3",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.21.0",
-    "@electron-forge/maker-dmg": "^7.2.0",
     "@microsoft/applicationinsights-web": "^2.8.3",
     "@tweenjs/tween.js": "^18.6.4",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
@@ -52,13 +47,6 @@
     "workbox-precaching": "^6.5.3"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.2.0",
-    "@electron-forge/maker-deb": "^7.2.0",
-    "@electron-forge/maker-rpm": "^7.2.0",
-    "@electron-forge/maker-squirrel": "^7.2.0",
-    "@electron-forge/maker-zip": "^7.2.0",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
-    "@electron-forge/plugin-vite": "^7.2.0",
     "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.16",
     "electron": "^28.1.4",
