@@ -12,7 +12,7 @@
     "build": "vite build",
     "watch": "vite build --watch",
     "preview": "vite preview",
-    "dev:electron": "electron-vite preview",
+    "dev:electron": "electron-vite dev",
     "build:electron": "electron-vite build",
     "package": "electron-builder --config=electron_builder.js",
     "publish": "electron-builder --config=electron_builder.js --publish"
@@ -28,7 +28,6 @@
     "cannon-es": "^0.20.0",
     "cannon-es-debugger": "^1.0.0",
     "canvas-confetti": "^1.6.0",
-    "electron-log": "^5.1.2",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.8",
     "electron-vite": "^2.1.0",

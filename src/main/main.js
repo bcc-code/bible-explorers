@@ -32,10 +32,6 @@ export const createWindow = () => {
     mainWindow.webContents.openDevTools()
 
     // autoUpdater.forceDevUpdateConfig = true
-
-    autoUpdater.logger = require('electron-log')
-    autoUpdater.logger.transports.file.level = 'info'
-
     autoUpdater.checkForUpdatesAndNotify()
 }
 

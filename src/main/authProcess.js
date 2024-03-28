@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron'
 import { getAuthenticationURL, loadTokens, getLogOutUrl, logout } from './authService.js'
-import { createWindow, showWindow } from './main.js'
+import { createWindow } from './main.js'
 
 let win = null
 
