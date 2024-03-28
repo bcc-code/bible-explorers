@@ -296,6 +296,12 @@
             opacity: .2;
         }
     }
+
+    &.width-auto {
+        height: auto;
+        min-height: var(--button-height);
+        padding-inline: 15%;
+    }
 }
 
 /* #endregion */

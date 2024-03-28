@@ -42,7 +42,7 @@ export default class TaskDescriptionScreen {
                     <h1 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h1>
                     ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
                     ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                    ${instance.data.td_button !== '' ? `<div class="flex justify-center"><button class="button-cube-wider">${instance.data.td_button}</button></div>` : ''}
+                    ${instance.data.td_button !== '' ? `<div class="flex justify-center"><button class="button-cube-wider width-auto">${instance.data.td_button}</button></div>` : ''}
                 </div>
             </div>`
         )
