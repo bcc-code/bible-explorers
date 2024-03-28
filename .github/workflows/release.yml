@@ -87,6 +87,7 @@ jobs:
               run: npm run package
               if: matrix.os == 'macos-latest'
               env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CSC_LINK: developer-id.p12
                   CSC_KEY_PASSWORD: ${{secrets.BCCM_APPLE_DEVELOPER_ID_PASSWORD}}
                   APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.BCCM_APPLE_APP_SPECIFIC_PASSWORD}}
@@ -97,6 +98,8 @@ jobs:
             - name: Building the Electron app for Windows
               run: npm run package
               if: matrix.os != 'macos-latest'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Archive production artifacts
               uses: actions/upload-artifact@v3
