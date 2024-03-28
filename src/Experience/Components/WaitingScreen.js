@@ -17,6 +17,8 @@ export default class WaitingScreen {
         instance.program = instance.world.program
         instance.video = instance.program.video
 
+        instance.program.message.destroy()
+
         instance.experience.maxVW = 36
         instance.experience.adjustScreensWrapperSize()
 

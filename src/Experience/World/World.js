@@ -707,6 +707,7 @@ export default class World {
 
     goHome() {
         document.body.classList.add('freeze')
+        instance.experience.navigation.prev.disabled = false
 
         if (instance.program) {
             instance.program.destroy()

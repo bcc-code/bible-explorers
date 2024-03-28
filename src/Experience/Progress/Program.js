@@ -87,15 +87,19 @@ export default class Program {
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
-
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.disablePrevBtnOnStart)
-    }
-
-    disablePrevBtnOnStart() {
-        instance.experience.navigation.prev.disabled = instance.currentCheckpoint == 0 && instance.currentStep == 0
     }
 
     previousStep() {
+        if (instance.currentCheckpoint == 0 && instance.currentStep == 0) {
+            if (!!document.getElementById('waitingScreen') || !instance.world.selectedChapter.lobby_video_loop) {
+                instance.world.goHome()
+            } else {
+                instance.waitingScreen.show()
+            }
+
+            return
+        }
+
         instance.currentStep--
 
         if (instance.currentStep < 0) {
