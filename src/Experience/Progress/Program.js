@@ -190,7 +190,9 @@ export default class Program {
         }
 
         // Check if it was the last step in the last checkpoint
-        if (instance.currentCheckpoint == instance.totalCheckpoints) instance.congrats.toggleBibleCardsReminder()
+        if (instance.currentCheckpoint == instance.totalCheckpoints) {
+            instance.congrats.toggleBibleCardsReminder()
+        }
     }
 
     previousCheckpoint() {

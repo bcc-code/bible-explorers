@@ -41,6 +41,10 @@ export default class ProgressBar {
             checkpoint.addEventListener('click', instance.handleCheckpointClick)
         })
 
+        document.getElementById('finish-step').addEventListener('click', function () {
+            instance.program.goToCheckpoint(instance.program.totalCheckpoints)
+        })
+
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
         document.addEventListener(_e.ACTIONS.GO_HOME, instance.removeEventListeners)
     }
@@ -101,7 +105,7 @@ export default class ProgressBar {
         })
 
         return `${generatedHTML}
-            <button class="button-circle button-circle-default mb-0 grid" aria-label="checkpoint">
+            <button id="finish-step" class="button-circle button-circle-default mb-0 grid" aria-label="checkpoint">
                 <svg><use href="#star-solid" fill="currentColor"></use></svg>
             </button>
         </div>`
