@@ -48,8 +48,7 @@ export default class Quiz {
                     </div>
                     <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
                 </div>
-                <div class="overlay" id="overlay" style="display:none;"></div>
-                <div id="quiz-wrapper"><div id="loader" class="loader" style="display:none;"></div></div>
+                <div id="quiz-wrapper"></div>
                 ${
                     instance.questions.length > 0
                         ? `
@@ -140,8 +139,10 @@ export default class Quiz {
                     const inputLength = e.target.value.length
 
                     if (index === totalQuestions - 1) {
+                        this.experience.navigation.next.innerHTML = ``
                         submitQuiz.style.display = inputLength > 0 ? 'grid' : 'none'
                     } else {
+                        this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
                         nextQuestion.style.display = inputLength > 0 ? 'grid' : 'none'
                     }
                 })
@@ -197,44 +198,24 @@ export default class Quiz {
     }
 
     async saveAnswers() {
-        document.getElementById('loader').style.display = 'block'
-        document.getElementById('overlay').style.display = 'block'
-
+        const textareas = document.querySelectorAll('#quiz-game textarea')
         let answers = []
-        let allQuestionsAnswered = true // Flag to track if all questions are answered
 
-        document.querySelectorAll('.quiz-item').forEach((question, index) => {
-            let answer
-            const textarea = question.querySelector('textarea')
-            if (textarea) {
-                answer = textarea.value.trim()
-                if (!answer) allQuestionsAnswered = false // Mark as unanswered if textarea is empty
-            } else {
-                const selectedOption = question.querySelector('input[type="radio"]:checked')
-                if (selectedOption) {
-                    answer = selectedOption.nextElementSibling.textContent.trim()
-                } else {
-                    allQuestionsAnswered = false // Mark as unanswered if no option is selected
-                }
-            }
-
+        textareas.forEach((textarea) => {
+            const answer = textarea.value.trim()
             if (answer) {
-                answers.push({
-                    questionIndex: index,
-                    answer: answer,
-                })
+                answers.push(answer)
             }
         })
 
-        if (!allQuestionsAnswered) {
-            // Show modal or alert for incomplete answers
-            alert('Please answer all questions before submitting.')
-            return false // Indicate that the save operation was not successful
+        if (answers.length === 0) {
+            alert('Please fill in at least one answer before submitting.')
+            return
         }
 
         const data = {
             taskTitle: 'Quiz',
-            answers: answers.map((a) => a.answer),
+            answer: answers,
             chapterId: instance.selectedChapter.id,
             chapterTitle: instance.selectedChapter.title,
             language: _lang.getLanguageCode(),
@@ -253,17 +234,10 @@ export default class Quiz {
                 throw new Error('Network response was not ok')
             }
 
-            // Hide the loader on success
-            document.getElementById('loader').style.display = 'none'
-
             const responseData = await response.json()
-            return true
+            console.log(responseData)
         } catch (error) {
             console.error('Error:', error)
-
-            // Hide the loader on failure
-            document.getElementById('loader').style.display = 'none'
-            return false
         }
     }
 
