@@ -62,9 +62,7 @@ export default class ProgressBar {
         const clickedCheckpointIndex = parseInt(event.currentTarget.getAttribute('data-index'))
 
         // Update the program's current checkpoint
-        if (instance.program.currentCheckpoint !== clickedCheckpointIndex) {
-            instance.program.goToCheckpoint(clickedCheckpointIndex)
-        }
+        instance.program.goToCheckpoint(clickedCheckpointIndex)
     }
 
     getElements() {

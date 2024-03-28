@@ -218,7 +218,7 @@ export default class Program {
     }
 
     startInteractivity() {
-        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop && instance.waitingScreen.names.length == 0) {
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
             setTimeout(function () {
                 instance.waitingScreen.show()
             }, 1000)
