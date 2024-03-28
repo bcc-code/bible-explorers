@@ -35,6 +35,7 @@ export default class Quiz {
 
         this.quizHTML()
         this.setEventListeners()
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     quizHTML() {
@@ -45,7 +46,7 @@ export default class Quiz {
                     <div class="progress-bar-background">
                         <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
                     </div>
-                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button-circle" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
+                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
                 </div>
                 <div class="overlay" id="overlay" style="display:none;"></div>
                 <div id="quiz-wrapper"><div id="loader" class="loader" style="display:none;"></div></div>
@@ -89,7 +90,7 @@ export default class Quiz {
                 })
             } else {
                 this.openQuestions++
-                const selfAnswer = _gl.elementFromHtml(`<div><textarea rows="8" placeholder="${q.placeholder}" class="w-full bg-transparent px-3 py-2 rounded-md outline-none my-4 xl:my-6 tv:my-8 text-xl tv:text-2xl"></textarea></div>`)
+                const selfAnswer = _gl.elementFromHtml(`<div><textarea rows="8" placeholder="${q.placeholder}" class=""></textarea></div>`)
                 container.append(selfAnswer)
             }
 
@@ -100,8 +101,6 @@ export default class Quiz {
     }
 
     setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-
         const questionItems = document.querySelectorAll('.quiz-item')
         const totalQuestions = questionItems.length
 
@@ -125,7 +124,6 @@ export default class Quiz {
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
-
                         nextQuestion.style.display = 'grid'
                     } else {
                         instance.audio.playSound('wrong')
@@ -140,7 +138,12 @@ export default class Quiz {
             if (textarea) {
                 textarea.addEventListener('input', (e) => {
                     const inputLength = e.target.value.length
-                    submitQuiz.style.display = inputLength > 0 ? 'grid' : 'none'
+
+                    if (index === totalQuestions - 1) {
+                        submitQuiz.style.display = inputLength > 0 ? 'grid' : 'none'
+                    } else {
+                        nextQuestion.style.display = inputLength > 0 ? 'grid' : 'none'
+                    }
                 })
             }
         })
@@ -151,7 +154,7 @@ export default class Quiz {
             const wasSuccessful = await instance.saveAnswers()
             if (wasSuccessful) {
                 instance.destroy()
-                instance.program.congrats.toggleSummary()
+                instance.program.nextStep()
             }
         })
     }

@@ -903,6 +903,13 @@ $themes: (
             width: clamp(20rem, 45vw, 100%);
         }
 
+        textarea {
+            width: 100%;
+            background: transparent;
+            font-size: var(--font-size-text);
+            outline: none;
+        }
+
         .correct .question-label .button-circle {
             background-image: url('../../static/interface/B_circle_action.png');
         }
