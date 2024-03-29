@@ -36,7 +36,6 @@
 @import "./components/MultipleChoice.scss";
 @import "./components/Task.scss";
 @import "./components/Game.scss";
-@import "./components/Unlock.scss";
 
 @import "tailwindcss/utilities";
 
@@ -1220,6 +1219,120 @@ $themes: (
         75% {
             transform: translate(-10px, 10px);
         }
+    }
+}
+
+.code-unlock {
+    --key-spacing: 4%;
+
+    .task-container_box {
+        display: block;
+    }
+
+    &-device {
+        margin-inline: auto;
+        width: clamp(20rem, 20vw, 100%);
+    }
+
+    &-code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.2rem solid var(--clr-secondary);
+        border-radius: 1rem;
+
+        div {
+            font-weight: bold;
+            font-size: calc(var(--font-size-heading) * 2);
+            color: var(--clr-secondary);
+            height: calc(var(--button-height) * 1.5);
+            width: var(--button-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    }
+
+    &-keyboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--key-spacing);
+        margin-top: var(--key-spacing);
+
+    }
+
+    &-key {
+        display: block;
+        text-align: center;
+        height: var(--button-height);
+        font-size: var(--font-size-text);
+        border: 0.2rem solid var(--clr-primary);
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: var(--transition-duration) var(--transition-timing);
+
+        svg {
+            display: inline-block;
+            width: var(--font-size-text);
+            height: var(--font-size-text);
+        }
+
+        &:disabled {
+            filter: grayscale(1);
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        &:hover {
+            background-color: var(--clr-primary);
+        }
+    }
+
+    &.wrong-code {
+
+        .code-unlock-code {
+            animation: tilt-n-move-shaking var(--transition-duration) var(--transition-timing) both;
+            border-color: red;
+        }
+
+        .code-unlock-code div {
+            color: red;
+        }
+    }
+
+    &.correct-code {
+
+        .code-unlock-code {
+            border-color: greenyellow;
+        }
+
+        .code-unlock-code div {
+            color: greenyellow;
+        }
+    }
+
+}
+
+@keyframes tilt-n-move-shaking {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(5px, 5px) rotate(5deg);
+    }
+
+    50% {
+        transform: translate(0, 0) rotate(0eg);
+    }
+
+    75% {
+        transform: translate(-5px, 5px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
     }
 }
 

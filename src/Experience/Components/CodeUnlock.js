@@ -50,7 +50,7 @@ export default class CodeUnlock {
             if (i == 10) {
                 const deleteKey = _gl.elementFromHtml(`
                     <button class="code-unlock-key delete-number">
-                        <svg class="h-8"><use href="#delete-left-solid" fill="currentColor"></use></svg>
+                        <svg><use href="#delete-left-solid" fill="currentColor"></use></svg>
                     </button>
                 `)
                 deleteKey.disabled = true
@@ -61,7 +61,7 @@ export default class CodeUnlock {
             } else if (i == 12) {
                 const confirmKey = _gl.elementFromHtml(`
                     <button class="code-unlock-key confirm-code">
-                        <svg class="h-8"><use href="#check-solid" fill="currentColor"></use></svg>
+                        <svg><use href="#check-solid" fill="currentColor"></use></svg>
                     </button>
                 `)
 
@@ -76,7 +76,7 @@ export default class CodeUnlock {
         for (let j = 0; j < instance.secretCode.length; j++) {
             const asterix = _gl.elementFromHtml(`
                 <div>
-                    <svg class="h-8"><use href="#asterisk-solid"  fill="currentColor"></use></svg>
+                    <svg><use href="#asterisk-solid"  fill="currentColor"></use></svg>
                 </div>
             `)
             unlockScreen.querySelector('.code-unlock-code').append(asterix)
