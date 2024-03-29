@@ -85,11 +85,14 @@ export default class TrueFalsQuiz {
     }
 
     handleQuizCompletion() {
-        const completionHTML = `<div class="quiz-completion-message">Quiz completed! You answered ${instance.questionsAnsweredCorrectly} out of ${instance.data.questions.length} questions correctly.</div>`
+        const prompt = document.querySelector('.task-container_prompts')
+        prompt.innerText = 'Quiz completed!'
+
         const quizContentContainer = document.querySelector('#quiz-content')
-        quizContentContainer.innerHTML = completionHTML
+        quizContentContainer.innerHTML = ''
 
         instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.innerText = ''
     }
 
     handleAnswer = (event) => {
