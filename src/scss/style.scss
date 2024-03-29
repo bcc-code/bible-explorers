@@ -140,12 +140,6 @@
         }
     }
 
-    &.chapter__offline {
-        display: none;
-        position: absolute;
-        right: 2.5%;
-        bottom: 12%;
-    }
 }
 
 .button-circle {
@@ -529,7 +523,15 @@
         }
     }
 
-    body.bcc_member & {
+    &__offline {
+        display: none;
+        position: absolute;
+        right: 2.5%;
+        bottom: 12%;
+    }
+
+    body.bcc_member &,
+    body.logged-in & {
         .chapter__offline {
             display: grid;
         }
@@ -544,6 +546,10 @@
         &.downloading {
             .chapter__downloading {
                 display: flex;
+            }
+
+            .chapter__offline {
+                display: none;
             }
         }
 
