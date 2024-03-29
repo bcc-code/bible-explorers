@@ -530,7 +530,6 @@
         bottom: 12%;
     }
 
-    body.bcc_member &,
     body.logged-in & {
         .chapter__offline {
             display: grid;
@@ -565,7 +564,7 @@
         }
     }
 
-    body:not(.bcc_member) &.locked {
+    &.locked {
         filter: grayscale(1);
         pointer-events: none;
         opacity: 0.6;
@@ -580,7 +579,7 @@
         }
     }
 
-    body:not(.bcc_member) &.beta {
+    &.beta {
         display: none;
     }
 
