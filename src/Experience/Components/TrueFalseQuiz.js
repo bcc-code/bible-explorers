@@ -21,7 +21,7 @@ export default class TrueFalsQuiz {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.truefalse_quiz
 
-        instance.experience.setAppView('game')
+        instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
 
@@ -42,7 +42,7 @@ export default class TrueFalsQuiz {
                 </div>
             </div>`
 
-            instance.experience.interface.gameContainer.innerHTML = staticHTML
+            instance.experience.interface.tasksDescription.innerHTML = staticHTML
         }
 
         if (instance.data.questions.length > 0) {
@@ -54,8 +54,9 @@ export default class TrueFalsQuiz {
     setHTMLForQuestion(index) {
         const question = instance.data.questions[index]
         const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
-        const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<img src="${question.question_media}" alt="Question Image">` : `<p>${question.question_text}</p>`
-        const audioButton = question.question_audio ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
+        const isValidAudioUrl = (url) => /\.(mp3|wav|ogg)$/i.test(url)
+        const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<div class="task-container_image" id="task-image"><img src="${question.question_media}" alt="Question Image" /></div>` : `<p>${question.question_text}</p>`
+        const audioButton = question.question_audio && isValidAudioUrl(question.question_audio.url) ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
@@ -165,16 +166,18 @@ export default class TrueFalsQuiz {
         const answerButtons = document.querySelectorAll('.answer-button')
         const buttonAudio = document.getElementById('button-audio')
 
-        buttonAudio.addEventListener('click', (event) => {
-            instance.handleAudioPlay(event)
-        })
-
-        answerButtons.forEach((button) => {
-            button.addEventListener('click', (event) => {
-                instance.handleAnswer(event)
-                button.removeEventListener('click', instance.handleAnswer)
+        if (buttonAudio)
+            buttonAudio.addEventListener('click', (event) => {
+                instance.handleAudioPlay(event)
             })
-        })
+
+        if (answerButtons)
+            answerButtons.forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    instance.handleAnswer(event)
+                    button.removeEventListener('click', instance.handleAnswer)
+                })
+            })
     }
 
     destroy() {

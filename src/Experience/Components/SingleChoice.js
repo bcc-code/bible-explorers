@@ -21,7 +21,7 @@ export default class SingleChoice {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.single_choice
 
-        instance.experience.setAppView('game')
+        instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
@@ -42,7 +42,7 @@ export default class SingleChoice {
             </div>`
         )
 
-        instance.experience.interface.gameContainer.append(container)
+        instance.experience.interface.tasksDescription.append(container)
 
         document.querySelectorAll('.single-choice-option').forEach((option) => {
             option.addEventListener('click', instance.handleOptionSelect)
