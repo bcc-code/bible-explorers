@@ -3,6 +3,9 @@ name: Build Electron App
 on:
     workflow_dispatch:
     workflow_call:
+    push:
+        branches:
+            - electron-app
 
 jobs:
     build_and_deploy_electron_app_job:
