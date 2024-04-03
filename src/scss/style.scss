@@ -124,8 +124,12 @@
         outline: none;
     }
 
+    span,
     svg {
         pointer-events: none;
+    }
+
+    svg {
         width: var(--font-size-small);
         height: var(--font-size-small);
     }
@@ -161,8 +165,12 @@
         outline: none;
     }
 
+    span,
     svg {
         pointer-events: none;
+    }
+
+    svg {
         width: var(--font-size-small);
         height: var(--font-size-small);
     }
@@ -200,6 +208,11 @@
 
     &:focus {
         outline: none;
+    }
+
+    span,
+    svg {
+        pointer-events: none;
     }
 
     span {
@@ -251,8 +264,12 @@
         outline: none;
     }
 
+    span,
     svg {
         pointer-events: none;
+    }
+
+    svg {
         width: var(--font-size-small);
         height: var(--font-size-small);
     }
@@ -291,8 +308,12 @@
         outline: none;
     }
 
+    span,
     svg {
         pointer-events: none;
+    }
+
+    svg {
         width: var(--font-size-small);
         height: var(--font-size-small);
     }
