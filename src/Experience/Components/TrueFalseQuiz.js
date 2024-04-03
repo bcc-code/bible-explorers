@@ -34,8 +34,8 @@ export default class TrueFalsQuiz {
     setHTML() {
         if (!document.querySelector('#quiz-content')) {
             const staticHTML = `
-            <div class="absolute inset-0 grid place-content-center task-container" id="true-false-quiz">
-                <div class="relative mx-auto task-container_box text-center">
+            <div class="absolute inset-0 task-container" id="true-false-quiz">
+                <div class="task-container_box">
                     ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
                     ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
                     <div id="quiz-content"></div> <!-- Container for dynamic question content -->

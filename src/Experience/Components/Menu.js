@@ -75,7 +75,7 @@ export default class Menu {
             })
         })
 
-        const fullscreenToggle = document.getElementById('fullscreen-button')
+        const fullscreenToggle = document.getElementById('toggle-fullscreen')
         fullscreenToggle.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch((err) => {

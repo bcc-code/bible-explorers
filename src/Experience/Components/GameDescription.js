@@ -53,13 +53,13 @@ export default class GameDescription {
 
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 grid place-content-center task-container" id="task-container">
-                <div class="relative mx-auto text-center task-container_box grid place-items-center gap-[4%]">
+            `<div class="absolute inset-0 task-container" id="task-container">
+                <div class="relative task-container_box">
                     <h1 class="task-container_heading">${instance.data.title}</h1>
                     ${instance.data.prompts ? `<p class="task-container_prompts">${instance.data.prompts[0].prompt}</p>` : ''}
                     ${instance.data.tutorial ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
-                    <div class="flex justify-center">
-                        <button class="button-cube-wider width-auto">${_s.miniGames.startGame}</button>
+                    <div class="task-container_actions">
+                        <button class="button-task-action">${_s.miniGames.startGame}</button>
                     </div>
                 </div>
             </div>`

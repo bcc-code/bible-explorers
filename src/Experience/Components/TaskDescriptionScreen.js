@@ -37,12 +37,12 @@ export default class TaskDescriptionScreen {
 
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 grid place-content-center task-container" id="task-container">
-                <div class="relative mx-auto task-container_box grid place-items-center gap-[4%]">
+            `<div class="absolute inset-0 task-container" id="task-container">
+                <div class="task-container_box">
                     <h1 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h1>
                     ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
                     ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                    ${instance.data.td_button !== '' ? `<div class="flex justify-center"><button class="button-cube-wider width-auto">${instance.data.td_button}</button></div>` : ''}
+                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button-task-action">${instance.data.td_button}</button></div>` : ''}
                 </div>
             </div>`
         )
