@@ -29,7 +29,7 @@ export const createWindow = () => {
 
     mainWindow.maximize()
     mainWindow.show()
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     // autoUpdater.forceDevUpdateConfig = true
     autoUpdater.checkForUpdatesAndNotify()

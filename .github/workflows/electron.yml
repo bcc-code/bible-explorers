@@ -36,8 +36,9 @@ jobs:
 
             - name: Download certificate file
               run: |
-                  echo $APPLE_DEVELOPER_ID_FILE | base64 --decode >> developer-id.p12
-              if: matrix.os == 'macos-latest'
+                  if [ "$RUNNER_OS" == "macOS" ]; then
+                      echo $APPLE_DEVELOPER_ID_FILE | base64 --decode >> developer-id.p12
+                  fi
               shell: bash
               env:
                   APPLE_DEVELOPER_ID_FILE: ${{secrets.BCCM_APPLE_DEVELOPER_ID_FILE}}
@@ -46,14 +47,20 @@ jobs:
               run: npm run build:electron
 
             - name: Building the Electron app for Windows
-              run: npm run publish
-              if: matrix.os != 'macos-latest'
+              run: |
+                  if [ "$RUNNER_OS" == "Windows" ]; then
+                      npm run publish
+                  fi
+              shell: bash
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Building the Electron app for Mac
-              run: npm run publish
-              if: matrix.os == 'macos-latest'
+              run: |
+                  if [ "$RUNNER_OS" == "macOS" ]; then
+                      npm run publish
+                  fi
+              shell: bash
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CSC_LINK: developer-id.p12
