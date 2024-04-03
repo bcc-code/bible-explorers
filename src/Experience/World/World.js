@@ -728,9 +728,9 @@ export default class World {
         if (instance.program.pause) instance.program.pause.destroy()
         if (instance.program.congrats) instance.program.congrats.destroy()
 
-        document.querySelector('#fullscreen-setting input').checked = false
-
-        if (document.fullscreenElement) document.exitFullscreen()
+        if (document.fullscreenElement) {
+            document.exitFullscreen()
+        }
 
         document.dispatchEvent(_e.EVENTS.GO_HOME)
     }
