@@ -274,6 +274,7 @@
         height: var(--font-size-small);
     }
 
+    &.active,
     &:hover {
         background-image: url('../../static/interface/B_cube_wide_action.png');
     }
@@ -318,6 +319,7 @@
         height: var(--font-size-small);
     }
 
+    &.active,
     &:hover {
         background-image: url('../../static/interface/B_cube_wide_2_action.png');
     }
@@ -912,15 +914,37 @@ $themes: (
     }
 }
 
-#app-video-quality {
+.app-language_dropdown {
     position: absolute;
     top: 100%;
     right: 0;
     display: none;
     aspect-ratio: 544/837;
+    background-image: url('../../static/frames/language_frame.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 10%;
+    width: clamp(240px, 10vw, 100%);
 
     &.is-visible {
         display: block;
+    }
+
+    ul {
+        overflow-y: auto;
+        height: calc(100% - 10%);
+
+        li {
+            cursor: pointer;
+            font-size: var(--font-size-small);
+            padding: 2% 5%;
+            transition: .3s ease;
+        }
+
+        li:hover {
+            color: var(--clr-secondary);
+            background-color: #ffffff15;
+        }
     }
 }
 

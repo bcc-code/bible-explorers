@@ -11,7 +11,7 @@ import lazySizes from 'lazysizes'
 import isElectron from 'is-electron'
 
 // Loader text
-document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing}...</p>`
+// document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing}...</p>`
 
 // Load icons
 const ajax = new XMLHttpRequest()

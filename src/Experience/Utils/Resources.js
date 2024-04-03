@@ -84,7 +84,7 @@ export default class Resources extends EventEmitter {
             const loader = document.querySelector('#loading_text')
             if (!loader) return
 
-            loader.innerText = _s.status.fetching
+            // loader.innerText = _s.status.fetching
 
             resources.fetchApiThenCache(_api.getBiexChapters(), (json) => {
                 this.api[_api.getBiexChapters()] = json
