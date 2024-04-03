@@ -38,13 +38,11 @@ export default class Menu {
         selectLangCurrent.innerText = _lang.getLanguageName()
         selectLangDropdown.innerHTML = _lang.getLanguagesList()
         selectLangDropdown.querySelectorAll('li').forEach((item) => {
-            item.className = 'px-2 py-1 xl:py-2 xl:px-3 text-base xl:text-xl font-medium cursor-pointer transition hover:bg-white/20'
+            item.className = ''
         })
 
         const selectVQ = document.querySelector('#app-video-quality')
-        const selectVQLabel = selectVQ.querySelector('h5')
         const selectVQItems = selectVQ.querySelectorAll('button')
-        selectVQLabel.innerText = _s.settings.videoQuality.title + ':'
         selectVQItems.forEach((item) => {
             const btn = item.getAttribute('data-id')
             if (btn === 'low') {
@@ -56,21 +54,12 @@ export default class Menu {
             }
         })
 
-        const fullscreen = document.querySelector('#fullscreen-setting')
-        fullscreen.querySelector('h5').innerText = _s.settings.fullScreenMode + ':'
-        fullscreen.querySelector('input').checked = document.fullscreenElement !== null
-        fullscreen.querySelector('label').innerText = !document.fullscreenElement ? _s.settings.off : _s.settings.on
-
         const loginBtn = document.querySelector('#login-button')
         const logoutBtn = document.querySelector('#logout-button')
         loginBtn.querySelector('span').innerText = _s.settings.logIn
         logoutBtn.querySelector('span').innerText = _s.settings.logOut
         loginBtn.setAttribute('title', _s.settings.logIn)
         logoutBtn.setAttribute('title', _s.settings.logOut)
-
-        const bibleExplorersGuide = document.querySelector('#guide-link span')
-        bibleExplorersGuide.innerText = _s.howTo
-        bibleExplorersGuide.setAttribute('href', `https://biblekids.io/${_lang.getLanguageCode()}/explorers/`)
 
         const copyrightFooter = document.querySelector('#copyright')
         copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition hover:text-bke-orange">BCC Media STI</a>`
@@ -82,15 +71,15 @@ export default class Menu {
         document.querySelector('#toggle-settings')?.addEventListener('click', (e) => {
             isToggled = !isToggled
             e.target.classList.toggle('active')
-            e.target.setAttribute('aria-pressed', isToggled)
-            e.target.parentElement.classList.toggle('dropdown-is-visible')
+            e.target.setAttribute('aria-pressed', String(isToggled))
+            e.target.nextElementSibling.classList.toggle('is-visible')
         })
 
         document.querySelector('#toggle-languages')?.addEventListener('click', (e) => {
             isToggled = !isToggled
             e.target.classList.toggle('active')
-            e.target.setAttribute('aria-pressed', isToggled)
-            e.target.parentElement.classList.toggle('dropdown-is-visible')
+            e.target.setAttribute('aria-pressed', String(isToggled))
+            e.target.parentElement.classList.toggle('is-visible')
         })
 
         const languageItems = document.querySelectorAll('#app-language li')
@@ -111,23 +100,22 @@ export default class Menu {
             })
         })
 
-        const fullscreen = document.querySelector('#fullscreen-setting')
-        fullscreen.querySelector('input').addEventListener('change', (e) => {
-            if (e.target.checked) {
-                document.documentElement.requestFullscreen()
+        const fullscreenToggle = document.getElementById('fullscreen-button')
+        fullscreenToggle.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`)
+                })
             } else {
-                document.exitFullscreen()
+                // Exit fullscreen mode
+                document.exitFullscreen().catch((err) => {
+                    console.error(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`)
+                })
             }
         })
 
-        window.addEventListener('resize', (e) => {
-            if (window.innerHeight == screen.height) {
-                fullscreen.querySelector('input').checked = true
-                fullscreen.querySelector('label').innerText = _s.settings.on
-            } else {
-                fullscreen.querySelector('input').checked = false
-                fullscreen.querySelector('label').innerText = _s.settings.off
-            }
+        document.addEventListener('fullscreenchange', () => {
+            fullscreenToggle.classList.toggle('fullscreen-active', document.fullscreenElement)
         })
 
         const loginBtn = document.querySelector('#login-button')

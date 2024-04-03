@@ -71,8 +71,7 @@
         display: block;
     }
 
-    #home-button,
-    #toggle-settings {
+    #home-button {
         display: none;
     }
 }
@@ -134,6 +133,7 @@
         height: var(--font-size-small);
     }
 
+    &.active,
     &:hover {
         background-image: url('../../static/interface/B_cube_action.png');
     }
@@ -912,6 +912,17 @@ $themes: (
     }
 }
 
+#app-video-quality {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+    aspect-ratio: 544/837;
+
+    &.is-visible {
+        display: block;
+    }
+}
 
 /* #endregion */
 
