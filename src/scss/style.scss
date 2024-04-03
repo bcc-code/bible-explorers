@@ -876,20 +876,25 @@ $themes: (
 }
 
 #childrenNames {
-    background-image: url('../../static/frames/LOGIN_bar.png');
+    background-image: url('../../static/frames/LOGIN_bar_border.png');
     background-repeat: no-repeat;
     background-size: cover;
-    aspect-ratio: 2827/894;
+    aspect-ratio: 2931/894;
     width: clamp(320px, 30vw, 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1%;
 
     input {
-        position: absolute;
-        width: 58%;
-        left: 10%;
-        bottom: 20%;
-        height: 44%;
-        font-size: var(--font-size-heading);
+        background-image: url('../../static/frames/LOGIN_bar_input.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 965/194;
+        height: calc(var(--button-height) * 1.25);
+        font-size: var(--font-size-text);
         background-color: transparent;
+        padding-inline: 2%;
     }
 
     input:focus {
@@ -902,13 +907,10 @@ $themes: (
     }
 
     button {
-        position: absolute;
-        left: 72%;
-        bottom: 20%;
-        height: 44%;
-        font-weight: bold;
-        font-size: var(--font-size-heading);
+        height: calc(var(--button-height) * 1.25);
+        font-size: var(--font-size-text);
     }
+
 }
 
 #names-label {
