@@ -462,12 +462,10 @@
         aspect-ratio: 2675/2256;
 
         &-image {
-            position: absolute;
-            left: 0;
-            top: 0;
-            aspect-ratio: 2675/2256;
+            width: 100%;
+            aspect-ratio: 2675/850;
             mask-repeat: no-repeat;
-            mask-size: contain;
+            mask-size: cover;
             mask-image: url('../../static/frames/chapter_main_mask.png');
             z-index: -1;
 
@@ -499,8 +497,6 @@
     }
 
     &-content {
-        top: 37.5%;
-        height: 50%;
         padding: 1% 5% 5%;
     }
 
