@@ -103,6 +103,10 @@
     }
 }
 
+.group\/body:not(.electron) #app-version {
+    display: none !important;
+}
+
 /* #endregion */
 
 /* #region Buttons */
