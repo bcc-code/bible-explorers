@@ -192,8 +192,13 @@
         margin-bottom: 2%;
     }
 
+    &[aria-label="checkpoint"],
     &[currentCheckpoint] {
         background-image: url('../../static/interface/B_circle_action.png');
+    }
+
+    &[currentCheckpoint]~button {
+        background-image: url('../../static/interface/B_circle_active.png');
     }
 
     &.current-step,
