@@ -477,14 +477,15 @@
         }
 
         &-heading {
+            margin-block: 1%;
             font-size: var(--font-size-heading);
             font-weight: bold;
         }
 
         &-text {
+            margin-top: 3%;
             font-size: var(--font-size-text);
-            margin-top: 4%;
-            height: 95%;
+            flex: 1;
             overflow-y: auto;
         }
 
@@ -497,7 +498,10 @@
     }
 
     &-content {
-        padding: 1% 5% 5%;
+        padding-inline: 5%;
+        height: 53%;
+        display: flex;
+        flex-flow: column nowrap;
     }
 
     // States
