@@ -16,10 +16,6 @@ export default class Menu {
         instance.soundOn = true
         instance.currentDataView
 
-        const defaultVideoQuality = 'high'
-        instance.videoQuality = localStorage.getItem('videoQuality') || defaultVideoQuality
-        document.querySelector('#app-video-quality').setAttribute('data-quality', instance.videoQuality)
-
         instance.logInLogOut = {
             login: false,
             logout: false,
@@ -41,19 +37,6 @@ export default class Menu {
             item.className = ''
         })
 
-        const selectVQ = document.querySelector('#app-video-quality')
-        const selectVQItems = selectVQ.querySelectorAll('button')
-        selectVQItems.forEach((item) => {
-            const btn = item.getAttribute('data-id')
-            if (btn === 'low') {
-                item.innerText = _s.settings.videoQuality.low
-            } else if (btn === 'medium') {
-                item.innerText = _s.settings.videoQuality.medium
-            } else if (btn === 'high') {
-                item.innerText = _s.settings.videoQuality.high
-            }
-        })
-
         const loginBtn = document.querySelector('#login-button')
         const logoutBtn = document.querySelector('#logout-button')
         loginBtn.querySelector('span').innerText = _s.settings.logIn
@@ -63,40 +46,32 @@ export default class Menu {
 
         const copyrightFooter = document.querySelector('#copyright')
         copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition hover:text-bke-orange">BCC Media STI</a>`
+
+        instance.setDefaultVideoQuality()
     }
 
     eventListeners() {
+        document.querySelector('#toggle-vq').addEventListener('click', (e) => {
+            const newQuality = this.videoQuality === 'high' ? 'medium' : 'high'
+
+            localStorage.setItem('videoQuality', newQuality)
+            this.videoQuality = newQuality
+            e.target.setAttribute('data-quality', newQuality)
+        })
+
         let isToggled = false
 
-        document.querySelector('#toggle-settings')?.addEventListener('click', (e) => {
+        document.querySelector('#toggle-languages').addEventListener('click', (e) => {
             isToggled = !isToggled
             e.target.classList.toggle('active')
             e.target.setAttribute('aria-pressed', String(isToggled))
             e.target.nextElementSibling.classList.toggle('is-visible')
         })
 
-        document.querySelector('#toggle-languages')?.addEventListener('click', (e) => {
-            isToggled = !isToggled
-            e.target.classList.toggle('active')
-            e.target.setAttribute('aria-pressed', String(isToggled))
-            e.target.parentElement.classList.toggle('is-visible')
-        })
-
         const languageItems = document.querySelectorAll('#app-language li')
-
         languageItems.forEach((language) => {
             language.addEventListener('click', () => {
                 _lang.updateLanguage(language.getAttribute('data-id'))
-            })
-        })
-
-        const videoQualityItems = document.querySelectorAll('#app-video-quality button')
-
-        videoQualityItems.forEach((item) => {
-            item.addEventListener('click', () => {
-                instance.videoQuality = item.getAttribute('data-id')
-                localStorage.setItem('videoQuality', instance.videoQuality)
-                document.querySelector('#app-video-quality').setAttribute('data-quality', instance.videoQuality)
             })
         })
 
@@ -107,7 +82,6 @@ export default class Menu {
                     console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`)
                 })
             } else {
-                // Exit fullscreen mode
                 document.exitFullscreen().catch((err) => {
                     console.error(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`)
                 })
@@ -125,6 +99,20 @@ export default class Menu {
         logoutBtn.addEventListener('click', instance.logout)
 
         document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, instance.updateUI)
+    }
+
+    setDefaultVideoQuality() {
+        const defaultVideoQuality = 'high'
+        const currentQuality = localStorage.getItem('videoQuality')
+
+        if (!currentQuality) {
+            localStorage.setItem('videoQuality', defaultVideoQuality)
+            this.videoQuality = defaultVideoQuality
+        } else {
+            this.videoQuality = currentQuality
+        }
+
+        document.querySelector('#toggle-vq').setAttribute('data-quality', this.videoQuality)
     }
 
     updateUI = async () => {
