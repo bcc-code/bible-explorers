@@ -670,8 +670,9 @@ export default class World {
             },
         })
 
-        document.querySelector('#fullscreen-setting input').checked = true
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen()
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen()
+        }
     }
 
     currentChapterLabel() {
