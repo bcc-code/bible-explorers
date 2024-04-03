@@ -23,14 +23,10 @@ export default class Audio {
 
         audio.notes = []
         audio.btn = document.querySelector('#toggle-music')
-        audio.musicRange = document.getElementById('musicRange')
+        audio.musicRange = 50
         audio.fadeSteps = 15
         audio.slideValueConversion = 3.33
-        audio.bgMusicVolume = () => audio.musicRange.value / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
-
-        audio.musicRange.oninput = function () {
-            document.getElementById('rangeValue').innerText = this.value
-        }
+        audio.bgMusicVolume = () => audio.musicRange / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
         audio.initialize()
     }
@@ -253,10 +249,6 @@ export default class Audio {
 
     addEventListeners() {
         audio.btn.addEventListener('click', audio.togglePlayBgMusic)
-        audio.musicRange.addEventListener('input', function () {
-            if (!audio.bgMusic) return
-            audio.bgMusic.setVolume(audio.bgMusicVolume())
-        })
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)
     }
 }
