@@ -40,8 +40,8 @@ export default class Quiz {
 
     quizHTML() {
         instance.quizContainer = _gl.elementFromHtml(`
-        <div class="absolute inset-0 task-container grid place-content-center" id="quiz-game">
-            <div class="relative mx-auto task-container_box group/quiz flex flex-col">
+        <div class="absolute inset-0 task-container" id="quiz-game">
+            <div class="task-container_box group/quiz flex flex-col">
                 <div class="progress-bar-container">
                     <div class="progress-bar-background">
                         <div class="progress-bar-foreground" id="progress-bar-quiz"></div>

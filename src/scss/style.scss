@@ -359,26 +359,6 @@
     }
 }
 
-.button-task-action {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('../../static/interface/Task_Shape_button_action_s.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    pointer-events: auto;
-    aspect-ratio: 572/171;
-    width: 100%;
-    font-size: var(--font-size-text);
-    cursor: pointer;
-
-    &.active,
-    &:hover {
-        background-image: url('../../static/interface/Task_Shape_button_active_s.png');
-    }
-}
-
 /* #endregion */
 
 /* #region Masks */
@@ -872,11 +852,11 @@ $themes: (
     &_box {
         position: relative;
         width: clamp(48rem, 65vw, 100%);
-        background-image: url('../../static/frames/Task_Shape.png');
+        background-image: url('../../static/frames/Task_Shape_frame.png');
         background-repeat: no-repeat;
         background-size: contain;
-        aspect-ratio: 974/529;
-        padding: 8% 5% 7%;
+        aspect-ratio: 3719/2029;
+        padding: 6% 3%;
         display: flex;
         flex-flow: column nowrap;
         gap: 5%;
@@ -885,7 +865,7 @@ $themes: (
 
     &_heading {
         position: absolute;
-        top: 7.5%;
+        top: 4.25%;
         left: 50%;
         transform: translateX(-50%);
         font-size: var(--font-size-heading);
@@ -909,11 +889,29 @@ $themes: (
         }
     }
 
-
     &_actions {
-        width: 19vw;
+        aspect-ratio: 3719/2029;
+        background-image: url('../../static/interface/Task_Shape_button_active.png');
+        background-repeat: no-repeat;
+        background-size: contain;
         position: absolute;
-        bottom: 0%;
+        inset: 0;
+
+        button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 1%;
+            height: 14%;
+            width: 30%;
+            pointer-events: auto;
+            font-size: var(--font-size-text);
+            cursor: pointer;
+        }
+
+        &:hover {
+            background-image: url('../../static/interface/Task_Shape_button_action.png');
+        }
     }
 }
 
@@ -1010,6 +1008,10 @@ $themes: (
 
 #quiz-game {
 
+    #quiz-wrapper {
+        width: clamp(10rem, 50vw, 100%);
+    }
+
     .task-container_box {
         background-image: url('../../static/frames/Quiz_window.png');
         aspect-ratio: 3721/1879;
@@ -1091,10 +1093,6 @@ $themes: (
     }
 
     .quiz-item {
-        >div {
-            margin-inline: auto;
-            width: clamp(20rem, 45vw, 100%);
-        }
 
         textarea {
             width: 100%;
