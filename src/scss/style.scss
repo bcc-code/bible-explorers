@@ -49,6 +49,14 @@
     &:not(.vjs-fullscreen) .skip-video {
         display: none;
     }
+
+    .button-arrow {
+        opacity: 0.4;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 /* #endregion */
