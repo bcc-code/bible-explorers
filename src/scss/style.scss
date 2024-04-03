@@ -366,8 +366,6 @@
     }
 }
 
-
-
 /* #endregion */
 
 /* #region Masks */
@@ -1167,10 +1165,18 @@ $themes: (
 
         &[data-answer="false"] {
             background-image: url('../../static/interface/wrong_icon.png');
+
+            &:hover {
+                background-image: url('../../static/interface/wrong_icon_action.png');
+            }
         }
 
         &[data-answer="true"] {
             background-image: url('../../static/interface/correct_icon.png');
+
+            &:hover {
+                background-image: url('../../static/interface/correct_icon_action.png');
+            }
         }
     }
 
