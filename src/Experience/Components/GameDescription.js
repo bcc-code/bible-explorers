@@ -46,7 +46,10 @@ export default class GameDescription {
         instance.experience.setAppView('task-description')
 
         instance.setHtml()
-        if (instance.data.tutorial) instance.useCorrectAssetsSrc()
+
+        if (instance.data.tutorial) {
+            instance.useCorrectAssetsSrc()
+        }
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -110,7 +113,7 @@ export default class GameDescription {
     useCorrectAssetsSrc() {
         instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
             instance.program.updateAssetInProgramData('details', data)
-            const imageElement = document.querySelector('#task-image > *')
+            const imageElement = document.querySelector('#task-image')
             if (imageElement) {
                 // Check if the element exists
                 imageElement.src = data.tutorial

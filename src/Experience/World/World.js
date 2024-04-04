@@ -274,7 +274,9 @@ export default class World {
 
     removeDescriptionHtml() {
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
-        if (this.chapterSelectWrapper.querySelector('.chapter-description')) this.chapterSelectWrapper.querySelector('.chapter-description').remove()
+        if (this.chapterSelectWrapper.querySelector('.chapter-description')) {
+            this.chapterSelectWrapper.querySelector('.chapter-description').remove()
+        }
     }
 
     chapterEventListeners() {
