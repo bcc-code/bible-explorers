@@ -64,7 +64,7 @@ export default class World {
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
         }
 
-        instance.videoQualityTooltip = tippy(this.buttons.home, {
+        tippy(this.buttons.home, {
             theme: 'explorers',
             content: `Home`,
             duration: [500, 200],

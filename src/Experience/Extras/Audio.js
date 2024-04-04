@@ -34,7 +34,7 @@ export default class Audio {
 
         audio.initialize()
 
-        const bgMusicToggleTooltip = tippy(audio.btn, {
+        tippy(audio.btn, {
             theme: 'explorers',
             content: _s.settings.backgroundMusic,
             duration: [500, 200],
