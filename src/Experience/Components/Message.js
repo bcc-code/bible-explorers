@@ -29,7 +29,9 @@ export default class Message {
         instance.setHtml(caption, character)
         instance.setEventListeners()
 
-        if (instance.data.audio) instance.audio.togglePlayTaskDescription(instance.data.audio)
+        if (instance.data.audio) {
+            instance.audio.togglePlayTaskDescription(instance.data.audio)
+        }
 
         if (instance.data.video) {
             instance.video.load('texture-' + instance.data.video)

@@ -488,9 +488,8 @@ export default class World {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
             instance.cacheTaskDescriptionVideos(checkpoint.steps.filter((step) => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
-            instance.cacheTaskDescriptionWithSupportingScreensAudios(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.audio))
-            instance.cacheTaskDescriptionWithSupportingScreensVideos(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.video))
-            instance.cacheTaskDescriptionWithSupportingScreensMedia(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.media))
+            instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.character_audio))
+            instance.cacheTaskDescriptionWithSupportingScreensRightScreen(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.right_screen))
             instance.cacheSortingGameIcons(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'))
             instance.cacheDialogueAudios(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'))
@@ -535,19 +534,14 @@ export default class World {
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
     }
 
-    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
+    cacheTaskDescriptionWithSupportingScreensCharacterAudio(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.audio))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio))
     }
 
-    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
+    cacheTaskDescriptionWithSupportingScreensRightScreen(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.video))
-    }
-
-    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
-        if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.media))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen))
     }
 
     cacheSortingGameIcons(sortingTasks) {
