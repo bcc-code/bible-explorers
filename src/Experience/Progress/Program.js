@@ -169,7 +169,7 @@ export default class Program {
                 }
 
                 // Games
-                else if (instance.taskType() === 'cables' || instance.taskType() === 'sorting' || instance.taskType() === 'simon_says' || instance.taskType() === 'flip_cards' || instance.taskType() === 'choose_new_king' || instance.taskType() === 'heart_defense' || instance.taskType() === 'davids_refuge' || instance.taskType() === 'labyrinth' || instance.taskType() === 'duck_game') {
+                else if (['cables', 'sorting', 'simon_says', 'flip_cards', 'choose_new_king', 'heart_defense', 'davids_refuge', 'labyrinth', 'duck_game'].includes(instance.taskType())) {
                     instance.gameDescription.show()
                 } else if (instance.taskType() === 'multiple_choice_with_picture') {
                     instance.multipleChoiceWithPicture.show()

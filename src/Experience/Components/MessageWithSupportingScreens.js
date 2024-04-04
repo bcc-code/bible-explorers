@@ -1,3 +1,4 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
@@ -9,6 +10,7 @@ export default class MessageWithSupportingScreens {
     constructor() {
         instance = this
         instance.experience = new Experience()
+        instance.offline = new Offline()
         instance.world = instance.experience.world
         instance.resources = instance.experience.resources
         instance.audio = instance.world.audio
@@ -26,9 +28,13 @@ export default class MessageWithSupportingScreens {
         if (!character) character = instance.data ? instance.data.character : 'iris'
 
         instance.setHtml(caption, character)
+        instance.useCorrectAssetsSrc()
+
         instance.setEventListeners()
 
-        if (instance.data.character_audio) instance.audio.togglePlayTaskDescription(instance.data.character_audio)
+        if (instance.data.character_audio) {
+            instance.audio.togglePlayTaskDescription(instance.data.character_audio)
+        }
 
         if (instance.data.video) {
             instance.video.load('texture-' + instance.data.video)
@@ -62,8 +68,31 @@ export default class MessageWithSupportingScreens {
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
-        else return `<img src="${url}" />`
+        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="${url}" id="message-video" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        else return `<img src="${url}" id="message-image" />`
+    }
+
+    useCorrectAssetsSrc() {
+        if (instance.data.right_screen) {
+            const ext = instance.data.right_screen.split('.').pop().toLowerCase()
+            const elId = ['mp4', 'mov', 'webm'].includes(ext) ? '#message-video' : '#message-image'
+
+            instance.offline.fetchChapterAsset(instance.data, 'right_screen', (data) => {
+                instance.program.updateAssetInProgramData('message_with_supporting_screens', data)
+
+                const domEl = document.querySelector(elId)
+                if (domEl) {
+                    // Check if the element exists
+                    domEl.src = data.right_screen
+                }
+            })
+        }
+
+        if (instance.data.character_audio) {
+            instance.offline.fetchChapterAsset(instance.data, 'character_audio', (data) => {
+                instance.program.updateAssetInProgramData('message_with_supporting_screens', data)
+            })
+        }
     }
 
     leverClickEvent = () => {
