@@ -261,7 +261,7 @@ export default class Quiz {
             return true
         } catch (error) {
             console.error('Error:', error)
-            return false
+            return true // If the request failed (e.g. connection was offline) we still want to continue
         }
     }
 
