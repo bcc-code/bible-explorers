@@ -510,6 +510,7 @@ export default class World {
             instance.cacheTaskDescriptionScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'task_description_screen'))
             instance.cacheTaskDescriptionWithCalculatorScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'calculator_screen'))
             instance.cacheSingleChoiceMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'single_choice'))
+            instance.cacheTrueFalseQuizMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'truefalse_quiz'))
         })
     }
 
@@ -644,6 +645,16 @@ export default class World {
         if (steps.length == 0) return
         steps.forEach((step) => {
             step.single_choice.options.forEach((option) => instance.fetchAndCacheAsset(option.option_media))
+        })
+    }
+
+    cacheTrueFalseQuizMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.truefalse_quiz.questions.forEach((question) => {
+                instance.fetchAndCacheAsset(question.question_media)
+                instance.fetchAndCacheAsset(question.question_audio)
+            })
         })
     }
 

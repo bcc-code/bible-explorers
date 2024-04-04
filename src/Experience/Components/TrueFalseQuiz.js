@@ -53,10 +53,8 @@ export default class TrueFalsQuiz {
 
     setHTMLForQuestion(index) {
         const question = instance.data.questions[index]
-        const isValidMediaUrl = (url) => url && url !== 'false' && url.startsWith('http')
-        const isValidAudioUrl = (url) => /\.(mp3|wav|ogg)$/i.test(url)
-        const questionContent = question.type === 'image' && isValidMediaUrl(question.question_media) ? `<div class="task-container_image" id="task-image"><img src="${question.question_media}" alt="Question Image" /></div>` : `<p>${question.question_text}</p>`
-        const audioButton = question.question_audio && isValidAudioUrl(question.question_audio.url) ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>Play Audio</span></button>` : ''
+        const questionContent = question.type === 'image' && question.question_media ? `<div class="task-container_image" id="task-image"><img src="${question.question_media}" alt="Question Image" /></div>` : `<p>${question.question_text}</p>`
+        const audioButton = question.type === 'audio' && question.question_audio ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
@@ -71,7 +69,22 @@ export default class TrueFalsQuiz {
 
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = questionHTML
+
+        instance.useCorrectAssetsSrc(index)
+
         instance.attachEventListeners()
+    }
+
+    useCorrectAssetsSrc(index) {
+        const question = instance.data.questions[index]
+
+        if (question.question_media) {
+            instance.offline.fetchChapterAsset(question, 'question_media', (data) => {
+                instance.program.updateAssetInProgramData('truefalse_quiz', data)
+
+                document.querySelector('#task-image img').src = data.question_media
+            })
+        }
     }
 
     moveToNextQuestion() {
@@ -133,17 +146,20 @@ export default class TrueFalsQuiz {
             return
         }
 
-        const audioUrl = question.question_audio.url
-        const button = event.target
         const quizAudio = document.getElementById('quizAudio')
 
-        instance.audio.fadeOutBgMusic()
+        instance.offline.fetchChapterAsset(question, 'question_audio', (data) => {
+            instance.program.updateAssetInProgramData('truefalse_quiz', data)
+
+            quizAudio.src = data.question_audio
+            instance.audio.fadeOutBgMusic()
+        })
 
         if (quizAudio && !quizAudio.paused) {
             return
         }
 
-        quizAudio.src = audioUrl
+        const button = event.target
 
         button.disabled = true
 
