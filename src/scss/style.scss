@@ -388,6 +388,19 @@
     }
 }
 
+#logout-button::after {
+    content: '';
+    position: absolute;
+    width: 14%;
+    height: 14%;
+    border-radius: 99px;
+    right: 20%;
+    top: 20%;
+    background-color: greenyellow;
+}
+
+
+
 /* #endregion */
 
 /* #region Masks */
