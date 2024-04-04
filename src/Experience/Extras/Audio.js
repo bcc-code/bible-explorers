@@ -2,6 +2,10 @@ import * as THREE from 'three'
 import Experience from '../Experience.js'
 import _STATE from '../Utils/AudioStates.js'
 import _e from '../Utils/Events.js'
+import _s from '../Utils/Strings.js'
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/animations/shift-away.css'
 
 let audio = null
 
@@ -29,6 +33,14 @@ export default class Audio {
         audio.bgMusicVolume = () => audio.musicRange / audio.slideValueConversion / 100 // audio volume value should be [0, 1]
 
         audio.initialize()
+
+        const bgMusicToggleTooltip = tippy(audio.btn, {
+            theme: 'explorers',
+            content: _s.settings.backgroundMusic,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
     }
 
     initialize() {
