@@ -326,7 +326,8 @@ export default class World {
     setStatesTooltips() {
         tippy('.chapter__offline', {
             theme: 'explorers',
-            content: _s.offline.download.info,
+            // content: _s.offline.download.info,
+            content: 'Download offline version',
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'auto',
