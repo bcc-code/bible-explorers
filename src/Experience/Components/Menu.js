@@ -8,6 +8,7 @@ import isElectron from 'is-electron'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
+import DropdownToggle from '../Utils/DropdownToggle.js'
 
 let instance = null
 
@@ -47,11 +48,22 @@ export default class Menu {
 
         const loginBtn = document.querySelector('#login-button')
         const logoutBtn = document.querySelector('#logout-button')
-        loginBtn.querySelector('span').innerText = _s.settings.logIn
-        logoutBtn.querySelector('span').innerText = _s.settings.logOut
-        loginBtn.setAttribute('title', _s.settings.logIn)
-        logoutBtn.setAttribute('title', _s.settings.logOut)
 
+        tippy(loginBtn, {
+            theme: 'explorers',
+            content: _s.settings.logIn,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        tippy(logoutBtn, {
+            theme: 'explorers',
+            content: _s.settings.logOut,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
         const copyrightFooter = document.querySelector('#copyright')
         copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition hover:text-bke-orange">BCC Media STI</a>`
     }
@@ -73,13 +85,8 @@ export default class Menu {
             instance.updateVideoQualityTooltipContent()
         })
 
-        let isToggled = false
-        instance.languageToggle.addEventListener('click', (e) => {
-            isToggled = !isToggled
-            e.target.classList.toggle('active')
-            e.target.setAttribute('aria-pressed', String(isToggled))
-            e.target.nextElementSibling.classList.toggle('is-visible')
-        })
+        const dropdownLanguages = instance.languageToggle.nextElementSibling
+        const languageDropdownToggle = new DropdownToggle(instance.languageToggle, dropdownLanguages)
 
         const languageItems = document.querySelectorAll('#app-language li')
         languageItems.forEach((language) => {
