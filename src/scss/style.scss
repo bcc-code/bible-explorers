@@ -1101,13 +1101,16 @@ $themes: (
 
     .quiz-item {
 
-
         .correct .question-label .button-circle {
             background-image: url('../../static/interface/B_circle_action.png');
         }
 
         .wrong .question-label .button-circle {
             background-image: url('../../static/interface/B_circle_innactive.png');
+        }
+
+        .correct .question-label {
+            background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
         }
 
     }
