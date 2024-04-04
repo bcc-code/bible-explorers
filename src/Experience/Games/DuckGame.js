@@ -53,11 +53,14 @@ export default class DuckGame {
         // Adjusted in resizeCanvas method
         this.resizeCanvas()
 
-        // Initialize the click event listener for starting the game
-        this.startGameClickHandler = () => {
-            this.startGame()
+        instance.keydownHandler = (event) => {
+            if (!this.gameStarted || this.gameOver || this.gameWon) {
+                this.startGame()
+
+                document.removeEventListener('keydown', instance.keydownHandler)
+            }
         }
-        this.canvas.addEventListener('click', this.startGameClickHandler)
+        document.addEventListener('keydown', instance.keydownHandler)
 
         // Player instance (will be added when "Start" is clicked)
         this.player = null
@@ -142,9 +145,6 @@ export default class DuckGame {
 
         // Set gameStarted flag to true
         this.gameStarted = true
-
-        // Remove click event listener
-        this.canvas.removeEventListener('click', this.startGameClickHandler)
 
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this, this.playerImage)
@@ -369,7 +369,7 @@ export default class DuckGame {
     }
 
     drawStartScreen() {
-        const message = 'Click to start the game'
+        const message = 'Press any key to start'
         this.ctx.fillStyle = 'white'
         this.ctx.textAlign = 'center'
         this.ctx.font = '36px Arial'
@@ -386,15 +386,10 @@ export default class DuckGame {
         const gameOverText = 'Game Over'
         this.ctx.fillText(gameOverText, this.canvas.width / 2, this.canvas.height / 2)
         this.ctx.font = '20px Arial'
-        const gameOverSubText = 'Click to restart'
+        const gameOverSubText = 'Press any key to restart'
         this.ctx.fillText(gameOverSubText, this.canvas.width / 2, this.canvas.height / 2 + 40)
 
-        // Add click event listener to restart the game
-        this.canvas.addEventListener('click', () => {
-            if (this.gameOver) {
-                this.startGame()
-            }
-        })
+        document.addEventListener('keydown', instance.keydownHandler)
     }
 
     drawWinGameScreen() {
@@ -410,14 +405,10 @@ export default class DuckGame {
         const roundText = `Round: ${this.roundCount}` // Display the round count
         this.ctx.fillText(roundText, this.canvas.width / 2, this.canvas.height / 2 + 20)
         this.ctx.font = '20px Arial'
-        const winSubText = 'Click to start new round'
+        const winSubText = 'Press any key to continue'
         this.ctx.fillText(winSubText, this.canvas.width / 2, this.canvas.height / 2 + 60)
-        // Add click event listener to restart the game
-        this.canvas.addEventListener('click', () => {
-            if (this.gameWon) {
-                this.startGame()
-            }
-        })
+
+        document.addEventListener('keydown', instance.keydownHandler)
     }
 
     markDirty(x, y, width, height) {
@@ -489,9 +480,6 @@ export default class DuckGame {
         if (instance.gameLoop) {
             cancelAnimationFrame(instance.gameLoop)
         }
-
-        // Remove click event listener for starting the game
-        instance.canvas.removeEventListener('click', instance.startGameClickHandler)
 
         instance.experience.setAppView('chapter')
 
