@@ -124,6 +124,10 @@ export default class Quiz {
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
                         nextQuestion.disabled = false
                         instance.taskActionsWrapper.classList.remove('disabled')
+
+                        options.forEach((disableOption) => {
+                            disableOption.style.pointerEvents = 'none'
+                        })
                     } else {
                         instance.audio.playSound('wrong')
                         e.target.closest('div').classList.add('wrong')
