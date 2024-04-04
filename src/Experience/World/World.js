@@ -64,6 +64,14 @@ export default class World {
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
         }
 
+        instance.videoQualityTooltip = tippy(this.buttons.home, {
+            theme: 'explorers',
+            content: `Home`,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
         this.buttons.startChapter.addEventListener('click', this.startChapter)
