@@ -27,7 +27,7 @@ export default class WaitingScreen {
         instance.video.play()
 
         instance.videoBG = document.createElement('video')
-        instance.videoBG.setAttribute('src', './textures/Waitingscreen V003.mp4')
+        instance.videoBG.setAttribute('src', './textures/Waitingscreen_V003.mp4')
         instance.videoBG.setAttribute('playsinline', '')
         // instance.videoBG.setAttribute('muted', '')
         instance.videoBG.setAttribute('autoplay', '')
