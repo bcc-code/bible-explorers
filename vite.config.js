@@ -50,8 +50,12 @@ export default {
                 swDest: './dist/sw.js',
                 maximumFileSizeToCacheInBytes: 20000000,
                 globPatterns: ['**/*.{js,css,html,jpg,png,svg,mp3,mp4,webm,riv,glb,gltf,wasm}'],
-                globIgnores: ['assets/index.css', 'assets/index.js'],
+                globIgnores: ['index.html', 'assets/index.css', 'assets/index.js'],
                 runtimeCaching: [
+                    getCache({
+                        pattern: 'index.html',
+                        name: 'html',
+                    }),
                     getCache({
                         pattern: 'assets/index.css',
                         name: 'style',
