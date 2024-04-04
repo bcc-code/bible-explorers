@@ -41,7 +41,6 @@ export default class DuckGame {
             this.resizeCanvas()
             this.drawBackground()
             this.drawStartScreen()
-            this.drawModeInstructions()
         })
 
         // Initialize and bind resize event listener
@@ -49,7 +48,6 @@ export default class DuckGame {
             this.resizeCanvas()
             this.drawBackground()
             this.drawStartScreen()
-            this.drawModeInstructions()
         })
 
         // Adjusted in resizeCanvas method
@@ -102,9 +100,6 @@ export default class DuckGame {
 
         this.useGravity = false
 
-        this.boundToggleGravityMode = this.toggleGravityMode.bind(this)
-        document.addEventListener('keydown', this.boundToggleGravityMode)
-
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
@@ -150,7 +145,6 @@ export default class DuckGame {
 
         // Remove click event listener
         this.canvas.removeEventListener('click', this.startGameClickHandler)
-        document.removeEventListener('keydown', this.boundToggleGravityMode)
 
         // Reset player position and state
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this, this.playerImage)
@@ -319,7 +313,6 @@ export default class DuckGame {
     gameOverCallback() {
         // Game over logic
         this.gameOver = true
-        document.addEventListener('keydown', this.boundToggleGravityMode)
 
         // Stop timer
         this.stopTimer()
@@ -332,9 +325,6 @@ export default class DuckGame {
 
         // Draw game over screen
         this.drawGameOverScreen()
-        setTimeout(() => {
-            this.drawModeInstructions()
-        }, 100)
 
         // Remove player's event listeners to prevent memory leaks or unintended behavior
         this.player.removeEventListeners()
@@ -345,22 +335,16 @@ export default class DuckGame {
 
     winGame() {
         this.gameWon = true
-        document.addEventListener('keydown', this.boundToggleGravityMode)
 
         this.stopTimer()
         this.bibleBoxSpawned = true
         this.bibleBox = null
         this.roundCount++
-        this.roundsCompleted++ // Increment rounds completed count
+        this.roundsCompleted++
         this.drawWinGameScreen()
-
-        setTimeout(() => {
-            this.drawModeInstructions()
-        }, 100)
 
         cancelAnimationFrame(this.gameLoop)
 
-        // Check if rounds completed count equals 5
         if (this.roundsCompleted === 5) {
             // Perform actions for completing 5 rounds
         }
@@ -390,15 +374,6 @@ export default class DuckGame {
         this.ctx.textAlign = 'center'
         this.ctx.font = '36px Arial'
         this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2)
-    }
-
-    drawModeInstructions() {
-        const modeText = `Press M to switch mode: Gravity ${this.useGravity ? 'ON' : 'OFF'}`
-        this.ctx.font = '24px Arial'
-        this.ctx.fillStyle = 'white'
-        this.ctx.textAlign = 'center'
-        this.ctx.clearRect(0, this.canvas.height - 100, this.canvas.width, 100)
-        this.ctx.fillText(modeText, this.canvas.width / 2, this.canvas.height - 50)
     }
 
     drawGameOverScreen() {
@@ -498,12 +473,6 @@ export default class DuckGame {
         this.ctx.fillText(`Time: ${this.timer}s`, this.canvas.width - 10, 30)
     }
 
-    toggleGravityMode(event) {
-        if (event.key === 'm' || event.key === 'M') {
-            this.useGravity = !this.useGravity
-            this.drawModeInstructions()
-        }
-    }
     destroy() {
         // Clear canvas
         instance.ctx.clearRect(0, 0, instance.canvas.width, instance.canvas.height)
