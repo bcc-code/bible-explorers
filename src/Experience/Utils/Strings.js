@@ -133,6 +133,7 @@ const strings = {
             continue: 'Continue the journey',
             skip: 'Skip',
             correctAnswers: 'correct answers',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -280,6 +281,7 @@ const strings = {
             continue: 'Fortsett reisen',
             skip: 'Hopp over',
             correctAnswers: 'riktige svar',
+            playAudio: 'Spill lydspor',
         },
         chapter: {
             infoSingular: {
@@ -424,6 +426,7 @@ const strings = {
             continue: 'Reise fortsetzen',
             skip: 'Überspringen',
             correctAnswers: 'richtige Antworten',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -568,6 +571,7 @@ const strings = {
             continue: 'Ga door met de reis',
             skip: 'Overslaan',
             correctAnswers: 'antwoorden juist',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -709,6 +713,7 @@ const strings = {
             continue: 'Continuer le voyage',
             skip: 'Sauter',
             correctAnswers: 'réponses correctes',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -853,6 +858,7 @@ const strings = {
             continue: 'Kontynuuj podróż',
             skip: 'Pomiń',
             correctAnswers: 'poprawnych odpowiedzi',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -997,6 +1003,7 @@ const strings = {
             continue: 'Continuă călătoria',
             skip: 'Mergi mai departe',
             correctAnswers: 'răspunsuri corecte',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -1141,6 +1148,7 @@ const strings = {
             continue: 'Continuar el viaje',
             skip: 'Saltar',
             correctAnswers: 'respuestas correctas',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -1285,6 +1293,7 @@ const strings = {
             continue: 'Continue a viagem',
             skip: 'Skip',
             correctAnswers: 'respostas corretas',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -1429,6 +1438,7 @@ const strings = {
             continue: 'Continua il tuo viaggio',
             skip: 'Salta',
             correctAnswers: 'risposte corrette',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -1573,6 +1583,7 @@ const strings = {
             continue: 'Продолжить путешествие',
             skip: 'Пропустить',
             correctAnswers: 'верных ответов',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -1717,6 +1728,7 @@ const strings = {
             continue: 'Jatka matkaa',
             skip: 'Ohita',
             correctAnswers: 'oikeaa vastausta',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -1861,6 +1873,7 @@ const strings = {
             continue: 'Utazás folytatása',
             skip: 'Átugrás',
             correctAnswers: 'correct answers',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {
@@ -2005,6 +2018,7 @@ const strings = {
             continue: 'Fortsæt rejsen',
             skip: 'Skip',
             correctAnswers: 'rigtige svar',
+            playAudio: 'Play audio',
         },
         chapter: {
             infoSingular: {

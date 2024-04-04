@@ -52,13 +52,9 @@ export default class Quiz {
                 ${
                     instance.questions.length > 0
                         ? `
-                    <div id="quiz-navigation" class="flex justify-center mt-auto">
-                        <button class="button-cube" id="next-question">
-                            <svg><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>
-                        </button>
-                        <button class="button-cube-wider" id="submit-quiz" type="submit">
-                            ${_s.task.submit}
-                        </button>
+                    <div class="task-container_actions">
+                        <button id="next-question" class="button-task_action"><svg><use href="#arrow-right-long-solid" fill="currentColor"></use></svg></button>
+                        <button id="submit-quiz" class="button-task_action" type="submit"><span>${_s.task.submit}</span></button>
                     </div>`
                         : ''
                 }
@@ -89,7 +85,7 @@ export default class Quiz {
                 })
             } else {
                 this.openQuestions++
-                const selfAnswer = _gl.elementFromHtml(`<div><textarea rows="8" placeholder="${q.placeholder}" class=""></textarea></div>`)
+                const selfAnswer = _gl.elementFromHtml(`<div class="quiz-textarea"><textarea placeholder="${q.placeholder}" class=""></textarea></div>`)
                 container.append(selfAnswer)
             }
 
@@ -106,7 +102,10 @@ export default class Quiz {
         const nextQuestion = document.querySelector('#next-question')
         const submitQuiz = document.querySelector('#submit-quiz')
 
-        nextQuestion.style.display = 'none'
+        instance.taskActionsWrapper = document.querySelector('.task-container_actions')
+
+        nextQuestion.disabled = true
+        instance.taskActionsWrapper.classList.add('disabled')
         submitQuiz.style.display = 'none'
 
         questionItems.forEach((item, index) => {
@@ -123,7 +122,12 @@ export default class Quiz {
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
-                        nextQuestion.style.display = 'grid'
+                        nextQuestion.disabled = false
+                        instance.taskActionsWrapper.classList.remove('disabled')
+
+                        options.forEach((disableOption) => {
+                            disableOption.style.pointerEvents = 'none'
+                        })
                     } else {
                         instance.audio.playSound('wrong')
                         e.target.closest('div').classList.add('wrong')
@@ -137,13 +141,28 @@ export default class Quiz {
             if (textarea) {
                 textarea.addEventListener('input', (e) => {
                     const inputLength = e.target.value.length
-
-                    if (index === totalQuestions - 1) {
-                        this.experience.navigation.next.innerHTML = ``
-                        submitQuiz.style.display = inputLength > 0 ? 'grid' : 'none'
+                    const isLastQuestion = index === totalQuestions - 1
+                    if (inputLength > 0) {
+                        if (isLastQuestion) {
+                            this.experience.navigation.next.innerHTML = ``
+                            submitQuiz.style.display = 'flex'
+                            submitQuiz.disabled = false
+                            nextQuestion.style.display = 'none'
+                            instance.taskActionsWrapper.classList.remove('disabled')
+                        } else {
+                            nextQuestion.disabled = false
+                            instance.taskActionsWrapper.classList.remove('disabled')
+                        }
                     } else {
-                        this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-                        nextQuestion.style.display = inputLength > 0 ? 'grid' : 'none'
+                        if (isLastQuestion) {
+                            this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+                            submitQuiz.disabled = true
+                            nextQuestion.style.display = 'none'
+                            instance.taskActionsWrapper.classList.add('disabled')
+                        } else {
+                            nextQuestion.disabled = true
+                            instance.taskActionsWrapper.classList.add('disabled')
+                        }
                     }
                 })
             }
@@ -196,7 +215,8 @@ export default class Quiz {
             questionItems[instance.questionIdx].classList.add('block')
         }
 
-        nextQuestion.style.display = 'none'
+        nextQuestion.disabled = true
+        instance.taskActionsWrapper.classList.add('disabled')
         instance.updateProgressBar()
     }
 
@@ -241,7 +261,7 @@ export default class Quiz {
             return true
         } catch (error) {
             console.error('Error:', error)
-            return false
+            return true // If the request failed (e.g. connection was offline) we still want to continue
         }
     }
 

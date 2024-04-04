@@ -64,6 +64,14 @@ export default class World {
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
         }
 
+        tippy(this.buttons.home, {
+            theme: 'explorers',
+            content: `Home`,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
         this.buttons.startChapter.addEventListener('click', this.startChapter)
@@ -274,7 +282,9 @@ export default class World {
 
     removeDescriptionHtml() {
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
-        if (this.chapterSelectWrapper.querySelector('.chapter-description')) this.chapterSelectWrapper.querySelector('.chapter-description').remove()
+        if (this.chapterSelectWrapper.querySelector('.chapter-description')) {
+            this.chapterSelectWrapper.querySelector('.chapter-description').remove()
+        }
     }
 
     chapterEventListeners() {
@@ -305,18 +315,19 @@ export default class World {
             button.addEventListener('click', instance.confirmRedownload)
         })
 
-        this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
-            chapter.addEventListener('click', (event) => {
-                instance.downloadChapter(chapter)
-                event.stopPropagation()
-            })
-        })
+        // this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
+        //     chapter.addEventListener('click', (event) => {
+        //         instance.downloadChapter(chapter)
+        //         event.stopPropagation()
+        //     })
+        // })
     }
 
     setStatesTooltips() {
         tippy('.chapter__offline', {
             theme: 'explorers',
-            content: _s.offline.download.info,
+            // content: _s.offline.download.info,
+            content: 'Download offline version',
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'auto',
@@ -356,9 +367,9 @@ export default class World {
         button.removeEventListener('click', instance.confirmRedownload)
 
         button.innerHTML = `<span class="text-sm tv:text-base mr-1">${_s.offline.redownloadConfirmation}</span>
-            <svg class="refuse w-3 h-3"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
-            <span class="separator">/</span>
-            <svg class="redownload w-4 h-4"><use href="#check-solid" fill="currentColor"></use></svg>`
+            <svg class="refuse w-3 h-3 cursor-pointer"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+            <span class="separator mr-2">/</span>
+            <svg class="redownload w-4 h-4 cursor-pointer"><use href="#check-solid" fill="currentColor"></use></svg>`
 
         button.querySelector('.refuse').addEventListener('click', (event) => {
             instance.setDownloadHtml(button)
@@ -409,7 +420,7 @@ export default class World {
     fetchLobbyVideoLoop() {
         const videoName = instance.selectedChapter.lobby_video_loop
         if (videoName) {
-            instance.resources.loadLobbyVideoInBtvPlayer(videoName)
+            instance.resources.loadTextureInBtvPlayer(videoName)
         }
     }
 
@@ -484,11 +495,9 @@ export default class World {
 
         chapter['program'].forEach((checkpoint) => {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
-            instance.cacheTaskDescriptionVideos(checkpoint.steps.filter((step) => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
-            instance.cacheTaskDescriptionWithSupportingScreensAudios(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.audio))
-            instance.cacheTaskDescriptionWithSupportingScreensVideos(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.video))
-            instance.cacheTaskDescriptionWithSupportingScreensMedia(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.media))
+            instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.character_audio))
+            instance.cacheTaskDescriptionWithSupportingScreensRightScreen(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.right_screen))
             instance.cacheSortingGameIcons(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'))
             instance.cachePictureAndCodeImage(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'))
             instance.cacheDialogueAudios(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'))
@@ -500,6 +509,8 @@ export default class World {
             instance.cacheConfirmationScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'confirmation_screen'))
             instance.cacheTaskDescriptionScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'task_description_screen'))
             instance.cacheTaskDescriptionWithCalculatorScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'calculator_screen'))
+            instance.cacheSingleChoiceMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'single_choice'))
+            instance.cacheTrueFalseQuizMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'truefalse_quiz'))
         })
     }
 
@@ -523,29 +534,19 @@ export default class World {
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
     }
 
-    cacheTaskDescriptionVideos(steps) {
-        if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message.video))
-    }
-
     cacheTaskDescriptionMedia(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
     }
 
-    cacheTaskDescriptionWithSupportingScreensAudios(steps) {
+    cacheTaskDescriptionWithSupportingScreensCharacterAudio(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.audio))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio))
     }
 
-    cacheTaskDescriptionWithSupportingScreensVideos(steps) {
+    cacheTaskDescriptionWithSupportingScreensRightScreen(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.video))
-    }
-
-    cacheTaskDescriptionWithSupportingScreensMedia(steps) {
-        if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.media))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen))
     }
 
     cacheSortingGameIcons(sortingTasks) {
@@ -637,6 +638,23 @@ export default class World {
         if (steps.length == 0) return
         steps.forEach((step) => {
             instance.fetchAndCacheAsset(step.calculator_screen.td_image)
+        })
+    }
+
+    cacheSingleChoiceMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.single_choice.options.forEach((option) => instance.fetchAndCacheAsset(option.option_media))
+        })
+    }
+
+    cacheTrueFalseQuizMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.truefalse_quiz.questions.forEach((question) => {
+                instance.fetchAndCacheAsset(question.question_media)
+                instance.fetchAndCacheAsset(question.question_audio)
+            })
         })
     }
 

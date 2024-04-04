@@ -46,7 +46,10 @@ export default class GameDescription {
         instance.experience.setAppView('task-description')
 
         instance.setHtml()
-        if (instance.data.tutorial) instance.useCorrectAssetsSrc()
+
+        if (instance.data.tutorial) {
+            instance.useCorrectAssetsSrc()
+        }
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -59,7 +62,7 @@ export default class GameDescription {
                     ${instance.data.prompts ? `<p class="task-container_prompts">${instance.data.prompts[0].prompt}</p>` : ''}
                     ${instance.data.tutorial ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
                     <div class="task-container_actions">
-                        <button class="button-task-action">${_s.miniGames.startGame}</button>
+                        <button class="button-task_action">${_s.miniGames.startGame}</button>
                     </div>
                 </div>
             </div>`
@@ -110,7 +113,7 @@ export default class GameDescription {
     useCorrectAssetsSrc() {
         instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
             instance.program.updateAssetInProgramData('details', data)
-            const imageElement = document.querySelector('#task-image > *')
+            const imageElement = document.querySelector('#task-image')
             if (imageElement) {
                 // Check if the element exists
                 imageElement.src = data.tutorial

@@ -24,13 +24,16 @@ export default class TaskDescriptionScreen {
         instance.experience.setAppView('task-description')
 
         instance.setHtml()
-        if (instance.data.cs_image) instance.useCorrectAssetsSrc()
+
+        if (instance.data.td_image) {
+            instance.useCorrectAssetsSrc()
+        }
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     useCorrectAssetsSrc() {
-        instance.offline.fetchChapterAsset(instance.data, 'cs_image', (data) => {
+        instance.offline.fetchChapterAsset(instance.data, 'td_image', (data) => {
             document.querySelector('#task-image img').src = data.td_image
         })
     }
@@ -42,7 +45,7 @@ export default class TaskDescriptionScreen {
                     <h1 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h1>
                     ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
                     ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button-task-action">${instance.data.td_button}</button></div>` : ''}
+                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button-task_action">${instance.data.td_button}</button></div>` : ''}
                 </div>
             </div>`
         )

@@ -5,6 +5,10 @@ import _gl from '../Utils/Globals.js'
 import _lang from '../Utils/Lang.js'
 import _appInsights from '../Utils/AppInsights.js'
 import isElectron from 'is-electron'
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/animations/shift-away.css'
+import DropdownToggle from '../Utils/DropdownToggle.js'
 
 let instance = null
 
@@ -21,6 +25,11 @@ export default class Menu {
             logout: false,
         }
 
+        instance.videoQualityToggle = document.querySelector('#toggle-vq')
+        instance.fullscreenToggle = document.querySelector('#toggle-fullscreen')
+        instance.languageToggle = document.querySelector('#toggle-languages')
+
+        instance.setDefaultVideoQuality()
         instance.init()
         instance.eventListeners()
     }
@@ -39,34 +48,45 @@ export default class Menu {
 
         const loginBtn = document.querySelector('#login-button')
         const logoutBtn = document.querySelector('#logout-button')
-        loginBtn.querySelector('span').innerText = _s.settings.logIn
-        logoutBtn.querySelector('span').innerText = _s.settings.logOut
-        loginBtn.setAttribute('title', _s.settings.logIn)
-        logoutBtn.setAttribute('title', _s.settings.logOut)
 
+        tippy(loginBtn, {
+            theme: 'explorers',
+            content: _s.settings.logIn,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        tippy(logoutBtn, {
+            theme: 'explorers',
+            content: _s.settings.logOut,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
         const copyrightFooter = document.querySelector('#copyright')
         copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition hover:text-bke-orange">BCC Media STI</a>`
-
-        instance.setDefaultVideoQuality()
     }
 
     eventListeners() {
-        document.querySelector('#toggle-vq').addEventListener('click', (e) => {
-            const newQuality = this.videoQuality === 'high' ? 'medium' : 'high'
-
-            localStorage.setItem('videoQuality', newQuality)
-            this.videoQuality = newQuality
-            e.target.setAttribute('data-quality', newQuality)
+        instance.videoQualityTooltip = tippy(instance.videoQualityToggle, {
+            theme: 'explorers',
+            content: `${_s.settings.videoQuality.title} - ${_s.settings.videoQuality[this.videoQuality]}`,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
         })
 
-        let isToggled = false
+        instance.videoQualityToggle.addEventListener('click', (e) => {
+            instance.videoQuality = instance.videoQuality === 'high' ? 'medium' : 'high'
+            localStorage.setItem('videoQuality', instance.videoQuality)
+            e.target.setAttribute('data-quality', instance.videoQuality)
 
-        document.querySelector('#toggle-languages').addEventListener('click', (e) => {
-            isToggled = !isToggled
-            e.target.classList.toggle('active')
-            e.target.setAttribute('aria-pressed', String(isToggled))
-            e.target.nextElementSibling.classList.toggle('is-visible')
+            instance.updateVideoQualityTooltipContent()
         })
+
+        const dropdownLanguages = instance.languageToggle.nextElementSibling
+        const languageDropdownToggle = new DropdownToggle(instance.languageToggle, dropdownLanguages)
 
         const languageItems = document.querySelectorAll('#app-language li')
         languageItems.forEach((language) => {
@@ -75,8 +95,24 @@ export default class Menu {
             })
         })
 
-        const fullscreenToggle = document.getElementById('toggle-fullscreen')
-        fullscreenToggle.addEventListener('click', () => {
+        function isFullscreen() {
+            return document.fullscreenElement != null
+        }
+
+        function getTooltipContent() {
+            const stateLabel = isFullscreen() ? _s.settings.on : _s.settings.off
+            return `${_s.settings.fullScreenMode} - ${stateLabel}`
+        }
+
+        const fullscreenToggleTooltip = tippy(instance.fullscreenToggle, {
+            theme: 'explorers',
+            content: getTooltipContent(),
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        instance.fullscreenToggle.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch((err) => {
                     console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`)
@@ -89,7 +125,8 @@ export default class Menu {
         })
 
         document.addEventListener('fullscreenchange', () => {
-            fullscreenToggle.classList.toggle('fullscreen-active', document.fullscreenElement)
+            instance.fullscreenToggle.classList.toggle('fullscreen-active', document.fullscreenElement)
+            fullscreenToggleTooltip.setContent(getTooltipContent())
         })
 
         const loginBtn = document.querySelector('#login-button')
@@ -107,12 +144,17 @@ export default class Menu {
 
         if (!currentQuality) {
             localStorage.setItem('videoQuality', defaultVideoQuality)
-            this.videoQuality = defaultVideoQuality
+            instance.videoQuality = defaultVideoQuality
         } else {
-            this.videoQuality = currentQuality
+            instance.videoQuality = currentQuality
         }
 
-        document.querySelector('#toggle-vq').setAttribute('data-quality', this.videoQuality)
+        instance.videoQualityToggle.setAttribute('data-quality', instance.videoQuality)
+    }
+
+    updateVideoQualityTooltipContent() {
+        const qualityLabel = _s.settings.videoQuality[instance.videoQuality]
+        instance.videoQualityTooltip.setContent(`${_s.settings.videoQuality.title} - ${qualityLabel}`)
     }
 
     updateUI = async () => {
@@ -122,13 +164,9 @@ export default class Menu {
         const loginBtn = document.querySelector('#login-button')
         const logoutBtn = document.querySelector('#logout-button')
 
-        const loginUser = document.querySelector('[aria-label="User"]')
-
         if (loginBtn) {
             loginBtn.disabled = instance.logInLogOut.login
             logoutBtn.disabled = instance.logInLogOut.logout
-
-            // loginUser.innerText = instance.experience.auth0.userData?.name || ''
         }
     }
 
