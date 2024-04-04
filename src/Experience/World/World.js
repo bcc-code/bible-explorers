@@ -356,9 +356,9 @@ export default class World {
         button.removeEventListener('click', instance.confirmRedownload)
 
         button.innerHTML = `<span class="text-sm tv:text-base mr-1">${_s.offline.redownloadConfirmation}</span>
-            <svg class="refuse w-3 h-3"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
-            <span class="separator">/</span>
-            <svg class="redownload w-4 h-4"><use href="#check-solid" fill="currentColor"></use></svg>`
+            <svg class="refuse w-3 h-3 cursor-pointer"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+            <span class="separator mr-2">/</span>
+            <svg class="redownload w-4 h-4 cursor-pointer"><use href="#check-solid" fill="currentColor"></use></svg>`
 
         button.querySelector('.refuse').addEventListener('click', (event) => {
             instance.setDownloadHtml(button)
