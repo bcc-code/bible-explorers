@@ -222,6 +222,11 @@ export default class Offline {
     downloadScreenTexture = function (videoName, video) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
+
+        if (!video.url) {
+            console.log('Episode ' + videoName + ' is not downloadable!')
+        }
+
         xhr.open('GET', video.url, true)
         xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener('error', () => {
