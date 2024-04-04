@@ -193,13 +193,23 @@ export default class Offline {
     }
 
     downloadScreenTextures = async function (chapter) {
-        if (chapter.lobby_video_loop) offline.btvVideos.push(chapter.lobby_video_loop)
+        if (chapter.lobby_video_loop) {
+            offline.btvVideos.push(chapter.lobby_video_loop)
+        }
 
         chapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
-                if (step.details.step_type == 'iris' && step.message.video) offline.btvVideos.push(step.message.video)
+                if (step.details.step_type == 'iris' && step.message.video) {
+                    offline.btvVideos.push(step.message.video)
+                }
 
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) offline.btvVideos.push(step.video_with_question.video)
+                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens.video) {
+                    offline.btvVideos.push(step.message_with_supporting_screens.video)
+                }
+
+                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
+                    offline.btvVideos.push(step.video_with_question.video)
+                }
             })
         })
 
@@ -212,6 +222,11 @@ export default class Offline {
     downloadScreenTexture = function (videoName, video) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
+
+        if (!video.url) {
+            console.log('Episode ' + videoName + ' is not downloadable!')
+        }
+
         xhr.open('GET', video.url, true)
         xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener('error', () => {
@@ -232,7 +247,7 @@ export default class Offline {
             const textureData = {
                 language: video.audioLanguage,
                 name: 'texture-' + videoName,
-                quality: 'low',
+                quality: this.experience.settings.videoQuality,
                 video: xhr.response,
             }
 
@@ -263,8 +278,6 @@ export default class Offline {
             return file.audioLanguage == locale
         })
         if (!myLanguageVideos.length) return
-
-        if (this.experience.settings.videoQuality == 'high') return myLanguageVideos.find((video) => video.resolution == '960x540')
 
         return offline.getSelectedQualityVideo(myLanguageVideos)
     }
