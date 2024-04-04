@@ -72,21 +72,17 @@ export default class MazeGame {
 
     initHtml() {
         const game = _gl.elementFromHtml(`
-      <section class="game maze-game">
-        <div class="container">
-          <div class="absolute left-4 bottom-4 tv:left-8 tv:bottom-8 game-rounds text-white/80 tv:text-xl">
-            ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}
-          </div>
-          <div class="game-popup w-full grid place-items-center" id="game-popup">
-            <h1 class="text-2xl tv:text-3xl font-bold mb-8">${_s.miniGames.completed.title}</h1>
-            <button class="button-cube-wider shadow-border pointer-events-auto" id="new-level">${_s.miniGames.nextRound}</button>
-          </div>
-        </div>
-        <div id="maze-canvas" class="game-canvas"></div>
-      </section>`)
+        <section class="task-game maze-game">
+            <div id="maze-canvas" class="task-game_canvas"></div>
+            <div class="task-game_rounds">${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}</div>
+            <div class="task-game_popup">
+                <h1>${_s.miniGames.completed.title}</h1>
+                <button class="button-cube-wider" id="new-level">${_s.miniGames.nextRound}</button>
+            </div>
+        </section>`)
 
         instance.experience.interface.gameContainer.append(game)
-        document.querySelector('#game-popup').style.display = 'none'
+        document.querySelector('.task-game_popup').style.display = 'none'
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
@@ -108,7 +104,7 @@ export default class MazeGame {
         if (timerInMinutes > 0) {
             this.timer = new Timer()
 
-            this.timer.setMinutes(timerInMinutes, '.maze-game .container')
+            this.timer.setMinutes(timerInMinutes, '.maze-game')
 
             document.addEventListener(_e.ACTIONS.TIME_ELAPSED, instance.onTimeElapsed)
 
@@ -455,15 +451,15 @@ export default class MazeGame {
                 this.bibleBoxMesh.scale.set(1, 1, 1)
 
                 document.querySelector('.maze-game').classList.remove('popup-visible')
-                document.querySelector('#game-popup').style.display = 'none'
+                document.querySelector('.task-game_popup').style.display = 'none'
 
                 if (this.options.currentLevel <= this.options.minLevels) {
                     // Main levels
-                    document.querySelector('.game-rounds').innerHTML = `
+                    document.querySelector('.task-game_rounds').innerHTML = `
           ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}`
                 } else {
                     // Extra levels
-                    document.querySelector('.game-rounds').innerHTML = `
+                    document.querySelector('.task-game_rounds').innerHTML = `
           ${_s.miniGames.level} ${this.options.currentLevel}`
                 }
 
@@ -550,16 +546,16 @@ export default class MazeGame {
 
         if (this.options.gameState == 'congrats') {
             this.options.currentLevel++
-            document.querySelector('#game-popup h1').textContent = _s.miniGames.completed.title
-            document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound
+            document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
+            document.querySelector('.task-game_popup button').textContent = _s.miniGames.nextRound
         } else if (this.options.gameState == 'repeat') {
-            document.querySelector('#game-popup h1').textContent = _s.miniGames.timeElapsed.title
-            document.querySelector('#game-popup button').textContent = _s.miniGames.playAgain
+            document.querySelector('.task-game_popup h1').textContent = _s.miniGames.timeElapsed.title
+            document.querySelector('.task-game_popup button').textContent = _s.miniGames.playAgain
         } else if (this.options.gameState == 'end game') {
             this.options.currentLevel++
 
-            document.querySelector('#game-popup h1').textContent = _s.miniGames.completed.title
-            document.querySelector('#game-popup button').textContent = _s.miniGames.nextRound
+            document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
+            document.querySelector('.task-game_popup button').textContent = _s.miniGames.nextRound
 
             if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-cube-wider'
 
@@ -570,7 +566,7 @@ export default class MazeGame {
 
         setTimeout(() => {
             document.querySelector('.maze-game').classList.add('popup-visible')
-            document.querySelector('#game-popup').style.display = 'grid'
+            document.querySelector('.task-game_popup').style.display = 'grid'
         }, 500)
     }
 
@@ -600,7 +596,7 @@ export default class MazeGame {
 
     destroy() {
         instance.timer?.destroy()
-        document.querySelector('.game')?.remove()
+        document.querySelector('.task-game')?.remove()
 
         instance.experience.setAppView('chapter')
 
