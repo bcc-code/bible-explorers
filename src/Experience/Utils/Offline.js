@@ -247,7 +247,7 @@ export default class Offline {
             const textureData = {
                 language: video.audioLanguage,
                 name: 'texture-' + videoName,
-                quality: 'low',
+                quality: this.experience.settings.videoQuality,
                 video: xhr.response,
             }
 
@@ -278,8 +278,6 @@ export default class Offline {
             return file.audioLanguage == locale
         })
         if (!myLanguageVideos.length) return
-
-        if (this.experience.settings.videoQuality == 'high') return myLanguageVideos.find((video) => video.resolution == '960x540')
 
         return offline.getSelectedQualityVideo(myLanguageVideos)
     }
