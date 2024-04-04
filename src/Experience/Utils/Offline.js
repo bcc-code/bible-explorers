@@ -362,7 +362,7 @@ export default class Offline {
             let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
             if (chapterEl) {
                 chapterEl.classList.add('downloading')
-                chapterEl.querySelector('span.downloading-label').innerText = parseFloat(percentage).toFixed() + '%'
+                chapterEl.querySelector('.downloading-label').innerText = parseFloat(percentage).toFixed() + '%'
                 chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
             }
         }
@@ -381,7 +381,9 @@ export default class Offline {
     setErrorMessage = function (chapterId) {
         let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
         if (chapterEl) {
-            chapterEl.querySelector('span.title').innerText = 'Error!'
+            chapterEl.classList.remove('downloading')
+            chapterEl.classList.add('failed')
+            // chapterEl.querySelector('span.title').innerText = 'Error!'
         }
     }
 

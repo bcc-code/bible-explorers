@@ -305,12 +305,12 @@ export default class World {
             button.addEventListener('click', instance.confirmRedownload)
         })
 
-        this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
-            chapter.addEventListener('click', (event) => {
-                instance.downloadChapter(chapter)
-                event.stopPropagation()
-            })
-        })
+        // this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
+        //     chapter.addEventListener('click', (event) => {
+        //         instance.downloadChapter(chapter)
+        //         event.stopPropagation()
+        //     })
+        // })
     }
 
     setStatesTooltips() {
