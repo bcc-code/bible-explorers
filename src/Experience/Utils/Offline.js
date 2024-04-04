@@ -199,9 +199,17 @@ export default class Offline {
 
         chapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
-                if (step.details.step_type == 'iris' && step.message.video) offline.btvVideos.push(step.message.video)
+                if (step.details.step_type == 'iris' && step.message.video) {
+                    offline.btvVideos.push(step.message.video)
+                }
 
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) offline.btvVideos.push(step.video_with_question.video)
+                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens.video) {
+                    offline.btvVideos.push(step.message_with_supporting_screens.video)
+                }
+
+                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
+                    offline.btvVideos.push(step.video_with_question.video)
+                }
             })
         })
 
