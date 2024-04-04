@@ -494,7 +494,6 @@ export default class World {
 
         chapter['program'].forEach((checkpoint) => {
             instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
-            instance.cacheTaskDescriptionVideos(checkpoint.steps.filter((step) => step.message && step.message.video))
             instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
             instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.character_audio))
             instance.cacheTaskDescriptionWithSupportingScreensRightScreen(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.right_screen))
@@ -530,11 +529,6 @@ export default class World {
     cacheTaskDescriptionAudios(steps) {
         if (steps.length == 0) return
         steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
-    }
-
-    cacheTaskDescriptionVideos(steps) {
-        if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message.video))
     }
 
     cacheTaskDescriptionMedia(steps) {
