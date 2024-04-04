@@ -24,13 +24,23 @@ export default class SingleChoice {
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow'
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.setHTML()
+        instance.useCorrectAssetsSrc()
+
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     setHTML() {
-        const optionsHtml = instance.data.options.map((o, index) => `<li class="single-choice-option cursor-pointer hover:bg-white/10 rounded-xl p-[5%]" data-index="${index}"><img src="${o.option_media}"/> <h2 class="text-center">${o.option_text}</h2></li>`).join('')
+        const optionsHtml = instance.data.options
+            .map(
+                (o, index) =>
+                    `<li class="single-choice-option cursor-pointer hover:bg-white/10 rounded-xl p-[5%]" data-index="${index}">
+                <img src="${o.option_media}"/>
+                <h2 class="text-center">${o.option_text}</h2>
+            </li>`
+            )
+            .join('')
 
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="single-choice">
@@ -46,6 +56,14 @@ export default class SingleChoice {
 
         document.querySelectorAll('.single-choice-option').forEach((option) => {
             option.addEventListener('click', instance.handleOptionSelect)
+        })
+    }
+
+    useCorrectAssetsSrc() {
+        instance.data.options.forEach((option, index) => {
+            instance.offline.fetchChapterAsset(option, 'option_media', (data) => {
+                document.querySelector('.single-choice-option[data-index="' + index + '"] img').src = data.option_media
+            })
         })
     }
 
