@@ -409,7 +409,7 @@ export default class World {
     fetchLobbyVideoLoop() {
         const videoName = instance.selectedChapter.lobby_video_loop
         if (videoName) {
-            instance.resources.loadLobbyVideoInBtvPlayer(videoName)
+            instance.resources.loadTextureInBtvPlayer(videoName)
         }
     }
 

@@ -23,7 +23,7 @@ export default class WaitingScreen {
         instance.experience.adjustScreensWrapperSize()
 
         const id = instance.world.selectedChapter.lobby_video_loop
-        instance.video.load('lobby-video-' + id)
+        instance.video.load('texture-' + id)
         instance.video.play()
 
         instance.videoBG = document.createElement('video')

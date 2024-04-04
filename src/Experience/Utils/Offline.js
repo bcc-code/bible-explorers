@@ -193,7 +193,9 @@ export default class Offline {
     }
 
     downloadScreenTextures = async function (chapter) {
-        if (chapter.lobby_video_loop) offline.btvVideos.push(chapter.lobby_video_loop)
+        if (chapter.lobby_video_loop) {
+            offline.btvVideos.push(chapter.lobby_video_loop)
+        }
 
         chapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
