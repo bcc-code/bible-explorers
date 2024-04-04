@@ -8,6 +8,7 @@ import isElectron from 'is-electron'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
+import DropdownToggle from '../Utils/DropdownToggle.js'
 
 let instance = null
 
@@ -84,13 +85,8 @@ export default class Menu {
             instance.updateVideoQualityTooltipContent()
         })
 
-        let isToggled = false
-        instance.languageToggle.addEventListener('click', (e) => {
-            isToggled = !isToggled
-            e.target.classList.toggle('active')
-            e.target.setAttribute('aria-pressed', String(isToggled))
-            e.target.nextElementSibling.classList.toggle('is-visible')
-        })
+        const dropdownLanguages = instance.languageToggle.nextElementSibling
+        const languageDropdownToggle = new DropdownToggle(instance.languageToggle, dropdownLanguages)
 
         const languageItems = document.querySelectorAll('#app-language li')
         languageItems.forEach((language) => {
