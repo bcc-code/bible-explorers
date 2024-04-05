@@ -274,7 +274,6 @@ export default class DuckGame {
 
             // Create invisible wall at the same X position as the bible box for consistency
             this.invisibleWall = new InvisibleWall(this.canvas, bibleBoxX, this.bibleBox.width, lastPipe.speed, this.invisibleWallImage, this)
-            this.invisibleWall.update()
         }
 
         // Then, in your update method or a separate method, handle the movement and drawing of the bible box
@@ -285,12 +284,7 @@ export default class DuckGame {
 
         if (this.invisibleWall && this.bibleBoxSpawned) {
             this.invisibleWall.move()
-            this.invisibleWall.draw(this.ctx)
-        }
-
-        this.bgOffset -= this.bgSpeed
-        if (this.bgOffset < -this.bgImage.width) {
-            this.bgOffset += this.bgImage.width
+            this.invisibleWall.update()
         }
 
         this.gameLoop = requestAnimationFrame(this.update.bind(this))
@@ -513,7 +507,7 @@ class Player {
         const originalHeight = 329
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 128 * game.scaleX
+        this.width = 162 * game.scaleX
         this.height = this.width * aspectRatio
 
         const scaleFactor = 0.5 // boundingbox scalling to fit glitch without glow
