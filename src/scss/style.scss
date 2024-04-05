@@ -953,9 +953,21 @@ $themes: (
     align-items: center;
     justify-content: center;
 
+    &_overlay {
+        position: absolute;
+        inset: 0;
+        background-color: var(--bg-dark);
+        opacity: .6;
+        display: none;
+
+        .task-game.popup-visible & {
+            display: block;
+        }
+    }
+
     &_popup {
         position: relative;
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: center;
         text-align: center;
@@ -964,10 +976,19 @@ $themes: (
         background-size: contain;
         aspect-ratio: 3721/1879;
         width: clamp(20rem, 30vw, 100%);
+        padding: 2%;
+
 
         h1 {
             font-size: var(--font-size-heading);
             font-weight: bold;
+        }
+
+        .task-game.popup-visible & {
+            display: grid;
+            place-content: center;
+            place-items: center;
+            gap: 4%;
         }
     }
 
@@ -988,6 +1009,7 @@ $themes: (
         inset: 0;
     }
 
+    &_timer,
     .game-timer {
         position: absolute;
         top: 2%;
@@ -1014,7 +1036,7 @@ $themes: (
     background-image: url('../../static/frames/LOGIN_bar_border.png');
     background-repeat: no-repeat;
     background-size: cover;
-    aspect-ratio: 2931/894;
+    aspect-ratio: 257/72;
     width: clamp(320px, 30vw, 80%);
     display: flex;
     align-items: center;
@@ -1025,7 +1047,7 @@ $themes: (
         background-image: url('../../static/frames/LOGIN_bar_input.png');
         background-repeat: no-repeat;
         background-size: contain;
-        aspect-ratio: 965/194;
+        aspect-ratio: 647/133;
         height: calc(var(--button-height) * 1.25);
         font-size: var(--font-size-text);
         background-color: transparent;
