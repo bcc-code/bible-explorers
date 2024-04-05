@@ -568,8 +568,8 @@ class Player {
         }
 
         // Draw bounding box (for debug purposes)
-        this.ctx.strokeStyle = 'red' // Set the stroke color to red
-        this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
+        // this.ctx.strokeStyle = 'red' // Set the stroke color to red
+        // this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
 
         // Draw the player
         this.ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height)
@@ -645,10 +645,10 @@ class Pipe {
         this.speed = speed
         this.pipeTopImage = pipeTopImage
         this.pipeBottomImage = pipeBottomImage
-        this.game = game // Reference to the game instance
+        this.game = game
 
-        const originalWidth = 186
-        const originalHeight = 2000
+        const originalWidth = 125
+        const originalHeight = 1347
         const aspectRatio = originalHeight / originalWidth
 
         this.width = 80 * game.scaleX
