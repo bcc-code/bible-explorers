@@ -21,7 +21,6 @@ export default class DuckGame {
                 <canvas id="dukk-canvas" class="task-game_canvas"></canvas>
                 <div class="task-game_overlay"></div>
                 <div class="task-game_rounds"></div>
-                <div class="task-game_timer button-cube-wider"></div>
                 <div class="task-game_popup"></div>
             </section>`)
 
@@ -104,9 +103,6 @@ export default class DuckGame {
         // Initialize dirty rectangles array
         this.dirtyRects = [{ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height }]
 
-        // Initialize the timer
-        this.timerInterval = null
-
         // Box instance
         this.bibleBoxSpawned = false
         this.bibleBox = null
@@ -150,9 +146,6 @@ export default class DuckGame {
         // Reset pipes array
         this.pipes = []
 
-        // Reset game timer
-        this.resetTimer()
-
         // Reset box spawn flag
         this.bibleBoxSpawned = false
 
@@ -171,9 +164,6 @@ export default class DuckGame {
         this.player = new Player(this.canvas, this.gameOverCallback.bind(this), this, this.playerImage)
         this.playerHasInteractedWithBox = false
 
-        // Start the timer
-        this.startTimer()
-
         // Start generating pipes
         this.pipesGeneratedCount = 0
         this.pipesToWinRound = 10
@@ -181,30 +171,6 @@ export default class DuckGame {
 
         // Start the game loop
         this.gameLoop = requestAnimationFrame(this.update.bind(this))
-    }
-
-    startTimer() {
-        this.timerInterval = setInterval(() => {
-            this.timer++
-            this.updateTimerDisplay()
-        }, 1000)
-    }
-
-    stopTimer() {
-        clearInterval(this.timerInterval)
-    }
-
-    resetTimer() {
-        this.stopTimer()
-        this.timer = 0
-        this.updateTimerDisplay()
-    }
-
-    updateTimerDisplay() {
-        const timerElement = document.querySelector('.task-game_timer')
-        if (timerElement) {
-            timerElement.textContent = `Time: ${this.timer}s`
-        }
     }
 
     generatePipes() {
@@ -341,9 +307,6 @@ export default class DuckGame {
             this.allowInput = true
         }, 1000)
 
-        // Stop timer
-        this.stopTimer()
-
         // Stop generating pipes after 30 seconds
         this.bibleBoxSpawned = true
 
@@ -368,7 +331,6 @@ export default class DuckGame {
             this.allowInput = true
         }, 1000)
 
-        this.stopTimer()
         this.bibleBoxSpawned = true
         this.bibleBox = null
         this.roundCount++
@@ -498,10 +460,6 @@ export default class DuckGame {
     destroy() {
         if (instance.canvas && instance.canvas.parentNode) {
             instance.canvas.parentNode.removeChild(instance.canvas)
-        }
-
-        if (instance.timerInterval) {
-            clearInterval(instance.timerInterval)
         }
 
         if (instance.gameLoop) {
