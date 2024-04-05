@@ -670,7 +670,9 @@ export default class World {
 
     startChapter() {
         // Reset chapter if completed
-        if (instance.chapterProgress() == instance.selectedChapter.program.length) instance.resetChapter()
+        if (instance.chapterProgress() == instance.selectedChapter.program.length) {
+            instance.resetChapter()
+        }
 
         instance.experience.setAppView('chapter')
 

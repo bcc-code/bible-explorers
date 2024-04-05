@@ -203,7 +203,7 @@ export default class Resources extends EventEmitter {
 
     loadEpisodeTextures(videoName) {
         resources.addVideoDivElementToContainer(videoName, 'videos-container')
-        this.offline.loadEpisodeFromIndexedDb(videoName, this.loadTexturesLocally, this.loadTexturesOnline)
+        this.offline.loadEpisodeFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
     }
 
     loadVideoInBtvPlayer(id) {
@@ -211,7 +211,7 @@ export default class Resources extends EventEmitter {
         if (document.getElementById(textureName)) return
 
         resources.addVideoDivElementToContainer(textureName, 'videos-container')
-        this.offline.loadVideoFromIndexedDb(textureName, this.loadTexturesLocally, this.loadTexturesOnline)
+        this.offline.loadVideoFromIndexedDb(textureName, resources.streamLocally, resources.streamFromBtv)
     }
 
     loadTextureInBtvPlayer(id) {
@@ -219,30 +219,13 @@ export default class Resources extends EventEmitter {
         if (document.getElementById(textureName)) return
 
         resources.addVideoDivElementToContainer(textureName, 'videos-container')
-        this.offline.loadVideoFromIndexedDb(textureName, this.loadTexturesLocally, this.loadTexturesOnline)
+        this.offline.loadVideoFromIndexedDb(textureName, resources.streamLocally, resources.streamFromBtv)
     }
 
     addVideoDivElementToContainer(videoName, containerId) {
         const videoEl = document.createElement('div')
         videoEl.setAttribute('id', videoName)
         document.getElementById(containerId).appendChild(videoEl)
-    }
-
-    async loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
-        await resources.streamLocally(videoName, videoUrl)
-        resources.loadVideoThumbnail(videoName, thumbnailUrl)
-    }
-
-    async loadTexturesOnline(videoName) {
-        await resources.streamFromBtv(videoName)
-        resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
-    }
-
-    loadVideoThumbnail(videoName, thumbnailUrl) {
-        if (!thumbnailUrl) return
-        this.loaders.textureLoader.load(thumbnailUrl, (texture) => {
-            this.customTextureItems[videoName] = texture
-        })
     }
 
     async streamLocally(videoName, videoUrl) {
