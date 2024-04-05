@@ -23,20 +23,24 @@ export default class DuckGame {
 
         // Load the background image
         this.bgImage = new Image()
-        this.bgImage.src = 'games/duck-game/Dukk_BG.jpg'
+        this.bgImage.src = 'games/duck-game/D_BG_v02.png'
 
         // Load pipe images
         this.pipeTopImage = new Image()
-        this.pipeTopImage.src = 'games/duck-game/Dukk_platform.png'
+        this.pipeTopImage.src = 'games/duck-game/Dukk_top_platform_v02.png'
         this.pipeBottomImage = new Image()
-        this.pipeBottomImage.src = 'games/duck-game/Dukk_platform.png'
+        this.pipeBottomImage.src = 'games/duck-game/Dukk_bottom_platform_v02.png'
         this.playerImage = new Image()
-        this.playerImage.src = 'games/duck-game/Dukk_GLITCH.png'
+        this.playerImage.src = 'games/duck-game/Dukk_GLITCH_glow.png'
         this.bibleBoxImage = new Image()
-        this.bibleBoxImage.src = 'games/duck-game/Dukk_box.png'
+        this.bibleBoxImage.src = 'games/duck-game/D_Box.png'
+        this.invisibleWallImage = new Image()
+        this.invisibleWallImage.src = 'games/duck-game/D_Wall_2.png'
+        this.bibleBoxLightImage = new Image()
+        this.bibleBoxLightImage.src = 'games/duck-game/D_light.png'
 
         // Wait for all images to load
-        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage)]).then(() => {
+        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage), loadImage(this.invisibleWallImage), loadImage(this.bibleBoxLightImage)]).then(() => {
             // Once the images are loaded, resize the canvas and draw the background
             this.resizeCanvas()
             this.drawBackground()
@@ -504,19 +508,27 @@ class Player {
         this.game = game // Reference to the game instance
         this.playerImage = playerImage
 
-        const originalWidth = 111
-        const originalHeight = 152
+        const originalWidth = 296
+        const originalHeight = 329
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 64 * game.scaleX
+        this.width = 128 * game.scaleX
         this.height = this.width * aspectRatio
+
+        const scaleFactor = 0.5 // boundingbox scalling to fit glitch without glow
+
+        const adjustedWidth = this.width * scaleFactor
+        const adjustedHeight = this.height * scaleFactor
+
+        this.offsetX = (this.width - adjustedWidth) / 2
+        this.offsetY = (this.height - adjustedHeight) / 2
 
         // Define the bounding box
         this.boundingBox = {
-            x: this.x,
-            y: this.y + this.height - this.width,
-            width: this.width,
-            height: this.width,
+            x: this.x + this.offsetX,
+            y: this.y + this.offsetY,
+            width: adjustedWidth,
+            height: adjustedHeight,
         }
 
         // Storing bound functions for later removal
@@ -530,8 +542,8 @@ class Player {
 
     updateBoundingBox() {
         // Update bounding box position
-        this.boundingBox.x = this.x
-        this.boundingBox.y = this.y + this.height - this.width
+        this.boundingBox.x = this.x + this.offsetX
+        this.boundingBox.y = this.y + this.offsetY
     }
 
     draw() {
@@ -556,8 +568,8 @@ class Player {
         }
 
         // Draw bounding box (for debug purposes)
-        // this.ctx.strokeStyle = 'red' // Set the stroke color to red
-        // this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
+        this.ctx.strokeStyle = 'red' // Set the stroke color to red
+        this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
 
         // Draw the player
         this.ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height)
