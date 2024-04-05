@@ -33,14 +33,12 @@ export default class DuckGame {
         this.playerImage = new Image()
         this.playerImage.src = 'games/duck-game/Dukk_GLITCH_glow.png'
         this.bibleBoxImage = new Image()
-        this.bibleBoxImage.src = 'games/duck-game/D_Box.png'
+        this.bibleBoxImage.src = 'games/duck-game/D_BibleBox_merge.png'
         this.invisibleWallImage = new Image()
         this.invisibleWallImage.src = 'games/duck-game/D_Wall_2.png'
-        this.bibleBoxLightImage = new Image()
-        this.bibleBoxLightImage.src = 'games/duck-game/D_light.png'
 
         // Wait for all images to load
-        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage), loadImage(this.invisibleWallImage), loadImage(this.bibleBoxLightImage)]).then(() => {
+        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage), loadImage(this.invisibleWallImage)]).then(() => {
             // Once the images are loaded, resize the canvas and draw the background
             this.resizeCanvas()
             this.drawBackground()
@@ -268,20 +266,21 @@ export default class DuckGame {
         if (!this.bibleBoxSpawned && this.pipesGeneratedCount >= this.pipesToWinRound && this.pipes.length > 0) {
             const lastPipe = this.pipes[this.pipes.length - 1]
             const distanceBetweenPipes = 200 * this.scaleX // Adjust based on your game's design
-            const bibleBoxX = lastPipe.x + lastPipe.width + distanceBetweenPipes // Spawn after the last pipe at the same distance as between pipes
-            const bibleBoxY = this.canvas.height / 2 // Center vertically or adjust based on your game's design
-            this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, lastPipe.speed, this.bibleBoxImage, this)
+            const bibleBoxX = lastPipe.x + lastPipe.width + distanceBetweenPipes + 150 // Spawn after the last pipe at the same distance as between pipes
+            const bibleBoxY = 0
+            const bibleBoxBBOffsetX = 100
+            this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, bibleBoxBBOffsetX, lastPipe.speed, this.bibleBoxImage, this)
             this.bibleBoxSpawned = true
 
             // Create invisible wall at the same X position as the bible box for consistency
-            const invisibleWallX = bibleBoxX + 100 * this.scaleX
-            this.invisibleWall = new InvisibleWall(this.canvas, invisibleWallX, lastPipe.speed)
+            this.invisibleWall = new InvisibleWall(this.canvas, bibleBoxX, this.bibleBox.width, lastPipe.speed, this.invisibleWallImage, this)
+            this.invisibleWall.update()
         }
 
         // Then, in your update method or a separate method, handle the movement and drawing of the bible box
         if (this.bibleBoxSpawned && this.bibleBox) {
             this.bibleBox.move()
-            this.bibleBox.draw()
+            this.bibleBox.update()
         }
 
         if (this.invisibleWall && this.bibleBoxSpawned) {
@@ -425,6 +424,8 @@ export default class DuckGame {
 
     checkCollisions() {
         const player = this.player
+        const wall = this.invisibleWall
+        const biblebox = this.bibleBox
 
         this.pipes.forEach((pipe) => {
             const topPipe = {
@@ -447,14 +448,14 @@ export default class DuckGame {
         })
 
         // Check collision with box
-        if (this.bibleBox && this.detectCollision(player.boundingBox, this.bibleBox)) {
+        if (biblebox && this.detectCollision(player.boundingBox, biblebox.boundingBox)) {
             this.playerHasInteractedWithBox = true
             this.winGame()
         }
 
         // Check collision with the invisible wall
 
-        if (this.invisibleWall && this.detectCollision(player.boundingBox, this.invisibleWall)) {
+        if (this.invisibleWall && this.detectCollision(player.boundingBox, wall.boundingBox)) {
             if (!this.playerHasInteractedWithBox) {
                 this.gameOverCallback()
             }
@@ -525,10 +526,10 @@ class Player {
 
         // Define the bounding box
         this.boundingBox = {
-            x: this.x + this.offsetX,
-            y: this.y + this.offsetY,
+            x: this.x,
+            y: this.y,
             width: adjustedWidth,
-            height: adjustedHeight,
+            height: adjustedWidth,
         }
 
         // Storing bound functions for later removal
@@ -568,7 +569,7 @@ class Player {
         }
 
         // Draw bounding box (for debug purposes)
-        // this.ctx.strokeStyle = 'red' // Set the stroke color to red
+        // this.ctx.strokeStyle = 'red'
         // this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
 
         // Draw the player
@@ -657,8 +658,8 @@ class Pipe {
 
     draw() {
         // Draw bounding box (for debug purposes)
-        // this.ctx.strokeStyle = 'red' // Set the stroke color to blue
-        // this.ctx.lineWidth = 2 // Set the line width for the rectangle
+        // this.ctx.strokeStyle = 'red'
+        // this.ctx.lineWidth = 2
 
         // Mark the previous pipe position as dirty
         this.game.markDirty(this.x, this.y - this.height, this.width, this.height)
@@ -690,7 +691,7 @@ class Pipe {
 }
 
 class BibleBox {
-    constructor(canvas, x, y, speed, bibleBoxImage, game) {
+    constructor(canvas, x, y, offsetX, speed, bibleBoxImage, game) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.x = x
@@ -701,42 +702,99 @@ class BibleBox {
         this.speed = speed
 
         const originalWidth = 482
-        const originalHeight = 401
+        const originalHeight = 891
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 192 * game.scaleX
+        this.width = 264 * game.scaleX
         this.height = this.width * aspectRatio
+
+        this.offsetX = offsetX
+
+        this.boundingBox = {
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
+        }
     }
 
     draw() {
+        this.game.markDirty(this.x, this.y, this.width, this.height)
+
+        // Debug
+        // this.ctx.strokeStyle = 'red'
+        // this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
+
         this.ctx.drawImage(this.bibleBoxImage, this.x, this.y, this.width, this.height)
+
+        this.game.markDirty(this.x, this.y, this.width, this.height)
     }
 
     move() {
         this.x -= this.speed
+    }
+
+    updateBoundingBox() {
+        this.boundingBox.x = this.x + this.offsetX
+        this.boundingBox.y = this.y
+    }
+
+    update() {
+        this.draw()
+        this.updateBoundingBox()
     }
 }
 
 class InvisibleWall {
-    constructor(canvas, x, speed) {
+    constructor(canvas, x, offsetX, speed, wallImage, game) {
         this.canvas = canvas
+        this.ctx = canvas.getContext('2d')
         this.x = x
         this.y = 0
-        this.width = 10 // Adjust width as needed
-        this.height = canvas.height // Same height as the canvas
-        this.speed = speed // Speed of the wall
+        this.speed = speed
+        this.wallImage = wallImage
+        this.game = game
+
+        const originalWidth = 2021
+        const originalHeight = 1641
+        const aspectRatio = originalHeight / originalWidth
+
+        this.height = canvas.height
+        this.width = this.height * aspectRatio
+
+        this.offsetX = offsetX
+
+        this.boundingBox = {
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
+        }
     }
 
     move() {
-        // Move the wall towards the player
         this.x -= this.speed
     }
 
-    draw(ctx) {
-        // only for debug
-        // Draw the wall
-        // ctx.fillStyle = 'red' // Set color to transparent
-        // ctx.fillRect(this.x, this.y, this.width, this.height)
+    draw() {
+        this.game.markDirty(this.x, this.y, this.width, this.height)
+
+        // this.ctx.strokeStyle = 'red'
+        // this.ctx.strokeRect(this.boundingBox.x, this.boundingBox.y, this.boundingBox.width, this.boundingBox.height)
+
+        this.ctx.drawImage(this.wallImage, this.x, this.y, this.width, this.height)
+
+        this.game.markDirty(this.x, this.y, this.width, this.height)
+    }
+
+    updateBoundingBox() {
+        this.boundingBox.x = this.x + this.offsetX
+        this.boundingBox.y = this.y
+    }
+
+    update() {
+        this.draw()
+        this.updateBoundingBox()
     }
 }
 
