@@ -50,7 +50,7 @@ export default class Video {
         document.addEventListener(_e.ACTIONS.VIDEO_LOADED, () => {
             instance.setUpVideo()
 
-            if (id.includes('texture-') || episodeIsDirectlyPlayable(id)) {
+            if (id.includes('texture-') || instance.episodeIsDirectlyPlayable(id)) {
                 instance.play()
             }
         })
