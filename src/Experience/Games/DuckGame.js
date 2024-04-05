@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import _e from '../Utils/Events.js'
+import _gl from '../Utils/Globals.js'
 
 let instance = null
 
@@ -14,12 +15,25 @@ export default class DuckGame {
         this.baseHeight = 900
     }
 
+    gameHTML() {
+        const game = _gl.elementFromHtml(`
+            <section class="task-game dukk-game" id="dukk-game">
+                <canvas id="dukk-canvas" class="task-game_canvas"></canvas>
+                <div class="task-game_overlay"></div>
+                <div class="task-game_rounds"></div>
+                <div class="task-game_timer button-cube-wider"></div>
+                <div class="task-game_popup"></div>
+            </section>`)
+
+        instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
+    }
+
     toggleGame() {
-        this.canvas = document.createElement('canvas')
-        this.canvas.className = 'fixed left-0 top-0 z-50'
+        instance.gameHTML()
+
+        this.canvas = document.getElementById('dukk-canvas')
         this.ctx = this.canvas.getContext('2d')
-        this.experience.interface.gameContainer.appendChild(this.canvas)
-        this.experience.setAppView('game')
 
         // Load the background image
         this.bgImage = new Image()
@@ -58,7 +72,7 @@ export default class DuckGame {
         instance.keydownHandler = (event) => {
             if (!this.gameStarted || this.gameOver || this.gameWon) {
                 this.startGame()
-
+                this.hidePopup()
                 document.removeEventListener('keydown', instance.keydownHandler)
             }
         }
@@ -167,7 +181,8 @@ export default class DuckGame {
     startTimer() {
         this.timerInterval = setInterval(() => {
             this.timer++
-        }, 1000) // Update the timer every second (1000 milliseconds)
+            this.updateTimerDisplay()
+        }, 1000)
     }
 
     stopTimer() {
@@ -177,6 +192,14 @@ export default class DuckGame {
     resetTimer() {
         this.stopTimer()
         this.timer = 0
+        this.updateTimerDisplay()
+    }
+
+    updateTimerDisplay() {
+        const timerElement = document.querySelector('.task-game_timer')
+        if (timerElement) {
+            timerElement.textContent = `Time: ${this.timer}s`
+        }
     }
 
     generatePipes() {
@@ -245,9 +268,6 @@ export default class DuckGame {
         } else if (this.gameWon) {
             this.drawWinGameScreen()
         }
-
-        // Draw timer
-        this.drawTimer()
 
         // Request next frame if game is not over
         if (this.gameOver || this.gameWon) return
@@ -366,46 +386,50 @@ export default class DuckGame {
     }
 
     drawStartScreen() {
-        const message = 'Press any key to start'
-        this.ctx.fillStyle = 'white'
-        this.ctx.textAlign = 'center'
-        this.ctx.font = '36px Arial'
-        this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2)
+        const startMessage = 'Press any key to start'
+        this.showPopup(startMessage)
     }
 
     drawGameOverScreen() {
-        // Draw game over screen
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
-        this.ctx.fillStyle = 'white'
-        this.ctx.font = '36px Arial'
-        this.ctx.textAlign = 'center'
         const gameOverText = 'Game Over'
-        this.ctx.fillText(gameOverText, this.canvas.width / 2, this.canvas.height / 2)
-        this.ctx.font = '20px Arial'
-        const gameOverSubText = 'Press any key to restart'
-        this.ctx.fillText(gameOverSubText, this.canvas.width / 2, this.canvas.height / 2 + 40)
+        const restartMessage = 'Press any key to restart'
+        this.showPopup(`${gameOverText}<br>${restartMessage}`)
 
         document.addEventListener('keydown', instance.keydownHandler)
     }
 
     drawWinGameScreen() {
-        // Draw win game screen
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
-        this.ctx.fillStyle = 'white'
-        this.ctx.textAlign = 'center'
-        this.ctx.font = '36px Arial'
-        const winGameText = 'You Win!'
-        this.ctx.fillText(winGameText, this.canvas.width / 2, this.canvas.height / 2)
-        this.ctx.font = '16px Arial'
-        const roundText = `Round: ${this.roundCount}` // Display the round count
-        this.ctx.fillText(roundText, this.canvas.width / 2, this.canvas.height / 2 + 20)
-        this.ctx.font = '20px Arial'
-        const winSubText = 'Press any key to continue'
-        this.ctx.fillText(winSubText, this.canvas.width / 2, this.canvas.height / 2 + 60)
+        const winText = 'You Win!'
+        const continueMessage = 'Press any key to continue'
+        const roundText = `Round: ${this.roundCount}`
+        this.showPopup(`${winText}<br>${roundText}<br>${continueMessage}`)
 
         document.addEventListener('keydown', instance.keydownHandler)
+    }
+
+    showPopup(message) {
+        const gameSection = document.querySelector('.dukk-game')
+        const popup = document.querySelector('.task-game_popup')
+        popup.innerHTML = ''
+
+        const popupText = document.createElement('h1')
+        popupText.innerHTML = message
+        popup.appendChild(popupText)
+
+        gameSection.classList.add('popup-visible')
+    }
+
+    hidePopup() {
+        const gameSection = document.querySelector('.dukk-game')
+        gameSection.classList.remove('popup-visible')
+    }
+
+    startNextLevel() {
+        this.hidePopup()
+    }
+
+    restartGame() {
+        this.hidePopup()
     }
 
     markDirty(x, y, width, height) {
@@ -456,33 +480,29 @@ export default class DuckGame {
         }
     }
 
-    drawTimer() {
-        this.ctx.fillStyle = 'white'
-        this.ctx.font = '24px Arial'
-        this.ctx.textAlign = 'right'
-        this.ctx.fillText(`Time: ${this.timer}s`, this.canvas.width - 10, 30)
-    }
-
     destroy() {
-        // Clear canvas
-        instance.ctx.clearRect(0, 0, instance.canvas.width, instance.canvas.height)
+        if (instance.canvas && instance.canvas.parentNode) {
+            instance.canvas.parentNode.removeChild(instance.canvas)
+        }
 
-        // Stop timer if running
         if (instance.timerInterval) {
             clearInterval(instance.timerInterval)
         }
 
-        // Remove canvas from the DOM
-        instance.canvas.parentNode.removeChild(instance.canvas)
-
-        // Reset game loop
         if (instance.gameLoop) {
             cancelAnimationFrame(instance.gameLoop)
         }
 
+        const gameSection = document.querySelector('.dukk-game')
+        if (gameSection) {
+            gameSection.remove()
+        }
+
         instance.experience.setAppView('chapter')
 
-        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        if (typeof _e.ACTIONS.STEP_TOGGLED !== 'undefined') {
+            document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+        }
     }
 }
 
