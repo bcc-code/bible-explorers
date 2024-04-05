@@ -69,8 +69,13 @@ export default class DuckGame {
         // Adjusted in resizeCanvas method
         this.resizeCanvas()
 
+        this.allowInput = true
         instance.keydownHandler = (event) => {
-            if (!this.gameStarted || this.gameOver || this.gameWon) {
+            if (event.key === 'Escape' || event.key === 'F11') {
+                return
+            }
+
+            if (this.allowInput && (!this.gameStarted || this.gameOver || this.gameWon)) {
                 this.startGame()
                 this.hidePopup()
                 document.removeEventListener('keydown', instance.keydownHandler)
@@ -331,6 +336,11 @@ export default class DuckGame {
         // Game over logic
         this.gameOver = true
 
+        this.allowInput = false
+        setTimeout(() => {
+            this.allowInput = true
+        }, 1000)
+
         // Stop timer
         this.stopTimer()
 
@@ -352,6 +362,11 @@ export default class DuckGame {
 
     winGame() {
         this.gameWon = true
+
+        this.allowInput = false
+        setTimeout(() => {
+            this.allowInput = true
+        }, 1000)
 
         this.stopTimer()
         this.bibleBoxSpawned = true
