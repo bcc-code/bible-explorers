@@ -698,13 +698,13 @@ class BibleBox {
         this.game = game
         this.bibleBoxImage = bibleBoxImage
 
-        this.speed = speed // Same speed as pipes
+        this.speed = speed
 
-        const originalWidth = 1639
-        const originalHeight = 1088
+        const originalWidth = 482
+        const originalHeight = 401
         const aspectRatio = originalHeight / originalWidth
 
-        this.width = 96 * game.scaleX
+        this.width = 192 * game.scaleX
         this.height = this.width * aspectRatio
     }
 
