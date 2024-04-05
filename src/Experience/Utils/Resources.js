@@ -186,41 +186,9 @@ export default class Resources extends EventEmitter {
         this.itemsLoaded++
     }
 
-    updateBtvStreamVideoWithDownloadedVersion(videoName) {
-        let videoEl = document.getElementById(videoName)
-        if (videoEl) {
-            videoEl.remove()
-            this.loadEpisodeTexture(videoName)
-        }
-    }
-
-    updateBtvStreamTextureWithDownloadedVersion(videoName) {
-        let videoEl = document.getElementById(videoName)
-        if (videoEl) {
-            videoEl.remove()
-            this.loadTextureInBtvPlayer(videoName.replace('texture-', ''))
-        }
-    }
-
     loadEpisodeTexture(videoName) {
         resources.addVideoDivElementToContainer(videoName, 'video-container')
         this.offline.loadVideoFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
-    }
-
-    loadVideoInBtvPlayer(id) {
-        const textureName = 'video-' + id
-        if (document.getElementById(textureName)) return
-
-        resources.addVideoDivElementToContainer(textureName, 'video-container')
-        this.offline.loadVideoFromIndexedDb(textureName, resources.streamLocally, resources.streamFromBtv)
-    }
-
-    loadTextureInBtvPlayer(id) {
-        const textureName = 'texture-' + id
-        if (document.getElementById(textureName)) return
-
-        resources.addVideoDivElementToContainer(textureName, 'video-container')
-        this.offline.loadVideoFromIndexedDb(textureName, resources.streamLocally, resources.streamFromBtv)
     }
 
     addVideoDivElementToContainer(videoName, containerId) {

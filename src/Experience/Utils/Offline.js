@@ -253,7 +253,6 @@ export default class Offline {
 
             offline.putFileInDb(textureData)
             offline.downloadedTextures.push(textureData.name)
-            offline.experience.resources.updateBtvStreamTextureWithDownloadedVersion(textureData.name)
 
             if (offline.downloadedTextures.length < offline.btvVideos.length) {
                 // Next texture to download
@@ -406,7 +405,6 @@ export default class Offline {
             offline.putFileInDb(currentEpisode.data)
 
             offline.downloaded[chapterId].push(currentEpisode.data.name)
-            offline.experience.resources.updateBtvStreamVideoWithDownloadedVersion(currentEpisode.data.name)
 
             if (offline.data[chapterId].length == offline.downloaded[chapterId].length) {
                 let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
