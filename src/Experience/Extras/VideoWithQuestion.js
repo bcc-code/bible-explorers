@@ -29,7 +29,6 @@ export default class VideoWithQuestion {
 
         if (instance.data.video) {
             instance.video.load('texture-' + instance.data.video)
-            instance.video.play()
         }
 
         const content = _gl.elementFromHtml(

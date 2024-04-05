@@ -24,7 +24,6 @@ export default class WaitingScreen {
 
         const id = instance.world.selectedChapter.lobby_video_loop
         instance.video.load('texture-' + id)
-        instance.video.play()
 
         instance.videoBG = document.createElement('video')
         instance.videoBG.setAttribute('src', './textures/Waitingscreen_V003.mp4')

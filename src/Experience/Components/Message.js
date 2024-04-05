@@ -35,7 +35,6 @@ export default class Message {
 
         if (instance.data.video) {
             instance.video.load('texture-' + instance.data.video)
-            instance.video.play()
         }
     }
 

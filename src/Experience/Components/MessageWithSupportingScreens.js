@@ -38,7 +38,6 @@ export default class MessageWithSupportingScreens {
 
         if (instance.data.video) {
             instance.video.load('texture-' + instance.data.video)
-            instance.video.play()
         }
     }
 

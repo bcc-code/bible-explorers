@@ -439,51 +439,6 @@ export default class Offline {
         offline.objStore.delete(videoName)
     }
 
-    loadEpisodeFromIndexedDb = function (videoName, callback, fallback) {
-        if (!offline.db) {
-            fallback(videoName)
-            return
-        }
-
-        offline.transaction = offline.db.transaction([offline.store], 'readonly')
-        offline.objStore = offline.transaction.objectStore(offline.store)
-        const getItem = offline.objStore.get(videoName)
-
-        getItem.onsuccess = function () {
-            if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
-                const item = getItem.result
-
-                if (item.thumbnail) {
-                    let thumbnailUrl = null
-
-                    // Load thumbnail
-                    var f = new FileReader()
-
-                    f.onload = function (e) {
-                        const blob = offline.getArrayBufferBlob(e)
-                        thumbnailUrl = URL.createObjectURL(blob)
-
-                        // Load video blob as array buffer
-                        var r = new FileReader()
-
-                        r.onload = function (e) {
-                            const blob = offline.getArrayBufferBlob(e)
-                            const videoUrl = URL.createObjectURL(blob)
-
-                            callback(videoName, videoUrl, thumbnailUrl)
-                        }
-
-                        r.readAsArrayBuffer(item.video)
-                    }
-
-                    f.readAsArrayBuffer(item.thumbnail)
-                }
-            } else {
-                fallback(videoName)
-            }
-        }
-    }
-
     loadVideoFromIndexedDb = function (videoName, callback, fallback) {
         if (!offline.db) {
             fallback(videoName)

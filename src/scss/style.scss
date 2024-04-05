@@ -40,7 +40,7 @@
 @import "tailwindcss/utilities";
 
 /* #region VideoAPI */
-#videos-container .video-js:not(.vjs-fullscreen) .vjs-control-bar {
+#video-container .video-js:not(.vjs-fullscreen) .vjs-control-bar {
     transform: translateX(30px) translateY(-30px);
     width: calc(100% - 60px);
 }

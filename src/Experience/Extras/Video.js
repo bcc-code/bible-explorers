@@ -40,23 +40,33 @@ export default class Video {
         }
 
         instance.playingVideoId = null
-        instance.videosContainer = document.querySelector('#videos-container')
+        instance.videoContainer = document.querySelector('#video-container')
     }
 
     load(id) {
         instance.playingVideoId = id
+        instance.resources.loadEpisodeTexture(id)
 
+        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, () => {
+            instance.setUpVideo()
+
+            if (id.includes('texture-') || episodeIsDirectlyPlayable(id)) {
+                instance.play()
+            }
+        })
+    }
+
+    setUpVideo() {
         // First, remove all previous event listeners - if any
         instance.video().off('play', instance.setFullscreenIfNecessary)
+        instance.video().off('playing', instance.setDesiredVideoQuality)
         instance.video().off('ended', instance.finish)
 
         // Always start new loaded videos from the beginning
         instance.video().currentTime(0)
 
-        const videoQuality = instance.getVideoQuality()
-        instance.resources.videoPlayers[id].setVideoQuality(videoQuality)
-
         instance.video().on('play', instance.setFullscreenIfNecessary)
+        instance.video().on('playing', instance.setDesiredVideoQuality)
         instance.video().on('ended', instance.finish)
 
         instance.focus()
@@ -77,9 +87,6 @@ export default class Video {
     focus() {
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
-
-        instance.videosContainer.style.display = 'flex'
-        instance.videosContainer.querySelector('#' + instance.playingVideoId).style.display = 'flex'
     }
 
     defocus() {
@@ -94,20 +101,40 @@ export default class Video {
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
 
-        instance.videosContainer.style.display = 'none'
-        instance.videosContainer.querySelector('#' + instance.playingVideoId).style.display = 'none'
-
+        instance.videoContainer.innerHTML = ''
         instance.playingVideoId = null
     }
 
     finish() {
-        if (instance.hasSkipBtn()) instance.getSkipBtn().remove()
+        if (instance.hasSkipBtn()) {
+            instance.getSkipBtn().remove()
+        }
 
         instance.defocus()
         instance.world.program.nextStep()
     }
 
     //#endregion
+
+    episodeIsDirectlyPlayable(id) {
+        return id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
+    }
+
+    setFullscreenIfNecessary() {
+        if (!this.isFullscreen_ && [...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
+            this.requestFullscreen()
+            instance.addSkipBtn()
+        }
+    }
+
+    setDesiredVideoQuality() {
+        const videoQuality = instance.getVideoQuality()
+
+        // Set video quality only for online videos
+        if (![...instance.videoJsEl().classList].includes('offline-video')) {
+            instance.video().setVideoQuality(videoQuality)
+        }
+    }
 
     getVideoQuality() {
         switch (instance.world.selectedQuality) {
@@ -120,13 +147,6 @@ export default class Video {
             case 'high':
             default:
                 return 1080
-        }
-    }
-
-    setFullscreenIfNecessary() {
-        if (!this.isFullscreen_ && [...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
-            this.requestFullscreen()
-            instance.addSkipBtn()
         }
     }
 

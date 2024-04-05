@@ -142,10 +142,6 @@ export default class Program {
     startTask() {
         if (instance.stepType() === 'video') {
             instance.video.load(instance.currentVideo())
-
-            if (instance.getCurrentStepData().details.play_video_directly) {
-                instance.video.play()
-            }
         } else {
             if (instance.stepType() === 'iris') {
                 instance.message.show()

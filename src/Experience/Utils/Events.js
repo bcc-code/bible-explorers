@@ -6,6 +6,7 @@ const ACTIONS = {
     TIME_LAST_SECONDS: 'timeLastSeconds',
     STEP_TOGGLED: 'stepToggled',
     GO_HOME: 'goHome',
+    VIDEO_LOADED: 'videoLoaded',
 }
 
 const EVENTS = {
@@ -16,6 +17,7 @@ const EVENTS = {
     TIME_LAST_SECONDS: new Event('timeLastSeconds'),
     STEP_TOGGLED: new Event('stepToggled'),
     GO_HOME: new Event('goHome'),
+    VIDEO_LOADED: new Event('videoLoaded'),
 }
 
 export default { ACTIONS, EVENTS }

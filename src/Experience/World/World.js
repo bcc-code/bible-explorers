@@ -294,9 +294,6 @@ export default class World {
 
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
-                instance.loadChapterTextures()
-                instance.fetchLobbyVideoLoop()
-                instance.fetchBtvVideos()
                 instance.showActionButtons()
                 instance.setDescriptionHtml()
 
@@ -405,38 +402,6 @@ export default class World {
         const categorySlug = chapter.getAttribute('data-slug')
         instance.selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
             return chapter.id == chapterId
-        })
-    }
-
-    loadChapterTextures() {
-        instance.selectedChapter.episodes.forEach((episode) => {
-            const fileName = episode.type + '-' + episode.id
-            if (instance.resources.videoPlayers.hasOwnProperty(fileName)) return
-
-            instance.resources.loadEpisodeTextures(fileName)
-        })
-    }
-
-    fetchLobbyVideoLoop() {
-        const videoName = instance.selectedChapter.lobby_video_loop
-        if (videoName) {
-            instance.resources.loadTextureInBtvPlayer(videoName)
-        }
-    }
-
-    fetchBtvVideos() {
-        instance.selectedChapter.program.forEach((checkpoint) => {
-            checkpoint.steps.forEach((step) => {
-                if (step.details.step_type == 'iris' && step.message?.video) {
-                    instance.resources.loadTextureInBtvPlayer(step.message.video)
-                }
-                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens?.video) {
-                    instance.resources.loadTextureInBtvPlayer(step.message_with_supporting_screens.video)
-                }
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
-                    instance.resources.loadTextureInBtvPlayer(step.video_with_question.video)
-                }
-            })
         })
     }
 

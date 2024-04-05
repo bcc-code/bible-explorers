@@ -10,6 +10,7 @@ import _c from './Connection.js'
 import _api from './Api.js'
 import _lang from './Lang.js'
 import _s from './Strings.js'
+import _e from '../Utils/Events.js'
 
 let resources = null
 
@@ -189,7 +190,7 @@ export default class Resources extends EventEmitter {
         let videoEl = document.getElementById(videoName)
         if (videoEl) {
             videoEl.remove()
-            this.loadEpisodeTextures(videoName)
+            this.loadEpisodeTexture(videoName)
         }
     }
 
@@ -201,16 +202,16 @@ export default class Resources extends EventEmitter {
         }
     }
 
-    loadEpisodeTextures(videoName) {
-        resources.addVideoDivElementToContainer(videoName, 'videos-container')
-        this.offline.loadEpisodeFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
+    loadEpisodeTexture(videoName) {
+        resources.addVideoDivElementToContainer(videoName, 'video-container')
+        this.offline.loadVideoFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
     }
 
     loadVideoInBtvPlayer(id) {
         const textureName = 'video-' + id
         if (document.getElementById(textureName)) return
 
-        resources.addVideoDivElementToContainer(textureName, 'videos-container')
+        resources.addVideoDivElementToContainer(textureName, 'video-container')
         this.offline.loadVideoFromIndexedDb(textureName, resources.streamLocally, resources.streamFromBtv)
     }
 
@@ -218,7 +219,7 @@ export default class Resources extends EventEmitter {
         const textureName = 'texture-' + id
         if (document.getElementById(textureName)) return
 
-        resources.addVideoDivElementToContainer(textureName, 'videos-container')
+        resources.addVideoDivElementToContainer(textureName, 'video-container')
         this.offline.loadVideoFromIndexedDb(textureName, resources.streamLocally, resources.streamFromBtv)
     }
 
@@ -243,9 +244,14 @@ export default class Resources extends EventEmitter {
         })
 
         // Hide controlbar for textures
-        if (!videoName.includes('episode')) player.controlBar.hide()
+        if (!videoName.includes('episode')) {
+            player.controlBar.hide()
+        }
 
+        player.addClass('offline-video')
         resources.videoPlayers[videoName] = player
+
+        document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
     }
 
     async streamFromBtv(videoName) {
@@ -267,10 +273,14 @@ export default class Resources extends EventEmitter {
         })
 
         // Hide controlbar for textures
-        if (!videoName.includes('episode')) player.controlBar.hide()
+        if (!videoName.includes('episode')) {
+            player.controlBar.hide()
+        }
 
         resources.videoPlayers[videoName] = player
         resources.posterImages[videoName] = player.poster_
+
+        document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
     }
 
     fetchApiThenCache(theUrl, callback) {
