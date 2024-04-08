@@ -59,16 +59,6 @@ const config = {
         ],
         packageCategory: 'game',
     },
-    publish: [
-        {
-            provider: 'github',
-            owner: 'bcc-code',
-            repo: 'bible-explorers',
-            releaseType: 'release',
-            private: true,
-            token: '',
-        },
-    ],
 }
 
 // To debug the auto update on Mac, you can right click on Bible-Explorers.app and "Show package contents".
