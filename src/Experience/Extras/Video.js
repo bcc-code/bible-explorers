@@ -128,6 +128,8 @@ export default class Video {
     }
 
     setDesiredVideoQuality() {
+        if (!instance.videoJsEl()) return
+
         const videoQuality = instance.getVideoQuality()
 
         // Set video quality only for online videos
