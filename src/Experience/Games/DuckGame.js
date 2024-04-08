@@ -54,20 +54,18 @@ export default class DuckGame {
         // Wait for all images to load
         Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage), loadImage(this.invisibleWallImage)]).then(() => {
             // Once the images are loaded, resize the canvas and draw the background
-            this.resizeCanvas()
-            this.drawBackground()
-            this.drawStartScreen()
+            instance.resizeCanvas()
+            instance.drawBackground()
+            instance.drawStartScreen()
         })
 
         // Initialize and bind resize event listener
-        window.addEventListener('resize', () => {
-            this.resizeCanvas()
-            this.drawBackground()
-            this.drawStartScreen()
-        })
+        window.addEventListener('resize', instance.resizeCanvas)
+        window.addEventListener('resize', instance.drawBackground)
+        window.addEventListener('resize', instance.drawStartScreen)
 
         // Adjusted in resizeCanvas method
-        this.resizeCanvas()
+        instance.resizeCanvas()
 
         this.allowInput = true
         instance.keydownHandler = (event) => {
@@ -229,7 +227,7 @@ export default class DuckGame {
         this.dirtyRects = []
 
         // Redraw the background image
-        this.drawBackground()
+        instance.drawBackground()
 
         // Draw pipes
         this.drawPipes()
@@ -485,6 +483,10 @@ export default class DuckGame {
         if (typeof _e.ACTIONS.STEP_TOGGLED !== 'undefined') {
             document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         }
+
+        window.removeEventListener('resize', instance.resizeCanvas)
+        window.removeEventListener('resize', instance.drawBackground)
+        window.removeEventListener('resize', instance.drawStartScreen)
     }
 }
 
