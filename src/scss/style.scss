@@ -1193,6 +1193,10 @@ $themes: (
             background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
         }
 
+        .wrong .question-label {
+            background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
+        }
+
     }
 
     .quiz-textarea {
