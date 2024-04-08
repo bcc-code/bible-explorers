@@ -54,7 +54,7 @@ export default class TrueFalsQuiz {
     setHTMLForQuestion(index) {
         const question = instance.data.questions[index]
         const questionContent = question.type === 'image' && question.question_media ? `<div class="task-container_image" id="task-image"><img src="${question.question_media}" alt="Question Image" /></div>` : `<p>${question.question_text}</p>`
-        const audioButton = question.type === 'audio' && question.question_audio ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>` : ''
+        const audioButton = question.type === 'question' && question.question_audio ? `<button class="button-cube-wider" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>` : ''
 
         const questionHTML = `
                 <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
