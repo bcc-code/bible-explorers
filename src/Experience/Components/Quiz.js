@@ -245,7 +245,7 @@ export default class Quiz {
         }
 
         try {
-            const response = await fetch(_api.saveAnswer(), {
+            fetch(_api.saveAnswer(), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -253,11 +253,6 @@ export default class Quiz {
                 body: JSON.stringify(data),
             })
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-
-            const responseData = await response.json()
             return true
         } catch (error) {
             console.error('Error:', error)
