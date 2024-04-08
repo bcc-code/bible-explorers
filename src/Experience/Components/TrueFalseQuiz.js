@@ -38,7 +38,7 @@ export default class TrueFalsQuiz {
                 <div class="task-container_box">
                     ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
                     ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
-                    <div id="quiz-content"></div> <!-- Container for dynamic question content -->
+                    <div id="quiz-content"></div>
                 </div>
             </div>`
 
@@ -79,8 +79,6 @@ export default class TrueFalsQuiz {
 
         if (question.question_media) {
             instance.offline.fetchChapterAsset(question, 'question_media', (data) => {
-                instance.program.updateAssetInProgramData('truefalse_quiz', data)
-
                 const taskImage = document.querySelector('#task-image img')
                 if (taskImage) taskImage.src = data.question_media
             })
@@ -149,8 +147,6 @@ export default class TrueFalsQuiz {
         const quizAudio = document.getElementById('quizAudio')
 
         instance.offline.fetchChapterAsset(question, 'question_audio', (data) => {
-            instance.program.updateAssetInProgramData('truefalse_quiz', data)
-
             quizAudio.src = data.question_audio
             instance.audio.fadeOutBgMusic()
         })
@@ -207,5 +203,7 @@ export default class TrueFalsQuiz {
         instance.experience.navigation.next.className = 'button-arrow'
 
         instance.questionsAnsweredCorrectly = 0
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }

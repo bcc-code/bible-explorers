@@ -127,5 +127,7 @@ export default class GameDescription {
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }

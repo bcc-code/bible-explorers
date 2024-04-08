@@ -51,7 +51,6 @@ export default class TaskDescriptionScreen {
         )
 
         const nextStep = container.querySelector('button')
-
         if (nextStep) nextStep.addEventListener('click', instance.program.nextStep)
 
         instance.experience.interface.tasksDescription.append(container)
