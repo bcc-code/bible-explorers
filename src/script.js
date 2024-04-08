@@ -65,6 +65,8 @@ const handleRedirectCallback = async () => {
     if (experience.auth0.isAuthenticated) {
         document.body.classList.add('logged-in')
     } else if (isElectron()) {
+        document.body.classList.add('not-logged-in')
+
         const loginScreen = document.querySelector('#login-screen')
 
         loginScreen.querySelector('.info').textContent = _s.loginScreen.redirectInfo

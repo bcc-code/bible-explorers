@@ -61,7 +61,7 @@
 
 /* #endregion */
 
-body:not(.logged-in) {
+body.not-logged-in {
     #login-screen {
         display: flex;
     }
