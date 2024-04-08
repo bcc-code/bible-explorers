@@ -4,7 +4,7 @@ directories:
     output: build/${version}
 provider: s3
 endpoint: http://192.168.0.154:9000
-bucket: test-update
+bucket: test-electron-update
 # files:
 #     - dist/electron/**/*
 # dmg:

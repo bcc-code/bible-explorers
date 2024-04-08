@@ -162,6 +162,7 @@ if (!gotTheLock) {
     appReadyHasRun = true;
     openWindow(initUrl);
 
+    // autoUpdater.forceDevUpdateConfig = true
     autoUpdater.checkForUpdatesAndNotify();
   });
 
