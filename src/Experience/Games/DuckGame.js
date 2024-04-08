@@ -210,7 +210,7 @@ export default class DuckGame {
         }
 
         // Define a minimum distance before generating a new pipe
-        const originalMinDistance = (this.canvas.width / 6) * this.aspectAdjustmentFactor
+        const originalMinDistance = (this.canvas.width / 4) * this.aspectAdjustmentFactor
         const minDistance = originalMinDistance * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
 
         // Check if it's time to generate a new pipe
