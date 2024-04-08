@@ -73,7 +73,7 @@ const handleRedirectCallback = async () => {
         loginScreen.querySelector('span').textContent = _s.loginScreen.manualRedirectInfo
         loginScreen.querySelector('a').textContent = _s.loginScreen.redirectLink
 
-        loginScreen.addEventListener('click', async function (e) {
+        loginScreen.querySelector('a').addEventListener('click', async function (e) {
             e.preventDefault()
             await experience.auth0.loginWithRedirect({
                 redirect_uri: 'biex://explorers.biblekids.io',
