@@ -9,6 +9,7 @@ export default class DuckGame {
         instance = this
 
         this.experience = new Experience()
+        this.audio = this.experience.world.audio
 
         // Base resolution
         this.baseWidth = 1440
@@ -307,6 +308,8 @@ export default class DuckGame {
             this.allowInput = true
         }, 1000)
 
+        instance.audio.playSound('wrong')
+
         // Stop generating pipes after 30 seconds
         this.bibleBoxSpawned = true
 
@@ -330,6 +333,12 @@ export default class DuckGame {
         setTimeout(() => {
             this.allowInput = true
         }, 1000)
+
+        instance.audio.playSound('correct')
+        instance.experience.celebrate({
+            particleCount: 100,
+            spread: 160,
+        })
 
         this.bibleBoxSpawned = true
         this.bibleBox = null
