@@ -71,7 +71,6 @@ export default class TrueFalsQuiz {
         quizContentContainer.innerHTML = questionHTML
 
         instance.useCorrectAssetsSrc(index)
-
         instance.attachEventListeners()
     }
 
@@ -82,7 +81,8 @@ export default class TrueFalsQuiz {
             instance.offline.fetchChapterAsset(question, 'question_media', (data) => {
                 instance.program.updateAssetInProgramData('truefalse_quiz', data)
 
-                document.querySelector('#task-image img').src = data.question_media
+                const taskImage = document.querySelector('#task-image img')
+                if (taskImage) taskImage.src = data.question_media
             })
         }
     }
