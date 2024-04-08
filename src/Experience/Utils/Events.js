@@ -7,6 +7,7 @@ const ACTIONS = {
     STEP_TOGGLED: 'stepToggled',
     GO_HOME: 'goHome',
     VIDEO_LOADED: 'videoLoaded',
+    ROUTE_CHANGED: 'routeChanged',
 }
 
 const EVENTS = {
@@ -18,6 +19,7 @@ const EVENTS = {
     STEP_TOGGLED: new Event('stepToggled'),
     GO_HOME: new Event('goHome'),
     VIDEO_LOADED: new Event('videoLoaded'),
+    ROUTE_CHANGED: (query) => new CustomEvent('routeChanged', { detail: query }),
 }
 
 export default { ACTIONS, EVENTS }

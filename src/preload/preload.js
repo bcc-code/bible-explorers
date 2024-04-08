@@ -1,10 +1,11 @@
 // All the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 
+import _e from '../Experience/Utils/Events.js'
+
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    logoutWindow: (title) => ipcRenderer.send('logout-window', title),
     appVersion: () => {
         ipcRenderer.send('app-version')
         ipcRenderer.on('app-version', (event, arg) => {
@@ -35,6 +36,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
         document.getElementById('restart-button').addEventListener('click', function () {
             ipcRenderer.send('restart-app')
+        })
+    },
+    routeChanged: (query) => {
+        ipcRenderer.send('route-changed', query)
+        ipcRenderer.on('route-changed', (event, query) => {
+            ipcRenderer.removeAllListeners('route-changed')
+            window.dispatchEvent(_e.EVENTS.ROUTE_CHANGED(query))
         })
     },
 })

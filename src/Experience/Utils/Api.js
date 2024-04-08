@@ -12,6 +12,10 @@ const saveAnswer = () => wpApiUrl + '/answer/save'
 export default { getBiexChapters, getRoles, saveAnswer }
 
 function getWpApiUrl() {
+    if (window.location.protocol == 'biex:') {
+        return wpApiUrl_staging
+    }
+
     switch (window.location.hostname) {
         case 'explorers.biblekids.io':
             return wpApiUrl_production

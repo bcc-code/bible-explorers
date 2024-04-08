@@ -61,6 +61,12 @@
 
 /* #endregion */
 
+body:not(.logged-in) {
+    #login-screen {
+        display: flex;
+    }
+}
+
 /* #region App views */
 
 .app-logo {

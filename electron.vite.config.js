@@ -6,7 +6,7 @@ export default {
         root: 'src',
         build: {
             lib: {
-                entry: 'main/main.js',
+                entry: 'main/main.ts',
             },
             outDir: '../.vite/build',
             minify: true,

@@ -7,7 +7,6 @@ import _lang from './Experience/Utils/Lang.js'
 import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 import _gl from './Experience/Utils/Globals.js'
-import lazySizes from 'lazysizes'
 import isElectron from 'is-electron'
 
 // Loader text
@@ -35,12 +34,9 @@ const experience = new Experience()
 if (isElectron()) {
     document.body.classList.add('electron')
 
-    document.body.classList.add('logged-in')
-    experience.auth0 = { isAuthenticated: true, userData: { name: 'Log out' } }
-    document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
-
     window.electronAPI.appVersion()
     window.electronAPI.appNotifications()
+    window.electronAPI.routeChanged()
 } else {
     // Register Service Worker
     if ('serviceWorker' in navigator) {
@@ -48,37 +44,57 @@ if (isElectron()) {
             navigator.serviceWorker.register('/sw.js', { scope: '/' })
         })
     }
-
-    // Auth0
-    const configureClient = async () => {
-        experience.auth0 = await createAuth0Client({
-            domain: 'login.bcc.no',
-            client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
-        })
-    }
-
-    const handleRedirectCallback = async () => {
-        const query = window.location.search
-        if (query.includes('code=') && query.includes('state=')) {
-            await experience.auth0.handleRedirectCallback()
-            window.history.replaceState({}, document.title, '/')
-        }
-
-        experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
-
-        if (experience.auth0.isAuthenticated) {
-            experience.auth0.userData = await experience.auth0.getUser()
-            document.body.classList.add('logged-in')
-        }
-
-        document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
-    }
-
-    window.onload = async () => {
-        await configureClient()
-        await handleRedirectCallback()
-    }
 }
+
+// Auth0
+const configureClient = async () => {
+    experience.auth0 = await createAuth0Client({
+        domain: 'login.bcc.no',
+        client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
+    })
+}
+
+const handleRedirectCallback = async () => {
+    const query = window.location.search
+    if (query.includes('code=') && query.includes('state=')) {
+        await experience.auth0.handleRedirectCallback()
+        window.history.replaceState({}, document.title, '/')
+    }
+
+    experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+    if (experience.auth0.isAuthenticated) {
+        document.body.classList.add('logged-in')
+    } else if (isElectron()) {
+        const loginScreen = document.querySelector('#login-screen')
+
+        loginScreen.querySelector('.info').textContent = _s.loginScreen.redirectInfo
+        loginScreen.querySelector('span').textContent = _s.loginScreen.manualRedirectInfo
+        loginScreen.querySelector('a').textContent = _s.loginScreen.redirectLink
+
+        loginScreen.addEventListener('click', async function (e) {
+            e.preventDefault()
+            await experience.auth0.loginWithRedirect({
+                redirect_uri: 'biex://explorers.biblekids.io',
+            })
+        })
+
+        setTimeout(() => {
+            document.querySelector('#login-screen a').click()
+        }, 2000)
+    }
+
+    document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+}
+
+window.onload = async () => {
+    await configureClient()
+    await handleRedirectCallback()
+}
+window.addEventListener(_e.ACTIONS.ROUTE_CHANGED, async ({ detail }) => {
+    window.location.search = detail.replace('/?', '')
+    await configureClient()
+    await handleRedirectCallback()
+})
 
 // Detect browser
 var browserName = (function (agent) {

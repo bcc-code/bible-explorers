@@ -177,12 +177,8 @@ export default class Menu {
     }
 
     logout = () => {
-        if (isElectron()) {
-            window.electronAPI.logoutWindow()
-        } else {
-            this.experience.auth0.logout({
-                returnTo: window.location.origin,
-            })
-        }
+        this.experience.auth0.logout({
+            returnTo: window.location.origin,
+        })
     }
 }
