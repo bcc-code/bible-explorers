@@ -10,6 +10,7 @@ import Menu from './Components/Menu.js'
 import World from './World/World.js'
 import FAQ from './Components/FAQ.js'
 import _gl from './Utils/Globals.js'
+import _lang from './Utils/Lang.js'
 
 let instance = null
 
@@ -65,6 +66,12 @@ export default class Experience {
             resize: true,
             useWorker: true,
         })
+
+        const redirectToLanguage = this.getUrlParameter('language')
+        if (redirectToLanguage) {
+            window.history.replaceState({}, document.title, '/')
+            _lang.updateLanguage(redirectToLanguage)
+        }
     }
 
     setAppView(attr) {
@@ -74,5 +81,21 @@ export default class Experience {
     update() {
         this.world.update()
         this.stats.update()
+    }
+
+    getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=')
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1])
+            }
+        }
+        return false
     }
 }
