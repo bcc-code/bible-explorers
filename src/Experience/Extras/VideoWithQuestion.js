@@ -27,16 +27,17 @@ export default class VideoWithQuestion {
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
 
-        if (instance.data.video) {
-            instance.video.load('texture-' + instance.data.video)
-        }
-
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="video-with-question">
                 <div class="task-container_box">
                     ${instance.data.question ? `<h1 class="task-container_heading">${instance.data.question}</h1>` : ''}
-                    <div class="textarea-box"><textarea></textarea></div>
-                    <div class="task-container_actions"><button class="button-task_action" type="submit">${_s.task.submit}</button></div>
+                    <div id="task-container_video" class="w-[30rem]"></div>
+                    <div class="textarea-box">
+                        <textarea></textarea>
+                    </div>
+                    <div class="task-container_actions">
+                        <button class="button-task_action" type="submit">${_s.task.submit}</button>
+                    </div>
                 </div>
             </div>
             `
@@ -44,6 +45,10 @@ export default class VideoWithQuestion {
 
         instance.experience.interface.tasksDescription.append(container)
         instance.experience.setAppView('task-description')
+
+        if (instance.data.video) {
+            instance.video.load('texture-' + instance.data.video, 'task-container_video')
+        }
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
 
@@ -94,8 +99,10 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
 
         instance.experience.navigation.next.innerHTML = ``
-        document.getElementById('#video-with-question')?.remove()
+        document.getElementById('video-with-question').remove()
         instance.experience.setAppView('chapter')
+
+        instance.video.defocus()
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

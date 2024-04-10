@@ -43,9 +43,9 @@ export default class Video {
         instance.videoContainer = document.querySelector('#video-container')
     }
 
-    load(id) {
+    load(id, container = 'video-container') {
         instance.playingVideoId = id
-        instance.resources.loadEpisodeTexture(id)
+        instance.resources.loadEpisodeTexture(id, container)
 
         document.addEventListener(_e.ACTIONS.VIDEO_LOADED, () => {
             instance.setUpVideo()
