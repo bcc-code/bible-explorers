@@ -51,6 +51,7 @@ const configureClient = async () => {
     experience.auth0 = await createAuth0Client({
         domain: 'login.bcc.no',
         client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
+        cacheLocation: 'localstorage',
     })
 }
 
@@ -62,6 +63,7 @@ const handleRedirectCallback = async () => {
     }
 
     experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+
     if (experience.auth0.isAuthenticated) {
         document.body.classList.add('logged-in')
     } else if (isElectron()) {
