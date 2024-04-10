@@ -177,7 +177,13 @@ export default class Quiz {
                 instance.experience.celebrate({ particleCount: 100, spread: 160 })
                 instance.world.audio.playSound('task-completed')
                 submitQuiz.style.display = 'none'
-                document.getElementById('quiz-wrapper').innerHTML = `<p class="task-container_prompts text-center font-bold">${_s.miniGames.completed.title}</p>`
+
+                setTimeout(() => {
+                    instance.program.nextStep()
+                    instance.destroy()
+                }, 500)
+
+                // document.getElementById('quiz-wrapper').innerHTML = `<p class="task-container_prompts text-center font-bold">${_s.miniGames.completed.title}</p>`
             }
         })
     }
