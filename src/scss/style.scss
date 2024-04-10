@@ -245,7 +245,6 @@ body.not-logged-in {
     }
 }
 
-
 .button-arrow-skip {
     position: relative;
     display: flex;
@@ -1501,26 +1500,19 @@ $themes: (
     div {
         font-size: calc(var(--font-size-text) * 1.5);
         position: absolute;
-        animation: float 10s infinite linear;
+        transform: scale(0);
+        animation: popUp 0.5s forwards;
     }
 
-    @keyframes float {
-
-        0%,
-        100% {
-            transform: translate(-10px, -10px);
+    @keyframes popUp {
+        to {
+            transform: scale(1);
         }
+    }
 
-        25% {
-            transform: translate(10px, -10px);
-        }
-
-        50% {
-            transform: translate(10px, 10px);
-        }
-
-        75% {
-            transform: translate(-10px, 10px);
+    @for $i from 1 through 20 {
+        #chapter-credits div:nth-child(#{$i}) {
+            animation-delay: 0.5s * ($i - 1);
         }
     }
 }
