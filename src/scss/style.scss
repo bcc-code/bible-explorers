@@ -1120,6 +1120,27 @@ $themes: (
     }
 }
 
+.textarea-box {
+    background-image: url('../../static/frames/text_box.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    aspect-ratio: 2777/720;
+    padding: 2%;
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        mask-image: url('../../static/frames/text_box_alpha.png');
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        background-color: transparent;
+        font-size: var(--font-size-text);
+        outline: none;
+        resize: none;
+        padding: 2%;
+    }
+}
+
 /* #endregion */
 
 /* #region Tasks */
@@ -1206,26 +1227,7 @@ $themes: (
 
     }
 
-    .quiz-textarea {
-        background-image: url('../../static/frames/text_box.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 2777/720;
-        padding: 2%;
 
-        textarea {
-            width: 100%;
-            height: 100%;
-            mask-image: url('../../static/frames/text_box_alpha.png');
-            mask-repeat: no-repeat;
-            mask-size: contain;
-            background-color: transparent;
-            font-size: var(--font-size-text);
-            outline: none;
-            resize: none;
-            padding: 2%;
-        }
-    }
 
     .question-label {
         position: relative;

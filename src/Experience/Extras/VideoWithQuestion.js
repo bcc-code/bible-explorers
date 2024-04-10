@@ -31,19 +31,23 @@ export default class VideoWithQuestion {
             instance.video.load('texture-' + instance.data.video)
         }
 
-        const content = _gl.elementFromHtml(
-            `<div id="video-with-question" class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto">
-                <h1 class="text-2xl tv:text-3xl font-bold">${instance.data.question}</h1>
-                <textarea class="w-full text-bke-purple px-3 py-2 outline-none my-4 tv:my-8 tv:text-xl"></textarea>
-                <button class="button-cube-wider w-full" type="submit" aria-label="submit question">${_s.task.submit}</button>
+        const container = _gl.elementFromHtml(
+            `<div class="absolute inset-0 task-container" id="video-with-question">
+                <div class="task-container_box">
+                    ${instance.data.question ? `<h1 class="task-container_heading">${instance.data.question}</h1>` : ''}
+                    <div class="textarea-box"><textarea></textarea></div>
+                    <div class="task-container_actions"><button class="button-task_action" type="submit">${_s.task.submit}</button></div>
+                </div>
             </div>
             `
         )
 
-        instance.experience.interface.helperScreen.append(content)
-        instance.experience.interface.helperScreen.setAttribute('data-view', 'game-description')
+        instance.experience.interface.tasksDescription.append(container)
+        instance.experience.setAppView('task-description')
 
-        const submitQuestion = content.querySelector('[aria-label="submit question"')
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+
+        const submitQuestion = container.querySelector('button')
         submitQuestion.addEventListener('click', () => {
             instance.saveAnswers()
             instance.destroy()
@@ -60,7 +64,6 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        instance.experience.navigation.next.className = 'button-arrow'
     }
 
     saveAnswers() {
@@ -86,11 +89,13 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)
         instance.experience.navigation.next.removeEventListener('click', instance.destroy)
+
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
-        document.getElementById('video-with-question')?.remove()
-        document.getElementById('video-question')?.remove()
-        instance.experience.navigation.next.className = 'button-arrow'
+
+        instance.experience.navigation.next.innerHTML = ``
+        document.getElementById('#video-with-question')?.remove()
+        instance.experience.setAppView('chapter')
 
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()

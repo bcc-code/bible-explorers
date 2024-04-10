@@ -85,7 +85,7 @@ export default class Quiz {
                 })
             } else {
                 this.openQuestions++
-                const selfAnswer = _gl.elementFromHtml(`<div class="quiz-textarea"><textarea placeholder="${q.placeholder}" class=""></textarea></div>`)
+                const selfAnswer = _gl.elementFromHtml(`<div class="textarea-box"><textarea placeholder="${q.placeholder}" class=""></textarea></div>`)
                 container.append(selfAnswer)
             }
 
