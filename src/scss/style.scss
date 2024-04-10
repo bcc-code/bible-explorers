@@ -122,6 +122,10 @@ body.not-logged-in {
     display: none !important;
 }
 
+.electron #download-app {
+    display: none;
+}
+
 /* #endregion */
 
 /* #region Buttons */
@@ -658,7 +662,7 @@ body.not-logged-in {
         bottom: 12%;
     }
 
-    body.logged-in & {
+    body.logged-in.electron & {
         .chapter__offline {
             display: grid;
         }

@@ -58,11 +58,20 @@ export default class World {
 
         this.buttons = {
             // contact: document.querySelector('[aria-label="Contact"]'),
+            downloadApp: document.querySelector('#download-app'),
             home: document.querySelector('#home-button'),
             guide: document.querySelector('#guide-button'),
             startChapter: document.querySelector('#start-chapter'),
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
         }
+
+        tippy(this.buttons.downloadApp, {
+            theme: 'explorers',
+            content: _s.settings.downloadApp,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
 
         tippy(this.buttons.home, {
             theme: 'explorers',
@@ -72,6 +81,7 @@ export default class World {
             placement: 'bottom',
         })
 
+        this.buttons.downloadApp.addEventListener('click', this.downloadApp)
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
         this.buttons.startChapter.addEventListener('click', this.startChapter)
@@ -689,6 +699,15 @@ export default class World {
     resetChapter() {
         localStorage.removeItem('progress-theme-' + instance.selectedChapter.id)
         localStorage.removeItem('answers-theme-' + instance.selectedChapter.id)
+    }
+
+    downloadApp() {
+        _appInsights.trackEvent({
+            name: 'Download app',
+            properties: {
+                language: _lang.getLanguageCode(),
+            },
+        })
     }
 
     goHome() {
