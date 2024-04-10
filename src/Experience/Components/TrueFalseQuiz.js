@@ -91,7 +91,10 @@ export default class TrueFalsQuiz {
         if (instance.currentQuestionIndex < instance.data.questions.length) {
             instance.setHTMLForQuestion(instance.currentQuestionIndex)
         } else {
-            instance.handleQuizCompletion()
+            setTimeout(() => {
+                instance.destroy()
+                instance.program.nextStep()
+            }, 500)
         }
     }
 
@@ -126,13 +129,14 @@ export default class TrueFalsQuiz {
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
             instance.questionsAnsweredCorrectly += 1
+
+            setTimeout(() => {
+                instance.moveToNextQuestion()
+            }, 500)
         } else {
             instance.audio.playSound('wrong')
+            questionElement.querySelectorAll('.answer-button').forEach((btn) => (btn.disabled = false))
         }
-
-        setTimeout(() => {
-            instance.moveToNextQuestion()
-        }, 500)
     }
 
     handleAudioPlay(event) {
