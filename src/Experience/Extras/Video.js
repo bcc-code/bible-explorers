@@ -69,7 +69,10 @@ export default class Video {
         instance.video().on('playing', instance.setDesiredVideoQuality)
         instance.video().on('ended', instance.finish)
 
-        instance.focus()
+        // If the video is an episode, focus on the video (fade out bg music)
+        if ([...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
+            instance.focus()
+        }
     }
 
     //#region Actions
