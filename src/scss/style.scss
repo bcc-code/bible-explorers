@@ -1244,41 +1244,6 @@ $themes: (
 
     }
 
-
-
-    .question-label {
-        position: relative;
-        display: flex;
-        align-items: center;
-        background-image: url('../../static/frames/Quiz_answer_v02.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 1495/144;
-        padding-inline: 12% 5%;
-        cursor: pointer;
-
-        .button-circle {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 4%;
-            font-size: clamp(1.25rem, 1.15vw, 2rem);
-
-            &:hover {
-                background-image: url('../../static/interface/B_circle_active.png');
-            }
-        }
-
-        p {
-            font-size: var(--font-size-text);
-        }
-
-        &:hover .button-circle {
-            background-image: url('../../static/interface/B_circle_action.png');
-        }
-
-    }
-
     .task-container_box {
         background-image: url('../../static/frames/Quiz_window_v02.png');
         aspect-ratio: 3719/1930;
@@ -1307,6 +1272,60 @@ $themes: (
 
         &:not(.disabled):hover {
             background-image: url('../../static/interface/Quiz_button_action_v02.png');
+        }
+    }
+
+}
+
+.multiple-choice-answers {
+    width: clamp(10rem, 50vw, 100%);
+
+}
+
+.question-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-image: url('../../static/frames/Quiz_answer_v02.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    aspect-ratio: 1495/144;
+    padding-inline: 12% 5%;
+    cursor: pointer;
+
+    .button-circle {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 4%;
+        font-size: clamp(1.25rem, 1.15vw, 2rem);
+    }
+
+    p {
+        font-size: var(--font-size-text);
+    }
+
+    &:hover {
+        background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
+    }
+
+    &:hover .button-circle {
+        background-image: url('../../static/interface/B_circle_action.png');
+    }
+
+    .correct & {
+        background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
+
+        .button-circle {
+            background-image: url('../../static/interface/B_circle_action.png');
+        }
+    }
+
+    .wrong & {
+        background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
+
+        .button-circle {
+            background-image: url('../../static/interface/B_circle_innactive.png');
         }
     }
 

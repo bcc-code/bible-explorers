@@ -28,29 +28,28 @@ export default class MultipleChoiceWithPicture {
     }
 
     setHtml() {
-        let tries = 0
         let answerFound = false
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.multiple_choice_with_picture
 
         const multipleChoiceWithPicture = _gl.elementFromHtml(`
-            <div id="multiple-choice" class="absolute inset-0 bg-bke-darkpurple grid place-content-center">
-                <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
-                    <h1 class="text-2xl tv:text-3xl font-bold text-center mb-4">${instance.stepData.details.title}</h1>
-                    ${instance.data.image ? `<div id="task-image"><img src="${instance.data.image}"/></div>` : ''}
-                    <ul class="multiple-choice-answers mt-4 tv:mt-8"></ul>
+            <div id="multiple-choice" class="absolute inset-0 task-container">
+                <div class="task-container_box">
+                    ${instance.stepData.details.title ? `<p class="task-container_prompts font-bold">${instance.stepData.details.title}</p>` : ''}
+                    ${instance.data.image ? `<div id="task-image" class="task-container_tutorial !hidden"><img src="${instance.data.image}"/></div>` : ''}
+                    <ul class="multiple-choice-answers"></ul>
                 </div>
             </div>
         `)
 
         instance.data.choices.forEach((choice, cIdx) => {
             const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
-                <li class="multiple-choice-answer mb-2">
-                    <div class="label tv:text-xl leading-normal bg-bke-purple">
-                        <label for="answer-${cIdx}"></label>
-                        <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
-                        <span>${choice.answer}</span>
-                    </div>
+                <li class="multiple-choice-answer">
+                    <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
+                    <label for="answer-${cIdx}" class="question-label">
+                        <div class="font-bold button-circle">${cIdx + 1}</div>
+                        <p class="">${choice.answer}</p>
+                    </label>
                 </li>
             `)
 
@@ -58,41 +57,34 @@ export default class MultipleChoiceWithPicture {
         })
 
         multipleChoiceWithPicture.querySelectorAll('.multiple-choice-answers').forEach((a) => {
-            const htmlAnswers = a.querySelectorAll('.label')
+            const htmlAnswers = a.querySelectorAll('.multiple-choice-answer')
             const objAnswers = instance.data.choices
 
             htmlAnswers.forEach((a, i) => {
                 a.addEventListener('click', () => {
-                    tries++
                     a.style.pointerEvents = 'none'
 
                     if (!objAnswers[i].correct_wrong) {
                         instance.audio.playSound('wrong')
-                        a.parentNode.classList.add('shadow-wrong')
+
+                        a.classList.add('wrong')
+                        setTimeout(function () {
+                            a.classList.remove('wrong')
+                        }, 500)
                     } else {
                         answerFound = true
-                        a.parentNode.classList.add('shadow-correct')
                         instance.audio.playSound('correct')
                         instance.experience.celebrate({
                             particleCount: 100,
                             spread: 160,
                         })
 
-                        instance.experience.navigation.next.disabled = false
+                        a.classList.add('correct')
+                        instance.experience.navigation.next.innerHTML = ''
                         instance.experience.navigation.next.className = 'button-arrow'
+
+                        htmlAnswers.forEach((answer) => (answer.style.pointerEvents = 'none'))
                     }
-
-                    if (tries == 2 || answerFound) {
-                        const correctIndex = objAnswers.findIndex((a) => a.correct_wrong)
-                        htmlAnswers[correctIndex].parentNode.classList.add('correct')
-
-                        instance.experience.navigation.next.disabled = false
-                        instance.experience.navigation.next.className = 'button-arrow'
-                    }
-
-                    htmlAnswers.forEach((answer) => {
-                        if (tries == 2 || answerFound) answer.style.pointerEvents = 'none'
-                    })
                 })
             })
         })
