@@ -494,6 +494,8 @@ export default class DuckGame {
         window.removeEventListener('resize', instance.resizeCanvas)
         window.removeEventListener('resize', instance.drawBackground)
         window.removeEventListener('resize', instance.drawStartScreen)
+
+        instance.player.removeEventListeners()
     }
 }
 
@@ -636,8 +638,9 @@ class Player {
 
     // Call this method when you need to clean up (e.g., player is destroyed, game over, etc.)
     removeEventListeners() {
-        document.removeEventListener('keydown', this.boundHandleKeyDown)
-        document.removeEventListener('keyup', this.boundHandleKeyUp)
+        document.removeEventListener('keydown', instance.boundHandleKeyDown)
+        document.removeEventListener('keyup', instance.boundHandleKeyUp)
+        document.removeEventListener('keydown', instance.keydownHandler)
     }
 }
 
