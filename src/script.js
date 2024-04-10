@@ -52,6 +52,7 @@ const configureClient = async () => {
         domain: 'login.bcc.no',
         client_id: 'XGnvXPLlcqw22EU84VsQeZs3oO7VYl34',
         cacheLocation: 'localstorage',
+        useRefreshTokens: true,
     })
 }
 
