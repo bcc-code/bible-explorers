@@ -9,7 +9,7 @@ export default class DuckGame {
         instance = this
 
         this.experience = new Experience()
-        this.audio = this.experience.world.audio
+        this.world = this.experience.world
 
         // Base resolution
         this.baseWidth = 1440
@@ -30,6 +30,11 @@ export default class DuckGame {
     }
 
     toggleGame() {
+        this.audio = this.world.audio
+
+        this.ageCategory = this.world.selectedChapter.category
+        this.speedMultiplier = this.ageCategory === '9-11' ? 1.5 : 1
+
         instance.gameHTML()
 
         this.canvas = document.getElementById('dukk-canvas')
@@ -123,6 +128,8 @@ export default class DuckGame {
     }
 
     resizeCanvas() {
+        if (!this.canvas) return
+
         // Set canvas dimensions based on browser width
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
@@ -177,7 +184,7 @@ export default class DuckGame {
             return // Do not generate more pipes if the target has been reached
         }
 
-        const basePipeSpeed = 4 // Base speed at 800x600 resolution
+        const basePipeSpeed = 4 * this.speedMultiplier
         const pipeSpeed = basePipeSpeed * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
         const pipeGap = this.canvas.height / 3
         const minTopPipeY = this.canvas.height / 6
@@ -500,8 +507,8 @@ class Player {
         this.x = 50 * game.scaleX
         this.y = canvas.height / 2
         this.velocityY = 0
-        this.gravity = baseGravity * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor
-        this.jumpStrength = baseJumpStrength * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor
+        this.gravity = baseGravity * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor * game.speedMultiplier
+        this.jumpStrength = baseJumpStrength * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor * game.speedMultiplier
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance
