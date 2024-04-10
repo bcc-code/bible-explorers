@@ -40,30 +40,25 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
-        const startGame = _gl.elementFromHtml(`<button class="button-cube-wider w-full">${instance.confirmationScreen.cs_button}</button>`)
-
-        startGame.addEventListener('click', instance.toggleFlipCards)
-
-        const taskImage = _gl.elementFromHtml(`<div class="aspect-video flex justify-center p-2 xl:p-4 tv:p-8" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>`)
-
-        const taskContent = _gl.elementFromHtml(
-            `<div class="p-2 xl:p-4 tv:p-8 h-full flex flex-col items-center justify-center overflow-y-auto" id="task-content">
-                <h1 class="text-2xl tv:text-3xl font-bold">
-                    ${instance.confirmationScreen.cs_title}
-                </h1>
-                <p class="my-4 tv:my-8 tv:text-xl">${instance.confirmationScreen.cs_description}</p>
+        const container = _gl.elementFromHtml(
+            `<div class="absolute inset-0 task-container" id="task-content">
+                <div class="task-container_box">
+                <h1 class="task-container_heading">${instance.confirmationScreen.cs_title !== '' ? instance.confirmationScreen.cs_title : ''}</h1>
+                    ${instance.confirmationScreen.cs_description ? `<p class="task-container_prompts font-bold">${instance.confirmationScreen.cs_description}</p>` : ''}
+                    ${instance.confirmationScreen.cs_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
+                    ${instance.confirmationScreen.cs_button !== '' ? `<div class="task-container_actions"><button class="button-task_action">${instance.confirmationScreen.cs_button}</button></div>` : ''}
+                </div>
             </div>`
         )
 
-        taskContent.append(startGame)
+        const nextStep = container.querySelector('button')
+        if (nextStep) nextStep.addEventListener('click', instance.toggleFlipCards)
 
-        instance.experience.interface.mainScreen.append(taskImage)
-        instance.experience.interface.helperScreen.append(taskContent)
+        instance.experience.interface.tasksDescription.append(container)
+        instance.experience.setAppView('task-description')
 
-        instance.experience.interface.helperScreen.setAttribute('data-view', 'game-intro')
-
-        instance.experience.navigation.next.className = `button-arrow-skip`
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow-skip'
     }
 
     useCorrectAssetsSrcConfirmationScreen() {
@@ -230,12 +225,14 @@ export default class FlipCards {
     destroyFlipCards() {
         document.querySelector('.game')?.remove()
 
-        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
     }
 
     destroy() {
         instance.experience.setAppView('chapter')
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
 
         instance.destroyConfirmationScreen()
         instance.destroyFlipCards()
