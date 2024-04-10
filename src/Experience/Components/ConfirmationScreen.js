@@ -54,7 +54,7 @@ export default class ConfirmationScreen {
         instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     destroy() {

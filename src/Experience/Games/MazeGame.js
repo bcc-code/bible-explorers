@@ -85,7 +85,7 @@ export default class MazeGame {
         document.querySelector('.task-game_popup').style.display = 'none'
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     setEventListeners() {

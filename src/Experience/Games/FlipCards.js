@@ -62,7 +62,7 @@ export default class FlipCards {
 
         instance.experience.interface.helperScreen.setAttribute('data-view', 'game-intro')
 
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = `button-arrow-skip`
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
     }
 
@@ -149,7 +149,7 @@ export default class FlipCards {
         instance.experience.interface.gameContainer.append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     useCorrectAssetsSrcFlipCards() {

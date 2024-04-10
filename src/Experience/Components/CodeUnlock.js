@@ -76,6 +76,7 @@ export default class CodeUnlock {
 
         instance.experience.interface.gameContainer.append(unlockScreen)
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
 
         instance.el = {
             code: unlockScreen.querySelector('.code-unlock-code'),
@@ -150,6 +151,7 @@ export default class CodeUnlock {
                 spread: 160,
             })
             instance.experience.navigation.next.innerText = ''
+            instance.experience.navigation.next.className = `button-arrow`
         } else {
             instance.data.fails++
             instance.data.currentNumberIndex = 0
@@ -187,5 +189,6 @@ export default class CodeUnlock {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = `button-arrow`
     }
 }

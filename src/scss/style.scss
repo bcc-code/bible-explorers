@@ -234,37 +234,56 @@ body.not-logged-in {
         outline: none;
     }
 
-    span,
-    svg {
-        pointer-events: none;
-    }
-
-    span {
-        position: absolute;
-        bottom: -0.5em;
-        right: 50%;
-        font-size: 1rem;
-        text-transform: uppercase;
-        text-wrap: nowrap;
-    }
-
-    &.skip-video {
-        position: absolute;
-        top: 3%;
-        right: 2%;
-    }
-
     &.active,
     &:hover {
         background-image: url('../../static/interface/arrow_action.png');
-
-        span {
-            color: var(--clr-secondary)
-        }
     }
 
     &:disabled {
         background-image: url('../../static/interface/arrow_innactive.png');
+        cursor: not-allowed;
+    }
+}
+
+
+.button-arrow-skip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    aspect-ratio: 803/412;
+    height: var(--button-height);
+    padding-left: 0.5%;
+    background-image: url('../../static/interface/skip_active.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 0.4;
+
+    &:focus {
+        outline: none;
+    }
+
+    span {
+        display: block;
+        font-size: calc(var(--font-size-small) * 0.9);
+        pointer-events: none;
+    }
+
+    &.skip-video {
+        position: absolute;
+        top: 1%;
+        right: 1%;
+    }
+
+    &.active,
+    &:hover {
+        background-image: url('../../static/interface/skip_action.png');
+        opacity: 1;
+    }
+
+    &:disabled {
+        background-image: url('../../static/interface/skip_innactive.png');
         cursor: not-allowed;
     }
 }
@@ -404,7 +423,6 @@ body.not-logged-in {
     top: 20%;
     background-color: greenyellow;
 }
-
 
 
 /* #endregion */

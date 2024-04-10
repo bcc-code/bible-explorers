@@ -23,7 +23,7 @@ export default class SingleChoice {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button-arrow-skip'
 
         instance.setHTML()
         instance.useCorrectAssetsSrc()

@@ -30,7 +30,7 @@ export default class Quiz {
         this.questionIdx = 0
 
         this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        this.experience.navigation.next.className = 'button-arrow'
+        this.experience.navigation.next.className = `button-arrow-skip`
         this.experience.setAppView('game')
 
         this.quizHTML()
@@ -156,6 +156,7 @@ export default class Quiz {
                     } else {
                         if (isLastQuestion) {
                             this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+                            instance.experience.navigation.next.className = `button-arrow-skip`
                             submitQuiz.disabled = true
                             nextQuestion.style.display = 'none'
                             instance.taskActionsWrapper.classList.add('disabled')

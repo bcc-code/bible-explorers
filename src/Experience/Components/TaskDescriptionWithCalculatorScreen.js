@@ -56,7 +56,7 @@ export default class TaskDescriptionWithCalculatorScreen {
         instance.calculator.show(container.querySelector('.task-container_box'))
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     destroy() {

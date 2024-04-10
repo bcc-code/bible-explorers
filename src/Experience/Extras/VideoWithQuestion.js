@@ -46,6 +46,7 @@ export default class VideoWithQuestion {
         instance.experience.setAppView('task-description')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
 
         const submitQuestion = container.querySelector('button')
         submitQuestion.addEventListener('click', () => {
@@ -94,6 +95,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
 
         instance.experience.navigation.next.innerHTML = ``
+        instance.experience.navigation.next.className = `button-arrow`
         document.getElementById('#video-with-question')?.remove()
         instance.experience.setAppView('chapter')
 

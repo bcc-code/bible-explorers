@@ -63,7 +63,7 @@ export default class SimonSays {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = `button-arrow-skip`
 
         for (let i = 0; i < instance.config.rounds; i++) {
             const ticker = document.createElement('div')
