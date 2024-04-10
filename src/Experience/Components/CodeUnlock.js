@@ -48,11 +48,7 @@ export default class CodeUnlock {
 
         for (let i = 1; i <= 12; i++) {
             if (i == 10) {
-                const deleteKey = _gl.elementFromHtml(`
-                    <button class="code-unlock-key delete-number">
-                        <svg><use href="#delete-left-solid" fill="currentColor"></use></svg>
-                    </button>
-                `)
+                const deleteKey = _gl.elementFromHtml(`<button class="code-unlock-key delete-number"><svg><use href="#delete-left-solid" fill="currentColor"></use></svg></button>`)
                 deleteKey.disabled = true
                 unlockScreen.querySelector('.code-unlock-keyboard').append(deleteKey)
             } else if (i == 11) {
@@ -74,17 +70,11 @@ export default class CodeUnlock {
         }
 
         for (let j = 0; j < instance.secretCode.length; j++) {
-            const asterix = _gl.elementFromHtml(`
-                <div>
-                    <svg><use href="#asterisk-solid"  fill="currentColor"></use></svg>
-                </div>
-            `)
+            const asterix = _gl.elementFromHtml(`<div><svg><use href="#asterisk-solid"  fill="currentColor"></use></svg></div>`)
             unlockScreen.querySelector('.code-unlock-code').append(asterix)
         }
 
         instance.experience.interface.gameContainer.append(unlockScreen)
-
-        instance.experience.navigation.next.className = 'button-arrow'
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
 
         instance.el = {
@@ -133,11 +123,7 @@ export default class CodeUnlock {
 
         document.querySelector('.code-unlock.correct-code')?.classList.remove('correct-code')
 
-        const asterisk = _gl.elementFromHtml(`
-                <svg class="h-8">
-                    <use href="#asterisk-solid" fill="currentColor"></use>
-                </svg>
-            `)
+        const asterisk = _gl.elementFromHtml(`<svg><use href="#asterisk-solid" fill="currentColor"></use></svg>`)
 
         const numbers = instance.el.code.querySelectorAll('div')
         numbers[instance.data.currentNumberIndex - 1].textContent = ''
@@ -163,8 +149,7 @@ export default class CodeUnlock {
                 particleCount: 100,
                 spread: 160,
             })
-
-            instance.experience.navigation.next.className = 'button-arrow'
+            instance.experience.navigation.next.innerText = ''
         } else {
             instance.data.fails++
             instance.data.currentNumberIndex = 0
@@ -202,6 +187,5 @@ export default class CodeUnlock {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
     }
 }
