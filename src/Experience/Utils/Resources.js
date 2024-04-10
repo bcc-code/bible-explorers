@@ -186,8 +186,8 @@ export default class Resources extends EventEmitter {
         this.itemsLoaded++
     }
 
-    loadEpisodeTexture(videoName) {
-        resources.addVideoDivElementToContainer(videoName, 'video-container')
+    loadEpisodeTexture(videoName, containerId) {
+        resources.addVideoDivElementToContainer(videoName, containerId)
         this.offline.loadVideoFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
     }
 
