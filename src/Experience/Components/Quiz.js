@@ -182,8 +182,6 @@ export default class Quiz {
                     instance.program.nextStep()
                     instance.destroy()
                 }, 500)
-
-                // document.getElementById('quiz-wrapper').innerHTML = `<p class="task-container_prompts text-center font-bold">${_s.miniGames.completed.title}</p>`
             }
         })
     }
