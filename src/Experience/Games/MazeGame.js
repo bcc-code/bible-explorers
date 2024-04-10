@@ -455,12 +455,11 @@ export default class MazeGame {
 
                 if (this.options.currentLevel <= this.options.minLevels) {
                     // Main levels
-                    document.querySelector('.task-game_rounds').innerHTML = `
-          ${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}`
+                    document.querySelector('.task-game_rounds').innerHTML = `${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}`
                 } else {
                     // Extra levels
-                    document.querySelector('.task-game_rounds').innerHTML = `
-          ${_s.miniGames.level} ${this.options.currentLevel}`
+                    instance.experience.navigation.next.innerHTML = ``
+                    document.querySelector('.task-game_rounds').innerHTML = `${_s.miniGames.level} ${this.options.currentLevel}`
                 }
 
                 this.options.gameState = 'fade in'
@@ -559,8 +558,6 @@ export default class MazeGame {
 
             if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-cube-wider'
 
-            instance.experience.navigation.next.className = 'button-arrow'
-
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1
         }
 
@@ -604,7 +601,6 @@ export default class MazeGame {
         instance.experience.gameIsOn = false
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
