@@ -37,16 +37,41 @@ const openWindow = (url: string) => {
   if (bounds) window.setBounds(bounds);
 
   window.webContents.setWindowOpenHandler(({ url }) => {
-    // Keep default behavior for the app's protocol
-    if (url.startsWith(`${PRODUCTION_APP_PROTOCOL}://`)) {
-      return { action: 'allow' };
-    }
-
-    // Otherwise, open the URL in the default browser
-    shell.openExternal(url);
-
+    handleUrl(url);
     return { action: 'deny' };
   });
+  
+  async function handleUrl(url: string) {
+    const parsedUrl = maybeParseUrl(url);
+    if (!parsedUrl) {
+      return;
+    }
+  
+    const { protocol } = parsedUrl;
+
+    // We could handle all possible link cases here, not only http/https
+    if (protocol !== PRODUCTION_APP_PROTOCOL) {
+      try {
+      // Open the URL in the default browser
+        await shell.openExternal(url);
+      } catch (error: unknown) {
+        log.error(`Failed to open url: ${error}`);
+      }
+    }
+  }
+  
+  function maybeParseUrl(value: string): URL | undefined {
+    if (typeof value === 'string') {
+      try {
+        return new URL(value);
+      } catch (err) {
+        // Errors are ignored, as we only want to check if the value is a valid url
+        log.error(`Failed to parse url: ${value}`);
+      }
+    }
+  
+    return undefined;
+  }
 
   window.webContents.on("will-navigate", (e, _url) => {
     // Some links from the API have the fixed domain `explorers.biblekids.io` on the `http(s)` protocol. Use our router instead of navigating (which means reloading the "app").
