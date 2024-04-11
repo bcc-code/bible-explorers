@@ -594,6 +594,14 @@ body.not-logged-in {
         flex-flow: column nowrap;
     }
 
+    &-select_container {
+        padding-block: 5%;
+        padding-inline: 1%;
+        display: flex;
+        margin-inline: auto;
+        width: clamp(320px, 90vw, 1920px);
+    }
+
     // States
 
     &-status {
