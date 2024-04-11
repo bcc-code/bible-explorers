@@ -378,7 +378,8 @@ export default class DuckGame {
 
     drawStartScreen() {
         const startMessage = 'Press any key to start'
-        this.showPopup(startMessage)
+
+        if (this.showPopup) this.showPopup(startMessage)
     }
 
     drawGameOverScreen() {
