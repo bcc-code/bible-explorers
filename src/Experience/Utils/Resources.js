@@ -194,7 +194,10 @@ export default class Resources extends EventEmitter {
     addVideoDivElementToContainer(videoName, containerId) {
         const videoEl = document.createElement('div')
         videoEl.setAttribute('id', videoName)
-        document.getElementById(containerId).appendChild(videoEl)
+
+        const containerWrapper = document.getElementById(containerId)
+        containerWrapper.innerHTML = ''
+        containerWrapper.appendChild(videoEl)
     }
 
     async streamLocally(videoName, videoUrl) {

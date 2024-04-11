@@ -39,6 +39,14 @@ export default class Video {
             return instance.videoJsEl().querySelector('.skip-video')
         }
 
+        instance.isVideoEpisode = () => {
+            return [...instance.video().el_.classList].filter((c) => c.includes('episode')).length
+        }
+
+        instance.isOfflineVideo = () => {
+            return [...instance.videoJsEl().classList].includes('offline-video')
+        }
+
         instance.playingVideoId = null
         instance.videoContainer = document.querySelector('#video-container')
     }
@@ -104,7 +112,6 @@ export default class Video {
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
 
-        instance.videoContainer.innerHTML = ''
         instance.playingVideoId = null
     }
 
@@ -124,8 +131,8 @@ export default class Video {
     }
 
     setFullscreenIfNecessary() {
-        if (!this.isFullscreen_ && [...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
-            this.requestFullscreen()
+        if (!this.isFullscreen_ && instance.isVideoEpisode()) {
+            instance.video().requestFullscreen()
             instance.addSkipBtn()
         }
     }
@@ -136,7 +143,7 @@ export default class Video {
         const videoQuality = instance.getVideoQuality()
 
         // Set video quality only for online videos
-        if (![...instance.videoJsEl().classList].includes('offline-video')) {
+        if (!instance.isOfflineVideo()) {
             instance.video().setVideoQuality(videoQuality)
         }
     }
