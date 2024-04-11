@@ -36,6 +36,18 @@ const openWindow = (url: string) => {
   // restoring settings works fine on Mac. Maybe other environments need additional code to deal with changing monitor setups. See https://github.com/electron/electron/issues/526
   if (bounds) window.setBounds(bounds);
 
+  window.webContents.setWindowOpenHandler(({ url }) => {
+    // Keep default behavior for the app's protocol
+    if (url.startsWith(`${PRODUCTION_APP_PROTOCOL}://`)) {
+      return { action: 'allow' };
+    }
+
+    // Otherwise, open the URL in the default browser
+    shell.openExternal(url);
+
+    return { action: 'deny' };
+  });
+
   window.webContents.on("will-navigate", (e, _url) => {
     // Some links from the API have the fixed domain `explorers.biblekids.io` on the `http(s)` protocol. Use our router instead of navigating (which means reloading the "app").
     if (/^https?:\/\/explorers\.biblekids\.io\//.test(_url)) {
