@@ -666,7 +666,7 @@ body.not-logged-in {
     }
 
     &__offline {
-        display: grid;
+        display: none;
         position: absolute;
         right: 2.5%;
         bottom: 12%;
