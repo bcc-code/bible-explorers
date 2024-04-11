@@ -100,14 +100,19 @@ export default class Congrats {
         }
         const centralRect = centralElement.getBoundingClientRect()
 
+        const marginWidth = window.innerWidth * 0.2 // 20% of viewport width
+        const marginHeight = window.innerHeight * 0.2 // 20% of viewport height
+
         names.forEach((name) => {
             let randomX, randomY, overlap
 
             do {
                 overlap = false
-                randomX = Math.random() * (window.innerWidth - name.offsetWidth)
-                randomY = Math.random() * (window.innerHeight - name.offsetHeight)
+                // Adjust calculations to consider margins
+                randomX = marginWidth + Math.random() * (window.innerWidth - 2 * marginWidth - name.offsetWidth)
+                randomY = marginHeight + Math.random() * (window.innerHeight - 2 * marginHeight - name.offsetHeight)
 
+                // Check if the random position overlaps with the central element
                 overlap = randomX < centralRect.right && randomX + name.offsetWidth > centralRect.left && randomY < centralRect.bottom && randomY + name.offsetHeight > centralRect.top
             } while (overlap)
 
