@@ -92,11 +92,13 @@ body.not-logged-in {
 
 
 #app[data-view="chapter"],
-#app[data-view="task-description"] {
+#app[data-view="task-description"],
+#app[data-view="game"] {
 
     #logout-button,
     #login-button,
-    #toggle-languages {
+    #toggle-languages,
+    #download-app {
         display: none;
     }
 
