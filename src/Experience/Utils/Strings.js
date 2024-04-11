@@ -98,6 +98,7 @@ const strings = {
             update: 'Update offline version',
             redownloadConfirmation: 'Are you sure you want to redownload the chapter?',
             downloadFailed: 'There was a problem with downloading the chapter!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Play video',
@@ -250,8 +251,9 @@ const strings = {
                 info: 'Kapitlet er nå tilgjengelig offline med oppgaver og filmer. Du kan nå spille det av på en lokasjon uten internett.',
             },
             update: 'Oppdater offline-versjonen',
-            redownloadConfirmation: 'Er du sikker du vil laste kapitelet på nytt?',
-            downloadFailed: 'Det har oppstått et problem ved nedlastingen av kapitelet!',
+            redownloadConfirmation: 'Er du sikker du vil laste kapittelet på nytt?',
+            downloadFailed: 'Det har oppstått et problem ved nedlastingen av kapittelet!',
+            downloadToContinue: 'Du må laste ned kapittelet for å fortsette.',
         },
         tooltips: {
             video: 'Spill av video',
@@ -403,6 +405,7 @@ const strings = {
             update: 'Offline-Version aktualisieren',
             redownloadConfirmation: 'Bist du dir sicher, dass du das Kapitel erneut herunterladen möchtest?',
             downloadFailed: 'Beim Herunterladen des Kapitels ist ein Problem aufgetreten!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Video abspielen',
@@ -554,6 +557,7 @@ const strings = {
             update: 'Update de offline versie',
             redownloadConfirmation: 'Weet je zeker dat je het hoofdstuk opnieuw wilt downloaden?',
             downloadFailed: 'Er is een probleem opgestaan met het downloaden van het hoofdstuk!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Speel de video af',
@@ -702,6 +706,7 @@ const strings = {
             update: 'Mettre à jour la version hors connexion',
             redownloadConfirmation: 'Es-tu certain de vouloir télécharger le chapitre à nouveau ?',
             downloadFailed: 'Un problème est survenu lors du téléchargement du chapitre !',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Lire la vidéo',
@@ -853,6 +858,7 @@ const strings = {
             update: 'Zaktualizuj wersję offline',
             redownloadConfirmation: 'Czy chcesz na nowo załadować rozdział?',
             downloadFailed: 'Podczas pobierania rozdziału powstał problem!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Odtwórz film',
@@ -915,9 +921,9 @@ const strings = {
         initializing: 'Inițializare',
         fetching: 'Fetching chapters',
         loginScreen: {
-            redirectInfo: 'You will be redirected to the login page.',
-            manualRedirectInfo: 'Please wait or',
-            redirectLink: 'click here to log in.',
+            redirectInfo: 'Vei fi redirecționat către pagina de logare.',
+            manualRedirectInfo: 'Te rugăm să aștepți sau',
+            redirectLink: 'apasă aici pentru autentificare.',
         },
         conceptDescription: 'Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările',
         introduction: 'Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers',
@@ -1004,6 +1010,7 @@ const strings = {
             update: 'Actualizează versiunea offline',
             redownloadConfirmation: 'Ești sigur că vrei să redescarci capitolul?',
             downloadFailed: 'A apărut o problemă la descărcarea capitolului!',
+            downloadToContinue: 'Trebuie să descarci capitolul pentru a continua.',
         },
         tooltips: {
             video: 'Pornește video',
@@ -1045,7 +1052,7 @@ const strings = {
             continue: 'Continuă călătoria',
             skip: 'Mergi mai departe',
             correctAnswers: 'răspunsuri corecte',
-            playAudio: 'Play audio',
+            playAudio: 'Pornește audio',
         },
         chapter: {
             infoSingular: {
@@ -1155,6 +1162,7 @@ const strings = {
             update: 'Actualizar la versión sin conexión',
             redownloadConfirmation: '¿Seguro que quieres descargar el capítulo nuevamente?',
             downloadFailed: '¡Ha habido un problema al descargar el capítulo!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Reproducir video',
@@ -1306,6 +1314,7 @@ const strings = {
             update: 'Atualizar a versão offline',
             redownloadConfirmation: 'Está seguro que deseja recarregar o capítulo?',
             downloadFailed: 'Ocorreu um problema com o download do capítulo!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Play video',
@@ -1608,6 +1617,7 @@ const strings = {
             update: 'Обновите офлайн-версию',
             redownloadConfirmation: 'Вы уверены, что хотите повторно скачать главу?',
             downloadFailed: 'Возникла проблема при попытке скачать главу!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Включить видео',
@@ -1759,6 +1769,7 @@ const strings = {
             update: 'Päivitä offline versio',
             redownloadConfirmation: 'Oletko varma että haluat uudelleen ladata kappaleen?',
             downloadFailed: 'Kappaleen lataamisessa ilmeni ongelma!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Toista video',
@@ -1910,6 +1921,7 @@ const strings = {
             update: 'Update offline version',
             redownloadConfirmation: 'Are you sure you want to redownload the chapter?',
             downloadFailed: 'There was a problem with downloading the chapter!',
+            downloadToContinue: 'You need to download the chapter to continue.',
         },
         tooltips: {
             video: 'Videó lejátszása',
@@ -1982,7 +1994,7 @@ const strings = {
         browserNotification: 'Den anbefalede browser til dette koncept er Chrome',
         howTo: 'Hvordan man forbereder sig',
         waitingScreen: {
-            submit: 'Submit name',
+            submit: 'Legg inn navn',
         },
         journey: {
             start: 'Start tidsrejsen',
@@ -2061,6 +2073,7 @@ const strings = {
             update: 'Opdater offline-version',
             redownloadConfirmation: 'Er du sikker på, at du vil genindlæse kapitlet?',
             downloadFailed: 'Der har været et problem med at downloade kapitlet!',
+            downloadToContinue: 'Du må laste ned kapittelet for å fortsette.',
         },
         tooltips: {
             video: 'Play video',

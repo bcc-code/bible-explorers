@@ -414,6 +414,11 @@ export default class Offline {
                 chapterEl.classList.remove('downloading')
                 chapterEl.classList.add('downloaded')
 
+                // Make start chapter button available & remove tooltip
+                const startChapter = document.querySelector('#start-chapter')
+                startChapter.disabled = false
+                offline.experience.world.buttons.startChapter.tippy.destroy()
+
                 _appInsights.trackEvent({
                     name: 'Chapter downloaded',
                     properties: {

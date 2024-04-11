@@ -14,7 +14,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
 import gsap from 'gsap'
-// import Glitch from "./Glitch.js";
+import isElectron from 'is-electron'
 
 let instance = null
 export default class World {
@@ -301,12 +301,26 @@ export default class World {
     chapterEventListeners() {
         this.chapterSelectWrapper.querySelectorAll('.chapter').forEach((chapter) => {
             chapter.addEventListener('click', () => {
-                if (document.querySelector('.chapter-description')) document.querySelector('.chapter-description').remove()
+                if (document.querySelector('.chapter-description')) {
+                    document.querySelector('.chapter-description').remove()
+                }
 
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
-                instance.showActionButtons()
                 instance.setDescriptionHtml()
+
+                if (isElectron() && !chapter.classList.contains('downloaded')) {
+                    instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
+                        theme: 'explorers',
+                        content: _s.offline.downloadToContinue,
+                        maxWidth: 230,
+                        duration: [500, 200],
+                        animation: 'shift-away',
+                        placement: 'top',
+                    })
+
+                    return
+                }
 
                 instance.buttons.startChapter.disabled = false
             })
@@ -741,11 +755,11 @@ export default class World {
     }
 
     preselectChapter() {
-        document.querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']").click()
-    }
-
-    showActionButtons() {
-        this.buttons.startChapter.disabled = this.chapterProgress() == this.selectedChapter.program.length
+        // ToDo: Find another solution to select the chapter
+        // once checking if the chapter is downloaded is done
+        setTimeout(() => {
+            document.querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']").click()
+        }, 1000)
     }
 
     finishJourney() {
