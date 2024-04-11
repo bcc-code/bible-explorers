@@ -178,7 +178,8 @@ export default class World {
                         <div class="chapter-date">${chapter.date}</div>
                     </div>
                     <button class="chapter__offline button-cube">
-                        <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                        <svg class="group-[.downloaded]:hidden"><use href="#download-solid" fill="currentColor"></use></svg>
+                        <svg class="hidden group-[.downloaded]:block"><use href="#arrow-rotate-right-solid" fill="currentColor"></use></svg>
                     </button>
                 </a>
                 <div class="chapter-status">

@@ -666,7 +666,7 @@ body.not-logged-in {
     }
 
     &__offline {
-        display: none;
+        display: grid;
         position: absolute;
         right: 2.5%;
         bottom: 12%;
@@ -704,6 +704,11 @@ body.not-logged-in {
                 padding-left: 10%;
             }
         }
+
+        &:hover .chapter__offline {
+            display: grid;
+        }
+
     }
 
     &.locked {
@@ -724,6 +729,7 @@ body.not-logged-in {
     &.beta {
         display: none;
     }
+
 
 }
 
