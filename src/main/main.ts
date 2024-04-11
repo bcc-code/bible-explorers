@@ -20,8 +20,8 @@ const openWindow = (url: string) => {
   }
 
   window = new BrowserWindow({
-    minWidth: 1280,
-    minHeight: 1024,
+    minWidth: 800,
+    minHeight: 600,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, "preload.js"),
