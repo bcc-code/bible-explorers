@@ -92,8 +92,7 @@ body.not-logged-in {
 
 
 #app[data-view="chapter"],
-#app[data-view="task-description"],
-#app[data-view="game"] {
+#app[data-view="task-description"] {
 
     #logout-button,
     #login-button,
@@ -115,7 +114,8 @@ body.not-logged-in {
     #toggle-languages,
     #toggle-music,
     #toggle-vq,
-    #toggle-fullscreen {
+    #toggle-fullscreen,
+    #download-app {
         display: none;
     }
 }
