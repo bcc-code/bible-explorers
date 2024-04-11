@@ -675,6 +675,10 @@ body.not-logged-in {
 
     body.logged-in.electron & {
         .chapter__offline {
+            display: flex;
+        }
+
+        .chapter__download {
             display: grid;
         }
 
@@ -690,13 +694,14 @@ body.not-logged-in {
                 display: flex;
             }
 
-            .chapter__offline {
+            .chapter__download,
+            .chapter__redownload {
                 display: none;
             }
         }
 
         &.downloaded {
-            .chapter__offline {
+            .chapter__download {
                 display: none;
             }
 
@@ -704,12 +709,11 @@ body.not-logged-in {
                 display: flex;
                 padding-left: 10%;
             }
-        }
 
-        &:hover .chapter__offline {
-            display: grid;
+            &:hover .chapter__redownload {
+                display: grid !important;
+            }
         }
-
     }
 
     &.locked {

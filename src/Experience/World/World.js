@@ -177,10 +177,14 @@ export default class World {
                         <h1 class="chapter-heading">${chapter.title}</h1>
                         <div class="chapter-date">${chapter.date}</div>
                     </div>
-                    <button class="chapter__offline button-cube">
-                        <svg class="group-[.downloaded]:hidden"><use href="#download-solid" fill="currentColor"></use></svg>
-                        <svg class="hidden group-[.downloaded]:block"><use href="#arrow-rotate-right-solid" fill="currentColor"></use></svg>
-                    </button>
+                    <div class="chapter__offline">
+                        <button class="chapter__redownload button-cube !hidden">
+                            <svg><use href="#arrow-rotate-right-solid" fill="currentColor"></use></svg>
+                        </button>
+                        <button class="chapter__download button-cube group-[.downloaded]:hidden">
+                            <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                        </button>
+                    </div>
                 </a>
                 <div class="chapter-status">
                     <div class="chapter__downloading">
@@ -326,15 +330,18 @@ export default class World {
             })
         })
 
-        this.chapterSelectWrapper.querySelectorAll('.chapter__offline').forEach(function (chapter) {
+        this.chapterSelectWrapper.querySelectorAll('.chapter__download').forEach(function (chapter) {
             chapter.addEventListener('click', (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
 
-        this.chapterSelectWrapper.querySelectorAll('.chapter__downloaded').forEach(function (button) {
-            button.addEventListener('click', instance.confirmRedownload)
+        this.chapterSelectWrapper.querySelectorAll('.chapter__redownload').forEach(function (chapter) {
+            chapter.addEventListener('click', (event) => {
+                instance.redownloadChapter(chapter)
+                event.stopPropagation()
+            })
         })
 
         // this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
@@ -346,10 +353,17 @@ export default class World {
     }
 
     setStatesTooltips() {
-        tippy('.chapter__offline', {
+        tippy('.chapter__download', {
             theme: 'explorers',
-            // content: _s.offline.download.info,
-            content: 'Download offline version',
+            content: _s.offline.download.title,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'auto',
+        })
+
+        tippy('.chapter__redownload', {
+            theme: 'explorers',
+            content: _s.offline.update,
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'auto',
@@ -375,36 +389,6 @@ export default class World {
     }
 
     // Download
-
-    setDownloadHtml(button) {
-        button.innerHTML = `
-        <svg class="w-4 h-4"><use href="#check-solid" fill="currentColor"></use></svg>
-        <span>${_s.offline.availableOffline.title}</span>
-        `
-        button.addEventListener('click', instance.confirmRedownload)
-    }
-
-    confirmRedownload(event) {
-        const button = event.currentTarget
-        button.removeEventListener('click', instance.confirmRedownload)
-
-        button.innerHTML = `<span class="text-sm tv:text-base mr-1">${_s.offline.redownloadConfirmation}</span>
-            <svg class="refuse w-3 h-3 cursor-pointer"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
-            <span class="separator mr-2">/</span>
-            <svg class="redownload w-4 h-4 cursor-pointer"><use href="#check-solid" fill="currentColor"></use></svg>`
-
-        button.querySelector('.refuse').addEventListener('click', (event) => {
-            instance.setDownloadHtml(button)
-            event.stopPropagation()
-        })
-        button.querySelector('.redownload').addEventListener('click', (event) => {
-            instance.redownloadChapter(button)
-            instance.setDownloadHtml(button)
-            event.stopPropagation()
-        })
-
-        event.stopPropagation()
-    }
 
     redownloadChapter(chapter) {
         instance.removeDownload(chapter)

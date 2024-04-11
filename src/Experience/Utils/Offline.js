@@ -1,9 +1,6 @@
 import Experience from '../Experience.js'
 import _appInsights from './AppInsights.js'
 import _lang from './Lang.js'
-import tippy from 'tippy.js'
-import 'tippy.js/dist/tippy.css'
-import 'tippy.js/animations/shift-away.css'
 
 let offline = null
 
@@ -520,22 +517,6 @@ export default class Offline {
             (downloadedEpisodes) => {
                 if (downloadedEpisodes.length == chapter.episodes.length) {
                     document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded')
-
-                    document.querySelectorAll('.chapter.downloaded .chapter__offline').forEach((button) => {
-                        const tippyInstance = button._tippy
-                        if (tippyInstance) {
-                            tippyInstance.destroy()
-                        }
-                    })
-
-                    tippy('.chapter.downloaded .chapter__offline', {
-                        theme: 'explorers',
-                        // content: _s.offline.download.info,
-                        content: 'Re-download offline version',
-                        duration: [500, 200],
-                        animation: 'shift-away',
-                        placement: 'auto',
-                    })
                 }
             }
         )
