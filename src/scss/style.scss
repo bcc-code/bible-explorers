@@ -124,7 +124,8 @@ body.not-logged-in {
     display: none !important;
 }
 
-.electron #download-app {
+.electron #download-app,
+.group\/body:not(.logged-in) #download-app {
     display: none;
 }
 
