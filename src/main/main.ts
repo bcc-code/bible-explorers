@@ -49,10 +49,9 @@ const openWindow = (url: string) => {
   
     const { protocol } = parsedUrl;
 
-    // We could handle all possible link cases here, not only http/https
     if (protocol !== PRODUCTION_APP_PROTOCOL) {
-      try {
       // Open the URL in the default browser
+      try {
         await shell.openExternal(url);
       } catch (error: unknown) {
         log.error(`Failed to open url: ${error}`);
