@@ -521,6 +521,13 @@ export default class Offline {
                 if (downloadedEpisodes.length == chapter.episodes.length) {
                     document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded')
 
+                    document.querySelectorAll('.chapter.downloaded .chapter__offline').forEach((button) => {
+                        const tippyInstance = button._tippy
+                        if (tippyInstance) {
+                            tippyInstance.destroy()
+                        }
+                    })
+
                     tippy('.chapter.downloaded .chapter__offline', {
                         theme: 'explorers',
                         // content: _s.offline.download.info,
