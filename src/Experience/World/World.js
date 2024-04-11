@@ -685,25 +685,6 @@ export default class World {
         }
     }
 
-    currentChapterLabel() {
-        selectedChapter
-        const el = _gl.elementFromHtml(`
-            <div class="page-title">
-                <p>Chapter: <span>${instance.selectedChapter.title}</span></p>
-                <p>Age: <span>${instance.selectedChapter.category}</span></p>
-            </div>`)
-
-        document.querySelector('#header').append(el)
-
-        const tl = gsap.timeline()
-
-        tl.set(el, { autoAlpha: 0, x: -20 }).to(el, { autoAlpha: 1, x: 0 })
-
-        setTimeout(() => {
-            tl.to(el, { autoAlpha: 0, x: -20 })
-        }, 10000)
-    }
-
     setUpChapter() {
         document.body.classList.remove('freeze')
 
