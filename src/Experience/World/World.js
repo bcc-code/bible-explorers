@@ -81,6 +81,7 @@ export default class World {
             placement: 'bottom',
         })
 
+        this.setLinkToDownloadApp()
         this.buttons.downloadApp.addEventListener('click', this.downloadApp)
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
@@ -679,6 +680,15 @@ export default class World {
     resetChapter() {
         localStorage.removeItem('progress-theme-' + instance.selectedChapter.id)
         localStorage.removeItem('answers-theme-' + instance.selectedChapter.id)
+    }
+
+    setLinkToDownloadApp() {
+        fetch(_api.getAppDownloadLinks()).then(function (response) {
+            response.json().then(function (apiData) {
+                const platform = window.navigator.platform.indexOf('Mac') !== -1 ? '-mac' : ''
+                instance.buttons.downloadApp.parentElement.href = apiData['latest' + platform + '.yml']
+            })
+        })
     }
 
     downloadApp() {
