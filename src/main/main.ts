@@ -40,13 +40,13 @@ const openWindow = (url: string) => {
     handleUrl(url);
     return { action: 'deny' };
   });
-  
+
   async function handleUrl(url: string) {
     const parsedUrl = maybeParseUrl(url);
     if (!parsedUrl) {
       return;
     }
-  
+
     const { protocol } = parsedUrl;
 
     if (protocol !== PRODUCTION_APP_PROTOCOL) {
@@ -58,7 +58,7 @@ const openWindow = (url: string) => {
       }
     }
   }
-  
+
   function maybeParseUrl(value: string): URL | undefined {
     if (typeof value === 'string') {
       try {
@@ -68,7 +68,7 @@ const openWindow = (url: string) => {
         log.error(`Failed to parse url: ${value}`);
       }
     }
-  
+
     return undefined;
   }
 
@@ -199,6 +199,11 @@ if (!gotTheLock) {
     openWindow(initUrl);
 
     // autoUpdater.forceDevUpdateConfig = true
+	autoUpdater.setFeedURL({
+		provider: 'generic',
+		url: 'https://static2.bcc.media/explorers/',
+		channel: 'latest',
+	})
     autoUpdater.checkForUpdatesAndNotify();
   });
 
