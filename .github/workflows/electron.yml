@@ -53,6 +53,8 @@ jobs:
                   fi
               shell: bash
               env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Building the Electron app for Mac
@@ -62,6 +64,8 @@ jobs:
                   fi
               shell: bash
               env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CSC_LINK: developer-id.p12
                   CSC_KEY_PASSWORD: ${{secrets.BCCM_APPLE_DEVELOPER_ID_PASSWORD}}
