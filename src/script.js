@@ -67,6 +67,18 @@ const handleRedirectCallback = async () => {
 
     if (experience.auth0.isAuthenticated) {
         document.body.classList.add('logged-in')
+
+        experience.auth0.userData = await experience.auth0.getUser()
+        let personId = experience.auth0.userData['https://login.bcc.no/claims/personId']
+
+        experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
+            // In some cases the function will return an object instead of an array
+            if (typeof roles === 'object') roles = Object.values(roles)
+
+            if (roles.includes('administrator') || roles.includes('editor')) {
+                document.body.classList.add('admin')
+            }
+        })
     } else if (isElectron()) {
         document.body.classList.add('not-logged-in')
 
