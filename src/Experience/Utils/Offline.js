@@ -15,7 +15,7 @@ export default class Offline {
         offline.data = []
         offline.downloaded = []
 
-        offline.btvVideos = []
+        offline.textureVideos = []
         offline.downloadedTextures = []
 
         if ('indexedDB' in window) {
@@ -193,30 +193,36 @@ export default class Offline {
     }
 
     downloadScreenTextures = async function (chapter) {
+        offline.setTextureIdsForChapter(chapter)
+
+        if (!offline.textureVideos.length) return
+
+        // Start downloading textures
+        offline.startTextureDownload(0)
+    }
+
+    setTextureIdsForChapter = function (chapter) {
+        offline.textureVideos = []
+
         if (chapter.lobby_video_loop) {
-            offline.btvVideos.push(chapter.lobby_video_loop)
+            offline.textureVideos.push(chapter.lobby_video_loop)
         }
 
         chapter.program.forEach((checkpoint) => {
             checkpoint.steps.forEach((step) => {
                 if (step.details.step_type == 'iris' && step.message.video) {
-                    offline.btvVideos.push(step.message.video)
+                    offline.textureVideos.push(step.message.video)
                 }
 
                 if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens.video) {
-                    offline.btvVideos.push(step.message_with_supporting_screens.video)
+                    offline.textureVideos.push(step.message_with_supporting_screens.video)
                 }
 
                 if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
-                    offline.btvVideos.push(step.video_with_question.video)
+                    offline.textureVideos.push(step.video_with_question.video)
                 }
             })
         })
-
-        if (!offline.btvVideos.length) return
-
-        // Start downloading textures
-        offline.startTextureDownload(0)
     }
 
     downloadScreenTexture = function (videoName, texture) {
@@ -255,7 +261,7 @@ export default class Offline {
             offline.putFileInDb(textureData)
             offline.downloadedTextures.push(textureData.name)
 
-            if (offline.downloadedTextures.length < offline.btvVideos.length) {
+            if (offline.downloadedTextures.length < offline.textureVideos.length) {
                 // Next texture to download
                 offline.startTextureDownload(offline.downloadedTextures.length)
             }
@@ -263,8 +269,8 @@ export default class Offline {
     }
 
     startTextureDownload = async function (index) {
-        const textureUrls = await offline.getTextureDownloadUrls(offline.btvVideos[index])
-        offline.downloadScreenTexture(offline.btvVideos[index], textureUrls)
+        const textureUrls = await offline.getTextureDownloadUrls(offline.textureVideos[index])
+        offline.downloadScreenTexture(offline.textureVideos[index], textureUrls)
     }
 
     getTextureDownloadUrls = async function (episodeId) {
@@ -494,15 +500,34 @@ export default class Offline {
         return new Blob([arrayBuffer])
     }
 
-    markChapterIfAvailableOffline = function (chapter) {
-        offline.getDownloadedEpisodes(
-            chapter.episodes.map((e) => e.type + '-' + e.id),
-            (downloadedEpisodes) => {
-                if (downloadedEpisodes.length == chapter.episodes.length) {
-                    document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('downloaded')
-                }
+    markChapterIfAvailableOffline = async function (chapter) {
+        const episodes = chapter.episodes.map((e) => e.type + '-' + e.id)
+        offline.setTextureIdsForChapter(chapter)
+        const allDownloadableEpisodes = episodes.concat(offline.textureVideos.map((textureId) => 'texture-' + textureId))
+
+        offline.getDownloadedEpisodes(allDownloadableEpisodes, async (downloadedEpisodes) => {
+            if (downloadedEpisodes.length == chapter.episodes.length + offline.textureVideos.length) {
+                const latestVersion = await offline.checkAllVideosHaveLatestVersion(chapter, downloadedEpisodes)
+
+                const selectedChapter = document.querySelector('.chapter[data-id="' + chapter.id + '"]')
+                selectedChapter.classList.add(latestVersion ? 'downloaded' : 'outdated')
             }
-        )
+        })
+    }
+
+    checkAllVideosHaveLatestVersion = async function (chapterId, downloadedEpisodes) {
+        let staleEpisodes = []
+
+        downloadedEpisodes.forEach(async (downloadedEpisode) => {
+            const episodeId = downloadedEpisode.name.replace('episode-', '').replace('texture-', '')
+            const episodeUrls = await offline.getEpisodeDownloadUrls(episodeId, chapterId)
+
+            if (downloadedEpisode.version != episodeUrls.version) {
+                staleEpisodes.push(downloadedEpisode)
+            }
+        })
+
+        return staleEpisodes.length == 0
     }
 
     getDownloadedEpisodes = function (episodes, callback = () => {}) {
