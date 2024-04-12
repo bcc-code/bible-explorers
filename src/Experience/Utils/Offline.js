@@ -138,6 +138,7 @@ export default class Offline {
         if (episodeUrls) {
             notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
             notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
+            notDownloadedEpisodes[0].data.version = episodeUrls.version
 
             offline.startDownloading(chapterId, notDownloadedEpisodes[0])
         }
@@ -189,6 +190,7 @@ export default class Offline {
         return {
             downloadUrl: selectedQualityVideo.url,
             thumbnail: episode.image,
+            version: episode.assetVersion,
         }
     }
 
@@ -219,35 +221,36 @@ export default class Offline {
         offline.startTextureDownload(0)
     }
 
-    downloadScreenTexture = function (videoName, video) {
+    downloadScreenTexture = function (videoName, texture) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
 
-        if (!video.url) {
-            console.log('Episode ' + videoName + ' is not downloadable!')
+        if (!texture.url) {
+            console.log('Texture ' + videoName + ' is not downloadable!')
         }
 
-        xhr.open('GET', video.url, true)
+        xhr.open('GET', texture.url, true)
         xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener('error', () => {
-            console.log('Episode ' + videoName + ' failed to download!')
+            console.log('Texture ' + videoName + ' failed to download!')
         })
         xhr.addEventListener(
             'load',
             () => {
-                offline.onScreenTextureDownloadComplete(videoName, video, xhr)
+                offline.onScreenTextureDownloadComplete(videoName, texture, xhr)
             },
             false
         )
         xhr.send()
     }
 
-    onScreenTextureDownloadComplete = async function (videoName, video, xhr) {
+    onScreenTextureDownloadComplete = async function (videoName, texture, xhr) {
         if (xhr.status === 200) {
             const textureData = {
-                language: video.audioLanguage,
+                language: texture.audioLanguage,
                 name: 'texture-' + videoName,
                 quality: this.experience.settings.videoQuality,
+                version: texture.version,
                 video: xhr.response,
             }
 
@@ -262,11 +265,11 @@ export default class Offline {
     }
 
     startTextureDownload = async function (index) {
-        const video = await offline.getEpisodeDesiredQualityDownloadUrl(offline.btvVideos[index])
-        offline.downloadScreenTexture(offline.btvVideos[index], video)
+        const textureUrls = await offline.getTextureDownloadUrls(offline.btvVideos[index])
+        offline.downloadScreenTexture(offline.btvVideos[index], textureUrls)
     }
 
-    getEpisodeDesiredQualityDownloadUrl = async function (episodeId) {
+    getTextureDownloadUrls = async function (episodeId) {
         let locale = _lang.getLanguageCode()
         locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
 
@@ -278,7 +281,10 @@ export default class Offline {
         })
         if (!myLanguageVideos.length) return
 
-        return offline.getSelectedQualityVideo(myLanguageVideos)
+        const selectedQualityVideo = offline.getSelectedQualityVideo(myLanguageVideos)
+        selectedQualityVideo.version = episode.assetVersion
+
+        return selectedQualityVideo
     }
 
     getEpisodeData = async function (episodeId) {
@@ -292,6 +298,7 @@ export default class Offline {
                     episode(id: "${episodeId}") {
                         id
                         image
+                        assetVersion
                         files {
                             id
                             audioLanguage
@@ -533,9 +540,13 @@ export default class Offline {
             var getItem = offline.objStore.get(id)
 
             getItem.onsuccess = function () {
-                if (getItem.result && getItem.result.language == _lang.getLanguageCode()) downloadedEpisodes.push(getItem.result.name)
+                if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
+                    downloadedEpisodes.push(getItem.result)
+                }
 
-                if (index + 1 == episodes.length) callback(downloadedEpisodes)
+                if (index + 1 == episodes.length) {
+                    callback(downloadedEpisodes)
+                }
             }
         })
     }
