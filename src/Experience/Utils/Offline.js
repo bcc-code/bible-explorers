@@ -137,7 +137,6 @@ export default class Offline {
 
         if (episodeUrls) {
             notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
-            notDownloadedEpisodes[0].data.thumbnail = episodeUrls.thumbnail
             notDownloadedEpisodes[0].data.version = episodeUrls.version
 
             offline.startDownloading(chapterId, notDownloadedEpisodes[0])
@@ -189,7 +188,6 @@ export default class Offline {
 
         return {
             downloadUrl: selectedQualityVideo.url,
-            thumbnail: episode.image,
             version: episode.assetVersion,
         }
     }
@@ -297,7 +295,6 @@ export default class Offline {
                 query: `query {
                     episode(id: "${episodeId}") {
                         id
-                        image
                         assetVersion
                         files {
                             id
@@ -330,27 +327,6 @@ export default class Offline {
     }
 
     startDownloading = function (chapterId, currentEpisode) {
-        var xhr = new XMLHttpRequest()
-        xhr.responseType = 'blob'
-        xhr.open('GET', currentEpisode.data.thumbnail, true)
-        xhr.addEventListener(
-            'load',
-            () => {
-                offline.onThumbnailDownloadComplete(chapterId, currentEpisode, xhr)
-            },
-            false
-        )
-        xhr.send()
-    }
-
-    onThumbnailDownloadComplete = function (chapterId, currentEpisode, xhr) {
-        if (xhr.status === 200) {
-            currentEpisode.data.thumbnail = xhr.response
-            offline.downloadVideo(chapterId, currentEpisode)
-        }
-    }
-
-    downloadVideo = function (chapterId, currentEpisode) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
         xhr.open('GET', currentEpisode.downloadUrl, true)
