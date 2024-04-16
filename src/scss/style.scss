@@ -27,6 +27,11 @@
     --font-size-heading: clamp(1.35rem, 1.25vw, 3rem);
     --font-size-text: clamp(1.15rem, 1.15vw, 2.5rem);
 
+    --scrollbar-color-thumb: var(--clr-secondary);
+    --scrollbar-color-track: rgba(255, 255, 255, 10%);
+    --scrollbar-width: thin;
+    --scrollbar-width-legacy: 10px;
+
 }
 
 @import "tailwindcss/base";
@@ -38,6 +43,34 @@
 @import "./components/Game.scss";
 
 @import "tailwindcss/utilities";
+
+.scroller:hover {
+    --fix: ;
+    /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
+}
+
+@supports (scrollbar-width: auto) {
+    .scroller {
+        scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+        scrollbar-width: var(--scrollbar-width);
+    }
+}
+
+@supports selector(::-webkit-scrollbar) {
+    .scroller::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-color-thumb);
+    }
+
+    .scroller::-webkit-scrollbar-track {
+        background: var(--scrollbar-color-track);
+    }
+
+    .scroller::-webkit-scrollbar {
+        max-width: var(--scrollbar-width-legacy);
+        max-height: var(--scrollbar-width-legacy);
+    }
+}
+
 
 /* #region VideoAPI */
 #video-container .video-js:not(.vjs-fullscreen) .vjs-control-bar {
@@ -476,7 +509,7 @@ body.not-logged-in {
 /* #region Chapter */
 
 .chapter {
-    margin-bottom: 2%;
+    margin-bottom: 4%;
 
     &-box {
         display: block;
@@ -490,7 +523,8 @@ body.not-logged-in {
             background-image: url('../../static/frames/chapter_bar_action.png');
         }
 
-        .chapter.selected & {
+        .chapter.selected &,
+        .chapter.downloading & {
             background-image: url('../../static/frames/chapter_bar_action.png');
         }
 
@@ -547,7 +581,8 @@ body.not-logged-in {
 
     &-description {
         isolation: isolate;
-        position: relative;
+        position: sticky;
+        top: 0;
         background-image: url('../../static/frames/chapter_main_active_v02.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -598,8 +633,6 @@ body.not-logged-in {
     }
 
     &-select_container {
-        padding-block: 5%;
-        padding-inline: 1%;
         display: flex;
         margin-inline: auto;
         width: clamp(320px, 90vw, 1920px);
@@ -614,6 +647,8 @@ body.not-logged-in {
     &__downloading {
         display: none;
         align-items: center;
+        padding-left: 10%;
+        padding-right: 3%;
 
         .downloading-title {
             font-size: clamp(0.85rem, 1vw, 1.1rem);
@@ -622,18 +657,9 @@ body.not-logged-in {
         .downloading-progress {
             position: relative;
             flex: 1;
-            margin: 0 1rem;
-            height: 4px;
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                opacity: 0.2;
-            }
+            height: 10px;
+            background-color: #361a35;
+            clip-path: polygon(3% 0, 100% 0, 97% 100%, 0 100%);
         }
 
         .progress-line {
@@ -644,7 +670,7 @@ body.not-logged-in {
             height: 100%;
             transform: scaleX(0);
             transform-origin: center left;
-            background-color: #fff;
+            background: linear-gradient(to right, #ff634a, #ffc54b)
         }
 
     }
@@ -670,7 +696,7 @@ body.not-logged-in {
     &__offline {
         display: none;
         position: absolute;
-        right: 2.5%;
+        right: 3%;
         bottom: 12%;
     }
 
@@ -691,6 +717,7 @@ body.not-logged-in {
         }
 
         &.downloading {
+
             .chapter__downloading,
             .chapter__downloaded-quota {
                 display: flex;
@@ -721,6 +748,7 @@ body.not-logged-in {
                 display: flex;
             }
         }
+
     }
 
     &.locked {
@@ -738,6 +766,33 @@ body.not-logged-in {
         }
     }
 }
+
+.chapters {
+
+    &-container {
+        position: fixed;
+        top: 15%;
+        bottom: 15%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    &-list {
+        width: 40%;
+        height: 100%;
+        overflow-y: auto;
+
+    }
+
+    &-description {
+        width: 40%;
+    }
+
+}
+
+
+
 
 .coming-soon {
     display: none;

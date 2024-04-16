@@ -191,11 +191,13 @@ export default class World {
                 </a>
                 <div class="chapter-status">
                     <div class="chapter__downloading">
-                        <span class="downloading-title">${_s.offline.downloading}</span>
-                        <div class="downloading-progress">
-                            <span class="progress-line"></span>
+                        <div class="flex items-center gap-[5%] w-full">
+                            <span class="downloading-title">${_s.offline.downloading}</span>
+                            <div class="downloading-progress">
+                                <span class="progress-line"></span>
+                            </div>
+                            <span class="downloading-label"></span>
                         </div>
-                        <span class="downloading-label"></span>
                     </div>
                     <div class="chapter__download-failed">${_s.offline.downloadFailed}</div>
                     <div class="chapter__downloaded">
