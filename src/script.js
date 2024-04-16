@@ -14,7 +14,7 @@ import isElectron from 'is-electron'
 
 // Load icons
 const ajax = new XMLHttpRequest()
-ajax.open('GET', 'https://biblekids.io/wp-content/uploads/2023/03/biex-sprite.svg', true)
+ajax.open('GET', 'https://biblekids.io/wp-content/uploads/2023/03/biex-sprite.svg?ver=1', true)
 ajax.send()
 ajax.onload = function () {
     const div = document.createElement('div')

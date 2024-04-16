@@ -185,7 +185,7 @@ export default class World {
                             <svg><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
                         <button class="chapter__remove button-cube !hidden">
-                            <svg><use href="#remove-solid" fill="currentColor"></use></svg>
+                            <svg><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </a>
@@ -203,7 +203,7 @@ export default class World {
                         <span>${_s.offline.availableOffline.title}</span>
                     </div>
                     <div class="chapter__outdated">
-                        <svg><use href="#warning-solid" fill="currentColor"></use></svg>
+                        <svg><use href="#file-circle-exclamation-solid" fill="currentColor"></use></svg>
                         <span>${_s.offline.outdated}</span>
                     </div>
                 </div>
