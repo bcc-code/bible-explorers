@@ -1410,7 +1410,7 @@ $themes: (
     .stars {
         margin-top: 10%;
         position: relative;
-        width: clamp(10rem, 20vw, 100%);
+        width: 100%;
         display: flex;
 
         progress {
