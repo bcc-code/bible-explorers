@@ -654,7 +654,8 @@ body.not-logged-in {
         font-size: clamp(0.85rem, 1vw, 1.1rem);
     }
 
-    &__downloaded {
+    &__downloaded,
+    &__outdated {
         display: none;
         align-items: center;
         font-size: clamp(0.85rem, 1vw, 1.1rem);
@@ -674,7 +675,7 @@ body.not-logged-in {
     }
 
     body.logged-in.electron & {
-        .chapter__offline {
+        &.loaded .chapter__offline {
             display: flex;
         }
 
@@ -690,12 +691,12 @@ body.not-logged-in {
         }
 
         &.downloading {
-            .chapter__downloading {
+            .chapter__downloading,
+            .chapter__downloaded-quota {
                 display: flex;
             }
 
-            .chapter__download,
-            .chapter__redownload {
+            .chapter__download {
                 display: none;
             }
         }
@@ -710,8 +711,14 @@ body.not-logged-in {
                 padding-left: 10%;
             }
 
-            &:hover .chapter__redownload {
+            &:hover .chapter__remove {
                 display: grid !important;
+            }
+        }
+
+        &.outdated {
+            .chapter__outdated {
+                display: flex;
             }
         }
     }

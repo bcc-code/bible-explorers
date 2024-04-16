@@ -99,6 +99,8 @@ const strings = {
             redownloadConfirmation: 'Are you sure you want to redownload the chapter?',
             downloadFailed: 'There was a problem with downloading the chapter!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Play video',
@@ -254,6 +256,8 @@ const strings = {
             redownloadConfirmation: 'Er du sikker du vil laste kapittelet på nytt?',
             downloadFailed: 'Det har oppstått et problem ved nedlastingen av kapittelet!',
             downloadToContinue: 'Du må laste ned kapittelet for å fortsette.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Spill av video',
@@ -406,6 +410,8 @@ const strings = {
             redownloadConfirmation: 'Bist du dir sicher, dass du das Kapitel erneut herunterladen möchtest?',
             downloadFailed: 'Beim Herunterladen des Kapitels ist ein Problem aufgetreten!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Video abspielen',
@@ -558,6 +564,8 @@ const strings = {
             redownloadConfirmation: 'Weet je zeker dat je het hoofdstuk opnieuw wilt downloaden?',
             downloadFailed: 'Er is een probleem opgestaan met het downloaden van het hoofdstuk!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Speel de video af',
@@ -707,6 +715,8 @@ const strings = {
             redownloadConfirmation: 'Es-tu certain de vouloir télécharger le chapitre à nouveau ?',
             downloadFailed: 'Un problème est survenu lors du téléchargement du chapitre !',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Lire la vidéo',
@@ -859,6 +869,8 @@ const strings = {
             redownloadConfirmation: 'Czy chcesz na nowo załadować rozdział?',
             downloadFailed: 'Podczas pobierania rozdziału powstał problem!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Odtwórz film',
@@ -1011,6 +1023,8 @@ const strings = {
             redownloadConfirmation: 'Ești sigur că vrei să redescarci capitolul?',
             downloadFailed: 'A apărut o problemă la descărcarea capitolului!',
             downloadToContinue: 'Trebuie să descarci capitolul pentru a continua.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Pornește video',
@@ -1163,6 +1177,8 @@ const strings = {
             redownloadConfirmation: '¿Seguro que quieres descargar el capítulo nuevamente?',
             downloadFailed: '¡Ha habido un problema al descargar el capítulo!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Reproducir video',
@@ -1315,6 +1331,8 @@ const strings = {
             redownloadConfirmation: 'Está seguro que deseja recarregar o capítulo?',
             downloadFailed: 'Ocorreu um problema com o download do capítulo!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Play video',
@@ -1618,6 +1636,8 @@ const strings = {
             redownloadConfirmation: 'Вы уверены, что хотите повторно скачать главу?',
             downloadFailed: 'Возникла проблема при попытке скачать главу!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Включить видео',
@@ -1770,6 +1790,8 @@ const strings = {
             redownloadConfirmation: 'Oletko varma että haluat uudelleen ladata kappaleen?',
             downloadFailed: 'Kappaleen lataamisessa ilmeni ongelma!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Toista video',
@@ -1922,6 +1944,8 @@ const strings = {
             redownloadConfirmation: 'Are you sure you want to redownload the chapter?',
             downloadFailed: 'There was a problem with downloading the chapter!',
             downloadToContinue: 'You need to download the chapter to continue.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Videó lejátszása',
@@ -2074,6 +2098,8 @@ const strings = {
             redownloadConfirmation: 'Er du sikker på, at du vil genindlæse kapitlet?',
             downloadFailed: 'Der har været et problem med at downloade kapitlet!',
             downloadToContinue: 'Du må laste ned kapittelet for å fortsette.',
+            outdated: 'The chapter has been updated. Please redownload to get the latest updates for best performance.',
+            remove: 'Delete offline version',
         },
         tooltips: {
             video: 'Play video',
