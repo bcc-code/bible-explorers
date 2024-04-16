@@ -44,8 +44,8 @@ export default class WaitingScreen {
         const wrapper = _gl.elementFromHtml(`<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`)
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="absolute bottom-6 left-1/2 -translate-x-1/2">
-                <input placeholder="${_s.waitingScreen.submit}" />
-                <button type="submit" class="button-cube-wide">Add</button>
+                <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
+                <button type="submit" class="button-cube-wide">${_s.waitingScreen.submit}</button>
             </form>`
         )
 

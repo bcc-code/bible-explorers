@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
+import _s from '../Utils/Strings.js'
 
 let instance = null
 
@@ -377,23 +378,23 @@ export default class DuckGame {
     }
 
     drawStartScreen() {
-        const startMessage = 'Press any key to start'
+        const startMessage = _s.miniGames.keyInteraction.start
 
         if (this.showPopup) this.showPopup(startMessage)
     }
 
     drawGameOverScreen() {
-        const gameOverText = 'Game Over'
-        const restartMessage = 'Press any key to restart'
+        const gameOverText = _s.miniGames.gameOver
+        const restartMessage = _s.miniGames.keyInteraction.tryAgain
         this.showPopup(`${gameOverText}<br>${restartMessage}`)
 
         document.addEventListener('keydown', instance.keydownHandler)
     }
 
     drawWinGameScreen() {
-        const winText = 'You Win!'
-        const continueMessage = 'Press any key to continue'
-        const roundText = `Round: ${this.roundCount}`
+        const winText = _s.miniGames.winRound
+        const continueMessage = _s.miniGames.keyInteraction.continue
+        const roundText = `${_s.miniGames.round}: ${this.roundCount}`
         this.showPopup(`${winText}<br>${roundText}<br>${continueMessage}`)
 
         document.addEventListener('keydown', instance.keydownHandler)
