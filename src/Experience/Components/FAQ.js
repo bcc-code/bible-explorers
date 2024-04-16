@@ -25,7 +25,7 @@ export default class FAQ {
                 </div>
             `)
 
-            list.append(listItem)
+            list?.append(listItem)
         }
     }
 }
