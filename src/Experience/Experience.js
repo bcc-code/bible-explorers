@@ -11,6 +11,7 @@ import World from './World/World.js'
 import FAQ from './Components/FAQ.js'
 import _gl from './Utils/Globals.js'
 import _lang from './Utils/Lang.js'
+import _e from './Utils/Events.js'
 
 let instance = null
 
@@ -34,10 +35,12 @@ export default class Experience {
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
-        this.resources = new Resources(sources)
         this.pointer = new MouseMove()
-        this.world = new World()
-        this.auth0 = {}
+
+        document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, () => {
+            this.resources = new Resources(sources)
+            this.world = new World()
+        })
 
         // Time animation event
         this.videoIsPlaying = false

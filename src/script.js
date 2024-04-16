@@ -69,38 +69,31 @@ const handleRedirectCallback = async () => {
         document.body.classList.add('logged-in')
 
         experience.auth0.userData = await experience.auth0.getUser()
-        let personId = experience.auth0.userData['https://login.bcc.no/claims/personId']
+        document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+    } else {
+        document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
 
-        experience.resources.fetchApiThenCache(_api.getRoles(personId), function (roles) {
-            // In some cases the function will return an object instead of an array
-            if (typeof roles === 'object') roles = Object.values(roles)
+        if (isElectron()) {
+            document.body.classList.add('not-logged-in')
 
-            if (roles.includes('administrator') || roles.includes('editor')) {
-                document.body.classList.add('admin')
-            }
-        })
-    } else if (isElectron()) {
-        document.body.classList.add('not-logged-in')
+            const loginScreen = document.querySelector('#login-screen')
 
-        const loginScreen = document.querySelector('#login-screen')
+            loginScreen.querySelector('.info').textContent = _s.loginScreen.redirectInfo
+            loginScreen.querySelector('span').textContent = _s.loginScreen.manualRedirectInfo
+            loginScreen.querySelector('a').textContent = _s.loginScreen.redirectLink
 
-        loginScreen.querySelector('.info').textContent = _s.loginScreen.redirectInfo
-        loginScreen.querySelector('span').textContent = _s.loginScreen.manualRedirectInfo
-        loginScreen.querySelector('a').textContent = _s.loginScreen.redirectLink
-
-        loginScreen.querySelector('a').addEventListener('click', async function (e) {
-            e.preventDefault()
-            await experience.auth0.loginWithRedirect({
-                redirect_uri: 'biex://explorers.biblekids.io',
+            loginScreen.querySelector('a').addEventListener('click', async function (e) {
+                e.preventDefault()
+                await experience.auth0.loginWithRedirect({
+                    redirect_uri: 'biex://explorers.biblekids.io',
+                })
             })
-        })
 
-        setTimeout(() => {
-            document.querySelector('#login-screen a').click()
-        }, 2000)
+            setTimeout(() => {
+                document.querySelector('#login-screen a').click()
+            }, 2000)
+        }
     }
-
-    document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
 }
 
 window.onload = async () => {
@@ -137,18 +130,16 @@ var browserName = (function (agent) {
 
 if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification)
-    // document.body.appendChild(_gl.elementFromHtml(`<span style="background: red; color: white; position: absolute; top: 7rem; left: 1rem; padding: 0.5rem; border-radius: 1rem; z-index: 99">You are using: ${browserName}</span>`));
 }
 
-// adjust screens wrapper size
-const dynamicDiv = document.getElementById('screens-wrapper')
-const closedCaption = document.getElementById('closed-caption')
-const aspectRatio = 1.5
-experience.maxVW = 36
-const maxVH = 65
-const minPaddingTopVh = 6
-
 experience.adjustScreensWrapperSize = () => {
+    const dynamicDiv = document.getElementById('screens-wrapper')
+    const closedCaption = document.getElementById('closed-caption')
+    const aspectRatio = 1.5
+    experience.maxVW = 36
+    const maxVH = 65
+    const minPaddingTopVh = 6
+
     let vw = window.innerWidth * (experience.maxVW / 100)
     let vh = window.innerHeight * (maxVH / 100)
 
@@ -169,7 +160,6 @@ experience.adjustScreensWrapperSize = () => {
 
     dynamicDiv.style.paddingTop = `${paddingTop}px`
 }
+experience.adjustScreensWrapperSize()
 
 window.addEventListener('resize', experience.adjustScreensWrapperSize)
-
-experience.adjustScreensWrapperSize()
