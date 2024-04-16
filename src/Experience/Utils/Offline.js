@@ -14,12 +14,7 @@ export default class Offline {
         offline.isOnline = false
 
         offline.allDownloadableVideos = []
-        offline.textureVideos = (chapterId) => offline.allDownloadableVideos[chapterId].filter((v) => v.type == 'texture')
-        offline.episodeVideos = (chapterId) => offline.allDownloadableVideos[chapterId].filter((v) => v.type == 'episode')
-
         offline.downloaded = []
-        offline.downloadedTextureVideos = (chapterId) => offline.downloaded[chapterId].filter((v) => v.name.includes('texture'))
-        offline.downloadedEpisodeVideos = (chapterId) => offline.downloaded[chapterId].filter((v) => v.name.includes('episode'))
 
         offline.sizeDownloaded = (chapterId) => offline.downloaded[chapterId].reduce((acc, v) => acc + v.size, 0)
         offline.sizeToBeDownloaded = (chapterId) => offline.allDownloadableVideos[chapterId].reduce((acc, v) => acc + v.data.size, 0)
@@ -107,12 +102,12 @@ export default class Offline {
 
             const selectedChapter = document.querySelector('.chapter[data-id="' + chapter.id + '"]')
 
-            if (downloadedEpisodes.length != chapter.episodes.length + offline.textureVideos(chapter.id).length) {
+            if (offline.downloaded[chapter.id].length != offline.allDownloadableVideos[chapter.id].length) {
                 selectedChapter.classList.add('loaded')
                 return
             }
 
-            const latestVersion = await offline.checkAllVideosHaveLatestVersion(chapter.id, downloadedEpisodes)
+            const latestVersion = await offline.checkAllVideosHaveLatestVersion(chapter.id)
 
             selectedChapter.classList.add(latestVersion ? 'downloaded' : 'outdated')
             selectedChapter.classList.add('loaded')
@@ -139,76 +134,21 @@ export default class Offline {
         }
 
         // Download or continue interrupted download
-
-        await offline.downloadScreenTextureFromChapter(chapterId)
-        await offline.downloadEpisodesFromChapter(chapterId)
+        await offline.downloadVideosFromChapter(chapterId)
     }
 
-    downloadScreenTextureFromChapter = async function (chapterId) {
-        let notDownloadedTextures = offline.getNotDownloadedTextures(chapterId)
-
-        if (notDownloadedTextures.length > 0) {
-            offline.downloadScreenTexture(chapterId, notDownloadedTextures[0].data)
-        }
-    }
-
-    getNotDownloadedTextures = function (chapterId) {
-        return offline.textureVideos(chapterId).filter((episode) => {
-            return !offline.downloaded[chapterId].some((downloadedTexture) => {
-                return episode.data.name === downloadedTexture.name
-            })
-        })
-    }
-
-    downloadScreenTexture = function (chapterId, texture) {
-        var xhr = new XMLHttpRequest()
-        xhr.responseType = 'blob'
-
-        if (!texture.url) {
-            console.log('Texture ' + texture.id + ' is not downloadable!')
-        }
-
-        xhr.open('GET', texture.url, true)
-        xhr.timeout = 86400000 // 24 hours
-        xhr.addEventListener('error', () => {
-            console.log('Texture ' + texture.id + ' failed to download!')
-        })
-        xhr.addEventListener(
-            'load',
-            () => {
-                offline.onScreenTextureDownloadComplete(chapterId, texture, xhr)
-            },
-            false
-        )
-        xhr.send()
-    }
-
-    onScreenTextureDownloadComplete = async function (chapterId, texture, xhr) {
-        if (xhr.status === 200) {
-            texture.video = xhr.response
-            offline.putFileInDb(texture)
-
-            offline.downloaded[chapterId].push(texture)
-
-            if (offline.downloadedTextureVideos(chapterId).length < offline.textureVideos(chapterId).length) {
-                // Next texture to download
-                offline.downloadScreenTextureFromChapter(chapterId)
-            }
-        }
-    }
-
-    downloadEpisodesFromChapter = async function (chapterId) {
-        let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(chapterId)
+    downloadVideosFromChapter = async function (chapterId) {
+        let notDownloadedEpisodes = offline.getNotDownloadedVideos(chapterId)
 
         if (notDownloadedEpisodes.length > 0) {
-            offline.downloadEpisode(chapterId, notDownloadedEpisodes[0].data)
+            offline.downloadVideo(chapterId, notDownloadedEpisodes[0].data)
         }
     }
 
-    getNotDownloadedEpisodes = function (chapterId) {
-        return offline.episodeVideos(chapterId).filter((episode) => {
-            return !offline.downloaded[chapterId].some((downloadedEpisode) => {
-                return episode.data.name === downloadedEpisode.name
+    getNotDownloadedVideos = function (chapterId) {
+        return offline.allDownloadableVideos[chapterId].filter((video) => {
+            return !offline.downloaded[chapterId].some((downloadedVideo) => {
+                return video.data.name === downloadedVideo.name
             })
         })
     }
@@ -271,15 +211,15 @@ export default class Offline {
         return episode.data
     }
 
-    checkAllVideosHaveLatestVersion = async function (chapterId, downloadedEpisodes) {
+    checkAllVideosHaveLatestVersion = async function (chapterId) {
         let staleEpisodes = []
 
-        downloadedEpisodes.forEach(async (downloadedEpisode) => {
-            const episodeId = downloadedEpisode.name.replace('episode-', '').replace('texture-', '')
-            const episodeData = offline.allDownloadableVideos[chapterId].find((v) => v.id == episodeId)
+        offline.downloaded[chapterId].forEach(async (downloadedVideo) => {
+            const videoId = downloadedVideo.name.replace('episode-', '').replace('texture-', '')
+            const fetchedVideo = offline.allDownloadableVideos[chapterId].find((v) => v.id == videoId)
 
-            if (downloadedEpisode.version != episodeData.data.version) {
-                staleEpisodes.push(downloadedEpisode)
+            if (downloadedVideo.version != fetchedVideo.data.version) {
+                staleEpisodes.push(downloadedVideo)
             }
         })
 
@@ -330,11 +270,15 @@ export default class Offline {
         return 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
     }
 
-    downloadEpisode = function (chapterId, currentEpisode) {
+    downloadVideo = function (chapterId, video) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
 
-        xhr.open('GET', currentEpisode.url, true)
+        if (!video.url) {
+            console.log('Video ' + video.id + ' is not downloadable!')
+        }
+
+        xhr.open('GET', video.url, true)
         xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener('progress', (event) => {
             offline.onVideoDownloadProgress(chapterId, event)
@@ -348,7 +292,7 @@ export default class Offline {
         xhr.addEventListener(
             'load',
             () => {
-                offline.onEpisodeDownloadComplete(chapterId, currentEpisode, xhr)
+                offline.onEpisodeDownloadComplete(chapterId, video, xhr)
             },
             false
         )
@@ -388,15 +332,17 @@ export default class Offline {
         }
     }
 
-    onEpisodeDownloadComplete = async function (chapterId, currentEpisode, xhr) {
+    onEpisodeDownloadComplete = async function (chapterId, video, xhr) {
         if (xhr.status === 200) {
-            currentEpisode.video = xhr.response
-            offline.putFileInDb(currentEpisode)
+            video.video = xhr.response
+            offline.putFileInDb(video)
 
-            offline.downloaded[chapterId].push(currentEpisode)
+            offline.downloaded[chapterId].push(video)
 
-            if (offline.episodeVideos(chapterId).length == offline.downloadedEpisodeVideos(chapterId).length) {
-                // All episodes downloaded
+            console.log(offline.allDownloadableVideos[chapterId].length, offline.downloaded[chapterId].length)
+
+            if (offline.allDownloadableVideos[chapterId].length == offline.downloaded[chapterId].length) {
+                // All videos downloaded
                 let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
                 chapterEl.classList.remove('downloading')
                 chapterEl.classList.add('downloaded')
@@ -409,13 +355,13 @@ export default class Offline {
                 _appInsights.trackEvent({
                     name: 'Chapter downloaded',
                     properties: {
-                        language: currentEpisode.language,
-                        quality: currentEpisode.quality,
+                        language: video.language,
+                        quality: video.quality,
                     },
                 })
             } else {
                 // Next episode to download
-                await offline.downloadEpisodesFromChapter(chapterId)
+                await offline.downloadVideosFromChapter(chapterId)
             }
         }
     }
@@ -462,37 +408,6 @@ export default class Offline {
                 r.readAsArrayBuffer(item.video)
             } else {
                 fallback(videoName)
-            }
-        }
-    }
-
-    loadScreenTextureFromIndexedDb = function (videoName, firstCase, secondCase, callback) {
-        if (!offline.db) {
-            secondCase(videoName, callback)
-            return
-        }
-
-        offline.transaction = offline.db.transaction([offline.store], 'readonly')
-        offline.objStore = offline.transaction.objectStore(offline.store)
-        const getItem = offline.objStore.get(videoName)
-
-        getItem.onsuccess = function () {
-            if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
-                const item = getItem.result
-
-                // Load video blob as array buffer
-                var r = new FileReader()
-
-                r.onload = function (e) {
-                    const blob = offline.getArrayBufferBlob(e)
-                    const videoUrl = URL.createObjectURL(blob)
-
-                    firstCase(videoName, videoUrl, callback)
-                }
-
-                r.readAsArrayBuffer(item.video)
-            } else {
-                secondCase(videoName, callback)
             }
         }
     }
