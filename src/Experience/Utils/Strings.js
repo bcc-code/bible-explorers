@@ -20,7 +20,7 @@ const strings = {
         howTo: 'How to guide',
         waitingScreen: {
             submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            inputPlaceholder: 'Write your name here',
         },
         journey: {
             start: 'Start the time travel',
@@ -147,7 +147,7 @@ const strings = {
             skip: 'Skip',
             correctAnswers: 'correct answers',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Well done!',
         },
         chapter: {
             infoSingular: {
@@ -499,8 +499,8 @@ const strings = {
         browserNotification: 'De aanbevolen browser voor dit concept is Chrome',
         howTo: 'Hoe bereid je je voor',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Bevestig',
+            inputPlaceholder: 'Schrijf hier je naam',
         },
         journey: {
             start: 'Start de tijdreis',
@@ -588,9 +588,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Klik op een toets om de ronde te starten',
+                tryAgain: 'Klik op een toets om opnieuw te beginnen',
+                continue: 'Klik op een toets om door te gaan',
             },
             simonSays: {
                 failed: {
@@ -627,7 +627,7 @@ const strings = {
             skip: 'Overslaan',
             correctAnswers: 'antwoorden juist',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Goed gedaan!',
         },
         chapter: {
             infoSingular: {
@@ -782,7 +782,7 @@ const strings = {
             skip: 'Sauter',
             correctAnswers: 'réponses correctes',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Bravo !',
         },
         chapter: {
             infoSingular: {
@@ -813,8 +813,8 @@ const strings = {
         browserNotification: 'Zalecana przeglądarka dla tego programu to Chrome',
         howTo: 'Jak należy się przygotować',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Dodaj',
+            inputPlaceholder: 'Wpisz tutaj swoje imię',
         },
         journey: {
             start: 'Rozpocznij podróż w czasie',
@@ -902,9 +902,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Kliknij przycisk, żeby rozpocząć rundę',
+                tryAgain: 'Kliknij przycisk, żeby rozpocząć rundę od nowa',
+                continue: 'PKliknij przycisk, żeby kontynuować',
             },
             simonSays: {
                 failed: {
@@ -941,7 +941,7 @@ const strings = {
             skip: 'Pomiń',
             correctAnswers: 'poprawnych odpowiedzi',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Dobra robota!',
         },
         chapter: {
             infoSingular: {
@@ -972,8 +972,8 @@ const strings = {
         browserNotification: 'Browserul recomandat pentru acest concept este Chrome',
         howTo: 'Cum funcționează?',
         waitingScreen: {
-            submit: 'Adaugă nume',
-            inputPlaceholder: 'Write your name',
+            submit: 'Adaugă',
+            inputPlaceholder: 'Introdu numele aici',
         },
         journey: {
             start: 'Începe călătoria în timp',
@@ -1061,9 +1061,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Apasă pe o tastă pentru a începe runda',
+                tryAgain: 'Apasă pe o tastă pentru a începe runda din nou',
+                continue: 'Apasă pe o tastă pentru a continua',
             },
             simonSays: {
                 failed: {
@@ -1100,7 +1100,7 @@ const strings = {
             skip: 'Mergi mai departe',
             correctAnswers: 'răspunsuri corecte',
             playAudio: 'Pornește audio',
-            winRound: 'You win!',
+            winRound: 'Bună treabă!',
         },
         chapter: {
             infoSingular: {
@@ -1449,8 +1449,8 @@ const strings = {
         browserNotification: 'Il browser consigliato per questo concetto è Chrome',
         howTo: 'Come prepararsi',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Aggiungere',
+            inputPlaceholder: 'Inserisci il tuo nome qui',
         },
         journey: {
             start: 'Inizia il viaggio nel tempo',
@@ -1537,9 +1537,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Fare clic su un tasto per avviare il turno',
+                tryAgain: 'Fare clic su un tasto per ricominciare il turno',
+                continue: 'Fare clic su un tasto per continuare',
             },
             simonSays: {
                 failed: {
@@ -1576,7 +1576,7 @@ const strings = {
             skip: 'Salta',
             correctAnswers: 'risposte corrette',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Ben fatto!',
         },
         chapter: {
             infoSingular: {
@@ -1607,8 +1607,8 @@ const strings = {
         browserNotification: 'Рекомендуемый браузер - Chrome',
         howTo: 'Как подготовиться',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Добавить в',
+            inputPlaceholder: 'Введите свое имя здесь',
         },
         journey: {
             start: 'Начать путешествие во времени',
@@ -1696,9 +1696,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Нажмите на клавишу, чтобы начать раунд',
+                tryAgain: 'Нажмите на клавишу, чтобы начать раунд заново',
+                continue: 'Нажмите на клавишу, чтобы продолжить',
             },
             simonSays: {
                 failed: {
@@ -1735,7 +1735,7 @@ const strings = {
             skip: 'Пропустить',
             correctAnswers: 'верных ответов',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Отличная работа!',
         },
         chapter: {
             infoSingular: {
@@ -1766,8 +1766,8 @@ const strings = {
         browserNotification: 'Suosittelemme Chrome selaimen käyttöä tässä konseptissa',
         howTo: 'Miten valmistautua tehtävää varten',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Lisää',
+            inputPlaceholder: 'Kirjoita nimesi tähän',
         },
         journey: {
             start: 'Aloita aikamatka',
@@ -1855,9 +1855,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Aloita kierros napsauttamalla näppäintä',
+                tryAgain: 'Aloita kierros uudelleen napsauttamalla näppäintä',
+                continue: 'Jatka klikkaamalla näppäintä ',
             },
             simonSays: {
                 failed: {
@@ -1894,7 +1894,7 @@ const strings = {
             skip: 'Ohita',
             correctAnswers: 'oikeaa vastausta',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Hyvää työtä!',
         },
         chapter: {
             infoSingular: {
@@ -1925,8 +1925,8 @@ const strings = {
         browserNotification: 'Recommended browser for this concept is Chrome',
         howTo: 'How to guide',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Hozzáadás',
+            inputPlaceholder: 'Írd ide a neved',
         },
         journey: {
             start: 'Időutazás elkezdése',
@@ -1935,7 +1935,7 @@ const strings = {
             congrats: 'Gratulálunk!',
             bibleCards: {
                 title: 'Bible cards',
-                message: 'Now it is time to get your bible cards.',
+                message: 'Itt az idő, hogy megszerezzétek a bibliai kártyákat.',
             },
             completed: 'Befejezted',
             back: 'Vissza',
@@ -2053,7 +2053,7 @@ const strings = {
             skip: 'Átugrás',
             correctAnswers: 'correct answers',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Szép munka!',
         },
         chapter: {
             infoSingular: {
@@ -2084,8 +2084,8 @@ const strings = {
         browserNotification: 'Den anbefalede browser til dette koncept er Chrome',
         howTo: 'Hvordan man forbereder sig',
         waitingScreen: {
-            submit: 'Legg til',
-            inputPlaceholder: 'Write your name',
+            submit: 'Tilføj',
+            inputPlaceholder: 'Skriv dit navn her',
         },
         journey: {
             start: 'Start tidsrejsen',
@@ -2173,9 +2173,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Klik på en tast for at starte runden',
+                tryAgain: 'Klik på en tast for at starte runden igen',
+                continue: 'Klik på en tast for at fortsætte',
             },
             simonSays: {
                 failed: {
@@ -2212,7 +2212,7 @@ const strings = {
             skip: 'Skip',
             correctAnswers: 'rigtige svar',
             playAudio: 'Play audio',
-            winRound: 'You win!',
+            winRound: 'Godt gået!',
         },
         chapter: {
             infoSingular: {
