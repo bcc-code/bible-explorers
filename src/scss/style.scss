@@ -731,11 +731,9 @@ body.not-logged-in {
         }
     }
 
-    &.beta {
+    .group\/body:not(.admin) &.beta {
         display: none;
     }
-
-
 }
 
 .coming-soon {

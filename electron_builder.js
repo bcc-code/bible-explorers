@@ -13,6 +13,8 @@ const config = {
     },
     win: {
         target: 'nsis',
+        publisherName: 'BCC Media',
+        legalTrademarks: '(C) 2024 BCC Media',
     },
     mac: {
         category: 'public.app-category.game',
@@ -60,6 +62,12 @@ const config = {
         packageCategory: 'game',
     },
     publish: [
+        {
+            provider: 's3',
+            bucket: 'bccm-static',
+            path: 'explorers',
+            acl: null,
+        },
         {
             provider: 'github',
             owner: 'bcc-code',

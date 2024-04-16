@@ -8,8 +8,9 @@ const wpApiUrl = getWpApiUrl()
 const getBiexChapters = () => wpApiUrl + '/biex-chapters/get?lang=' + _lang.getLanguageCode()
 const getRoles = (personId) => wpApiUrl_production + '/roles/' + personId
 const saveAnswer = () => wpApiUrl + '/answer/save'
+const getAppDownloadLinks = () => wpApiUrl + '/app/download-links/get'
 
-export default { getBiexChapters, getRoles, saveAnswer }
+export default { getBiexChapters, getRoles, saveAnswer, getAppDownloadLinks }
 
 function getWpApiUrl() {
     if (window.location.protocol == 'biex:') {

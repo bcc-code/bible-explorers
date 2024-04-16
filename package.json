@@ -1,6 +1,6 @@
 {
   "name": "bible-explorers",
-  "version": "1.5.1",
+  "version": "1.5.3",
   "description": "App for Bible Explorers",
   "main": ".vite/build/main.js",
   "repository": {
@@ -18,7 +18,7 @@
     "publish": "electron-builder --config=electron_builder.js --publish always"
   },
   "author": "BCC Media",
-  "license": "GNU AGPLv3",
+  "license": "(C) 2024 BCC Media",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.21.0",
     "@microsoft/applicationinsights-web": "^2.8.3",
