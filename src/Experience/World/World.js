@@ -31,7 +31,8 @@ export default class World {
 
         // Wait for resources
         this.resources.on('ready', () => {
-            instance.chaptersData = instance.resources.api[_api.getBiexChapters()]
+            const personId = this.experience.auth0.userData ? this.experience.auth0.userData['https://login.bcc.no/claims/personId'] : ''
+            instance.chaptersData = instance.resources.api[_api.getBiexChapters(personId)]
 
             this.ageCategory = document.getElementById('app-age_category')
             this.chapterSelectWrapper = document.getElementById('chapter-select')
