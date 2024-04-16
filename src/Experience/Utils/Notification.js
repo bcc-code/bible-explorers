@@ -4,9 +4,6 @@ let notification = []
 
 export default class Notification {
     constructor(text, icon = '') {
-        this.experience = new Experience()
-        this.program = this.experience.world.program
-
         this.htmlEl = document.createElement('div')
         this.htmlEl.className = 'isolate fixed grid place-content-center inset-0'
         this.htmlEl.innerHTML = Notification.generateHtml(text)

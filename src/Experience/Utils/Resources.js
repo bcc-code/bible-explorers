@@ -87,8 +87,10 @@ export default class Resources extends EventEmitter {
 
             // loader.innerText = _s.status.fetching
 
-            resources.fetchApiThenCache(_api.getBiexChapters(), (json) => {
-                this.api[_api.getBiexChapters()] = json
+            const personId = this.experience.auth0.userData ? this.experience.auth0.userData['https://login.bcc.no/claims/personId'] : ''
+
+            resources.fetchApiThenCache(_api.getBiexChapters(personId), (json) => {
+                this.api[_api.getBiexChapters(personId)] = json
 
                 console.log('Loading complete!')
                 this.trigger('ready')

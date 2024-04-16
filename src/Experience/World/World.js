@@ -31,7 +31,8 @@ export default class World {
 
         // Wait for resources
         this.resources.on('ready', () => {
-            instance.chaptersData = instance.resources.api[_api.getBiexChapters()]
+            const personId = this.experience.auth0.userData ? this.experience.auth0.userData['https://login.bcc.no/claims/personId'] : ''
+            instance.chaptersData = instance.resources.api[_api.getBiexChapters(personId)]
 
             this.ageCategory = document.getElementById('app-age_category')
             this.chapterSelectWrapper = document.getElementById('chapter-select')
@@ -179,11 +180,12 @@ export default class World {
                         <div class="chapter-date">${chapter.date}</div>
                     </div>
                     <div class="chapter__offline">
-                        <button class="chapter__redownload button-cube !hidden">
-                            <svg><use href="#arrow-rotate-right-solid" fill="currentColor"></use></svg>
-                        </button>
+                        <span class="chapter__downloaded-quota hidden"></span>
                         <button class="chapter__download button-cube group-[.downloaded]:hidden">
                             <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                        </button>
+                        <button class="chapter__remove button-cube !hidden">
+                            <svg><use href="#remove-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                 </a>
@@ -200,6 +202,10 @@ export default class World {
                         <svg><use href="#check-solid" fill="currentColor"></use></svg>
                         <span>${_s.offline.availableOffline.title}</span>
                     </div>
+                    <div class="chapter__outdated">
+                        <svg><use href="#warning-solid" fill="currentColor"></use></svg>
+                        <span>${_s.offline.outdated}</span>
+                    </div>
                 </div>
             </li>`
         )
@@ -211,7 +217,9 @@ export default class World {
 
         instance.experience.interface.chaptersList.querySelector('ul').appendChild(chapterHtml)
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterBgImage)
+
         instance.offline.markChapterIfAvailableOffline(chapter)
+
         instance.setStatesTooltips()
     }
 
@@ -338,9 +346,9 @@ export default class World {
             })
         })
 
-        this.chapterSelectWrapper.querySelectorAll('.chapter__redownload').forEach(function (chapter) {
+        this.chapterSelectWrapper.querySelectorAll('.chapter__remove').forEach(function (chapter) {
             chapter.addEventListener('click', (event) => {
-                instance.redownloadChapter(chapter)
+                instance.removeDownload(chapter)
                 event.stopPropagation()
             })
         })
@@ -362,9 +370,9 @@ export default class World {
             placement: 'auto',
         })
 
-        tippy('.chapter__redownload', {
+        tippy('.chapter__remove', {
             theme: 'explorers',
-            content: _s.offline.update,
+            content: _s.offline.remove,
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'auto',
@@ -390,11 +398,6 @@ export default class World {
     }
 
     // Download
-
-    redownloadChapter(chapter) {
-        instance.removeDownload(chapter)
-        instance.downloadChapter(chapter)
-    }
 
     addClassToSelectedChapter(chapter) {
         instance.unselectAllChapters()
@@ -431,19 +434,15 @@ export default class World {
         chapterEl.classList.remove('failed')
         chapterEl.classList.add('downloading')
 
-        this.offline.downloadScreenTextures(selectedChapter)
-        this.offline.downloadEpisodes(chapterId, selectedChapter['episodes'])
+        await instance.offline.downloadAllVideos(chapterId)
     }
 
     removeDownload(chapter) {
         let chapterEl = chapter.closest('.chapter')
         const chapterId = chapterEl.getAttribute('data-id')
-        const categorySlug = chapterEl.getAttribute('data-slug')
-        const selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
-            return chapter.id == chapterId
-        })
 
-        selectedChapter['episodes'].forEach((episode) => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id))
+        instance.offline.deleteChapterFromIndexedDb(chapterId)
+
         chapterEl.classList.remove('downloaded')
     }
 

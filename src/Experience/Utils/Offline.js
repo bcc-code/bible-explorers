@@ -12,11 +12,12 @@ export default class Offline {
         offline = this
 
         offline.isOnline = false
-        offline.data = []
+
+        offline.allDownloadableVideos = []
         offline.downloaded = []
 
-        offline.textureVideos = []
-        offline.downloadedTextures = []
+        offline.sizeDownloaded = (chapterId) => offline.downloaded[chapterId].reduce((acc, v) => acc + v.size, 0)
+        offline.sizeToBeDownloaded = (chapterId) => offline.allDownloadableVideos[chapterId].reduce((acc, v) => acc + v.data.size, 0)
 
         if ('indexedDB' in window) {
             this.initialize()
@@ -93,73 +94,73 @@ export default class Offline {
         }
     }
 
-    downloadEpisodes(chapterId, episodes) {
-        let episodesData = []
+    markChapterIfAvailableOffline = async function (chapter) {
+        await offline.setChapterDownloadableVideos(chapter)
 
-        episodes.forEach((episode) => {
-            if (episodesData.map((e) => e.id).includes(episode.id)) return
+        offline.getDownloadedVideos(offline.allDownloadableVideos[chapter.id], async (downloadedEpisodes) => {
+            offline.downloaded[chapter.id] = downloadedEpisodes
 
-            episodesData.push({
-                id: episode.id,
-                data: {
-                    name: episode.type + '-' + episode.id,
-                    language: _lang.getLanguageCode(),
-                    quality: this.experience.settings.videoQuality,
-                },
-            })
+            const selectedChapter = document.querySelector('.chapter[data-id="' + chapter.id + '"]')
+
+            if (offline.downloaded[chapter.id].length != offline.allDownloadableVideos[chapter.id].length) {
+                selectedChapter.classList.add('loaded')
+                return
+            }
+
+            const latestVersion = await offline.checkAllVideosHaveLatestVersion(chapter.id)
+
+            selectedChapter.classList.add(latestVersion ? 'downloaded' : 'outdated')
+            selectedChapter.classList.add('loaded')
+        })
+    }
+
+    async setChapterDownloadableVideos(chapter) {
+        const episodes = chapter.episodes.map((e) => ({ type: e.type, id: e.id }))
+        const textures = offline.getTextureIdsForChapter(chapter).map((textureId) => ({ type: 'texture', id: textureId }))
+
+        offline.allDownloadableVideos[chapter.id] = episodes.concat(textures)
+
+        let promises = offline.allDownloadableVideos[chapter.id].map(async (video) => {
+            video.data = await offline.getVideoDataForDesiredQuality(video, chapter.id)
         })
 
-        offline.downloadFromWeb(chapterId, episodesData)
+        await Promise.all(promises)
     }
 
-    downloadFromWeb = function (chapterId, episodes) {
-        offline.getDownloadedEpisodes(
-            episodes.map((e) => e.data.name),
-            async (downloadedEpisodes) => {
-                offline.data[chapterId] = episodes
+    async downloadAllVideos(chapterId) {
+        if (offline.allDownloadableVideos[chapterId].length == offline.downloaded[chapterId].length) {
+            // The user wants to redownload the chapter
+            offline.downloaded[chapterId] = []
+        }
 
-                if (episodes.length == downloadedEpisodes.length) {
-                    // The user wants to redownload the chapter
-                    offline.downloaded[chapterId] = []
-                } else {
-                    // Continue interrupted download
-                    offline.downloaded[chapterId] = downloadedEpisodes
-                }
-
-                await offline.downloadEpisodesFromChapter(chapterId)
-            }
-        )
+        // Download or continue interrupted download
+        await offline.downloadVideosFromChapter(chapterId)
     }
 
-    downloadEpisodesFromChapter = async function (chapterId) {
-        let notDownloadedEpisodes = offline.getNotDownloadedEpisodes(offline.data[chapterId], offline.downloaded[chapterId])
-        const episodeUrls = await offline.getEpisodeDownloadUrls(notDownloadedEpisodes[0].id, chapterId)
+    downloadVideosFromChapter = async function (chapterId) {
+        let notDownloadedEpisodes = offline.getNotDownloadedVideos(chapterId)
 
-        if (episodeUrls) {
-            notDownloadedEpisodes[0].downloadUrl = episodeUrls.downloadUrl
-            notDownloadedEpisodes[0].data.version = episodeUrls.version
-
-            offline.startDownloading(chapterId, notDownloadedEpisodes[0])
+        if (notDownloadedEpisodes.length > 0) {
+            offline.downloadVideo(chapterId, notDownloadedEpisodes[0].data)
         }
     }
 
-    getNotDownloadedEpisodes = function (allEpisodes, downloadedEpisodes) {
-        return allEpisodes.filter((episode) => {
-            return !downloadedEpisodes.some((downloadedEpisodeName) => {
-                return episode.data.name === downloadedEpisodeName
+    getNotDownloadedVideos = function (chapterId) {
+        return offline.allDownloadableVideos[chapterId].filter((video) => {
+            return !offline.downloaded[chapterId].some((downloadedVideo) => {
+                return video.data.name === downloadedVideo.name
             })
         })
     }
 
-    getEpisodeDownloadUrls = async function (episodeId, chapterId) {
-        let locale = _lang.getLanguageCode()
-        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
-
+    getVideoDataForDesiredQuality = async function (video, chapterId) {
+        const locale = offline.getBtvSupportedLanguageCode()
         let episode = {}
         let allLanguagesVideos = []
 
         try {
-            episode = (await offline.getEpisodeData(episodeId)).episode
+            const episodeData = await offline.fetchEpisodeData(video.id)
+            episode = episodeData.episode
             allLanguagesVideos = episode.files
         } catch (e) {
             offline.setErrorMessage(chapterId)
@@ -169,129 +170,20 @@ export default class Offline {
         })
 
         if (!myLanguageVideos.length) {
-            _appInsights.trackException({
-                exception: 'No videos found',
-                chapterId: chapterId,
-                episodeId: episodeId,
-                language: locale,
-            })
-
-            // There was a problem downloading the episode
-            const chapter = document.querySelector('.chapter[data-id="' + chapterId + '"]')
-            chapter.classList.remove('downloading')
-            chapter.classList.add('failed')
-
             return
         }
 
-        const selectedQualityVideo = offline.getSelectedQualityVideo(myLanguageVideos)
-
-        return {
-            downloadUrl: selectedQualityVideo.url,
+        const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
             version: episode.assetVersion,
-        }
-    }
-
-    downloadScreenTextures = async function (chapter) {
-        offline.setTextureIdsForChapter(chapter)
-
-        if (!offline.textureVideos.length) return
-
-        // Start downloading textures
-        offline.startTextureDownload(0)
-    }
-
-    setTextureIdsForChapter = function (chapter) {
-        offline.textureVideos = []
-
-        if (chapter.lobby_video_loop) {
-            offline.textureVideos.push(chapter.lobby_video_loop)
-        }
-
-        chapter.program.forEach((checkpoint) => {
-            checkpoint.steps.forEach((step) => {
-                if (step.details.step_type == 'iris' && step.message.video) {
-                    offline.textureVideos.push(step.message.video)
-                }
-
-                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens.video) {
-                    offline.textureVideos.push(step.message_with_supporting_screens.video)
-                }
-
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
-                    offline.textureVideos.push(step.video_with_question.video)
-                }
-            })
+            language: _lang.getLanguageCode(),
+            name: `${video.type}-${video.id}`,
+            quality: offline.experience.settings.videoQuality,
         })
-    }
-
-    downloadScreenTexture = function (videoName, texture) {
-        var xhr = new XMLHttpRequest()
-        xhr.responseType = 'blob'
-
-        if (!texture.url) {
-            console.log('Texture ' + videoName + ' is not downloadable!')
-        }
-
-        xhr.open('GET', texture.url, true)
-        xhr.timeout = 86400000 // 24 hours
-        xhr.addEventListener('error', () => {
-            console.log('Texture ' + videoName + ' failed to download!')
-        })
-        xhr.addEventListener(
-            'load',
-            () => {
-                offline.onScreenTextureDownloadComplete(videoName, texture, xhr)
-            },
-            false
-        )
-        xhr.send()
-    }
-
-    onScreenTextureDownloadComplete = async function (videoName, texture, xhr) {
-        if (xhr.status === 200) {
-            const textureData = {
-                language: texture.audioLanguage,
-                name: 'texture-' + videoName,
-                quality: this.experience.settings.videoQuality,
-                version: texture.version,
-                video: xhr.response,
-            }
-
-            offline.putFileInDb(textureData)
-            offline.downloadedTextures.push(textureData.name)
-
-            if (offline.downloadedTextures.length < offline.textureVideos.length) {
-                // Next texture to download
-                offline.startTextureDownload(offline.downloadedTextures.length)
-            }
-        }
-    }
-
-    startTextureDownload = async function (index) {
-        const textureUrls = await offline.getTextureDownloadUrls(offline.textureVideos[index])
-        offline.downloadScreenTexture(offline.textureVideos[index], textureUrls)
-    }
-
-    getTextureDownloadUrls = async function (episodeId) {
-        let locale = _lang.getLanguageCode()
-        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
-
-        let episode = (await offline.getEpisodeData(episodeId)).episode
-        let allLanguagesVideos = episode.files
-
-        const myLanguageVideos = allLanguagesVideos.filter((file) => {
-            return file.audioLanguage == locale
-        })
-        if (!myLanguageVideos.length) return
-
-        const selectedQualityVideo = offline.getSelectedQualityVideo(myLanguageVideos)
-        selectedQualityVideo.version = episode.assetVersion
 
         return selectedQualityVideo
     }
 
-    getEpisodeData = async function (episodeId) {
+    fetchEpisodeData = async function (episodeId) {
         const response = await fetch('https://api.brunstad.tv/query', {
             method: 'POST',
             headers: {
@@ -319,6 +211,47 @@ export default class Offline {
         return episode.data
     }
 
+    checkAllVideosHaveLatestVersion = async function (chapterId) {
+        let staleEpisodes = []
+
+        offline.downloaded[chapterId].forEach(async (downloadedVideo) => {
+            const videoId = downloadedVideo.name.replace('episode-', '').replace('texture-', '')
+            const fetchedVideo = offline.allDownloadableVideos[chapterId].find((v) => v.id == videoId)
+
+            if (downloadedVideo.version != fetchedVideo.data.version) {
+                staleEpisodes.push(downloadedVideo)
+            }
+        })
+
+        return staleEpisodes.length == 0
+    }
+
+    getTextureIdsForChapter = function (chapter) {
+        const textureVideos = []
+
+        if (chapter.lobby_video_loop) {
+            textureVideos.push(chapter.lobby_video_loop)
+        }
+
+        chapter.program.forEach((checkpoint) => {
+            checkpoint.steps.forEach((step) => {
+                if (step.details.step_type == 'iris' && step.message.video) {
+                    textureVideos.push(step.message.video)
+                }
+
+                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens.video) {
+                    textureVideos.push(step.message_with_supporting_screens.video)
+                }
+
+                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
+                    textureVideos.push(step.video_with_question.video)
+                }
+            })
+        })
+
+        return textureVideos
+    }
+
     getSelectedQualityVideo = function (arr) {
         switch (this.experience.settings.videoQuality) {
             case 'low':
@@ -332,10 +265,20 @@ export default class Offline {
         }
     }
 
-    startDownloading = function (chapterId, currentEpisode) {
+    getBtvSupportedLanguageCode() {
+        let locale = _lang.getLanguageCode()
+        return 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
+    }
+
+    downloadVideo = function (chapterId, video) {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
-        xhr.open('GET', currentEpisode.downloadUrl, true)
+
+        if (!video.url) {
+            console.log('Video ' + video.id + ' is not downloadable!')
+        }
+
+        xhr.open('GET', video.url, true)
         xhr.timeout = 86400000 // 24 hours
         xhr.addEventListener('progress', (event) => {
             offline.onVideoDownloadProgress(chapterId, event)
@@ -349,7 +292,7 @@ export default class Offline {
         xhr.addEventListener(
             'load',
             () => {
-                offline.onVideoDownloadComplete(chapterId, currentEpisode, xhr)
+                offline.onEpisodeDownloadComplete(chapterId, video, xhr)
             },
             false
         )
@@ -358,13 +301,14 @@ export default class Offline {
 
     onVideoDownloadProgress = function (chapterId, e) {
         if (e.lengthComputable) {
-            var percentage = (offline.downloaded[chapterId].length * 100 + (e.loaded / e.total) * 100) / offline.data[chapterId].length
-
+            var percentage = ((offline.sizeDownloaded(chapterId) + e.loaded) * 100) / offline.sizeToBeDownloaded(chapterId)
             let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
+
             if (chapterEl) {
                 chapterEl.classList.add('downloading')
                 chapterEl.querySelector('.downloading-label').innerText = parseFloat(percentage).toFixed() + '%'
                 chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
+                chapterEl.querySelector('.chapter__downloaded-quota').innerText = `${formatBytes(offline.sizeDownloaded(chapterId) + e.loaded, 2)} / ${formatBytes(offline.sizeToBeDownloaded(chapterId), 2)}`
             }
         }
     }
@@ -388,14 +332,17 @@ export default class Offline {
         }
     }
 
-    onVideoDownloadComplete = async function (chapterId, currentEpisode, xhr) {
+    onEpisodeDownloadComplete = async function (chapterId, video, xhr) {
         if (xhr.status === 200) {
-            currentEpisode.data.video = xhr.response
-            offline.putFileInDb(currentEpisode.data)
+            video.video = xhr.response
+            offline.putFileInDb(video)
 
-            offline.downloaded[chapterId].push(currentEpisode.data.name)
+            offline.downloaded[chapterId].push(video)
 
-            if (offline.data[chapterId].length == offline.downloaded[chapterId].length) {
+            console.log(offline.allDownloadableVideos[chapterId].length, offline.downloaded[chapterId].length)
+
+            if (offline.allDownloadableVideos[chapterId].length == offline.downloaded[chapterId].length) {
+                // All videos downloaded
                 let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
                 chapterEl.classList.remove('downloading')
                 chapterEl.classList.add('downloaded')
@@ -408,13 +355,13 @@ export default class Offline {
                 _appInsights.trackEvent({
                     name: 'Chapter downloaded',
                     properties: {
-                        language: currentEpisode.data.language,
-                        quality: currentEpisode.data.quality,
+                        language: video.language,
+                        quality: video.quality,
                     },
                 })
             } else {
                 // Next episode to download
-                await offline.downloadEpisodesFromChapter(chapterId)
+                await offline.downloadVideosFromChapter(chapterId)
             }
         }
     }
@@ -425,10 +372,13 @@ export default class Offline {
         offline.objStore.put(data, data.name)
     }
 
-    deleteEpisodeFromDb = function (videoName) {
+    deleteChapterFromIndexedDb = function (chapterId) {
         offline.transaction = offline.db.transaction([offline.store], 'readwrite')
         offline.objStore = offline.transaction.objectStore(offline.store)
-        offline.objStore.delete(videoName)
+
+        offline.downloaded[chapterId].forEach((video) => {
+            offline.objStore.delete(video.name)
+        })
     }
 
     loadVideoFromIndexedDb = function (videoName, callback, fallback) {
@@ -462,37 +412,6 @@ export default class Offline {
         }
     }
 
-    loadScreenTextureFromIndexedDb = function (videoName, firstCase, secondCase, callback) {
-        if (!offline.db) {
-            secondCase(videoName, callback)
-            return
-        }
-
-        offline.transaction = offline.db.transaction([offline.store], 'readonly')
-        offline.objStore = offline.transaction.objectStore(offline.store)
-        const getItem = offline.objStore.get(videoName)
-
-        getItem.onsuccess = function () {
-            if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
-                const item = getItem.result
-
-                // Load video blob as array buffer
-                var r = new FileReader()
-
-                r.onload = function (e) {
-                    const blob = offline.getArrayBufferBlob(e)
-                    const videoUrl = URL.createObjectURL(blob)
-
-                    firstCase(videoName, videoUrl, callback)
-                }
-
-                r.readAsArrayBuffer(item.video)
-            } else {
-                secondCase(videoName, callback)
-            }
-        }
-    }
-
     getArrayBufferBlob(e) {
         const contents = e.target.result
         const uint8Array = new Uint8Array(contents)
@@ -500,45 +419,15 @@ export default class Offline {
         return new Blob([arrayBuffer])
     }
 
-    markChapterIfAvailableOffline = async function (chapter) {
-        const episodes = chapter.episodes.map((e) => e.type + '-' + e.id)
-        offline.setTextureIdsForChapter(chapter)
-        const allDownloadableEpisodes = episodes.concat(offline.textureVideos.map((textureId) => 'texture-' + textureId))
-
-        offline.getDownloadedEpisodes(allDownloadableEpisodes, async (downloadedEpisodes) => {
-            if (downloadedEpisodes.length == chapter.episodes.length + offline.textureVideos.length) {
-                const latestVersion = await offline.checkAllVideosHaveLatestVersion(chapter, downloadedEpisodes)
-
-                const selectedChapter = document.querySelector('.chapter[data-id="' + chapter.id + '"]')
-                selectedChapter.classList.add(latestVersion ? 'downloaded' : 'outdated')
-            }
-        })
-    }
-
-    checkAllVideosHaveLatestVersion = async function (chapterId, downloadedEpisodes) {
-        let staleEpisodes = []
-
-        downloadedEpisodes.forEach(async (downloadedEpisode) => {
-            const episodeId = downloadedEpisode.name.replace('episode-', '').replace('texture-', '')
-            const episodeUrls = await offline.getEpisodeDownloadUrls(episodeId, chapterId)
-
-            if (downloadedEpisode.version != episodeUrls.version) {
-                staleEpisodes.push(downloadedEpisode)
-            }
-        })
-
-        return staleEpisodes.length == 0
-    }
-
-    getDownloadedEpisodes = function (episodes, callback = () => {}) {
+    getDownloadedVideos = function (episodes, callback = () => {}) {
         if (!offline.db) return
         offline.transaction = offline.db.transaction([offline.store], 'readonly')
         offline.objStore = offline.transaction.objectStore(offline.store)
 
         let downloadedEpisodes = []
 
-        episodes.forEach((id, index) => {
-            var getItem = offline.objStore.get(id)
+        episodes.forEach((episode, index) => {
+            var getItem = offline.objStore.get(episode.type + '-' + episode.id)
 
             getItem.onsuccess = function () {
                 if (getItem.result && getItem.result.language == _lang.getLanguageCode()) {
@@ -582,7 +471,7 @@ function formatBytes(bytes, decimals = 0) {
 
     const k = 1024
     const dm = decimals < 0 ? 0 : decimals
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
 
     const i = Math.floor(Math.log(bytes) / Math.log(k))
 
