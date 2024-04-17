@@ -82,7 +82,7 @@ export default class World {
             placement: 'bottom',
         })
 
-        this.setLinkToDownloadApp()
+        // this.setLinkToDownloadApp()
         this.buttons.downloadApp.addEventListener('click', this.downloadApp)
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
