@@ -229,7 +229,7 @@ export default class Program {
         if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
             setTimeout(function () {
                 instance.waitingScreen.show()
-            }, 1000)
+            }, 100)
 
             return
         }
