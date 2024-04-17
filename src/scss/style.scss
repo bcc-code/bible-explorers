@@ -487,6 +487,7 @@ body.not-logged-in {
 
 #main-screen .mask-image {
     mask-image: url('../../static/frames/Screen_1_mask.png');
+    overflow: hidden;
 }
 
 .task-container_box .overlay {

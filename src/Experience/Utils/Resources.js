@@ -198,7 +198,6 @@ export default class Resources extends EventEmitter {
         videoEl.setAttribute('id', videoName)
 
         const containerWrapper = document.getElementById(containerId)
-        containerWrapper.innerHTML = ''
         containerWrapper.appendChild(videoEl)
     }
 

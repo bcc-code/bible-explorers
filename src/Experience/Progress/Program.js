@@ -29,12 +29,16 @@ export default class Program {
         instance.experience = new Experience()
         instance.resources = instance.experience.resources
         instance.world = instance.experience.world
+        instance.offline = instance.world.offline
         instance.programData = instance.world.selectedChapter.program
         instance.audio = instance.world.audio
         instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
+
         instance.video = new Video()
+        instance.videosLoaded = 0
+
         instance.codeUnlock = new CodeUnlock()
         instance.pictureAndCode = new HiddenItems()
         instance.questionAndCode = new QuestionAndCode()
@@ -79,9 +83,17 @@ export default class Program {
         instance.clickCallback = () => {}
         instance.canClick = () => !document.body.classList.contains('freeze') && !document.body.classList.contains('modal-on') && !document.body.classList.contains('camera-is-moving')
 
-        instance.startInteractivity()
         instance.addEventListeners()
-        instance.stepToggled()
+        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyOnAllVideosLoaded)
+    }
+
+    startJourneyOnAllVideosLoaded() {
+        instance.videosLoaded++
+
+        if (instance.videosLoaded == instance.offline.allDownloadableVideos[instance.world.selectedChapter.id].length) {
+            instance.startInteractivity()
+            instance.stepToggled()
+        }
     }
 
     addEventListeners() {
@@ -260,6 +272,7 @@ export default class Program {
         instance.experience.navigation.next.removeEventListener('click', instance.nextStep)
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.disablePrevBtnOnStart)
+        document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyOnAllVideosLoaded)
     }
 
     destroy() {
