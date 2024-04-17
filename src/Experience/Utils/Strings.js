@@ -151,6 +151,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Well done!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Download Bible Explorers desktop app',
+                deviceTypeLabel: 'Choose your device type',
+                infoLabel: 'To find which Mac version applies to you, open “Apple menu ” > “About This Mac”',
+                infoText1: 'If it shows an item labeled “Chip” followed by chip name, it is “Mac with Apple silicon”.',
+                infoText2: 'If it shows an item labeled “Processor” followed by processor name, it is “Intel-based Mac”.',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -315,6 +324,15 @@ const strings = {
             playAudio: 'Spill lydspor',
             winRound: 'Bra jobba!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Last ned Bible Explorers desktop app',
+                deviceTypeLabel: 'Velg enhetstype',
+                infoLabel: 'For å finne hvilken Mac-versjon som gjelder for deg, åpne "Apple-menyen " > "Om denne Macen"”',
+                infoText1: 'Hvis den viser et element merket "Chip" etterfulgt av brikkenavn, er det "Mac with Apple silicon”.',
+                infoText2: 'Hvis den viser et element merket "Processor" etterfulgt av prosessornavn, er det "Intel-based Mac".',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -385,7 +403,7 @@ const strings = {
                 high: 'Hoch',
             },
             language: 'Sprache',
-            downloadApp: 'Download the app',
+            downloadApp: 'App herunterladen',
             backgroundMusic: 'Hintergrundmusik',
             fullScreenMode: 'Vollbildmodus',
             on: 'An',
@@ -476,6 +494,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'You win!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Bible Explorers Desktop-App herunterladen',
+                deviceTypeLabel: 'Wähle deinen Gerätetyp',
+                infoLabel: 'Um herauszufinden, welche Mac-Version für dich zutrifft, öffne "Apple-Menü "> "Über diesen Mac"',
+                infoText1: 'Wenn ein Eintrag mit der Bezeichnung "Chip" - gefolgt vom Chipnamen - angezeigt wird, handelt es sich um “Mac with Apple silicon”.',
+                infoText2: 'Wenn ein Eintrag mit der Bezeichnung "Processor" - gefolgt vom Prozessornamen - angezeigt wird, handelt es sich um einen "Intel-based Mac".',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'Video',
@@ -546,7 +573,7 @@ const strings = {
                 high: 'Hoog',
             },
             language: 'Taal',
-            downloadApp: 'Download the app',
+            downloadApp: 'Download de app',
             backgroundMusic: 'Achtergrondmuziek',
             fullScreenMode: 'Volledig scherm',
             on: 'Aan',
@@ -637,6 +664,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Goed gedaan!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Download de Bible Explorers desktop app',
+                deviceTypeLabel: 'Kies je type device',
+                infoLabel: 'Om uit te vinden welk type Mac je hebt, open "Apple menu ">"Over deze Mac"',
+                infoText1: 'Als er een item staat, aangeduid met "Chip", gevolgd door de chip naam, dan is het een "Mac with Apple Silicon" ',
+                infoText2: 'Als er een item staat, aangeduid met "Processor", gevolgd door de processor naam, dan is het "Intel-based Mac"',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -703,7 +739,7 @@ const strings = {
                 high: 'Haute',
             },
             language: 'Langue',
-            downloadApp: 'Download the app',
+            downloadApp: `Téléchargez l'application`,
             backgroundMusic: 'Musique de fond',
             fullScreenMode: 'Mode plein écran',
             on: 'On',
@@ -794,6 +830,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Bravo !',
         },
+        modal: {
+            downloadApp: {
+                title: `Téléchargez l’application bureautique Bible Explorers`,
+                deviceTypeLabel: `Choisissez votre type d'appareil`,
+                infoLabel: `Pour savoir quelle version de Mac s'applique à vous, ouvrez « Menu Apple  » > « À propos de ce Mac »`,
+                infoText1: `If it shows an item labeled “Chip” followed by chip name, it is “Mac with Apple silicon”.`,
+                infoText2: `S'il affiche un élément intitulé "Processor" suivi du nom du processeur, il s'agit d'un "Intel-based Mac".`,
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'vidéo',
@@ -864,7 +909,7 @@ const strings = {
                 high: 'Wysoka',
             },
             language: 'Język',
-            downloadApp: 'Download the app',
+            downloadApp: 'Pobierz aplikację',
             backgroundMusic: 'Muzyka w tle',
             fullScreenMode: 'Tryb pełnoekranowy',
             on: 'On',
@@ -955,6 +1000,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Dobra robota!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Pobierz aplikację Bible Explorers na komputer',
+                deviceTypeLabel: 'Wybierz typ swojego urządzenia',
+                infoLabel: 'Aby dowiedzieć się, która wersja komputera Mac występuje na twoim urządzeniu, otwórz "Apple menu" > "Informacje o tym Macu"',
+                infoText1: 'Jeśli pokazuje się element oznaczony "Chip", po którym następuje nazwa chipa, jest to "Mac with Apple silicon".',
+                infoText2: 'Jeśli pojawi się pozycja oznaczona "Processor", a po niej nazwa procesora, oznacza to, że jest to "Intel-based Mac".',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'filmik',
@@ -1025,7 +1079,7 @@ const strings = {
                 high: 'Înalt',
             },
             language: 'Limbă',
-            downloadApp: 'Download the app',
+            downloadApp: 'Descarcă aplicația',
             backgroundMusic: 'Muzică de fundal',
             fullScreenMode: 'Pe tot ecranul',
             on: 'On',
@@ -1116,6 +1170,15 @@ const strings = {
             playAudio: 'Pornește audio',
             winRound: 'Bună treabă!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Descarcă aplicația Bible Explorers pentru desktop',
+                deviceTypeLabel: 'Alege sistemul de operare',
+                infoLabel: 'Pentru a afla ce versiune Mac ți se aplică, deschide „meniul Apple ” > „Despre acest Mac”',
+                infoText1: 'Dacă apare un element intitulat „Chip” urmat de numele chipului, este „Mac with Apple silicon”.',
+                infoText2: 'Dacă apare un element intitulat „Processor” urmat de numele procesorului, este „Intel-based Mac”.',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'film',
@@ -1186,7 +1249,7 @@ const strings = {
                 high: 'Alta',
             },
             language: 'Idioma',
-            downloadApp: 'Download the app',
+            downloadApp: 'Descargar la aplicación',
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -1277,6 +1340,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'You win!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Descarga la aplicación para ordenador',
+                deviceTypeLabel: 'Elija su tipo de dispositivo',
+                infoLabel: 'Para saber qué versión de Mac es la tuya, abre "Menú Apple " > "Acerca de este Mac"',
+                infoText1: 'Si aparece un ítem con la etiqueta "Chip" y a continuación el nombre del chip, se trata de un "Mac with Apple silicon"',
+                infoText2: 'Si aparece un ítem con la etiqueta "Processor" y a continuación el nombre del procesador, se trata de un "Intel-based Mac".',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -1347,7 +1419,7 @@ const strings = {
                 high: 'Alto',
             },
             language: 'Idioma',
-            downloadApp: 'Download the app',
+            downloadApp: 'Baixe o aplicativo',
             backgroundMusic: 'Musica de fundo',
             fullScreenMode: 'Modo tela cheia',
             on: 'On',
@@ -1438,6 +1510,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'You win!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Baixe o aplicativo Bible Explorers para desktop',
+                deviceTypeLabel: 'Escolha o tipo do seu dispositivo',
+                infoLabel: 'Para descobrir qual versão do Mac se aplica a você, abra “Menu Apple ” > “Sobre este Mac”',
+                infoText1: 'Se mostrar um item denominado “Chip” seguido do nome do chip, é “Mac com silício Apple”.',
+                infoText2: 'Se mostrar um item denominado “Processador” seguido do nome do processador, é “Mac baseado em Intel”.',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'vídeo',
@@ -1508,7 +1589,7 @@ const strings = {
                 high: 'Alta',
             },
             language: 'Lingua',
-            downloadApp: 'Download the app',
+            downloadApp: `Scaricare l'app`,
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -1596,6 +1677,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Ben fatto!',
         },
+        modal: {
+            downloadApp: {
+                title: `Scarica l'applicazione desktop Bible Explorers`,
+                deviceTypeLabel: 'Seleziona il tipo di dispositivo',
+                infoLabel: 'Per sapere quale versione del Mac è applicabile, aprire il "menu Apple " > "Informazioni su questo Mac"',
+                infoText1: 'Se viene visualizzata una voce etichettata "Chip" seguita dal nome del chip, si tratta di "Mac with Apple silicon".',
+                infoText2: 'Se viene visualizzata una voce "Processor" seguita dal nome del processore, si tratta di un “Intel-based Mac”.',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -1666,7 +1756,7 @@ const strings = {
                 high: 'Высокое',
             },
             language: 'Язык',
-            downloadApp: 'Download the app',
+            downloadApp: 'Воспроизвести аудио',
             backgroundMusic: 'Фоновая музыка',
             fullScreenMode: 'Полноэкранный режим',
             on: 'Вкл.',
@@ -1757,6 +1847,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Отличная работа!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Загрузите десктоп-приложение Bible Explorers',
+                deviceTypeLabel: 'Выберите тип устройства',
+                infoLabel: 'Чтобы узнать версю Mac, откройте «Apple меню» > «Об этом Mac»',
+                infoText1: 'Если он показывает элемент с надписью «Chip», за которым следует название чипа, это «Mac with Apple Silicon».',
+                infoText2: 'Если отображается пункт«Processor», за которым следует название процессора, это «Intel-based Mac».',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'Видео',
@@ -1827,7 +1926,7 @@ const strings = {
                 high: 'Korkea',
             },
             language: 'Kieli',
-            downloadApp: 'Download the app',
+            downloadApp: 'Lataa sovellus',
             backgroundMusic: 'Taustamusiikki',
             fullScreenMode: 'Koko näytön tila',
             on: 'Päälle',
@@ -1918,6 +2017,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Hyvää työtä!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Lataa Bible Explorers -työpöytäsovellus',
+                deviceTypeLabel: 'Valitse laitteen tyyppi',
+                infoLabel: 'Voit selvittää, mikä Mac-versio koskee sinua, avaamalla "Apple-valikko " > "Tietoja tästä Macista".',
+                infoText1: 'Jos näytössä näkyy kohta "Järjestelmäpiiri", jota seuraa piirin nimi, se on "Mac with Apple silicon".',
+                infoText2: 'Jos näyttöön tulee kohta "Prosessori"ja sen jälkeen prosessorin nimi, kyseessä on "Intel-based Mac".',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -1988,7 +2096,7 @@ const strings = {
                 high: 'Magas',
             },
             language: 'Nyelv',
-            downloadApp: 'Download the app',
+            downloadApp: 'App letöltése',
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -2079,6 +2187,15 @@ const strings = {
             playAudio: 'Play audio',
             winRound: 'Szép munka!',
         },
+        modal: {
+            downloadApp: {
+                title: 'Bible Explorers asztali alkalmazás letöltése',
+                deviceTypeLabel: 'Válaszd ki a készülék típusát',
+                infoLabel: 'Az adott Mac-verzió megtalálásához nyisd meg az "Apple menü  "> "Erről a Mac-ről" menüpontját',
+                infoText1: 'Ha egy "Chip" feliratú elem jelenik meg, amelyet a chip neve követ, akkor az "Mac with Apple silicon".',
+                infoText2: 'Ha megjelenik egy " Processor " feliratú elem, amelyet a processzor neve követ, akkor az " Intel-based Mac ".',
+            },
+        },
         chapter: {
             infoSingular: {
                 video: 'video',
@@ -2149,7 +2266,7 @@ const strings = {
                 high: 'Høj',
             },
             language: 'Sprog',
-            downloadApp: 'Download the app',
+            downloadApp: 'Download appen',
             backgroundMusic: 'Baggrundsmusik',
             fullScreenMode: 'Fuldskærmstilstand',
             on: 'On',
@@ -2239,6 +2356,15 @@ const strings = {
             correctAnswers: 'rigtige svar',
             playAudio: 'Play audio',
             winRound: 'Godt gået!',
+        },
+        modal: {
+            downloadApp: {
+                title: 'Download Bible Explorers desktop-app',
+                deviceTypeLabel: 'Vælg din enhedstype',
+                infoLabel: 'For at finde ud af, hvilken Mac-version der gælder for dig, skal du åbne "Apple-menuen " > "Om denne Mac"',
+                infoText1: 'Hvis den viser et element mærket "Chip" efterfulgt af chipnavn, er det "Mac with Apple silicon".',
+                infoText2: 'Hvis den viser et element mærket "Processor" efterfulgt af processornavn, er det "Intel-based Mac".',
+            },
         },
         chapter: {
             infoSingular: {

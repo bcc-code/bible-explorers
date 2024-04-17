@@ -49,6 +49,8 @@ export default class World {
             this.audio = new Audio()
         })
 
+        this.setDownloadModalHTML()
+
         this.placeholderChapterData()
         this.chapterProgress = () => 0
 
@@ -57,11 +59,9 @@ export default class World {
         // Chapters
         this.chaptersData = []
 
-        this.downloadModal = document.querySelector('#download-modal')
         this.buttons = {
             // contact: document.querySelector('[aria-label="Contact"]'),
             openDownloadModal: document.querySelector('#download-app'),
-            downloadModalClose: this.downloadModal.querySelector('.modal-close'),
             home: document.querySelector('#home-button'),
             guide: document.querySelector('#guide-button'),
             startChapter: document.querySelector('#start-chapter'),
@@ -84,11 +84,8 @@ export default class World {
             placement: 'bottom',
         })
 
-        this.setLinksToDownloadModal()
         this.buttons.openDownloadModal.addEventListener('click', this.openDownloadModal)
-        this.buttons.downloadModalClose.addEventListener('click', () => {
-            this.downloadModal.close()
-        })
+
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
         this.buttons.startChapter.addEventListener('click', this.startChapter)
@@ -688,13 +685,37 @@ export default class World {
         localStorage.removeItem('answers-theme-' + instance.selectedChapter.id)
     }
 
+    setDownloadModalHTML() {
+        instance.downloadModal = _gl.elementFromHtml(`
+        <dialog id="download-modal" class="modal">
+            <div class="modal-container">
+                <h2 class="modal-heading">${_s.modal.downloadApp.title}</h2>
+                <p>${_s.modal.downloadApp.deviceTypeLabel}</p>
+                <ul class="device-type-available"></ul>
+                <p>${_s.modal.downloadApp.infoLabel}</p>
+                <ul>
+                    <li>${_s.modal.downloadApp.infoText1}</li>
+                    <li>${_s.modal.downloadApp.infoText2}</li>
+                </ul>
+            </div>
+            <button class="button-cube modal-close">
+                <svg><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+            </button>
+        </dialog>`)
+
+        document.querySelector('#app').append(instance.downloadModal)
+
+        instance.closeDownloadModal()
+        instance.setLinksToDownloadModal()
+    }
+
     setLinksToDownloadModal() {
         fetch(_api.getAppDownloadLinks()).then(function (response) {
             response.json().then(function (apiData) {
-                instance.downloadModal.querySelector('ul.mac').appendChild(_gl.elementFromHtml(`<li><a href="${apiData['mac']['x64']}">x64 - Mac with Intel CPU (produced before 2021)</a></li>`))
-                instance.downloadModal.querySelector('ul.mac').appendChild(_gl.elementFromHtml(`<li><a href="${apiData['mac']['arm64']}">arm64 - newer Mac (M1, M2, M3, ...)</a></li>`))
-
-                instance.downloadModal.querySelector('ul.windows').appendChild(_gl.elementFromHtml(`<li><a href="${apiData['windows']['exe']}">exe</a></li>`))
+                const ul = instance.downloadModal.querySelector('.device-type-available')
+                ul.appendChild(_gl.elementFromHtml(`<li><a href="${apiData['windows']['exe']}">Windows</a></li>`))
+                ul.appendChild(_gl.elementFromHtml(`<li><a href="${apiData['mac']['x64']}">Mac with Apple silicon</a></li>`))
+                ul.appendChild(_gl.elementFromHtml(`<li><a href="${apiData['mac']['arm64']}">Intel-based Mac</a></li>`))
             })
         })
     }
@@ -709,6 +730,14 @@ export default class World {
             properties: {
                 language: _lang.getLanguageCode(),
             },
+        })
+    }
+
+    closeDownloadModal() {
+        const closeModal = instance.downloadModal.querySelector('.modal-close')
+
+        closeModal.addEventListener('click', () => {
+            instance.downloadModal.close()
         })
     }
 
