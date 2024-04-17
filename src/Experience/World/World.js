@@ -70,7 +70,7 @@ export default class World {
 
         tippy(this.buttons.openDownloadModal, {
             theme: 'explorers',
-            content: _s.settings.downloadApp,
+            content: _s.offline.downloadApp.title,
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'bottom',
@@ -689,16 +689,16 @@ export default class World {
         instance.downloadModal = _gl.elementFromHtml(`
         <dialog id="download-modal" class="modal">
             <div class="modal-container">
-                <h2 class="modal-heading">${_s.modal.downloadApp.title}</h2>
-                <p class="text-center">${_s.modal.downloadApp.deviceTypeLabel}</p>
+                <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
+                <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
                 <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
-                <p>${_s.modal.downloadApp.infoLabel}</p>
+                <p>${_s.offline.downloadApp.infoLabel}</p>
                 <ul>
-                    <li>${_s.modal.downloadApp.infoText1}</li>
-                    <li>${_s.modal.downloadApp.infoText2}</li>
+                    <li>${_s.offline.downloadApp.infoText1}</li>
+                    <li>${_s.offline.downloadApp.infoText2}</li>
                 </ul>
                 <div class="modal-actions">
-                    <button class="modal-close">Close</button>
+                    <button class="modal-close">${_s.offline.downloadApp.close}</button>
                 </div>
             </div>
         </dialog>`)
