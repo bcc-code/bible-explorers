@@ -14,7 +14,7 @@ export default { getBiexChapters, getRoles, saveAnswer, getAppDownloadLinks }
 
 function getWpApiUrl() {
     if (window.location.protocol == 'biex:') {
-        return wpApiUrl_staging
+        return wpApiUrl_production
     }
 
     switch (window.location.hostname) {

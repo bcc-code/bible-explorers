@@ -62,12 +62,12 @@ const config = {
         packageCategory: 'game',
     },
     publish: [
-        {
-            provider: 's3',
-            bucket: 'bccm-static',
-            path: 'explorers',
-            acl: null,
-        },
+        // {
+        //     provider: 's3',
+        //     bucket: 'bccm-static',
+        //     path: 'explorers',
+        //     acl: null,
+        // },
         {
             provider: 'github',
             owner: 'bcc-code',
