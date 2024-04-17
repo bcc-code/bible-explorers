@@ -120,11 +120,7 @@ export default class Offline {
 
         offline.allDownloadableVideos[chapter.id] = episodes.concat(textures)
 
-        let promises = offline.allDownloadableVideos[chapter.id].map(async (video) => {
-            video.data = await offline.getVideoDataForDesiredQuality(video, chapter.id)
-        })
-
-        await Promise.all(promises)
+        await offline.setVideoDataForDesiredQuality(chapter.id)
     }
 
     async downloadAllVideos(chapterId) {
@@ -153,57 +149,74 @@ export default class Offline {
         })
     }
 
-    getVideoDataForDesiredQuality = async function (video, chapterId) {
+    setVideoDataForDesiredQuality = async function (chapterId) {
         const locale = offline.getBtvSupportedLanguageCode()
-        let episode = {}
-        let allLanguagesVideos = []
 
         try {
-            const episodeData = await offline.fetchEpisodeData(video.id)
-            episode = episodeData.episode
-            allLanguagesVideos = episode.files
+            const videosData = await offline.fetchVideosData(chapterId)
+            let selectedQualityVideo = []
+
+            offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
+                const video = videosData[`episode${index + 1}`]
+
+                const myLanguageVideos = video.files.filter((file) => {
+                    return file.audioLanguage == locale
+                })
+
+                if (!myLanguageVideos.length) {
+                    return
+                }
+
+                selectedQualityVideo.push(
+                    Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
+                        version: video.assetVersion,
+                        language: _lang.getLanguageCode(),
+                        name: `${episode.type}-${episode.id}`,
+                        quality: offline.experience.settings.videoQuality,
+                    })
+                )
+
+                offline.allDownloadableVideos[chapterId][index].data = selectedQualityVideo
+            })
         } catch (e) {
             offline.setErrorMessage(chapterId)
         }
-        const myLanguageVideos = allLanguagesVideos.filter((file) => {
-            return file.audioLanguage == locale
-        })
-
-        if (!myLanguageVideos.length) {
-            return
-        }
-
-        const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
-            version: episode.assetVersion,
-            language: _lang.getLanguageCode(),
-            name: `${video.type}-${video.id}`,
-            quality: offline.experience.settings.videoQuality,
-        })
-
-        return selectedQualityVideo
     }
 
-    fetchEpisodeData = async function (episodeId) {
+    fetchVideosData = async function (chapterId) {
+        const fragment = `fragment episodeDetail on Episode {
+            id
+            assetVersion
+            files {
+                id
+                audioLanguage
+                size
+                resolution
+                url
+                fileName
+            }
+        }`
+
+        let query = ``
+
+        offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
+            query += `
+                episode${index + 1}: episode(id: "${episode.id}") {
+                    ...episodeDetail
+                }
+            `
+        })
+
         const response = await fetch('https://api.brunstad.tv/query', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                query: `query {
-                    episode(id: "${episodeId}") {
-                        id
-                        assetVersion
-                        files {
-                            id
-                            audioLanguage
-                            size
-                            resolution
-                            url
-                            fileName
-                        }
-                    }
-                }`,
+                query: `
+                    ${fragment}
+                    { ${query} }
+                `,
             }),
         })
 
