@@ -1259,15 +1259,8 @@ $themes: (
         width: 65vw;
         background-image: url('../../static/frames/Quiz_window_v02.png');
         background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 974/529;
+        background-size: 100% 100%;
         padding: 6%;
-    }
-
-    &-close {
-        position: absolute;
-        right: 3%;
-        top: 5%;
     }
 
     &-heading {
@@ -1276,6 +1269,38 @@ $themes: (
         margin-bottom: 2%;
         text-align: center;
     }
+
+    &-actions {
+        position: absolute;
+        inset: 0;
+        background-size: 100% 100%;
+        background-image: url('../../static/interface/Quiz_button_active_v02.png');
+        background-repeat: no-repeat;
+        pointer-events: none;
+
+        button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 1.5%;
+            height: 14%;
+            width: 22%;
+            padding-inline: 1%;
+            pointer-events: auto;
+            font-size: var(--font-size-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4%;
+        }
+
+        &:hover {
+            background-image: url('../../static/interface/Quiz_button_action_v02.png');
+        }
+    }
+
+
 
 }
 
@@ -1293,7 +1318,7 @@ $themes: (
 
     ul {
         padding-left: 24px;
-        margin-bottom: 5%;
+        margin-bottom: 10%;
 
         a:hover {
             color: var(--clr-secondary);
@@ -1304,8 +1329,24 @@ $themes: (
             font-size: var(--font-size-text);
         }
 
-        &:last-of-type {
-            margin-bottom: 0;
+    }
+
+    .button-cube-wider {
+        height: calc(var(--button-height) * 2.25);
+        font-size: var(--font-size-text);
+        flex-flow: column;
+        background-size: 100% 100%;
+        height: auto;
+        padding: 3% 0;
+        flex: 1;
+
+        span {
+            display: block;
+        }
+
+        svg {
+            width: calc(var(--font-size-text) * 1.5);
+            height: calc(var(--font-size-text) * 1.5);
         }
     }
 }
