@@ -163,3 +163,17 @@ experience.adjustScreensWrapperSize = () => {
 experience.adjustScreensWrapperSize()
 
 window.addEventListener('resize', experience.adjustScreensWrapperSize)
+
+// Popup
+
+const downloadModal = document.querySelector('#download-modal')
+const closeDownloadModal = downloadModal.querySelector('.modal-close')
+const openDownloadModal = document.querySelector('.modal-open-download')
+
+openDownloadModal.addEventListener('click', () => {
+    downloadModal.showModal()
+})
+
+closeDownloadModal.addEventListener('click', () => {
+    downloadModal.close()
+})

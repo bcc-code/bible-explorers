@@ -1239,6 +1239,60 @@ $themes: (
     }
 }
 
+.modal {
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    color: #fff;
+
+    &:hover {
+        outline: 0;
+    }
+
+    &::backdrop {
+        background: var(--gradient-dark);
+        opacity: 0.95;
+    }
+
+    &-container {
+        position: relative;
+        width: 65vw;
+        background-image: url('../../static/frames/Task_Shape.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 974/529;
+        padding: 10% 6%;
+    }
+
+    &-close {
+        position: absolute;
+        right: 0%;
+        top: 3.5%;
+    }
+
+    &-heading {
+        position: absolute;
+        top: 7.25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: var(--font-size-heading);
+        font-weight: bold;
+    }
+
+}
+
+#download-modal {
+    h3 {
+        font-size: var(--font-size-text);
+    }
+
+    ul {
+        li {
+            text-align: center;
+        }
+    }
+}
+
 /* #endregion */
 
 /* #region Tasks */
