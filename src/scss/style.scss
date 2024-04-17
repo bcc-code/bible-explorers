@@ -1311,9 +1311,15 @@ $themes: (
 
     p {
         font-size: var(--font-size-text);
-        font-weight: bold;
+        font-weight: 500;
         margin-bottom: 2%;
-        opacity: 0.6;
+
+        svg {
+            display: inline;
+            vertical-align: -2px;
+            width: var(--font-size-text);
+            height: var(--font-size-text);
+        }
     }
 
     ul {
@@ -1327,6 +1333,8 @@ $themes: (
         li {
             list-style: circle;
             font-size: var(--font-size-text);
+
+
         }
 
     }
