@@ -57,16 +57,18 @@ export default class World {
         // Chapters
         this.chaptersData = []
 
+        this.downloadModal = document.querySelector('#download-modal')
         this.buttons = {
             // contact: document.querySelector('[aria-label="Contact"]'),
-            downloadApp: document.querySelector('#download-app'),
+            openDownloadModal: document.querySelector('#download-app'),
+            downloadModalClose: this.downloadModal.querySelector('.modal-close'),
             home: document.querySelector('#home-button'),
             guide: document.querySelector('#guide-button'),
             startChapter: document.querySelector('#start-chapter'),
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
         }
 
-        tippy(this.buttons.downloadApp, {
+        tippy(this.buttons.openDownloadModal, {
             theme: 'explorers',
             content: _s.settings.downloadApp,
             duration: [500, 200],
@@ -82,8 +84,11 @@ export default class World {
             placement: 'bottom',
         })
 
-        // this.setLinkToDownloadApp()
-        this.buttons.downloadApp.addEventListener('click', this.downloadApp)
+        this.setLinksToDownloadModal()
+        this.buttons.openDownloadModal.addEventListener('click', this.openDownloadModal)
+        this.buttons.downloadModalClose.addEventListener('click', () => {
+            this.downloadModal.close()
+        })
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
         this.buttons.startChapter.addEventListener('click', this.startChapter)
@@ -683,16 +688,22 @@ export default class World {
         localStorage.removeItem('answers-theme-' + instance.selectedChapter.id)
     }
 
-    setLinkToDownloadApp() {
+    setLinksToDownloadModal() {
         fetch(_api.getAppDownloadLinks()).then(function (response) {
             response.json().then(function (apiData) {
-                const platform = window.navigator.platform.indexOf('Mac') !== -1 ? '-mac' : ''
-                instance.buttons.downloadApp.parentElement.href = apiData['latest' + platform + '.yml']
+                instance.downloadModal.querySelector('ul.mac').appendChild(_gl.elementFromHtml(`<li><a href="${apiData['mac']['x64']}">x64 - Mac with Intel CPU (produced before 2021)</a></li>`))
+                instance.downloadModal.querySelector('ul.mac').appendChild(_gl.elementFromHtml(`<li><a href="${apiData['mac']['arm64']}">arm64 - newer Mac (M1, M2, M3, ...)</a></li>`))
+
+                instance.downloadModal.querySelector('ul.windows').appendChild(_gl.elementFromHtml(`<li><a href="${apiData['windows']['exe']}">exe</a></li>`))
             })
         })
     }
 
-    downloadApp() {
+    // Popup
+
+    openDownloadModal() {
+        instance.downloadModal.showModal()
+
         _appInsights.trackEvent({
             name: 'Download app',
             properties: {
