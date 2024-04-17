@@ -698,7 +698,7 @@ export default class World {
                     <li>${_s.modal.downloadApp.infoText2}</li>
                 </ul>
                 <div class="modal-actions">
-                    <button class="modal-close">Close popup</button>
+                    <button class="modal-close">Close</button>
                 </div>
             </div>
         </dialog>`)
