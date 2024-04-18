@@ -16,8 +16,9 @@ const config = {
     },
     win: {
         target: 'nsis',
-        legalTrademarks: '(C) 2024 BCC Media',
         // publisherName: 'BCC Media',
+        verifyUpdateCodeSignature: false, // Disable publisher name check until we get the signature in place for Windows
+        legalTrademarks: '(C) 2024 BCC Media',
     },
     mac: {
         category: 'public.app-category.game',
