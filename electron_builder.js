@@ -16,8 +16,8 @@ const config = {
     },
     win: {
         target: 'nsis',
-        publisherName: 'BCC Media',
         legalTrademarks: '(C) 2024 BCC Media',
+        // publisherName: 'BCC Media',
     },
     mac: {
         category: 'public.app-category.game',
