@@ -60,7 +60,6 @@ const strings = {
                 high: 'High',
             },
             language: 'Language',
-            downloadApp: 'Download the app',
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -87,6 +86,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Download Bible Explorers desktop app',
+                deviceTypeLabel: 'Choose your device type',
+                infoLabel:
+                    'To find which Mac version applies to you, open “Apple menu <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>” > “About This Mac”',
+                infoText1: 'If it shows an item labeled “Chip” followed by chip name, it is “Mac with Apple silicon”.',
+                infoText2: 'If it shows an item labeled “Processor” followed by processor name, it is “Intel-based Mac”.',
+                close: 'Close',
+            },
             download: {
                 title: 'Get offline version',
                 info: 'Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline.',
@@ -150,16 +158,6 @@ const strings = {
             correctAnswers: 'correct answers',
             playAudio: 'Play audio',
             winRound: 'Well done!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Download Bible Explorers desktop app',
-                deviceTypeLabel: 'Choose your device type',
-                infoLabel:
-                    'To find which Mac version applies to you, open “Apple menu <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>” > “About This Mac”',
-                infoText1: 'If it shows an item labeled “Chip” followed by chip name, it is “Mac with Apple silicon”.',
-                infoText2: 'If it shows an item labeled “Processor” followed by processor name, it is “Intel-based Mac”.',
-            },
         },
         chapter: {
             infoSingular: {
@@ -234,7 +232,6 @@ const strings = {
                 high: 'Høy',
             },
             language: 'Språk',
-            downloadApp: 'Last ned appen',
             backgroundMusic: 'Bakgrunnsmusikk',
             fullScreenMode: 'Fullskjermmodus',
             on: 'På',
@@ -261,6 +258,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Last ned Bible Explorers desktop app',
+                deviceTypeLabel: 'Velg enhetstype',
+                infoLabel:
+                    'For å finne hvilken Mac-versjon som gjelder for deg, åpne "Apple-menyen <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Om denne Macen"”',
+                infoText1: 'Hvis den viser et element merket "Chip" etterfulgt av brikkenavn, er det "Mac with Apple silicon”.',
+                infoText2: 'Hvis den viser et element merket "Processor" etterfulgt av prosessornavn, er det "Intel-based Mac".',
+                close: 'Lukk',
+            },
             download: {
                 title: 'Få offline-versjon',
                 info: 'Er du logget inn? Da kan du gjennomføre kapitlet uten internett. Trykk her for å gjøre kapitlet tilgjengelig offline.',
@@ -324,16 +330,6 @@ const strings = {
             correctAnswers: 'riktige svar',
             playAudio: 'Afspil lyd',
             winRound: 'Bra jobba!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Last ned Bible Explorers desktop app',
-                deviceTypeLabel: 'Velg enhetstype',
-                infoLabel:
-                    'For å finne hvilken Mac-versjon som gjelder for deg, åpne "Apple-menyen <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Om denne Macen"”',
-                infoText1: 'Hvis den viser et element merket "Chip" etterfulgt av brikkenavn, er det "Mac with Apple silicon”.',
-                infoText2: 'Hvis den viser et element merket "Processor" etterfulgt av prosessornavn, er det "Intel-based Mac".',
-            },
         },
         chapter: {
             infoSingular: {
@@ -405,7 +401,6 @@ const strings = {
                 high: 'Hoch',
             },
             language: 'Sprache',
-            downloadApp: 'App herunterladen',
             backgroundMusic: 'Hintergrundmusik',
             fullScreenMode: 'Vollbildmodus',
             on: 'An',
@@ -432,6 +427,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Bible Explorers Desktop-App herunterladen',
+                deviceTypeLabel: 'Wähle deinen Gerätetyp',
+                infoLabel:
+                    'Um herauszufinden, welche Mac-Version für dich zutrifft, öffne "Apple-Menü <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>"> "Über diesen Mac"',
+                infoText1: 'Wenn ein Eintrag mit der Bezeichnung "Chip" - gefolgt vom Chipnamen - angezeigt wird, handelt es sich um “Mac with Apple silicon”.',
+                infoText2: 'Wenn ein Eintrag mit der Bezeichnung "Processor" - gefolgt vom Prozessornamen - angezeigt wird, handelt es sich um einen "Intel-based Mac".',
+                close: 'Close',
+            },
             download: {
                 title: 'Offline Version erhalten',
                 info: 'Bist du angemeldet? Dann kannst du das Kapitel ohne Internetverbindung durchführen. Klicke hier, um das Kapitel offline verfügbar zu machen.',
@@ -495,16 +499,6 @@ const strings = {
             correctAnswers: 'richtige Antworten',
             playAudio: 'Audio abspielen',
             winRound: 'Well done!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Bible Explorers Desktop-App herunterladen',
-                deviceTypeLabel: 'Wähle deinen Gerätetyp',
-                infoLabel:
-                    'Um herauszufinden, welche Mac-Version für dich zutrifft, öffne "Apple-Menü <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>"> "Über diesen Mac"',
-                infoText1: 'Wenn ein Eintrag mit der Bezeichnung "Chip" - gefolgt vom Chipnamen - angezeigt wird, handelt es sich um “Mac with Apple silicon”.',
-                infoText2: 'Wenn ein Eintrag mit der Bezeichnung "Processor" - gefolgt vom Prozessornamen - angezeigt wird, handelt es sich um einen "Intel-based Mac".',
-            },
         },
         chapter: {
             infoSingular: {
@@ -576,7 +570,6 @@ const strings = {
                 high: 'Hoog',
             },
             language: 'Taal',
-            downloadApp: 'Download de app',
             backgroundMusic: 'Achtergrondmuziek',
             fullScreenMode: 'Volledig scherm',
             on: 'Aan',
@@ -603,6 +596,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Download de Bible Explorers desktop app',
+                deviceTypeLabel: 'Kies je type device',
+                infoLabel:
+                    'Om uit te vinden welk type Mac je hebt, open "Apple menu <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>">"Over deze Mac"',
+                infoText1: 'Als er een item staat, aangeduid met "Chip", gevolgd door de chip naam, dan is het een "Mac with Apple Silicon" ',
+                infoText2: 'Als er een item staat, aangeduid met "Processor", gevolgd door de processor naam, dan is het "Intel-based Mac"',
+                close: 'Close',
+            },
             download: {
                 title: 'Download offline-versie',
                 info: 'Ben je ingelogd? Dan kan je het hoofdstuk doorlopen zonder internet. Druk hier om het hoofdstuk offline toegankelijk te maken. ',
@@ -666,16 +668,6 @@ const strings = {
             correctAnswers: 'antwoorden juist',
             playAudio: 'Speel audio af',
             winRound: 'Goed gedaan!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Download de Bible Explorers desktop app',
-                deviceTypeLabel: 'Kies je type device',
-                infoLabel:
-                    'Om uit te vinden welk type Mac je hebt, open "Apple menu <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>">"Over deze Mac"',
-                infoText1: 'Als er een item staat, aangeduid met "Chip", gevolgd door de chip naam, dan is het een "Mac with Apple Silicon" ',
-                infoText2: 'Als er een item staat, aangeduid met "Processor", gevolgd door de processor naam, dan is het "Intel-based Mac"',
-            },
         },
         chapter: {
             infoSingular: {
@@ -743,7 +735,6 @@ const strings = {
                 high: 'Haute',
             },
             language: 'Langue',
-            downloadApp: `Téléchargez l'application`,
             backgroundMusic: 'Musique de fond',
             fullScreenMode: 'Mode plein écran',
             on: 'On',
@@ -770,6 +761,14 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: `Téléchargez l’application bureautique Bible Explorers`,
+                deviceTypeLabel: `Choisissez votre type d'appareil`,
+                infoLabel: `Pour savoir quelle version de Mac s'applique à vous, ouvrez « Menu Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> » > « À propos de ce Mac »`,
+                infoText1: `S'il affiche un élément intitulé "Chip" suivi du nom de la puce, il s'agit d'un "Mac with Apple silicon".`,
+                infoText2: `S'il affiche un élément intitulé "Processor" suivi du nom du processeur, il s'agit d'un "Intel-based Mac".`,
+                close: 'Close',
+            },
             download: {
                 title: 'Obtenir la version hors connexion',
                 info: "Es-tu connecté ? Si c'est le cas, tu peux compléter le chapitre sans internet. Clique ici pour que le chapitre soit disponible hors connexion.",
@@ -833,15 +832,6 @@ const strings = {
             correctAnswers: 'réponses correctes',
             playAudio: 'Supprimer la version hors ligne',
             winRound: 'Bravo !',
-        },
-        modal: {
-            downloadApp: {
-                title: `Téléchargez l’application bureautique Bible Explorers`,
-                deviceTypeLabel: `Choisissez votre type d'appareil`,
-                infoLabel: `Pour savoir quelle version de Mac s'applique à vous, ouvrez « Menu Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> » > « À propos de ce Mac »`,
-                infoText1: `S'il affiche un élément intitulé "Chip" suivi du nom de la puce, il s'agit d'un "Mac with Apple silicon".`,
-                infoText2: `S'il affiche un élément intitulé "Processor" suivi du nom du processeur, il s'agit d'un "Intel-based Mac".`,
-            },
         },
         chapter: {
             infoSingular: {
@@ -913,7 +903,6 @@ const strings = {
                 high: 'Wysoka',
             },
             language: 'Język',
-            downloadApp: 'Pobierz aplikację',
             backgroundMusic: 'Muzyka w tle',
             fullScreenMode: 'Tryb pełnoekranowy',
             on: 'On',
@@ -940,6 +929,14 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Pobierz aplikację Bible Explorers na komputer',
+                deviceTypeLabel: 'Wybierz typ swojego urządzenia',
+                infoLabel: 'Aby dowiedzieć się, która wersja komputera Mac występuje na twoim urządzeniu, otwórz "Apple menu" > "Informacje o tym Macu"',
+                infoText1: 'Jeśli pokazuje się element oznaczony "Chip", po którym następuje nazwa chipa, jest to "Mac with Apple silicon".',
+                infoText2: 'Jeśli pojawi się pozycja oznaczona "Processor", a po niej nazwa procesora, oznacza to, że jest to "Intel-based Mac".',
+                close: 'Close',
+            },
             download: {
                 title: 'Uzyskaj dostęp offline',
                 info: 'Czy jesteś zalogowany? Jeśli tak, możesz przejść rozdział bez połączenia z internetem. Klliknij tutaj aby pobrać rozdział.',
@@ -1003,15 +1000,6 @@ const strings = {
             correctAnswers: 'poprawnych odpowiedzi',
             playAudio: 'Odtwórz dźwięk',
             winRound: 'Dobra robota!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Pobierz aplikację Bible Explorers na komputer',
-                deviceTypeLabel: 'Wybierz typ swojego urządzenia',
-                infoLabel: 'Aby dowiedzieć się, która wersja komputera Mac występuje na twoim urządzeniu, otwórz "Apple menu" > "Informacje o tym Macu"',
-                infoText1: 'Jeśli pokazuje się element oznaczony "Chip", po którym następuje nazwa chipa, jest to "Mac with Apple silicon".',
-                infoText2: 'Jeśli pojawi się pozycja oznaczona "Processor", a po niej nazwa procesora, oznacza to, że jest to "Intel-based Mac".',
-            },
         },
         chapter: {
             infoSingular: {
@@ -1083,7 +1071,6 @@ const strings = {
                 high: 'Înalt',
             },
             language: 'Limbă',
-            downloadApp: 'Descarcă aplicația',
             backgroundMusic: 'Muzică de fundal',
             fullScreenMode: 'Pe tot ecranul',
             on: 'On',
@@ -1110,6 +1097,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Descarcă aplicația Bible Explorers pentru desktop',
+                deviceTypeLabel: 'Alege sistemul de operare',
+                infoLabel:
+                    'Pentru a afla ce versiune Mac ți se aplică, deschide „meniul Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>” > „Despre acest Mac”',
+                infoText1: 'Dacă apare un element intitulat „Chip” urmat de numele chipului, este „Mac with Apple silicon”.',
+                infoText2: 'Dacă apare un element intitulat „Processor” urmat de numele procesorului, este „Intel-based Mac”.',
+                close: 'Close',
+            },
             download: {
                 title: 'Obține varianta offline',
                 info: 'Te-ai autentificat? Astfel poți parcurge capitolul fără o conexiune la internet. Apasă aici pentru a face capitolul disponibil offline.',
@@ -1173,16 +1169,6 @@ const strings = {
             correctAnswers: 'răspunsuri corecte',
             playAudio: 'Pornește audio',
             winRound: 'Bună treabă!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Descarcă aplicația Bible Explorers pentru desktop',
-                deviceTypeLabel: 'Alege sistemul de operare',
-                infoLabel:
-                    'Pentru a afla ce versiune Mac ți se aplică, deschide „meniul Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>” > „Despre acest Mac”',
-                infoText1: 'Dacă apare un element intitulat „Chip” urmat de numele chipului, este „Mac with Apple silicon”.',
-                infoText2: 'Dacă apare un element intitulat „Processor” urmat de numele procesorului, este „Intel-based Mac”.',
-            },
         },
         chapter: {
             infoSingular: {
@@ -1254,7 +1240,6 @@ const strings = {
                 high: 'Alta',
             },
             language: 'Idioma',
-            downloadApp: 'Descargar la aplicación',
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -1281,6 +1266,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Descarga la aplicación para ordenador',
+                deviceTypeLabel: 'Elija su tipo de dispositivo',
+                infoLabel:
+                    'Para saber qué versión de Mac es la tuya, abre "Menú Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Acerca de este Mac"',
+                infoText1: 'Si aparece un ítem con la etiqueta "Chip" y a continuación el nombre del chip, se trata de un "Mac with Apple silicon"',
+                infoText2: 'Si aparece un ítem con la etiqueta "Processor" y a continuación el nombre del procesador, se trata de un "Intel-based Mac".',
+                close: 'Close',
+            },
             download: {
                 title: 'Obtener versión sin conexión',
                 info: '¿Estás conectado? Entonces puedes completar el capítulo sin internet. Haz clic aquí para que el capítulo esté disponible sin conexión.',
@@ -1344,16 +1338,6 @@ const strings = {
             correctAnswers: 'respuestas correctas',
             playAudio: 'Reproducir audio',
             winRound: 'Well done!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Descarga la aplicación para ordenador',
-                deviceTypeLabel: 'Elija su tipo de dispositivo',
-                infoLabel:
-                    'Para saber qué versión de Mac es la tuya, abre "Menú Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Acerca de este Mac"',
-                infoText1: 'Si aparece un ítem con la etiqueta "Chip" y a continuación el nombre del chip, se trata de un "Mac with Apple silicon"',
-                infoText2: 'Si aparece un ítem con la etiqueta "Processor" y a continuación el nombre del procesador, se trata de un "Intel-based Mac".',
-            },
         },
         chapter: {
             infoSingular: {
@@ -1425,7 +1409,6 @@ const strings = {
                 high: 'Alto',
             },
             language: 'Idioma',
-            downloadApp: 'Baixe o aplicativo',
             backgroundMusic: 'Musica de fundo',
             fullScreenMode: 'Modo tela cheia',
             on: 'On',
@@ -1452,6 +1435,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Baixe o aplicativo Bible Explorers para desktop',
+                deviceTypeLabel: 'Escolha o tipo do seu dispositivo',
+                infoLabel:
+                    'Para descobrir qual versão do Mac se aplica a você, abra “Menu Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>” > “Sobre este Mac”',
+                infoText1: 'Se mostrar um item denominado “Chip” seguido do nome do chip, é “Mac com silício Apple”.',
+                infoText2: 'Se mostrar um item denominado “Processador” seguido do nome do processador, é “Mac baseado em Intel”.',
+                close: 'Close',
+            },
             download: {
                 title: 'Obtenha a versão offline',
                 info: 'Você está logado? Então você pode completar o capítulo sem acesso a internet. Clique aqui para tornar o capítulo disponível offline.',
@@ -1515,16 +1507,6 @@ const strings = {
             correctAnswers: 'respostas corretas',
             playAudio: 'Reproduzir áudio',
             winRound: 'Well done!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Baixe o aplicativo Bible Explorers para desktop',
-                deviceTypeLabel: 'Escolha o tipo do seu dispositivo',
-                infoLabel:
-                    'Para descobrir qual versão do Mac se aplica a você, abra “Menu Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>” > “Sobre este Mac”',
-                infoText1: 'Se mostrar um item denominado “Chip” seguido do nome do chip, é “Mac com silício Apple”.',
-                infoText2: 'Se mostrar um item denominado “Processador” seguido do nome do processador, é “Mac baseado em Intel”.',
-            },
         },
         chapter: {
             infoSingular: {
@@ -1596,7 +1578,6 @@ const strings = {
                 high: 'Alta',
             },
             language: 'Lingua',
-            downloadApp: `Scaricare l'app`,
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -1623,6 +1604,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: `Scarica l'applicazione desktop Bible Explorers`,
+                deviceTypeLabel: 'Seleziona il tipo di dispositivo',
+                infoLabel:
+                    'Per sapere quale versione del Mac è applicabile, aprire il "menu Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Informazioni su questo Mac"',
+                infoText1: 'Se viene visualizzata una voce etichettata "Chip" seguita dal nome del chip, si tratta di "Mac with Apple silicon".',
+                infoText2: 'Se viene visualizzata una voce "Processor" seguita dal nome del processore, si tratta di un “Intel-based Mac”.',
+                close: 'Close',
+            },
             download: {
                 title: 'Ottieni la versione offline',
                 info: 'Hai effettuato il login? Se sì, puoi completare il capitolo senza internet. Clicca qui per rendere il capitolo disponibile offline.',
@@ -1686,16 +1676,6 @@ const strings = {
             correctAnswers: 'risposte corrette',
             playAudio: `Riprodurre l'audio`,
             winRound: 'Ben fatto!',
-        },
-        modal: {
-            downloadApp: {
-                title: `Scarica l'applicazione desktop Bible Explorers`,
-                deviceTypeLabel: 'Seleziona il tipo di dispositivo',
-                infoLabel:
-                    'Per sapere quale versione del Mac è applicabile, aprire il "menu Apple <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Informazioni su questo Mac"',
-                infoText1: 'Se viene visualizzata una voce etichettata "Chip" seguita dal nome del chip, si tratta di "Mac with Apple silicon".',
-                infoText2: 'Se viene visualizzata una voce "Processor" seguita dal nome del processore, si tratta di un “Intel-based Mac”.',
-            },
         },
         chapter: {
             infoSingular: {
@@ -1767,7 +1747,6 @@ const strings = {
                 high: 'Высокое',
             },
             language: 'Язык',
-            downloadApp: 'Воспроизвести аудио',
             backgroundMusic: 'Фоновая музыка',
             fullScreenMode: 'Полноэкранный режим',
             on: 'Вкл.',
@@ -1794,6 +1773,14 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Загрузите десктоп-приложение Bible Explorers',
+                deviceTypeLabel: 'Выберите тип устройства',
+                infoLabel: 'Чтобы узнать версю Mac, откройте «Apple меню» > «Об этом Mac»',
+                infoText1: 'Если он показывает элемент с надписью «Chip», за которым следует название чипа, это «Mac with Apple Silicon».',
+                infoText2: 'Если отображается пункт«Processor», за которым следует название процессора, это «Intel-based Mac».',
+                close: 'Close',
+            },
             download: {
                 title: 'Получить офлайн-версию',
                 info: 'Вы вошли в учетную запись? Вы можете пройти главу без интернета. Нажмите здесь, чтобы глава стала доступной офлайн.',
@@ -1857,15 +1844,6 @@ const strings = {
             correctAnswers: 'верных ответов',
             playAudio: 'Воспроизвести аудио',
             winRound: 'Отличная работа!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Загрузите десктоп-приложение Bible Explorers',
-                deviceTypeLabel: 'Выберите тип устройства',
-                infoLabel: 'Чтобы узнать версю Mac, откройте «Apple меню» > «Об этом Mac»',
-                infoText1: 'Если он показывает элемент с надписью «Chip», за которым следует название чипа, это «Mac with Apple Silicon».',
-                infoText2: 'Если отображается пункт«Processor», за которым следует название процессора, это «Intel-based Mac».',
-            },
         },
         chapter: {
             infoSingular: {
@@ -1937,7 +1915,6 @@ const strings = {
                 high: 'Korkea',
             },
             language: 'Kieli',
-            downloadApp: 'Lataa sovellus',
             backgroundMusic: 'Taustamusiikki',
             fullScreenMode: 'Koko näytön tila',
             on: 'Päälle',
@@ -1964,6 +1941,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Lataa Bible Explorers -työpöytäsovellus',
+                deviceTypeLabel: 'Valitse laitteen tyyppi',
+                infoLabel:
+                    'Voit selvittää, mikä Mac-versio koskee sinua, avaamalla "Apple-valikko <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Tietoja tästä Macista".',
+                infoText1: 'Jos näytössä näkyy kohta "Järjestelmäpiiri", jota seuraa piirin nimi, se on "Mac with Apple silicon".',
+                infoText2: 'Jos näyttöön tulee kohta "Prosessori"ja sen jälkeen prosessorin nimi, kyseessä on "Intel-based Mac".',
+                close: 'Close',
+            },
             download: {
                 title: 'Lataa offline-versio',
                 info: 'Oletko kirjautunut sisään? Jos olet, voit suorittaa jakson ilman internet yhteyttä. Paina tästä suorittaaksesi jakso offline tilassa.',
@@ -2027,16 +2013,6 @@ const strings = {
             correctAnswers: 'oikeaa vastausta',
             playAudio: 'Toista äänet',
             winRound: 'Hyvää työtä!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Lataa Bible Explorers -työpöytäsovellus',
-                deviceTypeLabel: 'Valitse laitteen tyyppi',
-                infoLabel:
-                    'Voit selvittää, mikä Mac-versio koskee sinua, avaamalla "Apple-valikko <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Tietoja tästä Macista".',
-                infoText1: 'Jos näytössä näkyy kohta "Järjestelmäpiiri", jota seuraa piirin nimi, se on "Mac with Apple silicon".',
-                infoText2: 'Jos näyttöön tulee kohta "Prosessori"ja sen jälkeen prosessorin nimi, kyseessä on "Intel-based Mac".',
-            },
         },
         chapter: {
             infoSingular: {
@@ -2108,7 +2084,6 @@ const strings = {
                 high: 'Magas',
             },
             language: 'Nyelv',
-            downloadApp: 'App letöltése',
             backgroundMusic: 'Background music',
             fullScreenMode: 'Full screen',
             on: 'On',
@@ -2135,6 +2110,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Bible Explorers asztali alkalmazás letöltése',
+                deviceTypeLabel: 'Válaszd ki a készülék típusát',
+                infoLabel:
+                    'Az adott Mac-verzió megtalálásához nyisd meg az "Apple menü  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>"> "Erről a Mac-ről" menüpontját',
+                infoText1: 'Ha egy "Chip" feliratú elem jelenik meg, amelyet a chip neve követ, akkor az "Mac with Apple silicon".',
+                infoText2: 'Ha megjelenik egy " Processor " feliratú elem, amelyet a processzor neve követ, akkor az " Intel-based Mac ".',
+                close: 'Close',
+            },
             download: {
                 title: 'Letöltés',
                 info: 'Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline.',
@@ -2198,16 +2182,6 @@ const strings = {
             correctAnswers: 'correct answers',
             playAudio: 'Hanglejátszás',
             winRound: 'Szép munka!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Bible Explorers asztali alkalmazás letöltése',
-                deviceTypeLabel: 'Válaszd ki a készülék típusát',
-                infoLabel:
-                    'Az adott Mac-verzió megtalálásához nyisd meg az "Apple menü  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>"> "Erről a Mac-ről" menüpontját',
-                infoText1: 'Ha egy "Chip" feliratú elem jelenik meg, amelyet a chip neve követ, akkor az "Mac with Apple silicon".',
-                infoText2: 'Ha megjelenik egy " Processor " feliratú elem, amelyet a processzor neve követ, akkor az " Intel-based Mac ".',
-            },
         },
         chapter: {
             infoSingular: {
@@ -2279,7 +2253,6 @@ const strings = {
                 high: 'Høj',
             },
             language: 'Sprog',
-            downloadApp: 'Download appen',
             backgroundMusic: 'Baggrundsmusik',
             fullScreenMode: 'Fuldskærmstilstand',
             on: 'On',
@@ -2306,6 +2279,15 @@ const strings = {
             ],
         },
         offline: {
+            downloadApp: {
+                title: 'Download Bible Explorers desktop-app',
+                deviceTypeLabel: 'Vælg din enhedstype',
+                infoLabel:
+                    'For at finde ud af, hvilken Mac-version der gælder for dig, skal du åbne "Apple-menuen <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Om denne Mac"',
+                infoText1: 'Hvis den viser et element mærket "Chip" efterfulgt af chipnavn, er det "Mac with Apple silicon".',
+                infoText2: 'Hvis den viser et element mærket "Processor" efterfulgt af processornavn, er det "Intel-based Mac".',
+                close: 'Close',
+            },
             download: {
                 title: 'Få offline versjon',
                 info: 'Er du logget ind? Så kan du færdiggøre kapitlet uden internet. Tryk her for at gøre kapitlet tilgængeligt offline.',
@@ -2369,16 +2351,6 @@ const strings = {
             correctAnswers: 'rigtige svar',
             playAudio: 'Play audio',
             winRound: 'Godt gået!',
-        },
-        modal: {
-            downloadApp: {
-                title: 'Download Bible Explorers desktop-app',
-                deviceTypeLabel: 'Vælg din enhedstype',
-                infoLabel:
-                    'For at finde ud af, hvilken Mac-version der gælder for dig, skal du åbne "Apple-menuen <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>" > "Om denne Mac"',
-                infoText1: 'Hvis den viser et element mærket "Chip" efterfulgt af chipnavn, er det "Mac with Apple silicon".',
-                infoText2: 'Hvis den viser et element mærket "Processor" efterfulgt af processornavn, er det "Intel-based Mac".',
-            },
         },
         chapter: {
             infoSingular: {

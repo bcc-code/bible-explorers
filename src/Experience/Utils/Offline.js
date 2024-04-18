@@ -154,7 +154,6 @@ export default class Offline {
 
         try {
             const videosData = await offline.fetchVideosData(chapterId)
-            let selectedQualityVideo = []
 
             offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
                 const video = videosData[`episode${index + 1}`]
@@ -167,14 +166,12 @@ export default class Offline {
                     return
                 }
 
-                selectedQualityVideo.push(
-                    Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
-                        version: video.assetVersion,
-                        language: _lang.getLanguageCode(),
-                        name: `${episode.type}-${episode.id}`,
-                        quality: offline.experience.settings.videoQuality,
-                    })
-                )
+                const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
+                    version: video.assetVersion,
+                    language: _lang.getLanguageCode(),
+                    name: `${episode.type}-${episode.id}`,
+                    quality: offline.experience.settings.videoQuality,
+                })
 
                 offline.allDownloadableVideos[chapterId][index].data = selectedQualityVideo
             })
@@ -351,8 +348,6 @@ export default class Offline {
             offline.putFileInDb(video)
 
             offline.downloaded[chapterId].push(video)
-
-            console.log(offline.allDownloadableVideos[chapterId].length, offline.downloaded[chapterId].length)
 
             if (offline.allDownloadableVideos[chapterId].length == offline.downloaded[chapterId].length) {
                 // All videos downloaded

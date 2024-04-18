@@ -4,12 +4,15 @@
  */
 const config = {
     appId: 'io.biblekids.explorers',
-    productName: 'Bible Explorers',
+    productName: 'Bible-Explorers',
     files: ['!node_modules'],
     icon: './static/favicon.png',
     includeSubNodeModules: false,
     directories: {
         output: 'dist-app',
+    },
+    nsis: {
+        artifactName: '${productName}-${version}.${ext}',
     },
     win: {
         target: 'nsis',
@@ -62,17 +65,17 @@ const config = {
         packageCategory: 'game',
     },
     publish: [
-        // {
-        //     provider: 's3',
-        //     bucket: 'bccm-static',
-        //     path: 'explorers',
-        //     acl: null,
-        // },
         {
             provider: 'github',
             owner: 'bcc-code',
             repo: 'bible-explorers',
             releaseType: 'release',
+        },
+        {
+            provider: 's3',
+            bucket: 'bccm-static',
+            path: 'explorers',
+            acl: null,
         },
     ],
 }
