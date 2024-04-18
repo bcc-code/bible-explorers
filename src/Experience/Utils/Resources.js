@@ -37,7 +37,6 @@ export default class Resources extends EventEmitter {
         this.mediaItems = []
         this.textureItems = []
         this.customTextureItems = []
-        this.posterImages = []
         this.videoPlayers = []
         this.api = []
 
@@ -188,16 +187,16 @@ export default class Resources extends EventEmitter {
         this.itemsLoaded++
     }
 
-    loadEpisodeTexture(videoName, containerId) {
-        resources.addVideoDivElementToContainer(videoName, containerId)
+    loadEpisodeTexture(videoName) {
+        resources.addVideoDivElementToContainer(videoName)
         this.offline.loadVideoFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
     }
 
-    addVideoDivElementToContainer(videoName, containerId) {
+    addVideoDivElementToContainer(videoName) {
         const videoEl = document.createElement('div')
         videoEl.setAttribute('id', videoName)
 
-        const containerWrapper = document.getElementById(containerId)
+        const containerWrapper = document.getElementById('video-container')
         containerWrapper.appendChild(videoEl)
     }
 
@@ -250,7 +249,6 @@ export default class Resources extends EventEmitter {
         }
 
         resources.videoPlayers[videoName] = player
-        resources.posterImages[videoName] = player.poster_
 
         document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
     }

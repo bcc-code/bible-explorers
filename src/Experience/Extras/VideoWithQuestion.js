@@ -47,7 +47,10 @@ export default class VideoWithQuestion {
         instance.experience.setAppView('task-description')
 
         if (instance.data.video) {
-            instance.video.load('texture-' + instance.data.video, 'task-container_video')
+            const videoId = `texture-${instance.data.video}`
+
+            instance.video.load(videoId)
+            instance.moveDivToAnotherDiv(videoId, 'task-container_video')
         }
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
@@ -61,6 +64,17 @@ export default class VideoWithQuestion {
         })
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    }
+
+    moveDivToAnotherDiv(sourceDiv, destinationDiv) {
+        // Declare a fragment:
+        var fragment = document.createDocumentFragment()
+
+        // Append desired element to the fragment:
+        fragment.appendChild(document.getElementById(sourceDiv))
+
+        // Append fragment to desired element:
+        document.getElementById(destinationDiv).appendChild(fragment)
     }
 
     toggleQuestion() {
@@ -91,6 +105,9 @@ export default class VideoWithQuestion {
     }
 
     destroy() {
+        const videoId = `texture-${instance.data.video}`
+        instance.moveDivToAnotherDiv(videoId, 'video-container')
+
         instance.experience.navigation.prev.removeEventListener('click', instance.destroy)
         instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)

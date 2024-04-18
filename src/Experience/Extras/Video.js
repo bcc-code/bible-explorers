@@ -22,7 +22,7 @@ export default class Video {
         const chapterId = instance.world.selectedChapter.id
         instance.world.offline.allDownloadableVideos[chapterId].forEach((video) => {
             const id = `${video.type}-${video.id}`
-            instance.resources.loadEpisodeTexture(id, 'video-container')
+            instance.resources.loadEpisodeTexture(id)
         })
 
         // Setup
