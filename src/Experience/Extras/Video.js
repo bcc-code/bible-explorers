@@ -61,7 +61,6 @@ export default class Video {
 
         // First, remove all previous event listeners - if any
         instance.video().off('play', instance.setFullscreenIfNecessary)
-        instance.video().off('playing', instance.setDesiredVideoQuality)
         instance.video().off('ended', instance.finish)
 
         // Always start new loaded videos from the beginning
@@ -69,7 +68,6 @@ export default class Video {
 
         // Add video event listeners
         instance.video().on('play', instance.setFullscreenIfNecessary)
-        instance.video().on('playing', instance.setDesiredVideoQuality)
         instance.video().on('ended', instance.finish)
 
         // If the video is an episode, focus on the video (fade out bg music)
@@ -134,31 +132,6 @@ export default class Video {
         if (!this.isFullscreen_ && instance.isVideoEpisode()) {
             instance.video().requestFullscreen()
             instance.addSkipBtn()
-        }
-    }
-
-    setDesiredVideoQuality() {
-        if (!instance.videoJsEl()) return
-
-        const videoQuality = instance.getVideoQuality()
-
-        // Set video quality only for online videos
-        if (!instance.isOfflineVideo()) {
-            instance.video().setVideoQuality(videoQuality)
-        }
-    }
-
-    getVideoQuality() {
-        switch (instance.world.selectedQuality) {
-            case 'low':
-                return 270
-
-            case 'medium':
-                return 540
-
-            case 'high':
-            default:
-                return 1080
         }
     }
 
