@@ -12,7 +12,7 @@ const config = {
         output: 'dist-app',
     },
     nsis: {
-        artifactName: '${productName}-${version}.${ext}',
+        artifactName: process.platform == 'win32' ? '${productName}-Setup-${version}.${ext}' : '${productName}-${version}.${ext}',
     },
     win: {
         target: 'nsis',
