@@ -199,11 +199,11 @@ if (!gotTheLock) {
     openWindow(initUrl);
 
     // autoUpdater.forceDevUpdateConfig = true
-    // autoUpdater.setFeedURL({
-    //   provider: 'generic',
-    //   url: 'https://static2.bcc.media/explorers/',
-    //   channel: 'latest',
-    // })
+    autoUpdater.setFeedURL({
+      provider: 'generic',
+      url: 'https://static2.bcc.media/explorers/',
+      channel: 'latest',
+    })
     autoUpdater.checkForUpdatesAndNotify();
   });
 
