@@ -100,17 +100,15 @@ export default class Program {
             videoId += instance.getCurrentStepData().message_with_supporting_screens.video
         }
 
-        if (instance.videoNotYetLoaded(videoId)) {
+        if (!instance.videoPlayerLoaded(videoId)) {
             return
         }
-
         document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
 
         instance.startInteractivity()
-        instance.stepToggled()
     }
 
-    videoNotYetLoaded(id) {
+    videoPlayerLoaded(id) {
         return instance.resources.videoPlayers.hasOwnProperty(id)
     }
 
@@ -245,10 +243,7 @@ export default class Program {
 
     startInteractivity() {
         if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
-            setTimeout(function () {
-                instance.waitingScreen.show()
-            }, 1500)
-
+            instance.waitingScreen.show()
             return
         }
 
@@ -257,13 +252,9 @@ export default class Program {
         }
 
         if (instance.stepType() === 'iris') {
-            setTimeout(function () {
-                instance.message.show()
-            }, 100)
+            instance.message.show()
         } else if (instance.stepType() === 'iris_with_supporting_screens') {
-            setTimeout(function () {
-                instance.messageWithSupportingScreens.show()
-            }, 100)
+            instance.messageWithSupportingScreens.show()
         } else {
             instance.startTask()
         }

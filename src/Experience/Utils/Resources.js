@@ -239,6 +239,10 @@ export default class Resources extends EventEmitter {
                 videojs: {
                     autoplay: false,
                     loop: loopVideo,
+                    hls: {
+                        limitRenditionByPlayerDimensions: false,
+                        useDevicePixelRatio: true,
+                    },
                 },
             },
         })
@@ -248,9 +252,10 @@ export default class Resources extends EventEmitter {
             player.controlBar.hide()
         }
 
-        resources.videoPlayers[videoName] = player
-
-        document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
+        player.on('ready', () => {
+            resources.videoPlayers[videoName] = player
+            document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
+        })
     }
 
     fetchApiThenCache(theUrl, callback) {
