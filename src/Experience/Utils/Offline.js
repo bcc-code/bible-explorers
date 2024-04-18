@@ -118,7 +118,7 @@ export default class Offline {
         const episodes = chapter.episodes.map((e) => ({ type: e.type, id: e.id }))
         const textures = offline.getTextureIdsForChapter(chapter).map((textureId) => ({ type: 'texture', id: textureId }))
 
-        offline.allDownloadableVideos[chapter.id] = episodes.concat(textures)
+        offline.allDownloadableVideos[chapter.id] = textures.concat(episodes)
 
         await offline.setVideoDataForDesiredQuality(chapter.id)
     }

@@ -29,12 +29,16 @@ export default class Program {
         instance.experience = new Experience()
         instance.resources = instance.experience.resources
         instance.world = instance.experience.world
+        instance.offline = instance.world.offline
         instance.programData = instance.world.selectedChapter.program
         instance.audio = instance.world.audio
         instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
+
         instance.video = new Video()
+        instance.videosLoaded = 0
+
         instance.codeUnlock = new CodeUnlock()
         instance.pictureAndCode = new HiddenItems()
         instance.questionAndCode = new QuestionAndCode()
@@ -79,9 +83,33 @@ export default class Program {
         instance.clickCallback = () => {}
         instance.canClick = () => !document.body.classList.contains('freeze') && !document.body.classList.contains('modal-on') && !document.body.classList.contains('camera-is-moving')
 
-        instance.startInteractivity()
         instance.addEventListeners()
-        instance.stepToggled()
+        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
+    }
+
+    startJourneyWhenVideoIsLoaded() {
+        let videoId = 'texture-'
+
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+            videoId += instance.world.selectedChapter.lobby_video_loop
+        } else if (instance.stepType() === 'iris') {
+            instance.stepData = instance.data = instance.stepData.message
+
+            videoId += instance.getCurrentStepData().message.video
+        } else if (instance.stepType() === 'iris_with_supporting_screens') {
+            videoId += instance.getCurrentStepData().message_with_supporting_screens.video
+        }
+
+        if (!instance.videoPlayerLoaded(videoId)) {
+            return
+        }
+        document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
+
+        instance.startInteractivity()
+    }
+
+    videoPlayerLoaded(id) {
+        return instance.resources.videoPlayers.hasOwnProperty(id)
     }
 
     addEventListeners() {
@@ -215,23 +243,18 @@ export default class Program {
 
     startInteractivity() {
         if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
-            setTimeout(function () {
-                instance.waitingScreen.show()
-            }, 1000)
-
+            instance.waitingScreen.show()
             return
         }
 
-        if (instance.stepType() !== 'video') instance.video.defocus()
+        if (instance.stepType() !== 'video') {
+            instance.video.defocus()
+        }
 
         if (instance.stepType() === 'iris') {
-            setTimeout(function () {
-                instance.message.show()
-            }, 100)
+            instance.message.show()
         } else if (instance.stepType() === 'iris_with_supporting_screens') {
-            setTimeout(function () {
-                instance.messageWithSupportingScreens.show()
-            }, 100)
+            instance.messageWithSupportingScreens.show()
         } else {
             instance.startTask()
         }

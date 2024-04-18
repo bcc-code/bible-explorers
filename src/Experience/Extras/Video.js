@@ -7,18 +7,23 @@ let instance = null
 
 export default class Video {
     constructor() {
-        if (instance) return instance
-
         instance = this
-
         instance.experience = new Experience()
         instance.world = instance.experience.world
+        instance.offline = instance.world.offline
         instance.debug = instance.experience.debug
         instance.resources = instance.experience.resources
         instance.audio = instance.world.audio
         instance.scene = instance.experience.scene
         instance.controlRoom = instance.world.controlRoom
         instance.clickableObjects = instance.controlRoom.clickableObjects
+
+        // Load all videos
+        const chapterId = instance.world.selectedChapter.id
+        instance.world.offline.allDownloadableVideos[chapterId].forEach((video) => {
+            const id = `${video.type}-${video.id}`
+            instance.resources.loadEpisodeTexture(id)
+        })
 
         // Setup
         instance.video = () => {
@@ -40,46 +45,39 @@ export default class Video {
         }
 
         instance.isVideoEpisode = () => {
-            return [...instance.video().el_.classList].filter((c) => c.includes('episode')).length
-        }
-
-        instance.isOfflineVideo = () => {
-            return [...instance.videoJsEl().classList].includes('offline-video')
+            return instance.playingVideoId?.includes('episode-')
         }
 
         instance.playingVideoId = null
         instance.videoContainer = document.querySelector('#video-container')
     }
 
-    load(id, container = 'video-container') {
+    load(id) {
+        // Set new playing video id
         instance.playingVideoId = id
-        instance.resources.loadEpisodeTexture(id, container)
 
-        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, () => {
-            instance.setUpVideo()
+        // Move current video first in the list in order to be visible
+        instance.videoContainer.prepend(instance.videoContainer.querySelector('#' + id))
 
-            if (id.includes('texture-') || instance.episodeIsDirectlyPlayable(id)) {
-                instance.play()
-            }
-        })
-    }
-
-    setUpVideo() {
         // First, remove all previous event listeners - if any
         instance.video().off('play', instance.setFullscreenIfNecessary)
-        instance.video().off('playing', instance.setDesiredVideoQuality)
         instance.video().off('ended', instance.finish)
 
         // Always start new loaded videos from the beginning
         instance.video().currentTime(0)
 
+        // Add video event listeners
         instance.video().on('play', instance.setFullscreenIfNecessary)
-        instance.video().on('playing', instance.setDesiredVideoQuality)
         instance.video().on('ended', instance.finish)
 
         // If the video is an episode, focus on the video (fade out bg music)
         if ([...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
             instance.focus()
+        }
+
+        // Play if necessary
+        if (id.includes('texture-') || instance.episodeIsDirectlyPlayable(id)) {
+            instance.play()
         }
     }
 
@@ -134,31 +132,6 @@ export default class Video {
         if (!this.isFullscreen_ && instance.isVideoEpisode()) {
             instance.video().requestFullscreen()
             instance.addSkipBtn()
-        }
-    }
-
-    setDesiredVideoQuality() {
-        if (!instance.videoJsEl()) return
-
-        const videoQuality = instance.getVideoQuality()
-
-        // Set video quality only for online videos
-        if (!instance.isOfflineVideo()) {
-            instance.video().setVideoQuality(videoQuality)
-        }
-    }
-
-    getVideoQuality() {
-        switch (instance.world.selectedQuality) {
-            case 'low':
-                return 270
-
-            case 'medium':
-                return 540
-
-            case 'high':
-            default:
-                return 1080
         }
     }
 
