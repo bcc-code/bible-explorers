@@ -84,16 +84,34 @@ export default class Program {
         instance.canClick = () => !document.body.classList.contains('freeze') && !document.body.classList.contains('modal-on') && !document.body.classList.contains('camera-is-moving')
 
         instance.addEventListeners()
-        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyOnAllVideosLoaded)
+        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
     }
 
-    startJourneyOnAllVideosLoaded() {
-        instance.videosLoaded++
+    startJourneyWhenVideoIsLoaded() {
+        let videoId = 'texture-'
 
-        if (instance.videosLoaded == instance.offline.allDownloadableVideos[instance.world.selectedChapter.id].length) {
-            instance.startInteractivity()
-            instance.stepToggled()
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+            videoId += instance.world.selectedChapter.lobby_video_loop
+        } else if (instance.stepType() === 'iris') {
+            instance.stepData = instance.data = instance.stepData.message
+
+            videoId += instance.getCurrentStepData().message.video
+        } else if (instance.stepType() === 'iris_with_supporting_screens') {
+            videoId += instance.getCurrentStepData().message_with_supporting_screens.video
         }
+
+        if (instance.videoNotYetLoaded(videoId)) {
+            return
+        }
+
+        document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
+
+        instance.startInteractivity()
+        instance.stepToggled()
+    }
+
+    videoNotYetLoaded(id) {
+        return instance.resources.videoPlayers.hasOwnProperty(id)
     }
 
     addEventListeners() {
@@ -229,12 +247,14 @@ export default class Program {
         if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
             setTimeout(function () {
                 instance.waitingScreen.show()
-            }, 100)
+            }, 1500)
 
             return
         }
 
-        if (instance.stepType() !== 'video') instance.video.defocus()
+        if (instance.stepType() !== 'video') {
+            instance.video.defocus()
+        }
 
         if (instance.stepType() === 'iris') {
             setTimeout(function () {
@@ -272,7 +292,6 @@ export default class Program {
         instance.experience.navigation.next.removeEventListener('click', instance.nextStep)
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.disablePrevBtnOnStart)
-        document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyOnAllVideosLoaded)
     }
 
     destroy() {

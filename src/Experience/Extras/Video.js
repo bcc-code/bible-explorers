@@ -57,7 +57,7 @@ export default class Video {
         instance.playingVideoId = id
 
         // Move current video first in the list in order to be visible
-        instance.videoContainer.prepend(instance.videoJsEl().parentElement)
+        instance.videoContainer.prepend(instance.videoContainer.querySelector('#' + id))
 
         // First, remove all previous event listeners - if any
         instance.video().off('play', instance.setFullscreenIfNecessary)
