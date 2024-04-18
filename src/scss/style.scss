@@ -248,7 +248,7 @@ body.not-logged-in {
     }
 
     &.current-step,
-    &:hover {
+    &[aria-label="checkpoint"]:hover {
         background-image: url('../../static/interface/B_circle_action.png');
     }
 
@@ -1415,7 +1415,6 @@ $themes: (
             }
         }
 
-
         .step-number {
             color: white;
             font-size: var(--font-size-text);
@@ -1424,7 +1423,6 @@ $themes: (
     }
 
     .quiz-item {
-
         .correct .question-label .button-circle {
             background-image: url('../../static/interface/B_circle_action.png');
         }
@@ -1440,7 +1438,6 @@ $themes: (
         .wrong .question-label {
             background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
         }
-
     }
 
     .task-container_box {
