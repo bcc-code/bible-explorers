@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import _appInsights from './AppInsights.js'
 import _lang from './Lang.js'
+import _c from './Connection.js'
 
 let offline = null
 
@@ -151,34 +152,29 @@ export default class Offline {
 
     setVideoDataForDesiredQuality = async function (chapterId) {
         const locale = offline.getBtvSupportedLanguageCode()
+        const videosData = await offline.fetchVideosData(chapterId)
 
-        try {
-            const videosData = await offline.fetchVideosData(chapterId)
+        offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
+            const video = videosData[`episode${index + 1}`]
 
-            offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
-                const video = videosData[`episode${index + 1}`]
-
-                const myLanguageVideos = video.files.filter((file) => {
-                    return file.audioLanguage == locale
-                })
-
-                if (!myLanguageVideos.length) {
-                    console.log('Video ' + episode.id + ' from chapter ' + chapterId + ' is not downloadable!')
-                    return
-                }
-
-                const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
-                    version: video.assetVersion,
-                    language: _lang.getLanguageCode(),
-                    name: `${episode.type}-${episode.id}`,
-                    quality: offline.experience.settings.videoQuality,
-                })
-
-                offline.allDownloadableVideos[chapterId][index].data = selectedQualityVideo
+            const myLanguageVideos = video.files.filter((file) => {
+                return file.audioLanguage == locale
             })
-        } catch (e) {
-            offline.setErrorMessage(chapterId)
-        }
+
+            if (!myLanguageVideos.length) {
+                console.log('Video ' + episode.id + ' from chapter ' + chapterId + ' is not downloadable!')
+                return
+            }
+
+            const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
+                version: video.assetVersion,
+                language: _lang.getLanguageCode(),
+                name: `${episode.type}-${episode.id}`,
+                quality: offline.experience.settings.videoQuality,
+            })
+
+            offline.allDownloadableVideos[chapterId][index].data = selectedQualityVideo
+        })
     }
 
     fetchVideosData = async function (chapterId) {
@@ -205,7 +201,8 @@ export default class Offline {
             `
         })
 
-        const response = await fetch('https://api.brunstad.tv/query', {
+        const theUrl = 'https://api.brunstad.tv/query'
+        const response = await fetch(theUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -217,8 +214,29 @@ export default class Offline {
                 `,
             }),
         })
+            .then((response) => {
+                offline.setConnection(_c.ONLINE)
 
+                return response
+            })
+            .catch(async () => {
+                offline.setConnection(_c.OFFLINE)
+
+                const cache = await caches.open('apiResponses')
+                return await cache.match(theUrl + '/' + chapterId)
+            })
+
+        // Clone the response for cache
+        var responseClone = await new Promise((resolve) => resolve(response.clone()))
+
+        // Save to cache for offline use
+        caches.open('apiResponses').then(function (cache) {
+            cache.put(theUrl + '/' + chapterId, responseClone)
+        })
+
+        // Get the JSON response
         const episode = await response.json()
+
         return episode.data
     }
 
@@ -470,6 +488,7 @@ export default class Offline {
     }
 
     setConnection(mode) {
+        document.body.classList.toggle('offline', mode == _c.OFFLINE)
         offline.isOnline = mode
     }
 }

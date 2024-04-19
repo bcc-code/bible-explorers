@@ -434,8 +434,7 @@ export default class World {
 
         instance.cacheChapterAssets(selectedChapter)
 
-        chapterEl.classList.remove('download')
-        chapterEl.classList.remove('failed')
+        chapterEl.classList.remove('download', 'failed', 'outdated')
         chapterEl.classList.add('downloading')
 
         await instance.offline.downloadAllVideos(chapterId)
