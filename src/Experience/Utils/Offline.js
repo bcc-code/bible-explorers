@@ -201,8 +201,30 @@ export default class Offline {
             `
         })
 
+        // Use the Cache-Aside strategy
+
         const theUrl = 'https://api.brunstad.tv/query'
-        const response = await fetch(theUrl, {
+
+        // First, get the response from cache
+        const cache = await caches.open('apiResponses')
+        let response = await cache.match(theUrl + '/' + chapterId)
+
+        if (!response) {
+            // There is no cache for this chapter,
+            // so we wait for the data to be fetched
+            response = await offline.getDataFromApi(theUrl, query, fragment, chapterId)
+        } else {
+            // Call the API to update the cache and continue
+            offline.getDataFromApi(theUrl, query, fragment, chapterId)
+        }
+
+        const episode = await response.json()
+
+        return episode.data
+    }
+
+    async getDataFromApi(theUrl, query, fragment, chapterId) {
+        return await fetch(theUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -214,30 +236,22 @@ export default class Offline {
                 `,
             }),
         })
-            .then((response) => {
+            .then(async (response) => {
                 offline.setConnection(_c.ONLINE)
+
+                // Clone the response for cache
+                var responseClone = await new Promise((resolve) => resolve(response.clone()))
+
+                // Save to cache for offline use
+                caches.open('apiResponses').then(function (cache) {
+                    cache.put(theUrl + '/' + chapterId, responseClone)
+                })
 
                 return response
             })
             .catch(async () => {
                 offline.setConnection(_c.OFFLINE)
-
-                const cache = await caches.open('apiResponses')
-                return await cache.match(theUrl + '/' + chapterId)
             })
-
-        // Clone the response for cache
-        var responseClone = await new Promise((resolve) => resolve(response.clone()))
-
-        // Save to cache for offline use
-        caches.open('apiResponses').then(function (cache) {
-            cache.put(theUrl + '/' + chapterId, responseClone)
-        })
-
-        // Get the JSON response
-        const episode = await response.json()
-
-        return episode.data
     }
 
     checkAllVideosHaveLatestVersion = async function (chapterId) {
