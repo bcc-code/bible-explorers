@@ -163,6 +163,7 @@ export default class Offline {
                 })
 
                 if (!myLanguageVideos.length) {
+                    console.log('Video ' + episode.id + ' from chapter ' + chapterId + ' is not downloadable!')
                     return
                 }
 
@@ -284,8 +285,8 @@ export default class Offline {
         var xhr = new XMLHttpRequest()
         xhr.responseType = 'blob'
 
-        if (!video.url) {
-            console.log('Video ' + video.id + ' is not downloadable!')
+        if (!video) {
+            return offline.setErrorMessage(chapterId)
         }
 
         xhr.open('GET', video.url, true)
@@ -338,7 +339,6 @@ export default class Offline {
         if (chapterEl) {
             chapterEl.classList.remove('downloading')
             chapterEl.classList.add('failed')
-            // chapterEl.querySelector('span.title').innerText = 'Error!'
         }
     }
 
