@@ -752,6 +752,17 @@ body.not-logged-in {
 
     }
 
+    body.offline &:not(.downloaded),
+    &:not(.loaded) {
+        opacity: 0.2;
+        filter: grayscale(100%);
+        pointer-events: none;
+    }
+
+    body.offline & .chapter__download {
+        pointer-events: none;
+    }
+        
     &.locked {
         filter: grayscale(1);
         pointer-events: none;
