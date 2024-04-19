@@ -49,7 +49,7 @@ export default class WaitingScreen {
             </form>`
         )
 
-        const nameLabelContainer = _gl.elementFromHtml('<ul class="bg-black/40 overflow-y-auto h-full p-[13%]" id="names-label"></ul>')
+        const nameLabelContainer = _gl.elementFromHtml('<ul class="bg-black/50 overflow-y-auto h-full p-[13%]" id="names-label"></ul>')
 
         wrapper.append(instance.videoBG, form)
         instance.experience.interface.helperScreen.append(nameLabelContainer)
@@ -98,7 +98,7 @@ export default class WaitingScreen {
     }
 
     generateNameLabel(inputVal) {
-        const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative flex items-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`)
+        const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative flex items-center justify-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`)
 
         const removeButton = nameLabel.querySelector('span')
         removeButton.addEventListener('click', () => {
