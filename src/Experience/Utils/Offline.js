@@ -18,7 +18,7 @@ export default class Offline {
         offline.downloaded = []
 
         offline.sizeDownloaded = (chapterId) => offline.downloaded[chapterId].reduce((acc, v) => acc + v.size, 0)
-        offline.sizeToBeDownloaded = (chapterId) => offline.allDownloadableVideos[chapterId].reduce((acc, v) => acc + v.data.size, 0)
+        offline.sizeToBeDownloaded = (chapterId) => offline.allDownloadableVideos[chapterId].reduce((acc, v) => acc + v.data?.size, 0)
 
         if ('indexedDB' in window) {
             this.initialize()
@@ -145,7 +145,7 @@ export default class Offline {
     getNotDownloadedVideos = function (chapterId) {
         return offline.allDownloadableVideos[chapterId].filter((video) => {
             return !offline.downloaded[chapterId].some((downloadedVideo) => {
-                return video.data.name === downloadedVideo.name
+                return video.data?.name === downloadedVideo.name
             })
         })
     }
