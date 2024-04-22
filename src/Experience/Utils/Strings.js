@@ -360,8 +360,8 @@ const strings = {
         browserNotification: 'Der empfohlene Browser für dieses Konzept ist Chrome',
         howTo: 'Wie man sich vorbereitet',
         waitingScreen: {
-            submit: 'Add',
-            inputPlaceholder: 'Write your name',
+            submit: 'Hinzufügen',
+            inputPlaceholder: 'Gebe hier deinen Namen ein',
         },
         journey: {
             start: 'Zeitreise starten',
@@ -459,9 +459,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Klicke auf eine Taste, um die Runde zu starten',
+                tryAgain: 'Klicke auf eine Taste, um die Runde neu zu starten',
+                continue: 'Klicke auf eine Taste, um fortzufahren',
             },
             simonSays: {
                 failed: {
@@ -498,7 +498,7 @@ const strings = {
             skip: 'Überspringen',
             correctAnswers: 'richtige Antworten',
             playAudio: 'Audio abspielen',
-            winRound: 'Well done!',
+            winRound: 'Gut gemacht! ',
         },
         chapter: {
             infoSingular: {
