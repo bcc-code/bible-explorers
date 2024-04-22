@@ -97,7 +97,9 @@ export default class MessageWithSupportingScreens {
     leverClickEvent = () => {
         const interactiveLever = document.getElementById('interactive-lever')
         interactiveLever.loop = false
-        interactiveLever.src = 'textures/switch_activate_ANIM.mp4'
+        interactiveLever.src = 'textures/switch_activate_ANIM_V002.mp4'
+
+        interactiveLever.removeEventListener('click', this.leverClickEvent)
 
         interactiveLever.addEventListener('ended', function () {
             instance.program.nextStep()
@@ -111,7 +113,6 @@ export default class MessageWithSupportingScreens {
     destroy() {
         const interactiveImage = document.getElementById('interactive-lever')
         if (interactiveImage) {
-            interactiveImage.removeEventListener('click', this.leverClickEvent)
             interactiveImage.remove()
             instance.experience.interface.helperScreen.setAttribute('data-view', 'map')
         }
