@@ -326,20 +326,13 @@ export default class World {
                 instance.addClassToSelectedChapter(chapter)
                 instance.setDescriptionHtml()
 
-                if (isElectron() && !chapter.classList.contains('downloaded')) {
-                    instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
-                        theme: 'explorers',
-                        content: _s.offline.downloadToContinue,
-                        maxWidth: 230,
-                        duration: [500, 200],
-                        animation: 'shift-away',
-                        placement: 'top',
-                    })
-
+                if (!chapter.classList.contains('downloaded')) {
+                    instance.disableStartChapterButton()
                     return
                 }
 
                 instance.buttons.startChapter.disabled = false
+                instance.buttons.startChapter.tippy?.destroy()
             })
         })
 
@@ -356,13 +349,21 @@ export default class World {
                 event.stopPropagation()
             })
         })
+    }
 
-        // this.chapterSelectWrapper.querySelectorAll('.chapter__download-failed').forEach(function (chapter) {
-        //     chapter.addEventListener('click', (event) => {
-        //         instance.downloadChapter(chapter)
-        //         event.stopPropagation()
-        //     })
-        // })
+    disableStartChapterButton() {
+        if (!isElectron()) return
+
+        instance.buttons.startChapter.disabled = true
+        instance.buttons.startChapter.tippy?.destroy()
+        instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
+            theme: 'explorers',
+            content: _s.offline.downloadToContinue,
+            maxWidth: 230,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'top',
+        })
     }
 
     setStatesTooltips() {
@@ -447,6 +448,8 @@ export default class World {
         instance.offline.deleteChapterFromIndexedDb(chapterId)
 
         chapterEl.classList.remove('downloaded')
+
+        instance.disableStartChapterButton()
     }
 
     fetchBgMusic() {
