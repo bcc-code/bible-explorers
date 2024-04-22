@@ -151,22 +151,17 @@ export default class Offline {
     }
 
     setVideoDataForDesiredQuality = async function (chapterId) {
-        const locale = offline.getBtvSupportedLanguageCode()
         const videosData = await offline.fetchVideosData(chapterId)
 
         offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
-            const video = videosData[`episode${index + 1}`]
+            const video = videosData.episodes.find((v) => v.uuid == episode.id)
 
-            const myLanguageVideos = video.files.filter((file) => {
-                return file.audioLanguage == locale
-            })
-
-            if (!myLanguageVideos.length) {
-                console.log('Video ' + episode.id + ' from chapter ' + chapterId + ' is not downloadable!')
+            if (!video.files.length) {
+                console.log(episode.id + ' from chapter ' + chapterId + ' is not downloadable!')
                 return
             }
 
-            const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(myLanguageVideos), {
+            const selectedQualityVideo = Object.assign(offline.getSelectedQualityVideo(video.files), {
                 version: video.assetVersion,
                 language: _lang.getLanguageCode(),
                 name: `${episode.type}-${episode.id}`,
@@ -178,27 +173,31 @@ export default class Offline {
     }
 
     fetchVideosData = async function (chapterId) {
-        const fragment = `fragment episodeDetail on Episode {
-            id
-            assetVersion
-            files {
-                id
-                audioLanguage
-                size
-                resolution
-                url
-                fileName
-            }
-        }`
-
-        let query = ``
-
-        offline.allDownloadableVideos[chapterId].forEach((episode, index) => {
-            query += `
-                episode${index + 1}: episode(id: "${episode.id}") {
-                    ...episodeDetail
+        const query = `
+            query ($ids: [ID!]!, $audioLanguages: [String!]) {
+                episodes(ids: $ids) {
+                    id
+                    uuid
+                    assetVersion
+                    files(audioLanguages: $audioLanguages) {
+                        id
+                        audioLanguage
+                        size
+                        resolution
+                        url
+                        fileName
+                    }
                 }
-            `
+            }
+        `
+
+        const locale = offline.getBtvSupportedLanguageCode()
+        const requestBody = JSON.stringify({
+            query: query,
+            variables: {
+                audioLanguages: locale,
+                ids: offline.allDownloadableVideos[chapterId].map((episode) => episode.id),
+            },
         })
 
         // Use the Cache-Aside strategy
@@ -212,10 +211,10 @@ export default class Offline {
         if (!response) {
             // There is no cache for this chapter,
             // so we wait for the data to be fetched
-            response = await offline.getDataFromApi(theUrl, query, fragment, chapterId)
+            response = await offline.getDataFromApi(theUrl, requestBody, chapterId)
         } else {
             // Call the API to update the cache and continue
-            offline.getDataFromApi(theUrl, query, fragment, chapterId)
+            offline.getDataFromApi(theUrl, requestBody, chapterId)
         }
 
         const episode = await response.json()
@@ -223,18 +222,13 @@ export default class Offline {
         return episode.data
     }
 
-    async getDataFromApi(theUrl, query, fragment, chapterId) {
+    async getDataFromApi(theUrl, requestBody, chapterId) {
         return await fetch(theUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                query: `
-                    ${fragment}
-                    { ${query} }
-                `,
-            }),
+            body: requestBody,
         })
             .then(async (response) => {
                 offline.setConnection(_c.ONLINE)
