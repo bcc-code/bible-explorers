@@ -752,7 +752,7 @@ body.not-logged-in {
 
     }
 
-    body.offline &:not(.downloaded),
+    body.offline.electron &:not(.downloaded),
     &:not(.loaded) {
         opacity: 0.2;
         filter: grayscale(100%);

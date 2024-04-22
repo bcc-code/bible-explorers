@@ -191,44 +191,19 @@ export default class Offline {
             }
         `
 
-        const locale = offline.getBtvSupportedLanguageCode()
-        const requestBody = JSON.stringify({
-            query: query,
-            variables: {
-                audioLanguages: locale,
-                ids: offline.allDownloadableVideos[chapterId].map((episode) => episode.id),
-            },
-        })
-
-        // Use the Cache-Aside strategy
-
         const theUrl = 'https://api.brunstad.tv/query'
-
-        // First, get the response from cache
-        const cache = await caches.open('apiResponses')
-        let response = await cache.match(theUrl + '/' + chapterId)
-
-        if (!response) {
-            // There is no cache for this chapter,
-            // so we wait for the data to be fetched
-            response = await offline.getDataFromApi(theUrl, requestBody, chapterId)
-        } else {
-            // Call the API to update the cache and continue
-            offline.getDataFromApi(theUrl, requestBody, chapterId)
-        }
-
-        const episode = await response.json()
-
-        return episode.data
-    }
-
-    async getDataFromApi(theUrl, requestBody, chapterId) {
-        return await fetch(theUrl, {
+        const response = await fetch(theUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: requestBody,
+            body: JSON.stringify({
+                query: query,
+                variables: {
+                    audioLanguages: offline.getBtvSupportedLanguageCode(),
+                    ids: offline.allDownloadableVideos[chapterId].map((episode) => episode.id),
+                },
+            }),
         })
             .then(async (response) => {
                 offline.setConnection(_c.ONLINE)
@@ -245,7 +220,15 @@ export default class Offline {
             })
             .catch(async () => {
                 offline.setConnection(_c.OFFLINE)
+
+                // Get the response from cache
+                const cache = await caches.open('apiResponses')
+                return await cache.match(theUrl + '/' + chapterId)
             })
+
+        const episode = await response.json()
+
+        return episode.data
     }
 
     checkAllVideosHaveLatestVersion = async function (chapterId) {
