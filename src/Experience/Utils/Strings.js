@@ -2084,10 +2084,10 @@ const strings = {
                 high: 'Magas',
             },
             language: 'Nyelv',
-            backgroundMusic: 'Background music',
-            fullScreenMode: 'Full screen',
-            on: 'On',
-            off: 'Off',
+            backgroundMusic: 'Háttérzene',
+            fullScreenMode: 'Teljes képernyő',
+            on: 'Ki',
+            off: 'Be',
             feedback: 'Visszajelzés',
             faq: 'FAQ',
             notLoggedIn: 'You are not logged in!',
@@ -2142,9 +2142,9 @@ const strings = {
         },
         miniGames: {
             keyInteraction: {
-                start: 'Press any key to start a round',
-                tryAgain: 'Press any key to try again',
-                continue: 'Press any key to continue',
+                start: 'Nyomj meg egy billentyűt a forduló indításához',
+                tryAgain: 'Nyomj meg egy billentyűt a forduló újraindításához.',
+                continue: 'Nyomj meg egy gombot a folytatáshoz',
             },
             simonSays: {
                 failed: {
@@ -2169,8 +2169,8 @@ const strings = {
             },
             startGame: 'Játék indítása',
             level: 'Level',
-            gameOver: 'Uh oh, elhibáztad.',
-            round: 'Round',
+            gameOver: 'Oh,elhibáztad.',
+            round: 'Kör',
             nextRound: 'Next round',
             anotherRound: 'Another round',
             tryAgain: 'Próbáld újra!',
