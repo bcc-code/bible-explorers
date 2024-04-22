@@ -326,7 +326,7 @@ export default class World {
                 instance.addClassToSelectedChapter(chapter)
                 instance.setDescriptionHtml()
 
-                if (!chapter.classList.contains('downloaded')) {
+                if (isElectron() && !chapter.classList.contains('downloaded')) {
                     instance.disableStartChapterButton()
                     return
                 }
@@ -352,8 +352,6 @@ export default class World {
     }
 
     disableStartChapterButton() {
-        if (!isElectron()) return
-
         instance.buttons.startChapter.disabled = true
         instance.buttons.startChapter.tippy?.destroy()
         instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
@@ -449,7 +447,9 @@ export default class World {
 
         chapterEl.classList.remove('downloaded')
 
-        instance.disableStartChapterButton()
+        if (isElectron()) {
+            instance.disableStartChapterButton()
+        }
     }
 
     fetchBgMusic() {
