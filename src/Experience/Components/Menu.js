@@ -68,21 +68,23 @@ export default class Menu {
     }
 
     eventListeners() {
-        instance.videoQualityTooltip = tippy(instance.videoQualityToggle, {
-            theme: 'explorers',
-            content: `${_s.settings.videoQuality.title} - ${_s.settings.videoQuality[this.videoQuality]}`,
-            duration: [500, 200],
-            animation: 'shift-away',
-            placement: 'bottom',
-        })
+        if (instance.videoQualityToggle) {
+            instance.videoQualityTooltip = tippy(instance.videoQualityToggle, {
+                theme: 'explorers',
+                content: `${_s.settings.videoQuality.title} - ${_s.settings.videoQuality[this.videoQuality]}`,
+                duration: [500, 200],
+                animation: 'shift-away',
+                placement: 'bottom',
+            })
 
-        instance.videoQualityToggle.addEventListener('click', (e) => {
-            instance.videoQuality = instance.videoQuality === 'high' ? 'medium' : 'high'
-            localStorage.setItem('videoQuality', instance.videoQuality)
-            e.target.setAttribute('data-quality', instance.videoQuality)
+            instance.videoQualityToggle.addEventListener('click', (e) => {
+                instance.videoQuality = instance.videoQuality === 'high' ? 'medium' : 'high'
+                localStorage.setItem('videoQuality', instance.videoQuality)
+                e.target.setAttribute('data-quality', instance.videoQuality)
 
-            instance.updateVideoQualityTooltipContent()
-        })
+                instance.updateVideoQualityTooltipContent()
+            })
+        }
 
         const dropdownLanguages = instance.languageToggle.nextElementSibling
         const languageDropdownToggle = new DropdownToggle(instance.languageToggle, dropdownLanguages)
@@ -148,7 +150,7 @@ export default class Menu {
             instance.videoQuality = currentQuality
         }
 
-        instance.videoQualityToggle.setAttribute('data-quality', instance.videoQuality)
+        instance.videoQualityToggle?.setAttribute('data-quality', instance.videoQuality)
     }
 
     updateVideoQualityTooltipContent() {
