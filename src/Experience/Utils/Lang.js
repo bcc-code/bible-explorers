@@ -1,37 +1,38 @@
-
-const defaultLang = "en"
+const defaultLang = 'en'
 const languagesList = {
-    "en": "English",
-    "no": "Norsk",
-    "de": "Deutsch",
-    "da": "Dansk",
-    "nl": "Nederlands",
-    "fr": "Français",
-    "pl": "Polski",
-    "ro": "Română",
-    "hu": "Magyar",
-    "es": "Español",
-    "pt-pt": "Português",
-    "it": "Italiano",
-    "ru": "Русский",
-    "fi": "Suomi"
+    en: 'English',
+    no: 'Norsk',
+    de: 'Deutsch',
+    da: 'Dansk',
+    nl: 'Nederlands',
+    fr: 'Français',
+    pl: 'Polski',
+    ro: 'Română',
+    hu: 'Magyar',
+    es: 'Español',
+    'pt-pt': 'Português',
+    it: 'Italiano',
+    ru: 'Русский',
+    fi: 'Suomi',
+    tu: 'Türkiye',
 }
 const threeLettersLang = {
-    "no": "nor",
-    "en": "eng",
-    "nl": "nld",
-    "de": "deu",
-    "fr": "fra",
-    "es": "spa",
-    "fi": "fin",
-    "ru": "rus",
-    "pt-pt": "por",
-    "ro": "ron",
-    "tr": "tur",
-    "pl": "pol",
-    "hu": "hun",
-    "it": "ita",
-    "da": "dan"
+    no: 'nor',
+    en: 'eng',
+    nl: 'nld',
+    de: 'deu',
+    fr: 'fra',
+    es: 'spa',
+    fi: 'fin',
+    ru: 'rus',
+    'pt-pt': 'por',
+    ro: 'ron',
+    tr: 'tur',
+    pl: 'pol',
+    hu: 'hun',
+    it: 'ita',
+    da: 'dan',
+    tu: 'tur',
 }
 
 let getLanguageCode = () => localStorage.getItem('lang') || defaultLang
@@ -47,7 +48,7 @@ let getLanguagesList = () => {
 }
 let updateLanguage = (newLang) => {
     localStorage.setItem('lang', newLang)
-    window.location.reload();
+    window.location.reload()
 }
 
 export default { getLanguageCode, get3LettersLang, getLanguageName, getLanguagesList, updateLanguage }
