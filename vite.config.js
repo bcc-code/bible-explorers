@@ -51,8 +51,9 @@ export default {
                 maximumFileSizeToCacheInBytes: 20000000,
                 globPatterns: ['**/*.{js,css,html,jpg,png,svg,mp3,mp4,webm,riv,glb,gltf,wasm}'],
                 globIgnores: ['assets/index.css', 'assets/index.js'],
-                skipWaiting: false, // This forces the waiting service worker to become the active service worker
+                skipWaiting: true, // This forces the waiting service worker to become the active service worker
                 clientsClaim: true, // This instructs the active service worker to take control of all clients as soon as it's activated
+                navigateFallback: '/index.html',
                 runtimeCaching: [
                     getCache({
                         pattern: 'assets/index.css',
