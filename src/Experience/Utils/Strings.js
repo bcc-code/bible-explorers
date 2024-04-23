@@ -1165,7 +1165,7 @@ const strings = {
             reset: 'Începe jocul din nou',
             restartRound: 'Joacă din nou runda',
             continue: 'Continuă călătoria',
-            skip: 'Mergi mai departe',
+            skip: 'Mai departe',
             correctAnswers: 'răspunsuri corecte',
             playAudio: 'Pornește audio',
             winRound: 'Bună treabă!',

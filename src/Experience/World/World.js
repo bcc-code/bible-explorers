@@ -190,6 +190,7 @@ export default class World {
                             <svg><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
+                    <span class="chapter__loading"></span>
                 </a>
                 <div class="chapter-status">
                     <div class="chapter__downloading">
