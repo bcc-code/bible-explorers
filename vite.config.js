@@ -53,6 +53,7 @@ export default {
                 globIgnores: ['assets/index.css', 'assets/index.js'],
                 skipWaiting: true, // This forces the waiting service worker to become the active service worker
                 clientsClaim: true, // This instructs the active service worker to take control of all clients as soon as it's activated
+                navigateFallback: '/index.html',
                 runtimeCaching: [
                     getCache({
                         pattern: 'assets/index.css',
