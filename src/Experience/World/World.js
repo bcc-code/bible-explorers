@@ -60,7 +60,6 @@ export default class World {
         this.chaptersData = []
 
         this.buttons = {
-            // contact: document.querySelector('[aria-label="Contact"]'),
             openDownloadModal: document.querySelector('#download-app'),
             home: document.querySelector('#home-button'),
             guide: document.querySelector('#guide-button'),

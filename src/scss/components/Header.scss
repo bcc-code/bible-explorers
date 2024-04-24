@@ -66,22 +66,6 @@
     }
 }
 
-button[aria-label="Contact"] {
-    .close-icon {
-        display: none;
-    }
-
-    &[is-open] {
-        .close-icon {
-            display: block;
-        }
-
-        .chat-icon {
-            display: none;
-        }
-    }
-}
-
 .page-title {
     position: absolute;
     left: 0;
