@@ -719,6 +719,10 @@
         "notAvailable": "Aucun chapitre disponible dans la langue sélectionnée",
         "browserNotification": "Chrome est le navigateur recommandé pour ce concept",
         "howTo": "Guide d'utilisation",
+        "waitingScreen": {
+            "submit": "Add",
+            "inputPlaceholder": "Write your name here"
+        },
         "journey": {
             "start": "Commencer le voyage dans le temps",
             "continue": "Continuer le voyage dans le temps",
