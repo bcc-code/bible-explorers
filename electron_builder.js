@@ -12,13 +12,15 @@ const config = {
         output: 'dist-app',
     },
     nsis: {
-        artifactName: process.platform == 'win32' ? '${productName}-Setup-${version}.${ext}' : '${productName}-${version}.${ext}',
+        artifactName:
+            process.platform == 'win32'
+                ? '${productName}-Setup-${version}.${ext}'
+                : '${productName}-${version}.${ext}',
     },
     win: {
         target: 'nsis',
-        publisherName: 'BCC Media',
-        verifyUpdateCodeSignature: false, // Disable publisher name check until we get the signature in place for Windows
-        legalTrademarks: '(C) 2024 BCC Media',
+        publisherName: 'BCC MEDIA STI',
+        legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },
     mac: {
         category: 'public.app-category.game',

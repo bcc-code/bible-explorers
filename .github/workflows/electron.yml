@@ -31,7 +31,7 @@ jobs:
             - name: Install dependencies
               run: npm install
 
-            - name: Download certificate file
+            - name: Download certificate file for Mac
               run: |
                   if [ "$RUNNER_OS" == "macOS" ]; then
                       echo $APPLE_DEVELOPER_ID_FILE | base64 --decode >> developer-id.p12
@@ -53,6 +53,25 @@ jobs:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Code signing for Windows
+              run: |
+                  if [ "$RUNNER_OS" == "Windows" ]; then
+                      set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+                      dotnet tool install --global AzureSignTool --version 2.0.17
+                      AzureSignTool.exe sign -du "https://explorers.biblekids.io" ^
+                        -kvu "https://bccm-code-sign2.vault.azure.net" ^
+                        -kvi $WINDOWS_CLIENT_ID ^
+                        -kvs $WINDOWS_CLIENT_PASSWORD ^
+                        -kvc "BCC MEDIA STI" ^
+                        -tr http://timestamp.digicert.com ^
+                        -v ^
+                        $(System.DefaultWorkingDirectory)\dist-app\Bible-Explorers-Setup-1.6.9.exe
+                  fi
+              shell: bash
+              env:
+                  WINDOWS_CLIENT_ID: ${{secrets.BCCM_WINDOWS_CLIENT_ID}}
+                  WINDOWS_CLIENT_PASSWORD: ${{secrets.BCCM_WINDOWS_CLIENT_PASSWORD}}
 
             - name: Building the Electron app for Mac
               run: |
