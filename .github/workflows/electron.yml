@@ -8,7 +8,7 @@ jobs:
     build_and_deploy_electron_app_job:
         strategy:
             matrix:
-                os: [{ name: 'windows', image: 'windows-latest' }, { name: 'macos', image: 'macos-latest' }]
+                os: [{ name: 'windows', image: 'windows-2019' }, { name: 'macos', image: 'macos-latest' }]
         runs-on: ${{ matrix.os.image }}
         steps:
             - name: Github checkout
