@@ -8,7 +8,7 @@ jobs:
     build_and_deploy_electron_app_job:
         strategy:
             matrix:
-                os: [{ name: 'windows', image: 'windows-2019' }, { name: 'macos', image: 'macos-latest' }]
+                os: [{ name: 'windows', image: 'windows-latest' }, { name: 'macos', image: 'macos-latest' }]
         runs-on: ${{ matrix.os.image }}
         steps:
             - name: Github checkout
@@ -58,7 +58,7 @@ jobs:
               run: |
                   if [ "$RUNNER_OS" == "Windows" ]; then
                       set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
-                      dotnet tool install --global AzureSignTool --version 2.0.17
+                      dotnet tool install --global AzureSignTool --version 5.0.0
                       AzureSignTool.exe sign -du "https://explorers.biblekids.io" ^
                         -kvu "https://bccm-code-sign2.vault.azure.net" ^
                         -kvi $WINDOWS_CLIENT_ID ^
