@@ -31,7 +31,9 @@ export default class World {
 
         // Wait for resources
         this.resources.on('ready', () => {
-            const personId = this.experience.auth0.userData ? this.experience.auth0.userData['https://login.bcc.no/claims/personId'] : ''
+            const personId = this.experience.auth0.userData
+                ? this.experience.auth0.userData['https://login.bcc.no/claims/personId']
+                : ''
             instance.chaptersData = instance.resources.api[_api.getBiexChapters(personId)]
 
             this.ageCategory = document.getElementById('app-age_category')
@@ -65,6 +67,7 @@ export default class World {
             guide: document.querySelector('#guide-button'),
             startChapter: document.querySelector('#start-chapter'),
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
+            contact: document.querySelector('#contact-button'),
         }
 
         tippy(this.buttons.openDownloadModal, {
@@ -78,6 +81,14 @@ export default class World {
         tippy(this.buttons.home, {
             theme: 'explorers',
             content: `Home`,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        tippy(this.buttons.contact, {
+            theme: 'explorers',
+            content: _s.settings.contact,
             duration: [500, 200],
             animation: 'shift-away',
             placement: 'bottom',
@@ -149,7 +160,9 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<li><button class="category button-cube-wider" data-slug="${category.slug}">${category.name}</button></li>`)
+        const categoryBtn = _gl.elementFromHtml(
+            `<li><button class="category button-cube-wider" data-slug="${category.slug}">${category.name}</button></li>`
+        )
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 
@@ -271,26 +284,38 @@ export default class World {
             details.append(info)
 
             if (numberOfEpisodes != 1) {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`
+                )
                 info.append(videoLabel)
             } else {
-                const videoLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`)
+                const videoLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`
+                )
                 info.append(videoLabel)
             }
 
             if (numberOfTasks != 1) {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`
+                )
                 info.append(taskLabel)
             } else {
-                const taskLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`)
+                const taskLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`
+                )
                 info.append(taskLabel)
             }
 
             if (numberOfQuizes != 1) {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`
+                )
                 info.append(quizLabel)
             } else {
-                const quizLabel = _gl.elementFromHtml(`<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`)
+                const quizLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`
+                )
                 info.append(quizLabel)
             }
         }
@@ -396,7 +421,9 @@ export default class World {
     }
 
     setChapterDescriptionBgImage(chapter) {
-        const img = _gl.elementFromHtml(`<div class="chapter-description-image"><img src="${chapter.thumbnail}"/></div>`)
+        const img = _gl.elementFromHtml(
+            `<div class="chapter-description-image"><img src="${chapter.thumbnail}"/></div>`
+        )
         document.querySelector('.chapter-description').prepend(img)
     }
 
@@ -474,23 +501,123 @@ export default class World {
         instance.cacheChapterArchiveImages(chapter.archive)
 
         chapter['program'].forEach((checkpoint) => {
-            instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
-            instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
-            instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.character_audio))
-            instance.cacheTaskDescriptionWithSupportingScreensRightScreen(checkpoint.steps.filter((step) => step.message_with_supporting_screens && step.message_with_supporting_screens.right_screen))
-            instance.cacheSortingGameIcons(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'))
-            instance.cachePictureAndCodeImage(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'))
-            instance.cacheDialogueAudios(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'))
-            instance.cacheGameDescriptionTutorials(checkpoint.steps.filter((step) => step.details && step.details.tutorial))
-            instance.cacheFlipCardsMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'flip_cards'))
-            instance.cacheChooseNewKingMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'choose_new_king'))
-            instance.cacheDavidsRefugeImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'davids_refuge'))
-            instance.cacheMultipleChoiceWithPicture(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'multiple_choice_with_picture'))
-            instance.cacheConfirmationScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'confirmation_screen'))
-            instance.cacheTaskDescriptionScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'task_description_screen'))
-            instance.cacheTaskDescriptionWithCalculatorScreenImages(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'calculator_screen'))
-            instance.cacheSingleChoiceMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'single_choice'))
-            instance.cacheTrueFalseQuizMedia(checkpoint.steps.filter((step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'truefalse_quiz'))
+            instance.cacheTaskDescriptionAudios(
+                checkpoint.steps.filter((step) => step.message && step.message.audio)
+            )
+            instance.cacheTaskDescriptionMedia(
+                checkpoint.steps.filter((step) => step.message && step.message.media)
+            )
+            instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.message_with_supporting_screens &&
+                        step.message_with_supporting_screens.character_audio
+                )
+            )
+            instance.cacheTaskDescriptionWithSupportingScreensRightScreen(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.message_with_supporting_screens &&
+                        step.message_with_supporting_screens.right_screen
+                )
+            )
+            instance.cacheSortingGameIcons(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'sorting'
+                )
+            )
+            instance.cachePictureAndCodeImage(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'picture_and_code'
+                )
+            )
+            instance.cacheDialogueAudios(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'
+                )
+            )
+            instance.cacheGameDescriptionTutorials(
+                checkpoint.steps.filter((step) => step.details && step.details.tutorial)
+            )
+            instance.cacheFlipCardsMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'flip_cards'
+                )
+            )
+            instance.cacheChooseNewKingMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'choose_new_king'
+                )
+            )
+            instance.cacheDavidsRefugeImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'davids_refuge'
+                )
+            )
+            instance.cacheMultipleChoiceWithPicture(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'multiple_choice_with_picture'
+                )
+            )
+            instance.cacheConfirmationScreenImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'confirmation_screen'
+                )
+            )
+            instance.cacheTaskDescriptionScreenImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'task_description_screen'
+                )
+            )
+            instance.cacheTaskDescriptionWithCalculatorScreenImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'calculator_screen'
+                )
+            )
+            instance.cacheSingleChoiceMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'single_choice'
+                )
+            )
+            instance.cacheTrueFalseQuizMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'truefalse_quiz'
+                )
+            )
         })
     }
 
@@ -521,12 +648,16 @@ export default class World {
 
     cacheTaskDescriptionWithSupportingScreensCharacterAudio(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio))
+        steps.forEach((step) =>
+            instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio)
+        )
     }
 
     cacheTaskDescriptionWithSupportingScreensRightScreen(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen))
+        steps.forEach((step) =>
+            instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen)
+        )
     }
 
     cacheSortingGameIcons(sortingTasks) {
