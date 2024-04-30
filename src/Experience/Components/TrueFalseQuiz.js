@@ -77,7 +77,7 @@ export default class TrueFalsQuiz {
         quizContentContainer.innerHTML = questionHTML
 
         instance.useCorrectAssetsSrc(index)
-        instance.attachEventListeners()
+        instance.attachEventListeners(index)
     }
 
     useCorrectAssetsSrc(index) {
@@ -145,56 +145,49 @@ export default class TrueFalsQuiz {
         }
     }
 
-    handleAudioPlay(event) {
-        const questionIndex = event.target.closest('.question').getAttribute('data-index')
-        const question = instance.data.questions[questionIndex]
-
-        if (!question.question_audio) {
-            console.error('No audio URL found for this question')
-            return
-        }
-
+    handleAudioPlay() {
         const quizAudio = document.getElementById('quizAudio')
 
-        instance.offline.fetchChapterAsset(question, 'question_audio', (data) => {
-            quizAudio.src = data.question_audio
-            instance.audio.fadeOutBgMusic()
-        })
-
-        if (quizAudio && !quizAudio.paused) {
-            return
-        }
-
-        const button = event.target
-
-        button.disabled = true
-
         quizAudio.onplay = () => {
-            button.disabled = false
+            instance.audio.fadeOutBgMusic()
         }
-
-        quizAudio.onpause = () => {
-            button.disabled = false
-        }
-
-        quizAudio.play().catch((e) => {
-            console.error('Error playing audio:', e)
-        })
 
         quizAudio.onended = () => {
-            button.disabled = false
+            quizAudio.currentTime = 0
             instance.audio.fadeInBgMusic()
+        }
+
+        if (!quizAudio.paused) {
+            quizAudio.pause()
+        } else {
+            quizAudio.play().catch((e) => {
+                console.error('Error playing audio:', e)
+            })
         }
     }
 
-    attachEventListeners() {
+    attachEventListeners(index) {
         const answerButtons = document.querySelectorAll('.answer-button')
         const buttonAudio = document.getElementById('button-audio')
 
-        if (buttonAudio)
+        if (buttonAudio) {
+            const question = instance.data.questions[index]
+
+            if (!question.question_audio) {
+                console.error('No audio URL found for this question')
+                return
+            }
+
+            const quizAudio = document.getElementById('quizAudio')
+
+            instance.offline.fetchChapterAsset(question, 'question_audio', (data) => {
+                quizAudio.src = data.question_audio
+            })
+
             buttonAudio.addEventListener('click', (event) => {
                 instance.handleAudioPlay(event)
             })
+        }
 
         if (answerButtons)
             answerButtons.forEach((button) => {
