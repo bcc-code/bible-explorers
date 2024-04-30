@@ -109,11 +109,17 @@ export default class Congrats {
             do {
                 overlap = false
                 // Adjust calculations to consider margins
-                randomX = marginWidth + Math.random() * (window.innerWidth - 2 * marginWidth - name.offsetWidth)
-                randomY = marginHeight + Math.random() * (window.innerHeight - 2 * marginHeight - name.offsetHeight)
+                randomX =
+                    marginWidth + Math.random() * (window.innerWidth - 2 * marginWidth - name.offsetWidth)
+                randomY =
+                    marginHeight + Math.random() * (window.innerHeight - 2 * marginHeight - name.offsetHeight)
 
                 // Check if the random position overlaps with the central element
-                overlap = randomX < centralRect.right && randomX + name.offsetWidth > centralRect.left && randomY < centralRect.bottom && randomY + name.offsetHeight > centralRect.top
+                overlap =
+                    randomX < centralRect.right &&
+                    randomX + name.offsetWidth > centralRect.left &&
+                    randomY < centralRect.bottom &&
+                    randomY + name.offsetHeight > centralRect.top
             } while (overlap)
 
             name.style.left = `${randomX}px`
@@ -126,6 +132,7 @@ export default class Congrats {
 
     finishChapter() {
         instance.destroy()
+        instance.world.finishJourney()
         instance.world.goHome()
     }
 

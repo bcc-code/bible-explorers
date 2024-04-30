@@ -17,8 +17,10 @@ export default class Offline {
         offline.allDownloadableVideos = []
         offline.downloaded = []
 
-        offline.sizeDownloaded = (chapterId) => offline.downloaded[chapterId].reduce((acc, v) => acc + v.size, 0)
-        offline.sizeToBeDownloaded = (chapterId) => offline.allDownloadableVideos[chapterId].reduce((acc, v) => acc + v.data?.size, 0)
+        offline.sizeDownloaded = (chapterId) =>
+            offline.downloaded[chapterId].reduce((acc, v) => acc + v.size, 0)
+        offline.sizeToBeDownloaded = (chapterId) =>
+            offline.allDownloadableVideos[chapterId].reduce((acc, v) => acc + v.data?.size, 0)
 
         if ('indexedDB' in window) {
             this.initialize()
@@ -34,7 +36,10 @@ export default class Offline {
                 let usage = 0
                 let message = ''
 
-                message = persistent == true ? 'Storage will NOT be cleared except by explicit user action.' : 'Storage may be cleared by the UA under storage pressure.'
+                message =
+                    persistent == true
+                        ? 'Storage will NOT be cleared except by explicit user action.'
+                        : 'Storage may be cleared by the UA under storage pressure.'
 
                 navigator.storage.estimate().then((estimate) => {
                     quota = formatBytes(estimate.quota)
@@ -54,8 +59,17 @@ export default class Offline {
     }
 
     initialize = function () {
-        offline.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
-        offline.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
+        offline.indexedDB =
+            window.indexedDB ||
+            window.webkitIndexedDB ||
+            window.mozIndexedDB ||
+            window.OIndexedDB ||
+            window.msIndexedDB
+        offline.IDBTransaction =
+            window.IDBTransaction ||
+            window.webkitIDBTransaction ||
+            window.OIDBTransaction ||
+            window.msIDBTransaction
         offline.dbVersion = 3
         offline.store = 'chaptersData'
         offline.db = null
@@ -75,7 +89,8 @@ export default class Offline {
     }
 
     setUpDbConnection = function () {
-        if (!offline.request) offline.request = offline.indexedDB.open('Bible Kids Explorers', offline.dbVersion)
+        if (!offline.request)
+            offline.request = offline.indexedDB.open('Bible Kids Explorers', offline.dbVersion)
 
         offline.request.onerror = function () {
             // console.log("Error creating/accessing IndexedDB database")
@@ -117,7 +132,9 @@ export default class Offline {
 
     async setChapterDownloadableVideos(chapter) {
         const episodes = chapter.episodes.map((e) => ({ type: e.type, id: e.id }))
-        const textures = offline.getTextureIdsForChapter(chapter).map((textureId) => ({ type: 'texture', id: textureId }))
+        const textures = offline
+            .getTextureIdsForChapter(chapter)
+            .map((textureId) => ({ type: 'texture', id: textureId }))
 
         offline.allDownloadableVideos[chapter.id] = textures.concat(episodes)
 
@@ -259,11 +276,18 @@ export default class Offline {
                     textureVideos.push(step.message.video)
                 }
 
-                if (step.details.step_type == 'iris_with_supporting_screens' && step.message_with_supporting_screens.video) {
+                if (
+                    step.details.step_type == 'iris_with_supporting_screens' &&
+                    step.message_with_supporting_screens.video
+                ) {
                     textureVideos.push(step.message_with_supporting_screens.video)
                 }
 
-                if (step.details.step_type == 'task' && step.details.task_type == 'video_with_question' && step.video_with_question.video) {
+                if (
+                    step.details.step_type == 'task' &&
+                    step.details.task_type == 'video_with_question' &&
+                    step.video_with_question.video
+                ) {
                     textureVideos.push(step.video_with_question.video)
                 }
             })
@@ -321,14 +345,17 @@ export default class Offline {
 
     onVideoDownloadProgress = function (chapterId, e) {
         if (e.lengthComputable) {
-            var percentage = ((offline.sizeDownloaded(chapterId) + e.loaded) * 100) / offline.sizeToBeDownloaded(chapterId)
+            var percentage =
+                ((offline.sizeDownloaded(chapterId) + e.loaded) * 100) / offline.sizeToBeDownloaded(chapterId)
             let chapterEl = document.querySelector('.chapter[data-id="' + chapterId + '"]')
 
             if (chapterEl) {
                 chapterEl.classList.add('downloading')
-                chapterEl.querySelector('.downloading-label').innerText = parseFloat(percentage).toFixed() + '%'
+                chapterEl.querySelector('.downloading-label').innerText =
+                    parseFloat(percentage).toFixed() + '%'
                 chapterEl.querySelector('.progress-line').style.transform = `scaleX(${percentage / 100})`
-                chapterEl.querySelector('.chapter__downloaded-quota').innerText = `${formatBytes(offline.sizeDownloaded(chapterId) + e.loaded, 2)} / ${formatBytes(offline.sizeToBeDownloaded(chapterId), 2)}`
+                chapterEl.querySelector('.chapter__downloaded-quota').innerText =
+                    `${formatBytes(offline.sizeDownloaded(chapterId) + e.loaded, 2)} / ${formatBytes(offline.sizeToBeDownloaded(chapterId), 2)}`
             }
         }
     }
@@ -374,6 +401,7 @@ export default class Offline {
                 _appInsights.trackEvent({
                     name: 'Chapter downloaded',
                     properties: {
+                        chapterId: chapterId,
                         language: video.language,
                         quality: video.quality,
                     },

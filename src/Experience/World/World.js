@@ -794,10 +794,12 @@ export default class World {
         _appInsights.trackEvent({
             name: 'Start chapter',
             properties: {
-                title: instance.selectedChapter.title,
+                chapterId: instance.selectedChapter.id,
                 category: instance.selectedChapter.category,
                 language: _lang.getLanguageCode(),
                 quality: instance.selectedQuality,
+                device: isElectron() ? 'App' : 'Web',
+                login: instance.experience.auth0?.isAuthenticated ? 'Login' : 'Non-Login',
             },
         })
 
