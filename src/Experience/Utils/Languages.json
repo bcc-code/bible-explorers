@@ -71,7 +71,7 @@
             "logIn": "Log in",
             "logOut": "Log out",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -250,7 +250,7 @@
             "logIn": "Logg inn",
             "logOut": "Logg ut",
             "noAccess": "Du har ikke tilgang til å vise denne filmen. For å få tilgang send mail til <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -426,7 +426,7 @@
             "logIn": "Einloggen",
             "logOut": "Ausloggen",
             "noAccess": "Du hast keinen Zugang um diesen Film anzusehen. Zugang erhältst du bei <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -602,7 +602,7 @@
             "logIn": "Log in",
             "logOut": "Log uit",
             "noAccess": "Je hebt geen rechten om deze film te bekijken. Stuur een e-mail naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> om toegang aan te vragen.",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -778,7 +778,7 @@
             "logIn": "Se connecter",
             "logOut": "Se déconnecter",
             "noAccess": "Tu n'as pas accès au visionnage des films. Pour obtenir un accès, merci d'envoyer un mail à <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -954,7 +954,7 @@
             "logIn": "Zaloguj",
             "logOut": "Wyloguj",
             "noAccess": "Nie masz dostępu do tego filmiku. Aby uzyskać dostęp- napisz maila pod <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -1130,7 +1130,7 @@
             "logIn": "Logare",
             "logOut": "Delogare",
             "noAccess": "Nu ai acces pentru a viziona filmele. Pentru a primi acces, trimite un email la <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -1306,7 +1306,7 @@
             "logIn": "Iniciar sección",
             "logOut": "Cerrar sección",
             "noAccess": "No tienes acceso para ver esta película. Para obtener acceso, envíe un correo electrónico a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -1482,7 +1482,7 @@
             "logIn": "Conecte-se",
             "logOut": "Sair",
             "noAccess": "Você não tem acesso a esse vídeo. Para recceber acesso envie um e-mail a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -1658,7 +1658,7 @@
             "logIn": "Accedi",
             "logOut": "Esci",
             "noAccess": "Non hai accesso alla visione dei film. Per ottenere l'accesso invia un'e-mail a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -1834,7 +1834,7 @@
             "logIn": "Войти",
             "logOut": "Выйти",
             "noAccess": "У вас нет доступа для просмотра этого фильма. Чтобы получить доступ, отправьте письмо на <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -2010,7 +2010,7 @@
             "logIn": "Kirjaudu sisään",
             "logOut": "Kirjaudu ulos",
             "noAccess": "Sinulla ei ole oikeutta katsoa tätä videota. Saadaksesi oikeuden katsoa, lähetä sähköposti osoitteeseen <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -2186,7 +2186,7 @@
             "logIn": "Bejelentkezés",
             "logOut": "Kijelentkezés",
             "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -2362,7 +2362,7 @@
             "logIn": "Log ind",
             "logOut": "Log ud",
             "noAccess": "Du har ikke adgang til at se denne film. For at få adgang\": send en mail til <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [
@@ -2541,7 +2541,7 @@
             "logIn": "Giriş yapmak",
             "logOut": "Çıkış Yap",
             "noAccess": "Filmleri izleme erişiminiz yok. Erişim elde etmek için <a href='mailto:hello@biblekids.io'>hello@biblekids.io</a> adresine bir e-posta gönderin",
-            "contact": "Send us an email"
+            "contact": "Contact support"
         },
         "faq": {
             "questions": [

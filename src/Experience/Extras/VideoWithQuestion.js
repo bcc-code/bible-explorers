@@ -33,7 +33,7 @@ export default class VideoWithQuestion {
                     ${instance.data.question ? `<h1 class="task-container_heading">${instance.data.question}</h1>` : ''}
                     <div id="task-container_video" class="w-[30rem]"></div>
                     <div class="textarea-box">
-                        <textarea></textarea>
+                        <textarea class="scroller"></textarea>
                     </div>
                     <div class="task-container_actions">
                         <button class="button-task_action" type="submit">${_s.task.submit}</button>
@@ -79,7 +79,9 @@ export default class VideoWithQuestion {
 
     toggleQuestion() {
         instance.resources.videoPlayers[instance.data.video].pause()
-        document.querySelectorAll('#video-with-question .hidden').forEach((item) => item.classList.remove('hidden'))
+        document
+            .querySelectorAll('#video-with-question .hidden')
+            .forEach((item) => item.classList.remove('hidden'))
 
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)

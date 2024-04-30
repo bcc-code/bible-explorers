@@ -64,8 +64,12 @@ export default class Quiz {
         instance.quizContainer.querySelector('#quiz-wrapper').setAttribute('data-question', 0)
 
         instance.questions.forEach((q, qIdx) => {
-            const container = _gl.elementFromHtml(`<div class="quiz-item ${qIdx === 0 ? 'block' : 'hidden'}" data-index="${qIdx}"></div>`)
-            const question = _gl.elementFromHtml(`<h1 class="task-container_prompts text-center font-bold mb-[4%]">${q.question}</h1>`)
+            const container = _gl.elementFromHtml(
+                `<div class="quiz-item ${qIdx === 0 ? 'block' : 'hidden'}" data-index="${qIdx}"></div>`
+            )
+            const question = _gl.elementFromHtml(
+                `<h1 class="task-container_prompts text-center font-bold mb-[4%]">${q.question}</h1>`
+            )
 
             container.append(question)
 
@@ -85,7 +89,9 @@ export default class Quiz {
                 })
             } else {
                 this.openQuestions++
-                const selfAnswer = _gl.elementFromHtml(`<div class="textarea-box"><textarea placeholder="${q.placeholder}" class=""></textarea></div>`)
+                const selfAnswer = _gl.elementFromHtml(
+                    `<div class="textarea-box"><textarea class="scroller" placeholder="${q.placeholder}" class=""></textarea></div>`
+                )
                 container.append(selfAnswer)
             }
 
@@ -114,8 +120,12 @@ export default class Quiz {
 
             options.forEach((option, idx) => {
                 option.addEventListener('click', (e) => {
-                    const currentQuestionIdx = parseInt(e.target.closest('.quiz-item').getAttribute('data-index'))
-                    const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex((item) => item.correct_wrong === true)
+                    const currentQuestionIdx = parseInt(
+                        e.target.closest('.quiz-item').getAttribute('data-index')
+                    )
+                    const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex(
+                        (item) => item.correct_wrong === true
+                    )
 
                     if (idx === correctAnswerIdx) {
                         e.target.closest('div').classList.add('correct')
