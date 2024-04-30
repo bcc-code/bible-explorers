@@ -984,15 +984,15 @@ $themes: (
 #closed-caption {
 
     #iris-cc {
-        background-image: url('../../static/interface/Dialog_bar.png');
+        background-image: url('../../static/interface/Dialog_bar_v02.png');
         background-repeat: no-repeat;
         background-size: contain;
-        aspect-ratio: 2495/439;
+        aspect-ratio: 2495/513;
         padding-top: 5%;
         padding-bottom: 3%;
         padding-inline: 4%;
         display: flex;
-        width: clamp(439px, 50vw, 2495px);
+        width: clamp(513px, 50vw, 2495px);
 
         div {
             flex: 1;
