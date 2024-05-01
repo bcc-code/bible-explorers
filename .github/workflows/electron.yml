@@ -59,7 +59,7 @@ jobs:
                   if [ "$RUNNER_OS" == "Windows" ]; then
                       set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
                       dotnet tool install --global AzureSignTool --version 5.0.0
-                      AzureSignTool.exe sign -du "https://explorers.biblekids.io" -kvu "https://bccm-code-sign2.vault.azure.net" -kvt "$WINDOWS_DIRECTORY_ID" -kvi "$WINDOWS_CLIENT_ID" -kvs "$WINDOWS_CLIENT_PASSWORD" -kvc "HSM-CS" -tr "http://timestamp.digicert.com" -v "$(System.DefaultWorkingDirectory)\dist-app\*.exe"
+                      AzureSignTool.exe sign -du "https://explorers.biblekids.io" -kvu "https://bccm-code-sign2.vault.azure.net" -kvt "$WINDOWS_DIRECTORY_ID" -kvi "$WINDOWS_CLIENT_ID" -kvs "$WINDOWS_CLIENT_PASSWORD" -kvc "HSM-CS" -tr "http://timestamp.digicert.com" -v "dist-app/Bible-Explorers*.exe"
                   fi
               shell: bash
               env:
