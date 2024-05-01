@@ -20,7 +20,6 @@ const config = {
     win: {
         target: 'nsis',
         publisherName: 'BCC MEDIA STI',
-        verifyUpdateCodeSignature: false, // Disable publisher name check until we get the signature in place for Windows
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },
     mac: {

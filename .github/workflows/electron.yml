@@ -34,23 +34,50 @@ jobs:
             - name: Build for production
               run: npm run build:electron
 
-            - name: Build the Electron app, do code signing and publish the artifacts for Windows
+            - name: Build the Electron app & sign the code for Windows
               run: |
                   if [ "$RUNNER_OS" == "Windows" ]; then
                       npm run package
                       set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
                       dotnet tool install --global AzureSignTool --version 5.0.0
-                      AzureSignTool.exe sign -du "https://explorers.biblekids.io" -kvu "https://bccm-code-sign2.vault.azure.net" -kvt "$WINDOWS_DIRECTORY_ID" -kvi "$WINDOWS_CLIENT_ID" -kvs "$WINDOWS_CLIENT_PASSWORD" -kvc "HSM-CS" -tr "http://timestamp.digicert.com" -v "dist-app/Bible-Explorers-Setup-1.6.14.exe"
-                      npm run publish
+                      AzureSignTool.exe sign -du "https://explorers.biblekids.io" -kvu "https://bccm-code-sign2.vault.azure.net" -kvt "$WINDOWS_DIRECTORY_ID" -kvi "$WINDOWS_CLIENT_ID" -kvs "$WINDOWS_CLIENT_PASSWORD" -kvc "HSM-CS" -tr "http://timestamp.digicert.com" -v "dist-app/Bible-Explorers-Setup-1.6.15.exe"
                   fi
               shell: bash
               env:
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WINDOWS_DIRECTORY_ID: ${{secrets.BCCM_WINDOWS_DIRECTORY_ID}}
                   WINDOWS_CLIENT_ID: ${{secrets.BCCM_WINDOWS_CLIENT_ID}}
                   WINDOWS_CLIENT_PASSWORD: ${{secrets.BCCM_WINDOWS_CLIENT_PASSWORD}}
+
+            - name: Create release on GitHub for Windows
+              uses: actions/create-release@v1
+              if: matrix.os.name == 'windows'
+              id: create_release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ github.ref }}
+                  release_name: Release ${{ github.ref }}
+                  draft: false
+                  prerelease: false
+
+            - name: Upload assets to GitHub for Windows
+              uses: actions/upload-release-asset@v1
+              if: matrix.os.name == 'windows'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: ./dist-app/*
+                  asset_content_type: application/octet-stream
+
+            - name: Upload to Amazon S3 for Windows
+              run: |
+                  if [ "$RUNNER_OS" == "Windows" ]; then
+                      aws s3 cp ./dist-app/* s3://bccm-static/explorers/ --region eu-north-1
+                  fi
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
             - name: Download certificate file & build the Electron app for Mac
               run: |
