@@ -72,7 +72,7 @@ export default class Experience {
 
         const redirectToLanguage = this.getUrlParameter('language')
         if (redirectToLanguage) {
-            window.history.replaceState({}, document.title, '/')
+            window.history.replaceState({}, document.title, window.location.pathname)
             _lang.updateLanguage(redirectToLanguage)
         }
     }
