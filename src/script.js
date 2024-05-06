@@ -100,6 +100,11 @@ const handleRedirectCallback = async () => {
                 document.querySelector('#login-screen a').click()
             }, 2000)
         }
+        else if (window.location.pathname.includes('login')) {
+            await experience.auth0.loginWithRedirect({
+                redirect_uri: window.location.origin,
+            })
+        }
     }
 }
 
