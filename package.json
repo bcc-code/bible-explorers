@@ -1,6 +1,6 @@
 {
   "name": "bible-explorers",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "description": "App for Bible Explorers",
   "main": ".vite/build/main.js",
   "repository": {
