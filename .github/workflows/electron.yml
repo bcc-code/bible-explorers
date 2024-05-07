@@ -43,13 +43,13 @@ jobs:
 
             - name: Login to Azure
               if: ${{ matrix.os.name == 'windows' }}
-              uses: azure/login@v1
+              uses: azure/login@v2
               with:
+                  auth-type: IDENTITY
                   client-id: ${{ secrets.BCCM_WINDOWS_CLIENT_ID }}
-                  subscription-id: ${{ secrets.BCCM_WINDOWS_SUBSCRIPTION_ID }}
                   tenant-id: ${{ secrets.BCCM_WINDOWS_DIRECTORY_ID }}
-                  allow-no-subscriptions: true
-                  federated-token: ${{ secrets.GITHUB_TOKEN }}
+                  subscription-id: ${{ secrets.BCCM_WINDOWS_SUBSCRIPTION_ID }}
+                  enable-AzPSSession: true
 
             - name: Download certificate file from Key Vault
               id: download-cert
