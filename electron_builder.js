@@ -20,6 +20,7 @@ const config = {
     win: {
         target: 'nsis',
         sign: './custom-sign.js',
+        certificateSubjectName: 'HSM-CS',
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },
