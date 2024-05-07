@@ -1,7 +1,7 @@
-import Experience from "../Experience"
-import _s from "../Utils/Strings.js"
-import _gl from "../Utils/Globals.js"
-import _e from "../Utils/Events.js"
+import Experience from '../Experience.js'
+import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -15,70 +15,51 @@ export default class Message {
         instance.navigation = instance.experience.navigation
     }
 
-    show(text = '', character = '') {
+    show(caption = '', character = '') {
         instance.destroy()
         instance.world = instance.experience.world
         instance.program = instance.world.program
+        instance.video = instance.program.video
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.message
 
-        if (!text) text = instance.data.text
+        if (!caption) caption = instance.data.text
         if (!character) character = instance.data ? instance.data.character : 'iris'
 
-        instance.setHtml(text, character)
+        instance.setHtml(caption, character)
         instance.setEventListeners()
 
-        if (instance.data.audio)
+        if (instance.data.audio) {
             instance.audio.togglePlayTaskDescription(instance.data.audio)
+        }
 
         if (instance.data.video) {
-            const textureName = `chapter-${instance.world.selectedChapter.id}_c-${instance.world.program.currentCheckpoint}_s-${instance.world.program.currentStep}`
-            instance.world.controlRoom.tv_16x9.material.map = instance.resources.textureItems[textureName].item
-            instance.world.controlRoom.playCustomIrisTexture(textureName)
+            instance.video.load('texture-' + instance.data.video)
         }
     }
 
-    setHtml(text, character) {
-        const message = _gl.elementFromHtml(
-            `<section class="message">
-                <div class="container">
-                    <div class="content">
-                        <h2>${character}</h2>
-                        ${text}
-                    </div>
-                </div>
-            </section>`
-        )
-        document.querySelector('.ui-container').append(message)
+    setHtml(caption, character) {
+        const message = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`)
+        instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.character == 'glitch') {
             const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
-            document.querySelector('section.message .container').append(glitch)
+            document.querySelector('#closed-caption').append(glitch)
         }
 
         if (instance.data.open_question === true) {
-            instance.experience.navigation.next.disabled = true
+            // instance.experience.navigation.next.disabled = true
             const openQuestion = _gl.elementFromHtml(
-                `<section class="open-question">
-                    <div class="container">
-                        <div class="content">
-                            <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
-                        </div>
-                    </div>
-                </section>`
+                `<div id="open-question">
+                    <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                </div`
             )
-            document.querySelector('.ui-container').append(openQuestion)
+            document.querySelector('#closed-caption').append(openQuestion)
 
-            const texarea = openQuestion.querySelector('textarea')
-            texarea.addEventListener('input', (e) => {
-                if (e.target.value.length > 2) {
-                    instance.experience.navigation.next.disabled = false
-                }
-                else {
-                    instance.experience.navigation.next.disabled = true
-                }
+            const textarea = openQuestion.querySelector('textarea')
+            textarea.addEventListener('input', (e) => {
+                instance.experience.navigation.next.disabled = e.target.value.length <= 2
             })
-
         }
     }
 
@@ -87,7 +68,8 @@ export default class Message {
     }
 
     destroy() {
-        document.querySelector('section.message')?.remove()
-        document.querySelector('section.open-question')?.remove()
+        instance.video?.defocus()
+        document.querySelector('#iris-cc')?.remove()
+        document.querySelector('#open-question')?.remove()
     }
 }

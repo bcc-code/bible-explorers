@@ -1,192 +1,147 @@
-import * as THREE from 'three'
-import TWEEN from '@tweenjs/tween.js'
-import Experience from "../Experience.js";
+import Experience from '../Experience.js'
 import _lang from '../Utils/Lang.js'
 import _s from '../Utils/Strings.js'
+import _e from '../Utils/Events.js'
 
 let instance = null
 
 export default class Video {
     constructor() {
-        if (instance)
-            return instance
-
-        this.experience = new Experience()
-        this.world = this.experience.world
-        this.debug = this.experience.debug
-        this.resources = this.experience.resources
-        this.camera = this.experience.camera
-        this.audio = this.experience.world.audio
-
         instance = this
+        instance.experience = new Experience()
+        instance.world = instance.experience.world
+        instance.offline = instance.world.offline
+        instance.debug = instance.experience.debug
+        instance.resources = instance.experience.resources
+        instance.audio = instance.world.audio
+        instance.scene = instance.experience.scene
+        instance.controlRoom = instance.world.controlRoom
+        instance.clickableObjects = instance.controlRoom.clickableObjects
+
+        // Load all videos
+        const chapterId = instance.world.selectedChapter.id
+        instance.world.offline.allDownloadableVideos[chapterId].forEach((video) => {
+            const id = `${video.type}-${video.id}`
+            instance.resources.loadEpisodeTexture(id)
+        })
 
         // Setup
-        this.portalScreen = this.world.controlRoom.tv_portal
-        this.tablet = this.world.controlRoom.tablet
-
-        this.video = () => {
+        instance.video = () => {
             let id = instance.playingVideoId
-            return instance.resources.videoPlayers[id];
+            return instance.resources.videoPlayers[id]
         }
 
-        this.videoJsEl = () => {
+        instance.videoJsEl = () => {
             let id = 'videojs-' + instance.playingVideoId
             return document.getElementById(id)
         }
 
-        this.hasSkipBtn = () => {
+        instance.hasSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video') != null
         }
 
-        this.getSkipBtn = () => {
+        instance.getSkipBtn = () => {
             return instance.videoJsEl().querySelector('.skip-video')
         }
 
-        this.playingVideoId = null
+        instance.isVideoEpisode = () => {
+            return instance.playingVideoId?.includes('episode-')
+        }
+
+        instance.playingVideoId = null
+        instance.videoContainer = document.querySelector('#video-container')
     }
 
     load(id) {
-        this.playingVideoId = id
+        // Set new playing video id
+        instance.playingVideoId = id
+
+        // Move current video first in the list in order to be visible
+        instance.videoContainer.prepend(instance.videoContainer.querySelector('#' + id))
 
         // First, remove all previous event listeners - if any
-        this.video().off('ended', instance.waitAndFinish)
+        instance.video().off('play', instance.setFullscreenIfNecessary)
+        instance.video().off('ended', instance.finish)
 
         // Always start new loaded videos from the beginning
-        this.video().currentTime(0)
+        instance.video().currentTime(0)
 
-        // Set texture when starting directly on a video task type
-        if (this.portalScreen.material.map != this.resources.textureItems[id])
-            this.setTexture(id)
+        // Add video event listeners
+        instance.video().on('play', instance.setFullscreenIfNecessary)
+        instance.video().on('ended', instance.finish)
 
-        this.resources.videoPlayers[id].setVideoQuality(this.getVideoQuality())
+        // If the video is an episode, focus on the video (fade out bg music)
+        if ([...instance.video().el_.classList].filter((c) => c.includes('episode')).length) {
+            instance.focus()
+        }
 
-        // Add event listener on play
-        this.video().on('play', function () {
-            this.requestFullscreen()
-        })
-
-        // Add event listener on video update
-        this.video().on('timeupdate', function () {
-            if (instance.showSkipBtn()) {
-                if (instance.hasSkipBtn()) return
-
-                const skipVideo = document.createElement('div')
-                skipVideo.className = 'skip-video btn default next pulsate'
-                skipVideo.innerText = _s.miniGames.skip
-
-                skipVideo.addEventListener('click', instance.finish)
-                instance.videoJsEl().appendChild(skipVideo)
-            }
-            else {
-                if (!instance.hasSkipBtn()) return
-                instance.getSkipBtn().remove()
-            }
-        })
-
-        // Add event listener on fullscreen change
-        this.video().on('fullscreenchange', function () {
-            if (!this.isFullscreen_) {
-                instance.pause()
-            }
-        })
-
-        // Add event listener on video end
-        this.video().on('ended', instance.waitAndFinish)
-        this.focus()
-    }
-
-    setTexture(id) {
-        if (!this.resources.textureItems.hasOwnProperty(id)) return
-
-        this.portalScreen.material.map = this.resources.textureItems[id]
-        this.portalScreen.material.map.flipY = false
-        this.portalScreen.material.needsUpdate = true
+        // Play if necessary
+        if (id.includes('texture-') || instance.episodeIsDirectlyPlayable(id)) {
+            instance.play()
+        }
     }
 
     //#region Actions
 
     play() {
         instance.video().play()
-        this.experience.videoIsPlaying = true
+        instance.experience.videoIsPlaying = true
     }
 
     pause() {
         instance.video().pause()
-        this.experience.videoIsPlaying = false
+        instance.experience.videoIsPlaying = false
     }
 
     focus() {
-        instance.camera.zoomIn(2000)
-        instance.tablet.material.map.image.play()
-
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
-
-        new TWEEN.Tween(instance.portalScreen.material)
-            .to({ color: new THREE.Color(0xFFFFFF) }, 1000)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .start()
     }
 
     defocus() {
-        if (instance.video()) {
-            instance.pause()
-            instance.tablet.material.map.image.pause()
-            instance.portalScreen.scale.set(0, 0, 0)
+        if (!instance.video()) return
 
-            if (this.video().isFullscreen_) {
-                instance.video().exitFullscreen()
-            }
+        instance.pause()
 
-            new TWEEN.Tween(instance.portalScreen.material)
-                .to({ color: new THREE.Color(0x131A43) }, 1000)
-                .easing(TWEEN.Easing.Quadratic.InOut)
-                .start()
-                .onComplete(() => {
-                    instance.audio.setOtherAudioIsPlaying(false)
-                    instance.audio.fadeInBgMusic()
-                })
+        if (instance.video().isFullscreen_) {
+            instance.video().exitFullscreen()
         }
 
-        // instance.experience.navigation.next.disabled = false
-    }
+        instance.audio.setOtherAudioIsPlaying(false)
+        instance.audio.fadeInBgMusic()
 
-    waitAndFinish() {
-        if (instance.hasSkipBtn())
-            instance.getSkipBtn().remove()
-
-        setTimeout(() => { instance.finish() }, 1000)
+        instance.playingVideoId = null
     }
 
     finish() {
+        if (instance.hasSkipBtn()) {
+            instance.getSkipBtn().remove()
+        }
+
         instance.defocus()
         instance.world.program.nextStep()
     }
 
     //#endregion
 
-    getVideoQuality() {
-        switch (this.world.selectedQuality) {
-            case 'low':
-                return 270
+    episodeIsDirectlyPlayable(id) {
+        return id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
+    }
 
-            case 'medium':
-                return 540
-
-            case 'high':
-            default:
-                return 1080
+    setFullscreenIfNecessary() {
+        if (!this.isFullscreen_ && instance.isVideoEpisode()) {
+            instance.video().requestFullscreen()
+            instance.addSkipBtn()
         }
     }
 
-    showSkipBtn() {
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            return true
+    addSkipBtn() {
+        if (instance.hasSkipBtn()) return
 
-        const secondsToSkip = 10
-        const currentTime = instance.video().currentTime()
-        const duration = instance.video().duration()
-
-        return duration - currentTime < secondsToSkip
+        const skipVideo = document.createElement('div')
+        skipVideo.className = 'skip-video button-arrow-skip'
+        skipVideo.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        skipVideo.addEventListener('click', instance.finish)
+        instance.videoJsEl().appendChild(skipVideo)
     }
 }

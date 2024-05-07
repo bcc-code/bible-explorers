@@ -46,6 +46,7 @@
     }
 
     .btn:hover & {
+
         .bar {
             background-color: var(--clr-text);
         }
@@ -61,38 +62,6 @@
 
         .bar-3 {
             transform: translateY(-4px) scaleX(1.8);
-        }
-    }
-}
-
-button[aria-label="Background music"] {
-    .music-on {
-        display: none;
-    }
-
-    &[is-playing] {
-        .music-on {
-            display: block;
-        }
-
-        .music-off {
-            display: none;
-        }
-    }
-}
-
-button[aria-label="Contact"] {
-    .close-icon {
-        display: none;
-    }
-
-    &[is-open] {
-        .close-icon {
-            display: block;
-        }
-
-        .chat-icon {
-            display: none;
         }
     }
 }

@@ -1,49 +1,43 @@
 export default [
+    // Maze game
     {
-        name: 'cubeMap',
-        type: 'cubeTexture',
-        path: [
-            'textures/cubeMap/C_Left_v2.png',
-            'textures/cubeMap/C_Right_v2.png',
-            'textures/cubeMap/C_Top_v2.png',
-            'textures/cubeMap/C_Down_v2.png',
-            'textures/cubeMap/C_Back_v2.png',
-            'textures/cubeMap/C_Front_v2.png'
-        ]
-    },
-    {
-        name: 'controlRoom',
+        name: 'glitch',
         type: 'gltfModel',
-        path: 'models/Controlroom_lowmodel_1.glb'
+        path: 'games/maze/GLITCH_LowPoly_v05.gltf',
     },
     {
-        name: 'baked',
+        name: 'glitch_baked',
         type: 'texture',
-        path: 'textures/baking_v6.png'
+        path: 'games/maze/glitch_v02.jpg',
     },
     {
-        name: 'screen_default',
+        name: 'cubeMapTop',
         type: 'texture',
-        path: 'textures/screen_default.jpg'
+        path: 'games/maze/cubeMap/c_top.png',
     },
     {
-        name: 'map',
-        type: 'videoTexture',
-        path: 'textures/map_v2.mp4'
+        name: 'cubeMapSide',
+        type: 'texture',
+        path: 'games/maze/cubeMap/c_side.png',
     },
     {
-        name: 'codes',
-        type: 'videoTexture',
-        path: 'textures/codes_v2.mp4'
+        name: 'floor',
+        type: 'texture',
+        path: 'games/maze/TexturesCom_OutdoorFloor4_512_albedo.png',
     },
     {
-        name: 'iris',
-        type: 'videoTexture',
-        path: 'textures/iris_idle_v3.mp4'
+        name: 'mazeBox',
+        type: 'gltfModel',
+        path: 'games/maze/BibleBox_OpenAnimation.gltf',
     },
     {
-        name: 'hud',
-        type: 'videoTexture',
-        path: 'textures/screen_hud_v2.mp4'
-    }
+        name: 'mazeBoxBaked',
+        type: 'texture',
+        path: 'games/maze/BibleBoxTexture_Baked_V02.png',
+    },
+    {
+        name: 'instructions',
+        type: 'texture',
+        path: 'games/maze/instructions.png',
+    },
 ]

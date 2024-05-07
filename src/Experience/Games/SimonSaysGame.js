@@ -6,11 +6,11 @@ import _gl from '../Utils/Globals.js'
 let instance = null
 const explorersOne = {
     noOfRounds: 6,
-    msBetweenNotes: 250
+    msBetweenNotes: 250,
 }
 const explorersTwo = {
     noOfRounds: 8,
-    msBetweenNotes: 150
+    msBetweenNotes: 150,
 }
 export default class SimonSays {
     constructor() {
@@ -22,26 +22,14 @@ export default class SimonSays {
         instance = this
 
         instance.data = {
-            color: [
-                'pink',
-                'yellow',
-                'green',
-                'teal'
-            ],
-            notes: [
-                'e-4',
-                'f-sharp-4',
-                'g-sharp-4',
-                'a-4'
-            ],
-            melody: []
+            color: ['pink', 'yellow', 'green', 'teal'],
+            notes: ['e-4', 'f-sharp-4', 'g-sharp-4', 'a-4'],
+            melody: [],
         }
 
         instance.config = {
-            fails: 0,
-            showSkipAfterNoOfTries: 3,
             rounds: instance.world.selectedChapter.category == '6-8' ? explorersOne.noOfRounds : explorersTwo.noOfRounds,
-            msBetweenNotes: instance.world.selectedChapter.category == '6-8' ? explorersOne.msBetweenNotes : explorersTwo.msBetweenNotes
+            msBetweenNotes: instance.world.selectedChapter.category == '6-8' ? explorersOne.msBetweenNotes : explorersTwo.msBetweenNotes,
         }
     }
 
@@ -68,12 +56,14 @@ export default class SimonSays {
                         <div class="side left"></div>
                         <div class="side right"></div>
                     </div>
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 </div>
                 <div class="overlay"></div>
             </section>`)
 
-        document.querySelector('.ui-container').append(game)
+        document.querySelector('.app-container').append(game)
+
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
 
         for (let i = 0; i < instance.config.rounds; i++) {
             const ticker = document.createElement('div')
@@ -86,42 +76,27 @@ export default class SimonSays {
 
             game.querySelector('.cables').append(cable)
 
-            i < 4
-                ? game.querySelector('.side.left').append(ticker)
-                : game.querySelector('.side.right').append(ticker)
+            i < 4 ? game.querySelector('.side.left').append(ticker) : game.querySelector('.side.right').append(ticker)
         }
 
         for (let j = 0; j < instance.data.color.length; j++) {
             const note = _gl.elementFromHtml(`<button class="note" data-id="${j}" data-color="${instance.data.color[j]}"></button>`)
             game.querySelector('.box').appendChild(note)
-
         }
-
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.config.fails >= instance.config.showSkipAfterNoOfTries)
-            skipBTN.style.display = 'flex'
     }
 
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
-        document.querySelectorAll(".simon-says .note").forEach((note) => {
-            note.addEventListener("click", () => {
-
+        document.querySelectorAll('.simon-says .note').forEach((note) => {
+            note.addEventListener('click', () => {
                 if (!instance.canPlay()) return
 
                 const i = note.dataset.id
                 instance.playPad(i)
                 instance.checkMelody(i)
-
             })
         })
-
     }
 
     startGame() {
@@ -150,8 +125,7 @@ export default class SimonSays {
             setTimeout(() => {
                 instance.playPad(instance.data.melody[instance.currentPad])
             }, instance.config.msBetweenNotes)
-        }
-        else {
+        } else {
             document.removeEventListener(_e.ACTIONS.NOTE_PLAYED, instance.continueMelody)
             instance.allowPlaying()
         }
@@ -188,8 +162,7 @@ export default class SimonSays {
                 instance.level++
                 instance.playMelody()
             }
-        }
-        else {
+        } else {
             setTimeout(() => {
                 instance.wrongNote()
             }, 1000)
@@ -198,7 +171,7 @@ export default class SimonSays {
 
     roundTick() {
         const round = document.querySelectorAll('.tick')
-        round[instance.level].className += " done"
+        round[instance.level].className += ' done'
     }
 
     wrongNote() {
@@ -228,23 +201,15 @@ export default class SimonSays {
         document.querySelector('.simon-says .container').append(gameOverHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')
 
-        if (instance.config.fails == 3)
-            document.querySelector('[aria-label="skip-button"]').style.display = 'flex'
-
-
         // Add event listeners
         resetBTN.addEventListener('click', () => {
-            instance.config.fails++
-
             instance.destroy()
             instance.toggleSimonSays()
         })
-
     }
 
     toggleGameComplete() {
         instance.blockPlaying()
-        instance.config.fails = 0
 
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
@@ -253,17 +218,7 @@ export default class SimonSays {
             </div>
         `)
 
-
-        const continueBtn = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
-        `)
-
-        continueBtn.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        congratsHTML.querySelector('.buttons').append(continueBtn)
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.querySelector('.simon-says .container').append(congratsHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')
@@ -271,9 +226,8 @@ export default class SimonSays {
         instance.audio.playSound('task-completed')
         instance.experience.celebrate({
             particleCount: 100,
-            spread: 160
+            spread: 160,
         })
-
     }
 
     allNotesPlayed() {
@@ -301,8 +255,10 @@ export default class SimonSays {
         miniGame.classList.remove('active')
     }
 
-
     destroy() {
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

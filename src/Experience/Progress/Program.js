@@ -1,16 +1,25 @@
-import Experience from "../Experience.js"
+import Experience from '../Experience.js'
 import Archive from '../Components/Archive.js'
 import CodeUnlock from '../Components/CodeUnlock.js'
 import HiddenItems from '../Games/HiddenItems.js'
 import QuestionAndCode from '../Extras/QuestionAndCode.js'
 import Video from '../Extras/Video.js'
 import Quiz from '../Components/Quiz.js'
+import MultipleChoiceWithPicture from '../Extras/MultipleChoiceWithPicture.js'
+import VideoWithQuestion from '../Extras/VideoWithQuestion.js'
 import Congrats from '../Extras/Congrats.js'
 import Pause from '../Extras/Pause.js'
 import Dialogue from '../Components/Dialogue.js'
 import Message from '../Components/Message.js'
 import GameDescription from '../Components/GameDescription.js'
+import ConfirmationScreen from '../Components/ConfirmationScreen.js'
+import WaitingScreen from '../Components/WaitingScreen.js'
 import _e from '../Utils/Events.js'
+import TaskDescriptionScreen from '../Components/TaskDescriptionScreen.js'
+import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWithCalculatorScreen.js'
+import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
+import SingleChoice from '../Components/SingleChoice.js'
+import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
 
 let instance = null
 
@@ -20,119 +29,128 @@ export default class Program {
         instance.experience = new Experience()
         instance.resources = instance.experience.resources
         instance.world = instance.experience.world
+        instance.offline = instance.world.offline
         instance.programData = instance.world.selectedChapter.program
-        instance.camera = instance.experience.camera
-        instance.points = instance.world.points
-        instance.highlight = instance.world.highlight
         instance.audio = instance.world.audio
         instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
+
         instance.video = new Video()
+        instance.videosLoaded = 0
+
         instance.codeUnlock = new CodeUnlock()
         instance.pictureAndCode = new HiddenItems()
         instance.questionAndCode = new QuestionAndCode()
         instance.quiz = new Quiz()
+        instance.multipleChoiceWithPicture = new MultipleChoiceWithPicture()
+        instance.videoWithQuestion = new VideoWithQuestion()
         instance.congrats = new Congrats()
         instance.pause = new Pause()
         instance.dialogue = new Dialogue()
         instance.message = new Message()
+        instance.messageWithSupportingScreens = new MessageWithSupportingScreens()
         instance.gameDescription = new GameDescription()
+        instance.confirmationScreen = new ConfirmationScreen()
+        instance.waitingScreen = new WaitingScreen()
+        instance.taskDescriptionScreen = new TaskDescriptionScreen()
+        instance.taskDescriptionWithCalculatorScreen = new TaskDescriptionWithCalculatorScreen()
+        instance.singleChoice = new SingleChoice()
+        instance.quizTrueFalse = new TrueFalsQuiz()
 
         instance.gamesData = {
             pictureAndCode: {
-                circles: []
-            }
+                circles: [],
+            },
         }
 
         // Get instance variables
-        instance.chapterProgress = () => parseInt(localStorage.getItem(instance.world.getId())) || 0
-        instance.currentCheckpoint = instance.debug.onPreviewMode() ? 0 : (instance.chapterProgress() || 0)
-        instance.getCurrentCheckpointData = () => instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null
+        instance.chapterProgress = () => 0
+        instance.currentCheckpoint = 0
+        instance.getCurrentCheckpointData = () => (instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null)
 
         instance.currentStep = 0
-        instance.getCurrentStepData = () => instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null
-        instance.stepType = () => instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null
-        instance.taskType = () => instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null
+        instance.getCurrentStepData = () => (instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null)
+
+        instance.stepType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null)
+        instance.taskType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null)
 
         instance.updateAssetInProgramData = (field, newValue) => {
             instance.programData[instance.currentCheckpoint].steps[instance.currentStep][field] = newValue
         }
 
-        instance.currentLocation = () => {
-            if (instance.stepType() == 'video') { return 'portal' }
-            else if (instance.stepType() == 'iris') { return 'irisCloseLook' }
-            else if (instance.stepType() == 'task') {
-                // Games
-                if (instance.taskType() == 'cables'
-                    || instance.taskType() == 'sorting'
-                    || instance.taskType() == 'simon_says'
-                    || instance.taskType() == 'flip_cards'
-                    || instance.taskType() == 'heart_defense'
-                    || instance.taskType() == 'davids_refuge'
-                ) {
-                    return 'irisCloseLook'
-                }
-                else {
-                    return 'irisWithOptions'
-                }
-            }
-            else { return 'default' }
-        }
-        instance.interactiveObjects = () => instance.getCurrentStepData() ? instance.getAllInteractiveObjects() : []
         instance.totalCheckpoints = Object.keys(instance.programData).length
-        instance.clickedObject = null
-        instance.clickCallback = () => { }
-        instance.canClick = () =>
-            !document.body.classList.contains('freeze') &&
-            !document.body.classList.contains('modal-on') &&
-            !document.body.classList.contains('camera-is-moving')
+        instance.clickCallback = () => {}
+        instance.canClick = () => !document.body.classList.contains('freeze') && !document.body.classList.contains('modal-on') && !document.body.classList.contains('camera-is-moving')
+
+        instance.addEventListeners()
+        document.addEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
+    }
+
+    startJourneyWhenVideoIsLoaded() {
+        let videoId = 'texture-'
+
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+            videoId += instance.world.selectedChapter.lobby_video_loop
+        } else if (instance.stepType() === 'iris') {
+            instance.stepData = instance.data = instance.stepData.message
+
+            videoId += instance.getCurrentStepData().message.video
+        } else if (instance.stepType() === 'iris_with_supporting_screens') {
+            videoId += instance.getCurrentStepData().message_with_supporting_screens.video
+        }
+
+        if (!instance.videoPlayerLoaded(videoId)) {
+            return
+        }
+        document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
 
         instance.startInteractivity()
-        instance.addEventListeners()
-        instance.stepToggled()
+    }
+
+    videoPlayerLoaded(id) {
+        return instance.resources.videoPlayers.hasOwnProperty(id)
     }
 
     addEventListeners() {
         instance.experience.navigation.prev.addEventListener('click', instance.previousStep)
         instance.experience.navigation.next.addEventListener('click', instance.nextStep)
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.removeInteractivity)
     }
 
     previousStep() {
-        // If there is a multi-action step, go to the first step of the checkpoint instead of going to the previous step
-        if (instance.points.previousLabel) {
-            instance.goToCheckpoint(instance.currentCheckpoint)
-            instance.points.delete()
+        if (instance.currentCheckpoint == 0 && instance.currentStep == 0) {
+            if (!!document.getElementById('waitingScreen') || !instance.world.selectedChapter.lobby_video_loop) {
+                instance.world.goHome()
+            } else {
+                instance.waitingScreen.show()
+            }
+
             return
         }
 
         instance.currentStep--
+
+        if (instance.currentStep < 0) {
+            instance.toggleStep()
+            return
+        }
+
         instance.toggleStep()
     }
 
     nextStep() {
-        // If there is any clickable item, trigger the action instead of going to the next step
-        if (instance.points.currentLabel) {
-            instance.control(instance.points.currentLabel)
-            instance.points.delete()
-            return
-        }
-
         instance.currentStep++
         instance.toggleStep()
     }
 
     toggleStep() {
-        instance.world.progressBar.hide()
-
         if (instance.currentStep < 0) {
             // Back to previous checkpoint
             instance.previousCheckpoint()
             instance.stepToggled()
             instance.startInteractivity()
         } else {
-            if (instance.currentStep == instance.getCurrentCheckpointData().steps.length) {
+            if (instance.currentStep == instance.getCurrentCheckpointData()?.steps.length) {
                 // Advance to next checkpoint
                 instance.nextCheckpoint()
                 instance.stepToggled()
@@ -150,88 +168,60 @@ export default class Program {
     }
 
     startTask() {
-        instance.experience.navigation.prev.disabled = instance.currentStep == 0
-        instance.experience.navigation.next.disabled = false
-
-        if (instance.stepType() == 'video') {
+        if (instance.stepType() === 'video') {
             instance.video.load(instance.currentVideo())
-
-            if (instance.getCurrentStepData().details.play_video_directly) {
-                instance.video.play()
-            }
-            else {
-                instance.updateCameraForCurrentStep(() => {
-                    instance.highlight.add(instance.interactiveObjects()[0])
-                    instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-                    instance.experience.navigation.next.disabled = true
-                    instance.world.controlRoom.tv_portal.scale.set(1, 1, 1)
-                })
-            }
-        }
-
-        else {
-            instance.updateCameraForCurrentStep(() => {
-                instance.world.controlRoom.tv_portal.scale.set(0, 0, 0)
-                instance.video.defocus()
-                instance.video.setTexture(instance.nextVideo())
-            })
-
-            if (instance.stepType() == 'iris') {
-                instance.getCurrentStepData().message.character == 'glitch'
-                    ? instance.camera.updateCameraTo('irisWithOptions', instance.message.show)
-                    : instance.message.show()
-            }
-
-            else if (instance.stepType() == 'task') {
-                if (instance.taskType() == 'code_to_unlock') {
+        } else {
+            if (instance.stepType() === 'iris') {
+                instance.message.show()
+            } else if (instance.stepType() === 'iris_with_supporting_screens') {
+                instance.messageWithSupportingScreens.show()
+            } else if (instance.stepType() === 'task') {
+                if (instance.taskType() === 'code_to_unlock') {
                     instance.codeUnlock.toggleCodeUnlock()
-                }
-
-                else if (instance.taskType() == 'picture_and_code') {
+                } else if (instance.taskType() === 'picture_and_code') {
                     instance.pictureAndCode.togglePictureAndCode()
-                }
-
-                else if (instance.taskType() == 'question_and_code') {
+                } else if (instance.taskType() === 'question_and_code') {
                     instance.questionAndCode.toggleQuestionAndCode()
-                }
-
-                else if (instance.taskType() == 'questions') {
+                } else if (instance.taskType() === 'questions') {
                     // instance.questions.toggleQuestions()
-                }
-
-                else if (instance.taskType() == 'dialog') {
+                } else if (instance.taskType() === 'dialog') {
                     instance.dialogue.toggle()
+                } else if (instance.taskType() === 'truefalse_quiz') {
+                    instance.quizTrueFalse.show()
+                } else if (instance.taskType() === 'single_choice') {
+                    instance.singleChoice.show()
                 }
 
                 // Games
-                else if (instance.taskType() == 'cables'
-                    || instance.taskType() == 'sorting'
-                    || instance.taskType() == 'simon_says'
-                    || instance.taskType() == 'flip_cards'
-                    || instance.taskType() == 'heart_defense'
-                    || instance.taskType() == 'davids_refuge'
-                ) {
+                else if (['cables', 'sorting', 'simon_says', 'flip_cards', 'choose_new_king', 'heart_defense', 'davids_refuge', 'labyrinth', 'duck_game'].includes(instance.taskType())) {
                     instance.gameDescription.show()
+                } else if (instance.taskType() === 'multiple_choice_with_picture') {
+                    instance.multipleChoiceWithPicture.show()
+                } else if (instance.taskType() === 'video_with_question') {
+                    instance.videoWithQuestion.toggleVideoWithQuestion()
+                } else if (instance.taskType() === 'confirmation_screen') {
+                    instance.confirmationScreen.show()
+                } else if (instance.taskType() === 'task_description_screen') {
+                    instance.taskDescriptionScreen.show()
+                } else if (instance.taskType() === 'calculator_screen') {
+                    instance.taskDescriptionWithCalculatorScreen.show()
                 }
-            }
-
-            else if (instance.stepType() == 'quiz') {
+            } else if (instance.stepType() === 'quiz') {
                 instance.quiz.toggleQuiz()
-            }
-
-            else if (instance.stepType() == 'pause') {
+            } else if (instance.stepType() === 'pause') {
                 instance.pause.togglePause()
             }
         }
 
         // Check if it was the last step in the last checkpoint
-        if (instance.currentCheckpoint == instance.totalCheckpoints)
-            instance.showBibleCards()
+        if (instance.currentCheckpoint == instance.totalCheckpoints) {
+            instance.congrats.toggleBibleCardsReminder()
+        }
     }
 
     previousCheckpoint() {
         instance.updateCurrentCheckpoint(--instance.currentCheckpoint)
-        instance.currentStep = instance.programData[instance.currentCheckpoint].steps.length - 1
+        instance.currentStep = instance.programData[instance.currentCheckpoint]?.steps.length - 1
     }
 
     nextCheckpoint() {
@@ -249,136 +239,29 @@ export default class Program {
 
     updateCurrentCheckpoint(newCheckpoint) {
         instance.currentCheckpoint = newCheckpoint
-
-        if (newCheckpoint > instance.chapterProgress() && !instance.debug.onPreviewMode())
-            instance.updateLocalStorage()
     }
 
     startInteractivity() {
-        instance.experience.navigation.prev.disabled = true
-        instance.experience.navigation.next.disabled = true
-
-        if (instance.stepType() == 'iris') {
-            instance.camera.updateCameraTo('screens', () => {
-                instance.world.progressBar.show()
-                instance.highlight.add(instance.interactiveObjects()[0])
-                instance.points.add(instance.interactiveObjects()[0], instance.stepType())
-
-                instance.clickCallback = () => {
-                    instance.world.progressBar.hide()
-                    instance.experience.navigation.next.disabled = false
-                }
-
-                document.addEventListener('click', (event) => {
-                    if (event.target.classList.contains('highlight-label'))
-                        instance.control(instance.points.currentLabel)
-                })
-            })
+        if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
+            instance.waitingScreen.show()
+            return
         }
 
-        else if (instance.stepType() == 'pause') {
-            instance.camera.updateCameraTo('default', () => {
-                instance.world.progressBar?.hide()
-                instance.startTask()
-            })
+        if (instance.stepType() !== 'video') {
+            instance.video.defocus()
         }
 
-        else {
-            instance.world.progressBar?.hide()
+        if (instance.stepType() === 'iris') {
+            instance.message.show()
+        } else if (instance.stepType() === 'iris_with_supporting_screens') {
+            instance.messageWithSupportingScreens.show()
+        } else {
             instance.startTask()
         }
     }
 
-    control(currentIntersect) {
-        if (!instance.canClick()) return
-
-        instance.clickedObject = currentIntersect.name
-
-        if (instance.objectIsClickable()) {
-            instance.camera.updateCameraTo(this.currentLocation())
-            instance.startAction()
-
-            instance.experience.navigation.prev.disabled = false
-            if (instance.skip) document.querySelector('[aria-label="prev step"]').disabled = false
-        }
-    }
-
-    startAction() {
-        if (instance.clickedObject == 'tv_16x9_screen') {
-            instance.clickCallback()
-            instance.clickCallback = () => { }
-            instance.message.show()
-        }
-        else if (instance.clickedObject == 'Screen') {
-            instance.video.play()
-        }
-
-        else if (instance.clickedObject == 'Switch') {
-            instance.world.controlRoom.animations.actions.drag.play()
-            instance.world.controlRoom.animations.mixer.addEventListener('finished', (e) => {
-                instance.video.play()
-                instance.world.controlRoom.animations.actions.drag.stop()
-            })
-        }
-
-        instance.removeInteractivity()
-    }
-
-    showBibleCards() {
-        instance.updateCameraForCurrentStep(instance.congrats.toggleBibleCardsReminder)
-    }
-
-    updateCameraForCurrentStep(callback = () => { }) {
-        instance.camera.updateCameraTo(instance.currentLocation(), () => {
-            callback()
-
-            document.addEventListener('click', (event) => {
-                if (event.target.classList.contains('highlight-label')) {
-                    instance.control(instance.points.currentLabel)
-                }
-            })
-        })
-    }
-
-    objectIsClickable() {
-        return instance.currentCheckpoint in instance.programData &&
-            instance.interactiveObjects().includes(instance.clickedObject)
-    }
-
-    getAllInteractiveObjects() {
-        let interactiveObjects = []
-
-        if (instance.stepType() == 'video') {
-
-            if (instance.currentCheckpoint != 6) {
-                interactiveObjects.push("Screen")
-            } else {
-
-                const UA = navigator.userAgent;
-                const isWebkit =
-                    /\b(iPad|iPhone|iPod)\b/.test(UA) &&
-                    /WebKit/.test(UA) &&
-                    !/Edge/.test(UA) &&
-                    !window.MSStream;
-
-                if (isWebkit) {
-                    interactiveObjects.push("Screen")
-                } else {
-                    interactiveObjects.push("Switch")
-                }
-            }
-        }
-
-        else if (instance.stepType() == 'iris' || instance.stepType() == 'task' && instance.currentStep == 0) {
-            interactiveObjects.push("tv_16x9_screen")
-        }
-
-        return interactiveObjects
-    }
-
     currentVideo() {
-        if (instance.currentCheckpoint >= instance.programData.length)
-            return null
+        if (instance.currentCheckpoint >= instance.programData.length) return null
 
         return instance.programData[instance.currentCheckpoint].steps[instance.currentStep].videoId
     }
@@ -388,31 +271,24 @@ export default class Program {
             const startingStep = checkpoint == instance.currentCheckpoint ? instance.currentStep : 0
 
             for (let step = startingStep; step < instance.programData[checkpoint].steps.length; step++) {
-                if (instance.programData[checkpoint].steps[step].details.step_type == 'video')
-                    return instance.programData[checkpoint].steps[step].videoId
+                if (instance.programData[checkpoint].steps[step].details.step_type == 'video') return instance.programData[checkpoint].steps[step].videoId
             }
         }
 
         return null
     }
 
-    updateLocalStorage() {
-        localStorage.setItem(instance.world.getId(), instance.currentCheckpoint)
-    }
-
-    removeInteractivity() {
-        instance.highlight.fadeOut()
-        instance.points.delete()
-    }
-
     removeEventListeners() {
         instance.experience.navigation.prev.removeEventListener('click', instance.previousStep)
         instance.experience.navigation.next.removeEventListener('click', instance.nextStep)
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.disablePrevBtnOnStart)
     }
 
     destroy() {
         instance.removeEventListeners()
         instance.message.destroy()
+        instance.messageWithSupportingScreens.destroy()
         instance.dialogue.destroy()
     }
 }

@@ -26,7 +26,6 @@ export default class SortingGame {
 
         instance.resize()
         window.addEventListener('resize', instance.resize)
-
     }
 
     generateHTML() {
@@ -35,24 +34,15 @@ export default class SortingGame {
 
         const game = _gl.elementFromHtml(`
             <div class="game sort-game">
-                <div class="container">
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
-                </div>
+                <div class="container"></div>
                 <div class="overlay"></div>
                 <div class="game-canvas" id="sort-game"></div>
             <div>
         `)
-        document.querySelector('.ui-container').append(game)
+        document.querySelector('.app-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
-
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     initCanvas() {
@@ -62,17 +52,17 @@ export default class SortingGame {
         this.stage = new Konva.Stage({
             container: 'sort-game',
             width: width,
-            height: height
+            height: height,
         })
 
         this.data = {
             colors: {
-                orange: "#fbaf4e",
-                orangeOultine: "#d27235",
-                pink: "#f65b98",
-                pinkOutline: "#b42c64",
-                correct: "#00ff00",
-                wrong: "#ff0000"
+                orange: '#fbaf4e',
+                orangeOultine: '#d27235',
+                pink: '#f65b98',
+                pinkOutline: '#b42c64',
+                correct: '#00ff00',
+                wrong: '#ff0000',
             },
             box: {
                 x: 32,
@@ -82,22 +72,22 @@ export default class SortingGame {
                 strokeWidth: 6,
                 cornerRadius: 10,
                 buttonSrc: {
-                    wrong: "games/dislike.svg",
-                    correct: "games/like.svg"
-                }
+                    wrong: 'games/dislike.svg',
+                    correct: 'games/like.svg',
+                },
             },
             icon: {
                 width: 120,
-                height: 120
+                height: 120,
             },
             button: {
                 srcContinue: {
                     default: 'svgs/button_long_goTo.svg',
-                    hover: 'svgs/button_long_goTo_hover.svg'
+                    hover: 'svgs/button_long_goTo_hover.svg',
                 },
                 srcDefault: {
                     default: 'svgs/button_long.svg',
-                    hover: 'svgs/button_long_hover.svg'
+                    hover: 'svgs/button_long_hover.svg',
                 },
                 fontSize: 24,
                 fontFamily: 'Berlin Sans FB',
@@ -105,28 +95,19 @@ export default class SortingGame {
                 textFill: 'white',
                 icon: {
                     width: 72,
-                    height: 60
-                }
+                    height: 60,
+                },
             },
             counter: {
                 correct: 0,
-                wrong: 0
+                wrong: 0,
             },
-            icons: []
+            icons: [],
         }
 
         this.animations = {
             // x, y, width, height (8 frames)
-            button: [
-                0, 0, 240, 134,
-                240 * 2, 0, 240, 134,
-                240 * 3, 0, 240, 134,
-                240 * 4, 0, 240, 134,
-                240 * 5, 0, 240, 134,
-                240 * 6, 0, 240, 134,
-                240 * 7, 0, 240, 134,
-                240 * 8, 0, 240, 134,
-            ]
+            button: [0, 0, 240, 134, 240 * 2, 0, 240, 134, 240 * 3, 0, 240, 134, 240 * 4, 0, 240, 134, 240 * 5, 0, 240, 134, 240 * 6, 0, 240, 134, 240 * 7, 0, 240, 134, 240 * 8, 0, 240, 134],
         }
 
         this.program = this.world.program
@@ -134,64 +115,41 @@ export default class SortingGame {
 
         this.data.noOfIcons = gameData.length
         this.data.icons = gameData
-
     }
 
     initCanvasLayers() {
         this.layer = new Konva.Layer()
 
-        this.leftBox = this.createBox(
-            this.data.box.x,
-            this.data.box.y,
-            this.data.box.width,
-            this.data.box.height,
-            this.data.colors.pink,
-            this.data.colors.pinkOutline,
-            this.data.box.strokeWidth,
-            this.data.box.cornerRadius,
-            "wrong",
-            this.data.box.buttonSrc.wrong
-        )
-        this.rightBox = this.createBox(
-            this.stage.width() - this.data.box.width - this.data.box.x,
-            this.data.box.y,
-            this.data.box.width,
-            this.data.box.height,
-            this.data.colors.orange,
-            this.data.colors.orangeOultine,
-            this.data.box.strokeWidth,
-            this.data.box.cornerRadius,
-            "correct",
-            this.data.box.buttonSrc.correct
-        )
+        this.leftBox = this.createBox(this.data.box.x, this.data.box.y, this.data.box.width, this.data.box.height, this.data.colors.pink, this.data.colors.pinkOutline, this.data.box.strokeWidth, this.data.box.cornerRadius, 'wrong', this.data.box.buttonSrc.wrong)
+        this.rightBox = this.createBox(this.stage.width() - this.data.box.width - this.data.box.x, this.data.box.y, this.data.box.width, this.data.box.height, this.data.colors.orange, this.data.colors.orangeOultine, this.data.box.strokeWidth, this.data.box.cornerRadius, 'correct', this.data.box.buttonSrc.correct)
 
         this.layer.add(this.leftBox, this.rightBox)
         this.stage.add(this.layer)
 
-        this.boxes = this.layer.children.filter(item => item.attrs.name === "box")
+        this.boxes = this.layer.children.filter((item) => item.attrs.name === 'box')
         this.container = []
         this.grids = []
         this.buttons = []
         this.cells = {
-            'correct': [],
-            'wrong': []
+            correct: [],
+            wrong: [],
         }
         this.icons = []
 
-        this.boxes.forEach(el => {
-            this.grids.push(el.children.filter(item => item.attrs.name === "grid")[0])
-            this.container.push(el.children.filter(item => item.attrs.name === "container")[0])
-            this.buttons.push(el.children.filter(item => item.attrs.name === "button")[0])
+        this.boxes.forEach((el) => {
+            this.grids.push(el.children.filter((item) => item.attrs.name === 'grid')[0])
+            this.container.push(el.children.filter((item) => item.attrs.name === 'container')[0])
+            this.buttons.push(el.children.filter((item) => item.attrs.name === 'button')[0])
         })
 
-        this.grids.forEach(grid => {
-            grid.children.forEach(el => {
+        this.grids.forEach((grid) => {
+            grid.children.forEach((el) => {
                 this.cells[grid.id()].push(el)
             })
         })
 
         instance.data.icons.forEach(async (data) => {
-            instance.offline.fetchChapterAsset(data, "icon", instance.createIcon)
+            instance.offline.fetchChapterAsset(data, 'icon', instance.createIcon)
         })
     }
 
@@ -221,7 +179,6 @@ export default class SortingGame {
 
             icon.x(Math.min(Math.max(icon.x(), -maxX), -minX))
             icon.y(Math.min(Math.max(icon.y(), -maxY), -minY))
-
         })
         icon.on('dragstart', () => {
             instance.draggedIconPosition = icon.position()
@@ -229,13 +186,11 @@ export default class SortingGame {
         })
         icon.on('dragend', () => {
             const category = icon.name().replace('icon_', '')
-            const box = instance.boxes.find(b => b.id() == category)
+            const box = instance.boxes.find((b) => b.id() == category)
             let selectedBox = category
             let feedback = null
 
-
-            if (!instance.intersected(icon, instance.leftBox)
-                && !instance.intersected(icon, instance.rightBox)) {
+            if (!instance.intersected(icon, instance.leftBox) && !instance.intersected(icon, instance.rightBox)) {
                 return
             }
 
@@ -246,7 +201,7 @@ export default class SortingGame {
                 icon.to({
                     x: box.x() + cell.x() + cell.width() / 2 - icon.width() / 2,
                     y: box.y() + cell.y() + cell.height() / 2 - icon.height() / 2,
-                    duration: 0.5
+                    duration: 0.5,
                 })
 
                 icon.draggable(false)
@@ -255,15 +210,14 @@ export default class SortingGame {
                 if (instance.gameIsFinished()) {
                     setTimeout(instance.toggleGameComplete, 1000)
                 }
-            }
-            else {
+            } else {
                 feedback = 'wrong'
                 selectedBox = box.id() == 'correct' ? 'wrong' : 'correct'
 
                 icon.to({
                     x: instance.draggedIconPosition.x,
                     y: instance.draggedIconPosition.y,
-                    duration: 0.5
+                    duration: 0.5,
                 })
 
                 instance.audio.playSound('wrong')
@@ -275,7 +229,7 @@ export default class SortingGame {
 
     gameIsFinished() {
         let totalCount = 0
-        Object.values(instance.data.counter).forEach(c => totalCount += c);
+        Object.values(instance.data.counter).forEach((c) => (totalCount += c))
         return totalCount == instance.data.icons.length
     }
 
@@ -286,20 +240,10 @@ export default class SortingGame {
             <div class="game-popup">
                 <h1>${_s.miniGames.completed.title}</h1>
                 <p>${_s.miniGames.completed.message}</p>
-                <div class="buttons"></div>
             </div>
         `)
 
-        const continueBtn = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
-        `)
-
-        continueBtn.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        congratsHTML.querySelector('.buttons').append(continueBtn)
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.querySelector('.sort-game .container').append(congratsHTML)
         document.querySelector('.sort-game').classList.add('popup-visible')
@@ -307,7 +251,7 @@ export default class SortingGame {
         instance.audio.playSound('task-completed')
         instance.experience.celebrate({
             particleCount: 100,
-            spread: 160
+            spread: 160,
         })
     }
 
@@ -318,23 +262,25 @@ export default class SortingGame {
             width: w,
             height: h,
             name: 'box',
-            id: id
+            id: id,
         })
-        this.box.add(new Konva.Rect({
-            width: w,
-            height: h,
-            fill: fill,
-            cornerRadius: radius,
-            name: 'container'
-        }))
+        this.box.add(
+            new Konva.Rect({
+                width: w,
+                height: h,
+                fill: fill,
+                cornerRadius: radius,
+                name: 'container',
+            })
+        )
 
         const padding = 30
 
         this.grid = new Konva.Group({
             width: w - padding * 2,
-            height: this.box.height() * 3 / 4 - padding * 2,
+            height: (this.box.height() * 3) / 4 - padding * 2,
             name: 'grid',
-            id: id
+            id: id,
         })
 
         this.box.add(this.grid)
@@ -368,20 +314,22 @@ export default class SortingGame {
             width: this.box.width() - padding * 2,
             height: this.box.height() / 4 - padding,
             x: padding,
-            y: this.box.height() * 3 / 4,
+            y: (this.box.height() * 3) / 4,
             name: 'button',
-            id: id
+            id: id,
         })
 
-        button.add(new Konva.Rect({
-            width: button.width(),
-            height: button.height(),
-            fill: "blue",
-            stroke: "white",
-            strokeWidth: strokeWidth,
-            cornerRadius: radius / 2,
-            name: "buttonBg"
-        }))
+        button.add(
+            new Konva.Rect({
+                width: button.width(),
+                height: button.height(),
+                fill: 'blue',
+                stroke: 'white',
+                strokeWidth: strokeWidth,
+                cornerRadius: radius / 2,
+                name: 'buttonBg',
+            })
+        )
 
         Konva.Image.fromURL(buttonSrc, (imageNode) => {
             button.add(imageNode)
@@ -391,16 +339,16 @@ export default class SortingGame {
                 y: button.height() / 2,
                 width: this.data.button.icon.width,
                 height: this.data.button.icon.height,
-                name: "image",
+                name: 'image',
                 offset: {
                     x: this.data.button.icon.width / 2,
-                    y: this.data.button.icon.height / 2
-                }
+                    y: this.data.button.icon.height / 2,
+                },
             })
         })
 
-        button.add(this.setSprite("correct", { x: button.width() / 2, y: button.height() / 2 }))
-        button.add(this.setSprite("wrong", { x: button.width() / 2, y: button.height() / 2 }))
+        button.add(this.setSprite('correct', { x: button.width() / 2, y: button.height() / 2 }))
+        button.add(this.setSprite('wrong', { x: button.width() / 2, y: button.height() / 2 }))
 
         this.box.add(button)
 
@@ -416,7 +364,7 @@ export default class SortingGame {
             fill: fill,
             stroke: stroke,
             strokeWidth: strokeWidth,
-            name: 'cell'
+            name: 'cell',
         })
 
         return cell
@@ -429,7 +377,7 @@ export default class SortingGame {
             width: instance.data.icon.width,
             height: instance.data.icon.height,
             draggable: true,
-            name: data.correct_wrong ? 'icon_correct' : 'icon_wrong'
+            name: data.correct_wrong ? 'icon_correct' : 'icon_wrong',
         })
 
         Konva.Image.fromURL(data.icon, (img) => {
@@ -438,7 +386,7 @@ export default class SortingGame {
                 y: 0,
                 width: icon.width(),
                 height: icon.height(),
-                name: "image",
+                name: 'image',
             })
             icon.add(img)
         })
@@ -450,30 +398,25 @@ export default class SortingGame {
 
     addButton(name, background, label) {
         const button = document.createElement('div')
-        button.className = "button " + background + ' ' + name
-        button.innerHTML = "<span>" + label + "</span>"
+        button.className = 'button ' + background + ' ' + name
+        button.innerHTML = '<span>' + label + '</span>'
 
         return button
     }
 
     intersected(r1, r2) {
-        return !(
-            r2.x() > r1.x() + r1.width() ||
-            r2.x() + r2.width() < r1.x() ||
-            r2.y() > r1.y() + r1.height() ||
-            r2.y() + r2.height() < r1.y()
-        )
+        return !(r2.x() > r1.x() + r1.width() || r2.x() + r2.width() < r1.x() || r2.y() > r1.y() + r1.height() || r2.y() + r2.height() < r1.y())
     }
 
     movedToCorrectBox(icon) {
         const boxCategory = icon.name().replace('icon_', '')
-        const correctBox = instance.boxes.find(b => b.id() == boxCategory)
+        const correctBox = instance.boxes.find((b) => b.id() == boxCategory)
 
         return instance.intersected(icon, correctBox)
     }
 
     sortingFeedback(selectedBox, feedback) {
-        this.buttons.forEach(button => {
+        this.buttons.forEach((button) => {
             if (button.parent.id() === selectedBox) {
                 button.children[1].visible(false)
                 this.playAnimation(button, feedback)
@@ -489,8 +432,7 @@ export default class SortingGame {
         if (animation.isRunning()) {
             animation.stop()
             animation.frameIndex(0)
-        }
-        else {
+        } else {
             const otherFeedback = feedback == 'correct' ? 'wrong' : 'correct'
             const otherAnimation = button.findOne('#' + otherFeedback)
 
@@ -530,13 +472,13 @@ export default class SortingGame {
             animations: this.animations,
             frameRate: 8,
             frameIndex: 0,
-            name: "animationSprite",
+            name: 'animationSprite',
             id: id,
             visible: false,
             offset: {
                 x: 240 / 2,
-                y: 134 / 2
-            }
+                y: 134 / 2,
+            },
         })
     }
 
@@ -545,7 +487,7 @@ export default class SortingGame {
 
         const marginGutter = {
             top: 10,
-            between: 20
+            between: 20,
         }
 
         const boxSize = instance.data.icon.width + marginGutter.between
@@ -554,14 +496,13 @@ export default class SortingGame {
 
         const position = {
             x: instance.leftBox.x() + instance.leftBox.width() + marginGutter.sides + (index % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
-            y: instance.leftBox.y() + marginGutter.top + Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between)
+            y: instance.leftBox.y() + marginGutter.top + Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between),
         }
 
         return position
     }
 
     resize() {
-
         const width = document.querySelector('.game-canvas').offsetWidth
         const height = document.querySelector('.game-canvas').offsetHeight
 
@@ -577,7 +518,7 @@ export default class SortingGame {
             instance.leftBox.x(32)
             instance.rightBox.x(instance.stage.width() - instance.data.box.width - 32)
         } else {
-            instance.leftBox.x(instance.stage.width() / 2 - (instance.data.box.width * 2))
+            instance.leftBox.x(instance.stage.width() / 2 - instance.data.box.width * 2)
             instance.rightBox.x(instance.stage.width() / 2 + instance.data.box.width)
         }
 
@@ -590,5 +531,8 @@ export default class SortingGame {
     destroy() {
         window.removeEventListener('resize', instance.resize)
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

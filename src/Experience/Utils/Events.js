@@ -3,7 +3,11 @@ const ACTIONS = {
     AUDIO_TASK_DESCRIPTION_ENDED: 'audioTaskDescriptionEnded',
     NOTE_PLAYED: 'notePlayed',
     TIME_ELAPSED: 'timeElapsed',
-    STEP_TOGGLED: 'stepToggled'
+    TIME_LAST_SECONDS: 'timeLastSeconds',
+    STEP_TOGGLED: 'stepToggled',
+    GO_HOME: 'goHome',
+    VIDEO_LOADED: 'videoLoaded',
+    ROUTE_CHANGED: 'routeChanged',
 }
 
 const EVENTS = {
@@ -11,7 +15,11 @@ const EVENTS = {
     AUDIO_TASK_DESCRIPTION_ENDED: new Event('audioTaskDescriptionEnded'),
     NOTE_PLAYED: new Event('notePlayed'),
     TIME_ELAPSED: new Event('timeElapsed'),
-    STEP_TOGGLED: new Event('stepToggled')
+    TIME_LAST_SECONDS: new Event('timeLastSeconds'),
+    STEP_TOGGLED: new Event('stepToggled'),
+    GO_HOME: new Event('goHome'),
+    VIDEO_LOADED: new Event('videoLoaded'),
+    ROUTE_CHANGED: (query) => new CustomEvent('routeChanged', { detail: query }),
 }
 
 export default { ACTIONS, EVENTS }

@@ -1,15 +1,12 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import ControlRoom from './ControlRoom.js'
-import Environment from './Environment.js'
 import Audio from '../Extras/Audio.js'
 import Program from '../Progress/Program.js'
-import ProgressBar from "../Components/ProgressBar.js"
+import ProgressBar from '../Components/ProgressBar.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
-import Points from './Points.js'
-import Highlight from './Highlight.js'
 import _e from '../Utils/Events.js'
 import _appInsights from '../Utils/AppInsights.js'
 import tippy from 'tippy.js'
@@ -17,6 +14,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
 import gsap from 'gsap'
+import isElectron from 'is-electron'
 
 let instance = null
 export default class World {
@@ -26,7 +24,6 @@ export default class World {
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
-        this.camera = this.experience.camera
         this.resources = this.experience.resources
         this.debug = this.experience.debug
         this.page = this.experience.page
@@ -34,72 +31,121 @@ export default class World {
 
         // Wait for resources
         this.resources.on('ready', () => {
-            this.page.createIntro()
-            this.resources.fetchApiThenCache(_api.getBiexChapters(), this.setCategories)
+            const personId = this.experience.auth0.userData
+                ? this.experience.auth0.userData['https://login.bcc.no/claims/personId']
+                : ''
+            instance.chaptersData = instance.resources.api[_api.getBiexChapters(personId)]
+
+            this.ageCategory = document.getElementById('app-age_category')
+            this.chapterSelectWrapper = document.getElementById('chapter-select')
+            this.chapterWrapper = document.getElementById('chapter-wrapper')
+
+            // Select age category
+            instance.experience.setAppView('age-category')
+
+            this.ageCategory.querySelector('h1').innerText = _s.conceptDescription
+            this.setCategories()
 
             // Setup
             this.controlRoom = new ControlRoom()
-            this.environment = new Environment()
-            this.points = new Points()
-            this.highlight = new Highlight()
             this.audio = new Audio()
         })
 
+        this.setDownloadModalHTML()
+
         this.placeholderChapterData()
-        this.chapterProgress = () => parseInt(localStorage.getItem(this.getId())) || 0
+        this.chapterProgress = () => 0
 
         this.selectedQuality = this.experience.settings.videoQuality
 
         // Chapters
-        this.menu = {
-            categories: document.querySelector(".categories.list"),
-            chapters: document.querySelector(".chapters"),
-            chaptersData: []
-        }
+        this.chaptersData = []
 
         this.buttons = {
-            // contact: document.querySelector('[aria-label="Contact"]'),
-            home: document.querySelector('[aria-label="Home"]'),
-            guide: document.querySelector('[aria-label="Guide"]')
+            openDownloadModal: document.querySelector('#download-app'),
+            home: document.querySelector('#home-button'),
+            guide: document.querySelector('#guide-button'),
+            startChapter: document.querySelector('#start-chapter'),
+            backToAgeCateogry: document.querySelector('#back-to-age-category'),
+            contact: document.querySelector('#contact-button'),
         }
 
-        this.buttons.home.style.display = 'none'
-        this.buttons.home.addEventListener("click", this.goHome)
+        tippy(this.buttons.openDownloadModal, {
+            theme: 'explorers',
+            content: _s.offline.downloadApp.title,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        tippy(this.buttons.home, {
+            theme: 'explorers',
+            content: `Home`,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        tippy(this.buttons.contact, {
+            theme: 'explorers',
+            content: _s.settings.contact,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'bottom',
+        })
+
+        this.buttons.openDownloadModal.addEventListener('click', this.openDownloadModal)
+
+        this.buttons.home.addEventListener('click', this.goHome)
+        this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
+        this.buttons.startChapter.addEventListener('click', this.startChapter)
     }
 
     placeholderChapterData() {
         instance.selectedChapter = {
             id: 0,
             program: null,
-            data: null
+            data: null,
         }
     }
 
     showIntro() {
         instance.placeholderChapterData()
         instance.removeDescriptionHtml()
-        instance.page.removeLobby()
-        instance.page.createIntro()
 
-        !instance.menu.chaptersData
-            ? instance.resources.fetchApiThenCache(_api.getBiexChapters(), instance.setCategories)
-            : instance.setCategories(instance.menu.chaptersData)
+        // Remove if existing categories
+        if (instance.ageCategory.querySelector('ul').childNodes.length !== 0) {
+            instance.ageCategory.querySelectorAll('li').forEach((item) => {
+                item.remove()
+            })
+        }
+
+        // Show age category
+        instance.experience.setAppView('age-category')
+        instance.setCategories()
     }
 
     showLobby() {
-        instance.page.removeIntro()
-        instance.page.createLobby()
+        instance.experience.setAppView('lobby')
+
+        // Remove if existing chapters
+        if (instance.experience.interface.chaptersList.querySelector('ul').childNodes.length !== 0) {
+            instance.experience.interface.chaptersList.querySelectorAll('.chapter').forEach((item) => {
+                item.remove()
+            })
+        }
+
+        // Set chapter content/cards
         instance.setChapters()
-        instance.experience.navigation.prev.addEventListener('click', instance.showIntro)
+
+        // instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
     }
 
-    setCategories(result) {
-        if (result.length == 0) instance.addNotAvailableInYourLanguageMessage()
-        if (result.hasOwnProperty('message')) return
+    setCategories() {
+        if (instance.chaptersData.length == 0) instance.addNotAvailableInYourLanguageMessage()
+        if (instance.chaptersData.hasOwnProperty('message')) return
 
-        instance.menu.chaptersData = result
-
-        for (const [category, data] of Object.entries(instance.menu.chaptersData)) {
+        for (const [category, data] of Object.entries(instance.chaptersData)) {
             instance.setCategoryHtml({ name: data.name, slug: data.slug })
         }
 
@@ -107,20 +153,22 @@ export default class World {
     }
 
     addNotAvailableInYourLanguageMessage() {
-        const notAvailableEl = document.createElement("div")
-        notAvailableEl.className = "not-available"
+        const notAvailableEl = document.createElement('div')
+        notAvailableEl.className = 'text-bke-accent font-bold'
         notAvailableEl.innerText = _s.notAvailable
         instance.menu.categories.appendChild(notAvailableEl)
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(`<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`)
-        document.querySelector('.categories').appendChild(categoryBtn)
+        const categoryBtn = _gl.elementFromHtml(
+            `<li><button class="category button-cube-wider" data-slug="${category.slug}">${category.name}</button></li>`
+        )
+        this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
 
     selectCategoryListeners() {
-        document.querySelectorAll(".category").forEach(function (category) {
-            category.addEventListener("click", () => {
+        document.querySelectorAll('.category').forEach(function (category) {
+            category.addEventListener('click', () => {
                 instance.selectedCategory = category.getAttribute('data-slug')
                 instance.showLobby()
                 instance.audio.changeBgMusic()
@@ -129,62 +177,66 @@ export default class World {
     }
 
     setChapters() {
-        instance.menu.chaptersData[instance.selectedCategory]['chapters'].forEach(chapter => {
+        instance.chaptersData[instance.selectedCategory]['chapters'].forEach((chapter) => {
             instance.setChapterHtml(chapter)
         })
 
-        instance.experience.navigation.next.disabled = true
+        instance.buttons.startChapter.disabled = true
         instance.chapterEventListeners()
     }
 
     setChapterHtml(chapter) {
-        let chapterHtml = document.createElement("article")
-
-        let chapterClasses = "chapter"
-        chapterClasses += chapter.status == "future" ? " locked" : ""
-        chapterClasses += chapter.is_beta === true ? " beta" : ""
-        chapterHtml.className = chapterClasses
-
-        chapterHtml.setAttribute("data-id", chapter.id)
-        chapterHtml.setAttribute("data-slug", chapter.category)
-
-        chapterHtml.innerHTML = `
-            <header class="chapter__heading">
-                <h2 class="chapter__title">${chapter.title}</h2>
-                <span class="chapter__date">${chapter.date}</span>
-            </header>
-            <div class="coming-soon">Coming soon</div>
-            <div class="chapter__states">
-                <div class="chapter__offline">
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <use href="#download"></use>
-                    </svg>
-                    <span>${_s.offline.download.title}</span>
+        let chapterHtml = _gl.elementFromHtml(
+            `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
+                <a href="javascript:void(0)" class="chapter-box">
+                    <div class="chapter-mask">
+                        <h1 class="chapter-heading">${chapter.title}</h1>
+                        <div class="chapter-date">${chapter.date}</div>
+                    </div>
+                    <div class="chapter__offline">
+                        <span class="chapter__downloaded-quota hidden"></span>
+                        <button class="chapter__download button-cube group-[.downloaded]:hidden">
+                            <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                        </button>
+                        <button class="chapter__remove button-cube !hidden">
+                            <svg><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
+                        </button>
+                    </div>
+                    <span class="chapter__loading"></span>
+                </a>
+                <div class="chapter-status">
+                    <div class="chapter__downloading">
+                        <div class="flex items-center gap-[5%] w-full">
+                            <span class="downloading-title">${_s.offline.downloading}</span>
+                            <div class="downloading-progress">
+                                <span class="progress-line"></span>
+                            </div>
+                            <span class="downloading-label"></span>
+                        </div>
+                    </div>
+                    <div class="chapter__download-failed">${_s.offline.downloadFailed}</div>
+                    <div class="chapter__downloaded">
+                        <svg><use href="#check-solid" fill="currentColor"></use></svg>
+                        <span>${_s.offline.availableOffline.title}</span>
+                    </div>
+                    <div class="chapter__outdated">
+                        <svg><use href="#file-circle-exclamation-solid" fill="currentColor"></use></svg>
+                        <span>${_s.offline.outdated}</span>
+                    </div>
                 </div>
-                <div class="chapter__downloading">
-                    <span class="title">${_s.offline.downloading}</span>
-                    <span class="downloading-progress">
-                        <span class="progress-line"></span>
-                    </span>
-                    <span class="downloading-label"></span>
-                </div>
-                <div class="chapter__download-failed">
-                    <span>${_s.offline.downloadFailed}</span>
-                </div>
-                <div class="chapter__downloaded">
-                    <svg class="check-mark-icon" viewBox="0 0 23 16">
-                        <use href="#check-mark"></use>
-                    </svg>
-                    <span>${_s.offline.availableOffline.title}</span>
-                </div>
-            </div>
-        `
+            </li>`
+        )
 
-        const chapters = document.querySelector('.chapters')
-        chapters.appendChild(chapterHtml)
+        chapterHtml.setAttribute('data-id', chapter.id)
+        chapterHtml.setAttribute('data-slug', chapter.category)
 
-        instance.offline.fetchChapterAsset(chapter, "thumbnail", instance.setChapterBgImage)
+        // <span>${_s.offline.download.title}</span>
+
+        instance.experience.interface.chaptersList.querySelector('ul').appendChild(chapterHtml)
+        instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterBgImage)
+
         instance.offline.markChapterIfAvailableOffline(chapter)
+
         instance.setStatesTooltips()
     }
 
@@ -194,199 +246,188 @@ export default class World {
         let numberOfTasks = 0
         let numberOfQuizes = 0
 
-        chapter.program.forEach(checkpoint => {
-            if (checkpoint.steps.some(step => step.details.step_type == 'video'))
-                numberOfEpisodes++
-
-            else if (checkpoint.steps.some(step => step.details.step_type == 'quiz'))
-                numberOfQuizes++
-
-            else if (checkpoint.steps.some(step => step.details.step_type == 'task'))
-                numberOfTasks++
+        chapter.program.forEach((checkpoint) => {
+            if (checkpoint.steps.some((step) => step.details.step_type == 'video')) numberOfEpisodes++
+            else if (checkpoint.steps.some((step) => step.details.step_type == 'quiz')) numberOfQuizes++
+            else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++
         })
 
         const details = _gl.elementFromHtml(`
-            <section class="chapter-details">
-                <header>
-                    <h2>${chapter.title}</h2>
-                    <button class="btn default next" aria-label="Preview chapter">
-                        <svg class="preview-icon icon" viewBox="0 0 28 22">
-                            <use href="#preview"></use>
-                        </svg>
-                        <span>${_s.journey.preview.title}</span>
-                    </button>
-                </header>
-                
-            </section>
-        `)
+            <div class="chapter-description">
+                <div class="chapter-content relative">
+                    <h1 class="chapter-description-heading">${chapter.title}</h1>
+                    <div class="chapter-description-text"> ${chapter.content}</div>
+                </div>
+            </div>`)
 
-        const attachments = _gl.elementFromHtml(`<div class="attachments"></div>`)
-        const guide = _gl.elementFromHtml(`
-            <a class="link asset" href="https://biblekids.io/${localStorage.getItem('lang')}/explorers-mentor-guide/" target="_blank">
-                <svg class="book-icon icon" viewBox="0 0 21 24">
-                    <use href="#book"></use>
-                </svg>
-                <span>${_s.chapter.activityDescLabel}</span>
-            </a>`
-        )
+        if (chapter.other_attachments.length) {
+            chapter.other_attachments.forEach((attachment) => {
+                const link = attachment.link_to_file_of_other_attachment
 
-        if (!chapter.is_beta)
-            attachments.append(guide)
+                if (link.includes('mentor')) {
+                    const linkParts = link.split('/')
+                    const pageSlug = linkParts[linkParts.length - 2]
 
-        details.append(attachments)
+                    const guide = _gl.elementFromHtml(`
+                        <a class="button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <svg><use href="#book-solid" fill="currentColor"></use></svg>
+                        </a>`)
 
-        const description = _gl.elementFromHtml(`<div class="description">${chapter.content}</div>`)
-        details.append(description)
+                    details.prepend(guide)
+                }
+            })
+        }
 
         if (numberOfEpisodes > 0 || numberOfTasks > 0 || numberOfQuizes > 0) {
-            const info = _gl.elementFromHtml(`<div class="info"></div>`)
+            const info = _gl.elementFromHtml(`<ul class="text-bke-accent gap-8 hidden"></ul>`)
 
             details.append(info)
 
             if (numberOfEpisodes != 1) {
-                const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`)
+                const videoLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`
+                )
                 info.append(videoLabel)
             } else {
-                const videoLabel = _gl.elementFromHtml(`<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`)
+                const videoLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`
+                )
                 info.append(videoLabel)
             }
 
             if (numberOfTasks != 1) {
-                const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`)
+                const taskLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`
+                )
                 info.append(taskLabel)
             } else {
-                const taskLabel = _gl.elementFromHtml(`<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`)
+                const taskLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`
+                )
                 info.append(taskLabel)
             }
 
             if (numberOfQuizes != 1) {
-                const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`)
+                const quizLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`
+                )
                 info.append(quizLabel)
             } else {
-                const quizLabel = _gl.elementFromHtml(`<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`)
+                const quizLabel = _gl.elementFromHtml(
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`
+                )
                 info.append(quizLabel)
             }
         }
 
-        document.querySelector('.lobby').append(details)
-        document.querySelector('.chapters').classList.add('chapter-selected')
+        instance.experience.interface.chaptersDescription.append(details)
+        instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
+        instance.experience.interface.chaptersList.classList.add('chapter-selected')
 
-        const previewBtn = document.querySelector('[aria-label="Preview chapter"]')
-        previewBtn.addEventListener("click", instance.previewChapter)
-
-        tippy('[aria-label="Preview chapter"]', {
+        tippy('.chapter-guide', {
             theme: 'explorers',
-            content: _s.journey.preview.info,
+            content: _s.chapter.activityDescLabel,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'bottom-end',
+            placement: 'auto',
         })
-
-        instance.experience.navigation.next.addEventListener("click", instance.startChapter)
     }
 
     removeDescriptionHtml() {
-        document.querySelector('.chapters').classList.remove('chapter-selected')
-        if (document.querySelector('.chapter-details'))
-            document.querySelector('.chapter-details').remove()
+        instance.experience.interface.chaptersList.classList.add('chapter-selected')
+        if (this.chapterSelectWrapper.querySelector('.chapter-description')) {
+            this.chapterSelectWrapper.querySelector('.chapter-description').remove()
+        }
     }
 
     chapterEventListeners() {
-        document.querySelectorAll(".chapter").forEach((chapter) => {
-            chapter.addEventListener("click", () => {
-                if (document.querySelector('.chapter-details'))
-                    document.querySelector('.chapter-details').remove()
+        this.chapterSelectWrapper.querySelectorAll('.chapter').forEach((chapter) => {
+            chapter.addEventListener('click', () => {
+                if (document.querySelector('.chapter-description')) {
+                    document.querySelector('.chapter-description').remove()
+                }
 
                 instance.updateSelectedChapterData(chapter)
                 instance.addClassToSelectedChapter(chapter)
-                instance.loadChapterTextures()
-                instance.loadIrisVideoTextures()
-                instance.showActionButtons()
                 instance.setDescriptionHtml()
 
-                instance.experience.navigation.next.disabled = false
+                if (isElectron() && !chapter.classList.contains('downloaded')) {
+                    instance.disableStartChapterButton()
+                    return
+                }
+
+                instance.buttons.startChapter.disabled = false
+                instance.buttons.startChapter.tippy?.destroy()
             })
         })
 
-        document.querySelectorAll(".chapter__offline").forEach(function (chapter) {
-            chapter.addEventListener("click", (event) => {
+        this.chapterSelectWrapper.querySelectorAll('.chapter__download').forEach(function (chapter) {
+            chapter.addEventListener('click', (event) => {
                 instance.downloadChapter(chapter)
                 event.stopPropagation()
             })
         })
 
-        document.querySelectorAll(".chapter__downloaded").forEach(function (button) {
-            button.addEventListener("click", instance.confirmRedownload)
-        })
-
-        document.querySelectorAll(".chapter__download-failed").forEach(function (chapter) {
-            chapter.addEventListener("click", (event) => {
-                instance.downloadChapter(chapter)
+        this.chapterSelectWrapper.querySelectorAll('.chapter__remove').forEach(function (chapter) {
+            chapter.addEventListener('click', (event) => {
+                instance.removeDownload(chapter)
                 event.stopPropagation()
             })
+        })
+    }
+
+    disableStartChapterButton() {
+        instance.buttons.startChapter.disabled = true
+        instance.buttons.startChapter.tippy?.destroy()
+        instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
+            theme: 'explorers',
+            content: _s.offline.downloadToContinue,
+            maxWidth: 230,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'top',
         })
     }
 
     setStatesTooltips() {
-        tippy('.chapter__offline', {
+        tippy('.chapter__download', {
             theme: 'explorers',
-            content: _s.offline.download.info,
+            content: _s.offline.download.title,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'right',
+            placement: 'auto',
         })
 
-        tippy('.chapter__downloaded', {
+        tippy('.chapter__remove', {
+            theme: 'explorers',
+            content: _s.offline.remove,
+            duration: [500, 200],
+            animation: 'shift-away',
+            placement: 'auto',
+        })
+
+        tippy('.chapter__downloaded span', {
             theme: 'explorers',
             content: _s.offline.availableOffline.info,
             duration: [500, 200],
             animation: 'shift-away',
-            placement: 'right',
+            placement: 'auto',
         })
     }
 
     setChapterBgImage(chapter) {
-        document.querySelector('.chapter[data-id="' + chapter.id + '"]').style.backgroundImage = 'url("' + chapter.thumbnail + '")'
+        const img = _gl.elementFromHtml(`<div class="chapter-image"><img src="${chapter.thumbnail}" /></div>`)
+        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-mask`).prepend(img)
+    }
+
+    setChapterDescriptionBgImage(chapter) {
+        const img = _gl.elementFromHtml(
+            `<div class="chapter-description-image"><img src="${chapter.thumbnail}"/></div>`
+        )
+        document.querySelector('.chapter-description').prepend(img)
     }
 
     // Download
-
-    setDownloadHtml(button) {
-        button.innerHTML = `
-        <svg class="check-mark-icon" viewBox="0 0 23 16">
-            <use href="#check-mark"></use>
-        </svg>
-        <span>${_s.offline.availableOffline.title}</span>
-        `
-        button.addEventListener("click", instance.confirmRedownload)
-    }
-
-    confirmRedownload(event) {
-        const button = event.currentTarget
-        button.removeEventListener("click", instance.confirmRedownload)
-
-        button.innerHTML = `<span style="margin-right: 0.25rem">${_s.offline.redownloadConfirmation}</span>
-            <svg class="refuse | xmark-icon icon"  viewBox="0 0 17 16"><use href="#xmark"></use></svg>
-            <span class="separator">/</span>
-            <svg class="redownload | check-mark-icon icon" viewBox="0 0 23 16"><use href="#check-mark"></use></svg>`
-
-        button.querySelector('.refuse').addEventListener("click", (event) => {
-            instance.setDownloadHtml(button)
-            event.stopPropagation()
-        })
-        button.querySelector('.redownload').addEventListener("click", (event) => {
-            instance.redownloadChapter(button)
-            instance.setDownloadHtml(button)
-            event.stopPropagation()
-        })
-
-        event.stopPropagation()
-    }
-
-    redownloadChapter(chapter) {
-        instance.removeDownload(chapter)
-        instance.downloadChapter(chapter)
-    }
 
     addClassToSelectedChapter(chapter) {
         instance.unselectAllChapters()
@@ -394,7 +435,7 @@ export default class World {
     }
 
     unselectAllChapters() {
-        document.querySelectorAll(".chapter").forEach(function (thisChapter) {
+        document.querySelectorAll('.chapter').forEach(function (thisChapter) {
             thisChapter.classList.remove('selected')
         })
     }
@@ -402,72 +443,53 @@ export default class World {
     updateSelectedChapterData(chapter) {
         const chapterId = chapter.getAttribute('data-id')
         const categorySlug = chapter.getAttribute('data-slug')
-        instance.selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
-    }
-
-    loadChapterTextures() {
-        instance.selectedChapter.episodes.forEach((episode) => {
-            const fileName = episode.type + '-' + episode.id
-
-            if (instance.resources.videoPlayers.hasOwnProperty(fileName))
-                return
-
-            instance.resources.loadEpisodeTextures(fileName)
-        })
-    }
-
-    loadIrisVideoTextures() {
-        instance.selectedChapter.program.forEach((checkpoint, cIndex) => {
-            checkpoint.steps.forEach((step, sIndex) => {
-                if (step.type == 'iris' && step.message.video) {
-                    const textureName = `chapter-${instance.selectedChapter.id}_c-${cIndex}_s-${sIndex}`
-                    instance.offline.fetchChapterAsset(step.message, "video", (data) => {
-                        step.message = data
-                        instance.resources.loadVideoTexture(textureName, step.message.video)
-                    })
-                }
-            })
+        instance.selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
+            return chapter.id == chapterId
         })
     }
 
     async downloadChapter(chapter) {
         if (!this.experience.auth0.isAuthenticated) return
 
-        let chapterEl = chapter.closest(".chapter")
+        let chapterEl = chapter.closest('.chapter')
         const chapterId = chapterEl.getAttribute('data-id')
         const categorySlug = chapterEl.getAttribute('data-slug')
-        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
+        const selectedChapter = instance.chaptersData[categorySlug]['chapters'].find((chapter) => {
+            return chapter.id == chapterId
+        })
 
         instance.cacheChapterAssets(selectedChapter)
 
-        chapterEl.classList.remove('download')
-        chapterEl.classList.remove('failed')
+        chapterEl.classList.remove('download', 'failed', 'outdated')
         chapterEl.classList.add('downloading')
 
-        this.offline.downloadEpisodes(chapterId, selectedChapter['episodes'])
+        await instance.offline.downloadAllVideos(chapterId)
     }
 
     removeDownload(chapter) {
-        let chapterEl = chapter.closest(".chapter")
+        let chapterEl = chapter.closest('.chapter')
         const chapterId = chapterEl.getAttribute('data-id')
-        const categorySlug = chapterEl.getAttribute('data-slug')
-        const selectedChapter = instance.menu.chaptersData[categorySlug]['chapters'].find((chapter) => { return chapter.id == chapterId })
 
-        selectedChapter['episodes'].forEach(episode => this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id))
+        instance.offline.deleteChapterFromIndexedDb(chapterId)
+
         chapterEl.classList.remove('downloaded')
+
+        if (isElectron()) {
+            instance.disableStartChapterButton()
+        }
     }
 
     fetchBgMusic() {
         if (instance.selectedChapter.background_music) {
-            instance.offline.fetchChapterAsset(instance.selectedChapter, "background_music", (chapter) => {
+            instance.offline.fetchChapterAsset(instance.selectedChapter, 'background_music', (chapter) => {
                 instance.audio.changeBgMusic(chapter.background_music)
             })
         }
     }
 
     fetchArchiveImage() {
-        instance.selectedChapter.archive.forEach(fact => {
-            instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
+        instance.selectedChapter.archive.forEach((fact) => {
+            instance.offline.fetchChapterAsset(fact.image, 'url', (data) => {
                 fact.image = data
             })
         })
@@ -478,16 +500,124 @@ export default class World {
         instance.cacheChapterBgMusic(chapter.background_music)
         instance.cacheChapterArchiveImages(chapter.archive)
 
-        chapter['program'].forEach(checkpoint => {
-            instance.cacheTaskDescriptionAudios(checkpoint.steps.filter(step => step.message && step.message.audio))
-            instance.cacheTaskDescriptionVideos(checkpoint.steps.filter(step => step.message && step.message.video))
-            instance.cacheTaskDescriptionMedia(checkpoint.steps.filter(step => step.message && step.message.media))
-            instance.cacheSortingGameIcons(checkpoint.steps.filter(step => step.details && step.details.task_type == "sorting"))
-            instance.cachePictureAndCodeImage(checkpoint.steps.filter(step => step.details && step.details.task_type == "picture_and_code"))
-            instance.cacheDialogueAudios(checkpoint.steps.filter(step => step.details && step.details.task_type == "dialog"))
-            instance.cacheGameDescriptionTutorials(checkpoint.steps.filter(step => step.details && step.details.tutorial))
-            instance.cacheFlipCardsMedia(checkpoint.steps.filter(step => step.details && step.details.task_type == "flip_cards"))
-            instance.cacheDavidsRefugeImages(checkpoint.steps.filter(step => step.details && step.details.task_type == "davids_refuge"))
+        chapter['program'].forEach((checkpoint) => {
+            instance.cacheTaskDescriptionAudios(
+                checkpoint.steps.filter((step) => step.message && step.message.audio)
+            )
+            instance.cacheTaskDescriptionMedia(
+                checkpoint.steps.filter((step) => step.message && step.message.media)
+            )
+            instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.message_with_supporting_screens &&
+                        step.message_with_supporting_screens.character_audio
+                )
+            )
+            instance.cacheTaskDescriptionWithSupportingScreensRightScreen(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.message_with_supporting_screens &&
+                        step.message_with_supporting_screens.right_screen
+                )
+            )
+            instance.cacheSortingGameIcons(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'sorting'
+                )
+            )
+            instance.cachePictureAndCodeImage(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'picture_and_code'
+                )
+            )
+            instance.cacheDialogueAudios(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'
+                )
+            )
+            instance.cacheGameDescriptionTutorials(
+                checkpoint.steps.filter((step) => step.details && step.details.tutorial)
+            )
+            instance.cacheFlipCardsMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'flip_cards'
+                )
+            )
+            instance.cacheChooseNewKingMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'choose_new_king'
+                )
+            )
+            instance.cacheDavidsRefugeImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'davids_refuge'
+                )
+            )
+            instance.cacheMultipleChoiceWithPicture(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'multiple_choice_with_picture'
+                )
+            )
+            instance.cacheConfirmationScreenImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'confirmation_screen'
+                )
+            )
+            instance.cacheTaskDescriptionScreenImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'task_description_screen'
+                )
+            )
+            instance.cacheTaskDescriptionWithCalculatorScreenImages(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'calculator_screen'
+                )
+            )
+            instance.cacheSingleChoiceMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'single_choice'
+                )
+            )
+            instance.cacheTrueFalseQuizMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'truefalse_quiz'
+                )
+            )
         })
     }
 
@@ -503,231 +633,323 @@ export default class World {
 
     cacheChapterArchiveImages(facts) {
         if (facts.length == 0) return
-        facts.forEach(fact => instance.fetchAndCacheAsset(fact.image.url))
+        facts.forEach((fact) => instance.fetchAndCacheAsset(fact.image.url))
     }
 
     cacheTaskDescriptionAudios(steps) {
         if (steps.length == 0) return
-        steps.forEach(step => instance.fetchAndCacheAsset(step.message.audio))
-    }
-
-    cacheTaskDescriptionVideos(steps) {
-        if (steps.length == 0) return
-        steps.forEach(step => instance.fetchAndCacheAsset(step.message.video))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message.audio))
     }
 
     cacheTaskDescriptionMedia(steps) {
         if (steps.length == 0) return
-        steps.forEach(step => instance.fetchAndCacheAsset(step.message.media))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message.media))
+    }
+
+    cacheTaskDescriptionWithSupportingScreensCharacterAudio(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) =>
+            instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio)
+        )
+    }
+
+    cacheTaskDescriptionWithSupportingScreensRightScreen(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) =>
+            instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen)
+        )
     }
 
     cacheSortingGameIcons(sortingTasks) {
         if (sortingTasks.length == 0) return
-        sortingTasks.forEach(task => task.sorting.forEach(s => {
-            instance.fetchAndCacheAsset(s.icon)
-        }))
+        sortingTasks.forEach((task) =>
+            task.sorting.forEach((s) => {
+                instance.fetchAndCacheAsset(s.icon)
+            })
+        )
     }
 
     cachePictureAndCodeImage(pictureAndCodeTasks) {
         if (pictureAndCodeTasks.length == 0) return
-        pictureAndCodeTasks.forEach(task => instance.fetchAndCacheAsset(task.picture_and_code.picture))
+        pictureAndCodeTasks.forEach((task) => instance.fetchAndCacheAsset(task.picture_and_code.picture))
     }
 
     cacheDialogueAudios(steps) {
         if (steps.length == 0) return
-        steps.forEach(step => {
-            step.dialog.forEach(dialog => instance.fetchAndCacheAsset(dialog.audio))
+        steps.forEach((step) => {
+            step.dialog.forEach((dialog) => instance.fetchAndCacheAsset(dialog.audio))
         })
     }
 
     cacheGameDescriptionTutorials(steps) {
         if (steps.length == 0) return
-        steps.forEach(step => instance.fetchAndCacheAsset(step.details.tutorial))
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.details.tutorial))
     }
 
     cacheFlipCardsMedia(steps) {
         if (steps.length == 0) return
-        steps.forEach(step => {
-            step.flip_cards.cards.forEach(card => {
+        steps.forEach((step) => {
+            if (!step.flip_cards.cards) return
+
+            instance.fetchAndCacheAsset(step.confirmation_screen.cs_image)
+
+            step.flip_cards.cards.forEach((card) => {
                 instance.fetchAndCacheAsset(card.image_back)
                 instance.fetchAndCacheAsset(card.image_front)
                 instance.fetchAndCacheAsset(card.sound_effect)
             })
-            instance.fetchAndCacheAsset(step.flip_cards.glitchs_voice.audio)
-            instance.fetchAndCacheAsset(step.flip_cards.gods_voice.audio)
+        })
+    }
+
+    cacheChooseNewKingMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.choose_new_king.glitchs_voice.audio)
+            instance.fetchAndCacheAsset(step.choose_new_king.gods_voice.audio)
+
+            if (!step.choose_new_king.cards) return
+
+            step.choose_new_king.cards.forEach((card) => {
+                instance.fetchAndCacheAsset(card.image_back)
+                instance.fetchAndCacheAsset(card.image_front)
+                instance.fetchAndCacheAsset(card.sound_effect)
+            })
         })
     }
 
     cacheDavidsRefugeImages(steps) {
         if (steps.length == 0) return
-        steps.forEach(step => {
-            step.davids_refuge.characters.forEach(character => instance.fetchAndCacheAsset(character.image))
+        steps.forEach((step) => {
+            step.davids_refuge.characters.forEach((character) => instance.fetchAndCacheAsset(character.image))
+        })
+    }
+
+    cacheMultipleChoiceWithPicture(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.multiple_choice_with_picture.image)
+        })
+    }
+
+    cacheConfirmationScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.confirmation_screen.cs_image)
+        })
+    }
+
+    cacheTaskDescriptionScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.task_description_screen.td_image)
+        })
+    }
+
+    cacheTaskDescriptionWithCalculatorScreenImages(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            instance.fetchAndCacheAsset(step.calculator_screen.td_image)
+        })
+    }
+
+    cacheSingleChoiceMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.single_choice.options.forEach((option) => instance.fetchAndCacheAsset(option.option_media))
+        })
+    }
+
+    cacheTrueFalseQuizMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.truefalse_quiz.questions.forEach((question) => {
+                instance.fetchAndCacheAsset(question.question_media)
+                instance.fetchAndCacheAsset(question.question_audio)
+            })
         })
     }
 
     fetchAndCacheAsset(url) {
         if (!url) return
-        caches.open("chaptersAssets").then((cache) => {
+        caches.open('chaptersAssets').then((cache) => {
             var request = new Request(url)
-            fetch(request)
-                .then((fetchedResponse) => {
-                    cache.put(url, fetchedResponse)
-                })
+            fetch(request).then((fetchedResponse) => {
+                cache.put(url, fetchedResponse)
+            })
         })
-    }
-
-    previewChapter() {
-        instance.debug.addPreviewMode()
-        instance.startChapter()
     }
 
     startChapter() {
         // Reset chapter if completed
-        if (instance.chapterProgress() == instance.selectedChapter.program.length)
+        if (instance.chapterProgress() == instance.selectedChapter.program.length) {
             instance.resetChapter()
+        }
 
-        instance.page.removeLobby()
-        instance.removeLobbyEventListeners()
+        instance.experience.setAppView('chapter')
 
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
+        const appVersion = document.getElementById('app-version').innerText
+
         _appInsights.trackEvent({
-            name: "Start chapter",
+            name: 'Start chapter',
             properties: {
-                title: instance.selectedChapter.title,
+                chapterId: instance.selectedChapter.id,
                 category: instance.selectedChapter.category,
                 language: _lang.getLanguageCode(),
-                quality: instance.selectedQuality
-            }
+                quality: instance.selectedQuality,
+                device: isElectron() ? 'App' : 'Web',
+                login: instance.experience.auth0?.isAuthenticated ? 'Login' : 'Non-Login',
+                appVersion: appVersion ? appVersion : 'Web'
+            },
         })
 
-        document.querySelector('.fullscreen-section input').checked = true
-        if (!document.fullscreenElement)
+        if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen()
-
-        document.querySelector('.page').className = 'page page-home'
-        document.querySelector('.cta').style.display = 'none'
-    }
-
-    currentChapterLabel() {
-        const el = _gl.elementFromHtml(`
-            <div class="page-title">
-                <p>Chapter: <span>${instance.selectedChapter.title}</span></p>
-                <p>Age: <span>${instance.selectedChapter.category}</span></p>
-            </div>`)
-
-        document.querySelector('.app-header').append(el)
-
-        const tl = gsap.timeline()
-
-        tl
-            .set(el, { autoAlpha: 0, x: -20 })
-            .to(el, { autoAlpha: 1, x: 0, })
-
-        setTimeout(() => {
-            tl.to(el, { autoAlpha: 0, x: -20 })
-        }, 10000)
-    }
-
-    removeLobbyEventListeners() {
-        instance.experience.navigation.prev.removeEventListener('click', instance.showIntro)
-        instance.experience.navigation.next.removeEventListener("click", instance.startChapter)
+        }
     }
 
     setUpChapter() {
-        instance.hideMenu()
+        document.body.classList.remove('freeze')
+
         instance.program = new Program()
         instance.progressBar = new ProgressBar()
-        instance.buttons.home.style.display = 'flex'
     }
 
     resetChapter() {
-        localStorage.removeItem("progress-theme-" + instance.selectedChapter.id)
-        localStorage.removeItem("answers-theme-" + instance.selectedChapter.id)
+        localStorage.removeItem('progress-theme-' + instance.selectedChapter.id)
+        localStorage.removeItem('answers-theme-' + instance.selectedChapter.id)
+    }
+
+    setDownloadModalHTML() {
+        instance.downloadModal = _gl.elementFromHtml(`
+        <dialog id="download-modal" class="modal">
+            <div class="modal-container">
+                <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
+                <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
+                <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
+                <p>${_s.offline.downloadApp.infoLabel}</p>
+                <ul>
+                    <li>${_s.offline.downloadApp.infoText1}</li>
+                    <li>${_s.offline.downloadApp.infoText2}</li>
+                </ul>
+                <div class="modal-actions">
+                    <button class="modal-close">${_s.offline.downloadApp.close}</button>
+                </div>
+            </div>
+        </dialog>`)
+
+        document.querySelector('#app').append(instance.downloadModal)
+
+        instance.closeDownloadModal()
+        instance.setLinksToDownloadModal()
+    }
+
+    setLinksToDownloadModal() {
+        fetch(_api.getAppDownloadLinks()).then(function (response) {
+            response.json().then(function (apiData) {
+                const ul = instance.downloadModal.querySelector('.device-type-available')
+
+                ul.appendChild(
+                    _gl.elementFromHtml(`
+                        <a class="button-cube-wider" href="${apiData['windows']['exe']}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
+                            <span>Windows</span>
+                        </a>`)
+                )
+                ul.appendChild(
+                    _gl.elementFromHtml(`
+                        <a class="button-cube-wider" href="${apiData['mac']['x64']}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
+                            <div>Intel-based Mac</div>
+                        </a>`)
+                )
+                ul.appendChild(
+                    _gl.elementFromHtml(`
+                        <a class="button-cube-wider" href="${apiData['mac']['arm64']}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> 
+                            <span>Mac with Apple silicon</span>
+                        </a>`)
+                )
+            })
+        })
+    }
+
+    // Popup
+
+    openDownloadModal() {
+        instance.downloadModal.showModal()
+
+        _appInsights.trackEvent({
+            name: 'Download app',
+            properties: {
+                language: _lang.getLanguageCode(),
+            },
+        })
+    }
+
+    closeDownloadModal() {
+        const closeModal = instance.downloadModal.querySelector('.modal-close')
+
+        closeModal.addEventListener('click', () => {
+            instance.downloadModal.close()
+        })
     }
 
     goHome() {
         document.body.classList.add('freeze')
-        instance.program.destroy()
-        instance.program.video.defocus()
-        instance.program.removeInteractivity()
-        instance.buttons.home.style.display = 'none'
-        // instance.buttons.contact.style.display = 'flex'
-        instance.buttons.guide.style.display = 'flex'
-
-        document.querySelector('.cta').style.display = 'flex'
         instance.experience.navigation.prev.disabled = false
 
-        instance.camera.updateCameraTo(null)
+        if (instance.program) {
+            instance.program.destroy()
+            instance.program.video.defocus()
+        }
+
+        instance.controlRoom.irisTextureTransition()
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
-        instance.debug.removePreviewMode()
+
         instance.showLobby()
         instance.preselectChapter()
 
         document.querySelector('.page-title')?.remove()
 
-        if (instance.program.archive)
-            instance.program.archive.remove()
+        if (instance.program.archive) instance.program.archive.remove()
+        if (instance.program.pause) instance.program.pause.destroy()
+        if (instance.program.congrats) instance.program.congrats.destroy()
 
-        if (instance.program.pause)
-            instance.program.pause.destroy()
-
-        document.querySelector('.fullscreen-section input').checked = false
-        if (document.fullscreenElement)
+        if (document.fullscreenElement) {
             document.exitFullscreen()
+        }
 
+        document.dispatchEvent(_e.EVENTS.GO_HOME)
     }
 
     preselectChapter() {
-        document.querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']").click()
-    }
-
-    showActionButtons() {
-        instance.experience.navigation.next.disabled = this.chapterProgress() == this.selectedChapter.program.length
-    }
-
-    hideMenu() {
-        document.body.classList.remove('freeze')
-        document.querySelector('.page').className = 'page page-home'
-
-        // instance.buttons.contact.style.display = 'none'
-        instance.buttons.guide.style.display = 'none'
+        // ToDo: Find another solution to select the chapter
+        // once checking if the chapter is downloaded is done
+        setTimeout(() => {
+            document.querySelector(".chapter[data-id='" + instance.selectedChapter.id + "']").click()
+        }, 1000)
     }
 
     finishJourney() {
         instance.audio.changeBgMusic()
 
-        if (instance.debug.onPreviewMode())
-            return
-
         _appInsights.trackEvent({
-            name: "Finish chapter",
+            name: 'Finish chapter',
             properties: {
                 title: instance.selectedChapter.title,
                 category: instance.selectedChapter.category,
                 language: _lang.getLanguageCode(),
-                quality: instance.selectedQuality
-            }
+                quality: instance.selectedQuality,
+            },
         })
     }
 
     getId() {
-        return "progress-theme-" + this.selectedChapter.id
-    }
-
-    resize() {
-        if (this.points)
-            this.points.resize()
-    }
-
-    update() {
-        if (this.controlRoom)
-            this.controlRoom.update()
-
-        if (this.points)
-            this.points.update()
+        return 'progress-theme-' + this.selectedChapter.id
     }
 }

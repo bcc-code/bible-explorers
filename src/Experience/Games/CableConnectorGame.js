@@ -17,7 +17,6 @@ export default class CableConnector {
         this.debug = this.experience.debug
 
         instance = this
-        instance.fails = 0
     }
 
     toggleCableConnector() {
@@ -33,23 +32,15 @@ export default class CableConnector {
 
         const game = _gl.elementFromHtml(`
         <section class="game cable-connect">
-            <div class="container">
-                <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
-            </div>
+            <div class="container"></div>
             <div class="overlay"></div>
             <div id="cable-connect" class="game-canvas"></div>
         </section>`)
 
-        document.querySelector('.ui-container').append(game)
+        document.querySelector('.app-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            skipBTN.style.display = 'flex'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
 
         const spriteW = 180
         const spriteH = 100
@@ -69,55 +60,55 @@ export default class CableConnector {
                 plug: {
                     width: 60,
                     height: 60,
-                    radius: 1000
-                }
+                    radius: 1000,
+                },
             },
             color: {
-                name: [
-                    'lightBlue',
-                    'darkBlue',
-                    'yellow',
-                    'pink',
-                    'purple'
-                ],
-                hex: [
-                    "#2c90cf",
-                    "#373e93",
-                    "#f9c662",
-                    "#ff6ea9",
-                    "#af4eaa"
-                ],
-                stroke: [
-                    "#2b78c3",
-                    "#23307a",
-                    "#fcb04e",
-                    "#f75b99",
-                    "#9f4096",
-                ],
+                name: ['lightBlue', 'darkBlue', 'yellow', 'pink', 'purple'],
+                hex: ['#2c90cf', '#373e93', '#f9c662', '#ff6ea9', '#af4eaa'],
+                stroke: ['#2b78c3', '#23307a', '#fcb04e', '#f75b99', '#9f4096'],
                 default: '#cccccc',
-                defaultStroke: '#bbbbbb'
+                defaultStroke: '#bbbbbb',
             },
             sprite: {
                 src: {
                     sparkles: 'games/sparkles.png',
-                    explosion: 'games/explosion.png'
+                    explosion: 'games/explosion.png',
                 },
                 width: spriteW,
                 height: spriteH,
                 animations: {
                     sparkle: [
-                        0, 0, spriteW, spriteH,
-                        spriteW * 2, 0, spriteW, spriteH,
-                        spriteW * 3, 0, spriteW, spriteH,
+                        0,
+                        0,
+                        spriteW,
+                        spriteH,
+                        spriteW * 2,
+                        0,
+                        spriteW,
+                        spriteH,
+                        spriteW * 3,
+                        0,
+                        spriteW,
+                        spriteH,
                     ],
                     explosion: [
-                        0, 0, spriteW, spriteH,
-                        spriteW * 2, 0, spriteW, spriteH,
-                        spriteW * 3, 0, spriteW, spriteH,
-                    ]
-                }
+                        0,
+                        0,
+                        spriteW,
+                        spriteH,
+                        spriteW * 2,
+                        0,
+                        spriteW,
+                        spriteH,
+                        spriteW * 3,
+                        0,
+                        spriteW,
+                        spriteH,
+                    ],
+                },
             },
-            itemsLength: 5
+            itemsLength: 5,
         }
 
         this.cables = []
@@ -126,13 +117,13 @@ export default class CableConnector {
         this.randomOrder = {
             outlet_l: getRandomOrder(this.data.itemsLength),
             cable: getRandomOrder(this.data.itemsLength),
-            outlet_r: getRandomOrder(this.data.itemsLength)
+            outlet_r: getRandomOrder(this.data.itemsLength),
         }
 
         this.stage = new Konva.Stage({
             container: 'cable-connect',
             width: instance.data.canvas.width,
-            height: instance.data.canvas.height
+            height: instance.data.canvas.height,
         })
 
         this.correspondingOutlet = null
@@ -146,11 +137,11 @@ export default class CableConnector {
             x: 0,
             y: 0,
             width: this.data.canvas.width,
-            height: this.data.canvas.height
+            height: this.data.canvas.height,
         })
 
-        const cablesGroup = new Konva.Group({ name: "cables" })
-        const outletsGroup = new Konva.Group({ name: "outlets" })
+        const cablesGroup = new Konva.Group({ name: 'cables' })
+        const outletsGroup = new Konva.Group({ name: 'outlets' })
 
         this.container = containerObj._draw()
         layer.add(this.container)
@@ -161,12 +152,12 @@ export default class CableConnector {
         const outletHeight = background.height() / 5 - 30
         const cableWidth = background.width() / 2
 
-        this.data.cable.plug.height = outletHeight * 4 / 6
+        this.data.cable.plug.height = (outletHeight * 4) / 6
         this.data.cable.plug.width = outletWidth * 2
         this.data.cable.pin.height = outletHeight / 6
         this.data.cable.pin.width = outletWidth - 4
 
-        const spaceLeft = containerObj.height - (outletHeight * this.data.itemsLength)
+        const spaceLeft = containerObj.height - outletHeight * this.data.itemsLength
         const spaceBetween = spaceLeft / (this.data.itemsLength + 1)
         const getY = (index) => spaceBetween + index * (outletHeight + spaceBetween)
         const cableX = containerObj.width / 2 - cableWidth / 2
@@ -180,7 +171,7 @@ export default class CableConnector {
                 width: outletWidth,
                 height: outletHeight,
                 fill: this.data.color.default,
-                name: "left"
+                name: 'left',
             })
 
             const outlet_r = new Outlet({
@@ -191,7 +182,7 @@ export default class CableConnector {
                 width: outletWidth,
                 height: outletHeight,
                 fill: this.data.color.default,
-                name: "right"
+                name: 'right',
             })
 
             const cable = new Cable({
@@ -220,98 +211,111 @@ export default class CableConnector {
         containerObj.item.add(sparkleSprite)
         containerObj.item.add(explosionSprite)
 
-        this.cables.forEach(cable => {
+        this.cables.forEach((cable) => {
             cable.item.on('dragstart', () => {
                 cable.item.moveTo(dragLayer)
             })
 
-            cable.item.children.filter(c => c.name().includes('plug')).forEach(plug => {
-                plug.on('mouseover', () => {
-                    if (plug.draggable()) {
-                        cable.item.opacity(0.98)
-                        document.body.style.cursor = 'pointer'
-                    }
-                })
-
-                plug.on('mouseout', () => {
-                    if (plug.draggable()) {
-                        cable.item.opacity(1)
-                        document.body.style.cursor = 'default'
-                    }
-                })
-
-                plug.on('dragmove', () => {
-                    cable._updateDottedLines()
-
-                    const maxX = plug.getParent().x() - containerObj.sideWidth - containerObj.bandWidth
-                    const maxY = plug.getParent().y()
-
-                    const minX = plug.getParent().x() - containerObj.width + containerObj.sideWidth + containerObj.bandWidth
-                    const minY = plug.getParent().y() - containerObj.height + plug.height() - spaceBetween
-
-                    plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
-                    plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
-                })
-
-                plug.on('dragend', () => {
-                    if (instance.timerWithTimeElapsed()) return
-                    cable.item.moveTo(cablesGroup)
-
-                    const direction = plug.name().replace('plug_', '')
-                    const plugPosition = {
-                        x: cable.item.x() + plug.x(),
-                        y: cable.item.y() + plug.y()
-                    }
-                    instance.correspondingOutlet = instance.outlets.find(o => o.color == cable.color && o.name === direction)
-
-                    if (instance.connectedToOutlet(plugPosition, instance.correspondingOutlet)) {
-
-                        instance.audio.playSound('correct')
-                        instance.playAnimation(instance.correspondingOutlet, sparkleSprite)
-
-                        const plugInPosition = {
-                            x: direction == "left"
-                                ? instance.correspondingOutlet.position.x + instance.correspondingOutlet.width
-                                : instance.correspondingOutlet.position.x - instance.correspondingOutlet.width,
-                            y: instance.correspondingOutlet.position.y + instance.correspondingOutlet.height / 2 - instance.data.cable.plug.height / 2
+            cable.item.children
+                .filter((c) => c.name().includes('plug'))
+                .forEach((plug) => {
+                    plug.on('mouseover', () => {
+                        if (plug.draggable()) {
+                            cable.item.opacity(0.98)
+                            document.body.style.cursor = 'pointer'
                         }
+                    })
 
-                        plug.move({
-                            x: plugInPosition.x - plugPosition.x,
-                            y: plugInPosition.y - plugPosition.y
-                        })
-
-                        plug.draggable(false)
-                        plug.zIndex(0)
-                        instance.correspondingOutlet.connected = true
-
-
-                        if (instance.bothPlugsConnected(cable)) {
-                            cable.item.zIndex(0)
+                    plug.on('mouseout', () => {
+                        if (plug.draggable()) {
+                            cable.item.opacity(1)
+                            document.body.style.cursor = 'default'
                         }
+                    })
 
-                        if (instance.allCablesConnected()) {
-                            instance.stopTimerIfNecessary()
-                            setTimeout(instance.finishGame, 1000)
-                        }
-                    }
-                    else {
-                        let outletConnectedTo = null
-                        instance.outlets.filter(o => o.color != cable.color && o.name === direction).forEach(otherOutlet => {
-                            if (instance.connectedToOutlet(plugPosition, otherOutlet))
-                                outletConnectedTo = otherOutlet
-                        })
+                    plug.on('dragmove', () => {
+                        cable._updateDottedLines()
 
-                        if (outletConnectedTo) {
-                            instance.audio.playSound('wrong')
-                            instance.playAnimation(outletConnectedTo, explosionSprite)
+                        const maxX = plug.getParent().x() - containerObj.sideWidth - containerObj.bandWidth
+                        const maxY = plug.getParent().y()
+
+                        const minX =
+                            plug.getParent().x() -
+                            containerObj.width +
+                            containerObj.sideWidth +
+                            containerObj.bandWidth
+                        const minY = plug.getParent().y() - containerObj.height + plug.height() - spaceBetween
+
+                        plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
+                        plug.y(Math.min(Math.max(plug.y(), -maxY), -minY))
+                    })
+
+                    plug.on('dragend', () => {
+                        if (instance.timerWithTimeElapsed()) return
+                        cable.item.moveTo(cablesGroup)
+
+                        const direction = plug.name().replace('plug_', '')
+                        const plugPosition = {
+                            x: cable.item.x() + plug.x(),
+                            y: cable.item.y() + plug.y(),
                         }
-                    }
+                        instance.correspondingOutlet = instance.outlets.find(
+                            (o) => o.color == cable.color && o.name === direction
+                        )
+
+                        if (instance.connectedToOutlet(plugPosition, instance.correspondingOutlet)) {
+                            instance.audio.playSound('correct')
+                            instance.playAnimation(instance.correspondingOutlet, sparkleSprite)
+
+                            const plugInPosition = {
+                                x:
+                                    direction == 'left'
+                                        ? instance.correspondingOutlet.position.x +
+                                          instance.correspondingOutlet.width
+                                        : instance.correspondingOutlet.position.x -
+                                          instance.correspondingOutlet.width,
+                                y:
+                                    instance.correspondingOutlet.position.y +
+                                    instance.correspondingOutlet.height / 2 -
+                                    instance.data.cable.plug.height / 2,
+                            }
+
+                            plug.move({
+                                x: plugInPosition.x - plugPosition.x,
+                                y: plugInPosition.y - plugPosition.y,
+                            })
+
+                            plug.draggable(false)
+                            plug.zIndex(0)
+                            instance.correspondingOutlet.connected = true
+
+                            if (instance.bothPlugsConnected(cable)) {
+                                cable.item.zIndex(0)
+                            }
+
+                            if (instance.allCablesConnected()) {
+                                instance.stopTimerIfNecessary()
+                                setTimeout(instance.finishGame, 1000)
+                            }
+                        } else {
+                            let outletConnectedTo = null
+                            instance.outlets
+                                .filter((o) => o.color != cable.color && o.name === direction)
+                                .forEach((otherOutlet) => {
+                                    if (instance.connectedToOutlet(plugPosition, otherOutlet))
+                                        outletConnectedTo = otherOutlet
+                                })
+
+                            if (outletConnectedTo) {
+                                instance.audio.playSound('wrong')
+                                instance.playAnimation(outletConnectedTo, explosionSprite)
+                            }
+                        }
+                    })
                 })
-            })
         })
 
-        this.outlets.forEach(outlet => {
+        this.outlets.forEach((outlet) => {
             outlet.item.on('mouseover', () => {
                 if (outlet.colorFound) return
                 document.body.style.cursor = 'pointer'
@@ -332,9 +336,10 @@ export default class CableConnector {
 
                 if (outlet.isVisible) {
                     instance.deselectOutlet(outlet)
-                }
-                else {
-                    const currentVisible = instance.outlets.find(o => o.isVisible === true && o.colorFound === false)
+                } else {
+                    const currentVisible = instance.outlets.find(
+                        (o) => o.isVisible === true && o.colorFound === false
+                    )
                     instance.selectOutlet(outlet, index)
 
                     if (!currentVisible) return
@@ -347,14 +352,12 @@ export default class CableConnector {
                         currentVisible.colorFound = true
                         instance.audio.playSound('correct')
 
-                        instance.colorCable(this.cables.find(c => c.color === outlet.color))
-                    }
-                    else {
+                        instance.colorCable(this.cables.find((c) => c.color === outlet.color))
+                    } else {
                         // Different colors
                         if (outlet.name === currentVisible.name) {
                             instance.deselectOutlet(currentVisible)
-                        }
-                        else {
+                        } else {
                             // Opposite sides. Show wrong animation
                             instance.stopOutletClick()
                             instance.audio.playSound('wrong')
@@ -374,7 +377,7 @@ export default class CableConnector {
         this.stage.add(dragLayer)
     }
 
-    animateIcon(obj, fill, layer, callback = () => { }) {
+    animateIcon(obj, fill, layer, callback = () => {}) {
         const amplitude = 5
         const period = 100
         const centerX = 0
@@ -396,7 +399,7 @@ export default class CableConnector {
                 obj.opacity(0.35)
                 animation.stop()
                 callback()
-            }
+            },
         })
 
         this.tween.play()
@@ -429,17 +432,17 @@ export default class CableConnector {
     onTimeElapsed() {
         instance.toggleTryAgain()
 
-        instance.cables.forEach(cable => {
-            cable.item.find('.plug').forEach(plug => plug.stopDrag())
+        instance.cables.forEach((cable) => {
+            cable.item.find('.plug').forEach((plug) => plug.stopDrag())
         })
     }
 
     colorCable(cable) {
         const index = instance.data.color.name.indexOf(cable.color)
-        const plugs = cable.item.find(".plug")
-        const cord = cable.item.findOne(".cord")
+        const plugs = cable.item.find('.plug')
+        const cord = cable.item.findOne('.cord')
 
-        plugs.forEach(plug => {
+        plugs.forEach((plug) => {
             plug.fill(instance.data.color.hex[index])
             plug.stroke(instance.data.color.stroke[index])
 
@@ -462,20 +465,18 @@ export default class CableConnector {
     }
 
     stopOutletClick() {
-        instance.outlets.forEach(o => o.canClick = false)
+        instance.outlets.forEach((o) => (o.canClick = false))
     }
 
     startOutletClick() {
-        instance.outlets.forEach(o => o.canClick = true)
+        instance.outlets.forEach((o) => (o.canClick = true))
     }
 
     playAnimation(obj, spriteObj) {
         const direction = obj.name
         const newPosition = {
-            x: direction == "left"
-                ? obj.position.x + obj.width + 15
-                : obj.position.x - obj.width - 15,
-            y: obj.position.y + obj.height / 2
+            x: direction == 'left' ? obj.position.x + obj.width + 15 : obj.position.x - obj.width - 15,
+            y: obj.position.y + obj.height / 2,
         }
 
         spriteObj.position(newPosition)
@@ -514,29 +515,30 @@ export default class CableConnector {
             visible: false,
             offset: {
                 x: this.data.sprite.width / 2,
-                y: this.data.sprite.height / 2
-            }
+                y: this.data.sprite.height / 2,
+            },
         })
     }
 
     connectedToOutlet(plugPosition, correspondingOutlet) {
-        return Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 20
-            && Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height / 2
+        return (
+            Math.abs(plugPosition.x - correspondingOutlet.position.x) < correspondingOutlet.width + 20 &&
+            Math.abs(plugPosition.y - correspondingOutlet.position.y) < correspondingOutlet.height / 2
+        )
     }
 
     bothPlugsConnected(cable) {
-        return instance.outlets.filter(o => o.color == cable.color && o.connected).length == 2
+        return instance.outlets.filter((o) => o.color == cable.color && o.connected).length == 2
     }
 
     allCablesConnected() {
-        return instance.outlets.filter(o => o.connected).length == instance.data.itemsLength * 2
+        return instance.outlets.filter((o) => o.connected).length == instance.data.itemsLength * 2
     }
 
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
     toggleTryAgain() {
-
         instance.timer?.destroy()
 
         const gameOverHTML = _gl.elementFromHtml(`
@@ -556,20 +558,14 @@ export default class CableConnector {
         document.querySelector('.cable-connect .container').append(gameOverHTML)
         document.querySelector('.cable-connect').classList.add('popup-visible')
 
-        if (instance.fails == 3)
-            document.querySelector('[aria-label="skip-button"]').style.display = 'flex'
-
-
         // Add event listeners
         resetBTN.addEventListener('click', () => {
-            instance.fails++
             instance.destroy()
             instance.toggleCableConnector()
         })
     }
 
     finishGame() {
-        instance.fails = 0
         instance.timer?.destroy()
 
         instance.toggleGameComplete()
@@ -577,25 +573,14 @@ export default class CableConnector {
     }
 
     toggleGameComplete() {
-
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
                 <h1>${_s.miniGames.completed.title}</h1>
                 <p>${_s.miniGames.completed.message}</p>
-                <div class="buttons"></div>
             </div>
         `)
 
-        const continueBtn = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.continue}</button>
-        `)
-
-        continueBtn.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        congratsHTML.querySelector('.buttons').append(continueBtn)
+        instance.experience.navigation.next.className = 'button-arrow'
 
         document.querySelector('.cable-connect .container').append(congratsHTML)
         document.querySelector('.cable-connect').classList.add('popup-visible')
@@ -603,12 +588,13 @@ export default class CableConnector {
         instance.audio.playSound('task-completed')
         instance.experience.celebrate({
             particleCount: 100,
-            spread: 160
+            spread: 160,
         })
     }
 
     resizeBreakpoint(x, callback, callback2) {
-        if (x.matches) { // If media query matches
+        if (x.matches) {
+            // If media query matches
             callback
         } else {
             callback2
@@ -617,6 +603,9 @@ export default class CableConnector {
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }
 
@@ -625,9 +614,9 @@ class Container {
         this.position = { x, y }
         this.width = width
         this.height = height
-        this.stroke = "#cbcbcb"
+        this.stroke = '#cbcbcb'
         this.radius = 30
-        this.sideWidth = width * 1.5 / 12
+        this.sideWidth = (width * 1.5) / 12
         this.bandWidth = this.sideWidth / 4
     }
 
@@ -635,7 +624,7 @@ class Container {
         this.item = new Konva.Group({
             x: this.position.x,
             y: this.position.y,
-            name: "container"
+            name: 'container',
         })
 
         this.item.add(this._bg())
@@ -649,14 +638,11 @@ class Container {
     _bg() {
         const background = new Konva.Rect({
             x: this.width / 12,
-            width: this.width * 10 / 12,
+            width: (this.width * 10) / 12,
             height: this.height,
             fillLinearGradientEndPointY: this.height,
-            fillLinearGradientColorStops: [
-                0, '#1a1a1a',
-                1, '#4d4d4d'
-            ],
-            name: "background"
+            fillLinearGradientColorStops: [0, '#1a1a1a', 1, '#4d4d4d'],
+            name: 'background',
         })
 
         return background
@@ -666,7 +652,7 @@ class Container {
         const icon = new Konva.Group({
             x: this.width / 2,
             y: this.height / 2,
-            name: "warningSign"
+            name: 'warningSign',
         })
 
         const triangle = new Konva.RegularPolygon({
@@ -677,17 +663,17 @@ class Container {
             rotation: 20,
             opacity: 0.35,
             lineJoin: 'round',
-            name: 'triangle'
+            name: 'triangle',
         })
 
         icon.add(triangle)
 
-        Konva.Image.fromURL('games/volt.svg', image => {
+        Konva.Image.fromURL('games/volt.svg', (image) => {
             icon.add(image)
             image.setAttrs({
                 width: triangle.radius() / 2,
                 height: triangle.radius() / 0.8,
-                opacity: 0.35
+                opacity: 0.35,
             })
 
             image.offset({ x: image.width() / 2 - 5, y: image.height() / 2 + 10 })
@@ -700,26 +686,25 @@ class Container {
         const side = new Konva.Group({
             x: x,
             y: y,
-            name: "side"
+            name: 'side',
         })
 
-        side.add(new Konva.Rect({
-            width: this.sideWidth,
-            height: this.height,
-            fillLinearGradientEndPointX: this.sideWidth,
-            fillLinearGradientColorStops: [
-                0, '#989898',
-                1, '#666666'
-            ],
-            cornerRadius: [this.radius, 0, 0, this.radius],
-        }))
+        side.add(
+            new Konva.Rect({
+                width: this.sideWidth,
+                height: this.height,
+                fillLinearGradientEndPointX: this.sideWidth,
+                fillLinearGradientColorStops: [0, '#989898', 1, '#666666'],
+                cornerRadius: [this.radius, 0, 0, this.radius],
+            })
+        )
 
-        Konva.Image.fromURL('games/band.png', image => {
+        Konva.Image.fromURL('games/band.png', (image) => {
             side.add(image)
             image.setAttrs({
                 x: this.sideWidth - this.bandWidth,
                 width: this.bandWidth,
-                height: this.height
+                height: this.height,
             })
         })
 
@@ -777,20 +762,31 @@ class Cable {
     _draw() {
         const cable = new Konva.Group({
             x: this.position.x,
-            y: this.position.y
+            y: this.position.y,
         })
 
-        this.plug_l = this._plug({ x: 0, y: 0 }, "left")
-        this.controlOne = this._controlPoint({ x: this.width / 4, y: instance.data.cable.plug.height / 2 }, "one")
-        this.controlTwo = this._controlPoint({ x: this.width / 1.33, y: instance.data.cable.plug.height / 2 }, "two")
-        this.plug_r = this._plug({ x: this.width, y: 0 }, "right").scaleX(-1)
+        this.plug_l = this._plug({ x: 0, y: 0 }, 'left')
+        this.controlOne = this._controlPoint(
+            { x: this.width / 4, y: instance.data.cable.plug.height / 2 },
+            'one'
+        )
+        this.controlTwo = this._controlPoint(
+            { x: this.width / 1.33, y: instance.data.cable.plug.height / 2 },
+            'two'
+        )
+        this.plug_r = this._plug({ x: this.width, y: 0 }, 'right').scaleX(-1)
 
         this.cord = this._cord([
-            this.plug_l.x() + instance.data.cable.plug.width, instance.data.cable.plug.height / 2,
-            this.plug_l.x() + instance.data.cable.plug.width + 60, instance.data.cable.plug.height / 2,
-            (this.plug_l.x() + this.plug_r.x()) / 2, instance.data.cable.plug.height / 2,
-            this.plug_r.x() - instance.data.cable.plug.width - 60, instance.data.cable.plug.height / 2,
-            this.plug_r.x() - instance.data.cable.plug.width, instance.data.cable.plug.height / 2
+            this.plug_l.x() + instance.data.cable.plug.width,
+            instance.data.cable.plug.height / 2,
+            this.plug_l.x() + instance.data.cable.plug.width + 60,
+            instance.data.cable.plug.height / 2,
+            (this.plug_l.x() + this.plug_r.x()) / 2,
+            instance.data.cable.plug.height / 2,
+            this.plug_r.x() - instance.data.cable.plug.width - 60,
+            instance.data.cable.plug.height / 2,
+            this.plug_r.x() - instance.data.cable.plug.width,
+            instance.data.cable.plug.height / 2,
         ])
 
         this.bezierLine = this._bezierLine()
@@ -806,42 +802,47 @@ class Cable {
             y,
             width: instance.data.cable.plug.width + instance.data.cable.pin.width,
             height: instance.data.cable.plug.height + instance.data.cable.pin.height,
-            name: 'plug_' + position
+            name: 'plug_' + position,
         })
 
         // Add cable pins
-        const spaceLeft = instance.data.cable.plug.height - (instance.data.cable.pin.height * 2) // 2 is item length
+        const spaceLeft = instance.data.cable.plug.height - instance.data.cable.pin.height * 2 // 2 is item length
         const spaceBetween = spaceLeft / (2 + 1)
         const getY = (index) => spaceBetween + index * (instance.data.cable.pin.height + spaceBetween)
 
         for (let i = 0; i < 2; i++) {
-            plug.add(new Konva.Rect({
-                x: -instance.data.cable.pin.width,
-                y: getY(i),
-                width: instance.data.cable.pin.width,
-                height: instance.data.cable.pin.height,
-                fill: "#dcdcdc",
-                cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
-                name: 'pin'
-            }))
+            plug.add(
+                new Konva.Rect({
+                    x: -instance.data.cable.pin.width,
+                    y: getY(i),
+                    width: instance.data.cable.pin.width,
+                    height: instance.data.cable.pin.height,
+                    fill: '#dcdcdc',
+                    cornerRadius: [instance.data.cable.pin.radius, 0, 0, instance.data.cable.pin.radius],
+                    name: 'pin',
+                })
+            )
         }
 
         // Add cable plug
-        plug.add(new Konva.Rect({
-            width: instance.data.cable.plug.width,
-            height: instance.data.cable.plug.height,
-            fill: this.fill,
-            cornerRadius: [4, instance.data.cable.plug.radius, instance.data.cable.plug.radius, 4],
-            name: 'plug'
-        }))
+        plug.add(
+            new Konva.Rect({
+                width: instance.data.cable.plug.width,
+                height: instance.data.cable.plug.height,
+                fill: this.fill,
+                cornerRadius: [4, instance.data.cable.plug.radius, instance.data.cable.plug.radius, 4],
+                name: 'plug',
+            })
+        )
 
         return plug
     }
 
     _controlPoint({ x, y }, id) {
         return new Konva.Group({
-            x, y,
-            name: 'controlPoint_' + id
+            x,
+            y,
+            name: 'controlPoint_' + id,
         })
     }
 
@@ -881,7 +882,7 @@ class Cable {
             x3: (this.plug_l.x() + this.plug_r.x()) / 1.33,
             y3: this.plug_r.y() + instance.data.cable.plug.height / 2,
             x4: this.plug_r.x() - instance.data.cable.plug.width,
-            y4: this.plug_r.y() + instance.data.cable.plug.height / 2
+            y4: this.plug_r.y() + instance.data.cable.plug.height / 2,
         }
     }
 }

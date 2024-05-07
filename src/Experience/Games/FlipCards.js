@@ -2,12 +2,12 @@ import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
-import _e from "../Utils/Events.js"
+import _e from '../Utils/Events.js'
 import gsap from 'gsap'
 
 let instance = null
 
-export default class Chapter3Game2 {
+export default class FlipCards {
     constructor() {
         instance = this
         instance.offline = new Offline()
@@ -20,92 +20,152 @@ export default class Chapter3Game2 {
     toggleGame() {
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
-        instance.data = instance.stepData.flip_cards
+        instance.flipCards = instance.stepData.flip_cards
+        instance.confirmationScreen = instance.stepData.confirmation_screen
 
-        instance.gameHTML()
-        instance.useCorrectAssetsSrc()
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
-        instance.setEventListeners()
-
-        instance.audio.setOtherAudioIsPlaying(true)
-        instance.audio.fadeOutBgMusic()
+        if (instance.confirmationScreen.cs_description !== '') {
+            instance.toggleConfirmationScreen()
+        } else {
+            instance.toggleFlipCards()
+        }
     }
 
-    gameHTML() {
+    toggleConfirmationScreen() {
+        instance.destroyFlipCards()
+        instance.confirmationScreenHTML()
+        instance.useCorrectAssetsSrcConfirmationScreen()
+        instance.setConfirmationScreenEventListeners()
+    }
+
+    confirmationScreenHTML() {
+        const container = _gl.elementFromHtml(
+            `<div class="absolute inset-0 task-container" id="task-content">
+                <div class="task-container_box">
+                <h1 class="task-container_heading">${instance.confirmationScreen.cs_title !== '' ? instance.confirmationScreen.cs_title : ''}</h1>
+                    ${instance.confirmationScreen.cs_description ? `<p class="task-container_prompts font-bold">${instance.confirmationScreen.cs_description}</p>` : ''}
+                    ${instance.confirmationScreen.cs_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
+                    ${instance.confirmationScreen.cs_button !== '' ? `<div class="task-container_actions"><button class="button-task_action">${instance.confirmationScreen.cs_button}</button></div>` : ''}
+                </div>
+            </div>`
+        )
+
+        const nextStep = container.querySelector('button')
+        if (nextStep) nextStep.addEventListener('click', instance.toggleFlipCards)
+
+        instance.experience.interface.tasksDescription.append(container)
+        instance.experience.setAppView('task-description')
+
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = 'button-arrow-skip'
+    }
+
+    useCorrectAssetsSrcConfirmationScreen() {
+        instance.offline.fetchChapterAsset(instance.confirmationScreen, 'cs_image', (data) => {
+            document.querySelector('#task-image img').src = data.cs_image
+        })
+    }
+
+    setConfirmationScreenEventListeners() {
+        instance.experience.navigation.prev.removeEventListener('click', instance.program.previousStep)
+        instance.experience.navigation.prev.addEventListener('click', instance.backToGameDescription)
+        instance.experience.navigation.next.addEventListener('click', instance.toggleFlipCards)
+    }
+
+    backToGameDescription() {
+        instance.destroyConfirmationScreen()
+        instance.program.gameDescription.show()
+        instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep)
+    }
+
+    destroyConfirmationScreen() {
+        document.querySelector('#task-content')?.remove()
+
+        instance.experience.navigation.prev.removeEventListener('click', instance.backToGameDescription)
+        instance.experience.navigation.next.removeEventListener('click', instance.toggleFlipCards)
+    }
+
+    toggleFlipCards() {
+        instance.experience.setAppView('game')
+        instance.destroyConfirmationScreen()
+        instance.flipCardsHTML()
+        instance.useCorrectAssetsSrcFlipCards()
+        instance.setFlipCardsEventListeners()
+    }
+
+    flipCardsHTML() {
         const game = _gl.elementFromHtml(`
-            <section class="game flip-card">
+            <section class="game flip-card flip-card-new" id="flipCards">
+                <div class="fixed inset-0 bg-bke-darkpurple/75"></div>
                 <div class="container">
-                    <div class="cards"></div>
-                    <button class="btn default next" disabled aria-label="card select">${_s.miniGames.flipCards.chooseKing}</button>
+                  <header class="game-header">
+                    <h3 class="text-bke-accent text-2xl font-semibold">${instance.flipCards.title}</h3>
+                  </header>
+                  <div class="cards"></div>
                 </div>
                 <div class="overlay"></div>
             </section>
-        `)
+          `)
 
-        instance.data.cards.forEach(c => {
-            const card = _gl.elementFromHtml(`
-                <article class="card">
-                    <div class="card-frame"></div>
-                    <div class="card-image">
-                        <div class="card-back" style="background-image: url('${c.image_back}')"></div>
-                        <div class="card-front" style="background-image: url('${c.image_front}')"></div>
-                    </div>
-                    <div class="card-input">
-                        <div class="icon">
-                            <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
-                                <use href="#locked"></use>
-                            </svg>
-                        </div>
-                        <input type="number" placeholder="#" maxlength="1" />
-                    </div>
-                </article>
-            `)
+        if (instance.flipCards.cards) {
+            instance.flipCards.cards.forEach((c) => {
+                const card = _gl.elementFromHtml(`
+                  <article class="card">
+                      <div class="card-frame"></div>
+                      <div class="card-image">
+                          <div class="card-back" style="background-image: url('${c.image_back}')"></div>
+                          <div class="card-front" style="background-image: url('${c.image_front}')"></div>
+                      </div>
+                      <div class="card-input bg-bke-purple">
+                          <div class="icon">
+                              <svg class="w-3 h-3 tv:w-5 tv:h-5">
+                                  <use href="#book-solid" fill="currentColor"></use>
+                              </svg>
+                          </div>
+                          <input type="number" placeholder="#" maxlength="${c.code.length}" />
+                      </div>
+                  </article>
+              `)
 
-            if (c.sound_effect) {
-                const audio = _gl.elementFromHtml(`
-                    <audio class="card-audio" src="${c.sound_effect}"></audio>
-                `)
+                if (c.sound_effect) {
+                    const audio = _gl.elementFromHtml(`
+                        <audio class="card-audio" src="${c.sound_effect}"></audio>
+                    `)
 
-                card.append(audio)
-                card.classList.add('has-audio')
-            }
+                    card.append(audio)
+                    card.classList.add('has-audio')
+                }
 
-            game.querySelector('.cards').append(card)
-        })
+                game.querySelector('.cards').append(card)
+            })
+        }
 
-        document.querySelector('.ui-container').append(game)
-        document.querySelector('.cta').style.display = 'none'
+        instance.experience.interface.gameContainer.append(game)
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default skip">${_s.miniGames.skip}</button>
-        `)
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            document.querySelector('.game.flip-card .container').append(skipBTN)
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
-    useCorrectAssetsSrc() {
-        instance.data.cards.forEach((card, index) => {
-            instance.offline.fetchChapterAsset(card, "image_back", (data) => {
+    useCorrectAssetsSrcFlipCards() {
+        if (!instance.flipCards.cards) return
+
+        instance.flipCards.cards.forEach((card, index) => {
+            instance.offline.fetchChapterAsset(card, 'image_back', (data) => {
                 card.image_back = data.image_back
                 document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
             })
-            instance.offline.fetchChapterAsset(card, "image_front", (data) => {
+            instance.offline.fetchChapterAsset(card, 'image_front', (data) => {
                 card.image_front = data.image_front
                 document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
             })
         })
     }
 
-    setEventListeners() {
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+    setFlipCardsEventListeners() {
+        instance.experience.navigation.prev.addEventListener('click', instance.toggleConfirmationScreen)
 
-        const cards = gsap.utils.toArray('.flip-card .card')
-        let firstTimeClick = true
-
+        const cards = gsap.utils.toArray('#flipCards .card')
         cards.forEach((card, index) => {
             const q = gsap.utils.selector(card)
 
@@ -115,121 +175,68 @@ export default class Chapter3Game2 {
             const cInput = q('.card-input input')
 
             gsap.set(cImage[0], {
-                transformStyle: "preserve-3d",
-                transformPerspective: 1000
+                transformStyle: 'preserve-3d',
+                transformPerspective: 1000,
             })
 
             gsap.set(cFront, { rotationY: 180 })
 
-            const flipAnimation = gsap.timeline({ paused: true })
-                .to(cImage[0], { duration: 1, rotationY: 180 })
+            const flipAnimation = gsap.timeline({ paused: true }).to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
-                if (e.target.value.length > e.target.maxLength)
-                    e.target.value = e.target.value.slice(0, e.target.maxLength)
+                if (e.target.value.length > e.target.maxLength) e.target.value = e.target.value.slice(0, e.target.maxLength)
 
-                if (e.target.value === instance.data.cards[index].code) {
+                if (e.target.value.length == e.target.maxLength) {
+                    if (e.target.value == instance.flipCards.cards[index].code) {
+                        card.classList.add('flipped')
+                        flipAnimation.play()
 
-                    card.classList.add('flipped')
-                    flipAnimation.play()
+                        instance.audio.playSound('task-completed')
+                        instance.experience.celebrate({
+                            particleCount: 100,
+                            spread: 160,
+                        })
 
-                    instance.audio.playSound('task-completed')
-                    instance.experience.celebrate({
-                        particleCount: 100,
-                        spread: 160
-                    })
+                        // All cards are flipped
+                        const flippedCards = document.querySelectorAll('.flipped')
 
-                    // All cards are flipped
-                    const flippedCards = document.querySelectorAll('.flipped')
+                        if (flippedCards.length == instance.flipCards.cards.length) {
+                            instance.experience.navigation.next.className = 'button-arrow'
+                        }
+                    } else {
+                        e.target.parentNode.classList.add('wrong-code')
+                        instance.audio.playSound('wrong')
 
-                    if (flippedCards.length == instance.data.cards.length) {
-                        document.querySelector('.flip-card').classList.add('all-flipped')
-                    }
-                } else {
-                    e.target.parentNode.classList.add('wrong-code')
-                    instance.audio.playSound('wrong')
-
-                    setTimeout(() => {
-                        e.target.parentNode.classList.remove('wrong-code')
-                        e.target.value = ''
-                    }, 1000)
-                }
-            })
-
-            card.addEventListener('click', () => {
-                if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
-                    const selectedCard = document.querySelector('.selected')
-
-                    if (selectedCard)
-                        selectedCard.classList.remove('selected')
-
-                    card.classList.add('selected')
-                    document.querySelector('[aria-label="card select"]').disabled = false
-
-                    if (firstTimeClick) {
-                        firstTimeClick = false
-                        instance.toggleGlitch()
+                        setTimeout(() => {
+                            e.target.parentNode.classList.remove('wrong-code')
+                            e.target.value = ''
+                        }, 1000)
                     }
                 }
             })
 
             if (cAudio.length)
-                cImage[0].addEventListener('click', () => { cAudio[0].play() })
-        })
-
-        const chooseCard = document.querySelector('[aria-label="card select"')
-
-        chooseCard.addEventListener('click', (e) => {
-            e.target.disabled = true
-
-            document.querySelector('.game-notification')?.remove()
-            document.querySelector('.cta').style.display = 'flex'
-            cards.forEach(card => card.style.pointerEvents = 'none')
-
-            instance.toggleGodVoice()
+                cImage[0].addEventListener('click', () => {
+                    cAudio[0].play()
+                })
         })
     }
 
-    toggleGlitch() {
-        const notification = _gl.elementFromHtml(`
-            <aside class="game-notification">
-                <img src="games/glitchVoice.png"/>
-                <p>${instance.data.glitchs_voice.text}</p>
-            </aside>
-        `)
+    destroyFlipCards() {
+        document.querySelector('.game')?.remove()
 
-        document.querySelector('.flip-card .container').append(notification)
-
-        gsap.set(notification, { x: '-100%' })
-        gsap.to(notification, {
-            x: 0, onComplete: () => {
-                instance.audio.stopAllTaskDescriptions()
-                instance.audio.togglePlayTaskDescription(instance.data.glitchs_voice.audio)
-            }
-        })
-    }
-
-    toggleGodVoice() {
-        const notification = _gl.elementFromHtml(`
-            <aside class="game-notification">
-                <img src="games/godVoice.png"/>
-                <p>${instance.data.gods_voice.text}</p>
-            </aside>
-        `)
-
-        document.querySelector('.flip-card .container').append(notification)
-
-        gsap.set(notification, { x: '-100%' })
-        gsap.to(notification, {
-            x: 0, onComplete: () => {
-                instance.audio.stopAllTaskDescriptions()
-                instance.audio.togglePlayTaskDescription(instance.data.gods_voice.audio)
-            }
-        })
+        instance.experience.navigation.prev.removeEventListener('click', instance.toggleConfirmationScreen)
     }
 
     destroy() {
-        document.querySelector('.game')?.remove()
-        document.querySelector('.cta').style.display = 'flex'
+        instance.experience.setAppView('chapter')
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
+
+        instance.destroyConfirmationScreen()
+        instance.destroyFlipCards()
+        instance.experience.navigation.prev.addEventListener('click', instance.program.previousStep)
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }

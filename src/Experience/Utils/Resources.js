@@ -3,10 +3,14 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
-import Offline from '../Utils/Offline.js'
-import _c from '../Utils/Connection.js'
-import _lang from '../Utils/Lang.js'
-import _s from '../Utils/Strings.js'
+import Offline from './Offline.js'
+import { PlayerFactory, createPlayer } from 'bccm-video-player'
+import 'bccm-video-player/css'
+import _c from './Connection.js'
+import _api from './Api.js'
+import _lang from './Lang.js'
+import _s from './Strings.js'
+import _e from '../Utils/Events.js'
 
 let resources = null
 
@@ -17,6 +21,7 @@ export default class Resources extends EventEmitter {
         this.offline = new Offline()
         this.experience = new Experience()
         this.loadingManager = new THREE.LoadingManager()
+        this.chapterLoadingManager = new THREE.LoadingManager()
         this.page = this.experience.page
 
         resources = this
@@ -31,47 +36,70 @@ export default class Resources extends EventEmitter {
         this.loadingScreenLoaded = false
         this.mediaItems = []
         this.textureItems = []
-        this.posterImages = []
+        this.customTextureItems = []
         this.videoPlayers = []
+        this.api = []
 
         this.loadManager()
         this.setLoaders()
         this.startLoading()
+
+        // BTV player factory
+        this.factory = new PlayerFactory({
+            tokenFactory: null,
+            endpoint: 'https://api.brunstad.tv/query',
+        })
     }
 
     loadManager() {
         this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-            // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
-
-            if (!document.querySelector('.loader')) return
+            if (!document.querySelector('#loading_screen')) return
 
             this.loadingIcon = new rive.Rive({
                 src: 'textures/loading_icon.riv',
-                canvas: document.querySelector('#loading_icon'),
+                canvas: document.querySelector('#loading_logo'),
                 autoplay: true,
                 stateMachines: 'State Machine 1',
             })
-
-        }
-
-        this.loadingManager.onLoad = () => {
-            // console.log('Loading complete!')
-            document.querySelector('.loader')?.remove()
-            document.querySelector('.app-header').style.display = "flex"
-            // this.loadingIcon.cleanup();
         }
 
         this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+            // console.log(
+            //   `Started loading file: ${url} .\nloaded ${itemsLoaded} of ${itemsTotal} files`,
+            // );
 
-            const progressRatio = Math.trunc(itemsLoaded / itemsTotal * 100)
+            const progressRatio = Math.trunc((itemsLoaded / itemsTotal) * 100)
 
             if (this.loadingIcon.loaded) {
-                const inputs = this.loadingIcon.stateMachineInputs('State Machine 1')
-                const progress = inputs.find(i => i.name === 'Progress')
+                if (this.loadingIcon.stateMachineInputs('State Machine 1')) {
+                    const inputs = this.loadingIcon.stateMachineInputs('State Machine 1')
+                    const progress = inputs.find((i) => i.name === 'Progress')
 
-                progress.runtimeInput.value = progressRatio
+                    progress.runtimeInput.value = progressRatio
+                }
             }
+        }
+
+        this.loadingManager.onLoad = () => {
+            const loader = document.querySelector('#loading_text')
+            if (!loader) return
+
+            // loader.innerText = _s.status.fetching
+
+            const personId = this.experience.auth0.userData ? this.experience.auth0.userData['https://login.bcc.no/claims/personId'] : ''
+
+            resources.fetchApiThenCache(_api.getBiexChapters(personId), (json) => {
+                this.api[_api.getBiexChapters(personId)] = json
+
+                console.log('Loading complete!')
+                this.trigger('ready')
+
+                document.querySelector('#loading_screen')?.remove()
+                document.querySelector('#header').style.display = 'flex'
+
+                this.loadingIcon.cleanupInstances()
+                this.loadingIcon.reset()
+            })
         }
 
         this.loadingManager.onError = function (url) {
@@ -91,42 +119,27 @@ export default class Resources extends EventEmitter {
     }
 
     startLoading() {
-        // Load each source
         for (const source of this.sources) {
             if (source.type === 'gltfModel') {
                 this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
-                this.loaders.gltfLoader.load(
-                    source.path,
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
-            else if (source.type === 'texture') {
-                this.loaders.textureLoader.load(
-                    source.path,
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
-
-            else if (source.type === 'cubeTexture') {
-                this.loaders.cubeTextureLoader.load(
-                    source.path,
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
-
-            else if (source.type === 'videoTexture') {
-                this.loadVideoTexture(source.name, source.path)
+                this.loaders.gltfLoader.load(source.path, (file) => {
+                    this.sourceLoaded(source, file)
+                })
+            } else if (source.type === 'texture') {
+                this.loaders.textureLoader.load(source.path, (file) => {
+                    this.sourceLoaded(source, file)
+                })
+            } else if (source.type === 'cubeTexture') {
+                this.loaders.cubeTextureLoader.load(source.path, (file) => {
+                    this.sourceLoaded(source, file)
+                })
+            } else if (source.type === 'videoTexture') {
+                this.loadVideoTexture(source.name, source.path, 'default')
             }
         }
     }
 
-    loadVideoTexture(name, url) {
+    loadVideoTexture(name, url, type) {
         const video = document.createElement('video')
         video.addEventListener('canplay', this.onVideoLoad(video, url), false)
 
@@ -141,23 +154,24 @@ export default class Resources extends EventEmitter {
         video.autoplay = false
         video.preload = 'auto'
         video.src = url
-        
-        if (name == 'iris')
-            video.autoplay = true
+
+        if (type == 'default') video.autoplay = true
 
         const texture = new THREE.VideoTexture(video)
         texture.flipY = false
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
-        texture.encoding = THREE.sRGBEncoding
+        texture.colorSpace = THREE.SRGBColorSpace
         texture.needsUpdate = true
-        
-        this.textureItems[name] = {
+
+        const textureObject = {
             item: texture,
             path: url,
             naturalWidth: video.videoWidth || 1,
-            naturalHeight: video.videoHeight || 1
+            naturalHeight: video.videoHeight || 1,
         }
+
+        type && type == 'default' ? (this.textureItems[name] = textureObject) : (this.customTextureItems[name] = textureObject)
 
         this.loadingManager.itemStart(url)
     }
@@ -171,91 +185,77 @@ export default class Resources extends EventEmitter {
     sourceLoaded(source, file) {
         this.items[source.name] = file
         this.itemsLoaded++
-
-        if (this.itemsLoaded === this.toLoad) {
-            this.trigger('ready')
-        }
     }
 
-    updateBtvStreamWithDownloadedVersion(videoName) {
-        let videoEl = document.getElementById(videoName)
-        if (videoEl) {
-            videoEl.remove()
-            this.loadEpisodeTextures(videoName)
-        }
+    loadEpisodeTexture(videoName) {
+        resources.addVideoDivElementToContainer(videoName)
+        this.offline.loadVideoFromIndexedDb(videoName, resources.streamLocally, resources.streamFromBtv)
     }
 
-    loadEpisodeTextures(videoName) {
-        this.offline.loadFromIndexedDb(
-            videoName,
-            this.loadTexturesLocally,
-            this.loadTexturesOnline
-        )
+    addVideoDivElementToContainer(videoName) {
+        const videoEl = document.createElement('div')
+        videoEl.setAttribute('id', videoName)
+
+        const containerWrapper = document.getElementById('video-container')
+        containerWrapper.appendChild(videoEl)
     }
 
-    loadTexturesLocally(videoName, videoUrl, thumbnailUrl) {
-        resources.streamLocally(videoName, videoUrl)
-        resources.loadVideoThumbnail(videoName, thumbnailUrl)
-    }
-
-    async loadTexturesOnline(videoName) {
-        await resources.streamFromBtv(videoName)
-        resources.loadVideoThumbnail(videoName, resources.posterImages[videoName])
-    }
-
-    loadVideoThumbnail(videoName, thumbnailUrl) {
-        this.loaders.textureLoader.load(
-            thumbnailUrl,
-            (texture) => {
-                this.textureItems[videoName] = texture
-            }
-        )
-    }
-
-    streamLocally(videoName, videoUrl) {
-        let options = {
+    async streamLocally(videoName, videoUrl) {
+        const loopVideo = videoName.includes('texture')
+        const player = await createPlayer(videoName, {
             src: {
                 type: 'video/mp4',
-                src: videoUrl
+                src: videoUrl,
             },
+            autoplay: false,
             videojs: {
-                autoplay: false
-            }
+                autoplay: false,
+                loop: loopVideo,
+            },
+        })
+
+        // Hide controlbar for textures
+        if (!videoName.includes('episode')) {
+            player.controlBar.hide()
         }
 
-        resources.videoPlayers[videoName] = createVideoJsPlayer(videoName, options)
+        player.addClass('offline-video')
+        resources.videoPlayers[videoName] = player
+
+        document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
     }
 
     async streamFromBtv(videoName) {
-        const episodeId = videoName.replace('episode-', '')
-        let locale = _lang.getLanguageCode()
-        locale = 'pt-pt' == locale ? 'pt' : locale // BTV and WPML have different language codes
-
-        const claims = await resources.experience.auth0.getIdTokenClaims()
-        const idToken = claims ? claims.__raw : '';
-
-        var btvPlayer = BTVPlayer({
-            type: 'episode',
-            id: episodeId,
-            locale: locale,
-            access_token: idToken
-        })
-
-        let btvContainer = document.createElement('div')
-        btvContainer.setAttribute('id', videoName)
-        document.getElementById('videos-container').appendChild(btvContainer)
-
-        const loadResponse = await btvPlayer.load({
-            el: videoName,
-            options: {
+        const loopVideo = videoName.includes('texture')
+        const episodeId = videoName.replace('episode-', '').replace('texture-', '')
+        const player = await resources.factory.create(videoName, {
+            episodeId: episodeId,
+            overrides: {
+                languagePreferenceDefaults: {
+                    audio: _lang.get3LettersLang(),
+                    subtitle: _lang.get3LettersLang(),
+                },
+                autoplay: false,
                 videojs: {
-                    autoplay: false
-                }
-            }
+                    autoplay: false,
+                    loop: loopVideo,
+                    hls: {
+                        limitRenditionByPlayerDimensions: false,
+                        useDevicePixelRatio: true,
+                    },
+                },
+            },
         })
 
-        resources.videoPlayers[videoName] = loadResponse.player
-        resources.posterImages[videoName] = loadResponse.info.image
+        // Hide controlbar for textures
+        if (!videoName.includes('episode')) {
+            player.controlBar.hide()
+        }
+
+        player.on('ready', () => {
+            resources.videoPlayers[videoName] = player
+            document.dispatchEvent(_e.EVENTS.VIDEO_LOADED)
+        })
     }
 
     fetchApiThenCache(theUrl, callback) {
@@ -275,12 +275,21 @@ export default class Resources extends EventEmitter {
             })
             .catch(function () {
                 resources.offline.setConnection(_c.OFFLINE)
+
                 caches.open('apiResponses').then(function (cache) {
-                    cache.match(theUrl).then(response => {
-                        response.json().then(function (cachedData) {
-                            callback(cachedData)
+                    cache
+                        .match(theUrl)
+                        .then((response) => {
+                            response.json().then(function (cachedData) {
+                                callback(cachedData)
+                            })
                         })
-                    })
+                        .catch(function () {
+                            const loader = document.querySelector('#loading_text')
+                            if (!loader) return
+
+                            loader.innerText = _s.status.noCacheNoInternet
+                        })
                 })
             })
     }

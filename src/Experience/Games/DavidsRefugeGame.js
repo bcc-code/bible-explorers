@@ -21,13 +21,11 @@ export default class DavidsRefuge {
         instance.program = instance.world.program
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.davids_refuge
-        document.querySelector('.cta').style.display = 'none'
 
         instance.gameHTML()
         instance.useCorrectAssetsSrc()
 
-        if (instance.data.hints.length > 0)
-            instance.hintsHTML()
+        if (instance.data.hints.length > 0) instance.hintsHTML()
 
         instance.setEventListeners()
     }
@@ -43,9 +41,9 @@ export default class DavidsRefuge {
             </section>
         `)
 
-        document.querySelector('.ui-container').append(game)
+        document.querySelector('.app-container').append(game)
 
-        instance.data.characters.forEach(goat => {
+        instance.data.characters.forEach((goat) => {
             const url = goat.image.split('/')
             const fileName = url[url.length - 1].replace('goat-', '')
             const color = fileName.split('.')[0]
@@ -71,30 +69,20 @@ export default class DavidsRefuge {
             }
         })
 
-        const skipBTN = _gl.elementFromHtml(`
-            <button class="btn default" aria-label="skip-button">${_s.miniGames.skip}</button>
-        `)
-
-        if (instance.debug.developer || instance.debug.onPreviewMode())
-            game.querySelector('.container').append(skipBTN)
-
-        skipBTN.addEventListener('click', () => {
-            instance.destroy()
-            instance.program.nextStep()
-        })
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     useCorrectAssetsSrc() {
         instance.data.characters.forEach((character, index) => {
-            instance.offline.fetchChapterAsset(character, "image", (data) => {
+            instance.offline.fetchChapterAsset(character, 'image', (data) => {
                 document.querySelectorAll('article.goat img')[index].src = data.image
             })
         })
     }
 
     hintsHTML() {
-        if (!instance.data.hints.length)
-            return
+        if (!instance.data.hints.length) return
 
         const hints = _gl.elementFromHtml(`
             <aside class="hints">
@@ -120,18 +108,14 @@ export default class DavidsRefuge {
 
         gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: 'top left' })
 
-        const showHints = gsap.timeline({ paused: true })
-            .to(hints, { scale: 1, autoAlpha: 1 })
+        const showHints = gsap.timeline({ paused: true }).to(hints, { scale: 1, autoAlpha: 1 })
 
         hintsToggle.addEventListener('click', () => {
-            hints.style.opacity === '0'
-                ? showHints.play()
-                : showHints.reverse()
+            hints.style.opacity === '0' ? showHints.play() : showHints.reverse()
         })
 
         document.addEventListener('click', (event) => {
-            if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target))
-                showHints.reverse()
+            if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target)) showHints.reverse()
         })
 
         let index = 1
@@ -143,8 +127,7 @@ export default class DavidsRefuge {
                 hintsList.appendChild(hint)
             }
 
-            if (++index == instance.data.hints.length)
-                getHint.remove()
+            if (++index == instance.data.hints.length) getHint.remove()
         })
     }
 
@@ -162,7 +145,7 @@ export default class DavidsRefuge {
                 selectGoat.disabled = false
 
                 if (item.classList.contains('is-active')) return
-                document.querySelectorAll('.goat').forEach(goat => {
+                document.querySelectorAll('.goat').forEach((goat) => {
                     goat.classList.remove('is-active')
                     gsap.to(goat, { scale: 0.85 })
                 })
@@ -173,28 +156,24 @@ export default class DavidsRefuge {
 
             selectGoat.addEventListener('click', () => {
                 if (item.classList.contains('is-active')) {
-
                     item.classList.add('is-selected')
                     gsap.to(item, { x: '-50%' })
 
                     tooltip[0].className = 'tooltip right'
 
-                    console.log();
-
                     if (instance.data.characters[index].tells_the_truth) {
-
                         tooltip[0].innerText = instance.data.correct_character_message
 
                         instance.audio.playSound('correct')
                         instance.experience.celebrate({
                             particleCount: 100,
-                            spread: 160
+                            spread: 160,
                         })
 
                         gsap.to(selectGoat, { autoAlpha: 0 })
-                        document.querySelector('.cta').style.display = 'flex'
-                    }
-                    else {
+
+                        instance.experience.navigation.next.className = 'button-arrow'
+                    } else {
                         tooltip[0].innerText = instance.data.wrong_character_message
 
                         selectGoat.innerText = _s.miniGames.tryAgain
@@ -208,7 +187,6 @@ export default class DavidsRefuge {
                 }
             })
         })
-
     }
 
     toggleQuestion() {
@@ -223,5 +201,7 @@ export default class DavidsRefuge {
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        instance.experience.navigation.next.className = 'button-arrow'
     }
 }

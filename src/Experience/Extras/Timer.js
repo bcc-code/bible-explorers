@@ -13,32 +13,39 @@ export default class Timer {
     setMinutes(minutes, container) {
         if (document.querySelector('.timer')) return
 
-        timer.minutes = minutes
+        const time = timer.getMinutesAndSeconds(minutes * 60)
 
         timer.htmlEl = _gl.elementFromHtml(`
-            <div class="game-timer">
-                <span class="minutes">${timer.minutes}</span>
+            <div class="game-timer button-cube-wider">
+                <span class="minutes">${time.minutes}</span>
                 <div>:</div>
-                <span class="seconds">00</span>
+                <span class="seconds">${time.seconds}</span>
             </div>
         `)
 
         document.querySelector(container).appendChild(timer.htmlEl)
 
         timer.el = {
-            minutes: timer.htmlEl.querySelector(".minutes"),
-            seconds: timer.htmlEl.querySelector(".seconds")
+            minutes: timer.htmlEl.querySelector('.minutes'),
+            seconds: timer.htmlEl.querySelector('.seconds'),
         }
 
         timer.start(minutes)
     }
 
-    updateInterfaceTime() {
-        const minutes = Math.floor(timer.remainingSeconds / 60)
-        const seconds = timer.remainingSeconds % 60
+    getMinutesAndSeconds(thisTimer = timer.remainingSeconds) {
+        return {
+            minutes: Math.floor(thisTimer / 60)
+                .toString()
+                .padStart(2, '0'),
+            seconds: (thisTimer % 60).toString().padStart(2, '0'),
+        }
+    }
 
-        timer.el.minutes.textContent = minutes.toString().padStart(2, "0")
-        timer.el.seconds.textContent = seconds.toString().padStart(2, "0")
+    updateInterfaceTime() {
+        const time = timer.getMinutesAndSeconds()
+        timer.el.minutes.textContent = time.minutes
+        timer.el.seconds.textContent = time.seconds
     }
 
     start(minutes) {
@@ -54,6 +61,10 @@ export default class Timer {
                 timer.stop()
                 document.dispatchEvent(_e.EVENTS.TIME_ELAPSED)
             }
+
+            if (timer.remainingSeconds < 10) {
+                document.dispatchEvent(_e.EVENTS.TIME_LAST_SECONDS)
+            }
         }, 1000)
     }
 
@@ -68,5 +79,4 @@ export default class Timer {
         timer.remainingSeconds = 0
         timer.htmlEl.remove()
     }
-
 }

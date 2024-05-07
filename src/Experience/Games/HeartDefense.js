@@ -2,7 +2,7 @@ import Konva from 'konva'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
-import _e from "../Utils/Events.js"
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -29,24 +29,19 @@ export default class HeartDefense {
             explosionHeight: spriteH,
             explosion: 'games/explosion.png',
             animations: {
-                explosion: [
-                    0, 0, spriteW, spriteH,
-                    spriteW * 2, 0, spriteW, spriteH,
-                    spriteW * 3, 0, spriteW, spriteH,
-                ]
+                explosion: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
             },
             highestSpeed: 3.2,
             lowestSpeed: 1.2,
             probability: 0.02,
             thoughtVariants: 3,
             pointsToCompleteLevel: 4,
-            showSkipAfterNoOfTries: 3,
             thoughts: {
                 width: 200,
-                height: 200
+                height: 200,
             },
             heart: {},
-            door: {}
+            door: {},
         }
     }
 
@@ -60,7 +55,6 @@ export default class HeartDefense {
             points: 0,
             heartClosed: true,
             level: 1,
-            fails: 0
         }
 
         instance.thoughtObjs = []
@@ -79,25 +73,16 @@ export default class HeartDefense {
                         <span class="level">${instance.stats.level}</span>
                         <span> / ${instance.config.levels}</span>
                     </div>
-                    <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
                 </div>
                 <div class="overlay"></div>
                 <div id="heart-defense" class="game-canvas"></div>
             </section>
         `)
 
-        document.querySelector('.ui-container').append(game)
+        document.querySelector('.app-container').append(game)
 
-        const skipBTN = document.querySelector('[aria-label="skip-button"]')
-        skipBTN.addEventListener('click', () => {
-            instance.stopExplosionAnimation()
-            instance.stopThoughtsAnimation()
-            instance.destroy()
-            instance.program.nextStep()
-        })
-
-        if (instance.debug.developer || instance.debug.onPreviewMode() || instance.stats.fails >= instance.config.showSkipAfterNoOfTries)
-            skipBTN.style.display = 'block'
+        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        instance.experience.navigation.next.className = `button-arrow-skip`
     }
 
     startGame() {
@@ -124,7 +109,7 @@ export default class HeartDefense {
         instance.stage = new Konva.Stage({
             container: 'heart-defense',
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
         })
 
         instance.layer = new Konva.Layer()
@@ -134,7 +119,7 @@ export default class HeartDefense {
             width: instance.stage.width(),
             height: instance.stage.height(),
             fill: '#131a43',
-            opacity: 0
+            opacity: 0,
         })
         instance.layer.add(instance.overlay)
 
@@ -142,20 +127,20 @@ export default class HeartDefense {
             node: instance.overlay,
             duration: 1,
             easing: Konva.Easings.EaseInOut,
-            opacity: 0.5
+            opacity: 0.5,
         })
 
         instance.center = {
             x: instance.stage.width() / 2,
-            y: instance.stage.height() / 2
+            y: instance.stage.height() / 2,
         }
     }
 
     drawHeart() {
         const heartGroup = new Konva.Group({
-            id: "heart",
+            id: 'heart',
             x: instance.center.x,
-            y: instance.center.y
+            y: instance.center.y,
         })
         instance.layer.add(heartGroup)
         instance.layer.findOne('#heart').zIndex(0)
@@ -173,9 +158,9 @@ export default class HeartDefense {
                     height: instance.config.heart.height,
                     offset: {
                         x: instance.config.heart.width / 2,
-                        y: instance.config.heart.height / 2
+                        y: instance.config.heart.height / 2,
                     },
-                    visible: i == instance.config.heartStates.length - 1
+                    visible: i == instance.config.heartStates.length - 1,
                 })
                 instance.layer.findOne('#heart').add(heart)
             }
@@ -185,9 +170,9 @@ export default class HeartDefense {
 
     drawDoor() {
         const doorGroup = new Konva.Group({
-            id: "door",
+            id: 'door',
             x: instance.center.x,
-            y: instance.center.y
+            y: instance.center.y,
         })
         instance.layer.on('touchstart click', instance.openCloseDoor)
         instance.layer.add(doorGroup)
@@ -206,9 +191,9 @@ export default class HeartDefense {
                     height: instance.config.door.height,
                     offset: {
                         x: instance.config.door.width / 2,
-                        y: instance.config.door.height / 2
+                        y: instance.config.door.height / 2,
                     },
-                    visible: i == 1
+                    visible: i == 1,
                 })
                 instance.layer.findOne('#door').add(door)
             }
@@ -217,11 +202,14 @@ export default class HeartDefense {
     }
 
     drawLives() {
-        const padding = 31.5, iconWidth = 40, iconHeight = 33, spaceBetween = 5
+        const padding = 31.5,
+            iconWidth = 40,
+            iconHeight = 33,
+            spaceBetween = 5
         const livesGroup = new Konva.Group({
-            id: "lives",
+            id: 'lives',
             x: padding,
-            y: padding
+            y: padding,
         })
         instance.layer.add(livesGroup)
         instance.layer.findOne('#lives').zIndex(2)
@@ -235,7 +223,7 @@ export default class HeartDefense {
                     x: iconWidth * i + spaceBetween * i,
                     width: iconWidth,
                     height: iconHeight,
-                    visible: instance.stats.lives <= i
+                    visible: instance.stats.lives <= i,
                 })
                 instance.layer.findOne('#lives').add(life)
             }
@@ -249,7 +237,7 @@ export default class HeartDefense {
                     x: iconWidth * i + spaceBetween * i,
                     width: iconWidth,
                     height: iconHeight,
-                    visible: instance.stats.lives > i
+                    visible: instance.stats.lives > i,
                 })
                 instance.layer.findOne('#lives').add(life)
             }
@@ -258,13 +246,12 @@ export default class HeartDefense {
     }
 
     setUpAnimation() {
-        const thoughtsGroup = new Konva.Group({ id: "thoughts" })
+        const thoughtsGroup = new Konva.Group({ id: 'thoughts' })
         instance.layer.add(thoughtsGroup)
         instance.layer.findOne('#thoughts').zIndex(3)
 
-        instance.animation = new Konva.Animation(frame => {
-            if (instance.thoughts.length < instance.getNoOfThoughts())
-                createThought()
+        instance.animation = new Konva.Animation((frame) => {
+            if (instance.thoughts.length < instance.getNoOfThoughts()) createThought()
 
             animateThoughts()
         })
@@ -286,8 +273,8 @@ export default class HeartDefense {
                 let norm = Math.sqrt(dX ** 2 + dY ** 2)
                 const speed = instance.getRndSpeed()
                 const distancePerFrame = {
-                    x: dX / norm * speed,
-                    y: dY / norm * speed
+                    x: (dX / norm) * speed,
+                    y: (dY / norm) * speed,
                 }
                 let estFramesToCenter = dX / distancePerFrame.x
 
@@ -310,8 +297,8 @@ export default class HeartDefense {
                     height: instance.config.thoughts.height,
                     offset: {
                         x: instance.config.thoughts.width / 2,
-                        y: instance.config.thoughts.height / 2
-                    }
+                        y: instance.config.thoughts.height / 2,
+                    },
                 })
 
                 instance.layer.findOne('#thoughts').add(thought)
@@ -322,7 +309,7 @@ export default class HeartDefense {
                     badThought: badThought,
                     remainingFramesToCenter: estFramesToCenter,
                     active: true,
-                    rotateDirection: Math.random() < 0.5 ? -1 : 1
+                    rotateDirection: Math.random() < 0.5 ? -1 : 1,
                 })
             }
             thoughtImage.src = badThought ? instance.getRndBadThoughtSrc() : instance.getRndGoodThoughtSrc()
@@ -337,16 +324,26 @@ export default class HeartDefense {
                 // Move thought towards the center
                 thought.item.move({
                     x: thought.speedX,
-                    y: thought.speedY
+                    y: thought.speedY,
                 })
                 // Rotate thought
                 thought.item.rotate(thought.rotateDirection / 10)
 
-                if (!instance.isIntersectingRectangleWithRectangle(
-                    { x: thought.item.position().x - 5, y: thought.item.position().y - 5 },
-                    10, 10,
-                    { x: instance.center.x - instance.config.door.width / 4, y: instance.center.y - instance.config.door.height / 4 },
-                    instance.config.door.width / 2, instance.config.door.height / 2)
+                if (
+                    !instance.isIntersectingRectangleWithRectangle(
+                        {
+                            x: thought.item.position().x - 5,
+                            y: thought.item.position().y - 5,
+                        },
+                        10,
+                        10,
+                        {
+                            x: instance.center.x - instance.config.door.width / 4,
+                            y: instance.center.y - instance.config.door.height / 4,
+                        },
+                        instance.config.door.width / 2,
+                        instance.config.door.height / 2
+                    )
                 )
                     return
 
@@ -366,21 +363,23 @@ export default class HeartDefense {
 
                         if (instance.stats.lives == 0) {
                             instance.stopThoughtsAnimation()
-                            setTimeout(() => { instance.toggleGameOver() }, 500)
+                            setTimeout(() => {
+                                instance.toggleGameOver()
+                            }, 500)
                         }
-                    }
-                    else {
+                    } else {
                         instance.audio.playSound('correct')
                         instance.updateHeartStatus()
                         instance.stats.points++
 
                         if (instance.stats.points == instance.config.pointsToCompleteLevel) {
                             instance.stopThoughtsAnimation()
-                            setTimeout(() => { instance.toggleLevelCompleted() }, 500)
+                            setTimeout(() => {
+                                instance.toggleLevelCompleted()
+                            }, 500)
                         }
                     }
-                }
-                else {
+                } else {
                     instance.audio.playSound('heart-defense/door-crash')
                     instance.playExplosionAnimation(thought.item)
                 }
@@ -392,16 +391,16 @@ export default class HeartDefense {
 
         function getUpdatedFramesToCenterValue(min, padding) {
             const framesToCenterArr = instance.thoughts
-                .map(thought => thought.remainingFramesToCenter)
-                .sort(function (a, b) { return a - b })
+                .map((thought) => thought.remainingFramesToCenter)
+                .sort(function (a, b) {
+                    return a - b
+                })
 
             // No update
-            if (framesToCenterArr.length === 0)
-                return min
+            if (framesToCenterArr.length === 0) return min
 
             // Value is already the closest to center
-            if (min + padding < framesToCenterArr[0])
-                return min
+            if (min + padding < framesToCenterArr[0]) return min
 
             // Find value inside array
             for (let i = 1; i < framesToCenterArr.length; i++) {
@@ -409,11 +408,9 @@ export default class HeartDefense {
 
                 if (intervalsIntersect(framesToCenterArr[i - 1], min, padding)) {
                     min = framesToCenterArr[i - 1] + padding
-                }
-                else if (intervalsIntersect(framesToCenterArr[i], min, padding)) {
+                } else if (intervalsIntersect(framesToCenterArr[i], min, padding)) {
                     min = framesToCenterArr[i] + padding
-                }
-                else {
+                } else {
                     return min
                 }
             }
@@ -424,8 +421,10 @@ export default class HeartDefense {
         }
 
         function intervalsIntersect(a, b, padding) {
-            const a_start = a - padding / 2, a_end = a + padding / 2
-            const b_start = b - padding / 2, b_end = b + padding / 2
+            const a_start = a - padding / 2,
+                a_end = a + padding / 2
+            const b_start = b - padding / 2,
+                b_end = b + padding / 2
 
             return a_start < b_end && b_start < a_end
         }
@@ -449,8 +448,8 @@ export default class HeartDefense {
             visible: true,
             offset: {
                 x: instance.config.explosionWidth / 2,
-                y: instance.config.explosionHeight / 2
-            }
+                y: instance.config.explosionHeight / 2,
+            },
         })
     }
 
@@ -495,20 +494,20 @@ export default class HeartDefense {
     possiblePositions = () => [
         {
             x: -instance.config.thoughts.width / 2,
-            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2)
+            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2),
         },
         {
             x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
-            y: -instance.config.thoughts.height / 2
+            y: -instance.config.thoughts.height / 2,
         },
         {
             x: instance.stage.width() + instance.config.thoughts.width / 2,
-            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2)
+            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2),
         },
         {
             x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
-            y: instance.stage.height() + instance.config.thoughts.height / 2
-        }
+            y: instance.stage.height() + instance.config.thoughts.height / 2,
+        },
     ]
 
     getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
@@ -525,20 +524,18 @@ export default class HeartDefense {
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         document.addEventListener('keydown', instance.keyDownHandler)
-        window.addEventListener("resize", instance.updateStageDimension)
+        window.addEventListener('resize', instance.updateStageDimension)
     }
 
     keyDownHandler(e) {
-        if (e.keyCode == 32)
-            instance.openCloseDoor()
+        if (e.keyCode == 32) instance.openCloseDoor()
     }
 
     openCloseDoor() {
         instance.stats.heartClosed = !instance.stats.heartClosed
         instance.updateDoorStatus()
 
-        if (!instance.stats.heartClosed)
-            instance.stopExplosionAnimation()
+        if (!instance.stats.heartClosed) instance.stopExplosionAnimation()
 
         const sound = instance.stats.heartClosed ? 'close' : 'open'
         instance.audio.playSound('heart-defense/door-' + sound)
@@ -579,7 +576,7 @@ export default class HeartDefense {
         `)
 
         const nextLevelBTN = _gl.elementFromHtml(`
-            <button class="btn default next pulsate">${_s.miniGames.nextRound}</button>
+            <button class="btn default focused pulsate">${_s.miniGames.nextRound}</button>
         `)
 
         congratsHTML.querySelector('.buttons').append(nextLevelBTN)
@@ -600,8 +597,7 @@ export default class HeartDefense {
                 instance.startGame()
                 instance.updateRoundsStatus()
             })
-        }
-        else {
+        } else {
             // All levels completed
             nextLevelBTN.innerText = _s.miniGames.anotherRound
             nextLevelBTN.addEventListener('click', () => {
@@ -609,17 +605,16 @@ export default class HeartDefense {
                 instance.startGame()
             })
 
-            instance.experience.navigation.prev.disabled = true
-            document.querySelector('.cta').style.display = 'flex'
+            nextLevelBTN.classList.remove('focused', 'pulsate')
+            instance.experience.navigation.next.className = 'button-arrow'
             document.querySelector('.game-rounds')?.remove()
         }
 
         instance.audio.playSound('task-completed')
         instance.experience.celebrate({
             particleCount: 100,
-            spread: 160
+            spread: 160,
         })
-
     }
 
     toggleGameOver() {
@@ -637,9 +632,6 @@ export default class HeartDefense {
 
         document.querySelector('.heart-defense .container').append(gameOverHTML)
         document.querySelector('.heart-defense').classList.add('popup-visible')
-
-        if (++instance.stats.fails == 3)
-            document.querySelector('[aria-label="skip-button"]').style.display = 'block'
 
         instance.stats.lives = instance.config.maxLives
 
@@ -669,14 +661,18 @@ export default class HeartDefense {
     }
 
     destroy() {
+        instance.stopExplosionAnimation()
+        instance.stopThoughtsAnimation()
+
         document.removeEventListener('keydown', instance.keyDownHandler)
         window.removeEventListener('resize', instance.updateStageDimension)
 
         document.querySelector('.game')?.remove()
-        document.querySelector('.cta').style.display = 'flex'
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button-arrow'
 
         instance.layer?.destroy()
         instance.experience.gameIsOn = false
-
     }
 }
