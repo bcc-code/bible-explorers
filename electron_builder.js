@@ -24,6 +24,7 @@ const config = {
         certificatePassword: null,
         sign: './custom-sign.js',
         certificateSubjectName: 'HSM-CS',
+        signAndEditExecutable: true,
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },
