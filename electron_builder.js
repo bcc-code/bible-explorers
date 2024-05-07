@@ -19,6 +19,7 @@ const config = {
     },
     win: {
         target: 'nsis',
+        sign: './custom-sign.js',
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },

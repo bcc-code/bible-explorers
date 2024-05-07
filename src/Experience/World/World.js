@@ -791,6 +791,8 @@ export default class World {
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
+        const appVersion = document.getElementById('app-version').innerText
+
         _appInsights.trackEvent({
             name: 'Start chapter',
             properties: {
@@ -800,6 +802,7 @@ export default class World {
                 quality: instance.selectedQuality,
                 device: isElectron() ? 'App' : 'Web',
                 login: instance.experience.auth0?.isAuthenticated ? 'Login' : 'Non-Login',
+                appVersion: appVersion ? appVersion : 'Web'
             },
         })
 
