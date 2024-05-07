@@ -31,13 +31,14 @@ export default class CableConnector {
         instance.currentStepData = instance.program.getCurrentStepData()
 
         const game = _gl.elementFromHtml(`
-        <section class="game cable-connect">
-            <div class="container"></div>
-            <div class="overlay"></div>
-            <div id="cable-connect" class="game-canvas"></div>
-        </section>`)
+            <section class="game cable-connect">
+                <div class="container"></div>
+                <div class="overlay"></div>
+                <div id="cable-connect" class="game-canvas"></div>
+            </section>`)
 
-        document.querySelector('.app-container').append(game)
+        instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
