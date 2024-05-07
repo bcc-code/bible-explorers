@@ -46,8 +46,10 @@ jobs:
               uses: azure/login@v1
               with:
                   client-id: ${{ secrets.BCCM_WINDOWS_CLIENT_ID }}
+                  subscription-id: ${{ secrets.BCCM_WINDOWS_SUBSCRIPTION_ID }}
                   tenant-id: ${{ secrets.BCCM_WINDOWS_DIRECTORY_ID }}
                   allow-no-subscriptions: true
+                  federated-token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Download certificate file from Key Vault
               id: download-cert
