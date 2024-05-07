@@ -21,7 +21,6 @@ const config = {
         target: 'nsis',
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
-        certificateSubjectName: 'HSM-CS',
         timeStampServer: 'http://timestamp.digicert.com',
     },
     mac: {
