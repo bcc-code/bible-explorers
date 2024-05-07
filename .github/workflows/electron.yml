@@ -68,6 +68,7 @@ jobs:
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CSC_LINK: developer-id.pfx
+                  CSC_KEY_PASSWORD: ${{ secrets.BCCM_WINDOWS_CLIENT_SECRET }}
 
             - name: Download certificate file & build the Electron app for Mac
               run: |
