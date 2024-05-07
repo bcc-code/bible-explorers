@@ -2,9 +2,9 @@ const { execSync } = require('child_process')
 
 module.exports = async function (configuration) {
     const filePath = configuration.path
-    const directoryId = process.env.BCCM_WINDOWS_DIRECTORY_ID
-    const clientId = process.env.BCCM_WINDOWS_CLIENT_ID
-    const clientSecret = process.env.BCCM_WINDOWS_CLIENT_SECRET
+    const directoryId = process.env.WINDOWS_DIRECTORY_ID
+    const clientId = process.env.WINDOWS_CLIENT_ID
+    const clientSecret = process.env.WINDOWS_CLIENT_SECRET
     const signCommand = `
         AzureSignTool.exe sign \
             -du "https://explorers.biblekids.io" \
