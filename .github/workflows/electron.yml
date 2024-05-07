@@ -49,7 +49,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WINDOWS_DIRECTORY_ID: ${{secrets.BCCM_WINDOWS_DIRECTORY_ID}}
                   WINDOWS_CLIENT_ID: ${{secrets.BCCM_WINDOWS_CLIENT_ID}}
-                  WINDOWS_CLIENT_PASSWORD: ${{secrets.BCCM_WINDOWS_CLIENT_PASSWORD}}
+                  WINDOWS_CLIENT_SECRET: ${{secrets.BCCM_WINDOWS_CLIENT_SECRET}}
 
             - name: Download certificate file & build the Electron app for Mac
               run: |
