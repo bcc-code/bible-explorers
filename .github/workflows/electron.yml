@@ -41,26 +41,9 @@ jobs:
             - name: Build for production
               run: npm run build:electron
 
-            - name: Login to Azure
-              if: ${{ matrix.os.name == 'windows' }}
-              uses: azure/login@v2
-              with:
-                  creds: ${{ secrets.BCCM_AZURE_CREDENTIALS }}
-
-            - name: Download certificate file from Key Vault
-              id: download-cert
-              if: ${{ matrix.os.name == 'windows' }}
-              uses: azure/get-keyvault-secrets@v1
-              with:
-                  keyvault: 'bccm-code-sign2'
-                  secrets: 'HSM-CS'
-              continue-on-error: false
-
             - name: Sign & build the Electron app for Windows
               run: |
                   if [ "$RUNNER_OS" == "Windows" ]; then
-                      echo "${{ steps.download-cert.outputs.HSM-CS }}" | base64 --decode >> developer-id.pfx
-                      openssl pkcs12 -in developer-id.pfx -info -passin pass:
                       npm run publish
                   fi
               shell: bash
@@ -68,8 +51,6 @@ jobs:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  CSC_LINK: developer-id.pfx
-                  CSC_KEY_PASSWORD: ''
 
             - name: Download certificate file & build the Electron app for Mac
               run: |
