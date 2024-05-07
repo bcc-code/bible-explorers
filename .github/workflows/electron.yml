@@ -7,6 +7,10 @@ on:
         branches:
             - electron-app
 
+permissions:
+    id-token: write
+    contents: read
+
 jobs:
     build_and_deploy_electron_app_job:
         strategy:
@@ -42,9 +46,8 @@ jobs:
               uses: azure/login@v1
               with:
                   client-id: ${{ secrets.BCCM_WINDOWS_CLIENT_ID }}
-                  client-secret: ${{ secrets.BCCM_WINDOWS_CLIENT_SECRET }}
-                  subscription-id: ${{ secrets.BCCM_WINDOWS_SUBSCRIPTION_ID }}
                   tenant-id: ${{ secrets.BCCM_WINDOWS_DIRECTORY_ID }}
+                  allow-no-subscriptions: true
 
             - name: Download certificate file from Key Vault
               id: download-cert
@@ -52,7 +55,7 @@ jobs:
               uses: azure/get-keyvault-secrets@v1
               with:
                   keyvault: 'bccm-code-sign2'
-                  secrets: 'HSM-CS'
+                  secrets: ${{ secrets.BCCM_WINDOWS_CLIENT_SECRET }}
               continue-on-error: false
 
             - name: Sign & build the Electron app for Windows
