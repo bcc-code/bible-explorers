@@ -19,6 +19,9 @@ const config = {
     },
     win: {
         target: 'nsis',
+        signingHashAlgorithms: ['sha256'],
+        certificateFile: null,
+        certificatePassword: null,
         sign: './custom-sign.js',
         certificateSubjectName: 'HSM-CS',
         publisherName: 'BCC MEDIA STI',

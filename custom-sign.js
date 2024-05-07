@@ -6,7 +6,7 @@ module.exports = async function (configuration) {
     const clientId = process.env.WINDOWS_CLIENT_ID
     const clientSecret = process.env.WINDOWS_CLIENT_SECRET
     const signCommand = `
-        AzureSignTool.exe sign \
+        AzureSignTool sign \
             -du "https://explorers.biblekids.io" \
             -kvu "https://bccm-code-sign2.vault.azure.net" \
             -kvt ${directoryId} \
