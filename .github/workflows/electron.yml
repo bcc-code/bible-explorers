@@ -40,6 +40,7 @@ jobs:
             - name: Sign & build the Electron app for Windows
               run: |
                   if [ "$RUNNER_OS" == "Windows" ]; then
+                      dotnet tool install -g AzureSignTool
                       npm run publish
                   fi
               shell: bash
@@ -47,9 +48,9 @@ jobs:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  WINDOWS_DIRECTORY_ID: ${{secrets.BCCM_WINDOWS_DIRECTORY_ID}}
-                  WINDOWS_CLIENT_ID: ${{secrets.BCCM_WINDOWS_CLIENT_ID}}
-                  WINDOWS_CLIENT_SECRET: ${{secrets.BCCM_WINDOWS_CLIENT_SECRET}}
+                  WINDOWS_DIRECTORY_ID: ${{ secrets.BCCM_WINDOWS_DIRECTORY_ID }}
+                  WINDOWS_CLIENT_ID: ${{ secrets.BCCM_WINDOWS_CLIENT_ID }}
+                  WINDOWS_CLIENT_SECRET: ${{ secrets.BCCM_WINDOWS_CLIENT_SECRET }}
 
             - name: Download certificate file & build the Electron app for Mac
               run: |
