@@ -12,13 +12,16 @@ const config = {
         output: 'dist-app',
     },
     nsis: {
-        artifactName: process.platform == 'win32' ? '${productName}-Setup-${version}.${ext}' : '${productName}-${version}.${ext}',
+        artifactName:
+            process.platform == 'win32'
+                ? '${productName}-Setup-${version}.${ext}'
+                : '${productName}-${version}.${ext}',
     },
     win: {
         target: 'nsis',
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
-        certificateSubjectName: 'BCC MEDIA STI',
+        certificateSubjectName: 'HSM-CS',
         timeStampServer: 'http://timestamp.digicert.com',
     },
     mac: {
