@@ -45,11 +45,7 @@ jobs:
               if: ${{ matrix.os.name == 'windows' }}
               uses: azure/login@v2
               with:
-                  auth-type: IDENTITY
-                  client-id: ${{ secrets.BCCM_WINDOWS_CLIENT_ID }}
-                  tenant-id: ${{ secrets.BCCM_WINDOWS_DIRECTORY_ID }}
-                  subscription-id: ${{ secrets.BCCM_WINDOWS_SUBSCRIPTION_ID }}
-                  enable-AzPSSession: true
+                  creds: ${{ secrets.BCCM_AZURE_CREDENTIALS }}
 
             - name: Download certificate file from Key Vault
               id: download-cert
@@ -57,7 +53,7 @@ jobs:
               uses: azure/get-keyvault-secrets@v1
               with:
                   keyvault: 'bccm-code-sign2'
-                  secrets: ${{ secrets.BCCM_WINDOWS_CLIENT_SECRET }}
+                  secrets: 'HSM-CS'
               continue-on-error: false
 
             - name: Sign & build the Electron app for Windows
