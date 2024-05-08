@@ -780,7 +780,7 @@ body.not-logged-in {
         }
     }
 
-    body.offline.electron &:not(.downloaded),
+    body.offline.electron &:not(.downloaded):not(.outdated),
     &:not(.loaded) {
         opacity: 0.2;
         filter: grayscale(100%);

@@ -81,6 +81,16 @@ const handleRedirectCallback = async () => {
         document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
 
         if (isElectron()) {
+            // Check if the user is online
+            let isOnline = false
+            await fetch('https://httpbin.org/get?uuid=' + self.crypto.randomUUID())
+                .then(() => (isOnline = true))
+                .catch(() => (isOnline = false))
+
+            if (!isOnline) {
+                return
+            }
+
             document.body.classList.add('not-logged-in')
 
             const loginScreen = document.querySelector('#login-screen')
@@ -99,8 +109,7 @@ const handleRedirectCallback = async () => {
             setTimeout(() => {
                 document.querySelector('#login-screen a').click()
             }, 2000)
-        }
-        else if (window.location.pathname.includes('login')) {
+        } else if (window.location.pathname.includes('login')) {
             await experience.auth0.loginWithRedirect({
                 redirect_uri: window.location.origin,
             })
