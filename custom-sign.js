@@ -1,6 +1,10 @@
 const { execSync } = require('child_process')
 
 module.exports = async function (configuration) {
+    if (!configuration.path.includes(configuration.name + '-Setup')) {
+        return
+    }
+
     const filePath = configuration.path
     const directoryId = process.env.WINDOWS_DIRECTORY_ID
     const clientId = process.env.WINDOWS_CLIENT_ID
