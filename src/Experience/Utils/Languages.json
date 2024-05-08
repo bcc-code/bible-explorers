@@ -357,10 +357,13 @@
             "activityDescLabel": "Mentor veiledning"
         }
     },
-    "de": {
-        "loading": "Wird geladen",
-        "initializing": "Inizialisieren",
-        "fetching": "Kapitel abrufen",
+    "de": {        
+        "status": {
+            "loading": "Wird geladen",
+            "initializing": "Inizialisieren",
+            "fetching": "Kapitel abrufen",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Du wirst dann zur Anmeldeseite weitergeleitet.",
             "manualRedirectInfo": "Bitte warte oder",
@@ -534,9 +537,12 @@
         }
     },
     "nl": {
-        "loading": "Laden",
-        "initializing": "Initialiseren",
-        "fetching": "Aanroepen van de hoofdstukken",
+        "status": {
+            "loading": "Laden",
+            "initializing": "Initialiseren",
+            "fetching": "Aanroepen van de hoofdstukken",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Je wordt naar de login pagina geleid",
             "manualRedirectInfo": "Wacht op",
@@ -710,9 +716,12 @@
         }
     },
     "fr": {
-        "loading": "Chargement",
-        "initializing": "Initialisation",
-        "fetching": "Récupérer des chapitres",
+        "status": {
+            "loading": "Chargement",
+            "initializing": "Initialisation",
+            "fetching": "Récupérer des chapitres",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "You will be redirected to the login page.",
             "manualRedirectInfo": "Veuillez patienter ou",
@@ -886,9 +895,12 @@
         }
     },
     "pl": {
-        "loading": "Ładowanie",
-        "initializing": "Inicjuję",
-        "fetching": "Pobieranie rozdziałów",
+        "status": {
+            "loading": "Ładowanie",
+            "initializing": "Inicjuję",
+            "fetching": "Pobieranie rozdziałów",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Nastąpi przekierowanie do strony logowania.",
             "manualRedirectInfo": "Czekaj lub",
@@ -1062,9 +1074,12 @@
         }
     },
     "ro": {
-        "loading": "Se încarcă",
-        "initializing": "Inițializare",
-        "fetching": "Accesează capitolele",
+        "status": {
+            "loading": "Se încarcă",
+            "initializing": "Inițializare",
+            "fetching": "Accesează capitolele",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Vei fi redirecționat către pagina de logare.",
             "manualRedirectInfo": "Te rugăm așteaptă sau",
@@ -1238,9 +1253,12 @@
         }
     },
     "es": {
-        "loading": "Cargando",
-        "initializing": "Inicializando",
-        "fetching": "Búsqueda de capítulos",
+        "status": {
+            "loading": "Cargando",
+            "initializing": "Inicializando",
+            "fetching": "Búsqueda de capítulos",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Serás redirigido a la página de inicio",
             "manualRedirectInfo": "Por favor espere",
@@ -1414,9 +1432,12 @@
         }
     },
     "pt-pt": {
-        "loading": "Carregando",
-        "initializing": "Inicialização",
-        "fetching": "Buscando capítulos",
+        "status": {
+            "loading": "Carregando",
+            "initializing": "Inicialização",
+            "fetching": "Buscando capítulos",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Você será redirecionado para a página de login.",
             "manualRedirectInfo": "Por favor, espere ou",
@@ -1590,9 +1611,12 @@
         }
     },
     "it": {
-        "loading": "Caricamento",
-        "initializing": "Inizializzazione",
-        "fetching": "Recuperare i capitoli",
+        "status": {
+            "loading": "Caricamento",
+            "initializing": "Inizializzazione",
+            "fetching": "Recuperare i capitoli",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Verrai reindirizzato alla pagina di accesso.",
             "manualRedirectInfo": "Attendere o",
@@ -1766,9 +1790,12 @@
         }
     },
     "ru": {
-        "loading": "Загрузка",
-        "initializing": "Инициализация",
-        "fetching": "Увлекательные главы",
+        "status": {
+            "loading": "Загрузка",
+            "initializing": "Инициализация",
+            "fetching": "Увлекательные главы",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Вы будете перенаправлены на страницу входа в систему.",
             "manualRedirectInfo": "Пожалуйста, подождите или",
@@ -1942,9 +1969,12 @@
         }
     },
     "fi": {
-        "loading": "Ladataan",
-        "initializing": "Alustaa",
-        "fetching": "Haetaan lukuja",
+        "status": {
+            "loading": "Ladataan",
+            "initializing": "Alustaa",
+            "fetching": "Haetaan lukuja",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "Sinut ohjataan kirjautumissivulle.",
             "manualRedirectInfo": "Odota tai",
@@ -2118,9 +2148,12 @@
         }
     },
     "hu": {
-        "loading": "Betöltés",
-        "initializing": "Inicializálás",
-        "fetching": "Fejezetek lehívása",
+        "status": {
+            "loading": "Betöltés",
+            "initializing": "Inicializálás",
+            "fetching": "Fejezetek lehívása",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "A rendszer átirányít a bejelentkezési oldalra.",
             "manualRedirectInfo": "Kérjük, várj vagy",
@@ -2294,9 +2327,12 @@
         }
     },
     "da": {
-        "loading": "Loader",
-        "initializing": "Initialiserer",
-        "fetching": "Fetching chapters",
+        "status": {
+            "loading": "Loader",
+            "initializing": "Initialiserer",
+            "fetching": "Fetching chapters",
+            "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+        },
         "loginScreen": {
             "redirectInfo": "You will be redirected to the login page.",
             "manualRedirectInfo": "Please wait or",
