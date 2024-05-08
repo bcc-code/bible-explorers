@@ -802,7 +802,7 @@ export default class World {
                 quality: instance.selectedQuality,
                 device: isElectron() ? 'App' : 'Web',
                 login: instance.experience.auth0?.isAuthenticated ? 'Login' : 'Non-Login',
-                appVersion: appVersion ? appVersion : 'Web'
+                appVersion: appVersion ? appVersion : 'Web',
             },
         })
 
@@ -936,8 +936,6 @@ export default class World {
     }
 
     finishJourney() {
-        instance.audio.changeBgMusic()
-
         _appInsights.trackEvent({
             name: 'Finish chapter',
             properties: {

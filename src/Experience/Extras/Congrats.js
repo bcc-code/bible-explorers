@@ -46,6 +46,7 @@ export default class Congrats {
     toggleCongrats() {
         instance.destroy()
         instance.experience.navigation.next.addEventListener('click', instance.finishChapter)
+        instance.world.finishJourney()
         instance.world.audio.playSound('congrats')
         instance.experience.celebrate({
             particleCount: 100,
@@ -132,7 +133,6 @@ export default class Congrats {
 
     finishChapter() {
         instance.destroy()
-        instance.world.finishJourney()
         instance.world.goHome()
     }
 
