@@ -53,6 +53,14 @@ export default class Offline {
                             usage: usage,
                         },
                     })
+
+                    plausible('Offline initialized', {
+                        props: {
+                            message: message,
+                            quota: quota,
+                            usage: usage,
+                        },
+                    })
                 })
             })
         }
@@ -401,6 +409,14 @@ export default class Offline {
                 _appInsights.trackEvent({
                     name: 'Chapter downloaded',
                     properties: {
+                        chapterId: chapterId,
+                        language: video.language,
+                        quality: video.quality,
+                    },
+                })
+
+                plausible('Chapter downloaded', {
+                    props: {
                         chapterId: chapterId,
                         language: video.language,
                         quality: video.quality,
