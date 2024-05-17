@@ -1,22 +1,22 @@
-import Offline from '../Utils/Offline.js';
-import Experience from '../Experience.js';
-import ControlRoom from './ControlRoom.js';
-import Environment from './Environment.js';
-import Audio from '../Extras/Audio.js';
-import Program from '../Progress/Program.js';
-import ProgressBar from '../Components/ProgressBar.js';
-import _s from '../Utils/Strings.js';
-import _lang from '../Utils/Lang.js';
-import _api from '../Utils/Api.js';
-import Points from './Points.js';
-import Highlight from './Highlight.js';
-import _e from '../Utils/Events.js';
-import _appInsights from '../Utils/AppInsights.js';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/shift-away.css';
-import _gl from '../Utils/Globals.js';
-import gsap from 'gsap';
+import Offline from "../Utils/Offline.js";
+import Experience from "../Experience.js";
+import ControlRoom from "./ControlRoom.js";
+import Environment from "./Environment.js";
+import Audio from "../Extras/Audio.js";
+import Program from "../Progress/Program.js";
+import ProgressBar from "../Components/ProgressBar.js";
+import _s from "../Utils/Strings.js";
+import _lang from "../Utils/Lang.js";
+import _api from "../Utils/Api.js";
+import Points from "./Points.js";
+import Highlight from "./Highlight.js";
+import _e from "../Utils/Events.js";
+import _appInsights from "../Utils/AppInsights.js";
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/shift-away.css";
+import _gl from "../Utils/Globals.js";
+import gsap from "gsap";
 // import Glitch from "./Glitch.js";
 
 let instance = null;
@@ -34,8 +34,13 @@ export default class World {
     this.time = this.experience.time;
 
     // Wait for resources
-    this.resources.on('ready', () => {
-      instance.chaptersData = instance.resources.api[_api.getBiexChapters()];
+    this.resources.on("ready", () => {
+      const personId = this.experience.auth0.userData
+        ? this.experience.auth0.userData["https://login.bcc.no/claims/personId"]
+        : "";
+
+      instance.chaptersData =
+        instance.resources.api[_api.getBiexChapters(personId)];
 
       this.page.createIntro();
       this.setCategories();
@@ -57,8 +62,8 @@ export default class World {
     // Chapters
     this.chaptersData = [];
     this.menu = {
-      categories: document.querySelector('.categories.list'),
-      chapters: document.querySelector('.chapters'),
+      categories: document.querySelector(".categories.list"),
+      chapters: document.querySelector(".chapters"),
     };
 
     this.buttons = {
@@ -67,8 +72,8 @@ export default class World {
       guide: document.querySelector('[aria-label="Guide"]'),
     };
 
-    this.buttons.home.style.display = 'none';
-    this.buttons.home.addEventListener('click', this.goHome);
+    this.buttons.home.style.display = "none";
+    this.buttons.home.addEventListener("click", this.goHome);
   }
 
   placeholderChapterData() {
@@ -92,15 +97,15 @@ export default class World {
     instance.page.createLobby();
     instance.setChapters();
     instance.experience.navigation.prev.addEventListener(
-      'click',
-      instance.showIntro,
+      "click",
+      instance.showIntro
     );
   }
 
   setCategories() {
     if (instance.chaptersData.length == 0)
       instance.addNotAvailableInYourLanguageMessage();
-    if (instance.chaptersData.hasOwnProperty('message')) return;
+    if (instance.chaptersData.hasOwnProperty("message")) return;
 
     for (const [category, data] of Object.entries(instance.chaptersData)) {
       instance.setCategoryHtml({ name: data.name, slug: data.slug });
@@ -110,23 +115,23 @@ export default class World {
   }
 
   addNotAvailableInYourLanguageMessage() {
-    const notAvailableEl = document.createElement('div');
-    notAvailableEl.className = 'not-available';
+    const notAvailableEl = document.createElement("div");
+    notAvailableEl.className = "not-available";
     notAvailableEl.innerText = _s.notAvailable;
     instance.menu.categories.appendChild(notAvailableEl);
   }
 
   setCategoryHtml(category) {
     const categoryBtn = _gl.elementFromHtml(
-      `<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`,
+      `<button class="category btn default" data-slug="${category.slug}">${category.name}</button>`
     );
-    document.querySelector('.categories').appendChild(categoryBtn);
+    document.querySelector(".categories").appendChild(categoryBtn);
   }
 
   selectCategoryListeners() {
-    document.querySelectorAll('.category').forEach(function (category) {
-      category.addEventListener('click', () => {
-        instance.selectedCategory = category.getAttribute('data-slug');
+    document.querySelectorAll(".category").forEach(function (category) {
+      category.addEventListener("click", () => {
+        instance.selectedCategory = category.getAttribute("data-slug");
         instance.showLobby();
         instance.audio.changeBgMusic();
       });
@@ -134,10 +139,10 @@ export default class World {
   }
 
   setChapters() {
-    instance.chaptersData[instance.selectedCategory]['chapters'].forEach(
+    instance.chaptersData[instance.selectedCategory]["chapters"].forEach(
       (chapter) => {
         instance.setChapterHtml(chapter);
-      },
+      }
     );
 
     instance.experience.navigation.next.disabled = true;
@@ -145,15 +150,15 @@ export default class World {
   }
 
   setChapterHtml(chapter) {
-    let chapterHtml = document.createElement('article');
+    let chapterHtml = document.createElement("article");
 
-    let chapterClasses = 'chapter';
-    chapterClasses += chapter.status == 'future' ? ' locked' : '';
-    chapterClasses += chapter.is_beta === true ? ' beta' : '';
+    let chapterClasses = "chapter";
+    chapterClasses += chapter.status == "future" ? " locked" : "";
+    chapterClasses += chapter.is_beta === true ? " beta" : "";
     chapterHtml.className = chapterClasses;
 
-    chapterHtml.setAttribute('data-id', chapter.id);
-    chapterHtml.setAttribute('data-slug', chapter.category);
+    chapterHtml.setAttribute("data-id", chapter.id);
+    chapterHtml.setAttribute("data-slug", chapter.category);
 
     chapterHtml.innerHTML = `
             <header class="chapter__heading">
@@ -187,13 +192,13 @@ export default class World {
             </div>
         `;
 
-    const chapters = document.querySelector('.chapters');
+    const chapters = document.querySelector(".chapters");
     chapters.appendChild(chapterHtml);
 
     instance.offline.fetchChapterAsset(
       chapter,
-      'thumbnail',
-      instance.setChapterBgImage,
+      "thumbnail",
+      instance.setChapterBgImage
     );
     instance.offline.markChapterIfAvailableOffline(chapter);
     instance.setStatesTooltips();
@@ -206,14 +211,14 @@ export default class World {
     let numberOfQuizes = 0;
 
     chapter.program.forEach((checkpoint) => {
-      if (checkpoint.steps.some((step) => step.details.step_type == 'video'))
+      if (checkpoint.steps.some((step) => step.details.step_type == "video"))
         numberOfEpisodes++;
       else if (
-        checkpoint.steps.some((step) => step.details.step_type == 'quiz')
+        checkpoint.steps.some((step) => step.details.step_type == "quiz")
       )
         numberOfQuizes++;
       else if (
-        checkpoint.steps.some((step) => step.details.step_type == 'task')
+        checkpoint.steps.some((step) => step.details.step_type == "task")
       )
         numberOfTasks++;
     });
@@ -232,13 +237,13 @@ export default class World {
       chapter.other_attachments.forEach((attachment) => {
         const link = attachment.link_to_file_of_other_attachment;
 
-        if (link.includes('mentor')) {
-          const linkParts = link.split('/');
+        if (link.includes("mentor")) {
+          const linkParts = link.split("/");
           const pageSlug = linkParts[linkParts.length - 2];
 
           const guide = _gl.elementFromHtml(`
                         <a class="link asset" href="https://biblekids.io/${localStorage.getItem(
-                          'lang',
+                          "lang"
                         )}/${pageSlug}/" target="_blank">
                             <svg class="book-icon icon" viewBox="0 0 21 24">
                                 <use href="#book"></use>
@@ -254,7 +259,7 @@ export default class World {
     details.append(attachments);
 
     const description = _gl.elementFromHtml(
-      `<div class="description">${chapter.content}</div>`,
+      `<div class="description">${chapter.content}</div>`
     );
     details.append(description);
 
@@ -265,61 +270,61 @@ export default class World {
 
       if (numberOfEpisodes != 1) {
         const videoLabel = _gl.elementFromHtml(
-          `<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`,
+          `<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></div>`
         );
         info.append(videoLabel);
       } else {
         const videoLabel = _gl.elementFromHtml(
-          `<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`,
+          `<div><svg class="film-icon icon" viewBox="0 0 24 22"><use href="#film"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></div>`
         );
         info.append(videoLabel);
       }
 
       if (numberOfTasks != 1) {
         const taskLabel = _gl.elementFromHtml(
-          `<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`,
+          `<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></div>`
         );
         info.append(taskLabel);
       } else {
         const taskLabel = _gl.elementFromHtml(
-          `<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`,
+          `<div><svg class="task-icon icon" viewBox="0 0 24 24"><use href="#pen-to-square"></use></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></div>`
         );
         info.append(taskLabel);
       }
 
       if (numberOfQuizes != 1) {
         const quizLabel = _gl.elementFromHtml(
-          `<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`,
+          `<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></div>`
         );
         info.append(quizLabel);
       } else {
         const quizLabel = _gl.elementFromHtml(
-          `<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`,
+          `<div><svg class="question-mark icon" viewBox="0 0 15 22"><use href="#question-mark"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></div>`
         );
         info.append(quizLabel);
       }
     }
 
-    document.querySelector('.lobby').append(details);
-    document.querySelector('.chapters').classList.add('chapter-selected');
+    document.querySelector(".lobby").append(details);
+    document.querySelector(".chapters").classList.add("chapter-selected");
 
     instance.experience.navigation.next.addEventListener(
-      'click',
-      instance.startChapter,
+      "click",
+      instance.startChapter
     );
   }
 
   removeDescriptionHtml() {
-    document.querySelector('.chapters').classList.remove('chapter-selected');
-    if (document.querySelector('.chapter-details'))
-      document.querySelector('.chapter-details').remove();
+    document.querySelector(".chapters").classList.remove("chapter-selected");
+    if (document.querySelector(".chapter-details"))
+      document.querySelector(".chapter-details").remove();
   }
 
   chapterEventListeners() {
-    document.querySelectorAll('.chapter').forEach((chapter) => {
-      chapter.addEventListener('click', () => {
-        if (document.querySelector('.chapter-details'))
-          document.querySelector('.chapter-details').remove();
+    document.querySelectorAll(".chapter").forEach((chapter) => {
+      chapter.addEventListener("click", () => {
+        if (document.querySelector(".chapter-details"))
+          document.querySelector(".chapter-details").remove();
 
         instance.updateSelectedChapterData(chapter);
         instance.addClassToSelectedChapter(chapter);
@@ -331,23 +336,23 @@ export default class World {
       });
     });
 
-    document.querySelectorAll('.chapter__offline').forEach(function (chapter) {
-      chapter.addEventListener('click', (event) => {
+    document.querySelectorAll(".chapter__offline").forEach(function (chapter) {
+      chapter.addEventListener("click", (event) => {
         instance.downloadChapter(chapter);
         event.stopPropagation();
       });
     });
 
     document
-      .querySelectorAll('.chapter__downloaded')
+      .querySelectorAll(".chapter__downloaded")
       .forEach(function (button) {
-        button.addEventListener('click', instance.confirmRedownload);
+        button.addEventListener("click", instance.confirmRedownload);
       });
 
     document
-      .querySelectorAll('.chapter__download-failed')
+      .querySelectorAll(".chapter__download-failed")
       .forEach(function (chapter) {
-        chapter.addEventListener('click', (event) => {
+        chapter.addEventListener("click", (event) => {
           instance.downloadChapter(chapter);
           event.stopPropagation();
         });
@@ -355,26 +360,26 @@ export default class World {
   }
 
   setStatesTooltips() {
-    tippy('.chapter__offline', {
-      theme: 'explorers',
+    tippy(".chapter__offline", {
+      theme: "explorers",
       content: _s.offline.download.info,
       duration: [500, 200],
-      animation: 'shift-away',
-      placement: 'right',
+      animation: "shift-away",
+      placement: "right",
     });
 
-    tippy('.chapter__downloaded', {
-      theme: 'explorers',
+    tippy(".chapter__downloaded", {
+      theme: "explorers",
       content: _s.offline.availableOffline.info,
       duration: [500, 200],
-      animation: 'shift-away',
-      placement: 'right',
+      animation: "shift-away",
+      placement: "right",
     });
   }
 
   setChapterBgImage(chapter) {
     document.querySelector(
-      '.chapter[data-id="' + chapter.id + '"]',
+      '.chapter[data-id="' + chapter.id + '"]'
     ).style.backgroundImage = 'url("' + chapter.thumbnail + '")';
   }
 
@@ -387,23 +392,23 @@ export default class World {
         </svg>
         <span>${_s.offline.availableOffline.title}</span>
         `;
-    button.addEventListener('click', instance.confirmRedownload);
+    button.addEventListener("click", instance.confirmRedownload);
   }
 
   confirmRedownload(event) {
     const button = event.currentTarget;
-    button.removeEventListener('click', instance.confirmRedownload);
+    button.removeEventListener("click", instance.confirmRedownload);
 
     button.innerHTML = `<span style="margin-right: 0.25rem">${_s.offline.redownloadConfirmation}</span>
             <svg class="refuse | xmark-icon icon"  viewBox="0 0 17 16"><use href="#xmark"></use></svg>
             <span class="separator">/</span>
             <svg class="redownload | check-mark-icon icon" viewBox="0 0 23 16"><use href="#check-mark"></use></svg>`;
 
-    button.querySelector('.refuse').addEventListener('click', (event) => {
+    button.querySelector(".refuse").addEventListener("click", (event) => {
       instance.setDownloadHtml(button);
       event.stopPropagation();
     });
-    button.querySelector('.redownload').addEventListener('click', (event) => {
+    button.querySelector(".redownload").addEventListener("click", (event) => {
       instance.redownloadChapter(button);
       instance.setDownloadHtml(button);
       event.stopPropagation();
@@ -419,20 +424,20 @@ export default class World {
 
   addClassToSelectedChapter(chapter) {
     instance.unselectAllChapters();
-    chapter.classList.add('selected');
+    chapter.classList.add("selected");
   }
 
   unselectAllChapters() {
-    document.querySelectorAll('.chapter').forEach(function (thisChapter) {
-      thisChapter.classList.remove('selected');
+    document.querySelectorAll(".chapter").forEach(function (thisChapter) {
+      thisChapter.classList.remove("selected");
     });
   }
 
   updateSelectedChapterData(chapter) {
-    const chapterId = chapter.getAttribute('data-id');
-    const categorySlug = chapter.getAttribute('data-slug');
+    const chapterId = chapter.getAttribute("data-id");
+    const categorySlug = chapter.getAttribute("data-slug");
     instance.selectedChapter = instance.chaptersData[categorySlug][
-      'chapters'
+      "chapters"
     ].find((chapter) => {
       return chapter.id == chapterId;
     });
@@ -440,7 +445,7 @@ export default class World {
 
   loadChapterTextures() {
     instance.selectedChapter.episodes.forEach((episode) => {
-      const fileName = episode.type + '-' + episode.id;
+      const fileName = episode.type + "-" + episode.id;
 
       if (instance.resources.videoPlayers.hasOwnProperty(fileName)) return;
 
@@ -451,39 +456,39 @@ export default class World {
   async downloadChapter(chapter) {
     if (!this.experience.auth0.isAuthenticated) return;
 
-    let chapterEl = chapter.closest('.chapter');
-    const chapterId = chapterEl.getAttribute('data-id');
-    const categorySlug = chapterEl.getAttribute('data-slug');
+    let chapterEl = chapter.closest(".chapter");
+    const chapterId = chapterEl.getAttribute("data-id");
+    const categorySlug = chapterEl.getAttribute("data-slug");
     const selectedChapter = instance.chaptersData[categorySlug][
-      'chapters'
+      "chapters"
     ].find((chapter) => {
       return chapter.id == chapterId;
     });
 
     instance.cacheChapterAssets(selectedChapter);
 
-    chapterEl.classList.remove('download');
-    chapterEl.classList.remove('failed');
-    chapterEl.classList.add('downloading');
+    chapterEl.classList.remove("download");
+    chapterEl.classList.remove("failed");
+    chapterEl.classList.add("downloading");
 
     this.offline.downloadScreenTextures(selectedChapter);
-    this.offline.downloadEpisodes(chapterId, selectedChapter['episodes']);
+    this.offline.downloadEpisodes(chapterId, selectedChapter["episodes"]);
   }
 
   removeDownload(chapter) {
-    let chapterEl = chapter.closest('.chapter');
-    const chapterId = chapterEl.getAttribute('data-id');
-    const categorySlug = chapterEl.getAttribute('data-slug');
+    let chapterEl = chapter.closest(".chapter");
+    const chapterId = chapterEl.getAttribute("data-id");
+    const categorySlug = chapterEl.getAttribute("data-slug");
     const selectedChapter = instance.chaptersData[categorySlug][
-      'chapters'
+      "chapters"
     ].find((chapter) => {
       return chapter.id == chapterId;
     });
 
-    selectedChapter['episodes'].forEach((episode) =>
-      this.offline.deleteEpisodeFromDb(episode.type + '-' + episode.id),
+    selectedChapter["episodes"].forEach((episode) =>
+      this.offline.deleteEpisodeFromDb(episode.type + "-" + episode.id)
     );
-    chapterEl.classList.remove('downloaded');
+    chapterEl.classList.remove("downloaded");
   }
 
   fetchLobbyVideoLoop() {
@@ -498,12 +503,12 @@ export default class World {
   fetchBtvVideos() {
     instance.selectedChapter.program.forEach((checkpoint) => {
       checkpoint.steps.forEach((step) => {
-        if (step.details.step_type == 'iris' && step.message?.video)
+        if (step.details.step_type == "iris" && step.message?.video)
           instance.offline.fetchScreenTexture(step.message.video);
 
         if (
-          step.details.step_type == 'task' &&
-          step.details.task_type == 'video_with_question' &&
+          step.details.step_type == "task" &&
+          step.details.task_type == "video_with_question" &&
           step.video_with_question.video
         )
           instance.offline.fetchScreenTexture(step.video_with_question.video);
@@ -515,7 +520,7 @@ export default class World {
     if (instance.selectedChapter.background_music) {
       instance.offline.fetchChapterAsset(
         instance.selectedChapter,
-        'background_music',
+        "background_music",
         (chapter) => {
           if (instance.selectedChapter.lobby_video_loop) {
             instance.audio.fadeOutBgMusic(() => {
@@ -524,14 +529,14 @@ export default class World {
           } else {
             instance.audio.changeBgMusic(chapter.background_music);
           }
-        },
+        }
       );
     }
   }
 
   fetchArchiveImage() {
     instance.selectedChapter.archive.forEach((fact) => {
-      instance.offline.fetchChapterAsset(fact.image, 'url', (data) => {
+      instance.offline.fetchChapterAsset(fact.image, "url", (data) => {
         fact.image = data;
       });
     });
@@ -542,84 +547,82 @@ export default class World {
     instance.cacheChapterBgMusic(chapter.background_music);
     instance.cacheChapterArchiveImages(chapter.archive);
 
-    chapter['program'].forEach((checkpoint) => {
+    chapter["program"].forEach((checkpoint) => {
       instance.cacheTaskDescriptionAudios(
-        checkpoint.steps.filter((step) => step.message && step.message.audio),
+        checkpoint.steps.filter((step) => step.message && step.message.audio)
       );
       instance.cacheTaskDescriptionVideos(
-        checkpoint.steps.filter((step) => step.message && step.message.video),
+        checkpoint.steps.filter((step) => step.message && step.message.video)
       );
       instance.cacheTaskDescriptionMedia(
-        checkpoint.steps.filter((step) => step.message && step.message.media),
+        checkpoint.steps.filter((step) => step.message && step.message.media)
       );
       instance.cacheSortingGameIcons(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'sorting',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "sorting"
+        )
       );
       instance.cachePictureAndCodeImage(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'picture_and_code',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "picture_and_code"
+        )
       );
       instance.cacheDialogueAudios(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'dialog',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "dialog"
+        )
       );
       instance.cacheGameDescriptionTutorials(
-        checkpoint.steps.filter(
-          (step) => step.details && step.details.tutorial,
-        ),
+        checkpoint.steps.filter((step) => step.details && step.details.tutorial)
       );
       instance.cacheFlipCardsMedia(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'flip_cards',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "flip_cards"
+        )
       );
       instance.cacheChooseNewKingMedia(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'choose_new_king',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "choose_new_king"
+        )
       );
       instance.cacheDavidsRefugeImages(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'davids_refuge',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "davids_refuge"
+        )
       );
       instance.cacheMultipleChoiceWithPicture(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'multiple_choice_with_picture',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "multiple_choice_with_picture"
+        )
       );
       instance.cacheConfirmationScreenImages(
         checkpoint.steps.filter(
           (step) =>
             step.details &&
-            step.details.step_type == 'task' &&
-            step.details.task_type == 'confirmation_screen',
-        ),
+            step.details.step_type == "task" &&
+            step.details.task_type == "confirmation_screen"
+        )
       );
     });
   }
@@ -664,14 +667,14 @@ export default class World {
     sortingTasks.forEach((task) =>
       task.sorting.forEach((s) => {
         instance.fetchAndCacheAsset(s.icon);
-      }),
+      })
     );
   }
 
   cachePictureAndCodeImage(pictureAndCodeTasks) {
     if (pictureAndCodeTasks.length == 0) return;
     pictureAndCodeTasks.forEach((task) =>
-      instance.fetchAndCacheAsset(task.picture_and_code.picture),
+      instance.fetchAndCacheAsset(task.picture_and_code.picture)
     );
   }
 
@@ -679,7 +682,7 @@ export default class World {
     if (steps.length == 0) return;
     steps.forEach((step) => {
       step.dialog.forEach((dialog) =>
-        instance.fetchAndCacheAsset(dialog.audio),
+        instance.fetchAndCacheAsset(dialog.audio)
       );
     });
   }
@@ -724,7 +727,7 @@ export default class World {
     if (steps.length == 0) return;
     steps.forEach((step) => {
       step.davids_refuge.characters.forEach((character) =>
-        instance.fetchAndCacheAsset(character.image),
+        instance.fetchAndCacheAsset(character.image)
       );
     });
   }
@@ -745,7 +748,7 @@ export default class World {
 
   fetchAndCacheAsset(url) {
     if (!url) return;
-    caches.open('chaptersAssets').then((cache) => {
+    caches.open("chaptersAssets").then((cache) => {
       var request = new Request(url);
       fetch(request).then((fetchedResponse) => {
         cache.put(url, fetchedResponse);
@@ -768,7 +771,7 @@ export default class World {
     instance.fetchArchiveImage();
 
     _appInsights.trackEvent({
-      name: 'Start chapter',
+      name: "Start chapter",
       properties: {
         title: instance.selectedChapter.title,
         category: instance.selectedChapter.category,
@@ -777,12 +780,12 @@ export default class World {
       },
     });
 
-    document.querySelector('.fullscreen-section input').checked = true;
+    document.querySelector(".fullscreen-section input").checked = true;
     if (!document.fullscreenElement)
       document.documentElement.requestFullscreen();
 
-    document.querySelector('.page').className = 'page page-home';
-    document.querySelector('.cta').style.display = 'none';
+    document.querySelector(".page").className = "page page-home";
+    document.querySelector(".cta").style.display = "none";
   }
 
   currentChapterLabel() {
@@ -792,7 +795,7 @@ export default class World {
                 <p>Age: <span>${instance.selectedChapter.category}</span></p>
             </div>`);
 
-    document.querySelector('.app-header').append(el);
+    document.querySelector(".app-header").append(el);
 
     const tl = gsap.timeline();
 
@@ -805,12 +808,12 @@ export default class World {
 
   removeLobbyEventListeners() {
     instance.experience.navigation.prev.removeEventListener(
-      'click',
-      instance.showIntro,
+      "click",
+      instance.showIntro
     );
     instance.experience.navigation.next.removeEventListener(
-      'click',
-      instance.startChapter,
+      "click",
+      instance.startChapter
     );
   }
 
@@ -818,23 +821,23 @@ export default class World {
     instance.hideMenu();
     instance.program = new Program();
     instance.progressBar = new ProgressBar();
-    instance.buttons.home.style.display = 'flex';
+    instance.buttons.home.style.display = "flex";
   }
 
   resetChapter() {
-    localStorage.removeItem('progress-theme-' + instance.selectedChapter.id);
-    localStorage.removeItem('answers-theme-' + instance.selectedChapter.id);
+    localStorage.removeItem("progress-theme-" + instance.selectedChapter.id);
+    localStorage.removeItem("answers-theme-" + instance.selectedChapter.id);
   }
 
   goHome() {
-    document.body.classList.add('freeze');
+    document.body.classList.add("freeze");
     instance.program.destroy();
     instance.program.video.defocus();
     instance.program.removeInteractivity();
-    instance.buttons.home.style.display = 'none';
-    instance.buttons.guide.style.display = 'flex';
+    instance.buttons.home.style.display = "none";
+    instance.buttons.guide.style.display = "flex";
 
-    document.querySelector('.cta').style.display = 'flex';
+    document.querySelector(".cta").style.display = "flex";
 
     instance.camera.updateCameraTo(null);
     instance.controlRoom.irisTextureTransition();
@@ -843,13 +846,13 @@ export default class World {
     instance.showLobby();
     instance.preselectChapter();
 
-    document.querySelector('.page-title')?.remove();
+    document.querySelector(".page-title")?.remove();
 
     if (instance.program.archive) instance.program.archive.remove();
 
     if (instance.program.pause) instance.program.pause.destroy();
 
-    document.querySelector('.fullscreen-section input').checked = false;
+    document.querySelector(".fullscreen-section input").checked = false;
 
     if (document.fullscreenElement) document.exitFullscreen();
   }
@@ -866,11 +869,11 @@ export default class World {
   }
 
   hideMenu() {
-    document.body.classList.remove('freeze');
-    document.querySelector('.page').className = 'page page-home';
+    document.body.classList.remove("freeze");
+    document.querySelector(".page").className = "page page-home";
 
     // instance.buttons.contact.style.display = 'none'
-    instance.buttons.guide.style.display = 'none';
+    instance.buttons.guide.style.display = "none";
   }
 
   hideLoading() {
@@ -883,7 +886,7 @@ export default class World {
     instance.audio.changeBgMusic();
 
     _appInsights.trackEvent({
-      name: 'Finish chapter',
+      name: "Finish chapter",
       properties: {
         title: instance.selectedChapter.title,
         category: instance.selectedChapter.category,
@@ -894,7 +897,7 @@ export default class World {
   }
 
   getId() {
-    return 'progress-theme-' + this.selectedChapter.id;
+    return "progress-theme-" + this.selectedChapter.id;
   }
 
   resize() {

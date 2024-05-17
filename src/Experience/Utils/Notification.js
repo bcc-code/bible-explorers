@@ -1,33 +1,30 @@
 import Experience from "../Experience.js";
 
-let notification = []
+let notification = [];
 
 export default class Notification {
-    constructor(text, icon = "") {
-        this.experience = new Experience()
-        this.program = this.experience.world.program
+  constructor(text, icon = "") {
+    this.htmlEl = document.createElement("div");
+    this.htmlEl.className = "alert";
+    this.htmlEl.innerHTML = Notification.generateHtml(text);
+    document.body.appendChild(this.htmlEl);
 
-        this.htmlEl = document.createElement("div")
-        this.htmlEl.className = "alert"
-        this.htmlEl.innerHTML = Notification.generateHtml(text)
-        document.body.appendChild(this.htmlEl)
+    this.el = {
+      close: this.htmlEl.querySelector('[aria-label="close alert"]'),
+    };
 
-        this.el = {
-            close: this.htmlEl.querySelector('[aria-label="close alert"]')
-        }
+    this.el.close.addEventListener("click", this.destroy);
 
-        this.el.close.addEventListener("click", this.destroy)
+    notification.push(this);
+  }
 
-        notification.push(this)
-    }
+  destroy() {
+    notification[notification.length - 1].htmlEl.remove();
+    notification.pop();
+  }
 
-    destroy() {
-        notification[notification.length - 1].htmlEl.remove()
-        notification.pop()
-    }
-
-    static generateHtml(text) {
-        return `
+  static generateHtml(text) {
+    return `
             <div class="container">
                 <p>${text}</p>
                 <button class="btn rounded" aria-label="close alert">
@@ -37,6 +34,6 @@ export default class Notification {
                 </button>
             </div>
             <div class="overlay"></div>
-        `
-    }
+        `;
+  }
 }

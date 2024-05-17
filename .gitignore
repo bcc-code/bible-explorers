@@ -4,3 +4,5 @@ dist
 .DS_store
 package-lock.json
 .prettierrc
+.vite/
+dist-app/
