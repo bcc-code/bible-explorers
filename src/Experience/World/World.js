@@ -806,6 +806,18 @@ export default class World {
             },
         })
 
+        plausible('Start chapter', {
+            props: {
+                chapterId: instance.selectedChapter.id,
+                category: instance.selectedChapter.category,
+                language: _lang.getLanguageCode(),
+                quality: instance.selectedQuality,
+                device: isElectron() ? 'App' : 'Web',
+                login: instance.experience.auth0?.isAuthenticated ? 'Login' : 'Non-Login',
+                appVersion: appVersion ? appVersion : 'Web',
+            },
+        })
+
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen()
         }
@@ -888,6 +900,12 @@ export default class World {
                 language: _lang.getLanguageCode(),
             },
         })
+
+        plausible('Download app', {
+            props: {
+                language: _lang.getLanguageCode(),
+            },
+        })
     }
 
     closeDownloadModal() {
@@ -939,6 +957,15 @@ export default class World {
         _appInsights.trackEvent({
             name: 'Finish chapter',
             properties: {
+                title: instance.selectedChapter.title,
+                category: instance.selectedChapter.category,
+                language: _lang.getLanguageCode(),
+                quality: instance.selectedQuality,
+            },
+        })
+
+        plausible('Finish chapter', {
+            props: {
                 title: instance.selectedChapter.title,
                 category: instance.selectedChapter.category,
                 language: _lang.getLanguageCode(),

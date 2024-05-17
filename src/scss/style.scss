@@ -140,6 +140,7 @@ body.not-logged-in {
 }
 
 #app[data-view="game"] {
+
     #home-button,
     #logout-button,
     #login-button,
@@ -289,9 +290,10 @@ body.not-logged-in {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     aspect-ratio: 803/412;
     height: var(--button-height);
-    padding-left: 0.5%;
+    padding-right: 0.5%;
     background-image: url('../../static/interface/skip_active.png');
     background-repeat: no-repeat;
     background-size: contain;
@@ -400,6 +402,11 @@ body.not-logged-in {
     svg {
         width: var(--font-size-small);
         height: var(--font-size-small);
+    }
+
+
+    &.bigger {
+        height: calc(var(--button-height) * 1.5);
     }
 
     &.active,
@@ -774,6 +781,7 @@ body.not-logged-in {
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -790,7 +798,7 @@ body.not-logged-in {
     body.offline & .chapter__download {
         pointer-events: none;
     }
-        
+
     &.locked {
         filter: grayscale(1);
         pointer-events: none;
