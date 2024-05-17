@@ -28,8 +28,14 @@ export default class SimonSays {
         }
 
         instance.config = {
-            rounds: instance.world.selectedChapter.category == '6-8' ? explorersOne.noOfRounds : explorersTwo.noOfRounds,
-            msBetweenNotes: instance.world.selectedChapter.category == '6-8' ? explorersOne.msBetweenNotes : explorersTwo.msBetweenNotes,
+            rounds:
+                instance.world.selectedChapter.category == '6-8'
+                    ? explorersOne.noOfRounds
+                    : explorersTwo.noOfRounds,
+            msBetweenNotes:
+                instance.world.selectedChapter.category == '6-8'
+                    ? explorersOne.msBetweenNotes
+                    : explorersTwo.msBetweenNotes,
         }
     }
 
@@ -60,7 +66,8 @@ export default class SimonSays {
                 <div class="overlay"></div>
             </section>`)
 
-        document.querySelector('.app-container').append(game)
+        instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
@@ -76,11 +83,15 @@ export default class SimonSays {
 
             game.querySelector('.cables').append(cable)
 
-            i < 4 ? game.querySelector('.side.left').append(ticker) : game.querySelector('.side.right').append(ticker)
+            i < 4
+                ? game.querySelector('.side.left').append(ticker)
+                : game.querySelector('.side.right').append(ticker)
         }
 
         for (let j = 0; j < instance.data.color.length; j++) {
-            const note = _gl.elementFromHtml(`<button class="note" data-id="${j}" data-color="${instance.data.color[j]}"></button>`)
+            const note = _gl.elementFromHtml(
+                `<button class="note" data-id="${j}" data-color="${instance.data.color[j]}"></button>`
+            )
             game.querySelector('.box').appendChild(note)
         }
     }
@@ -257,6 +268,10 @@ export default class SimonSays {
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'

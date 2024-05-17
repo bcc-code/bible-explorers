@@ -1871,7 +1871,114 @@ $themes: (
             color: greenyellow;
         }
     }
+}
 
+#glitch-idle {
+    position: absolute;
+    width: 150px;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.pause {
+    .container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 6;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+        background: var(--gradient-dark);
+        transition: .3s var(--transition-timing);
+    }
+
+    span {
+        color: var(--clr-secondary);
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    p {
+        color: #fff;
+        font-size: 1.5rem;
+        margin-block: 1rem;
+        max-width: 42ch;
+    }
+}
+
+.chapter-progress {
+    width: 480px;
+    display: flex;
+    position: relative;
+    margin-bottom: 2rem;
+
+    progress {
+        -webkit-appearance: none;
+        appearance: none;
+        position: absolute;
+        background-color: transparent;
+        top: 0.5rem;
+        left: 0;
+        width: 100%;
+        height: 2rem;
+        border: 2px solid var(--clr-secondary);
+        padding: 6px;
+        border-radius: 2rem;
+    }
+
+    progress::-moz-progress-bar {
+        border-radius: 2rem;
+        overflow: hidden;
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: rgba(255, 255, 255, .2);
+        border-radius: 2rem;
+        overflow: hidden;
+    }
+
+    progress::-webkit-progress-value {
+        background-color: var(--clr-primary);
+        transition: filter 300ms, width 300ms;
+    }
+
+    svg {
+        float: right;
+        height: 3rem;
+        filter: drop-shadow(0 0 10px var(--clr-text));
+    }
+
+    ul {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        li {
+            flex: 1;
+        }
+
+        li.filled {
+            color: var(--clr-secondary);
+        }
+    }
 }
 
 @keyframes tilt-n-move-shaking {

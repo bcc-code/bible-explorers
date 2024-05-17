@@ -43,7 +43,7 @@ export default class Dialogue {
             dialogue.querySelector('.content').append(option)
         })
 
-        document.querySelector('.app-container').append(dialogue)
+        document.getElementById('chapter-wrapper').append(dialogue)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
@@ -69,6 +69,7 @@ export default class Dialogue {
                 if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
                     instance.experience.navigation.next.className = 'button-arrow'
+                    instance.experience.navigation.next.innerHTML = ''
                 }
 
                 instance.setMessageHtml(instance.data[index].answer)
@@ -86,23 +87,19 @@ export default class Dialogue {
     }
 
     setMessageHtml(text) {
-        document.querySelector('.app-container').append(
-            _gl.elementFromHtml(
-                `<section class="message-from-dialogue">
-                    <div class="container">
-                        <div class="content">
-                            <h2>Iris</h2>
-                            ${text}
-                        </div>
-                    </div>
-                </section>`
-            )
+        document.getElementById('iris-cc')?.remove()
+
+        const message = _gl.elementFromHtml(
+            `<div id="iris-cc"><h1 class="text-bke-orange uppercase">Iris</h1><div>${text}</div></div>`
         )
+        instance.experience.interface.closedCaption.append(message)
     }
 
     destroy() {
         document.querySelector('.dialogue')?.remove()
         document.querySelector('.message-from-dialogue')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'

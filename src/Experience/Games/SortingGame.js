@@ -34,12 +34,15 @@ export default class SortingGame {
 
         const game = _gl.elementFromHtml(`
             <div class="game sort-game">
-                <div class="container"></div>
+                <div class="container">
+                    <div class="game-canvas" id="sort-game"></div>
+                </div>
                 <div class="overlay"></div>
-                <div class="game-canvas" id="sort-game"></div>
             <div>
         `)
-        document.querySelector('.app-container').append(game)
+
+        instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
@@ -107,7 +110,40 @@ export default class SortingGame {
 
         this.animations = {
             // x, y, width, height (8 frames)
-            button: [0, 0, 240, 134, 240 * 2, 0, 240, 134, 240 * 3, 0, 240, 134, 240 * 4, 0, 240, 134, 240 * 5, 0, 240, 134, 240 * 6, 0, 240, 134, 240 * 7, 0, 240, 134, 240 * 8, 0, 240, 134],
+            button: [
+                0,
+                0,
+                240,
+                134,
+                240 * 2,
+                0,
+                240,
+                134,
+                240 * 3,
+                0,
+                240,
+                134,
+                240 * 4,
+                0,
+                240,
+                134,
+                240 * 5,
+                0,
+                240,
+                134,
+                240 * 6,
+                0,
+                240,
+                134,
+                240 * 7,
+                0,
+                240,
+                134,
+                240 * 8,
+                0,
+                240,
+                134,
+            ],
         }
 
         this.program = this.world.program
@@ -120,8 +156,30 @@ export default class SortingGame {
     initCanvasLayers() {
         this.layer = new Konva.Layer()
 
-        this.leftBox = this.createBox(this.data.box.x, this.data.box.y, this.data.box.width, this.data.box.height, this.data.colors.pink, this.data.colors.pinkOutline, this.data.box.strokeWidth, this.data.box.cornerRadius, 'wrong', this.data.box.buttonSrc.wrong)
-        this.rightBox = this.createBox(this.stage.width() - this.data.box.width - this.data.box.x, this.data.box.y, this.data.box.width, this.data.box.height, this.data.colors.orange, this.data.colors.orangeOultine, this.data.box.strokeWidth, this.data.box.cornerRadius, 'correct', this.data.box.buttonSrc.correct)
+        this.leftBox = this.createBox(
+            this.data.box.x,
+            this.data.box.y,
+            this.data.box.width,
+            this.data.box.height,
+            this.data.colors.pink,
+            this.data.colors.pinkOutline,
+            this.data.box.strokeWidth,
+            this.data.box.cornerRadius,
+            'wrong',
+            this.data.box.buttonSrc.wrong
+        )
+        this.rightBox = this.createBox(
+            this.stage.width() - this.data.box.width - this.data.box.x,
+            this.data.box.y,
+            this.data.box.width,
+            this.data.box.height,
+            this.data.colors.orange,
+            this.data.colors.orangeOultine,
+            this.data.box.strokeWidth,
+            this.data.box.cornerRadius,
+            'correct',
+            this.data.box.buttonSrc.correct
+        )
 
         this.layer.add(this.leftBox, this.rightBox)
         this.stage.add(this.layer)
@@ -190,7 +248,10 @@ export default class SortingGame {
             let selectedBox = category
             let feedback = null
 
-            if (!instance.intersected(icon, instance.leftBox) && !instance.intersected(icon, instance.rightBox)) {
+            if (
+                !instance.intersected(icon, instance.leftBox) &&
+                !instance.intersected(icon, instance.rightBox)
+            ) {
                 return
             }
 
@@ -405,7 +466,12 @@ export default class SortingGame {
     }
 
     intersected(r1, r2) {
-        return !(r2.x() > r1.x() + r1.width() || r2.x() + r2.width() < r1.x() || r2.y() > r1.y() + r1.height() || r2.y() + r2.height() < r1.y())
+        return !(
+            r2.x() > r1.x() + r1.width() ||
+            r2.x() + r2.width() < r1.x() ||
+            r2.y() > r1.y() + r1.height() ||
+            r2.y() + r2.height() < r1.y()
+        )
     }
 
     movedToCorrectBox(icon) {
@@ -492,11 +558,22 @@ export default class SortingGame {
 
         const boxSize = instance.data.icon.width + marginGutter.between
         const iconsPerRow = Math.max(Math.min(Math.floor((iconsWrapper - 20) / boxSize), 4), 2) // between [2-4]
-        marginGutter.sides = (iconsWrapper - iconsPerRow * instance.data.icon.width - (iconsPerRow - 1) * marginGutter.between) / 2
+        marginGutter.sides =
+            (iconsWrapper -
+                iconsPerRow * instance.data.icon.width -
+                (iconsPerRow - 1) * marginGutter.between) /
+            2
 
         const position = {
-            x: instance.leftBox.x() + instance.leftBox.width() + marginGutter.sides + (index % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
-            y: instance.leftBox.y() + marginGutter.top + Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between),
+            x:
+                instance.leftBox.x() +
+                instance.leftBox.width() +
+                marginGutter.sides +
+                (index % iconsPerRow) * (instance.data.icon.width + marginGutter.between),
+            y:
+                instance.leftBox.y() +
+                marginGutter.top +
+                Math.floor(index / iconsPerRow) * (instance.data.icon.height + marginGutter.between),
         }
 
         return position
@@ -531,6 +608,10 @@ export default class SortingGame {
     destroy() {
         window.removeEventListener('resize', instance.resize)
         document.querySelector('.game')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'

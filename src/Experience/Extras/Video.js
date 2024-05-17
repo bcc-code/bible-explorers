@@ -56,6 +56,8 @@ export default class Video {
         // Set new playing video id
         instance.playingVideoId = id
 
+        instance.videoContainer.classList.remove('hidden')
+
         // Move current video first in the list in order to be visible
         instance.videoContainer.prepend(instance.videoContainer.querySelector('#' + id))
 
@@ -79,6 +81,11 @@ export default class Video {
         if (id.includes('texture-') || instance.episodeIsDirectlyPlayable(id)) {
             instance.play()
         }
+    }
+
+    setNoVideoPlaying() {
+        instance.playingVideoId = null
+        instance.videoContainer.classList.add('hidden')
     }
 
     //#region Actions
@@ -125,7 +132,9 @@ export default class Video {
     //#endregion
 
     episodeIsDirectlyPlayable(id) {
-        return id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
+        return (
+            id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
+        )
     }
 
     setFullscreenIfNecessary() {

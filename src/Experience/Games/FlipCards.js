@@ -55,7 +55,7 @@ export default class FlipCards {
         if (nextStep) nextStep.addEventListener('click', instance.toggleFlipCards)
 
         instance.experience.interface.tasksDescription.append(container)
-        instance.experience.setAppView('task-description')
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button-arrow-skip'
@@ -153,11 +153,13 @@ export default class FlipCards {
         instance.flipCards.cards.forEach((card, index) => {
             instance.offline.fetchChapterAsset(card, 'image_back', (data) => {
                 card.image_back = data.image_back
-                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
+                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage =
+                    "url('" + data.image_back + "')"
             })
             instance.offline.fetchChapterAsset(card, 'image_front', (data) => {
                 card.image_front = data.image_front
-                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
+                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage =
+                    "url('" + data.image_front + "')"
             })
         })
     }
@@ -181,10 +183,13 @@ export default class FlipCards {
 
             gsap.set(cFront, { rotationY: 180 })
 
-            const flipAnimation = gsap.timeline({ paused: true }).to(cImage[0], { duration: 1, rotationY: 180 })
+            const flipAnimation = gsap
+                .timeline({ paused: true })
+                .to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
-                if (e.target.value.length > e.target.maxLength) e.target.value = e.target.value.slice(0, e.target.maxLength)
+                if (e.target.value.length > e.target.maxLength)
+                    e.target.value = e.target.value.slice(0, e.target.maxLength)
 
                 if (e.target.value.length == e.target.maxLength) {
                     if (e.target.value == instance.flipCards.cards[index].code) {
@@ -199,9 +204,9 @@ export default class FlipCards {
 
                         // All cards are flipped
                         const flippedCards = document.querySelectorAll('.flipped')
-
                         if (flippedCards.length == instance.flipCards.cards.length) {
                             instance.experience.navigation.next.className = 'button-arrow'
+                            instance.experience.navigation.next.innerHTML = ''
                         }
                     } else {
                         e.target.parentNode.classList.add('wrong-code')

@@ -35,26 +35,38 @@ export default class Message {
 
         if (instance.data.video) {
             instance.video.load('texture-' + instance.data.video)
+        } else {
+            instance.video.setNoVideoPlaying()
         }
     }
 
     setHtml(caption, character) {
-        const message = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`)
-        instance.experience.interface.closedCaption.append(message)
-
         if (instance.data.character == 'glitch') {
-            const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
+            const glitch = _gl.elementFromHtml(
+                '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>'
+            )
             document.querySelector('#closed-caption').append(glitch)
         }
+
+        const message = _gl.elementFromHtml(
+            `<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`
+        )
+        instance.experience.interface.closedCaption.append(message)
 
         if (instance.data.open_question === true) {
             // instance.experience.navigation.next.disabled = true
             const openQuestion = _gl.elementFromHtml(
-                `<div id="open-question">
-                    <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
-                </div`
+                `<section class="dialogue">
+                    <div class="container">
+                        <div class="content">
+                            <div id="open-question">
+                                <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
+                            </div
+                        </div>
+                    </div>
+                </section>`
             )
-            document.querySelector('#closed-caption').append(openQuestion)
+            document.getElementById('chapter-wrapper').append(openQuestion)
 
             const textarea = openQuestion.querySelector('textarea')
             textarea.addEventListener('input', (e) => {
@@ -69,6 +81,7 @@ export default class Message {
 
     destroy() {
         instance.video?.defocus()
+        document.querySelector('#glitch-idle')?.remove()
         document.querySelector('#iris-cc')?.remove()
         document.querySelector('#open-question')?.remove()
     }

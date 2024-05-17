@@ -44,7 +44,8 @@ export default class QuestionAndCode {
             <div class="overlay"></div>
         </div>`)
 
-        document.querySelector('.app-container').append(answersWrapper)
+        instance.experience.interface.gameContainer.append(answersWrapper)
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
@@ -97,6 +98,10 @@ export default class QuestionAndCode {
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.className = 'button-arrow'

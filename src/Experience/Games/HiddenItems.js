@@ -30,8 +30,6 @@ export default class HiddenItems {
     }
 
     togglePicture() {
-        instance.offline.fetchChapterAsset(instance.data, 'picture', (data) => instance.setPicture(data.picture))
-
         const game = _gl.elementFromHtml(`
             <section class="game hidden-items">
                 <div class="container">
@@ -43,7 +41,13 @@ export default class HiddenItems {
                 <div class="overlay"></div>
             </section>`)
 
-        document.querySelector('.app-container').append(game)
+        instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
+
+        instance.offline.fetchChapterAsset(instance.data, 'picture', (data) => {
+            instance.setPicture(data.picture)
+            game.querySelector('.img-loader').remove()
+        })
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
@@ -70,11 +74,13 @@ export default class HiddenItems {
 
     setPicture(url) {
         instance.data.picture = url
-        document.querySelector('.hidden-items img').setAttribute('data-src', instance.data.picture)
+        document.querySelector('.hidden-items img').setAttribute('src', instance.data.picture)
     }
 
     addExistingCircles() {
-        instance.program.gamesData.pictureAndCode.circles.forEach((circle) => instance.addCircle(circle.x, circle.y))
+        instance.program.gamesData.pictureAndCode.circles.forEach((circle) =>
+            instance.addCircle(circle.x, circle.y)
+        )
     }
 
     newScrollPosition(scrollPos) {
@@ -114,16 +120,27 @@ export default class HiddenItems {
 
     removeCircle = (mouseClick) => {
         mouseClick.target.remove()
-        const index = instance.program.gamesData.pictureAndCode.circles.findIndex((circle) => instance.intersected(mouseClick, circle))
+        const index = instance.program.gamesData.pictureAndCode.circles.findIndex((circle) =>
+            instance.intersected(mouseClick, circle)
+        )
         instance.program.gamesData.pictureAndCode.circles.splice(index, 1)
     }
 
     intersected(r1, r2) {
-        return !(r2.x > r1.x + circleSize || r2.x + circleSize < r1.x || r2.y > r1.y + circleSize || r2.y + circleSize < r1.y)
+        return !(
+            r2.x > r1.x + circleSize ||
+            r2.x + circleSize < r1.x ||
+            r2.y > r1.y + circleSize ||
+            r2.y + circleSize < r1.y
+        )
     }
 
     destroy() {
         document.querySelector('.game')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ``
         instance.experience.navigation.next.className = 'button-arrow'

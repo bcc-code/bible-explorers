@@ -67,13 +67,21 @@ export default class Program {
         // Get instance variables
         instance.chapterProgress = () => 0
         instance.currentCheckpoint = 0
-        instance.getCurrentCheckpointData = () => (instance.currentCheckpoint in instance.programData ? instance.programData[instance.currentCheckpoint] : null)
+        instance.getCurrentCheckpointData = () =>
+            instance.currentCheckpoint in instance.programData
+                ? instance.programData[instance.currentCheckpoint]
+                : null
 
         instance.currentStep = 0
-        instance.getCurrentStepData = () => (instance.getCurrentCheckpointData() ? instance.getCurrentCheckpointData().steps[instance.currentStep] : null)
+        instance.getCurrentStepData = () =>
+            instance.getCurrentCheckpointData()
+                ? instance.getCurrentCheckpointData().steps[instance.currentStep]
+                : null
 
-        instance.stepType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null)
-        instance.taskType = () => (instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null)
+        instance.stepType = () =>
+            instance.getCurrentStepData() ? instance.getCurrentStepData().details.step_type : null
+        instance.taskType = () =>
+            instance.getCurrentStepData() ? instance.getCurrentStepData().details.task_type : null
 
         instance.updateAssetInProgramData = (field, newValue) => {
             instance.programData[instance.currentCheckpoint].steps[instance.currentStep][field] = newValue
@@ -81,7 +89,10 @@ export default class Program {
 
         instance.totalCheckpoints = Object.keys(instance.programData).length
         instance.clickCallback = () => {}
-        instance.canClick = () => !document.body.classList.contains('freeze') && !document.body.classList.contains('modal-on') && !document.body.classList.contains('camera-is-moving')
+        instance.canClick = () =>
+            !document.body.classList.contains('freeze') &&
+            !document.body.classList.contains('modal-on') &&
+            !document.body.classList.contains('camera-is-moving')
 
         instance.addEventListeners()
         document.addEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
@@ -93,14 +104,13 @@ export default class Program {
         if (instance.currentCheckpoint == 0 && instance.world.selectedChapter.lobby_video_loop) {
             videoId += instance.world.selectedChapter.lobby_video_loop
         } else if (instance.stepType() === 'iris') {
-            instance.stepData = instance.data = instance.stepData.message
-
+            instance.stepData = instance.getCurrentStepData().message
             videoId += instance.getCurrentStepData().message.video
         } else if (instance.stepType() === 'iris_with_supporting_screens') {
             videoId += instance.getCurrentStepData().message_with_supporting_screens.video
         }
 
-        if (!instance.videoPlayerLoaded(videoId)) {
+        if (!instance.videoPlayerLoaded(videoId) && instance.getCurrentStepData().message.video) {
             return
         }
         document.removeEventListener(_e.ACTIONS.VIDEO_LOADED, instance.startJourneyWhenVideoIsLoaded)
@@ -119,7 +129,10 @@ export default class Program {
 
     previousStep() {
         if (instance.currentCheckpoint == 0 && instance.currentStep == 0) {
-            if (!!document.getElementById('waitingScreen') || !instance.world.selectedChapter.lobby_video_loop) {
+            if (
+                !!document.getElementById('waitingScreen') ||
+                !instance.world.selectedChapter.lobby_video_loop
+            ) {
                 instance.world.goHome()
             } else {
                 instance.waitingScreen.show()
@@ -193,7 +206,19 @@ export default class Program {
                 }
 
                 // Games
-                else if (['cables', 'sorting', 'simon_says', 'flip_cards', 'choose_new_king', 'heart_defense', 'davids_refuge', 'labyrinth', 'duck_game'].includes(instance.taskType())) {
+                else if (
+                    [
+                        'cables',
+                        'sorting',
+                        'simon_says',
+                        'flip_cards',
+                        'choose_new_king',
+                        'heart_defense',
+                        'davids_refuge',
+                        'labyrinth',
+                        'duck_game',
+                    ].includes(instance.taskType())
+                ) {
                     instance.gameDescription.show()
                 } else if (instance.taskType() === 'multiple_choice_with_picture') {
                     instance.multipleChoiceWithPicture.show()
@@ -267,11 +292,16 @@ export default class Program {
     }
 
     nextVideo() {
-        for (let checkpoint = instance.currentCheckpoint; checkpoint < instance.totalCheckpoints; checkpoint++) {
+        for (
+            let checkpoint = instance.currentCheckpoint;
+            checkpoint < instance.totalCheckpoints;
+            checkpoint++
+        ) {
             const startingStep = checkpoint == instance.currentCheckpoint ? instance.currentStep : 0
 
             for (let step = startingStep; step < instance.programData[checkpoint].steps.length; step++) {
-                if (instance.programData[checkpoint].steps[step].details.step_type == 'video') return instance.programData[checkpoint].steps[step].videoId
+                if (instance.programData[checkpoint].steps[step].details.step_type == 'video')
+                    return instance.programData[checkpoint].steps[step].videoId
             }
         }
 

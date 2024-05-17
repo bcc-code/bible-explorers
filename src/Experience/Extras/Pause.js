@@ -1,7 +1,7 @@
-import Experience from "../Experience.js"
+import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
-import _e from "../Utils/Events.js"
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -18,7 +18,7 @@ export default class Pause {
         instance.audio.playSound('task-completed')
         instance.experience.celebrate({
             particleCount: 100,
-            spread: 160
+            spread: 160,
         })
         instance.setEventListeners()
     }
@@ -54,7 +54,7 @@ export default class Pause {
             </aside>
         `)
 
-        document.body.append(pauseHTML)
+        document.getElementById('chapter-wrapper').append(pauseHTML)
     }
 
     setEventListeners() {

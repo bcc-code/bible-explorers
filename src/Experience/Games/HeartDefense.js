@@ -29,7 +29,20 @@ export default class HeartDefense {
             explosionHeight: spriteH,
             explosion: 'games/explosion.png',
             animations: {
-                explosion: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
+                explosion: [
+                    0,
+                    0,
+                    spriteW,
+                    spriteH,
+                    spriteW * 2,
+                    0,
+                    spriteW,
+                    spriteH,
+                    spriteW * 3,
+                    0,
+                    spriteW,
+                    spriteH,
+                ],
             },
             highestSpeed: 3.2,
             lowestSpeed: 1.2,
@@ -68,6 +81,7 @@ export default class HeartDefense {
         const game = _gl.elementFromHtml(`
             <section class="game heart-defense">
                 <div class="container">
+                    <div id="heart-defense" class="game-canvas"></div>
                     <div class="game-rounds">
                         <span>${_s.miniGames.round}:</span>
                         <span class="level">${instance.stats.level}</span>
@@ -75,11 +89,11 @@ export default class HeartDefense {
                     </div>
                 </div>
                 <div class="overlay"></div>
-                <div id="heart-defense" class="game-canvas"></div>
             </section>
         `)
 
-        document.querySelector('.app-container').append(game)
+        instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button-arrow-skip`
@@ -279,7 +293,9 @@ export default class HeartDefense {
                 let estFramesToCenter = dX / distancePerFrame.x
 
                 // Adjust distance if necessary
-                const diffFrames = getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) - estFramesToCenter
+                const diffFrames =
+                    getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) -
+                    estFramesToCenter
 
                 // Updated values
                 x -= diffFrames * distancePerFrame.x
@@ -494,7 +510,10 @@ export default class HeartDefense {
     possiblePositions = () => [
         {
             x: -instance.config.thoughts.width / 2,
-            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2),
+            y: instance.getRndBetween(
+                -instance.config.thoughts.height / 2,
+                instance.stage.height() + instance.config.thoughts.height / 2
+            ),
         },
         {
             x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
@@ -502,7 +521,10 @@ export default class HeartDefense {
         },
         {
             x: instance.stage.width() + instance.config.thoughts.width / 2,
-            y: instance.getRndBetween(-instance.config.thoughts.height / 2, instance.stage.height() + instance.config.thoughts.height / 2),
+            y: instance.getRndBetween(
+                -instance.config.thoughts.height / 2,
+                instance.stage.height() + instance.config.thoughts.height / 2
+            ),
         },
         {
             x: instance.getRndBetween(0, instance.stage.width() - instance.config.thoughts.width / 2),
@@ -510,15 +532,31 @@ export default class HeartDefense {
         },
     ]
 
-    getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
-    getRndSpeed = () => instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) * Math.min(instance.stats.level, instance.config.levels)
-    getRndBadThoughtSrc = () => instance.config.path + 'bad-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
-    getRndGoodThoughtSrc = () => instance.config.path + 'good-thought-' + instance.getRoundedRndBetween(1, instance.config.thoughtVariants) + '.png'
+    getNoOfThoughts = () =>
+        instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
+    getRndSpeed = () =>
+        instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) *
+        Math.min(instance.stats.level, instance.config.levels)
+    getRndBadThoughtSrc = () =>
+        instance.config.path +
+        'bad-thought-' +
+        instance.getRoundedRndBetween(1, instance.config.thoughtVariants) +
+        '.png'
+    getRndGoodThoughtSrc = () =>
+        instance.config.path +
+        'good-thought-' +
+        instance.getRoundedRndBetween(1, instance.config.thoughtVariants) +
+        '.png'
     getRndBetween = (min, max) => min + Math.random() * (max - min)
     getRoundedRndBetween = (min, max) => Math.round(instance.getRndBetween(min, max))
 
     isIntersectingRectangleWithRectangle = (rect1, width1, height1, rect2, width2, height2) => {
-        return rect2.x < rect1.x + width1 && rect2.x + width2 > rect1.x && rect2.y < rect1.y + height1 && rect2.y + height2 > rect1.y
+        return (
+            rect2.x < rect1.x + width1 &&
+            rect2.x + width2 > rect1.x &&
+            rect2.y < rect1.y + height1 &&
+            rect2.y + height2 > rect1.y
+        )
     }
 
     setEventListeners() {
@@ -668,6 +706,10 @@ export default class HeartDefense {
         window.removeEventListener('resize', instance.updateStageDimension)
 
         document.querySelector('.game')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'
