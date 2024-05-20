@@ -104,6 +104,7 @@ export default class QuestionAndCode {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
+        instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button-arrow'
     }
 }

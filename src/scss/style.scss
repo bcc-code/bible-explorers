@@ -73,9 +73,15 @@
 
 
 /* #region VideoAPI */
-#video-container .video-js:not(.vjs-fullscreen) .vjs-control-bar {
-    transform: translateX(30px) translateY(-30px);
-    width: calc(100% - 60px);
+#video-container .video-js:not(.vjs-fullscreen) {
+    .vjs-control-bar {
+        transform: translateX(30px) translateY(-30px);
+        width: calc(100% - 60px);
+    }
+
+    .vjs-seek-backward-control, .vjs-seek-forward-control, .vjs-volume-panel, .vjs-audio-button, .vjs-quality-selector, .vjs-picture-in-picture-control {
+        display: none;
+    }
 }
 
 .video-js {
@@ -1973,6 +1979,10 @@ $themes: (
 
         li {
             flex: 1;
+
+            svg {
+                fill: #FCB04E;
+            }
         }
 
         li.filled {

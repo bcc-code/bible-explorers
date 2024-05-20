@@ -32,17 +32,17 @@ export default class Pause {
                         <ul>
                             <li class="filled">
                                 <svg viewBox="0 0 29 29">
-                                    <use href="#star"></use>
+                                    <use href="#star-solid"></use>
                                 </svg>
                             </li>
                             <li>
                                 <svg viewBox="0 0 29 29">
-                                    <use href="#star"></use>
+                                    <use href="#star-solid"></use>
                                 </svg>
                             </li>
                             <li>
                                 <svg viewBox="0 0 29 29">
-                                    <use href="#star"></use>
+                                    <use href="#star-solid"></use>
                                 </svg>
                             </li>
                         </ul>
