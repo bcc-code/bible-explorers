@@ -53,7 +53,7 @@ export default class Quiz {
                     instance.questions.length > 0
                         ? `
                     <div class="task-container_actions">
-                        <button id="next-question" class="button-task_action"><svg><use href="#arrow-right-long-solid" fill="currentColor"></use></svg></button>
+                        <button id="next-question" class="button-task_action"><svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg></button>
                         <button id="submit-quiz" class="button-task_action" type="submit"><span>${_s.task.submit}</span></button>
                     </div>`
                         : ''

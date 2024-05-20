@@ -53,7 +53,7 @@ export default class ChooseNewKing {
                         </div>
                         <div class="card-input">
                             <div class="icon">
-                                <svg class="lock-icon" width="21" height="24" viewBox="0 0 21 24">
+                                <svg class="icon">
                                     <use href="#locked"></use>
                                 </svg>
                             </div>
@@ -87,11 +87,13 @@ export default class ChooseNewKing {
         instance.data.cards.forEach((card, index) => {
             instance.offline.fetchChapterAsset(card, 'image_back', (data) => {
                 card.image_back = data.image_back
-                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage = "url('" + data.image_back + "')"
+                document.querySelectorAll('article.card .card-back')[index].style.backgroundImage =
+                    "url('" + data.image_back + "')"
             })
             instance.offline.fetchChapterAsset(card, 'image_front', (data) => {
                 card.image_front = data.image_front
-                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage = "url('" + data.image_front + "')"
+                document.querySelectorAll('article.card .card-front')[index].style.backgroundImage =
+                    "url('" + data.image_front + "')"
             })
         })
     }
@@ -117,10 +119,13 @@ export default class ChooseNewKing {
 
             gsap.set(cFront, { rotationY: 180 })
 
-            const flipAnimation = gsap.timeline({ paused: true }).to(cImage[0], { duration: 1, rotationY: 180 })
+            const flipAnimation = gsap
+                .timeline({ paused: true })
+                .to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
-                if (e.target.value.length > e.target.maxLength) e.target.value = e.target.value.slice(0, e.target.maxLength)
+                if (e.target.value.length > e.target.maxLength)
+                    e.target.value = e.target.value.slice(0, e.target.maxLength)
 
                 if (e.target.value.length == e.target.maxLength)
                     if (e.target.value === instance.data.cards[index].code) {

@@ -118,12 +118,10 @@ export default class FlipCards {
                           <div class="card-front" style="background-image: url('${c.image_front}')"></div>
                       </div>
                       <div class="card-input bg-bke-purple">
-                          <div class="icon">
-                              <svg class="w-3 h-3 tv:w-5 tv:h-5">
-                                  <use href="#book-solid" fill="currentColor"></use>
-                              </svg>
-                          </div>
-                          <input type="number" placeholder="#" maxlength="${c.code.length}" />
+                            <svg class="icon">
+                                <use href="#book-solid" fill="currentColor"></use>
+                            </svg>
+                            <input type="number" placeholder="#" maxlength="${c.code.length}" />
                       </div>
                   </article>
               `)

@@ -48,7 +48,9 @@ export default class CodeUnlock {
 
         for (let i = 1; i <= 12; i++) {
             if (i == 10) {
-                const deleteKey = _gl.elementFromHtml(`<button class="code-unlock-key delete-number"><svg><use href="#delete-left-solid" fill="currentColor"></use></svg></button>`)
+                const deleteKey = _gl.elementFromHtml(
+                    `<button class="code-unlock-key delete-number"><svg class="icon"><use href="#delete-left-solid" fill="currentColor"></use></svg></button>`
+                )
                 deleteKey.disabled = true
                 unlockScreen.querySelector('.code-unlock-keyboard').append(deleteKey)
             } else if (i == 11) {
@@ -57,7 +59,7 @@ export default class CodeUnlock {
             } else if (i == 12) {
                 const confirmKey = _gl.elementFromHtml(`
                     <button class="code-unlock-key confirm-code">
-                        <svg><use href="#check-solid" fill="currentColor"></use></svg>
+                        <svg class="icon"><use href="#check-solid" fill="currentColor"></use></svg>
                     </button>
                 `)
 
@@ -70,7 +72,9 @@ export default class CodeUnlock {
         }
 
         for (let j = 0; j < instance.secretCode.length; j++) {
-            const asterix = _gl.elementFromHtml(`<div><svg><use href="#asterisk-solid"  fill="currentColor"></use></svg></div>`)
+            const asterix = _gl.elementFromHtml(
+                `<div><svg class="icon"><use href="#asterisk-solid"  fill="currentColor"></use></svg></div>`
+            )
             unlockScreen.querySelector('.code-unlock-code').append(asterix)
         }
 
@@ -96,7 +100,18 @@ export default class CodeUnlock {
         instance.el.confirm.addEventListener('click', instance.checkCode)
 
         document.onkeydown = (e) => {
-            if (e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' || e.key === '5' || e.key === '6' || e.key === '7' || e.key === '8' || e.key === '9' || e.key === '0') {
+            if (
+                e.key === '1' ||
+                e.key === '2' ||
+                e.key === '3' ||
+                e.key === '4' ||
+                e.key === '5' ||
+                e.key === '6' ||
+                e.key === '7' ||
+                e.key === '8' ||
+                e.key === '9' ||
+                e.key === '0'
+            ) {
                 instance.add(e.key)
             } else if (e.key === 'Backspace') {
                 if (instance.data.currentNumberIndex > 0) instance.remove()
@@ -109,7 +124,8 @@ export default class CodeUnlock {
     add(num) {
         if (instance.data.currentNumberIndex == instance.data.codeLength) return
 
-        if (instance.data.currentNumberIndex == instance.data.codeLength - 1) instance.el.confirm.disabled = false
+        if (instance.data.currentNumberIndex == instance.data.codeLength - 1)
+            instance.el.confirm.disabled = false
 
         if (instance.data.currentNumberIndex == 1) instance.el.backspace.disabled = false
 
@@ -124,7 +140,9 @@ export default class CodeUnlock {
 
         document.querySelector('.code-unlock.correct-code')?.classList.remove('correct-code')
 
-        const asterisk = _gl.elementFromHtml(`<svg><use href="#asterisk-solid" fill="currentColor"></use></svg>`)
+        const asterisk = _gl.elementFromHtml(
+            `<svg class="icon"><use href="#asterisk-solid" fill="currentColor"></use></svg>`
+        )
 
         const numbers = instance.el.code.querySelectorAll('div')
         numbers[instance.data.currentNumberIndex - 1].textContent = ''
@@ -162,7 +180,7 @@ export default class CodeUnlock {
             const numbers = instance.el.code.querySelectorAll('div')
             numbers.forEach((item) => {
                 const asterisk = _gl.elementFromHtml(`
-                    <svg class="asterisk-icon icon" width="20" height="22" viewBox="0 0 20 22">
+                    <svg class="icon asterisk-icon">
                         <use href="#asterisk"></use>
                     </svg>
                 `)

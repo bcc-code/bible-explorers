@@ -65,13 +65,13 @@ export default class Congrats {
                         <progress max="3" value="3"></progress>
                         <ul>
                             <li class="filled">
-                                <svg><use href="#star-solid"  fill="currentColor"></use></svg>
+                                <svg class="icon"><use href="#star-solid"  fill="currentColor"></use></svg>
                             </li>
                             <li class="filled">
-                                <svg><use href="#star-solid"  fill="currentColor"></use></svg>
+                                <svg class="icon"><use href="#star-solid"  fill="currentColor"></use></svg>
                             </li>
                             <li class="filled">
-                                <svg><use href="#star-solid"  fill="currentColor"></use></svg>
+                                <svg class="icon"><use href="#star-solid"  fill="currentColor"></use></svg>
                             </li>
                         </ul>
                     </div>

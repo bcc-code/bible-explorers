@@ -20,7 +20,10 @@ export default class ProgressBar {
     }
 
     init() {
-        instance.htmlEl.querySelector('div').innerHTML = ProgressBar.HTML(instance.checkpointWidth, instance.program)
+        instance.htmlEl.querySelector('div').innerHTML = ProgressBar.HTML(
+            instance.checkpointWidth,
+            instance.program
+        )
         instance.el = instance.getElements()
     }
 
@@ -98,13 +101,13 @@ export default class ProgressBar {
             const icon = stepTypeIcon[dominantStepType]
             generatedHTML += `
                 <button class="button-circle duration-300 grid" aria-label="checkpoint" data-index="${index}">
-                    <svg><use href="${icon}" fill="currentColor"></use></svg>
+                    <svg class="icon"><use href="${icon}" fill="currentColor"></use></svg>
                 </button>`
         })
 
         return `${generatedHTML}
             <button id="finish-step" class="button-circle mb-0 grid" aria-label="checkpoint">
-                <svg><use href="#star-solid" fill="currentColor"></use></svg>
+                <svg class="icon"><use href="#star-solid" fill="currentColor"></use></svg>
             </button>
         </div>`
     }

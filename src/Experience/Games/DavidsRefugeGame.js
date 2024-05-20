@@ -97,7 +97,7 @@ export default class DavidsRefuge {
 
         const hintsToggle = _gl.elementFromHtml(`
             <button class="btn rounded" aria-label="toggle hints">
-                <svg class="question-icon icon" width="15" height="22" viewBox="0 0 15 22">
+                <svg class="icon">
                     <use href="#question-mark"></use>
                 </svg>
             </button>

@@ -196,10 +196,10 @@ export default class World {
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
                         <button class="chapter__download button-cube group-[.downloaded]:hidden">
-                            <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
                         <button class="chapter__remove button-cube !hidden">
-                            <svg><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
                     <span class="chapter__loading"></span>
@@ -216,11 +216,11 @@ export default class World {
                     </div>
                     <div class="chapter__download-failed">${_s.offline.downloadFailed}</div>
                     <div class="chapter__downloaded">
-                        <svg><use href="#check-solid" fill="currentColor"></use></svg>
+                        <svg class="icon"><use href="#check-solid" fill="currentColor"></use></svg>
                         <span>${_s.offline.availableOffline.title}</span>
                     </div>
                     <div class="chapter__outdated">
-                        <svg><use href="#file-circle-exclamation-solid" fill="currentColor"></use></svg>
+                        <svg class="icon"><use href="#file-circle-exclamation-solid" fill="currentColor"></use></svg>
                         <span>${_s.offline.outdated}</span>
                     </div>
                 </div>
@@ -270,7 +270,7 @@ export default class World {
 
                     const guide = _gl.elementFromHtml(`
                         <a class="button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg><use href="#book-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
                         </a>`)
 
                     details.prepend(guide)
@@ -285,36 +285,36 @@ export default class World {
 
             if (numberOfEpisodes != 1) {
                 const videoLabel = _gl.elementFromHtml(
-                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="icon"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoPlural.video}</span></li>`
                 )
                 info.append(videoLabel)
             } else {
                 const videoLabel = _gl.elementFromHtml(
-                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="icon"><use href="#film-solid" fill="currentColor"></use></svg><span>${numberOfEpisodes} ${_s.chapter.infoSingular.video}</span></li>`
                 )
                 info.append(videoLabel)
             }
 
             if (numberOfTasks != 1) {
                 const taskLabel = _gl.elementFromHtml(
-                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="icon"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoPlural.task}</span></li>`
                 )
                 info.append(taskLabel)
             } else {
                 const taskLabel = _gl.elementFromHtml(
-                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="icon"><use href="#pen-to-square-solid" fill="currentColor"></use></svg></svg><span>${numberOfTasks} ${_s.chapter.infoSingular.task}</span></li>`
                 )
                 info.append(taskLabel)
             }
 
             if (numberOfQuizes != 1) {
                 const quizLabel = _gl.elementFromHtml(
-                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="icon"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoPlural.quiz}</span></li>`
                 )
                 info.append(quizLabel)
             } else {
                 const quizLabel = _gl.elementFromHtml(
-                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`
+                    `<li class="flex gap-2 items-center tv:text-xl"><svg class="icon"><use href="#question-solid" fill="currentColor"></use></svg><span>${numberOfQuizes} ${_s.chapter.infoSingular.quiz}</span></li>`
                 )
                 info.append(quizLabel)
             }

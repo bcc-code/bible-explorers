@@ -13,7 +13,10 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&family=Ubuntu:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
 
         <link rel="stylesheet" href="./scss/style.scss" />
     </head>
@@ -27,26 +30,41 @@
                     </div>
                     <div class="z-10 ml-auto flex items-center">
                         <button id="download-app" class="button-cube modal-open-download">
-                            <svg><use href="#download-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
                         <button id="home-button" class="button-cube">
-                            <svg><use href="#house-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
                         </button>
                         <button id="toggle-music" class="button-cube group">
-                            <svg class="hidden group-[.is-playing]:block"><use href="#music-solid" fill="currentColor"></use></svg>
-                            <svg class="group-[.is-playing]:hidden"><use href="#music-slash-solid" fill="currentColor"></use></svg>
+                            <svg class="icon hidden group-[.is-playing]:block">
+                                <use href="#music-solid" fill="currentColor"></use>
+                            </svg>
+                            <svg class="icon group-[.is-playing]:hidden">
+                                <use href="#music-slash-solid" fill="currentColor"></use>
+                            </svg>
                         </button>
                         <button id="toggle-vq" class="button-cube group">
-                            <svg class="hidden group-data-[quality='high']:block"><use href="#high-definition-solid" fill="currentColor"></use></svg>
-                            <svg class="hidden group-data-[quality='medium']:block"><use href="#standard-definition-solid" fill="currentColor"></use></svg>
+                            <svg class="icon hidden group-data-[quality='high']:block">
+                                <use href="#high-definition-solid" fill="currentColor"></use>
+                            </svg>
+                            <svg class="icon hidden group-data-[quality='medium']:block">
+                                <use href="#standard-definition-solid" fill="currentColor"></use>
+                            </svg>
                         </button>
                         <button id="toggle-fullscreen" class="button-cube group">
-                            <svg class="group-[.fullscreen-active]:hidden"><use href="#up-right-and-down-left-from-center-solid" fill="currentColor"></use></svg>
-                            <svg class="hidden group-[.fullscreen-active]:block"><use href="#down-left-and-up-right-to-center-solid" fill="currentColor"></use></svg>
+                            <svg class="icon group-[.fullscreen-active]:hidden">
+                                <use
+                                    href="#up-right-and-down-left-from-center-solid"
+                                    fill="currentColor"
+                                ></use>
+                            </svg>
+                            <svg class="icon hidden group-[.fullscreen-active]:block">
+                                <use href="#down-left-and-up-right-to-center-solid" fill="currentColor"></use>
+                            </svg>
                         </button>
                         <div class="relative" id="app-language">
                             <button id="toggle-languages" class="button-cube-wider" aria-pressed="false">
-                                <svg><use href="#globe-solid" fill="currentColor"></use></svg>
+                                <svg class="icon"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span></span>
                             </button>
                             <div class="app-language_dropdown">
@@ -54,21 +72,24 @@
                             </div>
                         </div>
                         <button id="logout-button" class="button-cube disabled:!hidden" disabled="true">
-                            <svg><use href="#user-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
                         </button>
                         <button id="login-button" class="button-cube disabled:!hidden" disabled="true">
-                            <svg><use href="#user-solid" fill="currentColor"></use></svg>
+                            <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
                         </button>
                         <a href="mailto:hello@biblekids.io">
                             <button id="contact-button" class="button-cube">
-                                <svg><use href="#envelope-solid" fill="currentColor"></use></svg>
+                                <svg class="icon"><use href="#envelope-solid" fill="currentColor"></use></svg>
                             </button>
                         </a>
                     </div>
                 </div>
             </header>
 
-            <div id="loading_screen" class="fixed inset-0 z-50 grid place-content-center justify-items-center bg-gradient-to-br from-bke-darkpurple to-bke-purple text-center">
+            <div
+                id="loading_screen"
+                class="fixed inset-0 z-50 grid place-content-center justify-items-center bg-gradient-to-br from-bke-darkpurple to-bke-purple text-center"
+            >
                 <canvas id="loading_logo" width="320" height="320"></canvas>
                 <div id="loading_text" class="bottom-8 left-8 w-96 text-xl">Loading...</div>
             </div>
@@ -79,7 +100,11 @@
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
                     <article class="fixed inset-0 grid place-content-center text-balance text-center">
-                        <h1 class="heading max-w-screen-sm font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md tv:max-w-screen-lg">Join time travels and explore the book that can answer every question</h1>
+                        <h1
+                            class="heading max-w-screen-sm font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md tv:max-w-screen-lg"
+                        >
+                            Join time travels and explore the book that can answer every question
+                        </h1>
                         <ul class="mt-[2%] flex justify-center gap-[2%]"></ul>
                     </article>
                 </div>
@@ -93,98 +118,164 @@
                         </div>
                         <div id="chapters-description" class="chapters-description"></div>
                     </div>
-                    <div class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4">
+                    <div
+                        class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
+                    >
                         <button class="button-arrow scale-x-[-1]" id="back-to-age-category"></button>
                         <div class="wrapper-tooltip">
                             <button class="button-arrow" id="start-chapter"></button>
                         </div>
                     </div>
                 </div>
-                <div id="chapter-wrapper" class="isolate hidden group-data-[view='chapter']/app:block group-data-[view='game']/app:block group-data-[view='task-description']/app:block">
+                <div
+                    id="chapter-wrapper"
+                    class="isolate hidden group-data-[view='chapter']/app:block group-data-[view='game']/app:block group-data-[view='task-description']/app:block"
+                >
                     <div class="fixed inset-0 -z-10 bg-chapter-room bg-cover bg-center">
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
                     <div class="mx-auto flex justify-center px-8 group-data-[view='game']/app:hidden">
-                        <div id="screens-wrapper" class="relative isolate grid gap-[0.25%]" style="grid-template-columns: 38% 30% 32%; grid-auto-rows: auto">
+                        <div
+                            id="screens-wrapper"
+                            class="relative isolate grid gap-[0.25%]"
+                            style="grid-template-columns: 38% 30% 32%; grid-auto-rows: auto"
+                        >
                             <div class="absolute bottom-[20%] right-full w-[20%]">
                                 <img src="./frames/Camera.png" alt="" />
                             </div>
                             <div class="relative col-span-1 row-span-1 grid">
-                                <div id="top-left-screen" class="relative mt-auto aspect-[4/3] w-full bg-top-left-screen bg-contain bg-bottom bg-no-repeat">
+                                <div
+                                    id="top-left-screen"
+                                    class="relative mt-auto aspect-[4/3] w-full bg-top-left-screen bg-contain bg-bottom bg-no-repeat"
+                                >
                                     <div class="absolute bottom-full left-[15%] -z-10 w-[50%]">
                                         <img src="./frames/Handle_1.png" alt="" />
                                     </div>
                                     <div class="absolute bottom-[calc(100%_-40px)] left-[70%] -z-10 w-[50%]">
                                         <img src="./frames/Handle_2.png" alt="" />
                                     </div>
-                                    <div id="top-left-screen_content" class="mask-image h-full w-full bg-[url('../../static/textures/Blueprint_BibleBox_00000.png')] bg-cover bg-no-repeat"></div>
+                                    <div
+                                        id="top-left-screen_content"
+                                        class="mask-image h-full w-full bg-[url('../../static/textures/Blueprint_BibleBox_00000.png')] bg-cover bg-no-repeat"
+                                    ></div>
                                 </div>
                             </div>
                             <div class="relative col-span-1 row-span-1 grid">
-                                <div id="top-mid-screen" class="relative mt-auto aspect-[3/4] w-full bg-top-mid-screen bg-contain bg-center bg-no-repeat">
+                                <div
+                                    id="top-mid-screen"
+                                    class="relative mt-auto aspect-[3/4] w-full bg-top-mid-screen bg-contain bg-center bg-no-repeat"
+                                >
                                     <div class="absolute bottom-full left-1/2 -z-10 w-[60%] -translate-x-1/2">
                                         <img src="./frames/Handle_3.png" alt="" />
                                     </div>
-                                    <div id="top-mid-screen_content" class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen3_00000.png')] bg-cover bg-no-repeat"></div>
+                                    <div
+                                        id="top-mid-screen_content"
+                                        class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen3_00000.png')] bg-cover bg-no-repeat"
+                                    ></div>
                                 </div>
                             </div>
                             <div class="relative col-span-1 row-span-2 grid">
-                                <div id="helper-screen" class="relative mb-[15%] mt-auto aspect-[9/16] w-full bg-helper-screen bg-contain bg-center bg-no-repeat">
+                                <div
+                                    id="helper-screen"
+                                    class="relative mb-[15%] mt-auto aspect-[9/16] w-full bg-helper-screen bg-contain bg-center bg-no-repeat"
+                                >
                                     <div class="absolute bottom-full left-1/2 -z-10 w-[40%] -translate-x-1/2">
                                         <img src="./frames/Handle_4.png" alt="" />
                                     </div>
-                                    <div id="helper-screen_content" class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen4_00001.png')] bg-cover bg-no-repeat"></div>
+                                    <div
+                                        id="helper-screen_content"
+                                        class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen4_00001.png')] bg-cover bg-no-repeat"
+                                    ></div>
                                 </div>
                             </div>
                             <div class="relative col-span-2 row-span-1 grid">
-                                <div id="main-screen" class="relative aspect-[16/9] w-full bg-main-screen bg-contain bg-center bg-no-repeat">
-                                    <div id="main-screen_content" class="mask-image h-full w-full bg-[url('../../static/textures/MT_IRIS_BG.png')] bg-cover bg-no-repeat">
+                                <div
+                                    id="main-screen"
+                                    class="relative aspect-[16/9] w-full bg-main-screen bg-contain bg-center bg-no-repeat"
+                                >
+                                    <div
+                                        id="main-screen_content"
+                                        class="mask-image h-full w-full bg-[url('../../static/textures/MT_IRIS_BG.png')] bg-cover bg-no-repeat"
+                                    >
                                         <div class="*:h-full *:w-full" id="video-container"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="closed-caption" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-center group-data-[view='game']/app:hidden"></div>
+                    <div
+                        id="closed-caption"
+                        class="fixed bottom-4 left-1/2 -translate-x-1/2 text-center group-data-[view='game']/app:hidden"
+                    ></div>
                     <div id="progress-bar" class="group/progress group-data-[view='game']/app:hidden">
                         <div class="absolute right-4 top-1/2 -translate-y-1/2"></div>
                     </div>
-                    <div id="chapter-navigation" class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4">
+                    <div
+                        id="chapter-navigation"
+                        class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
+                    >
                         <button class="button-arrow scale-x-[-1]" id="prev-step"></button>
                         <button class="button-arrow" id="next-step"></button>
                     </div>
-                    <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
-                    <div id="tasks-description" class="fixed inset-0 hidden group-data-[view='task-description']/app:block"></div>
+                    <div
+                        id="games-wrapper"
+                        class="fixed inset-0 hidden group-data-[view='game']/app:block"
+                    ></div>
+                    <div
+                        id="tasks-description"
+                        class="fixed inset-0 hidden group-data-[view='task-description']/app:block"
+                    ></div>
                 </div>
             </main>
 
             <aside id="faq" class="hidden group-data-[view='faq']/app:block">
                 <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
-                <div class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48">
+                <div
+                    class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48"
+                >
                     <div class="flex gap-8">
                         <button id="back-from-faq" class="button-cube-wider" title="back to main menu">
-                            <svg class="h-3 w-3 tv:h-5 tv:w-5"><use href="#arrow-left-long-solid" fill="currentColor"></use></svg>
+                            <svg class="icon">
+                                <use href="#arrow-left-long-solid" fill="currentColor"></use>
+                            </svg>
                         </button>
                         <div class="mt-2">
                             <h3 class="text-3xl font-bold">FAQ</h3>
-                            <div id="faq-content" class="prose-xl max-w-screen-md prose-a:text-bke-orange prose-a:underline prose-a:transition hover:prose-a:text-bke-orange/80"></div>
+                            <div
+                                id="faq-content"
+                                class="prose-xl max-w-screen-md prose-a:text-bke-orange prose-a:underline prose-a:transition hover:prose-a:text-bke-orange/80"
+                            ></div>
                         </div>
                     </div>
                 </div>
             </aside>
 
-            <div id="copyright" class="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs opacity-30 group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden"></div>
-            <div id="app-version" class="absolute bottom-1 right-1 hidden text-xs opacity-30 group-data-[view='age-category']/app:block"></div>
-            <div id="notification" class="fixed bottom-6 left-6 hidden w-60 rounded-md bg-white p-5 text-center text-black shadow-md">
+            <div
+                id="copyright"
+                class="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs opacity-30 group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden"
+            ></div>
+            <div
+                id="app-version"
+                class="absolute bottom-1 right-1 hidden text-xs opacity-30 group-data-[view='age-category']/app:block"
+            ></div>
+            <div
+                id="notification"
+                class="fixed bottom-6 left-6 hidden w-60 rounded-md bg-white p-5 text-center text-black shadow-md"
+            >
                 <p id="message" class="mb-3"></p>
                 <div class="flex justify-center">
-                    <button id="close-button" class="button-normal less-focused px-5 py-0 text-white">Close</button>
+                    <button id="close-button" class="button-normal less-focused px-5 py-0 text-white">
+                        Close
+                    </button>
                     <button id="restart-button" class="hidden">Restart</button>
                 </div>
             </div>
         </div>
 
-        <div id="login-screen" class="fixed hidden h-screen w-screen flex-col items-center justify-center gap-8 bg-black">
+        <div
+            id="login-screen"
+            class="fixed hidden h-screen w-screen flex-col items-center justify-center gap-8 bg-black"
+        >
             <div class="z-10 w-[500px]">
                 <img src="./textures/bible-kids-explorers.svg" alt="" />
             </div>
@@ -196,7 +287,17 @@
 
         <script src="https://unpkg.com/@rive-app/canvas@1.0.102/rive.js"></script>
         <script type="module" src="./script.js"></script>
-        <script defer data-domain="explorers.biblekids.io" src="https://plausible.io/js/script.tagged-events.js"></script>
-        <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+        <script
+            defer
+            data-domain="explorers.biblekids.io"
+            src="https://plausible.io/js/script.tagged-events.js"
+        ></script>
+        <script>
+            window.plausible =
+                window.plausible ||
+                function () {
+                    ;(window.plausible.q = window.plausible.q || []).push(arguments)
+                }
+        </script>
     </body>
 </html>

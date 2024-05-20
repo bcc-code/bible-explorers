@@ -59,7 +59,7 @@ export default class TrueFalsQuiz {
                 : `<p>${question.question_text}</p>`
         const audioButton =
             question.type === 'question' && question.question_audio
-                ? `<button class="button-cube-wider bigger" id="button-audio"><svg><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>`
+                ? `<button class="button-cube-wider bigger" id="button-audio"><svg class="icon"><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>`
                 : ''
 
         const questionHTML = `
