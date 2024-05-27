@@ -132,7 +132,9 @@ export default class Video {
     //#endregion
 
     episodeIsDirectlyPlayable(id) {
-        return id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
+        return (
+            id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
+        )
     }
 
     setFullscreenIfNecessary() {

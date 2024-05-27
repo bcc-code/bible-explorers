@@ -86,7 +86,9 @@ export default class Resources extends EventEmitter {
 
             // loader.innerText = _s.status.fetching
 
-            const personId = this.experience.auth0.userData ? this.experience.auth0.userData['https://login.bcc.no/claims/personId'] : ''
+            const personId = this.experience.auth0.userData
+                ? this.experience.auth0.userData['https://login.bcc.no/claims/personId']
+                : ''
 
             resources.fetchApiThenCache(_api.getBiexChapters(personId), (json) => {
                 this.api[_api.getBiexChapters(personId)] = json
@@ -171,7 +173,9 @@ export default class Resources extends EventEmitter {
             naturalHeight: video.videoHeight || 1,
         }
 
-        type && type == 'default' ? (this.textureItems[name] = textureObject) : (this.customTextureItems[name] = textureObject)
+        type && type == 'default'
+            ? (this.textureItems[name] = textureObject)
+            : (this.customTextureItems[name] = textureObject)
 
         this.loadingManager.itemStart(url)
     }

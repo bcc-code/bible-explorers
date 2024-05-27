@@ -500,33 +500,46 @@ export default class World {
         instance.cacheChapterArchiveImages(chapter.archive)
 
         chapter['program'].forEach((checkpoint) => {
-            instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
-            instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
+            instance.cacheTaskDescriptionAudios(
+                checkpoint.steps.filter((step) => step.message && step.message.audio)
+            )
+            instance.cacheTaskDescriptionMedia(
+                checkpoint.steps.filter((step) => step.message && step.message.media)
+            )
             instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.message_with_supporting_screens && step.message_with_supporting_screens.character_audio
+                        step.message_with_supporting_screens &&
+                        step.message_with_supporting_screens.character_audio
                 )
             )
             instance.cacheTaskDescriptionWithSupportingScreensRightScreen(
                 checkpoint.steps.filter(
-                    (step) => step.message_with_supporting_screens && step.message_with_supporting_screens.right_screen
+                    (step) =>
+                        step.message_with_supporting_screens &&
+                        step.message_with_supporting_screens.right_screen
                 )
             )
             instance.cacheSortingGameIcons(
                 checkpoint.steps.filter(
-                    (step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'sorting'
                 )
             )
             instance.cachePictureAndCodeImage(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'picture_and_code'
                 )
             )
             instance.cacheDialogueAudios(
                 checkpoint.steps.filter(
-                    (step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'
+                    (step) =>
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'
                 )
             )
             instance.cacheGameDescriptionTutorials(
@@ -534,19 +547,26 @@ export default class World {
             )
             instance.cacheFlipCardsMedia(
                 checkpoint.steps.filter(
-                    (step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'flip_cards'
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'flip_cards'
                 )
             )
             instance.cacheChooseNewKingMedia(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details && step.details.step_type == 'task' && step.details.task_type == 'choose_new_king'
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'choose_new_king'
                 )
             )
             instance.cacheDavidsRefugeImages(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details && step.details.step_type == 'task' && step.details.task_type == 'davids_refuge'
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'davids_refuge'
                 )
             )
             instance.cacheMultipleChoiceWithPicture(
@@ -584,13 +604,17 @@ export default class World {
             instance.cacheSingleChoiceMedia(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details && step.details.step_type == 'task' && step.details.task_type == 'single_choice'
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'single_choice'
                 )
             )
             instance.cacheTrueFalseQuizMedia(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details && step.details.step_type == 'task' && step.details.task_type == 'truefalse_quiz'
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'truefalse_quiz'
                 )
             )
         })
@@ -623,12 +647,16 @@ export default class World {
 
     cacheTaskDescriptionWithSupportingScreensCharacterAudio(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio))
+        steps.forEach((step) =>
+            instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio)
+        )
     }
 
     cacheTaskDescriptionWithSupportingScreensRightScreen(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen))
+        steps.forEach((step) =>
+            instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen)
+        )
     }
 
     cacheSortingGameIcons(sortingTasks) {
@@ -908,6 +936,8 @@ export default class World {
         if (instance.program.archive) instance.program.archive.remove()
         if (instance.program.pause) instance.program.pause.destroy()
         if (instance.program.congrats) instance.program.congrats.destroy()
+
+        instance.resources.videoPlayers = []
 
         if (document.fullscreenElement) {
             document.exitFullscreen()
