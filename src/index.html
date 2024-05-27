@@ -22,20 +22,28 @@
     </head>
 
     <body class="group/body select-none">
+        <svg height="0" width="0" style="position: absolute">
+            <defs>
+                <clipPath id="svgmask-image-description" clipPathUnits="objectBoundingBox">
+                    <path d="M0.0374,0 L0.9626,0 L1,0.1176 L1,1 L0,1 L0,0.1176 Z" />
+                </clipPath>
+            </defs>
+        </svg>
+
         <div id="app" class="group/app fixed inset-0 overflow-hidden">
             <header id="header" class="absolute left-0 top-0 hidden w-full">
-                <div class="flex w-full justify-between p-[1%]">
+                <div class="flex w-full justify-between p-4">
                     <div class="app-logo z-10">
                         <img src="./textures/bible-kids-explorers.svg" alt="" />
                     </div>
                     <div class="z-10 ml-auto flex items-center">
-                        <button id="download-app" class="button-cube modal-open-download">
+                        <button id="download-app" class="button button-cube modal-open-download">
                             <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="home-button" class="button-cube">
+                        <button id="home-button" class="button button-cube">
                             <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="toggle-music" class="button-cube group">
+                        <button id="toggle-music" class="button button-cube group">
                             <svg class="icon hidden group-[.is-playing]:block">
                                 <use href="#music-solid" fill="currentColor"></use>
                             </svg>
@@ -43,7 +51,7 @@
                                 <use href="#music-slash-solid" fill="currentColor"></use>
                             </svg>
                         </button>
-                        <button id="toggle-vq" class="button-cube group">
+                        <button id="toggle-vq" class="button button-cube group">
                             <svg class="icon hidden group-data-[quality='high']:block">
                                 <use href="#high-definition-solid" fill="currentColor"></use>
                             </svg>
@@ -51,7 +59,7 @@
                                 <use href="#standard-definition-solid" fill="currentColor"></use>
                             </svg>
                         </button>
-                        <button id="toggle-fullscreen" class="button-cube group">
+                        <button id="toggle-fullscreen" class="button button-cube group">
                             <svg class="icon group-[.fullscreen-active]:hidden">
                                 <use
                                     href="#up-right-and-down-left-from-center-solid"
@@ -63,7 +71,11 @@
                             </svg>
                         </button>
                         <div class="relative" id="app-language">
-                            <button id="toggle-languages" class="button-cube-wider" aria-pressed="false">
+                            <button
+                                id="toggle-languages"
+                                class="button button-rectangle-wide"
+                                aria-pressed="false"
+                            >
                                 <svg class="icon"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span></span>
                             </button>
@@ -71,14 +83,18 @@
                                 <ul></ul>
                             </div>
                         </div>
-                        <button id="logout-button" class="button-cube disabled:!hidden" disabled="true">
+                        <button
+                            id="logout-button"
+                            class="button button-cube disabled:!hidden"
+                            disabled="true"
+                        >
                             <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button id="login-button" class="button-cube disabled:!hidden" disabled="true">
+                        <button id="login-button" class="button button-cube disabled:!hidden" disabled="true">
                             <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
                         </button>
                         <a href="mailto:hello@biblekids.io">
-                            <button id="contact-button" class="button-cube">
+                            <button id="contact-button" class="button button-cube">
                                 <svg class="icon"><use href="#envelope-solid" fill="currentColor"></use></svg>
                             </button>
                         </a>
@@ -100,11 +116,7 @@
                         <div class="h-full w-full bg-bke-darkpurple/75"></div>
                     </div>
                     <article class="fixed inset-0 grid place-content-center text-balance text-center">
-                        <h1
-                            class="heading max-w-screen-sm font-semibold text-bke-orange drop-shadow-lg xl:max-w-screen-md tv:max-w-screen-lg"
-                        >
-                            Join time travels and explore the book that can answer every question
-                        </h1>
+                        <h1 class="w-[40ch] text-bke-orange"></h1>
                         <ul class="mt-[2%] flex justify-center gap-[2%]"></ul>
                     </article>
                 </div>
@@ -121,9 +133,9 @@
                     <div
                         class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
                     >
-                        <button class="button-arrow scale-x-[-1]" id="back-to-age-category"></button>
+                        <button class="button button-arrow scale-x-[-1]" id="back-to-age-category"></button>
                         <div class="wrapper-tooltip">
-                            <button class="button-arrow" id="start-chapter"></button>
+                            <button class="button button-arrow" id="start-chapter"></button>
                         </div>
                     </div>
                 </div>
@@ -214,8 +226,8 @@
                         id="chapter-navigation"
                         class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
                     >
-                        <button class="button-arrow scale-x-[-1]" id="prev-step"></button>
-                        <button class="button-arrow" id="next-step"></button>
+                        <button class="button button-arrow scale-x-[-1]" id="prev-step"></button>
+                        <button class="button button-arrow" id="next-step"></button>
                     </div>
                     <div
                         id="games-wrapper"
@@ -228,31 +240,9 @@
                 </div>
             </main>
 
-            <aside id="faq" class="hidden group-data-[view='faq']/app:block">
-                <div class="fixed inset-0 bg-gradient-to-br from-bke-darkpurple to-bke-purple"></div>
-                <div
-                    class="absolute inset-0 flex items-center justify-center gap-8 overflow-y-auto px-8 pb-8 pt-48"
-                >
-                    <div class="flex gap-8">
-                        <button id="back-from-faq" class="button-cube-wider" title="back to main menu">
-                            <svg class="icon">
-                                <use href="#arrow-left-long-solid" fill="currentColor"></use>
-                            </svg>
-                        </button>
-                        <div class="mt-2">
-                            <h3 class="text-3xl font-bold">FAQ</h3>
-                            <div
-                                id="faq-content"
-                                class="prose-xl max-w-screen-md prose-a:text-bke-orange prose-a:underline prose-a:transition hover:prose-a:text-bke-orange/80"
-                            ></div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
             <div
                 id="copyright"
-                class="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs opacity-30 group-data-[view='chapter']/app:hidden group-data-[view='game']/app:hidden"
+                class="absolute bottom-1 left-1/2 hidden -translate-x-1/2 text-xs opacity-30 group-data-[view='age-category']/app:block group-data-[view='lobby']/app:block"
             ></div>
             <div
                 id="app-version"

@@ -100,13 +100,13 @@ export default class ProgressBar {
 
             const icon = stepTypeIcon[dominantStepType]
             generatedHTML += `
-                <button class="button-circle duration-300 grid" aria-label="checkpoint" data-index="${index}">
+                <button class="button button-circle duration-300 grid" aria-label="checkpoint" data-index="${index}">
                     <svg class="icon"><use href="${icon}" fill="currentColor"></use></svg>
                 </button>`
         })
 
         return `${generatedHTML}
-            <button id="finish-step" class="button-circle mb-0 grid" aria-label="checkpoint">
+            <button id="finish-step" class="button button-circle mb-0 grid" aria-label="checkpoint">
                 <svg class="icon"><use href="#star-solid" fill="currentColor"></use></svg>
             </button>
         </div>`

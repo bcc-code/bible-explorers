@@ -40,10 +40,10 @@ export default class TaskDescriptionWithCalculatorScreen {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="task-container">
                 <div class="task-container_box">
-                    <h1 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h1>
+                    <h5 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h1>
                     ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
                     ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button-task_action">${instance.data.td_button}</button></div>` : ''}
+                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button button-task_action">${instance.data.td_button}</button></div>` : ''}
                 </div>
             </div>`
         )
@@ -56,7 +56,7 @@ export default class TaskDescriptionWithCalculatorScreen {
         instance.calculator.show(container.querySelector('.task-container_box'))
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     destroy() {
@@ -65,6 +65,6 @@ export default class TaskDescriptionWithCalculatorScreen {
         instance.calculator.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

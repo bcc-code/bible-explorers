@@ -23,7 +23,7 @@ export default class SingleChoice {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow-skip'
+        instance.experience.navigation.next.className = 'button button-arrow-skip'
 
         instance.setHTML()
         instance.useCorrectAssetsSrc()
@@ -37,7 +37,7 @@ export default class SingleChoice {
                 (o, index) =>
                     `<li class="single-choice-option cursor-pointer hover:bg-white/10 rounded-xl p-[5%]" data-index="${index}">
                 <img src="${o.option_media}"/>
-                <h2 class="text-center">${o.option_text}</h2>
+                <p class="text-center">${o.option_text}</p>
             </li>`
             )
             .join('')
@@ -45,7 +45,7 @@ export default class SingleChoice {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="single-choice">
                 <div class="task-container_box">
-                    ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
+                    ${instance.data.title ? `<h5 class="task-container_heading">${instance.data.title}</h1>` : ''}
                     ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
                     ${optionsHtml ? `<ul class="flex gap-8 mt-8">${optionsHtml}</ul>` : ''}
                 </div>
@@ -76,11 +76,11 @@ export default class SingleChoice {
             // If the option is correct
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
-            instance.experience.navigation.next.className = 'button-arrow'
+            instance.experience.navigation.next.className = 'button button-arrow'
 
             selectedOptionElement.classList.add('bg-white/10')
             instance.experience.navigation.next.innerHTML = ``
-            instance.experience.navigation.next.className = 'button-arrow active'
+            instance.experience.navigation.next.className = 'button button-arrow active'
 
             // Disable further clicks on options
             document.querySelectorAll('.single-choice-option').forEach((option) => {
@@ -104,6 +104,6 @@ export default class SingleChoice {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

@@ -13,7 +13,6 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import _gl from '../Utils/Globals.js'
-import gsap from 'gsap'
 import isElectron from 'is-electron'
 
 let instance = null
@@ -161,7 +160,7 @@ export default class World {
 
     setCategoryHtml(category) {
         const categoryBtn = _gl.elementFromHtml(
-            `<li><button class="category button-cube-wider" data-slug="${category.slug}">${category.name}</button></li>`
+            `<li><button class="category button button-rectangle-wide uppercase" data-slug="${category.slug}">${category.name}</button></li>`
         )
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
@@ -190,15 +189,15 @@ export default class World {
             `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
                 <a href="javascript:void(0)" class="chapter-box">
                     <div class="chapter-mask">
-                        <h1 class="chapter-heading">${chapter.title}</h1>
-                        <div class="chapter-date">${chapter.date}</div>
+                        <h6 class="chapter-heading">${chapter.title}</h6>
+                        <p class="chapter-date">${chapter.date}</p>
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
-                        <button class="chapter__download button-cube group-[.downloaded]:hidden">
+                        <button class="chapter__download button button-cube group-[.downloaded]:hidden">
                             <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
                         </button>
-                        <button class="chapter__remove button-cube !hidden">
+                        <button class="chapter__remove button button-cube !hidden">
                             <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
                         </button>
                     </div>
@@ -255,8 +254,8 @@ export default class World {
         const details = _gl.elementFromHtml(`
             <div class="chapter-description">
                 <div class="chapter-content relative">
-                    <h1 class="chapter-description-heading">${chapter.title}</h1>
-                    <div class="chapter-description-text"> ${chapter.content}</div>
+                    <h5 class="chapter-description-heading">${chapter.title}</h5>
+                    <div class="chapter-description-text scroller"> ${chapter.content}</div>
                 </div>
             </div>`)
 
@@ -269,7 +268,7 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                        <a class="button button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
                             <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
                         </a>`)
 
@@ -501,46 +500,33 @@ export default class World {
         instance.cacheChapterArchiveImages(chapter.archive)
 
         chapter['program'].forEach((checkpoint) => {
-            instance.cacheTaskDescriptionAudios(
-                checkpoint.steps.filter((step) => step.message && step.message.audio)
-            )
-            instance.cacheTaskDescriptionMedia(
-                checkpoint.steps.filter((step) => step.message && step.message.media)
-            )
+            instance.cacheTaskDescriptionAudios(checkpoint.steps.filter((step) => step.message && step.message.audio))
+            instance.cacheTaskDescriptionMedia(checkpoint.steps.filter((step) => step.message && step.message.media))
             instance.cacheTaskDescriptionWithSupportingScreensCharacterAudio(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.message_with_supporting_screens &&
-                        step.message_with_supporting_screens.character_audio
+                        step.message_with_supporting_screens && step.message_with_supporting_screens.character_audio
                 )
             )
             instance.cacheTaskDescriptionWithSupportingScreensRightScreen(
                 checkpoint.steps.filter(
-                    (step) =>
-                        step.message_with_supporting_screens &&
-                        step.message_with_supporting_screens.right_screen
+                    (step) => step.message_with_supporting_screens && step.message_with_supporting_screens.right_screen
                 )
             )
             instance.cacheSortingGameIcons(
                 checkpoint.steps.filter(
-                    (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'sorting'
+                    (step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'sorting'
                 )
             )
             instance.cachePictureAndCodeImage(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'picture_and_code'
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'picture_and_code'
                 )
             )
             instance.cacheDialogueAudios(
                 checkpoint.steps.filter(
-                    (step) =>
-                        step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'
+                    (step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'dialog'
                 )
             )
             instance.cacheGameDescriptionTutorials(
@@ -548,26 +534,19 @@ export default class World {
             )
             instance.cacheFlipCardsMedia(
                 checkpoint.steps.filter(
-                    (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'flip_cards'
+                    (step) => step.details && step.details.step_type == 'task' && step.details.task_type == 'flip_cards'
                 )
             )
             instance.cacheChooseNewKingMedia(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'choose_new_king'
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'choose_new_king'
                 )
             )
             instance.cacheDavidsRefugeImages(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'davids_refuge'
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'davids_refuge'
                 )
             )
             instance.cacheMultipleChoiceWithPicture(
@@ -605,17 +584,13 @@ export default class World {
             instance.cacheSingleChoiceMedia(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'single_choice'
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'single_choice'
                 )
             )
             instance.cacheTrueFalseQuizMedia(
                 checkpoint.steps.filter(
                     (step) =>
-                        step.details &&
-                        step.details.step_type == 'task' &&
-                        step.details.task_type == 'truefalse_quiz'
+                        step.details && step.details.step_type == 'task' && step.details.task_type == 'truefalse_quiz'
                 )
             )
         })
@@ -648,16 +623,12 @@ export default class World {
 
     cacheTaskDescriptionWithSupportingScreensCharacterAudio(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) =>
-            instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio)
-        )
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.character_audio))
     }
 
     cacheTaskDescriptionWithSupportingScreensRightScreen(steps) {
         if (steps.length == 0) return
-        steps.forEach((step) =>
-            instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen)
-        )
+        steps.forEach((step) => instance.fetchAndCacheAsset(step.message_with_supporting_screens.right_screen))
     }
 
     cacheSortingGameIcons(sortingTasks) {
@@ -866,21 +837,21 @@ export default class World {
 
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button-cube-wider" href="${apiData['windows']['exe']}">
+                        <a class="button button-rectangle-wide" href="${apiData['windows']['exe']}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
                             <span>Windows</span>
                         </a>`)
                 )
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button-cube-wider" href="${apiData['mac']['x64']}">
+                        <a class="button button-rectangle-wide" href="${apiData['mac']['x64']}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
                             <div>Intel-based Mac</div>
                         </a>`)
                 )
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button-cube-wider" href="${apiData['mac']['arm64']}">
+                        <a class="button button-rectangle-wide" href="${apiData['mac']['arm64']}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> 
                             <span>Mac with Apple silicon</span>
                         </a>`)

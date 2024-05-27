@@ -132,9 +132,7 @@ export default class Video {
     //#endregion
 
     episodeIsDirectlyPlayable(id) {
-        return (
-            id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
-        )
+        return id.includes('episode-') && instance.world.program.getCurrentStepData().details.play_video_directly
     }
 
     setFullscreenIfNecessary() {
@@ -148,7 +146,7 @@ export default class Video {
         if (instance.hasSkipBtn()) return
 
         const skipVideo = document.createElement('div')
-        skipVideo.className = 'skip-video button-arrow-skip'
+        skipVideo.className = 'skip-video button button-arrow-skip'
         skipVideo.innerHTML = `<span>${_s.miniGames.skip}</span>`
         skipVideo.addEventListener('click', instance.finish)
         instance.videoJsEl().appendChild(skipVideo)

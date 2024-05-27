@@ -48,7 +48,7 @@ export default class QuestionAndCode {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
@@ -65,10 +65,10 @@ export default class QuestionAndCode {
 
                 if (val == 0) {
                     instance.experience.navigation.next.innerHTML = ''
-                    instance.experience.navigation.next.className = 'button-arrow'
+                    instance.experience.navigation.next.className = 'button button-arrow'
                 } else {
                     instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-                    instance.experience.navigation.next.className = `button-arrow-skip`
+                    instance.experience.navigation.next.className = `button button-arrow-skip`
                 }
             })
         })
@@ -105,6 +105,6 @@ export default class QuestionAndCode {
 
         instance.experience.navigation.next.removeEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

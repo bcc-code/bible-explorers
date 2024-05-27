@@ -77,7 +77,7 @@ export default class MazeGame {
             <div class="task-game_rounds">${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}</div>
             <div class="task-game_popup">
                 <h1>${_s.miniGames.completed.title}</h1>
-                <button class="button-cube-wider" id="new-level">${_s.miniGames.nextRound}</button>
+                <button class="button button-rectangle-wide" id="new-level">${_s.miniGames.nextRound}</button>
             </div>
         </section>`)
 
@@ -85,7 +85,7 @@ export default class MazeGame {
         document.querySelector('.task-game_popup').style.display = 'none'
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     setEventListeners() {
@@ -225,22 +225,34 @@ export default class MazeGame {
                     const shape = new CANNON.Box(new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5))
                     // If entrance on left
                     if (c == 0) {
-                        this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize - wallSize, wallSize * 0.5, r * wallSize))
+                        this.mazeBody.addShape(
+                            shape,
+                            new CANNON.Vec3(c * wallSize - wallSize, wallSize * 0.5, r * wallSize)
+                        )
                     }
 
                     // If entrance on top
                     if (r == 0) {
-                        this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize, wallSize * 0.5, r * wallSize - wallSize))
+                        this.mazeBody.addShape(
+                            shape,
+                            new CANNON.Vec3(c * wallSize, wallSize * 0.5, r * wallSize - wallSize)
+                        )
                     }
 
                     // If entrance on bottom
                     if (r == row.length - 1) {
-                        this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize, wallSize * 0.5, r * wallSize + wallSize))
+                        this.mazeBody.addShape(
+                            shape,
+                            new CANNON.Vec3(c * wallSize, wallSize * 0.5, r * wallSize + wallSize)
+                        )
                     }
 
                     // If entrance on right
                     if (c == row.length - 1) {
-                        this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize + wallSize, wallSize * 0.5, r * wallSize))
+                        this.mazeBody.addShape(
+                            shape,
+                            new CANNON.Vec3(c * wallSize + wallSize, wallSize * 0.5, r * wallSize)
+                        )
                     }
 
                     this.maze.entrancePosition = [c * wallSize, r * wallSize]
@@ -315,7 +327,9 @@ export default class MazeGame {
         this.bibleBoxAnimation.mixer = new THREE.AnimationMixer(this.bibleBoxMesh)
 
         this.bibleBoxAnimation.actions = {}
-        this.bibleBoxAnimation.actions.open = this.bibleBoxAnimation.mixer.clipAction(this.resources.items.mazeBox.animations[1])
+        this.bibleBoxAnimation.actions.open = this.bibleBoxAnimation.mixer.clipAction(
+            this.resources.items.mazeBox.animations[1]
+        )
 
         this.bibleBoxAnimation.actions.open.setLoop(THREE.LoopOnce)
 
@@ -455,11 +469,13 @@ export default class MazeGame {
 
                 if (this.options.currentLevel <= this.options.minLevels) {
                     // Main levels
-                    document.querySelector('.task-game_rounds').innerHTML = `${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}`
+                    document.querySelector('.task-game_rounds').innerHTML =
+                        `${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}`
                 } else {
                     // Extra levels
                     instance.experience.navigation.next.innerHTML = ``
-                    document.querySelector('.task-game_rounds').innerHTML = `${_s.miniGames.level} ${this.options.currentLevel}`
+                    document.querySelector('.task-game_rounds').innerHTML =
+                        `${_s.miniGames.level} ${this.options.currentLevel}`
                 }
 
                 this.options.gameState = 'fade in'
@@ -518,7 +534,10 @@ export default class MazeGame {
         this.bibleBoxAnimation.actions.open.play()
 
         this.bibleBoxAnimation.mixer.addEventListener('finished', (e) => {
-            new TWEEN.Tween(instance.mazeMesh.position).to({ y: -0.5 }, 300).easing(TWEEN.Easing.Quadratic.InOut).start()
+            new TWEEN.Tween(instance.mazeMesh.position)
+                .to({ y: -0.5 }, 300)
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .start()
 
             new TWEEN.Tween(instance.bibleBoxMesh.scale)
                 .to({ x: 0, y: 0, z: 0 }, 300)
@@ -556,7 +575,8 @@ export default class MazeGame {
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
             document.querySelector('.task-game_popup button').textContent = _s.miniGames.nextRound
 
-            if (document.querySelector('#new-level')) document.querySelector('#new-level').className = 'button-cube-wider'
+            if (document.querySelector('#new-level'))
+                document.querySelector('#new-level').className = 'button button-rectangle-wide'
 
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1
         }

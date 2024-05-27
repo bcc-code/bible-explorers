@@ -58,11 +58,11 @@ export default class GameDescription {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="task-container">
                 <div class="relative task-container_box">
-                    <h1 class="task-container_heading">${instance.data.title}</h1>
+                    <h5 class="task-container_heading">${instance.data.title}</h1>
                     ${instance.data.prompts ? `<p class="task-container_prompts">${instance.data.prompts[0].prompt}</p>` : ''}
                     ${instance.data.tutorial ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
                     <div class="task-container_actions">
-                        <button class="button-task_action">${_s.miniGames.startGame}</button>
+                        <button class="button button-task_action">${_s.miniGames.startGame}</button>
                     </div>
                 </div>
             </div>`
@@ -74,7 +74,7 @@ export default class GameDescription {
         instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow-skip'
+        instance.experience.navigation.next.className = 'button button-arrow-skip'
     }
 
     startGame() {
@@ -126,7 +126,7 @@ export default class GameDescription {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }

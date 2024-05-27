@@ -29,20 +29,7 @@ export default class HeartDefense {
             explosionHeight: spriteH,
             explosion: 'games/explosion.png',
             animations: {
-                explosion: [
-                    0,
-                    0,
-                    spriteW,
-                    spriteH,
-                    spriteW * 2,
-                    0,
-                    spriteW,
-                    spriteH,
-                    spriteW * 3,
-                    0,
-                    spriteW,
-                    spriteH,
-                ],
+                explosion: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
             },
             highestSpeed: 3.2,
             lowestSpeed: 1.2,
@@ -96,7 +83,7 @@ export default class HeartDefense {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     startGame() {
@@ -294,8 +281,7 @@ export default class HeartDefense {
 
                 // Adjust distance if necessary
                 const diffFrames =
-                    getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) -
-                    estFramesToCenter
+                    getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) - estFramesToCenter
 
                 // Updated values
                 x -= diffFrames * distancePerFrame.x
@@ -532,8 +518,7 @@ export default class HeartDefense {
         },
     ]
 
-    getNoOfThoughts = () =>
-        instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
+    getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
     getRndSpeed = () =>
         instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) *
         Math.min(instance.stats.level, instance.config.levels)
@@ -644,7 +629,7 @@ export default class HeartDefense {
             })
 
             nextLevelBTN.classList.remove('focused', 'pulsate')
-            instance.experience.navigation.next.className = 'button-arrow'
+            instance.experience.navigation.next.className = 'button button-arrow'
             document.querySelector('.game-rounds')?.remove()
         }
 
@@ -712,7 +697,7 @@ export default class HeartDefense {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.layer?.destroy()
         instance.experience.gameIsOn = false

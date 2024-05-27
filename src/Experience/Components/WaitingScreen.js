@@ -19,8 +19,8 @@ export default class WaitingScreen {
 
         instance.program.message.destroy()
 
-        instance.experience.maxVW = 36
-        instance.experience.adjustScreensWrapperSize()
+        // instance.experience.maxVW = 36
+        // instance.experience.adjustScreensWrapperSize()
 
         const id = instance.world.selectedChapter.lobby_video_loop
         instance.video.load('texture-' + id)
@@ -45,11 +45,13 @@ export default class WaitingScreen {
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="absolute bottom-6 left-1/2 -translate-x-1/2">
                 <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
-                <button type="submit" class="button-cube-wide">${_s.waitingScreen.submit}</button>
+                <button type="submit" class="button button-rectangle-wide">${_s.waitingScreen.submit}</button>
             </form>`
         )
 
-        const nameLabelContainer = _gl.elementFromHtml('<ul class="bg-black/50 overflow-y-auto h-full p-[13%]" id="names-label"></ul>')
+        const nameLabelContainer = _gl.elementFromHtml(
+            '<ul class="bg-black/50 overflow-y-auto h-full p-[13%]" id="names-label"></ul>'
+        )
 
         wrapper.append(instance.videoBG, form)
         instance.experience.interface.helperScreen.append(nameLabelContainer)
@@ -98,7 +100,9 @@ export default class WaitingScreen {
     }
 
     generateNameLabel(inputVal) {
-        const nameLabel = _gl.elementFromHtml(`<li class="name-item group relative flex items-center justify-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`)
+        const nameLabel = _gl.elementFromHtml(
+            `<li class="name-item group relative flex items-center justify-center">${inputVal}<span class="cursor-pointer hidden group-hover:block">×</span></li>`
+        )
 
         const removeButton = nameLabel.querySelector('span')
         removeButton.addEventListener('click', () => {
@@ -163,7 +167,7 @@ export default class WaitingScreen {
         document.querySelector('#waitingScreen').remove()
 
         // Adjust screen wrappers
-        instance.experience.maxVW = 90
-        instance.experience.adjustScreensWrapperSize()
+        // instance.experience.maxVW = 90
+        // instance.experience.adjustScreensWrapperSize()
     }
 }

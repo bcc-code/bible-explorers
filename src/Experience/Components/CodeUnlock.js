@@ -37,7 +37,7 @@ export default class CodeUnlock {
         const unlockScreen = _gl.elementFromHtml(`
             <div class="code-unlock absolute inset-0 task-container" id="code-unlock">
                 <div class="relative task-container_box">
-                    <h1 class="task-container_heading">${title}</h1>
+                    <h5 class="task-container_heading">${title}</h1>
                     <div class="code-unlock-device">
                         <div class="code-unlock-code"></div>
                         <div class="code-unlock-keyboard"></div>
@@ -80,7 +80,7 @@ export default class CodeUnlock {
 
         instance.experience.interface.gameContainer.append(unlockScreen)
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
 
         instance.el = {
             code: unlockScreen.querySelector('.code-unlock-code'),
@@ -124,8 +124,7 @@ export default class CodeUnlock {
     add(num) {
         if (instance.data.currentNumberIndex == instance.data.codeLength) return
 
-        if (instance.data.currentNumberIndex == instance.data.codeLength - 1)
-            instance.el.confirm.disabled = false
+        if (instance.data.currentNumberIndex == instance.data.codeLength - 1) instance.el.confirm.disabled = false
 
         if (instance.data.currentNumberIndex == 1) instance.el.backspace.disabled = false
 
@@ -169,7 +168,7 @@ export default class CodeUnlock {
                 spread: 160,
             })
             instance.experience.navigation.next.innerText = ''
-            instance.experience.navigation.next.className = `button-arrow`
+            instance.experience.navigation.next.className = `button button-arrow`
         } else {
             instance.data.fails++
             instance.data.currentNumberIndex = 0
@@ -210,6 +209,6 @@ export default class CodeUnlock {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = `button-arrow`
+        instance.experience.navigation.next.className = `button button-arrow`
     }
 }

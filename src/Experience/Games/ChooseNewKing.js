@@ -78,7 +78,7 @@ export default class ChooseNewKing {
         document.querySelector('.app-container').append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     useCorrectAssetsSrc() {
@@ -119,9 +119,7 @@ export default class ChooseNewKing {
 
             gsap.set(cFront, { rotationY: 180 })
 
-            const flipAnimation = gsap
-                .timeline({ paused: true })
-                .to(cImage[0], { duration: 1, rotationY: 180 })
+            const flipAnimation = gsap.timeline({ paused: true }).to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
                 if (e.target.value.length > e.target.maxLength)
@@ -188,7 +186,7 @@ export default class ChooseNewKing {
 
             instance.toggleGodVoice()
 
-            instance.experience.navigation.next.className = 'button-arrow'
+            instance.experience.navigation.next.className = 'button button-arrow'
         })
     }
 
@@ -236,6 +234,6 @@ export default class ChooseNewKing {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

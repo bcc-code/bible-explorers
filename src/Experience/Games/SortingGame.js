@@ -45,7 +45,7 @@ export default class SortingGame {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     initCanvas() {
@@ -248,10 +248,7 @@ export default class SortingGame {
             let selectedBox = category
             let feedback = null
 
-            if (
-                !instance.intersected(icon, instance.leftBox) &&
-                !instance.intersected(icon, instance.rightBox)
-            ) {
+            if (!instance.intersected(icon, instance.leftBox) && !instance.intersected(icon, instance.rightBox)) {
                 return
             }
 
@@ -304,7 +301,7 @@ export default class SortingGame {
             </div>
         `)
 
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.querySelector('.sort-game .container').append(congratsHTML)
         document.querySelector('.sort-game').classList.add('popup-visible')
@@ -559,10 +556,7 @@ export default class SortingGame {
         const boxSize = instance.data.icon.width + marginGutter.between
         const iconsPerRow = Math.max(Math.min(Math.floor((iconsWrapper - 20) / boxSize), 4), 2) // between [2-4]
         marginGutter.sides =
-            (iconsWrapper -
-                iconsPerRow * instance.data.icon.width -
-                (iconsPerRow - 1) * marginGutter.between) /
-            2
+            (iconsWrapper - iconsPerRow * instance.data.icon.width - (iconsPerRow - 1) * marginGutter.between) / 2
 
         const position = {
             x:
@@ -614,6 +608,6 @@ export default class SortingGame {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

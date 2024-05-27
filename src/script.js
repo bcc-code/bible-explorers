@@ -181,6 +181,6 @@ experience.adjustScreensWrapperSize = () => {
 
     dynamicDiv.style.paddingTop = `${paddingTop}px`
 }
-experience.adjustScreensWrapperSize()
+// experience.adjustScreensWrapperSize()
 
-window.addEventListener('resize', experience.adjustScreensWrapperSize)
+// window.addEventListener('resize', experience.adjustScreensWrapperSize)

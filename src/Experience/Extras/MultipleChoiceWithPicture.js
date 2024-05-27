@@ -47,7 +47,7 @@ export default class MultipleChoiceWithPicture {
                 <li class="multiple-choice-answer">
                     <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
                     <label for="answer-${cIdx}" class="question-label">
-                        <div class="font-bold button-circle">${cIdx + 1}</div>
+                        <div class="font-bold button button-circle">${cIdx + 1}</div>
                         <p class="">${choice.answer}</p>
                     </label>
                 </li>
@@ -81,7 +81,7 @@ export default class MultipleChoiceWithPicture {
 
                         a.classList.add('correct')
                         instance.experience.navigation.next.innerHTML = ''
-                        instance.experience.navigation.next.className = 'button-arrow'
+                        instance.experience.navigation.next.className = 'button button-arrow'
 
                         htmlAnswers.forEach((answer) => (answer.style.pointerEvents = 'none'))
                     }
@@ -92,7 +92,7 @@ export default class MultipleChoiceWithPicture {
         instance.experience.interface.gameContainer.append(multipleChoiceWithPicture)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
         instance.experience.navigation.next.disabled = false
     }
 
@@ -112,6 +112,6 @@ export default class MultipleChoiceWithPicture {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

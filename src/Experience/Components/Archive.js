@@ -16,10 +16,10 @@ export default class Archive {
     }
 
     init() {
-        _appInsights.trackPageView({ name: "Archive" })
+        _appInsights.trackPageView({ name: 'Archive' })
 
         const archiveToggle = _gl.elementFromHtml(`<button class="btn default" aria-label="Archive">Archive</button>`)
-        archiveToggle.addEventListener("click", this.toggle)
+        archiveToggle.addEventListener('click', this.toggle)
 
         const archive = _gl.elementFromHtml(`
             <aside class="archive side-modal">
@@ -34,10 +34,9 @@ export default class Archive {
                     <section class="content"></section>
                 </div>
                 <div class="overlay"></div>
-            </aside>
-        `)
+            </aside>`)
 
-        instance.facts.forEach(fact => {
+        instance.facts.forEach((fact) => {
             const heading = _gl.elementFromHtml(`<h2>${fact.title}</h2>`)
             const content = _gl.elementFromHtml(`<div>${fact.description}</div>`)
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="2618.54" height="2193.54" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2618.54 2193.54">
+  <defs>
+    <linearGradient id="d" x1="0" y1="1096.77" x2="2618.54" y2="1096.77" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fbc052"/>
+      <stop offset="1" stop-color="#ff634a"/>
+    </linearGradient>
+  </defs>
+  <g id="c" data-name="Layer 1">
+    <g>
+      <path d="m2252.08,2141.8l-28,28h48.35l28-28h-48.35Zm-81.29,0l-28,28h48.34l28-28h-48.34Zm-81.3,0l-28,28h48.35l28-28h-48.35Zm-1023.46,0l-28,28h990.51l28-28h-990.51ZM2542.34,0H75.97L0,75.97v2042.69l74.89,74.88h890.51l80.63-80h1497.39l75.12-75.12V76.2L2542.34,0Zm47.85,2026.68l-58.51,58.51h-1497.33l-80.63,80H86.63l-58.28-58.27V87.71l59.36-59.36h2442.89l59.59,59.59v1938.74Z" fill="url(#d)"/>
+      <g fill="none" opacity=".6">
+        <polygon points="2588.59 87.94 2588.59 2026.68 2530.08 2085.19 1032.75 2085.19 952.12 2165.19 85.03 2165.19 26.75 2106.92 26.75 87.71 86.11 28.35 2529 28.35 2588.59 87.94"/>
+      </g>
+    </g>
+  </g>
+</svg>

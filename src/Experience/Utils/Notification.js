@@ -28,7 +28,7 @@ export default class Notification {
             <div class="fixed inset-0 -z-10 bg-bke-darkpurple/70"></div>
             <div class="p-8 bg-white flex items-center">
                 <p class="text-xl text-bke-darkpurple w-[320px]">${text}</p>
-                <button class="button-cube-wider" aria-label="close alert">
+                <button class="button button-rectangle-wide" aria-label="close alert">
                     <svg class="cion"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
                 </button>
             </div>

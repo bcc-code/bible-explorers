@@ -23,7 +23,7 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow-skip'
+        instance.experience.navigation.next.className = 'button button-arrow-skip'
 
         instance.setHTML()
         instance.questionsAnsweredCorrectly = 0
@@ -36,7 +36,7 @@ export default class TrueFalsQuiz {
             const staticHTML = `
             <div class="absolute inset-0 task-container" id="true-false-quiz">
                 <div class="task-container_box">
-                    ${instance.data.title ? `<h1 class="task-container_heading">${instance.data.title}</h1>` : ''}
+                    ${instance.data.title ? `<h5 class="task-container_heading">${instance.data.title}</h1>` : ''}
                     ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
                     <div id="quiz-content"></div>
                 </div>
@@ -59,7 +59,7 @@ export default class TrueFalsQuiz {
                 : `<p>${question.question_text}</p>`
         const audioButton =
             question.type === 'question' && question.question_audio
-                ? `<button class="button-cube-wider bigger" id="button-audio"><svg class="icon"><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>`
+                ? `<button class="button button-rectangle-wide bigger" id="button-audio"><svg class="icon"><use href="#volume-solid" fill="currentColor"></svg><span>${_s.miniGames.playAudio}</span></button>`
                 : ''
 
         const questionHTML = `
@@ -111,7 +111,7 @@ export default class TrueFalsQuiz {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = ''
 
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
         instance.experience.navigation.next.innerText = ''
     }
 
@@ -203,7 +203,7 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('chapter')
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.questionsAnsweredCorrectly = 0
 

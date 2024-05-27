@@ -71,7 +71,7 @@ export default class DavidsRefuge {
         })
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     useCorrectAssetsSrc() {
@@ -116,11 +116,7 @@ export default class DavidsRefuge {
         })
 
         document.addEventListener('click', (event) => {
-            if (
-                !hints.contains(event.target) &&
-                !hintsToggle.contains(event.target) &&
-                !getHint.contains(event.target)
-            )
+            if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target))
                 showHints.reverse()
         })
 
@@ -178,7 +174,7 @@ export default class DavidsRefuge {
 
                         gsap.to(selectGoat, { autoAlpha: 0 })
 
-                        instance.experience.navigation.next.className = 'button-arrow'
+                        instance.experience.navigation.next.className = 'button button-arrow'
                         instance.experience.navigation.next.innerHTML = ''
                     } else {
                         tooltip[0].innerText = instance.data.wrong_character_message
@@ -213,6 +209,6 @@ export default class DavidsRefuge {
 
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

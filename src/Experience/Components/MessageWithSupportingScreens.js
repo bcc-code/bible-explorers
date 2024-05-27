@@ -43,7 +43,7 @@ export default class MessageWithSupportingScreens {
 
     setHtml(caption, character) {
         const closedCaption = _gl.elementFromHtml(
-            `<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`
+            `<div id="iris-cc"><span>${character} </span><div>${caption}</div></div>`
         )
 
         instance.experience.interface.closedCaption.append(closedCaption)

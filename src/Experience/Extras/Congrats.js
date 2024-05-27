@@ -59,7 +59,8 @@ export default class Congrats {
                 <div class="chapter-progress_content">
                     <div class="congrats">
                         <h1 class="text-bke-orange">${_s.journey.congrats}</h1>
-                        <p>${_s.journey.completed}:<br /><strong class="text-bke-orange">${instance.world.selectedChapter.title}</strong></p>
+                        <h6>${_s.journey.completed}</h6>
+                        <h4 class="font-bold">${instance.world.selectedChapter.title}</h4>
                     </div>
                     <div class="stars">
                         <progress max="3" value="3"></progress>
@@ -110,10 +111,8 @@ export default class Congrats {
             do {
                 overlap = false
                 // Adjust calculations to consider margins
-                randomX =
-                    marginWidth + Math.random() * (window.innerWidth - 2 * marginWidth - name.offsetWidth)
-                randomY =
-                    marginHeight + Math.random() * (window.innerHeight - 2 * marginHeight - name.offsetHeight)
+                randomX = marginWidth + Math.random() * (window.innerWidth - 2 * marginWidth - name.offsetWidth)
+                randomY = marginHeight + Math.random() * (window.innerHeight - 2 * marginHeight - name.offsetHeight)
 
                 // Check if the random position overlaps with the central element
                 overlap =

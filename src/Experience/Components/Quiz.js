@@ -30,7 +30,7 @@ export default class Quiz {
         this.questionIdx = 0
 
         this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        this.experience.navigation.next.className = `button-arrow-skip`
+        this.experience.navigation.next.className = `button button-arrow-skip`
         this.experience.setAppView('game')
 
         this.quizHTML()
@@ -46,15 +46,15 @@ export default class Quiz {
                     <div class="progress-bar-background">
                         <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
                     </div>
-                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
+                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
                 </div>
                 <div id="quiz-wrapper"></div>
                 ${
                     instance.questions.length > 0
                         ? `
                     <div class="task-container_actions">
-                        <button id="next-question" class="button-task_action"><svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg></button>
-                        <button id="submit-quiz" class="button-task_action" type="submit"><span>${_s.task.submit}</span></button>
+                        <button id="next-question" class="button button-task_action"><svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg></button>
+                        <button id="submit-quiz" class="button button-task_action" type="submit"><span>${_s.task.submit}</span></button>
                     </div>`
                         : ''
                 }
@@ -68,7 +68,7 @@ export default class Quiz {
                 `<div class="quiz-item ${qIdx === 0 ? 'block' : 'hidden'}" data-index="${qIdx}"></div>`
             )
             const question = _gl.elementFromHtml(
-                `<h1 class="task-container_prompts text-center font-bold mb-[4%]">${q.question}</h1>`
+                `<h5 class="task-container_prompts text-center font-bold mb-[4%]">${q.question}</h5>`
             )
 
             container.append(question)
@@ -79,8 +79,8 @@ export default class Quiz {
                         <div>
                             <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
                             <label for="question-${qIdx}_answer-${aIdx}" class="question-label">
-                                <div class="font-bold button-circle">${aIdx + 1}</div>
-                                <p class="">${a.answer}</p>
+                                <div class="font-bold button button-circle">${aIdx + 1}</div>
+                                <h6 class="">${a.answer}</h6>
                             </label>
                         </div>
                     `)
@@ -120,9 +120,7 @@ export default class Quiz {
 
             options.forEach((option, idx) => {
                 option.addEventListener('click', (e) => {
-                    const currentQuestionIdx = parseInt(
-                        e.target.closest('.quiz-item').getAttribute('data-index')
-                    )
+                    const currentQuestionIdx = parseInt(e.target.closest('.quiz-item').getAttribute('data-index'))
                     const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex(
                         (item) => item.correct_wrong === true
                     )
@@ -164,6 +162,8 @@ export default class Quiz {
                         }
                     } else {
                         if (isLastQuestion) {
+                            this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+                            instance.experience.navigation.next.className = `button button-arrow-skip`
                             submitQuiz.disabled = true
                             nextQuestion.style.display = 'none'
                             instance.taskActionsWrapper.classList.add('disabled')
@@ -278,6 +278,6 @@ export default class Quiz {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

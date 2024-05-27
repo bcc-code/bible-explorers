@@ -46,7 +46,7 @@ export default class Dialogue {
         document.getElementById('chapter-wrapper').append(dialogue)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
         instance.experience.navigation.next.disabled = false
     }
 
@@ -68,7 +68,7 @@ export default class Dialogue {
                 // Check if all were visited
                 if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
-                    instance.experience.navigation.next.className = 'button-arrow'
+                    instance.experience.navigation.next.className = 'button button-arrow'
                     instance.experience.navigation.next.innerHTML = ''
                 }
 
@@ -86,12 +86,10 @@ export default class Dialogue {
         })
     }
 
-    setMessageHtml(text) {
+    setMessageHtml(caption) {
         document.getElementById('iris-cc')?.remove()
 
-        const message = _gl.elementFromHtml(
-            `<div id="iris-cc"><h1 class="text-bke-orange uppercase">Iris</h1><div>${text}</div></div>`
-        )
+        const message = _gl.elementFromHtml(`<div id="iris-cc"><span>Iris</span><div>${caption}</div></div>`)
         instance.experience.interface.closedCaption.append(message)
     }
 
@@ -102,6 +100,6 @@ export default class Dialogue {
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

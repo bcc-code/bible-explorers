@@ -43,10 +43,10 @@ export default class FlipCards {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="task-content">
                 <div class="task-container_box">
-                <h1 class="task-container_heading">${instance.confirmationScreen.cs_title !== '' ? instance.confirmationScreen.cs_title : ''}</h1>
+                <h5 class="task-container_heading">${instance.confirmationScreen.cs_title !== '' ? instance.confirmationScreen.cs_title : ''}</h1>
                     ${instance.confirmationScreen.cs_description ? `<p class="task-container_prompts font-bold">${instance.confirmationScreen.cs_description}</p>` : ''}
                     ${instance.confirmationScreen.cs_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
-                    ${instance.confirmationScreen.cs_button !== '' ? `<div class="task-container_actions"><button class="button-task_action">${instance.confirmationScreen.cs_button}</button></div>` : ''}
+                    ${instance.confirmationScreen.cs_button !== '' ? `<div class="task-container_actions"><button class="button button-task_action">${instance.confirmationScreen.cs_button}</button></div>` : ''}
                 </div>
             </div>`
         )
@@ -58,7 +58,7 @@ export default class FlipCards {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button-arrow-skip'
+        instance.experience.navigation.next.className = 'button button-arrow-skip'
     }
 
     useCorrectAssetsSrcConfirmationScreen() {
@@ -142,7 +142,7 @@ export default class FlipCards {
         instance.experience.interface.gameContainer.append(game)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button-arrow-skip`
+        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     useCorrectAssetsSrcFlipCards() {
@@ -181,9 +181,7 @@ export default class FlipCards {
 
             gsap.set(cFront, { rotationY: 180 })
 
-            const flipAnimation = gsap
-                .timeline({ paused: true })
-                .to(cImage[0], { duration: 1, rotationY: 180 })
+            const flipAnimation = gsap.timeline({ paused: true }).to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
                 if (e.target.value.length > e.target.maxLength)
@@ -203,7 +201,7 @@ export default class FlipCards {
                         // All cards are flipped
                         const flippedCards = document.querySelectorAll('.flipped')
                         if (flippedCards.length == instance.flipCards.cards.length) {
-                            instance.experience.navigation.next.className = 'button-arrow'
+                            instance.experience.navigation.next.className = 'button button-arrow'
                             instance.experience.navigation.next.innerHTML = ''
                         }
                     } else {
@@ -235,7 +233,7 @@ export default class FlipCards {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button-arrow'
+        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.destroyConfirmationScreen()
         instance.destroyFlipCards()

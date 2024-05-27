@@ -64,7 +64,7 @@ export default class Menu {
             placement: 'bottom',
         })
         const copyrightFooter = document.querySelector('#copyright')
-        copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition hover:text-bke-orange">BCC Media STI</a>`
+        copyrightFooter.innerHTML = `Copyright ${new Date().getFullYear()} © <a href="https://bcc.media" target="_blank" class="transition text-xs hover:text-bke-orange">BCC Media STI</a>`
     }
 
     eventListeners() {
