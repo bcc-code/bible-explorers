@@ -154,7 +154,6 @@ export default class Quiz {
                     const isLastQuestion = index === totalQuestions - 1
                     if (inputLength > 0) {
                         if (isLastQuestion) {
-                            this.experience.navigation.next.innerHTML = ``
                             submitQuiz.style.display = 'flex'
                             submitQuiz.disabled = false
                             nextQuestion.style.display = 'none'
@@ -165,8 +164,6 @@ export default class Quiz {
                         }
                     } else {
                         if (isLastQuestion) {
-                            this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-                            instance.experience.navigation.next.className = `button-arrow-skip`
                             submitQuiz.disabled = true
                             nextQuestion.style.display = 'none'
                             instance.taskActionsWrapper.classList.add('disabled')
