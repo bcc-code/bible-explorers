@@ -935,12 +935,12 @@ $themes: (
 
 @each $theme, $bgColor in $themes {
     .tippy-box[data-theme~='#{$theme}'] {
-        color: var(--clr-text);
-        font-size: var(--font-size-small);
+        color: var(--bg-dark);
+        font-size: var(--font-size-text);
         background-color: $bgColor;
         padding: 0.25rem;
         border-radius: 0.25rem;
-        box-shadow: 0 0 0.5rem var(--clr-text);
+        box-shadow: 0 0 0.5rem var(--bg-dark);
 
         // Nest placement variations inside the theme block
         &[data-placement^='top']>.tippy-arrow::before {
@@ -1220,12 +1220,6 @@ $themes: (
         width: clamp(20rem, 30vw, 100%);
         padding: 2%;
 
-
-        h1 {
-            font-size: var(--font-size-heading);
-            font-weight: bold;
-        }
-
         .task-game.popup-visible & {
             display: grid;
             place-content: center;
@@ -1351,7 +1345,7 @@ $themes: (
     }
 
     &-heading {
-        font-size: calc(var(--font-size-heading) * 1.25);
+        font-size: var(--font-size-h5);
         font-weight: bold;
         margin-bottom: 2%;
         text-align: center;
