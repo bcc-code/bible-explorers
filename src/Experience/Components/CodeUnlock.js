@@ -124,7 +124,8 @@ export default class CodeUnlock {
     add(num) {
         if (instance.data.currentNumberIndex == instance.data.codeLength) return
 
-        if (instance.data.currentNumberIndex == instance.data.codeLength - 1) instance.el.confirm.disabled = false
+        if (instance.data.currentNumberIndex == instance.data.codeLength - 1)
+            instance.el.confirm.disabled = false
 
         if (instance.data.currentNumberIndex == 1) instance.el.backspace.disabled = false
 
@@ -204,6 +205,7 @@ export default class CodeUnlock {
         instance.el.backspace.removeEventListener('click', instance.remove)
         instance.el.confirm.removeEventListener('click', instance.checkCode)
 
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         document.querySelector('#code-unlock')?.remove()
 
         instance.experience.setAppView('chapter')
