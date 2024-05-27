@@ -390,24 +390,24 @@ export default class DuckGame {
 
     drawBackground() {
         // Clear only the dirty rectangles
-        this.dirtyRects.forEach((rect) => {
-            this.ctx.clearRect(rect.x, rect.y, rect.width, rect.height)
+        instance.dirtyRects.forEach((rect) => {
+            instance.ctx.clearRect(rect.x, rect.y, rect.width, rect.height)
         })
 
         // Clear the dirty rectangles array
-        this.dirtyRects = []
+        instance.dirtyRects = []
 
         // Calculate the number of repetitions needed to cover the canvas width
-        const numRepetitions = Math.ceil(this.canvas.width / this.bgImage.width) + 1
+        const numRepetitions = Math.ceil(instance.canvas.width / instance.bgImage.width) + 1
 
         // Draw the background image for each repetition, maintaining full height
         for (let i = 0; i < numRepetitions; i++) {
-            this.ctx.drawImage(
-                this.bgImage,
-                this.bgOffset + i * this.bgImage.width,
+            instance.ctx.drawImage(
+                instance.bgImage,
+                instance.bgOffset + i * instance.bgImage.width,
                 0,
-                this.bgImage.width,
-                this.canvas.height
+                instance.bgImage.width,
+                instance.canvas.height
             )
         }
     }
