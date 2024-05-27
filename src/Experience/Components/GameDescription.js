@@ -105,8 +105,8 @@ export default class GameDescription {
 
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
-
-        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        if (['mp4', 'mov', 'webm'].includes(ext))
+            return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
         else return `<img src="${url}" id="task-image" />`
     }
 

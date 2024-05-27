@@ -58,7 +58,14 @@ export default class DuckGame {
         this.invisibleWallImage.src = 'games/duck-game/D_Wall_2.png'
 
         // Wait for all images to load
-        Promise.all([loadImage(this.bgImage), loadImage(this.pipeTopImage), loadImage(this.pipeBottomImage), loadImage(this.playerImage), loadImage(this.bibleBoxImage), loadImage(this.invisibleWallImage)]).then(() => {
+        Promise.all([
+            loadImage(this.bgImage),
+            loadImage(this.pipeTopImage),
+            loadImage(this.pipeBottomImage),
+            loadImage(this.playerImage),
+            loadImage(this.bibleBoxImage),
+            loadImage(this.invisibleWallImage),
+        ]).then(() => {
             // Once the images are loaded, resize the canvas and draw the background
             instance.resizeCanvas()
             instance.drawBackground()
@@ -196,7 +203,9 @@ export default class DuckGame {
         let y = Math.random() * (maxTopPipeY - minTopPipeY) + minTopPipeY
         y = Math.floor(y / yIncrement) * yIncrement
 
-        this.pipes.push(new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this))
+        this.pipes.push(
+            new Pipe(this.canvas, x, y, pipeGap, pipeSpeed, this.pipeTopImage, this.pipeBottomImage, this)
+        )
         this.lastPipeX = x
 
         this.pipesGeneratedCount++
@@ -217,7 +226,8 @@ export default class DuckGame {
 
         // Define a minimum distance before generating a new pipe
         const originalMinDistance = (this.canvas.width / 4) * this.aspectAdjustmentFactor
-        const minDistance = originalMinDistance * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
+        const minDistance =
+            originalMinDistance * (this.canvas.width / this.baseWidth) * this.aspectAdjustmentFactor
 
         // Check if it's time to generate a new pipe
         if (distanceFromLastPipe >= minDistance) {
@@ -261,17 +271,36 @@ export default class DuckGame {
         this.generatePipesIfNeeded()
 
         // Check if it's time to spawn the bible box and invisible wall
-        if (!this.bibleBoxSpawned && this.pipesGeneratedCount >= this.pipesToWinRound && this.pipes.length > 0) {
+        if (
+            !this.bibleBoxSpawned &&
+            this.pipesGeneratedCount >= this.pipesToWinRound &&
+            this.pipes.length > 0
+        ) {
             const lastPipe = this.pipes[this.pipes.length - 1]
             const distanceBetweenPipes = 200 * this.scaleX // Adjust based on your game's design
             const bibleBoxX = lastPipe.x + lastPipe.width + distanceBetweenPipes + 150 // Spawn after the last pipe at the same distance as between pipes
             const bibleBoxY = 0
             const bibleBoxBBOffsetX = 100
-            this.bibleBox = new BibleBox(this.canvas, bibleBoxX, bibleBoxY, bibleBoxBBOffsetX, lastPipe.speed, this.bibleBoxImage, this)
+            this.bibleBox = new BibleBox(
+                this.canvas,
+                bibleBoxX,
+                bibleBoxY,
+                bibleBoxBBOffsetX,
+                lastPipe.speed,
+                this.bibleBoxImage,
+                this
+            )
             this.bibleBoxSpawned = true
 
             // Create invisible wall at the same X position as the bible box for consistency
-            this.invisibleWall = new InvisibleWall(this.canvas, bibleBoxX, this.bibleBox.width, lastPipe.speed, this.invisibleWallImage, this)
+            this.invisibleWall = new InvisibleWall(
+                this.canvas,
+                bibleBoxX,
+                this.bibleBox.width,
+                lastPipe.speed,
+                this.invisibleWallImage,
+                this
+            )
         }
 
         // Then, in your update method or a separate method, handle the movement and drawing of the bible box
@@ -373,7 +402,13 @@ export default class DuckGame {
 
         // Draw the background image for each repetition, maintaining full height
         for (let i = 0; i < numRepetitions; i++) {
-            this.ctx.drawImage(this.bgImage, this.bgOffset + i * this.bgImage.width, 0, this.bgImage.width, this.canvas.height)
+            this.ctx.drawImage(
+                this.bgImage,
+                this.bgOffset + i * this.bgImage.width,
+                0,
+                this.bgImage.width,
+                this.canvas.height
+            )
         }
     }
 
@@ -453,7 +488,10 @@ export default class DuckGame {
             }
 
             // Check collision with top pipe
-            if (this.detectCollision(player.boundingBox, topPipe) || this.detectCollision(player.boundingBox, bottomPipe)) {
+            if (
+                this.detectCollision(player.boundingBox, topPipe) ||
+                this.detectCollision(player.boundingBox, bottomPipe)
+            ) {
                 this.gameOverCallback()
             }
         })
@@ -511,8 +549,16 @@ class Player {
         this.x = 50 * game.scaleX
         this.y = canvas.height / 2
         this.velocityY = 0
-        this.gravity = baseGravity * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor * game.speedMultiplier
-        this.jumpStrength = baseJumpStrength * (canvas.height / game.baseHeight) * game.aspectAdjustmentFactor * game.speedMultiplier
+        this.gravity =
+            baseGravity *
+            (canvas.height / game.baseHeight) *
+            game.aspectAdjustmentFactor *
+            game.speedMultiplier
+        this.jumpStrength =
+            baseJumpStrength *
+            (canvas.height / game.baseHeight) *
+            game.aspectAdjustmentFactor *
+            game.speedMultiplier
         this.spacePressed = false
         this.gameOverCallback = gameOverCallback // Callback function for game over
         this.game = game // Reference to the game instance

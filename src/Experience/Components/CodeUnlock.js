@@ -202,6 +202,9 @@ export default class CodeUnlock {
 
     destroy() {
         document.onkeydown = null
+        instance.el.backspace.removeEventListener('click', instance.remove)
+        instance.el.confirm.removeEventListener('click', instance.checkCode)
+
         document.querySelector('#code-unlock')?.remove()
 
         instance.experience.setAppView('chapter')
