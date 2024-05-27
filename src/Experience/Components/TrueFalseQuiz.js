@@ -55,7 +55,7 @@ export default class TrueFalsQuiz {
         const question = instance.data.questions[index]
         const questionContent =
             question.type === 'image' && question.question_media
-                ? `<div class="task-container_image" id="task-image"><img src="${question.question_media}" alt="Question Image" /></div>`
+                ? `<div class="task-container_image" id="task-image"><img class="max-w-[580px]" src="${question.question_media}" alt="Question Image" /></div>`
                 : `<p>${question.question_text}</p>`
         const audioButton =
             question.type === 'question' && question.question_audio
