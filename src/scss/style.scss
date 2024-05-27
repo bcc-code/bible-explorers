@@ -425,6 +425,15 @@ body.not-logged-in {
     &:disabled {
         background-image: url('../../static/interface/B_circle_innactive.png');
     }
+
+    &[aria-label="checkpoint"] {
+        background-image: url('../../static/interface/B_circle_action.png');
+    }
+
+    &[currentcheckpoint],
+    &[currentcheckpoint]~button {
+        background-image: url('../../static/interface/B_circle_active.png');
+    }
 }
 
 .button-rectangle-wide {
@@ -491,6 +500,7 @@ body.not-logged-in {
     width: 30%;
     height: 12%;
     padding-inline: 1rem;
+    font-size: calc(var(--font-size-button) * 1.25);
 }
 
 #logout-button::after {
@@ -918,7 +928,7 @@ body.not-logged-in {
 /* #region Tooltip */
 
 $themes: (
-    explorers: var(--clr-secondary),
+    explorers: var(--clr-primary),
     construction: #f7d211,
     preview: var(--clr-primary),
 );
@@ -1024,6 +1034,7 @@ $themes: (
     p {
         font-size: var(--font-size-h6);
         line-height: var(--line-height-h6);
+        margin-top: -2%;
     }
 
     span {
@@ -1145,6 +1156,7 @@ $themes: (
 
     &_prompts {
         text-align: center;
+        font-size: var(--font-size-h6);
     }
 
     &_image,
