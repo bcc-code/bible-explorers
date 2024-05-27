@@ -42,32 +42,41 @@ export default class MessageWithSupportingScreens {
     }
 
     setHtml(caption, character) {
-        const closedCaption = _gl.elementFromHtml(`<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`)
+        const closedCaption = _gl.elementFromHtml(
+            `<div id="iris-cc"><h1 class="text-bke-orange uppercase">${character} </h1><div>${caption}</div></div>`
+        )
 
         instance.experience.interface.closedCaption.append(closedCaption)
 
         if (instance.data.character == 'glitch') {
-            const glitch = _gl.elementFromHtml('<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>')
+            const glitch = _gl.elementFromHtml(
+                '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>'
+            )
             document.querySelector('#closed-caption').append(glitch)
         }
 
         if (instance.data.with_lever) {
             instance.experience.interface.helperScreen.innerHTML = ''
 
-            const rightScreenEl = _gl.elementFromHtml(`<video id="interactive-lever" src="textures/switch_action_ANIM.mp4" autoplay loop></video>`)
+            const rightScreenEl = _gl.elementFromHtml(
+                `<video id="interactive-lever" src="textures/switch_action_ANIM.mp4" autoplay loop></video>`
+            )
             rightScreenEl.addEventListener('click', this.leverClickEvent)
 
             instance.experience.interface.helperScreen.append(rightScreenEl)
         } else if (instance.data.right_screen) {
             instance.experience.interface.helperScreen.innerHTML = ''
-            instance.experience.interface.helperScreen.append(_gl.elementFromHtml(this.getDomElement(instance.data.right_screen)))
+            instance.experience.interface.helperScreen.append(
+                _gl.elementFromHtml(this.getDomElement(instance.data.right_screen))
+            )
         }
     }
 
     getDomElement(url) {
         const ext = url.split('.').pop().toLowerCase()
 
-        if (['mp4', 'mov', 'webm'].includes(ext)) return `<video src="${url}" id="message-video" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        if (['mp4', 'mov', 'webm'].includes(ext))
+            return `<video src="${url}" id="message-video" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
         else return `<img src="${url}" id="message-image" />`
     }
 
@@ -77,19 +86,11 @@ export default class MessageWithSupportingScreens {
             const elId = ['mp4', 'mov', 'webm'].includes(ext) ? '#message-video' : '#message-image'
 
             instance.offline.fetchChapterAsset(instance.data, 'right_screen', (data) => {
-                instance.program.updateAssetInProgramData('message_with_supporting_screens', data)
-
                 const domEl = document.querySelector(elId)
                 if (domEl) {
                     // Check if the element exists
                     domEl.src = data.right_screen
                 }
-            })
-        }
-
-        if (instance.data.character_audio) {
-            instance.offline.fetchChapterAsset(instance.data, 'character_audio', (data) => {
-                instance.program.updateAssetInProgramData('message_with_supporting_screens', data)
             })
         }
     }
