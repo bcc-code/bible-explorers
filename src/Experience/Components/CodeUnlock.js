@@ -73,7 +73,7 @@ export default class CodeUnlock {
 
         for (let j = 0; j < instance.secretCode.length; j++) {
             const asterix = _gl.elementFromHtml(
-                `<div><svg class="icon"><use href="#asterisk-solid"  fill="currentColor"></use></svg></div>`
+                `<div><svg class="icon"><use href="#asterisk-solid" fill="currentColor"></use></svg></div>`
             )
             unlockScreen.querySelector('.code-unlock-code').append(asterix)
         }
@@ -181,7 +181,7 @@ export default class CodeUnlock {
             numbers.forEach((item) => {
                 const asterisk = _gl.elementFromHtml(`
                     <svg class="icon asterisk-icon">
-                        <use href="#asterisk"></use>
+                        <use href="#asterisk-solid" fill="currentColor"></use>
                     </svg>
                 `)
                 item.textContent = ''
