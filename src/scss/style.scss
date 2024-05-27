@@ -2360,10 +2360,12 @@ $themes: (
 
     .cards {
         width: clamp(600px, 100vw - var(--app-padding), 90rem);
+        gap: 1rem;
     }
 
     .card-image {
         aspect-ratio: 1/1;
+        min-width: 180px;
     }
 
     .card-image div {

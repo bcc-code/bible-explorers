@@ -55,7 +55,7 @@ export default class FlipCards {
         if (nextStep) nextStep.addEventListener('click', instance.toggleFlipCards)
 
         instance.experience.interface.tasksDescription.append(container)
-        instance.experience.setAppView('game')
+        instance.experience.setAppView('task-description')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button button-arrow-skip'
@@ -87,7 +87,6 @@ export default class FlipCards {
     }
 
     toggleFlipCards() {
-        instance.experience.setAppView('game')
         instance.destroyConfirmationScreen()
         instance.flipCardsHTML()
         instance.useCorrectAssetsSrcFlipCards()
@@ -140,6 +139,7 @@ export default class FlipCards {
         }
 
         instance.experience.interface.gameContainer.append(game)
+        instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button button-arrow-skip`
