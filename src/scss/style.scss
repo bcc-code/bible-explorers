@@ -977,7 +977,7 @@ $themes: (
         background-size: contain;
         aspect-ratio: 647/133;
         height: var(--button-height);
-        font-size: var(--font-size-text);
+        font-size: var(--font-size-button);
         background-color: transparent;
         padding-inline: 1rem;
     }
@@ -3041,8 +3041,18 @@ img.lazyloaded~div.img-loader {
 @media (min-width: 1920px) {
 
     #screens-wrapper {
-        width: 1000px;
+        width: 1240px;
         padding-top: 40px;
+    }
+
+    #childrenNames {
+        width: 768px;
+
+        input,
+        button {
+            height: calc(var(--button-height) * 1.25);
+            font-size: calc(var(--font-size-button) * 1.25);
+        }
     }
 
     .chapters-container {
@@ -3061,8 +3071,5 @@ img.lazyloaded~div.img-loader {
         padding: 3rem;
     }
 
-    #childrenNames {
-        width: 700px;
-    }
 
 }
