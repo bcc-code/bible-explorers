@@ -77,6 +77,12 @@ const handleRedirectCallback = async () => {
 
         experience.auth0.userData = await experience.auth0.getUser()
         document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
+
+        if (!isElectron()) {
+            if (window.location.pathname.includes('login')) {
+                window.history.replaceState({}, document.title, '/')
+            }
+        }
     } else {
         document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
 
