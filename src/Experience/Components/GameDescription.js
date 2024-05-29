@@ -112,7 +112,6 @@ export default class GameDescription {
 
     useCorrectAssetsSrc() {
         instance.offline.fetchChapterAsset(instance.data, 'tutorial', (data) => {
-            instance.program.updateAssetInProgramData('details', data)
             const imageElement = document.querySelector('#task-image')
             if (imageElement) {
                 // Check if the element exists
