@@ -241,7 +241,10 @@ export default class CableConnector {
                         const maxY = plug.getParent().y()
 
                         const minX =
-                            plug.getParent().x() - containerObj.width + containerObj.sideWidth + containerObj.bandWidth
+                            plug.getParent().x() -
+                            containerObj.width +
+                            containerObj.sideWidth +
+                            containerObj.bandWidth
                         const minY = plug.getParent().y() - containerObj.height + plug.height() - spaceBetween
 
                         plug.x(Math.min(Math.max(plug.x(), -maxX), -minX))
@@ -268,8 +271,10 @@ export default class CableConnector {
                             const plugInPosition = {
                                 x:
                                     direction == 'left'
-                                        ? instance.correspondingOutlet.position.x + instance.correspondingOutlet.width
-                                        : instance.correspondingOutlet.position.x - instance.correspondingOutlet.width,
+                                        ? instance.correspondingOutlet.position.x +
+                                          instance.correspondingOutlet.width
+                                        : instance.correspondingOutlet.position.x -
+                                          instance.correspondingOutlet.width,
                                 y:
                                     instance.correspondingOutlet.position.y +
                                     instance.correspondingOutlet.height / 2 -
@@ -333,7 +338,9 @@ export default class CableConnector {
                 if (outlet.isVisible) {
                     instance.deselectOutlet(outlet)
                 } else {
-                    const currentVisible = instance.outlets.find((o) => o.isVisible === true && o.colorFound === false)
+                    const currentVisible = instance.outlets.find(
+                        (o) => o.isVisible === true && o.colorFound === false
+                    )
                     instance.selectOutlet(outlet, index)
 
                     if (!currentVisible) return
@@ -532,6 +539,7 @@ export default class CableConnector {
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
+
     toggleTryAgain() {
         instance.timer?.destroy()
 
@@ -574,6 +582,7 @@ export default class CableConnector {
             </div>
         `)
 
+        instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button button-arrow'
 
         document.querySelector('.cable-connect .container').append(congratsHTML)
@@ -596,10 +605,15 @@ export default class CableConnector {
     }
 
     destroy() {
+        instance.timer?.destroy()
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button button-arrow'
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.experience.setAppView('chapter')
     }
 }
 
@@ -760,8 +774,14 @@ class Cable {
         })
 
         this.plug_l = this._plug({ x: 0, y: 0 }, 'left')
-        this.controlOne = this._controlPoint({ x: this.width / 4, y: instance.data.cable.plug.height / 2 }, 'one')
-        this.controlTwo = this._controlPoint({ x: this.width / 1.33, y: instance.data.cable.plug.height / 2 }, 'two')
+        this.controlOne = this._controlPoint(
+            { x: this.width / 4, y: instance.data.cable.plug.height / 2 },
+            'one'
+        )
+        this.controlTwo = this._controlPoint(
+            { x: this.width / 1.33, y: instance.data.cable.plug.height / 2 },
+            'two'
+        )
         this.plug_r = this._plug({ x: this.width, y: 0 }, 'right').scaleX(-1)
 
         this.cord = this._cord([

@@ -2761,11 +2761,11 @@ $themes: (
         box-shadow: 0 0 0 0.5rem var(--clr-primary);
         border-radius: 50%;
         z-index: 9999;
-        cursor: grab;
 
 
         &:hover {
-            box-shadow: 0 0 0 0.5rem var(--clr-secondary);
+            box-shadow: 0 0 0 0.5rem var(--clr-dark-orange);
+            cursor: pointer;
         }
     }
 
