@@ -8,7 +8,6 @@ import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 import _gl from './Experience/Utils/Globals.js'
 import isElectron from 'is-electron'
-import gsap from 'gsap'
 
 // Loader text
 document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing}...</p>`
