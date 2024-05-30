@@ -3,6 +3,7 @@
 
 import _e from '../Experience/Utils/Events.js'
 import _s from '../Experience/Utils/Strings.js'
+import gsap from 'gsap'
 
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
@@ -23,19 +24,39 @@ contextBridge.exposeInMainWorld('electronAPI', {
         ipcRenderer.on('update-available', () => {
             ipcRenderer.removeAllListeners('update-available')
             message.innerHTML = _s.autoUpdate.updateAvailable
-            notification.classList.remove('hidden')
+            showNotification()
         })
         ipcRenderer.on('update-downloaded', () => {
             ipcRenderer.removeAllListeners('update-downloaded')
             message.innerHTML = _s.autoUpdate.updateDownloaded
             restartButton.innerText = _s.autoUpdate.install
             restartButton.classList.remove('hidden')
-            notification.classList.remove('hidden')
+            showNotification()
         })
 
-        closeButton.addEventListener('click', function () {
-            document.getElementById('notification').classList.add('hidden')
-        })
+        function showNotification() {
+            gsap.to(notification, {
+                duration: 1,
+                x: 0,
+                ease: 'power3.out',
+                onStart: () => {
+                    notification.classList.remove('hidden')
+                },
+            })
+        }
+
+        function hideNotification() {
+            gsap.to(notification, {
+                duration: 1,
+                x: '-100%',
+                ease: 'power3.in',
+                onStart: () => {
+                    notification.classList.add('hidden')
+                },
+            })
+        }
+
+        closeButton.addEventListener('click', hideNotification)
 
         restartButton.addEventListener('click', function () {
             ipcRenderer.send('restart-app')
