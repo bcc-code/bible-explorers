@@ -246,9 +246,17 @@ if (!gotTheLock) {
     event.sender.send('app-version', { version: app.getVersion() })
   })
 
+  autoUpdater.on('update-available', () => {
+    window.webContents.send('update-available')
+  })
+
+  autoUpdater.on('update-downloaded', () => {
+    window.webContents.send('update-downloaded')
+  })
+
   ipcMain.on('restart-app', () => {
-    autoUpdater.quitAndInstall()
-})
+    autoUpdater.quitAndInstall(false, true)
+  })
 
   // Quit when all windows are closed, except on macOS. There, it's common
   // for applications and their menu bar to stay active until the user quits

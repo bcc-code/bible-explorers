@@ -2,6 +2,7 @@
 // It has the same sandbox as a Chrome extension.
 
 import _e from '../Experience/Utils/Events.js'
+import _s from '../Experience/Utils/Strings.js'
 
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
@@ -17,24 +18,32 @@ contextBridge.exposeInMainWorld('electronAPI', {
         const notification = document.getElementById('notification')
         const message = document.getElementById('message')
         const restartButton = document.getElementById('restart-button')
+        const closeButton = document.getElementById('close-button')
 
-        ipcRenderer.on('update_available', () => {
-            ipcRenderer.removeAllListeners('update_available')
-            message.innerText = 'A new update is available. Downloading now...'
+        ipcRenderer.on('update-available', () => {
+            ipcRenderer.removeAllListeners('update-available')
+
+            message.innerHTML = _s.autoUpdate.updateAvailable
+            closeButton.innerText = _s.autoUpdate.close
+
             notification.classList.remove('hidden')
         })
-        ipcRenderer.on('update_downloaded', () => {
-            ipcRenderer.removeAllListeners('update_downloaded')
-            message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?'
+        ipcRenderer.on('update-downloaded', () => {
+            ipcRenderer.removeAllListeners('update-downloaded')
+
+            message.innerText = _s.autoUpdate.updateDownloaded
+            restartButton.innerText = _s.autoUpdate.install
+            closeButton.innerText = _s.autoUpdate.later
+
             restartButton.classList.remove('hidden')
             notification.classList.remove('hidden')
         })
 
-        document.getElementById('close-button').addEventListener('click', function () {
+        closeButton.addEventListener('click', function () {
             document.getElementById('notification').classList.add('hidden')
         })
 
-        document.getElementById('restart-button').addEventListener('click', function () {
+        restartButton.addEventListener('click', function () {
             ipcRenderer.send('restart-app')
         })
     },

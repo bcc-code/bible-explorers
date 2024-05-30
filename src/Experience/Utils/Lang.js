@@ -14,7 +14,7 @@ const languagesList = {
     it: 'Italiano',
     ru: 'Русский',
     fi: 'Suomi',
-    tu: 'Türkiye',
+    tr: 'Türkiye',
 }
 const threeLettersLang = {
     no: 'nor',
@@ -32,7 +32,6 @@ const threeLettersLang = {
     hu: 'hun',
     it: 'ita',
     da: 'dan',
-    tu: 'tur',
 }
 
 let getLanguageCode = () => localStorage.getItem('lang') || defaultLang
