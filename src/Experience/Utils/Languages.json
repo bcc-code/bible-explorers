@@ -1197,7 +1197,7 @@
         },
         "autoUpdate": {
             "updateAvailable": "Este disponibilă o nouă versiune a aplicației.<br />Se descarcă ...",
-            "updateDownloaded": "Noua versiune a fost descărcată și va fi instalată automat la repornirea aplicației.<br />Vrei să o instalezi acum?",
+            "updateDownloaded": "Noua versiune a fost descărcată și va fi instalată automat la repornirea aplicației.<br />Vrei să o instalezi chiar acum?",
             "install": "Instalează acum"
         },
         "offline": {

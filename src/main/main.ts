@@ -240,6 +240,10 @@ if (!gotTheLock) {
     }
   });
 
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('Bible Explorers');
+  }
+
   // Inter-Process Communication - Event listeners
 
   ipcMain.on('app-version', (event) => {
