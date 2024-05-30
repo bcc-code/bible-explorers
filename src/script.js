@@ -8,6 +8,7 @@ import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 import _gl from './Experience/Utils/Globals.js'
 import isElectron from 'is-electron'
+import gsap from 'gsap'
 
 // Loader text
 document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing}...</p>`
@@ -158,35 +159,3 @@ var browserName = (function (agent) {
 if (browserName !== 'Chrome') {
     new Notification(_s.browserNotification)
 }
-
-experience.adjustScreensWrapperSize = () => {
-    const dynamicDiv = document.getElementById('screens-wrapper')
-    const closedCaption = document.getElementById('closed-caption')
-    const aspectRatio = 1.5
-    experience.maxVW = 36
-    const maxVH = 65
-    const minPaddingTopVh = 6
-
-    let vw = window.innerWidth * (experience.maxVW / 100)
-    let vh = window.innerHeight * (maxVH / 100)
-
-    // Calculate the width and height based on maintaining the aspect ratio
-    let divWidth = vh * aspectRatio
-    let divHeight = vh
-
-    // If calculated width exceeds max VW, adjust both width and height to maintain aspect ratio
-    if (divWidth > vw) {
-        divWidth = vw
-        divHeight = divWidth / aspectRatio
-    }
-
-    const paddingTop = Math.max(window.innerHeight * (minPaddingTopVh / 100), window.innerHeight * 0.01)
-
-    dynamicDiv.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
-    // closedCaption.style.width = `${Math.round(Math.min(divWidth, window.innerWidth))}px`
-
-    dynamicDiv.style.paddingTop = `${paddingTop}px`
-}
-// experience.adjustScreensWrapperSize()
-
-// window.addEventListener('resize', experience.adjustScreensWrapperSize)

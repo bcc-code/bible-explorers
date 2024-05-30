@@ -19,9 +19,6 @@ export default class WaitingScreen {
 
         instance.program.message.destroy()
 
-        // instance.experience.maxVW = 36
-        // instance.experience.adjustScreensWrapperSize()
-
         const id = instance.world.selectedChapter.lobby_video_loop
         instance.video.load('texture-' + id)
 
@@ -41,7 +38,9 @@ export default class WaitingScreen {
 
         if (document.querySelector('#childrenNames')) return
 
-        const wrapper = _gl.elementFromHtml(`<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`)
+        const wrapper = _gl.elementFromHtml(
+            `<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`
+        )
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="absolute bottom-6 left-1/2 -translate-x-1/2">
                 <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
@@ -165,9 +164,5 @@ export default class WaitingScreen {
 
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
-
-        // Adjust screen wrappers
-        // instance.experience.maxVW = 90
-        // instance.experience.adjustScreensWrapperSize()
     }
 }
