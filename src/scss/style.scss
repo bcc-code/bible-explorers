@@ -1408,8 +1408,6 @@ $themes: (
         svg {
             display: inline;
             vertical-align: -2px;
-            width: var(--font-size-text);
-            height: var(--font-size-text);
         }
     }
 
@@ -1429,8 +1427,6 @@ $themes: (
     }
 
     .button-rectangle-wide {
-        height: calc(var(--button-height) * 2.25);
-        font-size: var(--font-size-text);
         flex-flow: column;
         background-size: 100% 100%;
         height: auto;
@@ -1442,9 +1438,10 @@ $themes: (
         }
 
         svg {
-            width: calc(var(--font-size-text) * 1.5);
-            height: calc(var(--font-size-text) * 1.5);
+            width: calc(var(--font-size-h4)*1);
+            height: calc(var(--font-size-h4)*1);
         }
+
     }
 }
 
