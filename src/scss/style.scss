@@ -17,6 +17,7 @@
 
     /* Gradients */
     --gradient-dark: linear-gradient(90deg, var(--bg-dark), var(--bg-default));
+    --gradient-light: linear-gradient(90deg, var(--clr-light-orange), var(--clr-dark-orange));
 
     /* Fonts */
     --ff-primary: 'Source Sans Pro', sans-serif;
@@ -262,14 +263,40 @@ svg {
 
 /* #endregion */
 
-#notification {
-    background-image: url(./LOGIN_bar_border-ed0aedc7.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    aspect-ratio: 480/136;
-    width: 480px;
-    align-items: center;
-    justify-content: center;
+.notification {
+
+    &-frame {
+        position: relative;
+        background: var(--gradient-dark);
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 480/136;
+        padding: 2rem;
+        width: 400px;
+        border: 2px solid var(--clr-light-orange);
+        border-radius: 8px;
+    }
+
+
+    #restart-button {
+        font-weight: bold;
+        color: var(--bg-dark);
+        background: var(--clr-light-orange);
+        border-radius: 8px;
+
+        &:hover {
+            background: var(--bg-dark);
+            color: var(--clr-text);
+            box-shadow: 0 0 0 2px var(--clr-light-orange);
+        }
+    }
+
+    #close-button {
+        position: absolute;
+        left: calc(100% - var(--button-height) / 2);
+        top: calc(var(--button-height) / 2 * -1);
+    }
+
 }
 
 /* #region VideoAPI */
