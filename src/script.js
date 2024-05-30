@@ -8,6 +8,7 @@ import _e from './Experience/Utils/Events.js'
 import _appInsights from './Experience/Utils/AppInsights.js'
 import _gl from './Experience/Utils/Globals.js'
 import isElectron from 'is-electron'
+import gsap from 'gsap'
 
 // Loader text
 document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing}...</p>`
@@ -35,8 +36,58 @@ if (isElectron()) {
     document.body.classList.add('electron')
 
     window.electronAPI.appVersion()
-    window.electronAPI.appNotifications()
     window.electronAPI.routeChanged()
+
+    // New app version notification
+
+    const notification = document.getElementById('notification')
+    const message = document.getElementById('message')
+    const closeButton = document.getElementById('close-button')
+    const restartButton = document.getElementById('restart-button')
+
+    function showNotification() {
+        gsap.fromTo(
+            notification,
+            {
+                x: '-100%',
+            },
+            {
+                duration: 1,
+                x: '0%',
+                ease: 'power3.out',
+                onStart: () => {
+                    notification.classList.remove('hidden')
+                },
+            }
+        )
+    }
+
+    window.electronAPI.onUpdateAvailable(() => {
+        message.innerHTML = _s.autoUpdate.updateAvailable
+        showNotification()
+    })
+
+    window.electronAPI.onUpdateDownloaded(() => {
+        message.innerHTML = _s.autoUpdate.updateDownloaded
+        restartButton.innerText = _s.autoUpdate.install
+        restartButton.classList.remove('hidden')
+        showNotification()
+    })
+
+    closeButton.addEventListener('click', () => {
+        gsap.to(notification, {
+            duration: 1,
+            x: '-100%',
+            ease: 'power3.in',
+            onComplete: () => {
+                notification.classList.add('hidden')
+            },
+        })
+    })
+
+    restartButton.addEventListener('click', () => {
+        window.electronAPI.restartApp()
+    })
 } else {
     // Register Service Worker
     if ('serviceWorker' in navigator) {
