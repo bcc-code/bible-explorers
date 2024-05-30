@@ -93,10 +93,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -279,10 +277,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Lukk",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -465,10 +461,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -651,10 +645,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -837,10 +829,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -1023,10 +1013,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -1209,10 +1197,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "Este disponibilă o nouă versiune a aplicației.<br />Se descarcă ...",
-            "updateDownloaded": "Noua versiune a fost descărcată. Aceasta va fi instalată automat la repornirea aplicației. Vrei să o instalezi acum?",
-            "install": "Instalare",
-            "close": "Închide",
-            "later": "Mai târziu"
+            "updateDownloaded": "Noua versiune a fost descărcată și va fi instalată automat la repornirea aplicației.<br />Vrei să o instalezi acum?",
+            "install": "Instalează acum"
         },
         "offline": {
             "downloadApp": {
@@ -1395,10 +1381,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -1581,10 +1565,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -1767,10 +1749,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -1953,10 +1933,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -2139,10 +2117,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -2325,10 +2301,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -2511,10 +2485,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Close",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
@@ -2697,10 +2669,8 @@
         },
         "autoUpdate": {
             "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-            "updateDownloaded": "The new version has been downloaded. It will automatically be installed on app restart. Do you want to install it now?",
-            "install": "Install",
-            "close": "Kapalı",
-            "later": "Later"
+            "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you restart the app.<br />Do you want to install it now instead?",
+            "install": "Install now"
         },
         "offline": {
             "downloadApp": {
