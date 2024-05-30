@@ -29,6 +29,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
             ipcRenderer.removeAllListeners('update-downloaded')
             message.innerHTML = _s.autoUpdate.updateDownloaded
             restartButton.innerText = _s.autoUpdate.install
+            restartButton.classList.remove('hidden')
             notification.classList.remove('hidden')
         })
 
