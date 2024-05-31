@@ -62,7 +62,9 @@ export default class Experience {
             chaptersDescription: document.querySelector('#chapters-description'),
         }
 
-        const celebrateCanvas = _gl.elementFromHtml(`<canvas class="celebrate" width="${this.sizes.width}" height="${this.sizes.height}"></canvas>`)
+        const celebrateCanvas = _gl.elementFromHtml(
+            `<canvas class="celebrate" width="${this.sizes.width}" height="${this.sizes.height}"></canvas>`
+        )
         document.querySelector('#app').appendChild(celebrateCanvas)
 
         this.celebrate = confetti.create(celebrateCanvas, {
@@ -70,9 +72,26 @@ export default class Experience {
             useWorker: true,
         })
 
-        const redirectToLanguage = this.getUrlParameter('language')
+        this.getUrlParameter = (sParam) => {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=')
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1])
+                }
+            }
+            return false
+        }
+
+        const redirectToLanguage = instance.getUrlParameter('language')
         if (redirectToLanguage) {
-            window.history.replaceState({}, document.title, window.location.pathname)
+            const requiredToLogin = instance.getUrlParameter('login')
+            window.history.replaceState({}, document.title, '/' + requiredToLogin ? '?login' : '')
             _lang.updateLanguage(redirectToLanguage)
         }
     }
@@ -84,21 +103,5 @@ export default class Experience {
     update() {
         this.world.update()
         this.stats.update()
-    }
-
-    getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=')
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1])
-            }
-        }
-        return false
     }
 }

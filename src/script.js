@@ -122,6 +122,7 @@ const handleRedirectCallback = async () => {
     }
 
     experience.auth0.isAuthenticated = await experience.auth0.isAuthenticated()
+    const requiredToLogin = experience.getUrlParameter('login')
 
     if (experience.auth0.isAuthenticated) {
         document.body.classList.add('logged-in')
@@ -130,7 +131,7 @@ const handleRedirectCallback = async () => {
         document.dispatchEvent(_e.EVENTS.USER_DATA_FETCHED)
 
         if (!isElectron()) {
-            if (window.location.pathname.includes('login')) {
+            if (requiredToLogin) {
                 window.history.replaceState({}, document.title, '/')
             }
         }
@@ -166,7 +167,7 @@ const handleRedirectCallback = async () => {
             setTimeout(() => {
                 document.querySelector('#login-screen a').click()
             }, 2000)
-        } else if (window.location.pathname.includes('login')) {
+        } else if (requiredToLogin) {
             await experience.auth0.loginWithRedirect({
                 redirect_uri: window.location.origin,
             })
