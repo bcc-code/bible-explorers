@@ -267,34 +267,31 @@ svg {
 
     &-frame {
         position: relative;
-        background: var(--gradient-dark);
+        background-image: url('../../static/interface/modal.svg');
         background-repeat: no-repeat;
         background-size: contain;
-        aspect-ratio: 480/136;
+        aspect-ratio: 447/400;
         padding: 2rem;
-        width: 400px;
-        border: 2px solid var(--clr-light-orange);
-        border-radius: 8px;
+        width: 380px;
     }
 
 
     #restart-button {
-        font-weight: bold;
-        color: var(--bg-dark);
-        background: var(--clr-light-orange);
-        border-radius: 8px;
+        height: auto;
+        width: 100%;
+        line-height: 1;
+        background-image: url('../../static/interface/B_cube_wide_action2.svg');
+        aspect-ratio: 377/80;
 
         &:hover {
-            background: var(--bg-dark);
-            color: var(--clr-text);
-            box-shadow: 0 0 0 2px var(--clr-light-orange);
+            background-image: url('../../static/interface/B_cube_wide_active2.svg');
         }
     }
 
     #close-button {
         position: absolute;
-        left: calc(100% - var(--button-height) / 2);
-        top: calc(var(--button-height) / 2 * -1);
+        left: calc(100% - var(--button-height) / 2 - 1rem);
+        top: calc(var(--button-height) / 2 * -1 + 1rem);
     }
 
 }

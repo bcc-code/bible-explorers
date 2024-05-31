@@ -61,14 +61,21 @@
                         </button>
                         <button id="toggle-fullscreen" class="button button-cube group">
                             <svg class="icon group-[.fullscreen-active]:hidden">
-                                <use href="#up-right-and-down-left-from-center-solid" fill="currentColor"></use>
+                                <use
+                                    href="#up-right-and-down-left-from-center-solid"
+                                    fill="currentColor"
+                                ></use>
                             </svg>
                             <svg class="icon hidden group-[.fullscreen-active]:block">
                                 <use href="#down-left-and-up-right-to-center-solid" fill="currentColor"></use>
                             </svg>
                         </button>
                         <div class="relative" id="app-language">
-                            <button id="toggle-languages" class="button button-rectangle-wide" aria-pressed="false">
+                            <button
+                                id="toggle-languages"
+                                class="button button-rectangle-wide"
+                                aria-pressed="false"
+                            >
                                 <svg class="icon"><use href="#globe-solid" fill="currentColor"></use></svg>
                                 <span></span>
                             </button>
@@ -76,7 +83,11 @@
                                 <ul></ul>
                             </div>
                         </div>
-                        <button id="logout-button" class="button button-cube disabled:!hidden" disabled="true">
+                        <button
+                            id="logout-button"
+                            class="button button-cube disabled:!hidden"
+                            disabled="true"
+                        >
                             <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
                         </button>
                         <button id="login-button" class="button button-cube disabled:!hidden" disabled="true">
@@ -119,7 +130,9 @@
                         </div>
                         <div id="chapters-description" class="chapters-description"></div>
                     </div>
-                    <div class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4">
+                    <div
+                        class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
+                    >
                         <button class="button button-arrow scale-x-[-1]" id="back-to-age-category"></button>
                         <div class="wrapper-tooltip">
                             <button class="button button-arrow" id="start-chapter"></button>
@@ -216,7 +229,10 @@
                         <button class="button button-arrow scale-x-[-1]" id="prev-step"></button>
                         <button class="button button-arrow" id="next-step"></button>
                     </div>
-                    <div id="games-wrapper" class="fixed inset-0 hidden group-data-[view='game']/app:block"></div>
+                    <div
+                        id="games-wrapper"
+                        class="fixed inset-0 hidden group-data-[view='game']/app:block"
+                    ></div>
                     <div
                         id="tasks-description"
                         class="fixed inset-0 hidden group-data-[view='task-description']/app:block"
@@ -232,7 +248,10 @@
                 id="app-version"
                 class="absolute bottom-1 right-1 hidden text-xs opacity-30 group-data-[view='age-category']/app:block"
             ></div>
-            <div id="notification" class="notification pointer-events-none fixed inset-0 z-50 hidden overflow-hidden">
+            <div
+                id="notification"
+                class="notification pointer-events-none fixed inset-0 z-50 hidden overflow-hidden"
+            >
                 <div class="flex h-full w-full p-4">
                     <div class="notification-frame self-end">
                         <div class="notification-content">
@@ -240,11 +259,10 @@
                                 <use href="#circle-exclamation-solid" fill="currentColor"></use>
                             </svg>
                             <p id="message" class="mt-4"></p>
-                            <a
-                                href="javascript:void(0)"
+                            <button
                                 id="restart-button"
-                                class="button pointer-events-auto mt-8 hidden"
-                            ></a>
+                                class="button button-rectangle-wide pointer-events-auto mt-4 hidden"
+                            ></button>
                         </div>
 
                         <button id="close-button" class="button button-cube pointer-events-auto">
