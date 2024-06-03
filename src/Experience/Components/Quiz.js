@@ -120,18 +120,27 @@ export default class Quiz {
 
             options.forEach((option, idx) => {
                 option.addEventListener('click', (e) => {
-                    const currentQuestionIdx = parseInt(e.target.closest('.quiz-item').getAttribute('data-index'))
+                    const currentQuestionIdx = parseInt(
+                        e.target.closest('.quiz-item').getAttribute('data-index')
+                    )
                     const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex(
                         (item) => item.correct_wrong === true
                     )
 
                     if (idx === correctAnswerIdx) {
+                        console.log()
                         e.target.closest('div').classList.add('correct')
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
-                        nextQuestion.disabled = false
-                        instance.taskActionsWrapper.classList.remove('disabled')
+
+                        if (instance.questionIdx !== totalQuestions - 1) {
+                            nextQuestion.disabled = false
+                            instance.taskActionsWrapper.classList.remove('disabled')
+                        } else {
+                            instance.experience.navigation.next.innerHTML = ''
+                            instance.experience.navigation.next.className = 'button button-arrow'
+                        }
 
                         options.forEach((disableOption) => {
                             disableOption.style.pointerEvents = 'none'
@@ -162,7 +171,7 @@ export default class Quiz {
                         }
                     } else {
                         if (isLastQuestion) {
-                            this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+                            instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
                             instance.experience.navigation.next.className = `button button-arrow-skip`
                             submitQuiz.disabled = true
                             nextQuestion.style.display = 'none'
