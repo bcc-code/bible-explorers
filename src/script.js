@@ -15,7 +15,7 @@ document.querySelector('#loading_text').innerHTML = `<p>${_s.status.initializing
 
 // Load icons
 const ajax = new XMLHttpRequest()
-ajax.open('GET', 'https://biblekids.io/wp-content/uploads/2023/03/biex-sprite.svg?ver=2', true)
+ajax.open('GET', 'https://biblekids.io/wp-content/uploads/2023/03/biex-sprite.svg?ver=3', true)
 ajax.send()
 ajax.onload = function () {
     const div = document.createElement('div')
