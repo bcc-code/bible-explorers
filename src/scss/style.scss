@@ -2962,7 +2962,7 @@ img.lazyloaded~div.img-loader {
         border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 8px;
         margin-bottom: 1rem;
-        padding: 1rem;
+        padding: 0.5rem;
         transition: .3s ease-in-out;
 
         p {
@@ -3101,5 +3101,11 @@ img.lazyloaded~div.img-loader {
         padding: 3rem;
     }
 
+    .dialogue,
+    .open-question {
+        .question {
+            padding: 1rem;
+        }
+    }
 
 }
