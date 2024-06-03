@@ -35,7 +35,7 @@ export default class DavidsRefuge {
             <section class="game davids-refuge">
                 <div class="container">
                     <div class="goats"></div>
-                    <button class="btn default" aria-label="select goat" disabled><span>${_s.miniGames.davidsRefuge.chooseGoat}</span></button>
+                    <button class="button button-rectangle-wide" aria-label="select goat" disabled><span>${_s.miniGames.davidsRefuge.chooseGoat}</span></button>
                 </div>
                 <div class="overlay"></div>
             </section>
@@ -91,12 +91,12 @@ export default class DavidsRefuge {
                 <ul>
                     <li>${instance.data.hints[0].text}</li>
                 </ul>
-                <button class="btn default next">Get more hints</button>
+                <button class="button button-rectangle-wide">Get more hints</button>
             </aside>
         `)
 
         const hintsToggle = _gl.elementFromHtml(`
-            <button class="btn rounded" aria-label="toggle hints">
+            <button class="button button-circle" aria-label="toggle hints">
                 <svg class="icon">
                     <use href="#question-mark"></use>
                 </svg>
@@ -116,7 +116,11 @@ export default class DavidsRefuge {
         })
 
         document.addEventListener('click', (event) => {
-            if (!hints.contains(event.target) && !hintsToggle.contains(event.target) && !getHint.contains(event.target))
+            if (
+                !hints.contains(event.target) &&
+                !hintsToggle.contains(event.target) &&
+                !getHint.contains(event.target)
+            )
                 showHints.reverse()
         })
 
