@@ -85,7 +85,10 @@ export default class Video {
 
     setNoVideoPlaying() {
         instance.playingVideoId = null
-        instance.videoContainer.classList.add('hidden')
+        instance.videoContainer.classList.remove('hidden')
+
+        // Move Iris video first in the list in order to be visible
+        instance.videoContainer.prepend(instance.videoContainer.querySelector('#iris-idle'))
     }
 
     //#region Actions
