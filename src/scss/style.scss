@@ -238,6 +238,15 @@ svg {
     /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
 }
 
+img,
+video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
 @supports (scrollbar-width: auto) {
     .scroller {
         scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
@@ -1052,23 +1061,14 @@ $themes: (
         background-size: contain;
         aspect-ratio: 2495/513;
         width: 768px;
-        padding: 2% 3%;
+        padding: 2% 3% 3% 3%;
         display: flex;
         flex-flow: column nowrap;
-
-        div {
-            flex: 1;
-            overflow-y: auto;
-            display: grid;
-            place-content: center;
-        }
-
     }
 
     p {
         font-size: var(--font-size-h6);
         line-height: var(--line-height-h6);
-        margin-top: -2%;
     }
 
     span {
