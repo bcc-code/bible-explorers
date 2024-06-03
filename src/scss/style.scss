@@ -2051,7 +2051,7 @@ $themes: (
         left: 0;
         width: 100%;
         height: 2rem;
-        border: 2px solid var(--clr-secondary);
+        border: 2px solid var(--clr-light-orange);
         padding: 6px;
         border-radius: 2rem;
     }
@@ -2068,14 +2068,15 @@ $themes: (
     }
 
     progress::-webkit-progress-value {
-        background-color: var(--clr-primary);
+        background: var(--gradient-light);
         transition: filter 300ms, width 300ms;
     }
 
     svg {
         float: right;
         height: 3rem;
-        filter: drop-shadow(0 0 10px var(--clr-text));
+        width: 3rem;
+        filter: drop-shadow(0 0 10px var(--clr-dark-orange));
     }
 
     ul {
@@ -2087,12 +2088,14 @@ $themes: (
             flex: 1;
 
             svg {
-                fill: #FCB04E;
+                fill: #fff;
             }
         }
 
         li.filled {
-            color: var(--clr-secondary);
+            svg {
+                fill: var(--clr-light-orange);
+            }
         }
     }
 }
@@ -2916,8 +2919,6 @@ img.lazyloaded~div.img-loader {
     position: relative;
     border: var(--app-border-size) solid transparent;
     counter-increment: answers;
-
-
 
     .label {
         display: flex;
