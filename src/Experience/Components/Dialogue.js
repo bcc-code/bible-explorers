@@ -89,7 +89,9 @@ export default class Dialogue {
     setMessageHtml(caption) {
         document.getElementById('iris-cc')?.remove()
 
-        const message = _gl.elementFromHtml(`<div id="iris-cc"><span>Iris</span><div>${caption}</div></div>`)
+        const message = _gl.elementFromHtml(
+            `<div id="iris-cc"><span>Iris</span><div class="flex-1 scroller flex items-center justify-center max-h-[65%]"><div class="overflow-y-auto max-h-full max-w-full">${caption}</div></div></div>`
+        )
         instance.experience.interface.closedCaption.append(message)
     }
 
