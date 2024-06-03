@@ -2889,21 +2889,25 @@ img.lazyloaded~div.img-loader {
         gap: 1rem;
 
         input {
-            pointer-events: all;
+            background-image: url('../../static/frames/LOGIN_bar_input.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            aspect-ratio: 647/133;
+            height: var(--button-height);
+            font-size: var(--font-size-button);
+            background-color: transparent;
+            padding-inline: 1rem;
+        }
+
+        input:focus {
             outline: none;
-            border: none;
-            background-color: var(--bg-with-opacity);
-            border: var(--app-border-size) solid transparent;
-            border-radius: calc(var(--app-padding) / 2);
-            padding: 0.5rem var(--app-padding);
-
         }
 
-        input:hover,
-        input:focus-visible {
-            box-shadow: 0 0 10px 0 var(--clr-secondary);
-            border-color: var(--clr-secondary);
+        ::-webkit-input-placeholder {
+            color: #fff;
+            opacity: 0.4;
         }
+
     }
 }
 
