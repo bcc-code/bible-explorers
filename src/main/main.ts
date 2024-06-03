@@ -251,11 +251,11 @@ if (!gotTheLock) {
   })
 
   autoUpdater.on('update-available', () => {
-    window.webContents.send('update-available')
+    window?.webContents.send('update-available')
   })
 
   autoUpdater.on('update-downloaded', () => {
-    window.webContents.send('update-downloaded')
+    window?.webContents.send('update-downloaded')
   })
 
   ipcMain.on('restart-app', () => {
