@@ -29,21 +29,21 @@ export default class Dialogue {
     setHtml() {
         const dialogue = _gl.elementFromHtml(`
             <section class="dialogue">
-                <div class="container">
-                    <div class="content"></div>
+                <div class="content">
+                    ${instance.data
+                        .map(
+                            (dialog) => `
+                        <div class="question">
+                            <p>${dialog.question}</p>
+                        </div>
+                    `
+                        )
+                        .join('')}
                 </div>
             </section>
         `)
 
-        instance.data.forEach((dialog) => {
-            const option = _gl.elementFromHtml(`
-                <button class="question">
-                    <p>${dialog.question}</p>
-                </button>`)
-            dialogue.querySelector('.content').append(option)
-        })
-
-        document.getElementById('chapter-wrapper').append(dialogue)
+        instance.experience.interface.helperScreen.append(dialogue)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button button-arrow-skip`
@@ -53,7 +53,7 @@ export default class Dialogue {
     setEventListeners() {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
-        const buttons = document.querySelectorAll('.dialogue .content button')
+        const buttons = document.querySelectorAll('.dialogue .question')
         buttons.forEach((button, index) => {
             button.addEventListener('click', () => {
                 buttons.forEach((button) => button.classList.remove('current'))
@@ -66,7 +66,7 @@ export default class Dialogue {
                 button.classList.add('current')
 
                 // Check if all were visited
-                if (document.querySelectorAll('.dialogue .content button.visited').length == buttons.length) {
+                if (document.querySelectorAll('.dialogue .question.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
                     instance.experience.navigation.next.className = 'button button-arrow'
                     instance.experience.navigation.next.innerHTML = ''
