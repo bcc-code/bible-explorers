@@ -96,8 +96,7 @@ export default class Dialogue {
     }
 
     destroy() {
-        document.querySelector('.dialogue')?.remove()
-        document.querySelector('.message-from-dialogue')?.remove()
+        instance.experience.interface.helperScreen.innerHTML = ''
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 

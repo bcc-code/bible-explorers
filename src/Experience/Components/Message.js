@@ -57,16 +57,15 @@ export default class Message {
             // instance.experience.navigation.next.disabled = true
             const openQuestion = _gl.elementFromHtml(
                 `<section class="dialogue">
-                    <div class="container">
                         <div class="content">
                             <div id="open-question">
                                 <textarea class="question-textarea" rows="8" placeholder="${_s.task.openQuestion}"></textarea>
                             </div
                         </div>
-                    </div>
                 </section>`
             )
-            document.getElementById('chapter-wrapper').append(openQuestion)
+
+            instance.experience.interface.helperScreen.append(openQuestion)
 
             const textarea = openQuestion.querySelector('textarea')
             textarea.addEventListener('input', (e) => {
@@ -83,6 +82,6 @@ export default class Message {
         instance.video?.defocus()
         document.querySelector('#glitch-idle')?.remove()
         document.querySelector('#iris-cc')?.remove()
-        document.querySelector('#open-question')?.remove()
+        instance.experience.interface.helperScreen.innerHTML = ''
     }
 }
