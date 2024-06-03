@@ -422,6 +422,7 @@ body.not-logged-in {
     pointer-events: auto;
     cursor: pointer;
     height: var(--button-height);
+    transition: .3s ease-in-out;
 
     &:focus {
         outline: none;
@@ -474,7 +475,7 @@ body.not-logged-in {
         background-image: url('../../static/interface/B_circle_action.png');
     }
 
-    &[currentcheckpoint]~button {
+    &[currentcheckpoint]~button:not(:hover) {
         background-image: url('../../static/interface/B_circle_active.png');
     }
 }
@@ -3027,6 +3028,8 @@ img.lazyloaded~div.img-loader {
 
     .button-circle:hover {
         background-image: url('../../static/interface/B_circle_action.png');
+        transform: scale(1.1);
+        transform-origin: center;
     }
 
     .button-rectangle-wide:hover {
