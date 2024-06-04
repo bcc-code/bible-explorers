@@ -440,7 +440,7 @@ export default class DuckGame {
         const popup = document.querySelector('.task-game_popup')
         popup.innerHTML = ''
 
-        const popupText = document.createElement('h1')
+        const popupText = document.createElement('h5')
         popupText.innerHTML = message
         popup.appendChild(popupText)
 
