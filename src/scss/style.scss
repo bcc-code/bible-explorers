@@ -308,8 +308,8 @@ video {
 /* #region VideoAPI */
 #video-container .video-js:not(.vjs-fullscreen) {
     .vjs-control-bar {
-        transform: translateX(30px) translateY(-30px);
-        width: calc(100% - 60px);
+        transform: translateX(4%) translateY(-45%);
+        width: 92%;
     }
 
     .vjs-seek-backward-control,
