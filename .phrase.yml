@@ -1,0 +1,17 @@
+phrase:
+    project_id: 429fb4e9dc206e06d119e59f10f59e2d #The public Project ID which can be found in the Project Settings (API tab)
+
+    push:
+        sources:
+            - file: ./src/locales/en.json #Provide the path to the file(s) you want to push here, starting from the location of the configuration file. You can use the placeholders <locale_name>, <locale_code> and <tags> in the path or file-name
+              params:
+                  file_format: simple_json #See above. Only required if you deviate from the default format set in the header
+                  locale_id: en #Can be the name (e.g. en-US) or public id (via Language settings -> API) of the locale. Preferred is the public id.
+                  update_translations: true #Indicates whether existing translations should be updated with the file content.
+
+    pull:
+        targets:
+            - file: ./src/locales/en.json
+              params:
+                  file_format: simple_json
+                  locale_id: en #Can be the name (e.g. en-US) or public id (via Language settings -> API) of the locale. Preferred is the public id.
