@@ -15,3 +15,7 @@ phrase:
               params:
                   file_format: i18next # See above. Only required if you deviate from the default format set in the header
                   locale_id: en # Can be the name (e.g. en-US) or public id (via Language settings -> API) of the locale. Preferred is the public id.
+            - file: ./src/locales/ro.json
+              params:
+                  file_format: i18next # See above. Only required if you deviate from the default format set in the header
+                  locale_id: ro # Can be the name (e.g. en-US) or public id (via Language settings -> API) of the locale. Preferred is the public id.
