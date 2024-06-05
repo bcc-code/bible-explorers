@@ -1,17 +1,87 @@
 phrase:
-    project_id: 429fb4e9dc206e06d119e59f10f59e2d # The public Project ID which can be found in the Project Settings (API tab)
+    project_id: 429fb4e9dc206e06d119e59f10f59e2d
 
     push:
         sources:
-            - file: ./src/locales/en.json # Provide the path to the file(s) you want to push here, starting from the location of the configuration file. You can use the placeholders <locale_name>, <locale_code> and <tags> in the path or file-name
+            - file: ./src/locales/en.json
               params:
-                  file_format: i18next # See above. Only required if you deviate from the default format set in the header
-                  locale_id: en # Can be the name (e.g. en-US) or public id (via Language settings -> API) of the locale. Preferred is the public id.
-                  update_translations: true # Indicates whether existing translations should be updated with the file content.
+                  file_format: i18next
+                  locale_id: en
+                  update_translations: true
 
     pull:
         targets:
             - file: ./src/locales/en.json
               params:
-                  file_format: i18next # See above. Only required if you deviate from the default format set in the header
-                  locale_id: en # Can be the name (e.g. en-US) or public id (via Language settings -> API) of the locale. Preferred is the public id.
+                  file_format: i18next
+                  locale_id: en
+
+            - file: ./src/locales/no.json
+              params:
+                  file_format: i18next
+                  locale_id: no
+
+            - file: ./src/locales/de.json
+              params:
+                  file_format: i18next
+                  locale_id: de
+
+            - file: ./src/locales/nl.json
+              params:
+                  file_format: i18next
+                  locale_id: nl
+
+            - file: ./src/locales/fr.json
+              params:
+                  file_format: i18next
+                  locale_id: fr
+
+            - file: ./src/locales/pl.json
+              params:
+                  file_format: i18next
+                  locale_id: pl
+
+            - file: ./src/locales/ro.json
+              params:
+                  file_format: i18next
+                  locale_id: ro
+
+            - file: ./src/locales/es.json
+              params:
+                  file_format: i18next
+                  locale_id: es
+
+            - file: ./src/locales/pt-pt.json
+              params:
+                  file_format: i18next
+                  locale_id: pt
+
+            - file: ./src/locales/it.json
+              params:
+                  file_format: i18next
+                  locale_id: it
+
+            - file: ./src/locales/ru.json
+              params:
+                  file_format: i18next
+                  locale_id: ru
+
+            - file: ./src/locales/fi.json
+              params:
+                  file_format: i18next
+                  locale_id: fi
+
+            - file: ./src/locales/hu.json
+              params:
+                  file_format: i18next
+                  locale_id: hu
+
+            - file: ./src/locales/da.json
+              params:
+                  file_format: i18next
+                  locale_id: da
+
+            - file: ./src/locales/tr.json
+              params:
+                  file_format: i18next
+                  locale_id: tr
