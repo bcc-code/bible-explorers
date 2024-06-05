@@ -1,184 +1,184 @@
 {
-    "status": {
-        "loading": "Laden",
-        "initializing": "Initialiseren",
-        "fetching": "Aanroepen van de hoofdstukken",
-        "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  "archive": "Archief",
+  "autoUpdate": {
+    "install": "Install now",
+    "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
+    "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you close the app.<br />Do you want to install it now instead?"
+  },
+  "browserNotification": "De aanbevolen browser voor dit concept is Chrome",
+  "chapter": {
+    "activityDescLabel": "Mentor gids",
+    "infoPlural": {
+      "quiz": "quizzen",
+      "task": "opdrachten",
+      "video": "video's"
     },
-    "loginScreen": {
-        "redirectInfo": "Je wordt naar de login pagina geleid",
-        "manualRedirectInfo": "Wacht op",
-        "redirectLink": "Klik hier om in te loggen"
-    },
-    "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
-    "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
-    "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
-    "browserNotification": "De aanbevolen browser voor dit concept is Chrome",
-    "howTo": "Hoe bereid je je voor",
-    "waitingScreen": {
-        "submit": "Bevestig",
-        "inputPlaceholder": "Schrijf hier je naam"
-    },
-    "journey": {
-        "start": "Start de tijdreis",
-        "continue": "Ga door met de tijdreis",
-        "restart": "Start de reis opnieuw",
-        "congrats": "Gefeliciteerd!",
-        "bibleCards": {
-            "title": "Bijbelkaarten",
-            "message": "Het is nu tijd voor de bijbelkaarten."
-        },
-        "completed": "Je hebt het gehaald",
-        "back": "Terug",
-        "attachments": "Bijlagen",
-        "homescreen": "Klaar",
-        "pause": {
-            "title": "Deel 1 voltooid",
-            "message": "De kinderen kunnen even pauzeren voordat de tijdreis verder gaat."
-        }
-    },
-    "task": {
-        "codeUnlock": "Voer het juiste getal in",
-        "taskDescription": "Beschrijving van de opdracht",
-        "questions": "Vraag",
-        "getTask": "Ga naar de opdracht",
-        "submit": "Verzend",
-        "next": "Volgende",
-        "openQuestion": "Schrijf antwoord hier"
-    },
-    "archive": "Archief",
-    "settings": {
-        "title": "Instellingen",
-        "soundEffects": "Geluidseffecten",
-        "videoQuality": {
-            "title": "Videokwaliteit",
-            "low": "Laag",
-            "medium": "Gemiddeld",
-            "high": "Hoog"
-        },
-        "language": "Taal",
-        "backgroundMusic": "Achtergrondmuziek",
-        "fullScreenMode": "Volledig scherm",
-        "on": "Aan",
-        "off": "Uit",
-        "feedback": "Feedback",
-        "faq": "FAQ",
-        "notLoggedIn": "Je bent niet ingelogd!",
-        "loggedInAs": "Je bent ingelogd als\":",
-        "mentor": "mentor",
-        "noRole": "geen rol",
-        "logIn": "Log in",
-        "logOut": "Log uit",
-        "noAccess": "Je hebt geen rechten om deze film te bekijken. Stuur een e-mail naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> om toegang aan te vragen.",
-        "contact": "Contact support"
-    },
-    "faq": {
-        "questions": [
-            "Ik krijg niet de mogelijkheid om de filmpjes te downloaden – wat doe ik?",
-            "Ik ben ingelogd met mijn portal account, maar ik kan de filmpjes nog niet downloaden.",
-            "Ik heb het hoofdstuk gedownload maar vind de bestanden niet – waarom?",
-            "Ik wil de filmpjes afspelen op de gemeentelocatie zonder internet, hoe ga ik te werk?",
-            "De website geeft storing als ik op de knoppen druk, wat doe ik?",
-            "Ik heb een vraag die hierboven niet beantwoord is – wat doe ik?"
-        ],
-        "answers": [
-            "Je moet inloggen met je portal-account om de mogelijkheid te krijgen de films te downloaden.",
-            "Je kunt toegang aanvragen door een e-mail te sturen naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "De filmpjes zijn opgeslagen in het cachegeheugen van je computer, je krijgt de mogelijkheid ze af te spelen vanaf de website ook als je niet met WiFi verbonden bent.",
-            "Log in op de website op een plek met WiFi, download het hoofdstuk, houd de website open op de computer. Als je op de plek komt waar je de website nodig hebt, open je computer opnieuw en gebruik je dezelfde browser om de filmpjes te openen op de website.",
-            "Heb je de website geopend in Chrome? Dat is de aanbevolen browser voor Explorers.",
-            "Stuur een e-mail naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>"
-        ]
-    },
-    "autoUpdate": {
-        "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-        "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you close the app.<br />Do you want to install it now instead?",
-        "install": "Install now"
-    },
-    "offline": {
-        "downloadApp": {
-            "title": "Download de Bible Explorers desktop app",
-            "deviceTypeLabel": "Kies je type device",
-            "infoLabel": "Om uit te vinden welk type Mac je hebt, open \"Apple menu <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>\"> \"Over deze Mac\"",
-            "infoText1": "Als er een item staat, aangeduid met \"Chip\", gevolgd door de chip naam, dan is het een \"Mac with Apple silicon\" ",
-            "infoText2": "Als er een item staat, aangeduid met \"Processor\", gevolgd door de processor naam, dan is het \"Intel-based Mac\"",
-            "close": "Close"
-        },
-        "download": {
-            "title": "Download offline-versie",
-            "info": "Ben je ingelogd? Dan kan je het hoofdstuk doorlopen zonder internet. Druk hier om het hoofdstuk offline toegankelijk te maken. "
-        },
-        "downloading": "Downloaden",
-        "availableOffline": {
-            "title": "Offline beschikbaar",
-            "info": "Het hoofdstuk is nu beschikbaar offline inclusief opdrachten en filmclips. Je kan het afspelen op een locatie zonder internet."
-        },
-        "update": "Update de offline versie",
-        "redownloadConfirmation": "Weet je zeker dat je het hoofdstuk opnieuw wilt downloaden?",
-        "downloadFailed": "Er is een probleem opgestaan met het downloaden van het hoofdstuk!",
-        "downloadToContinue": "Je moet het hoofdstuk downloaden om verder te gaan",
-        "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
-        "remove": "Delete offline versie"
-    },
-    "tooltips": {
-        "video": "Speel de video af",
-        "iris": "Praat met Iris",
-        "task": "Doe de opdracht"
-    },
-    "miniGames": {
-        "keyInteraction": {
-            "start": "Klik op een toets om de ronde te starten",
-            "tryAgain": "Klik op een toets om opnieuw te beginnen",
-            "continue": "Klik op een toets om door te gaan"
-        },
-        "simonSays": {
-            "failed": {
-                "title": "Oeps!",
-                "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
-            }
-        },
-        "flipCards": {
-            "chooseKing": "Kies een koning"
-        },
-        "davidsRefuge": {
-            "chooseGoat": "Kies geit"
-        },
-        "completed": {
-            "title": "Goed gedaan!",
-            "message": "Je hebt de opdracht voltooid!",
-            "string": "voltooid"
-        },
-        "timeElapsed": {
-            "title": "Oeps!",
-            "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
-        },
-        "startGame": "Start spel",
-        "level": "Level",
-        "gameOver": "Oh oh, dat ging mis.",
-        "round": "Ronde",
-        "nextRound": "Volgende ronde",
-        "anotherRound": "Nog een ronde",
-        "tryAgain": "Probeer opnieuw!",
-        "playAgain": "Speel opnieuw",
-        "reset": "Begin opnieuw",
-        "restartRound": "Begin de ronde opnieuw",
-        "continue": "Ga door met de reis",
-        "skip": "Overslaan",
-        "correctAnswers": "antwoorden juist",
-        "playAudio": "Speel audio af",
-        "winRound": "Goed gedaan!"
-    },
-    "chapter": {
-        "infoSingular": {
-            "video": "video",
-            "task": "opdracht",
-            "quiz": "quiz"
-        },
-        "infoPlural": {
-            "video": "video's",
-            "task": "opdrachten",
-            "quiz": "quizzen"
-        },
-        "activityDescLabel": "Mentor gids"
+    "infoSingular": {
+      "quiz": "quiz",
+      "task": "opdracht",
+      "video": "video"
     }
+  },
+  "conceptDescription": "Ga mee op een tijdreis en ontdek het boek dat alle vragen kan beantwoorden",
+  "faq": {
+    "answers": [
+      "Je moet inloggen met je portal-account om de mogelijkheid te krijgen de films te downloaden.",
+      "Je kunt toegang aanvragen door een e-mail te sturen naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
+      "De filmpjes zijn opgeslagen in het cachegeheugen van je computer, je krijgt de mogelijkheid ze af te spelen vanaf de website ook als je niet met WiFi verbonden bent.",
+      "Log in op de website op een plek met WiFi, download het hoofdstuk, houd de website open op de computer. Als je op de plek komt waar je de website nodig hebt, open je computer opnieuw en gebruik je dezelfde browser om de filmpjes te openen op de website.",
+      "Heb je de website geopend in Chrome? Dat is de aanbevolen browser voor Explorers.",
+      "Stuur een e-mail naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>"
+    ],
+    "questions": [
+      "Ik krijg niet de mogelijkheid om de filmpjes te downloaden – wat doe ik?",
+      "Ik ben ingelogd met mijn portal account, maar ik kan de filmpjes nog niet downloaden.",
+      "Ik heb het hoofdstuk gedownload maar vind de bestanden niet – waarom?",
+      "Ik wil de filmpjes afspelen op de gemeentelocatie zonder internet, hoe ga ik te werk?",
+      "De website geeft storing als ik op de knoppen druk, wat doe ik?",
+      "Ik heb een vraag die hierboven niet beantwoord is – wat doe ik?"
+    ]
+  },
+  "howTo": "Hoe bereid je je voor",
+  "introduction": "Nu kunnen kinderen van 6-12 jaar mee gaan op fantastische reizen door de tijd en de bijbel ontdekken op een heel nieuwe manier – met Explorers",
+  "journey": {
+    "attachments": "Bijlagen",
+    "back": "Terug",
+    "bibleCards": {
+      "message": "Het is nu tijd voor de bijbelkaarten.",
+      "title": "Bijbelkaarten"
+    },
+    "completed": "Je hebt het gehaald",
+    "congrats": "Gefeliciteerd!",
+    "continue": "Ga door met de tijdreis",
+    "homescreen": "Klaar",
+    "pause": {
+      "message": "De kinderen kunnen even pauzeren voordat de tijdreis verder gaat.",
+      "title": "Deel 1 voltooid"
+    },
+    "restart": "Start de reis opnieuw",
+    "start": "Start de tijdreis"
+  },
+  "loginScreen": {
+    "manualRedirectInfo": "Wacht op",
+    "redirectInfo": "Je wordt naar de login pagina geleid",
+    "redirectLink": "Klik hier om in te loggen"
+  },
+  "miniGames": {
+    "anotherRound": "Nog een ronde",
+    "completed": {
+      "message": "Je hebt de opdracht voltooid!",
+      "string": "voltooid",
+      "title": "Goed gedaan!"
+    },
+    "continue": "Ga door met de reis",
+    "correctAnswers": "antwoorden juist",
+    "davidsRefuge": {
+      "chooseGoat": "Kies geit"
+    },
+    "flipCards": {
+      "chooseKing": "Kies een koning"
+    },
+    "gameOver": "Oh oh, dat ging mis.",
+    "keyInteraction": {
+      "continue": "Klik op een toets om door te gaan",
+      "start": "Klik op een toets om de ronde te starten",
+      "tryAgain": "Klik op een toets om opnieuw te beginnen"
+    },
+    "level": "Level",
+    "nextRound": "Volgende ronde",
+    "playAgain": "Speel opnieuw",
+    "playAudio": "Speel audio af",
+    "reset": "Begin opnieuw",
+    "restartRound": "Begin de ronde opnieuw",
+    "round": "Ronde",
+    "simonSays": {
+      "failed": {
+        "message": "Je hebt de verkeerde noot van de melodie afgespeeld.",
+        "title": "Oeps!"
+      }
+    },
+    "skip": "Overslaan",
+    "startGame": "Start spel",
+    "timeElapsed": {
+      "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is.",
+      "title": "Oeps!"
+    },
+    "tryAgain": "Probeer opnieuw!",
+    "winRound": "Goed gedaan!"
+  },
+  "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
+  "offline": {
+    "availableOffline": {
+      "info": "Het hoofdstuk is nu beschikbaar offline inclusief opdrachten en filmclips. Je kan het afspelen op een locatie zonder internet.",
+      "title": "Offline beschikbaar"
+    },
+    "download": {
+      "info": "Ben je ingelogd? Dan kan je het hoofdstuk doorlopen zonder internet. Druk hier om het hoofdstuk offline toegankelijk te maken. ",
+      "title": "Download offline-versie"
+    },
+    "downloadApp": {
+      "close": "Close",
+      "deviceTypeLabel": "Kies je type device",
+      "infoLabel": "Om uit te vinden welk type Mac je hebt, open \"Apple menu <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>\"> \"Over deze Mac\"",
+      "infoText1": "Als er een item staat, aangeduid met \"Chip\", gevolgd door de chip naam, dan is het een \"Mac with Apple silicon\" ",
+      "infoText2": "Als er een item staat, aangeduid met \"Processor\", gevolgd door de processor naam, dan is het \"Intel-based Mac\"",
+      "title": "Download de Bible Explorers desktop app"
+    },
+    "downloadFailed": "Er is een probleem opgestaan met het downloaden van het hoofdstuk!",
+    "downloading": "Downloaden",
+    "downloadToContinue": "Je moet het hoofdstuk downloaden om verder te gaan",
+    "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
+    "redownloadConfirmation": "Weet je zeker dat je het hoofdstuk opnieuw wilt downloaden?",
+    "remove": "Delete offline versie",
+    "update": "Update de offline versie"
+  },
+  "settings": {
+    "backgroundMusic": "Achtergrondmuziek",
+    "contact": "Contact support",
+    "faq": "FAQ",
+    "feedback": "Feedback",
+    "fullScreenMode": "Volledig scherm",
+    "language": "Taal",
+    "loggedInAs": "Je bent ingelogd als\":",
+    "logIn": "Log in",
+    "logOut": "Log uit",
+    "mentor": "mentor",
+    "noAccess": "Je hebt geen rechten om deze film te bekijken. Stuur een e-mail naar <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> om toegang aan te vragen.",
+    "noRole": "geen rol",
+    "notLoggedIn": "Je bent niet ingelogd!",
+    "off": "Uit",
+    "on": "Aan",
+    "soundEffects": "Geluidseffecten",
+    "title": "Instellingen",
+    "videoQuality": {
+      "high": "Hoog",
+      "low": "Laag",
+      "medium": "Gemiddeld",
+      "title": "Videokwaliteit"
+    }
+  },
+  "status": {
+    "fetching": "Aanroepen van de hoofdstukken",
+    "initializing": "Initialiseren",
+    "loading": "Laden",
+    "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  },
+  "task": {
+    "codeUnlock": "Voer het juiste getal in",
+    "getTask": "Ga naar de opdracht",
+    "next": "Volgende",
+    "openQuestion": "Schrijf antwoord hier",
+    "questions": "Vraag",
+    "submit": "Verzend",
+    "taskDescription": "Beschrijving van de opdracht"
+  },
+  "tooltips": {
+    "iris": "Praat met Iris",
+    "task": "Doe de opdracht",
+    "video": "Speel de video af"
+  },
+  "waitingScreen": {
+    "inputPlaceholder": "Schrijf hier je naam",
+    "submit": "Bevestig"
+  }
 }

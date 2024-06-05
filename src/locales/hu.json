@@ -1,184 +1,184 @@
 {
-    "status": {
-        "loading": "Betöltés",
-        "initializing": "Inicializálás",
-        "fetching": "Fejezetek lehívása",
-        "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  "archive": "Archívum",
+  "autoUpdate": {
+    "install": "Install now",
+    "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
+    "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you close the app.<br />Do you want to install it now instead?"
+  },
+  "browserNotification": "Recommended browser for this concept is Chrome",
+  "chapter": {
+    "activityDescLabel": "Task description",
+    "infoPlural": {
+      "quiz": "quizzes",
+      "task": "tasks",
+      "video": "videos"
     },
-    "loginScreen": {
-        "redirectInfo": "A rendszer átirányít a bejelentkezési oldalra.",
-        "manualRedirectInfo": "Kérjük, várj vagy",
-        "redirectLink": "kattints ide a bejelentkezéshez."
-    },
-    "conceptDescription": "Csatlakozz az időutazáshoz és fedezd fel a könyvet, amely minden kérdésre választ ad!",
-    "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
-    "notAvailable": "No chapter available in the selected language",
-    "browserNotification": "Recommended browser for this concept is Chrome",
-    "howTo": "How to guide",
-    "waitingScreen": {
-        "submit": "Hozzáadás",
-        "inputPlaceholder": "Írd ide a neved"
-    },
-    "journey": {
-        "start": "Időutazás elkezdése",
-        "continue": "Időutazás folytatása ",
-        "restart": "Utazás újrakezdése",
-        "congrats": "Gratulálunk!",
-        "bibleCards": {
-            "title": "Bible cards",
-            "message": "Itt az idő, hogy megszerezzétek a bibliai kártyákat."
-        },
-        "completed": "Befejezted",
-        "back": "Vissza",
-        "attachments": "Csatolmányok",
-        "homescreen": "Kész",
-        "pause": {
-            "title": "Part 1 completed",
-            "message": "The children can take a break before the time travel continues."
-        }
-    },
-    "task": {
-        "codeUnlock": "Add meg a helyes számot",
-        "taskDescription": "Feladat leírása",
-        "questions": "Kérdés",
-        "getTask": "Menj a feladathoz",
-        "submit": "Küldés",
-        "next": "Next",
-        "openQuestion": "Write answer here"
-    },
-    "archive": "Archívum",
-    "settings": {
-        "title": "Beállítások",
-        "soundEffects": "Hanghatások",
-        "videoQuality": {
-            "title": "Videó minőség",
-            "low": "Alacsony",
-            "medium": "Közepes",
-            "high": "Magas"
-        },
-        "language": "Nyelv",
-        "backgroundMusic": "Háttérzene",
-        "fullScreenMode": "Teljes képernyő",
-        "on": "Ki",
-        "off": "Be",
-        "feedback": "Visszajelzés",
-        "faq": "FAQ",
-        "notLoggedIn": "You are not logged in!",
-        "loggedInAs": "You are logged in as\":",
-        "mentor": "mentor",
-        "noRole": "no role",
-        "logIn": "Bejelentkezés",
-        "logOut": "Kijelentkezés",
-        "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-        "contact": "Contact support"
-    },
-    "faq": {
-        "questions": [
-            "Nem tudom letölteni a filmeket – mit tegyek?",
-            "Bejelentkeztem a portál felhasználómmal, de még mindig nem tudom letölteni a filmeket.",
-            "Letöltöttem a fejezetet, de nem találom a fájlokat – miért?",
-            "Internet nélkül mutatom be a filmeket a közösségben, hogyan tovább?",
-            "Az oldal összeomlik, ha megnyomom a gombokat, mit tegyek?",
-            "Van egy kérdésem, amelyre fent nem kaptam választ – mit tegyek?"
-        ],
-        "answers": [
-            "A filmek letöltéséhez be kell jelentkezned a portál felhasználóval.",
-            "Hozzáférést a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> címre írt levélben kérheted",
-            "A fájlok a számítógép gyorsítótárában vannak tárolva, és akkor is le tudod játszani őket a webhelyről, ha nem csatlakozol a wifi-hez.",
-            "Töltsd be valahol wifin keresztül a weboldalt, töltsd le a fejezetet, tartsd nyitva a böngészőt a PC-n. Amikor eljutsz arra a helyre, ahol a webhelyet futtatni akarod, nyisd meg újra a számítógépét, használd ugyanazt a böngészőt, és a filmek megjelennek a webhelyen.",
-            "Chrome-ban nyitottad meg az oldalt? Ez az ajánlott böngésző.",
-            "Küldj levelet a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> címre"
-        ]
-    },
-    "autoUpdate": {
-        "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-        "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you close the app.<br />Do you want to install it now instead?",
-        "install": "Install now"
-    },
-    "offline": {
-        "downloadApp": {
-            "title": "Bible Explorers asztali alkalmazás letöltése",
-            "deviceTypeLabel": "Válaszd ki a készülék típusát",
-            "infoLabel": "Az adott Mac-verzió megtalálásához nyisd meg az \"Apple menü  <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>\"> \"Erről a Mac-ről\" menüpontját",
-            "infoText1": "Ha egy \"Chip\" feliratú elem jelenik meg, amelyet a chip neve követ, akkor az \"Mac with Apple silicon\".",
-            "infoText2": "Ha megjelenik egy \"Processor\" feliratú elem, amelyet a processzor neve követ, akkor az \"Intel-based Mac\".",
-            "close": "Close"
-        },
-        "download": {
-            "title": "Letöltés",
-            "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline."
-        },
-        "downloading": "Letöltés folyamatban",
-        "availableOffline": {
-            "title": "Elérhető offline",
-            "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet."
-        },
-        "update": "Update offline version",
-        "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
-        "downloadFailed": "There was a problem with downloading the chapter!",
-        "downloadToContinue": "A folytatáshoz le kell töltened a fejezetet.",
-        "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
-        "remove": "Offline verzió törlése"
-    },
-    "tooltips": {
-        "video": "Videó lejátszása",
-        "iris": "Beszélj Irisszel",
-        "task": "Fejezd be a feladatot"
-    },
-    "miniGames": {
-        "keyInteraction": {
-            "start": "Nyomj meg egy billentyűt a forduló indításához",
-            "tryAgain": "Nyomj meg egy billentyűt a forduló újraindításához.",
-            "continue": "Nyomj meg egy gombot a folytatáshoz"
-        },
-        "simonSays": {
-            "failed": {
-                "title": "Hoppá!",
-                "message": "You've played the wrong note of the melody!"
-            }
-        },
-        "flipCards": {
-            "chooseKing": "Válaszd ki a királyt"
-        },
-        "davidsRefuge": {
-            "chooseGoat": "Choose goat"
-        },
-        "completed": {
-            "title": "Szép munka!",
-            "message": "Teljesítetted a feladatot! Folytathatod az utazást",
-            "string": "befejezve"
-        },
-        "timeElapsed": {
-            "title": "Hoppá!",
-            "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
-        },
-        "startGame": "Játék indítása",
-        "level": "Level",
-        "gameOver": "Oh,elhibáztad.",
-        "round": "Kör",
-        "nextRound": "Next round",
-        "anotherRound": "Another round",
-        "tryAgain": "Próbáld újra!",
-        "playAgain": "Play again",
-        "reset": "Újrakezdés",
-        "restartRound": "Restart the round",
-        "continue": "Utazás folytatása",
-        "skip": "Átugrás",
-        "correctAnswers": "correct answers",
-        "playAudio": "Hanglejátszás",
-        "winRound": "Szép munka!"
-    },
-    "chapter": {
-        "infoSingular": {
-            "video": "video",
-            "task": "task",
-            "quiz": "quiz"
-        },
-        "infoPlural": {
-            "video": "videos",
-            "task": "tasks",
-            "quiz": "quizzes"
-        },
-        "activityDescLabel": "Task description"
+    "infoSingular": {
+      "quiz": "quiz",
+      "task": "task",
+      "video": "video"
     }
+  },
+  "conceptDescription": "Csatlakozz az időutazáshoz és fedezd fel a könyvet, amely minden kérdésre választ ad!",
+  "faq": {
+    "answers": [
+      "A filmek letöltéséhez be kell jelentkezned a portál felhasználóval.",
+      "Hozzáférést a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> címre írt levélben kérheted",
+      "A fájlok a számítógép gyorsítótárában vannak tárolva, és akkor is le tudod játszani őket a webhelyről, ha nem csatlakozol a wifi-hez.",
+      "Töltsd be valahol wifin keresztül a weboldalt, töltsd le a fejezetet, tartsd nyitva a böngészőt a PC-n. Amikor eljutsz arra a helyre, ahol a webhelyet futtatni akarod, nyisd meg újra a számítógépét, használd ugyanazt a böngészőt, és a filmek megjelennek a webhelyen.",
+      "Chrome-ban nyitottad meg az oldalt? Ez az ajánlott böngésző.",
+      "Küldj levelet a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a> címre"
+    ],
+    "questions": [
+      "Nem tudom letölteni a filmeket – mit tegyek?",
+      "Bejelentkeztem a portál felhasználómmal, de még mindig nem tudom letölteni a filmeket.",
+      "Letöltöttem a fejezetet, de nem találom a fájlokat – miért?",
+      "Internet nélkül mutatom be a filmeket a közösségben, hogyan tovább?",
+      "Az oldal összeomlik, ha megnyomom a gombokat, mit tegyek?",
+      "Van egy kérdésem, amelyre fent nem kaptam választ – mit tegyek?"
+    ]
+  },
+  "howTo": "How to guide",
+  "introduction": "A 6-12 éves gyerekek most fantasztikus időutazáson vehetnek részt és egészen új módon tapasztalhatják meg a Bibliát – a Felfedezőkkel. ",
+  "journey": {
+    "attachments": "Csatolmányok",
+    "back": "Vissza",
+    "bibleCards": {
+      "message": "Itt az idő, hogy megszerezzétek a bibliai kártyákat.",
+      "title": "Bible cards"
+    },
+    "completed": "Befejezted",
+    "congrats": "Gratulálunk!",
+    "continue": "Időutazás folytatása ",
+    "homescreen": "Kész",
+    "pause": {
+      "message": "The children can take a break before the time travel continues.",
+      "title": "Part 1 completed"
+    },
+    "restart": "Utazás újrakezdése",
+    "start": "Időutazás elkezdése"
+  },
+  "loginScreen": {
+    "manualRedirectInfo": "Kérjük, várj vagy",
+    "redirectInfo": "A rendszer átirányít a bejelentkezési oldalra.",
+    "redirectLink": "kattints ide a bejelentkezéshez."
+  },
+  "miniGames": {
+    "anotherRound": "Another round",
+    "completed": {
+      "message": "Teljesítetted a feladatot! Folytathatod az utazást",
+      "string": "befejezve",
+      "title": "Szép munka!"
+    },
+    "continue": "Utazás folytatása",
+    "correctAnswers": "correct answers",
+    "davidsRefuge": {
+      "chooseGoat": "Choose goat"
+    },
+    "flipCards": {
+      "chooseKing": "Válaszd ki a királyt"
+    },
+    "gameOver": "Oh,elhibáztad.",
+    "keyInteraction": {
+      "continue": "Nyomj meg egy gombot a folytatáshoz",
+      "start": "Nyomj meg egy billentyűt a forduló indításához",
+      "tryAgain": "Nyomj meg egy billentyűt a forduló újraindításához."
+    },
+    "level": "Level",
+    "nextRound": "Next round",
+    "playAgain": "Play again",
+    "playAudio": "Hanglejátszás",
+    "reset": "Újrakezdés",
+    "restartRound": "Restart the round",
+    "round": "Kör",
+    "simonSays": {
+      "failed": {
+        "message": "You've played the wrong note of the melody!",
+        "title": "Hoppá!"
+      }
+    },
+    "skip": "Átugrás",
+    "startGame": "Játék indítása",
+    "timeElapsed": {
+      "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő.",
+      "title": "Hoppá!"
+    },
+    "tryAgain": "Próbáld újra!",
+    "winRound": "Szép munka!"
+  },
+  "notAvailable": "No chapter available in the selected language",
+  "offline": {
+    "availableOffline": {
+      "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet.",
+      "title": "Elérhető offline"
+    },
+    "download": {
+      "info": "Are you logged in? If so, you can complete the chapter without internet. Click here to make the chapter available offline.",
+      "title": "Letöltés"
+    },
+    "downloadApp": {
+      "close": "Close",
+      "deviceTypeLabel": "Válaszd ki a készülék típusát",
+      "infoLabel": "Az adott Mac-verzió megtalálásához nyisd meg az \"Apple menü  <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>\"> \"Erről a Mac-ről\" menüpontját",
+      "infoText1": "Ha egy \"Chip\" feliratú elem jelenik meg, amelyet a chip neve követ, akkor az \"Mac with Apple silicon\".",
+      "infoText2": "Ha megjelenik egy \"Processor\" feliratú elem, amelyet a processzor neve követ, akkor az \"Intel-based Mac\".",
+      "title": "Bible Explorers asztali alkalmazás letöltése"
+    },
+    "downloadFailed": "There was a problem with downloading the chapter!",
+    "downloading": "Letöltés folyamatban",
+    "downloadToContinue": "A folytatáshoz le kell töltened a fejezetet.",
+    "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
+    "redownloadConfirmation": "Are you sure you want to redownload the chapter?",
+    "remove": "Offline verzió törlése",
+    "update": "Update offline version"
+  },
+  "settings": {
+    "backgroundMusic": "Háttérzene",
+    "contact": "Contact support",
+    "faq": "FAQ",
+    "feedback": "Visszajelzés",
+    "fullScreenMode": "Teljes képernyő",
+    "language": "Nyelv",
+    "loggedInAs": "You are logged in as\":",
+    "logIn": "Bejelentkezés",
+    "logOut": "Kijelentkezés",
+    "mentor": "mentor",
+    "noAccess": "You don't have access to watch the films. To get access send an email to <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
+    "noRole": "no role",
+    "notLoggedIn": "You are not logged in!",
+    "off": "Be",
+    "on": "Ki",
+    "soundEffects": "Hanghatások",
+    "title": "Beállítások",
+    "videoQuality": {
+      "high": "Magas",
+      "low": "Alacsony",
+      "medium": "Közepes",
+      "title": "Videó minőség"
+    }
+  },
+  "status": {
+    "fetching": "Fejezetek lehívása",
+    "initializing": "Inicializálás",
+    "loading": "Betöltés",
+    "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  },
+  "task": {
+    "codeUnlock": "Add meg a helyes számot",
+    "getTask": "Menj a feladathoz",
+    "next": "Next",
+    "openQuestion": "Write answer here",
+    "questions": "Kérdés",
+    "submit": "Küldés",
+    "taskDescription": "Feladat leírása"
+  },
+  "tooltips": {
+    "iris": "Beszélj Irisszel",
+    "task": "Fejezd be a feladatot",
+    "video": "Videó lejátszása"
+  },
+  "waitingScreen": {
+    "inputPlaceholder": "Írd ide a neved",
+    "submit": "Hozzáadás"
+  }
 }

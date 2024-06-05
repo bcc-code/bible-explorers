@@ -1,184 +1,184 @@
 {
-    "status": {
-        "loading": "Carregando",
-        "initializing": "Inicialização",
-        "fetching": "Buscando capítulos",
-        "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  "archive": "Arquivo",
+  "autoUpdate": {
+    "install": "Install now",
+    "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
+    "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you close the app.<br />Do you want to install it now instead?"
+  },
+  "browserNotification": "O navegador recomendado para este conceito é o Chrome",
+  "chapter": {
+    "activityDescLabel": "Guia do mentor",
+    "infoPlural": {
+      "quiz": "testes",
+      "task": "tarefa",
+      "video": "vídeos"
     },
-    "loginScreen": {
-        "redirectInfo": "Você será redirecionado para a página de login.",
-        "manualRedirectInfo": "Por favor, espere ou",
-        "redirectLink": "Clique aqui para logar."
-    },
-    "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
-    "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
-    "notAvailable": "Nenhum capítulo disponível no idioma selecionado",
-    "browserNotification": "O navegador recomendado para este conceito é o Chrome",
-    "howTo": "Como se preparar",
-    "waitingScreen": {
-        "submit": "Add",
-        "inputPlaceholder": "Write your name"
-    },
-    "journey": {
-        "start": "Comece a viajem no tempo",
-        "continue": "Continue a viajem no tempo",
-        "restart": "Reinicie a jornada",
-        "congrats": "Parabéns!",
-        "bibleCards": {
-            "title": "Cartão bíblico",
-            "message": "Agora é hora de receber cartões bíblicos."
-        },
-        "completed": "Você concluiu",
-        "back": "Voltar",
-        "attachments": "Attachments",
-        "homescreen": "Done",
-        "pause": {
-            "title": "Parte 1 completa",
-            "message": "As crianças podem fazer uma pausa antes que a viagem do tempo continue."
-        }
-    },
-    "task": {
-        "codeUnlock": "Digite o número correto",
-        "taskDescription": "Descrição da tarefa",
-        "questions": "Pergunta",
-        "getTask": "Vá para a tarefa",
-        "submit": "Enviar",
-        "next": "Seguinte",
-        "openQuestion": "Escreva sua resposta aqui"
-    },
-    "archive": "Arquivo",
-    "settings": {
-        "title": "Configurações",
-        "soundEffects": "Efeitos sonoros",
-        "videoQuality": {
-            "title": "Qualidade",
-            "low": "Baixo",
-            "medium": "Médio",
-            "high": "Alto"
-        },
-        "language": "Idioma",
-        "backgroundMusic": "Musica de fundo",
-        "fullScreenMode": "Modo tela cheia",
-        "on": "On",
-        "off": "Off",
-        "feedback": "Comentários",
-        "faq": "FAQ",
-        "notLoggedIn": "Você não está logado!",
-        "loggedInAs": "Você está logado\":",
-        "mentor": "mentor",
-        "noRole": "nenhum rolo",
-        "logIn": "Conecte-se",
-        "logOut": "Sair",
-        "noAccess": "Você não tem acesso a esse vídeo. Para recceber acesso envie um e-mail a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-        "contact": "Contact support"
-    },
-    "faq": {
-        "questions": [
-            "Não consigo baixar os filmes - o que eu faço?",
-            "Fiz login com meu usuário do portal, mas ainda não consigo baixar os filmes.",
-            "Baixei o capítulo mas não consigo encontrar os arquivos - por quê?",
-            "Vou exibir os filmes no site da igreja sem internet, como devo proceder?",
-            "A página trava quando pressiono botões, o que faço?",
-            "Eu tenho uma pergunta sem resposta acima - o que eu faço?"
-        ],
-        "answers": [
-            "Você deve fazer login com seu usuário do portal para poder baixar os filmes.",
-            "Você pode solicitar o acesso enviando um e-mail para <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "Os arquivos são armazenados no cache do seu PC, você poderá reproduzi-los do site mesmo se não estiver em wifi",
-            "Carregue o site em algum lugar com wifi, baixe o capítulo, mantenha o navegador aberto no PC. Quando você chegar ao local onde vai rodar o site, abra seu PC novamente, use o mesmo navegador e os filmes aparecerão no site.",
-            "Você abriu a página no chrome?  É o navegador recomendado para Exploradores.",
-            "Envie um e-mail para <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>"
-        ]
-    },
-    "autoUpdate": {
-        "updateAvailable": "There is a new version of the app available.<br />Downloading now ...",
-        "updateDownloaded": "The new version has been downloaded and it will be installed automatically when you close the app.<br />Do you want to install it now instead?",
-        "install": "Install now"
-    },
-    "offline": {
-        "downloadApp": {
-            "title": "Baixe o aplicativo Bible Explorers para desktop",
-            "deviceTypeLabel": "Escolha o tipo do seu dispositivo",
-            "infoLabel": "Para descobrir qual versão do Mac se aplica a você, abra “Menu Apple <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>” > “Sobre este Mac”",
-            "infoText1": "Se mostrar um item denominado “Chip” seguido do nome do chip, é “Mac com silício Apple”.",
-            "infoText2": "Se mostrar um item denominado “Processador” seguido do nome do processador, é “Mac baseado em Intel”.",
-            "close": "Close"
-        },
-        "download": {
-            "title": "Obtenha a versão offline",
-            "info": "Você está logado? Então você pode completar o capítulo sem acesso a internet. Clique aqui para tornar o capítulo disponível offline."
-        },
-        "downloading": "Baixando",
-        "availableOffline": {
-            "title": "Disponível off-line",
-            "info": "O capítulo agora está disponível offline com as tarefas e vídeos. Você agora pode jogar em um local sem acesso a internet."
-        },
-        "update": "Atualizar a versão offline",
-        "redownloadConfirmation": "Está seguro que deseja recarregar o capítulo?",
-        "downloadFailed": "Ocorreu um problema com o download do capítulo!",
-        "downloadToContinue": "Você precisa baixar o capítulo para continuar.",
-        "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
-        "remove": "Excluir versão off-line"
-    },
-    "tooltips": {
-        "video": "Play video",
-        "iris": "Falar com a Iris",
-        "task": "Complete a tarefa"
-    },
-    "miniGames": {
-        "keyInteraction": {
-            "start": "Press any key to start a round",
-            "tryAgain": "Press any key to try again",
-            "continue": "Press any key to continue"
-        },
-        "simonSays": {
-            "failed": {
-                "title": "Oops!",
-                "message": "Você tocou a nota incorreta da melodia!"
-            }
-        },
-        "flipCards": {
-            "chooseKing": "Escolha como um rei"
-        },
-        "davidsRefuge": {
-            "chooseGoat": "Escolha a carneiro"
-        },
-        "completed": {
-            "title": "Well done!",
-            "message": "You have successfully completed the task!",
-            "string": "completa"
-        },
-        "timeElapsed": {
-            "title": "Oops!",
-            "message": "Time is up; try to attach all the wires before time is up."
-        },
-        "startGame": "Comece o jogo",
-        "level": "Nivel",
-        "gameOver": "Oh, você falhou.",
-        "round": "Rodada",
-        "nextRound": "Próxima rodada",
-        "anotherRound": "Outra rodada",
-        "tryAgain": "Tente novamente!",
-        "playAgain": "Toque novamente",
-        "reset": "Recomeçar jogada",
-        "restartRound": "Reiniciar a rodada",
-        "continue": "Continue a viagem",
-        "skip": "Skip",
-        "correctAnswers": "respostas corretas",
-        "playAudio": "Reproduzir áudio",
-        "winRound": "Well done!"
-    },
-    "chapter": {
-        "infoSingular": {
-            "video": "vídeo",
-            "task": "tarefa",
-            "quiz": "quiz"
-        },
-        "infoPlural": {
-            "video": "vídeos",
-            "task": "tarefa",
-            "quiz": "testes"
-        },
-        "activityDescLabel": "Guia do mentor"
+    "infoSingular": {
+      "quiz": "quiz",
+      "task": "tarefa",
+      "video": "vídeo"
     }
+  },
+  "conceptDescription": "Junte-se a viajem no tempo e explore o livro que pode responder todas as perguntas",
+  "faq": {
+    "answers": [
+      "Você deve fazer login com seu usuário do portal para poder baixar os filmes.",
+      "Você pode solicitar o acesso enviando um e-mail para <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
+      "Os arquivos são armazenados no cache do seu PC, você poderá reproduzi-los do site mesmo se não estiver em wifi",
+      "Carregue o site em algum lugar com wifi, baixe o capítulo, mantenha o navegador aberto no PC. Quando você chegar ao local onde vai rodar o site, abra seu PC novamente, use o mesmo navegador e os filmes aparecerão no site.",
+      "Você abriu a página no chrome?  É o navegador recomendado para Exploradores.",
+      "Envie um e-mail para <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>"
+    ],
+    "questions": [
+      "Não consigo baixar os filmes - o que eu faço?",
+      "Fiz login com meu usuário do portal, mas ainda não consigo baixar os filmes.",
+      "Baixei o capítulo mas não consigo encontrar os arquivos - por quê?",
+      "Vou exibir os filmes no site da igreja sem internet, como devo proceder?",
+      "A página trava quando pressiono botões, o que faço?",
+      "Eu tenho uma pergunta sem resposta acima - o que eu faço?"
+    ]
+  },
+  "howTo": "Como se preparar",
+  "introduction": "Agora, crianças de 6 a 12 anos podem participar de fantásticas viagens no tempo e experimentar a bíblia de uma maneira totalmente nova – com exploradores",
+  "journey": {
+    "attachments": "Attachments",
+    "back": "Voltar",
+    "bibleCards": {
+      "message": "Agora é hora de receber cartões bíblicos.",
+      "title": "Cartão bíblico"
+    },
+    "completed": "Você concluiu",
+    "congrats": "Parabéns!",
+    "continue": "Continue a viajem no tempo",
+    "homescreen": "Done",
+    "pause": {
+      "message": "As crianças podem fazer uma pausa antes que a viagem do tempo continue.",
+      "title": "Parte 1 completa"
+    },
+    "restart": "Reinicie a jornada",
+    "start": "Comece a viajem no tempo"
+  },
+  "loginScreen": {
+    "manualRedirectInfo": "Por favor, espere ou",
+    "redirectInfo": "Você será redirecionado para a página de login.",
+    "redirectLink": "Clique aqui para logar."
+  },
+  "miniGames": {
+    "anotherRound": "Outra rodada",
+    "completed": {
+      "message": "You have successfully completed the task!",
+      "string": "completa",
+      "title": "Well done!"
+    },
+    "continue": "Continue a viagem",
+    "correctAnswers": "respostas corretas",
+    "davidsRefuge": {
+      "chooseGoat": "Escolha a carneiro"
+    },
+    "flipCards": {
+      "chooseKing": "Escolha como um rei"
+    },
+    "gameOver": "Oh, você falhou.",
+    "keyInteraction": {
+      "continue": "Press any key to continue",
+      "start": "Press any key to start a round",
+      "tryAgain": "Press any key to try again"
+    },
+    "level": "Nivel",
+    "nextRound": "Próxima rodada",
+    "playAgain": "Toque novamente",
+    "playAudio": "Reproduzir áudio",
+    "reset": "Recomeçar jogada",
+    "restartRound": "Reiniciar a rodada",
+    "round": "Rodada",
+    "simonSays": {
+      "failed": {
+        "message": "Você tocou a nota incorreta da melodia!",
+        "title": "Oops!"
+      }
+    },
+    "skip": "Skip",
+    "startGame": "Comece o jogo",
+    "timeElapsed": {
+      "message": "Time is up; try to attach all the wires before time is up.",
+      "title": "Oops!"
+    },
+    "tryAgain": "Tente novamente!",
+    "winRound": "Well done!"
+  },
+  "notAvailable": "Nenhum capítulo disponível no idioma selecionado",
+  "offline": {
+    "availableOffline": {
+      "info": "O capítulo agora está disponível offline com as tarefas e vídeos. Você agora pode jogar em um local sem acesso a internet.",
+      "title": "Disponível off-line"
+    },
+    "download": {
+      "info": "Você está logado? Então você pode completar o capítulo sem acesso a internet. Clique aqui para tornar o capítulo disponível offline.",
+      "title": "Obtenha a versão offline"
+    },
+    "downloadApp": {
+      "close": "Close",
+      "deviceTypeLabel": "Escolha o tipo do seu dispositivo",
+      "infoLabel": "Para descobrir qual versão do Mac se aplica a você, abra “Menu Apple <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>” > “Sobre este Mac”",
+      "infoText1": "Se mostrar um item denominado “Chip” seguido do nome do chip, é “Mac com silício Apple”.",
+      "infoText2": "Se mostrar um item denominado “Processador” seguido do nome do processador, é “Mac baseado em Intel”.",
+      "title": "Baixe o aplicativo Bible Explorers para desktop"
+    },
+    "downloadFailed": "Ocorreu um problema com o download do capítulo!",
+    "downloading": "Baixando",
+    "downloadToContinue": "Você precisa baixar o capítulo para continuar.",
+    "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
+    "redownloadConfirmation": "Está seguro que deseja recarregar o capítulo?",
+    "remove": "Excluir versão off-line",
+    "update": "Atualizar a versão offline"
+  },
+  "settings": {
+    "backgroundMusic": "Musica de fundo",
+    "contact": "Contact support",
+    "faq": "FAQ",
+    "feedback": "Comentários",
+    "fullScreenMode": "Modo tela cheia",
+    "language": "Idioma",
+    "loggedInAs": "Você está logado\":",
+    "logIn": "Conecte-se",
+    "logOut": "Sair",
+    "mentor": "mentor",
+    "noAccess": "Você não tem acesso a esse vídeo. Para recceber acesso envie um e-mail a <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
+    "noRole": "nenhum rolo",
+    "notLoggedIn": "Você não está logado!",
+    "off": "Off",
+    "on": "On",
+    "soundEffects": "Efeitos sonoros",
+    "title": "Configurações",
+    "videoQuality": {
+      "high": "Alto",
+      "low": "Baixo",
+      "medium": "Médio",
+      "title": "Qualidade"
+    }
+  },
+  "status": {
+    "fetching": "Buscando capítulos",
+    "initializing": "Inicialização",
+    "loading": "Carregando",
+    "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  },
+  "task": {
+    "codeUnlock": "Digite o número correto",
+    "getTask": "Vá para a tarefa",
+    "next": "Seguinte",
+    "openQuestion": "Escreva sua resposta aqui",
+    "questions": "Pergunta",
+    "submit": "Enviar",
+    "taskDescription": "Descrição da tarefa"
+  },
+  "tooltips": {
+    "iris": "Falar com a Iris",
+    "task": "Complete a tarefa",
+    "video": "Play video"
+  },
+  "waitingScreen": {
+    "inputPlaceholder": "Write your name",
+    "submit": "Add"
+  }
 }

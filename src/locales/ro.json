@@ -1,184 +1,184 @@
 {
-    "status": {
-        "loading": "Se încarcă",
-        "initializing": "Inițializare",
-        "fetching": "Accesează capitolele",
-        "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  "archive": "Arhivă",
+  "autoUpdate": {
+    "install": "Instalează acum",
+    "updateAvailable": "Este disponibilă o nouă versiune a aplicației.<br />Se descarcă ...",
+    "updateDownloaded": "Noua versiune a fost descărcată și va fi instalată automat la închiderea aplicației.<br />Vrei să o instalezi chiar acum?"
+  },
+  "browserNotification": "Browserul recomandat pentru acest concept este Chrome",
+  "chapter": {
+    "activityDescLabel": "Ghidul mentorului",
+    "infoPlural": {
+      "quiz": "teste",
+      "task": "sarcini",
+      "video": "filme"
     },
-    "loginScreen": {
-        "redirectInfo": "Vei fi redirecționat către pagina de logare.",
-        "manualRedirectInfo": "Te rugăm așteaptă sau",
-        "redirectLink": "apasă aici pentru autentificare."
-    },
-    "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
-    "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
-    "notAvailable": "Nici un capitol disponibil în limba selectată",
-    "browserNotification": "Browserul recomandat pentru acest concept este Chrome",
-    "howTo": "Cum funcționează?",
-    "waitingScreen": {
-        "submit": "Adaugă",
-        "inputPlaceholder": "Introdu numele aici"
-    },
-    "journey": {
-        "start": "Începe călătoria în timp",
-        "continue": "Continuă călătoria în timp",
-        "restart": "Începe călătoria din nou",
-        "congrats": "Felicitări!",
-        "bibleCards": {
-            "title": "Carduri biblice",
-            "message": "Acum este momentul să primiți cardurile biblice."
-        },
-        "completed": "Ai terminat",
-        "back": "Înapoi",
-        "attachments": "Fișiere",
-        "homescreen": "Finalizare",
-        "pause": {
-            "title": "Partea 1 finalizată",
-            "message": "Copiii pot lua o pauză înainte de a continua călătoria în timp."
-        }
-    },
-    "task": {
-        "codeUnlock": "Scrie numărul corect",
-        "taskDescription": "Descrierea sarcinii",
-        "questions": "Întrebare",
-        "getTask": "Mergi la sarcină",
-        "submit": "Trimite",
-        "next": "Continuă",
-        "openQuestion": "Scrie răspunsul aici"
-    },
-    "archive": "Arhivă",
-    "settings": {
-        "title": "Setări",
-        "soundEffects": "Efecte sonore",
-        "videoQuality": {
-            "title": "Calitate video",
-            "low": "Redus",
-            "medium": "Mediu",
-            "high": "Înalt"
-        },
-        "language": "Limbă",
-        "backgroundMusic": "Muzică de fundal",
-        "fullScreenMode": "Pe tot ecranul",
-        "on": "On",
-        "off": "Off",
-        "feedback": "Feedback",
-        "faq": "FAQ",
-        "notLoggedIn": "Nu ești autentificat!",
-        "loggedInAs": "Ești autentificat ca\":",
-        "mentor": "mentor",
-        "noRole": "niciun rol",
-        "logIn": "Logare",
-        "logOut": "Delogare",
-        "noAccess": "Nu ai acces pentru a viziona filmele. Pentru a primi acces, trimite un email la <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-        "contact": "Contact support"
-    },
-    "faq": {
-        "questions": [
-            "Nu pot descărca filmele - ce pot să fac?",
-            "M-am logat cu contul meu de Portal, dar tot nu pot descărca filmele.",
-            "Am descărcat capitolul dar nu găsesc fișierele - de ce?",
-            "Vom viziona filmele în adunarea locală fără internet, cum procedăm?",
-            "Pagina se blochează când apăs pe butoane, ce fac?",
-            "Am o întrebare la care nu s-a răspuns mai sus - ce fac?"
-        ],
-        "answers": [
-            "Trebuie să te loghezi cu contul de Portal pentru a putea descărca filmele.",
-            "Poți cere acces trimițând un e-mail la adresa\": <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
-            "Fișierele sunt stocate în memoria cache de pe calculator, le vei putea viziona de pe site chiar dacă nu ești conectat la Wifi.",
-            "Încarcă site-ul într-un loc în care ai internet, descarcă capitolul și ține browserul deschis pe calculator. Când ajungi la locul în care vei parcuge capitolul, deschide din nou calculatorul, folosește același browser iar filmele vor putea fi urmărite direct pe site.",
-            "Ai deschis pagina în Chrome? Este browserul recomandat pentru Explorers.",
-            "Trimite un e-mail la <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>"
-        ]
-    },
-    "autoUpdate": {
-        "updateAvailable": "Este disponibilă o nouă versiune a aplicației.<br />Se descarcă ...",
-        "updateDownloaded": "Noua versiune a fost descărcată și va fi instalată automat la închiderea aplicației.<br />Vrei să o instalezi chiar acum?",
-        "install": "Instalează acum"
-    },
-    "offline": {
-        "downloadApp": {
-            "title": "Descarcă aplicația Bible Explorers pentru desktop",
-            "deviceTypeLabel": "Alege sistemul de operare",
-            "infoLabel": "Pentru a afla ce versiune Mac ți se aplică, deschide „meniul Apple <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>” > „Despre acest Mac” ",
-            "infoText1": "Dacă apare un element intitulat „Chip” urmat de numele chipului, este „Mac with Apple silicon”.",
-            "infoText2": "Dacă apare un element intitulat „Processor” urmat de numele procesorului, este „Intel-based Mac”.",
-            "close": "Închide"
-        },
-        "download": {
-            "title": "Obține varianta offline",
-            "info": "Te-ai autentificat? Astfel poți parcurge capitolul fără o conexiune la internet. Apasă aici pentru a face capitolul disponibil offline."
-        },
-        "downloading": "Se descarcă",
-        "availableOffline": {
-            "title": "Disponibil offline",
-            "info": "Capitolul este acum disponibil offline cu toate sarcinile și filmele. Așadar, îl poți parcuge și într-o locație unde nu se găsește internet."
-        },
-        "update": "Actualizează versiunea offline",
-        "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?",
-        "downloadFailed": "A apărut o problemă la descărcarea capitolului!",
-        "downloadToContinue": "Trebuie să descarci capitolul pentru a continua.",
-        "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
-        "remove": "Șterge versiunea offline"
-    },
-    "tooltips": {
-        "video": "Pornește video",
-        "iris": "Vorbește cu Iris",
-        "task": "Finalizează sarcina"
-    },
-    "miniGames": {
-        "keyInteraction": {
-            "start": "Apasă pe o tastă pentru a începe runda",
-            "tryAgain": "Apasă pe o tastă pentru a începe runda din nou",
-            "continue": "Apasă pe o tastă pentru a continua"
-        },
-        "simonSays": {
-            "failed": {
-                "title": "Ups!",
-                "message": "Ai cântat o notă greșită în melodie!"
-            }
-        },
-        "flipCards": {
-            "chooseKing": "Alege ca împărat"
-        },
-        "davidsRefuge": {
-            "chooseGoat": "Alege capră"
-        },
-        "completed": {
-            "title": "Bravo!",
-            "message": "Ai terminat sarcina cu succes!",
-            "string": "finalizată"
-        },
-        "timeElapsed": {
-            "title": "Ups!",
-            "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
-        },
-        "startGame": "Începe jocul",
-        "level": "Nivel",
-        "gameOver": "Ups, ai pierdut.",
-        "round": "Runda",
-        "nextRound": "Runda următoare",
-        "anotherRound": "Încă o rundă",
-        "tryAgain": "Încearcă din nou",
-        "playAgain": "O nouă rundă",
-        "reset": "Începe jocul din nou",
-        "restartRound": "Joacă din nou runda",
-        "continue": "Continuă călătoria",
-        "skip": "Sări peste",
-        "correctAnswers": "răspunsuri corecte",
-        "playAudio": "Pornește audio",
-        "winRound": "Bună treabă!"
-    },
-    "chapter": {
-        "infoSingular": {
-            "video": "film",
-            "task": "sarcină",
-            "quiz": "test"
-        },
-        "infoPlural": {
-            "video": "filme",
-            "task": "sarcini",
-            "quiz": "teste"
-        },
-        "activityDescLabel": "Ghidul mentorului"
+    "infoSingular": {
+      "quiz": "test",
+      "task": "sarcină",
+      "video": "film"
     }
+  },
+  "conceptDescription": "Vino cu noi în călătoria în timp și explorează cartea care răspunde la toate întrebările",
+  "faq": {
+    "answers": [
+      "Trebuie să te loghezi cu contul de Portal pentru a putea descărca filmele.",
+      "Poți cere acces trimițând un e-mail la adresa\": <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
+      "Fișierele sunt stocate în memoria cache de pe calculator, le vei putea viziona de pe site chiar dacă nu ești conectat la Wifi.",
+      "Încarcă site-ul într-un loc în care ai internet, descarcă capitolul și ține browserul deschis pe calculator. Când ajungi la locul în care vei parcuge capitolul, deschide din nou calculatorul, folosește același browser iar filmele vor putea fi urmărite direct pe site.",
+      "Ai deschis pagina în Chrome? Este browserul recomandat pentru Explorers.",
+      "Trimite un e-mail la <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>"
+    ],
+    "questions": [
+      "Nu pot descărca filmele - ce pot să fac?",
+      "M-am logat cu contul meu de Portal, dar tot nu pot descărca filmele.",
+      "Am descărcat capitolul dar nu găsesc fișierele - de ce?",
+      "Vom viziona filmele în adunarea locală fără internet, cum procedăm?",
+      "Pagina se blochează când apăs pe butoane, ce fac?",
+      "Am o întrebare la care nu s-a răspuns mai sus - ce fac?"
+    ]
+  },
+  "howTo": "Cum funcționează?",
+  "introduction": "Copiii cu vârsta cuprinsă între 6-12 ani pot acum să participe la călătorii fantastice în timp și să experimenteze Biblia într-un fel nou - cu Explorers",
+  "journey": {
+    "attachments": "Fișiere",
+    "back": "Înapoi",
+    "bibleCards": {
+      "message": "Acum este momentul să primiți cardurile biblice.",
+      "title": "Carduri biblice"
+    },
+    "completed": "Ai terminat",
+    "congrats": "Felicitări!",
+    "continue": "Continuă călătoria în timp",
+    "homescreen": "Finalizare",
+    "pause": {
+      "message": "Copiii pot lua o pauză înainte de a continua călătoria în timp.",
+      "title": "Partea 1 finalizată"
+    },
+    "restart": "Începe călătoria din nou",
+    "start": "Începe călătoria în timp"
+  },
+  "loginScreen": {
+    "manualRedirectInfo": "Te rugăm așteaptă sau",
+    "redirectInfo": "Vei fi redirecționat către pagina de logare.",
+    "redirectLink": "apasă aici pentru autentificare."
+  },
+  "miniGames": {
+    "anotherRound": "Încă o rundă",
+    "completed": {
+      "message": "Ai terminat sarcina cu succes!",
+      "string": "finalizată",
+      "title": "Bravo!"
+    },
+    "continue": "Continuă călătoria",
+    "correctAnswers": "răspunsuri corecte",
+    "davidsRefuge": {
+      "chooseGoat": "Alege capră"
+    },
+    "flipCards": {
+      "chooseKing": "Alege ca împărat"
+    },
+    "gameOver": "Ups, ai pierdut.",
+    "keyInteraction": {
+      "continue": "Apasă pe o tastă pentru a continua",
+      "start": "Apasă pe o tastă pentru a începe runda",
+      "tryAgain": "Apasă pe o tastă pentru a începe runda din nou"
+    },
+    "level": "Nivel",
+    "nextRound": "Runda următoare",
+    "playAgain": "O nouă rundă",
+    "playAudio": "Pornește audio",
+    "reset": "Începe jocul din nou",
+    "restartRound": "Joacă din nou runda",
+    "round": "Runda",
+    "simonSays": {
+      "failed": {
+        "message": "Ai cântat o notă greșită în melodie!",
+        "title": "Ups!"
+      }
+    },
+    "skip": "Sări peste",
+    "startGame": "Începe jocul",
+    "timeElapsed": {
+      "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire.",
+      "title": "Ups!"
+    },
+    "tryAgain": "Încearcă din nou",
+    "winRound": "Bună treabă!"
+  },
+  "notAvailable": "Nici un capitol disponibil în limba selectată",
+  "offline": {
+    "availableOffline": {
+      "info": "Capitolul este acum disponibil offline cu toate sarcinile și filmele. Așadar, îl poți parcuge și într-o locație unde nu se găsește internet.",
+      "title": "Disponibil offline"
+    },
+    "download": {
+      "info": "Te-ai autentificat? Astfel poți parcurge capitolul fără o conexiune la internet. Apasă aici pentru a face capitolul disponibil offline.",
+      "title": "Obține varianta offline"
+    },
+    "downloadApp": {
+      "close": "Închide",
+      "deviceTypeLabel": "Alege sistemul de operare",
+      "infoLabel": "Pentru a afla ce versiune Mac ți se aplică, deschide „meniul Apple <svg xmlns=\"http\"://www.w3.org/2000/svg\" viewBox=\"0 0 842.32 1000\"><path fill=\"#ffffff\" d=\"M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z\"/></svg>” > „Despre acest Mac” ",
+      "infoText1": "Dacă apare un element intitulat „Chip” urmat de numele chipului, este „Mac with Apple silicon”.",
+      "infoText2": "Dacă apare un element intitulat „Processor” urmat de numele procesorului, este „Intel-based Mac”.",
+      "title": "Descarcă aplicația Bible Explorers pentru desktop"
+    },
+    "downloadFailed": "A apărut o problemă la descărcarea capitolului!",
+    "downloading": "Se descarcă",
+    "downloadToContinue": "Trebuie să descarci capitolul pentru a continua.",
+    "outdated": "The chapter has been updated. Please redownload to get the latest updates for best performance.",
+    "redownloadConfirmation": "Ești sigur că vrei să redescarci capitolul?",
+    "remove": "Șterge versiunea offline",
+    "update": "Actualizează versiunea offline"
+  },
+  "settings": {
+    "backgroundMusic": "Muzică de fundal",
+    "contact": "Contact support",
+    "faq": "FAQ",
+    "feedback": "Feedback",
+    "fullScreenMode": "Pe tot ecranul",
+    "language": "Limbă",
+    "loggedInAs": "Ești autentificat ca\":",
+    "logIn": "Logare",
+    "logOut": "Delogare",
+    "mentor": "mentor",
+    "noAccess": "Nu ai acces pentru a viziona filmele. Pentru a primi acces, trimite un email la <a href='mailto\":hello@biblekids.io'>hello@biblekids.io</a>",
+    "noRole": "niciun rol",
+    "notLoggedIn": "Nu ești autentificat!",
+    "off": "Off",
+    "on": "On",
+    "soundEffects": "Efecte sonore",
+    "title": "Setări",
+    "videoQuality": {
+      "high": "Înalt",
+      "low": "Redus",
+      "medium": "Mediu",
+      "title": "Calitate video"
+    }
+  },
+  "status": {
+    "fetching": "Se descarcă capitolele",
+    "initializing": "Inițializare",
+    "loading": "Se încarcă",
+    "noCacheNoInternet": "We're very sorry but it looks like we couldn't find the chapters and you are not connected to the Internet."
+  },
+  "task": {
+    "codeUnlock": "Scrie numărul corect",
+    "getTask": "Mergi la sarcină",
+    "next": "Continuă",
+    "openQuestion": "Scrie răspunsul aici",
+    "questions": "Întrebare",
+    "submit": "Trimite",
+    "taskDescription": "Descrierea sarcinii"
+  },
+  "tooltips": {
+    "iris": "Vorbește cu Iris",
+    "task": "Finalizează sarcina",
+    "video": "Pornește video"
+  },
+  "waitingScreen": {
+    "inputPlaceholder": "Introdu numele aici",
+    "submit": "Adaugă"
+  }
 }
