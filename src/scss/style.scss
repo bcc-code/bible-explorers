@@ -3004,6 +3004,54 @@ img.lazyloaded~div.img-loader {
 
 /* #endregion */
 
+#quiz-content {
+    display: flex;
+    width: 100%;
+
+    #quiz__question {
+        width: 60%;
+    }
+
+    #minefield__table {
+        width: 40%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 2px;
+
+        .cell {
+            background-color: #fff;
+            aspect-ratio: 1/1;
+            transition: .3s ease-in-out;
+
+            &[left-cell],
+            &[top-cell],
+            &[right-cell] {
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+
+            &[current-cell], &[visited-cell] {
+                background-color: #e59e35;
+            }
+            
+            &[left-cell] {
+                background-color: yellow;
+            }
+
+            &[top-cell] {
+                background-color: red;
+            }
+
+            &[right-cell] {
+                background-color: lightblue;
+            }
+        }
+    }
+}
+
 /* Hover styles for non-mobile devices */
 @media (hover: hover) and (pointer: fine) {
     .button-cube:hover {

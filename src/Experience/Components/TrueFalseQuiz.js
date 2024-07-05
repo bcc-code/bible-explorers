@@ -63,15 +63,15 @@ export default class TrueFalsQuiz {
                 : ''
 
         const questionHTML = `
-                <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
-                    ${audioButton}
-                    <audio id="quizAudio" class="hidden sr-only" preload="auto" crossOrigin="anonymous"></audio>
-                    ${questionContent}
-                    <div class="flex gap-12 items-center">
-                        <button class="answer-button" data-answer="false" id="answer-button-false"></button>
-                        <button class="answer-button" data-answer="true" id="answer-button-true"></button>
-                    </div>
-                </div>`
+            <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
+                ${audioButton}
+                <audio id="quizAudio" class="hidden sr-only" preload="auto" crossOrigin="anonymous"></audio>
+                ${questionContent}
+                <div class="flex gap-12 items-center">
+                    <button class="answer-button" data-answer="false" id="answer-button-false"></button>
+                    <button class="answer-button" data-answer="true" id="answer-button-true"></button>
+                </div>
+            </div>`
 
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = questionHTML

@@ -20,6 +20,7 @@ import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWi
 import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
 import SingleChoice from '../Components/SingleChoice.js'
 import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
+import MineField from '../Components/MineField.js'
 
 let instance = null
 
@@ -57,6 +58,7 @@ export default class Program {
         instance.taskDescriptionWithCalculatorScreen = new TaskDescriptionWithCalculatorScreen()
         instance.singleChoice = new SingleChoice()
         instance.quizTrueFalse = new TrueFalsQuiz()
+        instance.mineField = new MineField()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -199,6 +201,8 @@ export default class Program {
                     instance.quizTrueFalse.show()
                 } else if (instance.taskType() === 'single_choice') {
                     instance.singleChoice.show()
+                } else if (instance.taskType() === 'minefield') {
+                    instance.mineField.show()
                 }
 
                 // Games
