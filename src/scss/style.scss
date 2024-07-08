@@ -1995,6 +1995,33 @@ $themes: (
     border-radius: 10px;
 }
 
+#glitch-character {
+    position: absolute;
+    width: 250px;
+    bottom: -120px;
+    right: 9rem;
+    transition: .5s ease;
+    cursor: pointer;
+    padding: 2rem;
+
+    &:hover,
+    &.active {
+        transform: translateY(-110px);
+    }
+}
+
+#open-guide, #glitch-guide {
+    display: none;
+    position: absolute;
+    background: var(--bg-default);
+    right: 1rem;
+    bottom: 9rem;
+    padding: 0.5rem;
+    border: 2px solid #fff;
+    text-align: center;
+    width: 160px;
+}
+
 .pause {
     .container {
         position: fixed;
