@@ -21,6 +21,7 @@ import MessageWithSupportingScreens from '../Components/MessageWithSupportingScr
 import SingleChoice from '../Components/SingleChoice.js'
 import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
 import MineField from '../Components/MineField.js'
+import BibleVerseCode from '../Components/BibleVerseCode.js'
 
 let instance = null
 
@@ -59,6 +60,7 @@ export default class Program {
         instance.singleChoice = new SingleChoice()
         instance.quizTrueFalse = new TrueFalsQuiz()
         instance.mineField = new MineField()
+        instance.bibleVerseCode = new BibleVerseCode()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -203,6 +205,8 @@ export default class Program {
                     instance.singleChoice.show()
                 } else if (instance.taskType() === 'minefield') {
                     instance.mineField.show()
+                } else if (instance.taskType() === 'bible_verse_code') {
+                    instance.bibleVerseCode.toggleBibleVerseCode()
                 }
 
                 // Games
