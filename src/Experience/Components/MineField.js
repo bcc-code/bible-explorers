@@ -183,14 +183,15 @@ export default class MineField {
     handleQuizCompletion() {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = 'Game completed!'
+
+        instance.experience.navigation.next.innerHTML = ''
+        instance.experience.navigation.next.className = 'button button-arrow'
     }
 
     destroy() {
         document.querySelector('#minefield')?.remove()
 
         instance.experience.setAppView('chapter')
-        instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }

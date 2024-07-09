@@ -150,16 +150,10 @@ export default class BibleVerseCode {
     }
 
     destroy() {
-        document.onkeydown = null
-        instance.el.backspace.removeEventListener('click', instance.remove)
-        instance.el.confirm.removeEventListener('click', instance.checkCode)
-
-        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
         document.querySelector('#bible-verse-code')?.remove()
 
         instance.experience.setAppView('chapter')
 
-        instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = `button button-arrow`
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }
