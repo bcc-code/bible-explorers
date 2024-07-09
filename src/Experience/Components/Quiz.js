@@ -9,9 +9,8 @@ let instance = null
 
 export default class Quiz {
     constructor() {
-        if (instance) {
-            return instance
-        }
+        if (instance) return instance
+
         this.experience = new Experience()
         instance = this
     }
@@ -28,13 +27,20 @@ export default class Quiz {
         this.correctAnswers = 0
         this.openQuestions = 0
         this.questionIdx = 0
+        this.getCurrentQuestion = () => this.questions[this.questionIdx]
 
         this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         this.experience.navigation.next.className = `button button-arrow-skip`
         this.experience.setAppView('game')
 
         this.quizHTML()
-        this.setEventListeners()
+
+        this.nextQuestion = document.getElementById('next-question')
+        this.submitQuiz = document.getElementById('submit-quiz')
+        this.taskActionsWrapper = document.querySelector('.task-container_actions')
+
+        this.toggleQuestion()
+
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
@@ -46,39 +52,46 @@ export default class Quiz {
                     <div class="progress-bar-background">
                         <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
                     </div>
-                    <ul id="progress-steps" class="progress-steps">${instance.questions.map((_, index) => `<li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}"><span class="step-number">${index + 1}</span></li>`).join('')}</ul>
+                    <ul id="progress-steps" class="progress-steps">${instance.questions
+                        .map(
+                            (_, index) => `
+                        <li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
+                            <span class="step-number">${index + 1}</span>
+                        </li>`
+                        )
+                        .join('')}</ul>
                 </div>
                 <div id="quiz-wrapper"></div>
-                ${
-                    instance.questions.length > 0
-                        ? `
-                    <div class="task-container_actions">
-                        <button id="next-question" class="button button-task_action"><svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg></button>
-                        <button id="submit-quiz" class="button button-task_action" type="submit"><span>${_s.task.submit}</span></button>
-                    </div>`
-                        : ''
-                }
+                <div class="task-container_actions">
+                    <button id="next-question" class="button button-task_action"></button>
+                    <button id="submit-quiz" class="button button-task_action" type="submit"><span>${_s.task.submit}</span></button>
+                </div>
             </div>
         </div>`)
 
-        instance.quizContainer.querySelector('#quiz-wrapper').setAttribute('data-question', 0)
+        instance.experience.interface.gameContainer.append(instance.quizContainer)
+    }
 
-        instance.questions.forEach((q, qIdx) => {
-            const container = _gl.elementFromHtml(
-                `<div class="quiz-item ${qIdx === 0 ? 'block' : 'hidden'}" data-index="${qIdx}"></div>`
-            )
-            const question = _gl.elementFromHtml(
-                `<h5 class="task-container_prompts text-center font-bold mb-[4%]">${q.question}</h5>`
-            )
+    toggleQuestion() {
+        instance.quizContainer.querySelector('#quiz-wrapper').innerHTML = ''
 
-            container.append(question)
+        const container = _gl.elementFromHtml(
+            `<div class="quiz-item data-index="${instance.questionIdx}"></div>`
+        )
+        const question = _gl.elementFromHtml(
+            `<h5 class="task-container_prompts text-center font-bold mb-[4%]">${instance.getCurrentQuestion().question}</h5>`
+        )
 
-            if (q.answers.length) {
-                q.answers.forEach((a, aIdx) => {
+        container.append(question)
+
+        if (instance.getCurrentQuestion().answers.length) {
+            if (instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length > 1) {
+                // Multiple Choice
+                instance.getCurrentQuestion().answers.forEach((a, aIdx) => {
                     const answer = _gl.elementFromHtml(`
                         <div>
-                            <input type="radio" id="question-${qIdx}_answer-${aIdx}" name="question-${qIdx}" class="sr-only"/>
-                            <label for="question-${qIdx}_answer-${aIdx}" class="question-label">
+                            <input type="checkbox" id="question-${instance.questionIdx}_answer-${aIdx}" name="question-${instance.questionIdx}" class="sr-only"/>
+                            <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label">
                                 <div class="font-bold button button-circle">${aIdx + 1}</div>
                                 <h6 class="">${a.answer}</h6>
                             </label>
@@ -88,112 +101,145 @@ export default class Quiz {
                     container.append(answer)
                 })
             } else {
-                this.openQuestions++
-                const selfAnswer = _gl.elementFromHtml(
-                    `<div class="textarea-box"><textarea class="scroller" placeholder="${q.placeholder}" class=""></textarea></div>`
-                )
-                container.append(selfAnswer)
+                // Single Choice
+                instance.getCurrentQuestion().answers.forEach((a, aIdx) => {
+                    const answer = _gl.elementFromHtml(`
+                        <div>
+                            <input type="radio" id="question-${instance.questionIdx}_answer-${aIdx}" name="question-${instance.questionIdx}" class="sr-only"/>
+                            <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label">
+                                <div class="font-bold button button-circle">${aIdx + 1}</div>
+                                <h6 class="">${a.answer}</h6>
+                            </label>
+                        </div>
+                    `)
+
+                    container.append(answer)
+                })
             }
+        } else {
+            this.openQuestions++
+            const selfAnswer = _gl.elementFromHtml(
+                `<div class="textarea-box"><textarea class="scroller" placeholder="${instance.getCurrentQuestion().placeholder}" class=""></textarea></div>`
+            )
+            container.append(selfAnswer)
+        }
 
-            instance.quizContainer.querySelector('#quiz-wrapper').append(container)
-        })
+        instance.quizContainer.querySelector('#quiz-wrapper').append(container)
+        instance.questionItem = document.querySelector('.quiz-item')
 
-        instance.experience.interface.gameContainer.append(instance.quizContainer)
+        instance.addNextQuestionButtonLabel()
+        instance.setEventListeners()
+    }
+
+    addNextQuestionButtonLabel() {
+        instance.nextQuestion.innerHTML =
+            instance.getCurrentQuestion().answers &&
+            instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length > 1
+                ? 'Check answer' // Multiple choice question
+                : '<svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>' // Single choice question
     }
 
     setEventListeners() {
-        const questionItems = document.querySelectorAll('.quiz-item')
-        const totalQuestions = questionItems.length
-
-        const nextQuestion = document.querySelector('#next-question')
-        const submitQuiz = document.querySelector('#submit-quiz')
-
-        instance.taskActionsWrapper = document.querySelector('.task-container_actions')
-
-        nextQuestion.disabled = true
+        instance.nextQuestion.disabled = true
         instance.taskActionsWrapper.classList.add('disabled')
-        submitQuiz.style.display = 'none'
+        instance.submitQuiz.style.display = 'none'
 
-        questionItems.forEach((item, index) => {
-            const options = item.querySelectorAll('label')
-            const textarea = item.querySelector('textarea')
+        const answerLabels = instance.questionItem.querySelectorAll('label')
+        const textarea = instance.questionItem.querySelector('textarea')
 
-            options.forEach((option, idx) => {
-                option.addEventListener('click', (e) => {
-                    const currentQuestionIdx = parseInt(
-                        e.target.closest('.quiz-item').getAttribute('data-index')
-                    )
-                    const correctAnswerIdx = instance.questions[currentQuestionIdx].answers.findIndex(
-                        (item) => item.correct_wrong === true
-                    )
+        answerLabels.forEach((answer, idx) => {
+            answer.addEventListener('click', (e) => {
+                if (instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length == 1) {
+                    // Single choice question
+                    const correctAnswerIdx = instance
+                        .getCurrentQuestion()
+                        .answers.findIndex((item) => item.correct_wrong === true)
 
                     if (idx === correctAnswerIdx) {
-                        console.log()
                         e.target.closest('div').classList.add('correct')
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
 
-                        if (instance.questionIdx !== totalQuestions - 1) {
-                            nextQuestion.disabled = false
+                        if (instance.questionIdx !== instance.totalQuestions - 1) {
+                            instance.nextQuestion.disabled = false
                             instance.taskActionsWrapper.classList.remove('disabled')
                         } else {
                             instance.experience.navigation.next.innerHTML = ''
                             instance.experience.navigation.next.className = 'button button-arrow'
                         }
 
-                        options.forEach((disableOption) => {
+                        answerLabels.forEach((disableOption) => {
                             disableOption.style.pointerEvents = 'none'
                         })
                     } else {
                         instance.audio.playSound('wrong')
                         e.target.closest('div').classList.add('wrong')
+
                         setTimeout(() => {
                             e.target.closest('div').classList.remove('wrong')
                         }, 800)
                     }
-                })
+                } else {
+                    // Multiple choice question
+                    setTimeout(() => {
+                        // Disable or Enable the Check answer button
+                        instance.nextQuestion.disabled =
+                            document.querySelectorAll('.quiz-item input:checked').length == 0
+                    }, 100)
+                }
             })
-
-            if (textarea) {
-                textarea.addEventListener('input', (e) => {
-                    const inputLength = e.target.value.length
-                    const isLastQuestion = index === totalQuestions - 1
-                    if (inputLength > 0) {
-                        if (isLastQuestion) {
-                            submitQuiz.style.display = 'flex'
-                            submitQuiz.disabled = false
-                            nextQuestion.style.display = 'none'
-                            instance.taskActionsWrapper.classList.remove('disabled')
-                        } else {
-                            nextQuestion.disabled = false
-                            instance.taskActionsWrapper.classList.remove('disabled')
-                        }
-                    } else {
-                        if (isLastQuestion) {
-                            instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-                            instance.experience.navigation.next.className = `button button-arrow-skip`
-                            submitQuiz.disabled = true
-                            nextQuestion.style.display = 'none'
-                            instance.taskActionsWrapper.classList.add('disabled')
-                        } else {
-                            nextQuestion.disabled = true
-                            instance.taskActionsWrapper.classList.add('disabled')
-                        }
-                    }
-                })
-            }
         })
 
-        nextQuestion.addEventListener('click', () => instance.moveToNextQuestion())
+        if (textarea) {
+            textarea.addEventListener('input', (e) => {
+                const inputLength = e.target.value.length
+                const isLastQuestion = instance.questionIdx === instance.totalQuestions - 1
+                if (inputLength > 0) {
+                    if (isLastQuestion) {
+                        instance.submitQuiz.style.display = 'flex'
+                        instance.submitQuiz.disabled = false
+                        instance.nextQuestion.style.display = 'none'
+                        instance.taskActionsWrapper.classList.remove('disabled')
+                    } else {
+                        instance.nextQuestion.disabled = false
+                        instance.taskActionsWrapper.classList.remove('disabled')
+                    }
+                } else {
+                    if (isLastQuestion) {
+                        instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
+                        instance.experience.navigation.next.className = `button button-arrow-skip`
+                        instance.submitQuiz.disabled = true
+                        instance.nextQuestion.style.display = 'none'
+                        instance.taskActionsWrapper.classList.add('disabled')
+                    } else {
+                        instance.nextQuestion.disabled = true
+                        instance.taskActionsWrapper.classList.add('disabled')
+                    }
+                }
+            })
+        }
 
-        submitQuiz.addEventListener('click', async () => {
+        if (
+            instance.getCurrentQuestion().answers &&
+            instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length > 1
+        ) {
+            // Multiple choice question
+            instance.nextQuestion.removeEventListener('click', instance.moveToNextQuestion)
+            instance.nextQuestion.addEventListener('click', instance.checkMcQuestion)
+        } else {
+            // Single choice OR open question
+            instance.nextQuestion.removeEventListener('click', instance.checkMcQuestion)
+            instance.nextQuestion.addEventListener('click', instance.moveToNextQuestion)
+        }
+
+        instance.submitQuiz.addEventListener('click', async () => {
             const wasSuccessful = await instance.saveAnswers()
 
             if (wasSuccessful) {
                 instance.experience.celebrate({ particleCount: 100, spread: 160 })
                 instance.world.audio.playSound('task-completed')
-                submitQuiz.style.display = 'none'
+                instance.submitQuiz.style.display = 'none'
 
                 setTimeout(() => {
                     instance.program.nextStep()
@@ -201,6 +247,67 @@ export default class Quiz {
                 }, 500)
             }
         })
+    }
+
+    checkMcQuestion() {
+        let allAnswersCorrect = true
+
+        instance.getCurrentQuestion().answers.forEach((answer, index) => {
+            if (
+                (answer.correct_wrong == true &&
+                    document.querySelector(`#question-${instance.questionIdx}_answer-${index}`).checked ==
+                        false) ||
+                (answer.correct_wrong == false &&
+                    document.querySelector(`#question-${instance.questionIdx}_answer-${index}`).checked ==
+                        true)
+            ) {
+                allAnswersCorrect = false
+            }
+        })
+
+        if (allAnswersCorrect) {
+            instance.questionItem.querySelectorAll('input:checked').forEach((answer) => {
+                answer.parentNode.classList.add('correct')
+            })
+            instance.questionItem.querySelectorAll('input').forEach((answer) => {
+                answer.parentNode.querySelector('label').style.pointerEvents = 'none'
+            })
+
+            instance.audio.playSound('correct')
+            instance.correctAnswers++
+            instance.experience.celebrate({ particleCount: 100, spread: 160 })
+
+            if (instance.questionIdx !== instance.totalQuestions - 1) {
+                instance.nextQuestion.disabled = false
+                instance.taskActionsWrapper.classList.remove('disabled')
+            } else {
+                instance.experience.navigation.next.innerHTML = ''
+                instance.experience.navigation.next.className = 'button button-arrow'
+            }
+
+            instance.nextQuestion.innerHTML =
+                '<svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>'
+
+            instance.nextQuestion.removeEventListener('click', instance.checkMcQuestion)
+            instance.nextQuestion.addEventListener('click', instance.moveToNextQuestion)
+        } else {
+            instance.audio.playSound('wrong')
+            instance.questionItem.classList.add('wrong')
+            setTimeout(() => {
+                instance.questionItem.classList.remove('wrong')
+            }, 800)
+        }
+    }
+
+    moveToNextQuestion() {
+        instance.questionIdx++
+
+        instance.nextQuestion.disabled = true
+        instance.taskActionsWrapper.classList.add('disabled')
+
+        instance.updateProgressBar()
+        instance.toggleQuestion()
+        instance.addNextQuestionButtonLabel()
     }
 
     updateProgressBar() {
@@ -220,25 +327,6 @@ export default class Quiz {
                 }
             })
         }
-    }
-
-    moveToNextQuestion() {
-        const nextQuestion = document.querySelector('#next-question')
-
-        const questionItems = document.querySelectorAll('.quiz-item')
-        questionItems[instance.questionIdx].classList.add('hidden')
-        questionItems[instance.questionIdx].classList.remove('block')
-
-        instance.questionIdx++
-
-        if (instance.questionIdx < questionItems.length) {
-            questionItems[instance.questionIdx].classList.remove('hidden')
-            questionItems[instance.questionIdx].classList.add('block')
-        }
-
-        nextQuestion.disabled = true
-        instance.taskActionsWrapper.classList.add('disabled')
-        instance.updateProgressBar()
     }
 
     async saveAnswers() {
@@ -283,6 +371,8 @@ export default class Quiz {
 
     destroy() {
         document.querySelector('#quiz-game')?.remove()
+
+        document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.experience.setAppView('chapter')
 

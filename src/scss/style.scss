@@ -1597,6 +1597,10 @@ $themes: (
         .wrong .question-label {
             background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
         }
+
+        input[type="checkbox"]:checked + label {
+            background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
+        }
     }
 
     .task-container_box {
@@ -1646,9 +1650,10 @@ $themes: (
 
     .button-circle {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 4%;
+        left: 5%;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
         font-size: clamp(1.25rem, 1.15vw, 2rem);
     }
 
