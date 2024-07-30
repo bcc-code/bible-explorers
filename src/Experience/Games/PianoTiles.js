@@ -15,17 +15,15 @@ export default class PianoTiles {
 
     toggleGame() {
         this.audio = this.world.audio
-
         this.audio.loadPianoTiles()
 
-        this.gameHTML()
-        this.startRound()
-
-        this.audio.setOtherAudioIsPlaying(true)
-        this.audio.fadeOutBgMusic()
-
         this.ageCategory = this.world.selectedChapter.category
-        this.speedMultiplier = this.ageCategory === '9-11' ? 1.5 : 1
+        this.score = 0
+        this.speedMultiplier = this.ageCategory === '9-11' ? 1 : 1.25
+        this.speed = 400
+        this.transitionTime = 2000
+        this.notesIndex = 0
+        this.addNotesInterval
 
         this.notes = [
             {
@@ -106,7 +104,7 @@ export default class PianoTiles {
             },
             {
                 tone: 0,
-                length: 2.5,
+                length: 4,
             },
             {
                 tone: 1,
@@ -153,8 +151,8 @@ export default class PianoTiles {
                 length: 1,
             },
             {
-                tone: 0,
-                length: 1,
+                tone: 1,
+                length: 3,
             },
             {
                 tone: 0,
@@ -184,12 +182,13 @@ export default class PianoTiles {
 
         this.getCurrentTone = () => this.notes[this.notesIndex]?.tone
         this.getCurrentLength = () => this.notes[this.notesIndex]?.length
+        this.getSpeed = () => this.speed * this.speedMultiplier
 
-        this.addNotesInterval
-        this.score = 0
-        this.notesIndex = 0
-        this.speed = 400
-        this.transitionTime = 2000
+        this.gameHTML()
+        this.startRound()
+
+        this.audio.setOtherAudioIsPlaying(true)
+        this.audio.fadeOutBgMusic()
 
         instance.start.querySelector('button').onclick = () => {
             instance.startRound()
@@ -264,19 +263,20 @@ export default class PianoTiles {
         document.getElementById('piano-tiles_tiles').innerHTML = ''
 
         setTimeout(() => {
+            instance.audio.pianoTiles.playbackRate = 1 - (instance.speedMultiplier - 1) / 1.75
             instance.audio.pianoTiles.play()
         }, 1000)
 
         setTimeout(() => {
             instance.addNote()
             instance.createNotesInterval()
-        }, 7000)
+        }, 7000 * instance.speedMultiplier)
     }
 
     createNotesInterval() {
         instance.addNotesInterval = setInterval(
             instance.addNote,
-            instance.speed * instance.getCurrentLength()
+            instance.getSpeed() * instance.getCurrentLength()
         )
     }
 
@@ -309,7 +309,7 @@ export default class PianoTiles {
                 document.querySelector('.note.clickable')?.classList.remove('clickable')
                 note.classList.add('clickable')
             },
-            (instance.transitionTime - instance.speed * instance.getCurrentLength()) * 0.85,
+            (instance.transitionTime - instance.getSpeed() * instance.getCurrentLength()) * 0.85,
             note
         )
 
