@@ -197,7 +197,7 @@ export default class PianoTiles {
 
         instance.restart.onclick = () => {
             instance.start.style.display = 'block'
-            instance.result_box.classList.remove('activeResult')
+            instance.resultBox.classList.remove('visible')
             instance.sco.innerText = 0
             instance.audio.pianoTiles.stop()
         }
@@ -216,19 +216,23 @@ export default class PianoTiles {
 
                     <div id="piano-tiles_game">
                         <div id="piano-tiles_game-container">
-                            <div class="line" id="line1"></div>
-                            <div class="line" id="line2"></div>
-                            <div class="line" id="line3"></div>
+                            <div class="tile-box" id="tile-box1"></div>
+                            <div class="tile-box" id="tile-box2"></div>
+                            <div class="tile-box" id="tile-box3"></div>
                         </div>
 
-                        <div id="play-line"></div>
+                        <div id="piano-tiles_play-boxes">
+                            <div class="play-box" id="box1"></div>
+                            <div class="play-box" id="box2"></div>
+                            <div class="play-box" id="box3"></div>
+                        </div>
 
                         <div class="piano-tiles_tiles" id="piano-tiles_tiles"></div> 
                     </div>
                     <div class="piano-tiles_score"><p id="piano-tiles_score">0</p></div>
                 </div>
                     
-                <div class="task-game_popup result_box">
+                <div class="task-game_popup result-box">
                     <div class="icon">
                         <i class="fas fa-crown"></i>
                     </div>
@@ -244,9 +248,9 @@ export default class PianoTiles {
         this.start = game.querySelector('.piano-tiles_start')
         this.game = game.querySelector('#piano-tiles_game')
         this.sco = game.querySelector('#piano-tiles_score')
-        this.result_box = game.querySelector('.result_box')
-        this.restart = this.result_box.querySelector('.piano-tiles_restart')
-        this.text = this.result_box.querySelector('.score_text')
+        this.resultBox = game.querySelector('.result-box')
+        this.restart = this.resultBox.querySelector('.piano-tiles_restart')
+        this.text = this.resultBox.querySelector('.score_text')
     }
 
     startRound() {
@@ -284,7 +288,8 @@ export default class PianoTiles {
         note.classList.add('note')
         note.setAttribute('data-tone', instance.getCurrentTone())
         note.setAttribute('data-index', instance.notesIndex)
-        note.style.marginLeft = instance.getMargin() + '%'
+        note.style.left =
+            'calc(' + instance.getMargin() + '% + ' + (2 * instance.getCurrentTone() + 2) + 'rem)'
         note.style.height = instance.getCurrentLength() * 25 + '%'
 
         setTimeout(
@@ -301,7 +306,6 @@ export default class PianoTiles {
             (note) => {
                 document.querySelector('.note.clickable')?.classList.remove('clickable')
                 note.classList.add('clickable')
-                console.log(parseInt(note.getAttribute('data-index')) + 1 + ' is now clickable')
             },
             (instance.transitionTime - instance.speed * instance.getCurrentLength()) * 0.85,
             note
@@ -309,8 +313,6 @@ export default class PianoTiles {
 
         note.onclick = () => {
             if (!note.classList.contains('clickable')) return
-
-            console.log('correct note', parseInt(note.getAttribute('data-index')) + 1)
 
             note.style.background = 'rgba(255,255,255,0.2)'
             note.style.pointerEvents = 'none'
@@ -325,21 +327,18 @@ export default class PianoTiles {
             if (!clickableTone) return
 
             const toneToPlay = clickableTone.getAttribute('data-tone')
-            const toneIndex = parseInt(clickableTone.getAttribute('data-index')) + 1
 
             if (
                 (e.key === 'ArrowLeft' && toneToPlay == 0) ||
                 (e.key === 'ArrowUp' && toneToPlay == 1) ||
                 (e.key === 'ArrowRight' && toneToPlay == 2)
             ) {
-                console.log('correct note', toneIndex)
                 clickableTone.style.background = 'rgba(255,255,255,0.2)'
                 clickableTone.classList.remove('clickable')
                 clickableTone.onkeydown = null
 
                 instance.increaseScore()
             } else {
-                console.log('WRONG note', e.key, toneToPlay, toneIndex)
             }
         }
 
@@ -370,7 +369,7 @@ export default class PianoTiles {
 
     showScore() {
         instance.game.style.display = 'none'
-        instance.result_box.classList.add('activeResult')
+        instance.resultBox.classList.add('visible')
         instance.text.innerText = "You've scored " + instance.score + '/' + instance.notes.length + ' points'
     }
 

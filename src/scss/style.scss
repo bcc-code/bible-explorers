@@ -1995,7 +1995,7 @@ $themes: (
     }
 
     button,
-    .result_box {
+    .result-box {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -2023,50 +2023,54 @@ $themes: (
         position: relative;
         width: 100%;
         height: 100%;
-        max-width: 650px;
+        max-width: 800px;
         margin: 0 auto;
 
         #piano-tiles_game-container,
         #piano-tiles_tiles {
             width: 100%;
-            height: 100%;
+            height: 80%;
             display: flex;
+            gap: 8rem;
             z-index: 2;
             margin: 0 auto;
         }
 
         #piano-tiles_game-container {
-            .line {
-                width: 33.33%;
-                border-right: solid 1px rgb(197, 197, 197);
-            }
+            padding-inline: 1rem;
 
-            #line3 {
-                border-right: none;
+            .tile-box {
+                width: 33.33%;
+                border-left: solid 1px rgba(255, 255, 255, 0.8);
+                border-right: solid 1px rgba(255, 255, 255, 0.8);
             }
         }
 
-        #play-line {
+        #piano-tiles_play-boxes {
             width: 100%;
-            height: 1px;
-            border-bottom: solid 1px rgb(197, 197, 197);
-            bottom: 25%;
-            position: relative;
+            height: 20%;
+            display: flex;
+            gap: 6rem;
+
+            .play-box {
+                width: 33.33%;
+                height: 100%;
+                border: solid 1px rgba(255, 255, 255, 0.8);
+            }
         }
 
         #piano-tiles_tiles {
             display: block;
             overflow: hidden;
 
-            div {
-                width: 33.33%;
+            .note {
+                width: calc(33.33% - 8rem);
                 height: 30%;
                 position: absolute;
                 top: -30%;
                 background: #fff;
                 outline: none;
                 cursor: pointer;
-
 
                 &.clickable {
                     background: yellow;
@@ -2098,7 +2102,7 @@ $themes: (
         transition: transform linear 3s;
     }
 
-    .result_box {
+    .result-box {
         width: 450px;
         height: auto;
         padding: 25px 30px;
@@ -2112,7 +2116,7 @@ $themes: (
         pointer-events: none;
         transform: translate(-50%, -50%) scale(0.9);
 
-        &.activeResult {
+        &.visible {
             z-index: 5;
             opacity: 1;
             pointer-events: auto;
