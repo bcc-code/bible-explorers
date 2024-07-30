@@ -13,6 +13,7 @@ import DavidsRefuge from '../Games/DavidsRefugeGame.js'
 import MazeGame from '../Games/MazeGame.js'
 import DuckGame from '../Games/DuckGame.js'
 import CodeUnlock from './CodeUnlock.js'
+import PianoTiles from '../Games/PianoTiles.js'
 
 let instance = null
 
@@ -35,6 +36,7 @@ export default class GameDescription {
         instance.mazeGame = new MazeGame()
         instance.duckGame = new DuckGame()
         instance.codeUnlock = new CodeUnlock()
+        instance.pianoTiles = new PianoTiles()
     }
 
     show() {
@@ -100,6 +102,8 @@ export default class GameDescription {
             instance.duckGame.toggleGame()
         } else if (instance.program.taskType() == 'code_to_unlock') {
             instance.codeUnlock.toggleCodeUnlock()
+        } else if (instance.program.taskType() == 'piano_tiles') {
+            instance.pianoTiles.toggleGame()
         }
     }
 

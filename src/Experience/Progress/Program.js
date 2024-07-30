@@ -221,6 +221,7 @@ export default class Program {
                         'davids_refuge',
                         'labyrinth',
                         'duck_game',
+                        'piano_tiles',
                     ].includes(instance.taskType())
                 ) {
                     instance.gameDescription.show()

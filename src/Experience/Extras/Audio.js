@@ -259,6 +259,16 @@ export default class Audio {
         audio.fadeInBgMusic()
     }
 
+    loadPianoTiles() {
+        if (!audio.pianoTiles) {
+            audio.audioLoader.load('games/piano-tiles/biex-vignett.mp3', function (buffer) {
+                audio.pianoTiles = new THREE.Audio(audio.listener)
+                audio.pianoTiles.setBuffer(buffer)
+                audio.pianoTiles.onEnded = () => document.dispatchEvent(_e.EVENTS.SONG_ENDED)
+            })
+        }
+    }
+
     addEventListeners() {
         audio.btn.addEventListener('click', audio.togglePlayBgMusic)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, audio.stopAllTaskDescriptions)

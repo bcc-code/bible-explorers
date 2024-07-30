@@ -8,6 +8,7 @@ const ACTIONS = {
     GO_HOME: 'goHome',
     VIDEO_LOADED: 'videoLoaded',
     ROUTE_CHANGED: 'routeChanged',
+    SONG_ENDED: 'songEnded',
 }
 
 const EVENTS = {
@@ -20,6 +21,7 @@ const EVENTS = {
     GO_HOME: new Event('goHome'),
     VIDEO_LOADED: new Event('videoLoaded'),
     ROUTE_CHANGED: (query) => new CustomEvent('routeChanged', { detail: query }),
+    SONG_ENDED: new Event('songEnded'),
 }
 
 export default { ACTIONS, EVENTS }
