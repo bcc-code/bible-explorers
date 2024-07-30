@@ -222,14 +222,16 @@ export default class PianoTiles {
                         </div>
 
                         <div id="piano-tiles_play-boxes">
-                            <div class="play-box" id="box1"></div>
-                            <div class="play-box" id="box2"></div>
-                            <div class="play-box" id="box3"></div>
+                            <div class="play-box" id="play-box1"></div>
+                            <div class="play-box" id="play-box2"></div>
+                            <div class="play-box" id="play-box3"></div>
                         </div>
 
                         <div class="piano-tiles_tiles" id="piano-tiles_tiles"></div> 
                     </div>
-                    <div class="piano-tiles_score"><p id="piano-tiles_score">0</p></div>
+                    <div class="piano-tiles_score">
+                        <p id="piano-tiles_score">0</p>
+                    </div>
                 </div>
                     
                 <div class="task-game_popup result-box">
@@ -314,7 +316,7 @@ export default class PianoTiles {
         note.onclick = () => {
             if (!note.classList.contains('clickable')) return
 
-            note.style.background = 'rgba(255,255,255,0.2)'
+            note.style.opacity = 0.2
             note.style.pointerEvents = 'none'
             note.classList.remove('clickable')
             note.onkeydown = null
@@ -333,7 +335,7 @@ export default class PianoTiles {
                 (e.key === 'ArrowUp' && toneToPlay == 1) ||
                 (e.key === 'ArrowRight' && toneToPlay == 2)
             ) {
-                clickableTone.style.background = 'rgba(255,255,255,0.2)'
+                clickableTone.style.opacity = 0.2
                 clickableTone.classList.remove('clickable')
                 clickableTone.onkeydown = null
 

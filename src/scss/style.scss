@@ -2029,7 +2029,7 @@ $themes: (
         #piano-tiles_game-container,
         #piano-tiles_tiles {
             width: 100%;
-            height: 80%;
+            height: 70%;
             display: flex;
             gap: 8rem;
             z-index: 2;
@@ -2048,7 +2048,7 @@ $themes: (
 
         #piano-tiles_play-boxes {
             width: 100%;
-            height: 20%;
+            height: 30%;
             display: flex;
             gap: 6rem;
 
@@ -2056,6 +2056,24 @@ $themes: (
                 width: 33.33%;
                 height: 100%;
                 border: solid 1px rgba(255, 255, 255, 0.8);
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                position: relative;
+                display: block;
+                align-content: center;
+                font-size: 48px;
+            }
+
+            #play-box1::after {
+                content: "<";
+            }
+            #play-box2::after {
+                content: "^";
+            }
+            #play-box3::after {
+                content: ">";
             }
         }
 
@@ -2072,8 +2090,14 @@ $themes: (
                 outline: none;
                 cursor: pointer;
 
-                &.clickable {
-                    background: yellow;
+                &[data-tone="0"] {
+                    background: orange;
+                }
+                &[data-tone="1"] {
+                    background: green;
+                }
+                &[data-tone="2"] {
+                    background: pink;
                 }
             }
         }
