@@ -6,10 +6,6 @@ on:
             - master
             - develop
             - non3D
-    pull_request:
-        types: [closed]
-        branches:
-            - master
 
 jobs:
     build_and_deploy_web_app_job:
