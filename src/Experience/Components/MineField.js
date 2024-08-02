@@ -44,7 +44,10 @@ export default class MineField {
                     <h5 class="task-container_heading">Minefield</h1>
                     <div id="quiz-content">
                         <div id="quiz__question"></div>
-                        <div id="minefield__table" data-index="${instance.currentQuestionIndex}"></div>
+                        <div id="minefield__table">
+                            <div class="minefield__finish-line"></div>
+                            <div class="minefield__cells-wrapper" data-index="${instance.currentQuestionIndex}"></div>
+                        </div>
                     </div>
                 </div>
             </div>`
@@ -103,15 +106,15 @@ export default class MineField {
                         ${
                             instance.traveledPath.includes(i.toString() + j.toString()) &&
                             instance.checkpointCell == i.toString() + j.toString()
-                                ? '<svg class="icon"><use href="#star-solid" fill="currentColor"></use></svg>'
+                                ? '<img src="games/minefield/star.gif">'
                                 : ''
                         }
                     </div>`
             }
         }
 
-        const mineFieldTable = document.querySelector('#minefield__table')
-        mineFieldTable.innerHTML = tableHTML
+        const cellsWrapper = document.querySelector('.minefield__cells-wrapper')
+        cellsWrapper.innerHTML = tableHTML
     }
 
     useCorrectAssetsSrc(index) {
@@ -140,9 +143,9 @@ export default class MineField {
         event.stopPropagation()
 
         const selectedCell = event.target.getAttribute('data-cell')
-        const minefieldTable = event.target.closest('#minefield__table')
+        const cellsWrapper = event.target.closest('.minefield__cells-wrapper')
 
-        minefieldTable.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true))
+        cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true))
 
         if (instance.correctPath[instance.currentQuestionIndex] == selectedCell) {
             instance.audio.playSound('correct')
@@ -154,7 +157,7 @@ export default class MineField {
             }, 500)
         } else {
             instance.audio.playSound('wrong')
-            event.target.innerHTML = 'X'
+            event.target.innerHTML = '<img src="games/minefield/haman.gif">'
         }
     }
 

@@ -3251,14 +3251,25 @@ img.lazyloaded~div.img-loader {
         width: 60%;
     }
 
-    #minefield__table {
-        width: 40%;
+    .minefield__finish-line {
+        background: url('../../static/games/minefield/finish-line.png') #000;
+        background-size: contain;
+        background-repeat: repeat-x;
+        height: 70px;
+    }
+
+    .minefield__cells-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         gap: 2px;
+    }
+
+    #minefield__table {
+        width: 40%;
 
         .cell {
-            background-color: #fff;
+            background-image: url('../../static/games/minefield/button-lilla.png');
+            background-size: contain;
             aspect-ratio: 1/1;
             transition: .3s ease-in-out;
 
@@ -3273,19 +3284,19 @@ img.lazyloaded~div.img-loader {
             }
 
             &[current-cell], &[visited-cell] {
-                background-color: #e59e35;
+                background-image: url('../../static/games/minefield/button-yellow.png');
             }
             
             &[left-cell] {
-                background-color: yellow;
+                background-image: url('../../static/games/minefield/button-green.png');
             }
 
             &[top-cell] {
-                background-color: red;
+                background-image: url('../../static/games/minefield/button-red.png');
             }
 
             &[right-cell] {
-                background-color: lightblue;
+                background-image: url('../../static/games/minefield/button-blue.png');
             }
         }
     }
