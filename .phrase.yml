@@ -1,0 +1,87 @@
+phrase:
+    project_id: c02bc906e7889ed3711681395be13886
+
+    push:
+        sources:
+            - file: ./src/locales/en.json
+              params:
+                  file_format: i18next
+                  locale_id: en
+                  update_translations: true
+
+    pull:
+        targets:
+            - file: ./src/locales/en.json
+              params:
+                  file_format: i18next
+                  locale_id: en
+
+            - file: ./src/locales/no.json
+              params:
+                  file_format: i18next
+                  locale_id: no
+
+            - file: ./src/locales/de.json
+              params:
+                  file_format: i18next
+                  locale_id: de
+
+            - file: ./src/locales/nl.json
+              params:
+                  file_format: i18next
+                  locale_id: nl
+
+            - file: ./src/locales/fr.json
+              params:
+                  file_format: i18next
+                  locale_id: fr
+
+            - file: ./src/locales/pl.json
+              params:
+                  file_format: i18next
+                  locale_id: pl
+
+            - file: ./src/locales/ro.json
+              params:
+                  file_format: i18next
+                  locale_id: ro
+
+            - file: ./src/locales/es.json
+              params:
+                  file_format: i18next
+                  locale_id: es
+
+            - file: ./src/locales/pt-pt.json
+              params:
+                  file_format: i18next
+                  locale_id: pt
+
+            - file: ./src/locales/it.json
+              params:
+                  file_format: i18next
+                  locale_id: it
+
+            - file: ./src/locales/ru.json
+              params:
+                  file_format: i18next
+                  locale_id: ru
+
+            - file: ./src/locales/fi.json
+              params:
+                  file_format: i18next
+                  locale_id: fi
+
+            - file: ./src/locales/hu.json
+              params:
+                  file_format: i18next
+                  locale_id: hu
+
+            - file: ./src/locales/da.json
+              params:
+                  file_format: i18next
+                  locale_id: da
+
+            - file: ./src/locales/tr.json
+              params:
+                  file_format: i18next
+                  locale_id: tr
