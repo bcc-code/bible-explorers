@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 117.6 251.52">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+        filter: url(#outer-glow-1);
+        opacity: .5;
+        stroke-width: 0px;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="58.74" y1="30.24" x2="58.74" y2="221.35" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1f97ad"/>
+      <stop offset="1" stop-color="#54bbe1"/>
+    </linearGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="10"/>
+      <feFlood flood-color="#87d5ef" flood-opacity=".75"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <path class="cls-1" d="M87.45,58.95c0,.11,0,133.92,0,134.03-.18,15.7-12.97,28.37-28.71,28.37s-28.46-12.61-28.71-28.26c0-.15,0-134,0-134.15,0-15.86,12.85-28.71,28.71-28.71s28.71,12.85,28.71,28.71Z"/>
+  </g>
+</svg>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 139.68 140.16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient-3);
+        filter: url(#outer-glow-2);
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient);
+        filter: url(#outer-glow-1);
+        stroke: url(#radial-gradient-2);
+        stroke-miterlimit: 10;
+        stroke-width: 10px;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="69.89" cy="70.06" fx="69.89" fy="70.06" r="38.82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3f1c3d"/>
+      <stop offset="1" stop-color="#351834"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="69.89" cy="70.06" fx="69.89" fy="70.06" r="43.82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#817cb5"/>
+      <stop offset=".37" stop-color="#827eb6"/>
+      <stop offset=".57" stop-color="#8886bb"/>
+      <stop offset=".74" stop-color="#9293c5"/>
+      <stop offset=".88" stop-color="#a1a7d2"/>
+      <stop offset="1" stop-color="#b4c0e3"/>
+    </radialGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#fce2ea" flood-opacity="1"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <radialGradient id="radial-gradient-3" cx="-4128.56" cy="610.39" fx="-4128.56" fy="610.39" r="25.7" gradientTransform="translate(-4060.59 680.45) rotate(-180)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8179b2"/>
+      <stop offset="1" stop-color="#b4c6e6"/>
+    </radialGradient>
+    <filter id="outer-glow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur-2" stdDeviation="3"/>
+      <feFlood flood-color="#fce2ea" flood-opacity="1"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <polygon class="cls-2" points="31.25 36.79 36.88 31.15 103.3 31.15 108.63 36.49 108.63 103.83 103.5 108.96 36.2 108.96 31.16 103.92 31.25 36.79"/>
+    <polygon class="cls-1" points="94.85 86.11 72.03 86.11 72.03 94.51 41.08 69.97 71.57 45.61 71.57 54.19 94.85 54.19 94.85 86.11"/>
+  </g>
+</svg>

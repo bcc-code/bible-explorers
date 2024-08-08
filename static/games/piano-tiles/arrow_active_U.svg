@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 140.16 139.68">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient-3);
+        filter: url(#outer-glow-2);
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient);
+        filter: url(#outer-glow-1);
+        stroke: url(#radial-gradient-2);
+        stroke-miterlimit: 10;
+        stroke-width: 10px;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="70.13" cy="69.82" fx="70.13" fy="69.82" r="38.82" gradientTransform="translate(139.96 -.31) rotate(90)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3f1c3d"/>
+      <stop offset="1" stop-color="#351834"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="70.13" cy="69.82" fx="70.13" fy="69.82" r="43.82" gradientTransform="translate(139.96 -.31) rotate(90)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a97cb4"/>
+      <stop offset=".39" stop-color="#aa7eb5"/>
+      <stop offset=".61" stop-color="#b186ba"/>
+      <stop offset=".78" stop-color="#bd93c2"/>
+      <stop offset=".92" stop-color="#cda7cd"/>
+      <stop offset="1" stop-color="#d9b5d6"/>
+    </radialGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#fce2ea" flood-opacity="1"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <radialGradient id="radial-gradient-3" cx="-4128.32" cy="367.26" fx="-4128.32" fy="367.26" r="25.7" gradientTransform="translate(-297.13 -4060.43) rotate(-90)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a77ab2"/>
+      <stop offset="1" stop-color="#dbb4d5"/>
+    </radialGradient>
+    <filter id="outer-glow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur-2" stdDeviation="3"/>
+      <feFlood flood-color="#fce2ea" flood-opacity="1"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <polygon class="cls-2" points="103.4 31.17 109.04 36.81 109.04 103.23 103.7 108.56 36.36 108.56 31.23 103.43 31.23 36.13 36.27 31.09 103.4 31.17"/>
+    <polygon class="cls-1" points="54.09 94.78 54.09 71.96 45.68 71.96 70.23 41.01 94.59 71.5 86 71.5 86 94.78 54.09 94.78"/>
+  </g>
+</svg>
