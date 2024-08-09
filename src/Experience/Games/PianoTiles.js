@@ -153,7 +153,7 @@ export default class PianoTiles {
         this.getCurrentTone = () => this.notes[this.notesIndex]?.tone
         this.getCurrentLength = () => this.notes[this.notesIndex]?.length
         this.getBreak = () => this.notes[this.notesIndex]?.break ?? 0
-        this.getSpeed = () => this.speed * this.speedMultiplier * 2
+        this.getSpeed = () => this.speed * 2 * this.speedMultiplier
 
         this.gameHTML()
         this.startRound()
@@ -178,29 +178,27 @@ export default class PianoTiles {
                 <div class="absolute inset-0 grid place-content-center bg-black/60" id="piano-tites__background">
                     <video src="games/piano-tiles/flute_tiles_BG.mp4" class="h-screen object-cover" muted autoplay loop></video>
                 </div>
-                <div class="task-game_content">
-                    <div id="piano-tiles_game">
-                        <div class="piano-tiles_score">
-                            <p id="piano-tiles_score">0</p>
+                <div id="piano-tiles_game" class="task-game_content">
+                    <div class="piano-tiles_score">
+                        <p id="piano-tiles_score">0</p>
+                    </div>
+
+                    <div id="piano-tiles__wrapper">
+                        <div id="piano-tiles_game-container">
+                            <div class="tile-box" id="tile-box1"></div>
+                            <div class="tile-box" id="tile-box2"></div>
+                            <div class="tile-box" id="tile-box3"></div>
                         </div>
 
-                        <div id="piano-tiles__wrapper">
-                            <div id="piano-tiles_game-container">
-                                <div class="tile-box" id="tile-box1"></div>
-                                <div class="tile-box" id="tile-box2"></div>
-                                <div class="tile-box" id="tile-box3"></div>
-                            </div>
+                        <div id="piano-tiles_labels"></div>
+                        <div id="piano-tiles_flute"></div>
+                        <div id="piano-tiles_played-notes"></div>
+                    </div>
 
-                            <div id="piano-tiles_labels"></div>
-                            <div id="piano-tiles_flute"></div>
-                            <div id="piano-tiles_played-notes"></div>
-                        </div>
-
-                         <div id="piano-tiles_play-boxes">
-                            <div class="play-box" id="play-box1"></div>
-                            <div class="play-box" id="play-box2"></div>
-                            <div class="play-box" id="play-box3"></div>
-                        </div>
+                        <div id="piano-tiles_play-boxes">
+                        <div class="play-box" id="play-box1"></div>
+                        <div class="play-box" id="play-box2"></div>
+                        <div class="play-box" id="play-box3"></div>
                     </div>
                 </div>
                     
@@ -365,8 +363,6 @@ export default class PianoTiles {
             instance.transitionTime / 2,
             note
         )
-
-        setTimeout((note) => {}, instance.transitionTime, note)
 
         const noteLength = instance.getSpeed() * instance.getCurrentLength()
         const breakAfterNote = instance.getSpeed() * instance.getBreak()
