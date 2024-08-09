@@ -23,7 +23,6 @@ export default class PianoTiles {
         this.speed = 240
         this.transitionTime = 2000
         this.notesIndex = 0
-        this.addNotesInterval
 
         this.notes = [
             {
@@ -334,7 +333,7 @@ export default class PianoTiles {
         }, 1000)
 
         const timeBeforeSongStart = 7750
-        setTimeout(() => {
+        instance.addNoteTimeout = setTimeout(() => {
             instance.addNote()
         }, timeBeforeSongStart * instance.speedMultiplier)
     }
@@ -385,7 +384,6 @@ export default class PianoTiles {
 
     songEnded() {
         instance.audio.pianoTiles.stop()
-        clearInterval(instance.addNotesInterval)
         setTimeout(instance.showScore, 1500)
 
         const clickableTone = document.querySelector('.note.clickable')
@@ -402,7 +400,7 @@ export default class PianoTiles {
     }
 
     destroy() {
-        clearInterval(instance.addNotesInterval)
+        clearTimeout(instance.addNoteTimeout)
         instance.audio.pianoTiles.stop()
 
         instance.audio.setOtherAudioIsPlaying(false)
