@@ -3518,11 +3518,35 @@ img.lazyloaded~div.img-loader {
     }
 
     input {
-        width: 40px;
+        width: 80px;
         height: 80px;
-        color: #000;
+        color: #fff;
         font-size: 2rem;
         text-align: center;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        padding-inline: 25px;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.type1 {
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow1.svg');
+        }
+
+        &.type2 {
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow2.svg');
+        }
+
+        &.type3 {
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow3.svg');
+        }
+
+        &.correct {
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow-correct.svg');
+        }
     }
 
     /* Chrome, Safari, Edge, Opera */
