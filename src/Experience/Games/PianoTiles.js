@@ -20,63 +20,33 @@ export default class PianoTiles {
         this.ageCategory = this.world.selectedChapter.category
         this.score = 0
         this.speedMultiplier = this.ageCategory === '9-11' ? 1 : 1.25
-        this.speed = 400
+        this.speed = 240
         this.transitionTime = 2000
         this.notesIndex = 0
         this.addNotesInterval
 
         this.notes = [
             {
-                tone: 0,
-                length: 0.5,
-            },
-            {
                 tone: 1,
-                length: 1,
-            },
-            {
-                tone: 0,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 1,
+                length: 3,
             },
             {
                 tone: 2,
-                length: 0.5,
-            },
-            {
-                tone: 2,
-                length: 0.5,
+                length: 3,
+                break: 2,
             },
             {
                 tone: 1,
-                length: 4,
-            },
-            {
-                tone: 0,
-                length: 0.5,
+                length: 1.5,
             },
             {
                 tone: 1,
-                length: 1,
-            },
-            {
-                tone: 0,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 1,
-            },
-            {
-                tone: 2,
-                length: 0.5,
+                length: 1.5,
             },
             {
                 tone: 2,
                 length: 4,
+                break: 1,
             },
             {
                 tone: 0,
@@ -132,7 +102,7 @@ export default class PianoTiles {
             },
             {
                 tone: 2,
-                length: 0.5,
+                length: 1,
             },
             {
                 tone: 1,
@@ -144,7 +114,7 @@ export default class PianoTiles {
             },
             {
                 tone: 0,
-                length: 1,
+                length: 0.5,
             },
             {
                 tone: 0,
@@ -156,23 +126,23 @@ export default class PianoTiles {
             },
             {
                 tone: 0,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 1.5,
-            },
-            {
-                tone: 0,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 1.5,
+                length: 1,
             },
             {
                 tone: 1,
                 length: 1,
+            },
+            {
+                tone: 0,
+                length: 1,
+            },
+            {
+                tone: 1,
+                length: 1,
+            },
+            {
+                tone: 1,
+                length: 0.5,
             },
             {
                 tone: 2,
@@ -182,7 +152,8 @@ export default class PianoTiles {
 
         this.getCurrentTone = () => this.notes[this.notesIndex]?.tone
         this.getCurrentLength = () => this.notes[this.notesIndex]?.length
-        this.getSpeed = () => this.speed * this.speedMultiplier
+        this.getBreak = () => this.notes[this.notesIndex]?.break ?? 0
+        this.getSpeed = () => this.speed * this.speedMultiplier * 2
 
         this.gameHTML()
         this.startRound()
@@ -220,14 +191,15 @@ export default class PianoTiles {
                                 <div class="tile-box" id="tile-box3"></div>
                             </div>
 
+                            <div id="piano-tiles_labels"></div>
                             <div id="piano-tiles_flute"></div>
                             <div id="piano-tiles_played-notes"></div>
+                        </div>
 
-                            <div id="piano-tiles_play-boxes">
-                                <div class="play-box" id="play-box1"></div>
-                                <div class="play-box" id="play-box2"></div>
-                                <div class="play-box" id="play-box3"></div>
-                            </div>
+                         <div id="piano-tiles_play-boxes">
+                            <div class="play-box" id="play-box1"></div>
+                            <div class="play-box" id="play-box2"></div>
+                            <div class="play-box" id="play-box3"></div>
                         </div>
                     </div>
                 </div>
@@ -250,6 +222,7 @@ export default class PianoTiles {
         this.resultBox = game.querySelector('.result-box')
         this.restart = this.resultBox.querySelector('.piano-tiles_restart')
         this.text = this.resultBox.querySelector('.score_text')
+        this.labels = game.querySelector('#piano-tiles_labels')
         this.playedNotes = game.querySelector('#piano-tiles_played-notes')
 
         document.onkeydown = (e) => {
@@ -285,11 +258,46 @@ export default class PianoTiles {
                 (e.key === 'ArrowUp' && toneToPlay == 1) ||
                 (e.key === 'ArrowRight' && toneToPlay == 2)
             ) {
-                clickableTone.style.opacity = 0.3
                 clickableTone.classList.remove('clickable')
+                clickableTone.classList.add('clicked')
                 clickableTone.onkeydown = null
 
+                setTimeout(
+                    (clickableTone) => {
+                        clickableTone.classList.remove('clicked')
+                        clickableTone.classList.add('fade-out')
+                    },
+                    150,
+                    clickableTone
+                )
+
                 instance.increaseScore()
+
+                // Add awesome label
+                var awesomeLabel = document.createElement('div')
+                awesomeLabel.classList.add('awesome-label')
+                awesomeLabel.setAttribute('data-tone', toneToPlay)
+
+                const toneIndex = clickableTone.getAttribute('data-index')
+                if (instance.lastCorrectNoteIndex && toneIndex - 1 == instance.lastCorrectNoteIndex) {
+                    awesomeLabel.classList.add('combo')
+                }
+
+                const existingLabel = document.querySelector('.awesome-label')
+                if (existingLabel) existingLabel.remove()
+
+                instance.labels.append(awesomeLabel)
+
+                // Update note index
+                instance.lastCorrectNoteIndex = toneIndex
+
+                setTimeout(
+                    (awesomeLabel) => {
+                        awesomeLabel.remove()
+                    },
+                    750,
+                    awesomeLabel
+                )
 
                 // Add played note icon
                 var noteIcon = document.createElement('div')
@@ -315,6 +323,7 @@ export default class PianoTiles {
         instance.game.style.display = 'block'
         instance.score = 0
         instance.notesIndex = 0
+        instance.lastCorrectNoteIndex = null
 
         document.getElementById('tile-box1').innerHTML = ''
         document.getElementById('tile-box2').innerHTML = ''
@@ -326,25 +335,13 @@ export default class PianoTiles {
             instance.audio.pianoTiles.play()
         }, 1000)
 
+        const timeBeforeSongStart = 7750
         setTimeout(() => {
             instance.addNote()
-            instance.createNotesInterval()
-        }, 7800 * instance.speedMultiplier)
-    }
-
-    createNotesInterval() {
-        instance.addNotesInterval = setInterval(
-            instance.addNote,
-            instance.getSpeed() * instance.getCurrentLength()
-        )
+        }, timeBeforeSongStart * instance.speedMultiplier)
     }
 
     addNote() {
-        if (instance.notesIndex >= instance.notes.length) {
-            clearInterval(instance.addNotesInterval)
-            return
-        }
-
         var note = document.createElement('div')
         note.classList.add('note')
         note.setAttribute('data-tone', instance.getCurrentTone())
@@ -355,8 +352,6 @@ export default class PianoTiles {
         setTimeout(
             (note) => {
                 note.classList.add('move-down')
-                clearInterval(instance.addNotesInterval)
-                instance.createNotesInterval()
             },
             100,
             note
@@ -367,22 +362,20 @@ export default class PianoTiles {
                 document.querySelector('.note.clickable')?.classList.remove('clickable')
                 note.classList.add('clickable')
             },
-            (instance.transitionTime - instance.getSpeed() * instance.getCurrentLength()) * 0.65,
+            instance.transitionTime / 2,
             note
         )
 
-        note.onclick = () => {
-            if (!note.classList.contains('clickable')) return
+        setTimeout((note) => {}, instance.transitionTime, note)
 
-            note.style.opacity = 0.3
-            note.style.pointerEvents = 'none'
-            note.classList.remove('clickable')
-            note.onkeydown = null
-
-            instance.increaseScore()
-        }
+        const noteLength = instance.getSpeed() * instance.getCurrentLength()
+        const breakAfterNote = instance.getSpeed() * instance.getBreak()
 
         instance.notesIndex++
+
+        if (instance.notesIndex < instance.notes.length) {
+            setTimeout(instance.addNote, noteLength + breakAfterNote)
+        }
     }
 
     getMargin() {

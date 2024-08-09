@@ -2082,7 +2082,7 @@ $themes: (
         #piano-tiles_game-container,
         #piano-tiles_tiles {
             width: 100%;
-            height: 80%;
+            height: 100%;
             display: flex;
             z-index: 2;
             margin: 0 auto;
@@ -2103,44 +2103,37 @@ $themes: (
                     width: 100px;
                     height: 100px;
                     position: absolute;
-                    top: -20%;
+                    top: -100px;
                     outline: none;
                     cursor: pointer;
                     border-radius: 50%;
     
                     &[data-tone="0"] {
                         background-image: url('../../static/games/piano-tiles/note_idle_1.svg');
-                        &.clickable {
+                        &.clicked {
                             background-image: url('../../static/games/piano-tiles/note_active_1.svg')
                         }
                     }
 
                     &[data-tone="1"] {
                         background-image: url('../../static/games/piano-tiles/note_idle_2.svg');
-                        &.clickable {
+                        &.clicked {
                             background-image: url('../../static/games/piano-tiles/note_active_2.svg')
                         }
                     }
 
                     &[data-tone="2"] {
                         background-image: url('../../static/games/piano-tiles/note_idle_3.svg');
-                        &.clickable {
+                        &.clicked {
                             background-image: url('../../static/games/piano-tiles/note_active_3.svg')
                         }
-                    }
-
-                    &[data-length="3"]:before {
-                        height: 214px;
-                    }
-
-                    &[data-length="4"]:before {
-                        height: 285px;
                     }
 
                     &[data-length="3"]:before,
                     &[data-length="4"]:before {
                         content: '';
                         width: 100px;
+                        height: 214px;
                         position: absolute;
                         bottom: 0;
                         background-position: bottom;
@@ -2160,6 +2153,44 @@ $themes: (
                     &[data-tone="2"][data-length="4"]:before {
                         background-image: url('../../static/games/piano-tiles/note_l_3.svg');
                     }
+                }
+            }
+        }
+
+        #piano-tiles_labels {
+            width: 250px;
+            height: 49px;
+            left: -130px;
+            position: absolute;
+            top: 47%;
+            transform: rotate(-30deg);
+
+            .awesome-label {
+                height: 100%;
+                background-repeat: no-repeat;
+
+                &[data-tone="0"] {
+                    background-image: url('../../static/games/piano-tiles/amazing_1.svg');
+                }
+
+                &[data-tone="1"] {
+                    background-image: url('../../static/games/piano-tiles/amazing_2.svg');
+                }
+
+                &[data-tone="2"] {
+                    background-image: url('../../static/games/piano-tiles/amazing_3.svg');
+                }
+
+                &.combo::before {
+                    transform: rotate(30deg);
+                    content: "x2";
+                    display: block;
+                    font-weight: bold;
+                    font-size: 36px;
+                    text-align: right;
+                    position: relative;
+                    top: 0px;
+                    right: 35px;
                 }
             }
         }
@@ -2192,48 +2223,43 @@ $themes: (
 
                 &[data-tone="1"] {
                     transition: all linear 1.75s;
-                    width: 30px;
+                    width: 20px;
                     background-image: url('../../static/games/piano-tiles/note_1.svg');
+                    top: -10px;
                 }
 
                 &[data-tone="2"] {
                     transition: all linear 2s;
-                    width: 20px;
+                    width: 12px;
                     background-image: url('../../static/games/piano-tiles/note_2.svg');
+                    top: -15px;
                 }
 
                 &[data-tone="3"] {
                     transition: all linear 2.25s;
-                    width: 10px;
+                    width: 5px;
                     background-image: url('../../static/games/piano-tiles/note_3.svg');
+                    top: -10px;
                 }
 
                 &[data-tone="4"] {
                     transition: all linear 2.5s;
                     width: 10px;
                     background-image: url('../../static/games/piano-tiles/note_4.svg');
+                    top: -30px;
                 }
             }
         }
 
         #piano-tiles_play-boxes {
             width: 100%;
-            height: 20%;
+            height: 100px;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             align-items: center;
             justify-items: center;
             position: relative;
-
-            &::before {
-                content: '';
-                background: url('../../static/games/piano-tiles/main_line_h.svg');
-                background-repeat: no-repeat;
-                width: calc(100% - 20px);
-                height: 7px;
-                position: absolute;
-                top: 0;
-            }
+            padding-inline: 40px;
 
             .play-box {
                 width: 80px;
@@ -2277,6 +2303,11 @@ $themes: (
     .move-down {
         transform: translateY(145vh);
         transition: transform linear 3s;
+    }
+
+    .fade-out {
+        opacity: 0;
+        transition: transform linear 3s, opacity linear 200ms;
     }
 
     .move-right {
