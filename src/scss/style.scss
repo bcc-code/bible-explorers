@@ -3427,10 +3427,36 @@ img.lazyloaded~div.img-loader {
     }
 
     .minefield__finish-line {
-        background: url('../../static/games/minefield/finish-line.png') #000;
+        background: url('../../static/games/minefield/finish_all-middle-elements.png');
         background-size: contain;
         background-repeat: repeat-x;
         height: 70px;
+        position: relative;
+        width: calc(100% - 140px);
+        margin: 0 auto;
+        left: -11px;
+
+        &::before {
+            content: '';
+            background: url('../../static/games/minefield/finish_left.png');
+            background-size: contain;
+            background-repeat: repeat-x;
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            left: -70px;
+        }
+
+        &::after {
+            content: '';
+            background: url('../../static/games/minefield/finish_all-middle-elements.png');
+            background-size: contain;
+            background-repeat: repeat-x;
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            right: -70px;
+        }
     }
 
     .minefield__cells-wrapper {
