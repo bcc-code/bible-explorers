@@ -15,14 +15,15 @@ export default class PianoTiles {
 
     toggleGame() {
         this.audio = this.world.audio
-        this.audio.loadPianoTiles()
 
         this.ageCategory = this.world.selectedChapter.category
         this.score = 0
         this.speedMultiplier = this.ageCategory === '9-11' ? 1 : 1.25
+        this.timeBeforeSongStart = 7800
         this.speed = 240
         this.transitionTime = 2000
         this.notesIndex = 0
+        this.playableNotes = []
 
         this.notes = [
             {
@@ -113,11 +114,11 @@ export default class PianoTiles {
             },
             {
                 tone: 0,
-                length: 0.5,
+                length: 0.75,
             },
             {
                 tone: 0,
-                length: 1,
+                length: 0.75,
             },
             {
                 tone: 1,
@@ -154,11 +155,19 @@ export default class PianoTiles {
         this.getBreak = () => this.notes[this.notesIndex]?.break ?? 0
         this.getSpeed = () => this.speed * 2 * this.speedMultiplier
 
-        this.gameHTML()
-        this.startRound()
+        document.addEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
+        document.addEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
+        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
-        this.audio.setOtherAudioIsPlaying(true)
-        this.audio.fadeOutBgMusic()
+        this.audio.loadPianoTiles()
+    }
+
+    songLoaded() {
+        instance.gameHTML()
+        instance.startRound()
+
+        instance.audio.setOtherAudioIsPlaying(true)
+        instance.audio.fadeOutBgMusic()
 
         instance.restart.onclick = () => {
             instance.resultBox.classList.remove('visible')
@@ -166,9 +175,6 @@ export default class PianoTiles {
             instance.audio.pianoTiles.stop()
             instance.startRound()
         }
-
-        document.addEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
-        document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     gameHTML() {
@@ -177,6 +183,30 @@ export default class PianoTiles {
                 <div class="absolute inset-0 grid place-content-center bg-black/60" id="piano-tites__background">
                     <video src="games/piano-tiles/flute_tiles_BG.mp4" class="h-screen object-cover" muted autoplay loop></video>
                 </div>
+
+                <div class="piano-tiles_progress-bar">
+                    <div class="points-achieved">
+                        <progress max="${instance.notes.length * 0.75}" value="0"></progress>
+                        <ul>
+                            <li data-checkpoint="1">
+                                <svg viewBox="0 0 29 29">
+                                    <use href="#star-solid"></use>
+                                </svg>
+                            </li>
+                            <li data-checkpoint="2">
+                                <svg viewBox="0 0 29 29">
+                                    <use href="#star-solid"></use>
+                                </svg>
+                            </li>
+                            <li data-checkpoint="3">
+                                <svg viewBox="0 0 29 29">
+                                    <use href="#star-solid"></use>
+                                </svg>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div id="piano-tiles_game" class="task-game_content">
                     <div class="piano-tiles_score">
                         <p id="piano-tiles_score">0</p>
@@ -202,9 +232,6 @@ export default class PianoTiles {
                 </div>
                     
                 <div class="task-game_popup result-box">
-                    <div class="icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
                     <div class="score_text">You've scored 0 points</div>
                     <div class="buttons">
                         <button class="piano-tiles_restart">Play again</button>
@@ -221,22 +248,11 @@ export default class PianoTiles {
         this.text = this.resultBox.querySelector('.score_text')
         this.labels = game.querySelector('#piano-tiles_labels')
         this.playedNotes = game.querySelector('#piano-tiles_played-notes')
+        this.progressBar = game.querySelector('.piano-tiles_progress-bar')
 
         document.onkeydown = (e) => {
-            let playBox
-
-            if (e.key === 'ArrowLeft') {
-                playBox = document.getElementById('play-box1')
-            }
-
-            if (e.key === 'ArrowUp') {
-                playBox = document.getElementById('play-box2')
-            }
-
-            if (e.key === 'ArrowRight') {
-                playBox = document.getElementById('play-box3')
-            }
-
+            const playedNote = instance.expectedNote(e.key)
+            let playBox = document.getElementById('play-box' + (playedNote + 1))
             if (!playBox) return
 
             playBox.classList.add('clicked')
@@ -245,19 +261,24 @@ export default class PianoTiles {
             }, 150)
 
             // Get clickable note
-            const clickableTone = document.querySelector('.note.clickable')
-            if (!clickableTone) return
+            const playableNoteIdx = instance.playableNotes.findIndex((pn) => pn.tone == playedNote)
+            if (playableNoteIdx == -1) return
 
-            const toneToPlay = clickableTone.getAttribute('data-tone')
+            const toneToPlay = instance.playableNotes[playableNoteIdx].tone
 
             if (
                 (e.key === 'ArrowLeft' && toneToPlay == 0) ||
                 (e.key === 'ArrowUp' && toneToPlay == 1) ||
                 (e.key === 'ArrowRight' && toneToPlay == 2)
             ) {
+                const toneIndex = instance.playableNotes[playableNoteIdx].index
+                const clickableTone = document.querySelector('.note[data-index="' + toneIndex + '"]')
+                if (!clickableTone) return
+
                 clickableTone.classList.remove('clickable')
                 clickableTone.classList.add('clicked')
                 clickableTone.onkeydown = null
+                instance.playableNotes.splice(playableNoteIdx, 1)
 
                 setTimeout(
                     (clickableTone) => {
@@ -269,15 +290,19 @@ export default class PianoTiles {
                 )
 
                 instance.increaseScore()
+                instance.updateProgressBar()
 
                 // Add awesome label
                 var awesomeLabel = document.createElement('div')
                 awesomeLabel.classList.add('awesome-label')
                 awesomeLabel.setAttribute('data-tone', toneToPlay)
 
-                const toneIndex = clickableTone.getAttribute('data-index')
                 if (instance.lastCorrectNoteIndex && toneIndex - 1 == instance.lastCorrectNoteIndex) {
+                    instance.streak++
                     awesomeLabel.classList.add('combo')
+                    awesomeLabel.setAttribute('data-streak', instance.streak)
+                } else {
+                    instance.streak = 1
                 }
 
                 const existingLabel = document.querySelector('.awesome-label')
@@ -318,9 +343,12 @@ export default class PianoTiles {
 
     startRound() {
         instance.game.style.display = 'block'
+        instance.progressBar.style.display = 'block'
         instance.score = 0
         instance.notesIndex = 0
         instance.lastCorrectNoteIndex = null
+        instance.streak = 0
+        instance.updateProgressBar()
 
         document.getElementById('tile-box1').innerHTML = ''
         document.getElementById('tile-box2').innerHTML = ''
@@ -332,10 +360,10 @@ export default class PianoTiles {
             instance.audio.pianoTiles.play()
         }, 1000)
 
-        const timeBeforeSongStart = 7750
-        instance.addNoteTimeout = setTimeout(() => {
-            instance.addNote()
-        }, timeBeforeSongStart * instance.speedMultiplier)
+        instance.addNoteTimeout = setTimeout(
+            instance.addNote,
+            instance.timeBeforeSongStart * instance.speedMultiplier
+        )
     }
 
     addNote() {
@@ -354,12 +382,40 @@ export default class PianoTiles {
             note
         )
 
+        // Make note clickable
         setTimeout(
             (note) => {
-                document.querySelector('.note.clickable')?.classList.remove('clickable')
+                instance.playableNotes.push({
+                    tone: note.getAttribute('data-tone'),
+                    index: note.getAttribute('data-index'),
+                })
                 note.classList.add('clickable')
             },
-            instance.transitionTime / 2,
+            instance.transitionTime * 0.45,
+            note
+        )
+
+        // Remove clickable class from unplayed note
+        setTimeout(
+            (note) => {
+                const playableNoteIdx = instance.playableNotes.findIndex(
+                    (pn) => pn.tone == note.getAttribute('data-tone')
+                )
+                if (playableNoteIdx != -1) {
+                    instance.playableNotes.splice(playableNoteIdx, 1)
+                }
+                note.classList.remove('clickable')
+            },
+            instance.transitionTime * 0.6,
+            note
+        )
+
+        // Fade out unplayed note
+        setTimeout(
+            (note) => {
+                note.classList.add('fade-out')
+            },
+            instance.transitionTime - 500,
             note
         )
 
@@ -382,6 +438,29 @@ export default class PianoTiles {
         instance.sco.innerText = instance.score
     }
 
+    updateProgressBar() {
+        instance.progressBar.querySelector('progress').value = instance.score
+
+        if (instance.score >= 25) {
+            instance.getProgressBarCheckpoint(1).classList.add('filled')
+            instance.getProgressBarCheckpoint(2).classList.add('filled')
+            instance.getProgressBarCheckpoint(3).classList.add('filled')
+        } else if (instance.score >= 15) {
+            instance.getProgressBarCheckpoint(1).classList.add('filled')
+            instance.getProgressBarCheckpoint(2).classList.add('filled')
+        } else if (instance.score >= 5) {
+            instance.getProgressBarCheckpoint(1).classList.add('filled')
+        } else {
+            instance.getProgressBarCheckpoint(1).classList.remove('filled')
+            instance.getProgressBarCheckpoint(2).classList.remove('filled')
+            instance.getProgressBarCheckpoint(3).classList.remove('filled')
+        }
+    }
+
+    getProgressBarCheckpoint(index) {
+        return instance.progressBar.querySelector('li[data-checkpoint="' + index + '"]')
+    }
+
     songEnded() {
         instance.audio.pianoTiles.stop()
         setTimeout(instance.showScore, 1500)
@@ -395,8 +474,19 @@ export default class PianoTiles {
 
     showScore() {
         instance.game.style.display = 'none'
+        instance.progressBar.style.display = 'none'
         instance.resultBox.classList.add('visible')
         instance.text.innerText = "You've scored " + instance.score + '/' + instance.notes.length + ' points'
+    }
+
+    expectedNote(key) {
+        if (key === 'ArrowLeft') {
+            return 0
+        } else if (key === 'ArrowUp') {
+            return 1
+        } else if (key === 'ArrowRight') {
+            return 2
+        }
     }
 
     destroy() {
@@ -409,6 +499,8 @@ export default class PianoTiles {
         document.querySelector('.piano-tiles')?.remove()
         instance.experience.setAppView('chapter')
 
+        document.removeEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
+        document.removeEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 }

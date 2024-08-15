@@ -1989,10 +1989,82 @@ $themes: (
 }
 
 #piano-tiles {
+    flex-direction: column;
+
     .task-game_content {
         width: 100%;
-        height: 800px;
+        height: 700px;
         max-width: 480px;
+        top: -30px;
+    }
+   
+    .piano-tiles_progress-bar {
+        position: relative;
+        top: -50px;
+    }
+    
+    .points-achieved {
+        width: 380px;
+        display: flex;
+        position: relative;
+        margin-bottom: 2rem;
+    
+        progress {
+            -webkit-appearance: none;
+            appearance: none;
+            position: absolute;
+            background-color: transparent;
+            top: 0.5rem;
+            left: 0;
+            width: 100%;
+            height: 18px;
+            padding: 6px;
+            border-radius: 2rem;
+        }
+    
+        progress::-moz-progress-bar {
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+    
+        progress::-webkit-progress-bar {
+            background-color: rgba(255, 255, 255, .2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    
+        progress::-webkit-progress-value {
+            background: var(--gradient-light);
+            transition: filter 300ms, width 300ms;
+        }
+    
+        svg {
+            float: right;
+            height: 2rem;
+            width: 2rem;
+            z-index: 1;
+            position: relative;
+        }
+    
+        ul {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+    
+            li {
+                flex: 1;
+    
+                svg {
+                    fill: #fff;
+                }
+            }
+    
+            li.filled {
+                svg {
+                    fill: var(--clr-light-orange);
+                }
+            }
+        }
     }
 
     #piano-tiles_game {
@@ -2002,7 +2074,7 @@ $themes: (
         background-position: 50%;
         position: relative;
         margin: 0 auto;
-   
+
         .piano-tiles_score {
             display: flex;
             justify-content: center;
@@ -2080,7 +2152,7 @@ $themes: (
                     outline: none;
                     cursor: pointer;
                     border-radius: 50%;
-    
+
                     &[data-tone="0"] {
                         background-image: url('../../static/games/piano-tiles/note_idle_1.svg');
                         &.clicked {
@@ -2156,7 +2228,7 @@ $themes: (
 
                 &.combo::before {
                     transform: rotate(30deg);
-                    content: "x2";
+                    content: 'x' attr(data-streak);
                     display: block;
                     font-weight: bold;
                     font-size: 36px;
@@ -2195,29 +2267,29 @@ $themes: (
                 top: 0;
 
                 &[data-tone="1"] {
-                    transition: all linear 1.75s;
+                    transition: all linear 2.5s;
                     width: 20px;
                     background-image: url('../../static/games/piano-tiles/note_1.svg');
                     top: -10px;
                 }
 
                 &[data-tone="2"] {
-                    transition: all linear 2s;
-                    width: 12px;
+                    transition: all linear 2.4s;
+                    width: 18px;
                     background-image: url('../../static/games/piano-tiles/note_2.svg');
                     top: -15px;
                 }
 
                 &[data-tone="3"] {
-                    transition: all linear 2.25s;
-                    width: 5px;
+                    transition: all linear 2.2s;
+                    width: 13px;
                     background-image: url('../../static/games/piano-tiles/note_3.svg');
                     top: -10px;
                 }
 
                 &[data-tone="4"] {
-                    transition: all linear 2.5s;
-                    width: 10px;
+                    transition: all linear 2.3s;
+                    width: 15px;
                     background-image: url('../../static/games/piano-tiles/note_4.svg');
                     top: -30px;
                 }
@@ -2310,7 +2382,7 @@ $themes: (
         text-align: center;
         align-items: center;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 2rem;
         opacity: 0;
         pointer-events: none;
         transform: translate(-50%, -50%) scale(0.9);
@@ -2333,30 +2405,26 @@ $themes: (
             font-weight: 500;
         }
 
-        .icon {
-            font-size: 100px;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
         .buttons {
             position: relative;
             display: flex;
-            margin: 20px 0;
 
             button {
                 margin: 0 10px;
                 width: auto;
-                height: 40px;
-                padding: 0 20px;
+                padding: 10px 20px;
                 border: none;
                 outline: none;
                 font-size: 18px;
                 font-weight: 500;
                 border-radius: 5px;
-                border: 1px solid #007bff;
                 cursor: pointer;
                 transition: all 0.3s ease;
+                text-wrap: nowrap;
+
+                &:hover {
+                    opacity: 0.8;
+                }
             }
         }
 

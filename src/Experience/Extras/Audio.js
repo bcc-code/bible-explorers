@@ -264,8 +264,12 @@ export default class Audio {
             audio.audioLoader.load('games/piano-tiles/biex-vignett.mp3', function (buffer) {
                 audio.pianoTiles = new THREE.Audio(audio.listener)
                 audio.pianoTiles.setBuffer(buffer)
+
+                document.dispatchEvent(_e.EVENTS.SONG_LOADED)
                 audio.pianoTiles.onEnded = () => document.dispatchEvent(_e.EVENTS.SONG_ENDED)
             })
+        } else {
+            document.dispatchEvent(_e.EVENTS.SONG_LOADED)
         }
     }
 
