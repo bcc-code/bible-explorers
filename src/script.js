@@ -185,5 +185,4 @@ window.addEventListener(_e.ACTIONS.ROUTE_CHANGED, async ({ detail }) => {
     await handleRedirectCallback()
 })
 
-// Detect browser
 
