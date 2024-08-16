@@ -1,6 +1,6 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 :root {
     color-scheme: light;
@@ -20,7 +20,7 @@
     --gradient-light: linear-gradient(90deg, var(--clr-light-orange), var(--clr-dark-orange));
 
     /* Fonts */
-    --ff-primary: "Source Sans Pro", sans-serif;
+    --ff-primary: 'Source Sans Pro', sans-serif;
 
     /* Scrollbar */
     --scrollbar-color-thumb: var(--clr-primary);
@@ -278,7 +278,7 @@ video {
 .notification {
     &-frame {
         position: relative;
-        background-image: url("../../static/interface/modal.svg");
+        background-image: url('../../static/interface/modal.svg');
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 447/400;
@@ -290,11 +290,11 @@ video {
         height: auto;
         width: 100%;
         line-height: 1;
-        background-image: url("../../static/interface/B_cube_wide_action2.svg");
+        background-image: url('../../static/interface/B_cube_wide_action2.svg');
         aspect-ratio: 377/80;
 
         &:hover {
-            background-image: url("../../static/interface/B_cube_wide_active2.svg");
+            background-image: url('../../static/interface/B_cube_wide_active2.svg');
         }
     }
 
@@ -348,8 +348,8 @@ video {
     }
 }
 
-#app[data-view="lobby"],
-#app[data-view="age-category"] {
+#app[data-view='lobby'],
+#app[data-view='age-category'] {
     .app-logo {
         display: block;
     }
@@ -359,8 +359,8 @@ video {
     }
 }
 
-#app[data-view="chapter"],
-#app[data-view="task-description"] {
+#app[data-view='chapter'],
+#app[data-view='task-description'] {
     #logout-button,
     #login-button,
     #toggle-languages,
@@ -373,7 +373,7 @@ video {
     }
 }
 
-#app[data-view="game"] {
+#app[data-view='game'] {
     #home-button,
     #logout-button,
     #login-button,
@@ -441,74 +441,74 @@ body.not-logged-in {
 
 .button-cube {
     width: var(--button-height);
-    background-image: url("../../static/interface/B_cube_active.png");
+    background-image: url('../../static/interface/B_cube_active.png');
 
     &.active {
-        background-image: url("../../static/interface/B_cube_action.png");
+        background-image: url('../../static/interface/B_cube_action.png');
     }
 
     &:disabled {
-        background-image: url("../../static/interface/B_cube_innactive.png");
+        background-image: url('../../static/interface/B_cube_innactive.png');
     }
 }
 
 .button-circle {
     width: var(--button-height);
     border-radius: 50%;
-    background-image: url("../../static/interface/B_circle_active.png");
+    background-image: url('../../static/interface/B_circle_active.png');
 
     &.active {
-        background-image: url("../../static/interface/B_circle_action.png");
+        background-image: url('../../static/interface/B_circle_action.png');
     }
 
     &:disabled {
-        background-image: url("../../static/interface/B_circle_innactive.png");
+        background-image: url('../../static/interface/B_circle_innactive.png');
     }
 
-    &[aria-label="checkpoint"],
+    &[aria-label='checkpoint'],
     &[currentcheckpoint] {
-        background-image: url("../../static/interface/B_circle_action.png");
+        background-image: url('../../static/interface/B_circle_action.png');
     }
 
     &[currentcheckpoint] ~ button:not(:hover) {
-        background-image: url("../../static/interface/B_circle_active.png");
+        background-image: url('../../static/interface/B_circle_active.png');
     }
 }
 
 .button-rectangle-wide {
     aspect-ratio: 721 / 258;
-    background-image: url("../../static/interface/B_cube_wide_2_active.png");
+    background-image: url('../../static/interface/B_cube_wide_2_active.png');
 
     span {
         display: block;
     }
 
     &.active {
-        background-image: url("../../static/interface/B_cube_wide_2_action.png");
+        background-image: url('../../static/interface/B_cube_wide_2_action.png');
     }
 
     &:disabled {
-        background-image: url("../../static/interface/B_cube_wide_2_innactive.png");
+        background-image: url('../../static/interface/B_cube_wide_2_innactive.png');
     }
 }
 
 .button-arrow {
     aspect-ratio: 293 / 201;
-    background-image: url("../../static/interface/arrow_active.png");
+    background-image: url('../../static/interface/arrow_active.png');
 
     &.active {
-        background-image: url("../../static/interface/arrow_action.png");
+        background-image: url('../../static/interface/arrow_action.png');
     }
 
     &:disabled {
-        background-image: url("../../static/interface/arrow_innactive.png");
+        background-image: url('../../static/interface/arrow_innactive.png');
     }
 }
 
 .button-arrow-skip {
     aspect-ratio: 803 / 412;
     padding-right: 1rem;
-    background-image: url("../../static/interface/skip_active.png");
+    background-image: url('../../static/interface/skip_active.png');
     opacity: 0.4;
 
     span {
@@ -522,12 +522,12 @@ body.not-logged-in {
     }
 
     &.active {
-        background-image: url("../../static/interface/skip_action.png");
+        background-image: url('../../static/interface/skip_action.png');
         opacity: 1;
     }
 
     &:disabled {
-        background-image: url("../../static/interface/skip_innactive.png");
+        background-image: url('../../static/interface/skip_innactive.png');
     }
 }
 
@@ -543,7 +543,7 @@ body.not-logged-in {
 }
 
 #logout-button::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 14%;
     height: 14%;
@@ -563,24 +563,24 @@ body.not-logged-in {
 }
 
 #top-left-screen .mask-image {
-    mask-image: url("../../static/frames/Screen_4_mask.png");
+    mask-image: url('../../static/frames/Screen_4_mask.png');
 }
 
 #top-mid-screen .mask-image {
-    mask-image: url("../../static/frames/Screen_3_mask.png");
+    mask-image: url('../../static/frames/Screen_3_mask.png');
 }
 
 #helper-screen .mask-image {
-    mask-image: url("../../static/frames/Screen_2_mask.png");
+    mask-image: url('../../static/frames/Screen_2_mask.png');
 }
 
 #main-screen .mask-image {
-    mask-image: url("../../static/frames/Screen_1_mask.png");
+    mask-image: url('../../static/frames/Screen_1_mask.png');
     overflow: hidden;
 }
 
 .task-container_box .overlay {
-    mask-image: url("../../static/frames/Quiz_window_alpha.png");
+    mask-image: url('../../static/frames/Quiz_window_alpha.png');
     mask-repeat: no-repeat;
     mask-size: contain;
 }
@@ -593,25 +593,25 @@ body.not-logged-in {
     &-box {
         display: block;
         position: relative;
-        background-image: url("../../static/frames/chapter_bar_active.png");
+        background-image: url('../../static/frames/chapter_bar_active.png');
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 337/73;
 
         &:hover {
-            background-image: url("../../static/frames/chapter_bar_action.png");
+            background-image: url('../../static/frames/chapter_bar_action.png');
         }
 
         .chapter.selected &,
         .chapter.downloading & {
-            background-image: url("../../static/frames/chapter_bar_action.png");
+            background-image: url('../../static/frames/chapter_bar_action.png');
         }
     }
 
     &-mask {
         aspect-ratio: 337/73;
         width: 100%;
-        mask-image: url("../../static/frames/chapter_bar_mask.png");
+        mask-image: url('../../static/frames/chapter_bar_mask.png');
         mask-repeat: no-repeat;
         mask-size: contain;
         padding: 1.25rem 2rem;
@@ -623,7 +623,7 @@ body.not-logged-in {
         top: 0;
         width: 100%;
         height: 100%;
-        mask-image: url("../../static/frames/chapter_bar_mask_T.png");
+        mask-image: url('../../static/frames/chapter_bar_mask_T.png');
         mask-repeat: no-repeat;
         mask-size: contain;
         z-index: -1;
@@ -636,7 +636,7 @@ body.not-logged-in {
         }
 
         &::before {
-            content: "";
+            content: '';
             position: absolute;
             left: 0;
             top: 0;
@@ -661,10 +661,10 @@ body.not-logged-in {
         flex-flow: column nowrap;
 
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             inset: 0;
-            background-image: url("../../static/frames/chapter_main_active_v02.svg");
+            background-image: url('../../static/frames/chapter_main_active_v02.svg');
             background-repeat: no-repeat;
             background-size: contain;
             pointer-events: none;
@@ -676,7 +676,7 @@ body.not-logged-in {
             clip-path: url(#svgmask-image-description);
 
             &::after {
-                content: "";
+                content: '';
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -701,7 +701,7 @@ body.not-logged-in {
             // background: linear-gradient(to right, var(--clr-light-orange), var(--clr-dark-orange));
 
             &::after {
-                content: "";
+                content: '';
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -961,11 +961,11 @@ body.not-logged-in {
 $themes: (
     explorers: var(--clr-primary),
     construction: #f7d211,
-    preview: var(--clr-primary)
+    preview: var(--clr-primary),
 );
 
 @each $theme, $bgColor in $themes {
-    .tippy-box[data-theme~="#{$theme}"] {
+    .tippy-box[data-theme~='#{$theme}'] {
         color: var(--bg-dark);
         font-size: var(--font-size-text);
         background-color: $bgColor;
@@ -974,19 +974,19 @@ $themes: (
         box-shadow: 0 0 0.5rem var(--bg-dark);
 
         // Nest placement variations inside the theme block
-        &[data-placement^="top"] > .tippy-arrow::before {
+        &[data-placement^='top'] > .tippy-arrow::before {
             border-top-color: $bgColor;
         }
 
-        &[data-placement^="bottom"] > .tippy-arrow::before {
+        &[data-placement^='bottom'] > .tippy-arrow::before {
             border-bottom-color: $bgColor;
         }
 
-        &[data-placement^="left"] > .tippy-arrow::before {
+        &[data-placement^='left'] > .tippy-arrow::before {
             border-left-color: $bgColor;
         }
 
-        &[data-placement^="right"] > .tippy-arrow::before {
+        &[data-placement^='right'] > .tippy-arrow::before {
             border-right-color: $bgColor;
         }
     }
@@ -1002,7 +1002,7 @@ $themes: (
 }
 
 #childrenNames {
-    background-image: url("../../static/frames/LOGIN_bar_border.png");
+    background-image: url('../../static/frames/LOGIN_bar_border.png');
     background-repeat: no-repeat;
     background-size: cover;
     aspect-ratio: 257/72;
@@ -1013,7 +1013,7 @@ $themes: (
     padding-top: 1%;
 
     input {
-        background-image: url("../../static/frames/LOGIN_bar_input.png");
+        background-image: url('../../static/frames/LOGIN_bar_input.png');
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 647/133;
@@ -1042,7 +1042,7 @@ $themes: (
 
 #closed-caption {
     #iris-cc {
-        background-image: url("../../static/interface/Dialog_bar_v02.png");
+        background-image: url('../../static/interface/Dialog_bar_v02.png');
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 2495/513;
@@ -1068,7 +1068,7 @@ $themes: (
 
 .loader {
     border: 16px solid #f3f3f3;
-    border-top: 16px solid theme("colors.bke.orange");
+    border-top: 16px solid theme('colors.bke.orange');
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -1128,7 +1128,7 @@ $themes: (
         color: var(--clr-text);
     }
 
-    [aria-label="close alert"] {
+    [aria-label='close alert'] {
         flex-shrink: 0;
         margin-left: 1rem;
     }
@@ -1142,7 +1142,7 @@ $themes: (
 }
 
 .task-container {
-    background-image: url("../../static/textures/Task_BG.jpg");
+    background-image: url('../../static/textures/Task_BG.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -1153,7 +1153,7 @@ $themes: (
     &_box {
         position: relative;
         width: 100%;
-        background-image: url("../../static/frames/Task_Shape_frame.png");
+        background-image: url('../../static/frames/Task_Shape_frame.png');
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 3719/2029;
@@ -1193,7 +1193,7 @@ $themes: (
 
     &_actions {
         aspect-ratio: 3719/2029;
-        background-image: url("../../static/interface/Task_Shape_button_active_v03.png");
+        background-image: url('../../static/interface/Task_Shape_button_active_v03.png');
         background-repeat: no-repeat;
         background-size: contain;
         position: absolute;
@@ -1201,7 +1201,7 @@ $themes: (
         pointer-events: none;
 
         &:hover {
-            background-image: url("../../static/interface/Task_Shape_button_action_v03.png");
+            background-image: url('../../static/interface/Task_Shape_button_action_v03.png');
         }
     }
 }
@@ -1231,7 +1231,7 @@ $themes: (
         align-items: center;
         justify-content: center;
         text-align: center;
-        background-image: url("../../static/frames/Quiz_window.png");
+        background-image: url('../../static/frames/Quiz_window.png');
         background-repeat: no-repeat;
         background-size: contain;
         aspect-ratio: 3721/1879;
@@ -1291,7 +1291,7 @@ $themes: (
     right: 0;
     display: none;
     aspect-ratio: 544/837;
-    background-image: url("../../static/frames/language_frame.png");
+    background-image: url('../../static/frames/language_frame.png');
     background-repeat: no-repeat;
     background-size: contain;
     padding: 10%;
@@ -1320,7 +1320,7 @@ $themes: (
 }
 
 .textarea-box {
-    background-image: url("../../static/frames/text_box.png");
+    background-image: url('../../static/frames/text_box.png');
     background-repeat: no-repeat;
     background-size: contain;
     aspect-ratio: 2777/720;
@@ -1355,7 +1355,7 @@ $themes: (
     &-container {
         position: relative;
         width: 65vw;
-        background-image: url("../../static/frames/Quiz_window_v02.png");
+        background-image: url('../../static/frames/Quiz_window_v02.png');
         background-repeat: no-repeat;
         background-size: 100% 100%;
         padding: 6%;
@@ -1372,7 +1372,7 @@ $themes: (
         position: absolute;
         inset: 0;
         background-size: 100% 100%;
-        background-image: url("../../static/interface/Quiz_button_active_v02.png");
+        background-image: url('../../static/interface/Quiz_button_active_v02.png');
         background-repeat: no-repeat;
         pointer-events: none;
 
@@ -1394,7 +1394,7 @@ $themes: (
         }
 
         &:hover {
-            background-image: url("../../static/interface/Quiz_button_action_v02.png");
+            background-image: url('../../static/interface/Quiz_button_action_v02.png');
         }
     }
 }
@@ -1559,28 +1559,28 @@ $themes: (
 
     .quiz-item {
         .correct .question-label .button-circle {
-            background-image: url("../../static/interface/B_circle_action.png");
+            background-image: url('../../static/interface/B_circle_action.png');
         }
 
         .wrong .question-label .button-circle {
-            background-image: url("../../static/interface/B_circle_innactive.png");
+            background-image: url('../../static/interface/B_circle_innactive.png');
         }
 
         .correct .question-label {
-            background-image: url("../../static/frames/Quiz_answer_correct_v02.png");
+            background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
         }
 
         .wrong .question-label {
-            background-image: url("../../static/frames/Quiz_answer_wrong_1.png");
+            background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
         }
 
-        input[type="checkbox"]:checked + label {
-            background-image: url("../../static/frames/Quiz_answer_correct_v02.png");
+        input[type='checkbox']:checked + label {
+            background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
         }
     }
 
     .task-container_box {
-        background-image: url("../../static/frames/Quiz_window_v02.png");
+        background-image: url('../../static/frames/Quiz_window_v02.png');
         aspect-ratio: 3719/1930;
     }
 
@@ -1591,18 +1591,18 @@ $themes: (
 
     .task-container_actions {
         aspect-ratio: 3719/1930;
-        background-image: url("../../static/interface/Quiz_button_active_v02.png");
+        background-image: url('../../static/interface/Quiz_button_active_v02.png');
 
         .button-task_action {
             width: 22%;
         }
 
         &.disabled {
-            background-image: url("../../static/interface/Quiz_button_innactive_v02.png");
+            background-image: url('../../static/interface/Quiz_button_innactive_v02.png');
         }
 
         &:not(.disabled):hover {
-            background-image: url("../../static/interface/Quiz_button_action_v02.png");
+            background-image: url('../../static/interface/Quiz_button_action_v02.png');
         }
     }
 }
@@ -1615,7 +1615,7 @@ $themes: (
     position: relative;
     display: flex;
     align-items: center;
-    background-image: url("../../static/frames/Quiz_answer_v02.png");
+    background-image: url('../../static/frames/Quiz_answer_v02.png');
     background-repeat: no-repeat;
     background-size: contain;
     aspect-ratio: 1495/144;
@@ -1636,26 +1636,26 @@ $themes: (
     }
 
     &:hover {
-        background-image: url("../../static/frames/Quiz_answer_correct_v02.png");
+        background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
     }
 
     &:hover .button-circle {
-        background-image: url("../../static/interface/B_circle_action.png");
+        background-image: url('../../static/interface/B_circle_action.png');
     }
 
     .correct & {
-        background-image: url("../../static/frames/Quiz_answer_correct_v02.png");
+        background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
 
         .button-circle {
-            background-image: url("../../static/interface/B_circle_action.png");
+            background-image: url('../../static/interface/B_circle_action.png');
         }
     }
 
     .wrong & {
-        background-image: url("../../static/frames/Quiz_answer_wrong_1.png");
+        background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
 
         .button-circle {
-            background-image: url("../../static/interface/B_circle_innactive.png");
+            background-image: url('../../static/interface/B_circle_innactive.png');
         }
     }
 }
@@ -1687,19 +1687,19 @@ $themes: (
         width: clamp(4rem, 5vw, 20rem);
         height: clamp(4rem, 5vw, 20rem);
 
-        &[data-answer="false"] {
-            background-image: url("../../static/interface/wrong_icon.png");
+        &[data-answer='false'] {
+            background-image: url('../../static/interface/wrong_icon.png');
 
             &:hover {
-                background-image: url("../../static/interface/wrong_icon_action.png");
+                background-image: url('../../static/interface/wrong_icon_action.png');
             }
         }
 
-        &[data-answer="true"] {
-            background-image: url("../../static/interface/correct_icon.png");
+        &[data-answer='true'] {
+            background-image: url('../../static/interface/correct_icon.png');
 
             &:hover {
-                background-image: url("../../static/interface/correct_icon_action.png");
+                background-image: url('../../static/interface/correct_icon_action.png');
             }
         }
     }
@@ -1763,12 +1763,12 @@ $themes: (
 
         &::after,
         &::before {
-            content: "";
+            content: '';
             position: absolute;
             width: var(--width);
             top: 0;
             aspect-ratio: 1/0.9;
-            background: url("/textures/congrats.svg");
+            background: url('/textures/congrats.svg');
             background-repeat: no-repeat;
             transform-origin: bottom;
             opacity: 0;
@@ -2036,7 +2036,7 @@ $themes: (
     }
 
     #piano-tiles_game {
-        background: url("../../static/games/piano-tiles/main_shape_1.svg");
+        background: url('../../static/games/piano-tiles/main_shape_1.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: 50%;
@@ -2049,7 +2049,7 @@ $themes: (
             z-index: 5;
             position: absolute;
             margin: 0 auto;
-            background: url("../../static/games/piano-tiles/score_bar.svg");
+            background: url('../../static/games/piano-tiles/score_bar.svg');
             background-repeat: no-repeat;
             background-size: contain;
             background-position: 50%;
@@ -2074,8 +2074,8 @@ $themes: (
 
             &::before,
             &::after {
-                content: "";
-                background: url("../../static/games/piano-tiles/main_line_v.svg");
+                content: '';
+                background: url('../../static/games/piano-tiles/main_line_v.svg');
                 background-repeat: no-repeat;
                 width: 7px;
                 height: calc(100% - 120px);
@@ -2121,30 +2121,30 @@ $themes: (
                     cursor: pointer;
                     border-radius: 50%;
 
-                    &[data-tone="0"] {
-                        background-image: url("../../static/games/piano-tiles/note_idle_1.svg");
+                    &[data-tone='0'] {
+                        background-image: url('../../static/games/piano-tiles/note_idle_1.svg');
                         &.clicked {
-                            background-image: url("../../static/games/piano-tiles/note_active_1.svg");
+                            background-image: url('../../static/games/piano-tiles/note_active_1.svg');
                         }
                     }
 
-                    &[data-tone="1"] {
-                        background-image: url("../../static/games/piano-tiles/note_idle_2.svg");
+                    &[data-tone='1'] {
+                        background-image: url('../../static/games/piano-tiles/note_idle_2.svg');
                         &.clicked {
-                            background-image: url("../../static/games/piano-tiles/note_active_2.svg");
+                            background-image: url('../../static/games/piano-tiles/note_active_2.svg');
                         }
                     }
 
-                    &[data-tone="2"] {
-                        background-image: url("../../static/games/piano-tiles/note_idle_3.svg");
+                    &[data-tone='2'] {
+                        background-image: url('../../static/games/piano-tiles/note_idle_3.svg');
                         &.clicked {
-                            background-image: url("../../static/games/piano-tiles/note_active_3.svg");
+                            background-image: url('../../static/games/piano-tiles/note_active_3.svg');
                         }
                     }
 
-                    &[data-length="3"]:before,
-                    &[data-length="4"]:before {
-                        content: "";
+                    &[data-length='3']:before,
+                    &[data-length='4']:before {
+                        content: '';
                         width: 100px;
                         height: 214px;
                         position: absolute;
@@ -2152,19 +2152,19 @@ $themes: (
                         background-position: bottom;
                     }
 
-                    &[data-tone="0"][data-length="3"]:before,
-                    &[data-tone="0"][data-length="4"]:before {
-                        background-image: url("../../static/games/piano-tiles/note_l_1.svg");
+                    &[data-tone='0'][data-length='3']:before,
+                    &[data-tone='0'][data-length='4']:before {
+                        background-image: url('../../static/games/piano-tiles/note_l_1.svg');
                     }
 
-                    &[data-tone="1"][data-length="3"]:before,
-                    &[data-tone="1"][data-length="4"]:before {
-                        background-image: url("../../static/games/piano-tiles/note_l_2.svg");
+                    &[data-tone='1'][data-length='3']:before,
+                    &[data-tone='1'][data-length='4']:before {
+                        background-image: url('../../static/games/piano-tiles/note_l_2.svg');
                     }
 
-                    &[data-tone="2"][data-length="3"]:before,
-                    &[data-tone="2"][data-length="4"]:before {
-                        background-image: url("../../static/games/piano-tiles/note_l_3.svg");
+                    &[data-tone='2'][data-length='3']:before,
+                    &[data-tone='2'][data-length='4']:before {
+                        background-image: url('../../static/games/piano-tiles/note_l_3.svg');
                     }
                 }
             }
@@ -2182,21 +2182,21 @@ $themes: (
                 height: 100%;
                 background-repeat: no-repeat;
 
-                &[data-tone="0"] {
-                    background-image: url("../../static/games/piano-tiles/amazing_1.svg");
+                &[data-tone='0'] {
+                    background-image: url('../../static/games/piano-tiles/amazing_1.svg');
                 }
 
-                &[data-tone="1"] {
-                    background-image: url("../../static/games/piano-tiles/amazing_2.svg");
+                &[data-tone='1'] {
+                    background-image: url('../../static/games/piano-tiles/amazing_2.svg');
                 }
 
-                &[data-tone="2"] {
-                    background-image: url("../../static/games/piano-tiles/amazing_3.svg");
+                &[data-tone='2'] {
+                    background-image: url('../../static/games/piano-tiles/amazing_3.svg');
                 }
 
                 &.combo::before {
                     transform: rotate(30deg);
-                    content: "x" attr(data-streak);
+                    content: 'x' attr(data-streak);
                     display: block;
                     font-weight: bold;
                     font-size: 36px;
@@ -2209,7 +2209,7 @@ $themes: (
         }
 
         #piano-tiles_flute {
-            background: url("../../static/games/piano-tiles/flute.svg");
+            background: url('../../static/games/piano-tiles/flute.svg');
             background-repeat: no-repeat;
             width: 1003px;
             height: 65px;
@@ -2234,31 +2234,31 @@ $themes: (
                 height: 65px;
                 top: 0;
 
-                &[data-tone="1"] {
+                &[data-tone='1'] {
                     transition: all linear 2.5s;
                     width: 20px;
-                    background-image: url("../../static/games/piano-tiles/note_1.svg");
+                    background-image: url('../../static/games/piano-tiles/note_1.svg');
                     top: -10px;
                 }
 
-                &[data-tone="2"] {
+                &[data-tone='2'] {
                     transition: all linear 2.4s;
                     width: 18px;
-                    background-image: url("../../static/games/piano-tiles/note_2.svg");
+                    background-image: url('../../static/games/piano-tiles/note_2.svg');
                     top: -15px;
                 }
 
-                &[data-tone="3"] {
+                &[data-tone='3'] {
                     transition: all linear 2.2s;
                     width: 13px;
-                    background-image: url("../../static/games/piano-tiles/note_3.svg");
+                    background-image: url('../../static/games/piano-tiles/note_3.svg');
                     top: -10px;
                 }
 
-                &[data-tone="4"] {
+                &[data-tone='4'] {
                     transition: all linear 2.3s;
                     width: 15px;
-                    background-image: url("../../static/games/piano-tiles/note_4.svg");
+                    background-image: url('../../static/games/piano-tiles/note_4.svg');
                     top: -30px;
                 }
             }
@@ -2291,23 +2291,23 @@ $themes: (
             }
 
             #play-box1 {
-                background: url("../../static/games/piano-tiles/arrow_idle_L.svg");
+                background: url('../../static/games/piano-tiles/arrow_idle_L.svg');
                 &.clicked {
-                    background: url("../../static/games/piano-tiles/arrow_active_L.svg");
+                    background: url('../../static/games/piano-tiles/arrow_active_L.svg');
                 }
             }
 
             #play-box2 {
-                background: url("../../static/games/piano-tiles/arrow_idle_U.svg");
+                background: url('../../static/games/piano-tiles/arrow_idle_U.svg');
                 &.clicked {
-                    background: url("../../static/games/piano-tiles/arrow_active_U.svg");
+                    background: url('../../static/games/piano-tiles/arrow_active_U.svg');
                 }
             }
 
             #play-box3 {
-                background: url("../../static/games/piano-tiles/arrow_idle_R.svg");
+                background: url('../../static/games/piano-tiles/arrow_idle_R.svg');
                 &.clicked {
-                    background: url("../../static/games/piano-tiles/arrow_active_R.svg");
+                    background: url('../../static/games/piano-tiles/arrow_active_R.svg');
                 }
             }
         }
@@ -2717,7 +2717,7 @@ $themes: (
             }
         }
 
-        input[type="number"] {
+        input[type='number'] {
             -moz-appearance: textfield;
             appearance: textfield;
         }
@@ -2910,7 +2910,7 @@ $themes: (
             align-items: flex-end;
 
             &::before {
-                content: "";
+                content: '';
                 position: absolute;
                 width: 100%;
                 aspect-ratio: 1/1;
@@ -2932,7 +2932,7 @@ $themes: (
             z-index: 2;
 
             &::after {
-                content: "";
+                content: '';
                 position: absolute;
                 border: 10px solid transparent;
             }
@@ -2959,7 +2959,7 @@ $themes: (
             }
         }
 
-        &[data-color="yellow"] {
+        &[data-color='yellow'] {
             .tooltip {
                 background-color: var(--yellow);
                 box-shadow: -2px -2px 0 2px var(--yellow-shadow);
@@ -2978,7 +2978,7 @@ $themes: (
             }
         }
 
-        &[data-color="blue"] {
+        &[data-color='blue'] {
             .tooltip {
                 background-color: var(--blue);
                 box-shadow: -2px -2px 0 2px var(--blue-shadow);
@@ -2997,7 +2997,7 @@ $themes: (
             }
         }
 
-        &[data-color="pink"] {
+        &[data-color='pink'] {
             .tooltip {
                 background-color: var(--pink);
                 box-shadow: -2px -2px 0 2px var(--pink-shadow);
@@ -3021,11 +3021,11 @@ $themes: (
         }
     }
 
-    [aria-label="select goat"] {
+    [aria-label='select goat'] {
         margin-top: 2rem;
     }
 
-    [aria-label="toggle hints"] {
+    [aria-label='toggle hints'] {
         position: absolute;
         top: var(--app-padding);
         left: var(--app-padding);
@@ -3118,7 +3118,7 @@ $themes: (
         cursor: pointer;
 
         &::before {
-            content: "";
+            content: '';
             position: absolute;
             top: -4px;
             left: -4px;
@@ -3126,7 +3126,7 @@ $themes: (
             bottom: -4px;
         }
 
-        &[data-color="pink"] {
+        &[data-color='pink'] {
             background-color: #ff6ea9;
             border-bottom-right-radius: 3rem;
             border-top-left-radius: 1rem;
@@ -3137,7 +3137,7 @@ $themes: (
             }
         }
 
-        &[data-color="yellow"] {
+        &[data-color='yellow'] {
             background-color: #f9c662;
             border-bottom-left-radius: 3rem;
             border-top-right-radius: 1rem;
@@ -3148,7 +3148,7 @@ $themes: (
             }
         }
 
-        &[data-color="green"] {
+        &[data-color='green'] {
             background-color: #67bd53;
             border-top-right-radius: 3rem;
             border-bottom-left-radius: 1rem;
@@ -3159,7 +3159,7 @@ $themes: (
             }
         }
 
-        &[data-color="teal"] {
+        &[data-color='teal'] {
             background-color: #2c90cf;
             border-top-left-radius: 3rem;
             border-bottom-right-radius: 1rem;
@@ -3271,7 +3271,7 @@ $themes: (
     left: var(--app-padding);
 
     &:after {
-        content: " ";
+        content: ' ';
         display: block;
         width: 64px;
         height: 64px;
@@ -3348,7 +3348,7 @@ img.lazyloaded ~ div.img-loader {
         gap: 1rem;
 
         input {
-            background-image: url("../../static/frames/LOGIN_bar_input.png");
+            background-image: url('../../static/frames/LOGIN_bar_input.png');
             background-repeat: no-repeat;
             background-size: contain;
             aspect-ratio: 647/133;
@@ -3467,7 +3467,7 @@ img.lazyloaded ~ div.img-loader {
         }
 
         .minefield__finish-line {
-            background: url("../../static/games/minefield/finish_all-middle-elements.png");
+            background: url('../../static/games/minefield/finish_all-middle-elements.png');
             background-size: contain;
             background-repeat: repeat-x;
             height: 70px;
@@ -3476,8 +3476,8 @@ img.lazyloaded ~ div.img-loader {
             margin-left: 71px;
 
             &::before {
-                content: "";
-                background: url("../../static/games/minefield/finish_left.png");
+                content: '';
+                background: url('../../static/games/minefield/finish_left.png');
                 background-size: contain;
                 background-repeat: no-repeat;
                 width: 70px;
@@ -3487,8 +3487,8 @@ img.lazyloaded ~ div.img-loader {
             }
 
             &::after {
-                content: "";
-                background: url("../../static/games/minefield/finish_all-middle-elements.png");
+                content: '';
+                background: url('../../static/games/minefield/finish_all-middle-elements.png');
                 background-size: contain;
                 background-repeat: repeat-x;
                 width: 70px;
@@ -3508,7 +3508,7 @@ img.lazyloaded ~ div.img-loader {
             width: 435px;
 
             .cell {
-                background-image: url("../../static/games/minefield/button-lilla.png");
+                background-image: url('../../static/games/minefield/button-lilla.png');
                 background-size: contain;
                 aspect-ratio: 1/1;
                 transition: 0.3s ease-in-out;
@@ -3525,19 +3525,19 @@ img.lazyloaded ~ div.img-loader {
 
                 &[current-cell],
                 &[visited-cell] {
-                    background-image: url("../../static/games/minefield/button-yellow.png");
+                    background-image: url('../../static/games/minefield/button-yellow.png');
                 }
 
                 &[left-cell] {
-                    background-image: url("../../static/games/minefield/button-green.png");
+                    background-image: url('../../static/games/minefield/button-green.png');
                 }
 
                 &[top-cell] {
-                    background-image: url("../../static/games/minefield/button-red.png");
+                    background-image: url('../../static/games/minefield/button-red.png');
                 }
 
                 &[right-cell] {
-                    background-image: url("../../static/games/minefield/button-blue.png");
+                    background-image: url('../../static/games/minefield/button-blue.png');
                 }
             }
         }
@@ -3574,19 +3574,19 @@ img.lazyloaded ~ div.img-loader {
         }
 
         &.type1 {
-            background-image: url("../../static/games/bible-verse-code/button_no-arrow1.svg");
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow1.svg');
         }
 
         &.type2 {
-            background-image: url("../../static/games/bible-verse-code/button_no-arrow2.svg");
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow2.svg');
         }
 
         &.type3 {
-            background-image: url("../../static/games/bible-verse-code/button_no-arrow3.svg");
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow3.svg');
         }
 
         &.correct {
-            background-image: url("../../static/games/bible-verse-code/button_no-arrow-correct.svg");
+            background-image: url('../../static/games/bible-verse-code/button_no-arrow-correct.svg');
         }
     }
 
@@ -3598,7 +3598,7 @@ img.lazyloaded ~ div.img-loader {
     }
 
     /* Firefox */
-    input[type="number"] {
+    input[type='number'] {
         -moz-appearance: textfield;
     }
 
@@ -3617,25 +3617,25 @@ img.lazyloaded ~ div.img-loader {
 /* Hover styles for non-mobile devices */
 @media (hover: hover) and (pointer: fine) {
     .button-cube:hover {
-        background-image: url("../../static/interface/B_cube_action.png");
+        background-image: url('../../static/interface/B_cube_action.png');
     }
 
     .button-circle:hover {
-        background-image: url("../../static/interface/B_circle_action.png");
+        background-image: url('../../static/interface/B_circle_action.png');
         transform: scale(1.1);
         transform-origin: center;
     }
 
     .button-rectangle-wide:hover {
-        background-image: url("../../static/interface/B_cube_wide_2_action.png");
+        background-image: url('../../static/interface/B_cube_wide_2_action.png');
     }
 
     .button-arrow:hover {
-        background-image: url("../../static/interface/arrow_action.png");
+        background-image: url('../../static/interface/arrow_action.png');
     }
 
     .button-arrow-skip:hover {
-        background-image: url("../../static/interface/skip_action.png");
+        background-image: url('../../static/interface/skip_action.png');
         opacity: 1;
     }
 }
