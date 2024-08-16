@@ -19,7 +19,7 @@ export default class PianoTiles {
         this.ageCategory = this.world.selectedChapter.category
         this.score = 0
         this.speedMultiplier = this.ageCategory === '9-11' ? 1 : 1.25
-        this.timeBeforeSongStart = 1300
+        this.timeBeforeSongStart = 3750
         this.speed = 240
         this.transitionTime = 2000
         this.notesIndex = 0

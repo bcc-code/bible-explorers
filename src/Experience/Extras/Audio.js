@@ -261,7 +261,7 @@ export default class Audio {
 
     loadPianoTiles() {
         if (!audio.pianoTiles) {
-            audio.audioLoader.load('games/piano-tiles/BIEX_Vignett_Flute_V01.mp3', function (buffer) {
+            audio.audioLoader.load('games/piano-tiles/BIEX_Vignett_mflute_V02.mp3', function (buffer) {
                 audio.pianoTiles = new THREE.Audio(audio.listener)
                 audio.pianoTiles.setBuffer(buffer)
 
