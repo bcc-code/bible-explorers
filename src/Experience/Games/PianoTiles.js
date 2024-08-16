@@ -19,7 +19,7 @@ export default class PianoTiles {
         this.ageCategory = this.world.selectedChapter.category
         this.score = 0
         this.speedMultiplier = this.ageCategory === '9-11' ? 1 : 1.25
-        this.timeBeforeSongStart = 7800
+        this.timeBeforeSongStart = 1300
         this.speed = 240
         this.transitionTime = 2000
         this.notesIndex = 0
@@ -189,16 +189,19 @@ export default class PianoTiles {
                         <progress max="${instance.notes.length * 0.75}" value="0"></progress>
                         <ul>
                             <li data-checkpoint="1">
+                                <div class="progress-bullet"></div>
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star-solid"></use>
                                 </svg>
                             </li>
                             <li data-checkpoint="2">
+                                <div class="progress-bullet"></div>
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star-solid"></use>
                                 </svg>
                             </li>
                             <li data-checkpoint="3">
+                                <div class="progress-bullet"></div>
                                 <svg viewBox="0 0 29 29">
                                     <use href="#star-solid"></use>
                                 </svg>
@@ -234,7 +237,7 @@ export default class PianoTiles {
                 <div class="task-game_popup result-box">
                     <div class="score_text">You've scored 0 points</div>
                     <div class="buttons">
-                        <button class="piano-tiles_restart">Play again</button>
+                        <button class="piano-tiles_restart"></button>
                     </div>
             </section>`)
 
@@ -415,7 +418,7 @@ export default class PianoTiles {
             (note) => {
                 note.classList.add('fade-out')
             },
-            instance.transitionTime - 500,
+            instance.transitionTime * 0.65,
             note
         )
 
@@ -476,7 +479,16 @@ export default class PianoTiles {
         instance.game.style.display = 'none'
         instance.progressBar.style.display = 'none'
         instance.resultBox.classList.add('visible')
-        instance.text.innerText = "You've scored " + instance.score + '/' + instance.notes.length + ' points'
+
+        if (instance.score / instance.notes.length > 0.83) {
+            instance.text.innerText =
+                "Good job! You've scored " + instance.score + '/' + instance.notes.length + ' points'
+            instance.restart.innerText = 'Another round'
+        } else {
+            instance.text.innerText =
+                "Oops! You've only scored " + instance.score + '/' + instance.notes.length + ' points'
+            instance.restart.innerText = 'Try again'
+        }
     }
 
     expectedNote(key) {
