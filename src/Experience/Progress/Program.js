@@ -20,7 +20,7 @@ import TaskDescriptionWithCalculatorScreen from '../Components/TaskDescriptionWi
 import MessageWithSupportingScreens from '../Components/MessageWithSupportingScreens.js'
 import SingleChoice from '../Components/SingleChoice.js'
 import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
-import MineField from '../Components/MineField.js'
+import MineField from '../Games/MineField.js'
 import BibleVerseCode from '../Components/BibleVerseCode.js'
 
 let instance = null
