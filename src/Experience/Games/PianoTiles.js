@@ -235,9 +235,9 @@ export default class PianoTiles {
                 </div>
                     
                 <div class="task-game_popup result-box">
-                    <div class="score_text">You've scored 0 points</div>
+                    <div class="score_text text-2xl">You've scored 0 points</div>
                     <div class="buttons">
-                        <button class="piano-tiles_restart"></button>
+                        <button class="piano-tiles_restart button button-rectangle-wide"></button>
                     </div>
             </section>`)
 

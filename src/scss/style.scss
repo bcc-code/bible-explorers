@@ -2389,7 +2389,6 @@ $themes: (
         opacity: 0;
     }
 
-    button,
     .result-box {
         position: absolute;
         top: 50%;
@@ -2402,7 +2401,7 @@ $themes: (
     }
 
     .result-box {
-        width: 450px;
+        width: clamp(580px, 100%, 40vw);
         height: auto;
         padding: 25px 30px;
         border-radius: 5px;
@@ -2429,31 +2428,11 @@ $themes: (
 
         .score_text {
             margin: 10px 0;
-            font-size: 18px;
-            font-weight: 500;
         }
 
         .buttons {
             position: relative;
             display: flex;
-
-            button {
-                margin: 0 10px;
-                width: auto;
-                padding: 10px 20px;
-                border: none;
-                outline: none;
-                font-size: 18px;
-                font-weight: 500;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                text-wrap: nowrap;
-
-                &:hover {
-                    opacity: 0.8;
-                }
-            }
         }
 
         @media (max-width: 550px) {
