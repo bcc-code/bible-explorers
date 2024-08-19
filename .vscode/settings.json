@@ -1,4 +1,7 @@
 {
     "css.customData": [".vscode/tailwind.json"],
-    "scss.lint.unknownAtRules": "ignore"
+    "scss.lint.unknownAtRules": "ignore",
+    "prettier.configPath": "./.prettierrc",
+    "prettier.prettierPath": "./node_modules/prettier",
+    "prettier.requireConfig": true
 }
