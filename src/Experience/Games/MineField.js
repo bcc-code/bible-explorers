@@ -39,15 +39,21 @@ export default class MineField {
 
         if (!document.querySelector('#quiz-content')) {
             const staticHTML = `
-            <div class="absolute inset-0 task-container biex-overlay" id="minefield">
-                <div class="task-container_box ">
-                    <h5 class="task-container_heading">Minefield</h1>
+            <div class="absolute inset-0 task-container minefield biex-overlay" id="minefield">
+                <div class="task-container_left">
+                    <h5 class="game-title">Minefield</h5>
+                    <div class="minefield__content">
+                        <div class="finish-line">
+                            <div class="finish-left"></div>
+                            <div class="finish-middle"></div>
+                            <div class="finish-right"></div>
+                        </div>
+                        <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
+                    </div>
+                </div>
+                <div class="task-container_right">
                     <div id="quiz-content">
                         <div id="quiz__question"></div>
-                        <div id="minefield__table" class="ml-auto">
-                            <div class="minefield__finish-line"></div>
-                            <div class="minefield__cells-wrapper" data-index="${instance.currentQuestionIndex}"></div>
-                        </div>
                     </div>
                 </div>
             </div>`
@@ -67,27 +73,25 @@ export default class MineField {
         const question = instance.data[index]
         const questionContent =
             question.type === 'text'
-                ? `<h3 class="font-bold">${question.question_text}</h3>`
-                : `<div class="task-container_image" id="task-image"><img class="max-w-[580px]" src="${question.question_image}" alt="Question Image" /></div>`
-
+                ? `<p>${question.question_text}</p>`
+                : `<div id="task-image"><img src="${question.question_image}" alt="Question Image" /></div>`
 
         let answersHTML = ''
-        const colors = ['button-green.png', 'button-red.png', 'button-blue.png'];
+        const colors = ['button-green.png', 'button-red.png', 'button-blue.png']
 
         question.answers.forEach((answer, index) => {
-            const bulletIcon = `url('games/minefield/${colors[index % colors.length]}')`;
+            const bulletIcon = `url('games/minefield/${colors[index % colors.length]}')`
 
             answersHTML +=
                 question.type === 'text'
-                    ? `<div class="flex flex-col justify-center items-center gap-2 lg:gap-4"><div class="w-20 h-20 lg:w-24 lg:h-24 xl:w-32 xl:h-32 bg-cover" style="background-image: ${bulletIcon};"></div> <p class="text-xl lg:text-2xl captialize"> ${answer.answer_text}<p></div>`
-                    : `<img class="max-w-[280px]" src="${answer.answer_image}" alt="Answer Image" />`
+                    ? `<div class=""><div class="bg-cover" style="background-image: ${bulletIcon};"></div> <p> ${answer.answer_text}<p></div>`
+                    : `<img src="${answer.answer_image}" alt="Answer Image" />`
         })
-
 
         const questionHTML = `
             <div class="question">
                 ${questionContent}
-                <div class="quiz__answers flex my-4 lg:my-6 xl:my-8 gap-4 lg:gap-6 xl:gap-8">${answersHTML}</div>
+                <div class="quiz__answers">${answersHTML}</div>
             </div>`
 
         const quizContentContainer = document.querySelector('#quiz__question')
@@ -109,16 +113,17 @@ export default class MineField {
                         ${i - 1 == cellIJ[0] && j == cellIJ[1] ? 'top-cell' : ''}
                         ${i == cellIJ[0] && j - 1 == cellIJ[1] ? 'right-cell' : ''}
                     >
-                        ${instance.traveledPath.includes(i.toString() + j.toString()) &&
-                        instance.checkpointCell == i.toString() + j.toString()
-                        ? '<img src="games/minefield/star.gif">'
-                        : ''
-                    }
+                        ${
+                            instance.traveledPath.includes(i.toString() + j.toString()) &&
+                            instance.checkpointCell == i.toString() + j.toString()
+                                ? '<img src="games/minefield/star.gif">'
+                                : ''
+                        }
                     </div>`
             }
         }
 
-        const cellsWrapper = document.querySelector('.minefield__cells-wrapper')
+        const cellsWrapper = document.querySelector('.minefield__grid')
         cellsWrapper.innerHTML = tableHTML
     }
 
@@ -148,7 +153,7 @@ export default class MineField {
         event.stopPropagation()
 
         const selectedCell = event.target.getAttribute('data-cell')
-        const cellsWrapper = event.target.closest('.minefield__cells-wrapper')
+        const cellsWrapper = event.target.closest('.minefield__grid')
 
         cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true))
 

@@ -1150,6 +1150,24 @@ $themes: (
     align-items: center;
     justify-content: center;
 
+    &_left {
+        background-image: url('../../static/frames/Task_Shape_frame-left.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 1/1;
+        width: 787px;
+        padding: 2%;
+    }
+
+    &_right {
+        background-image: url('../../static/frames/language_frame.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        aspect-ratio: 480/738;
+        width: 480px;
+        padding: 4%;
+    }
+
     &_box {
         position: relative;
         width: 100%;
@@ -3492,90 +3510,144 @@ img.lazyloaded ~ div.img-loader {
     }
 }
 
-#minefield {
-    #quiz-content {
-        display: flex;
-        width: 100%;
-        justify-content: center;
+.game-title {
+    font-weight: bold;
+    text-shadow: 0 0 30px var(--clr-dark-orange);
+    font-size: 3rem;
+    text-align: center;
+}
 
-        #quiz__question {
-            width: 60%;
+.minefield {
+    .finish {
+        &-line {
+            display: flex;
+            align-items: center;
+            width: 400px;
         }
 
-        .minefield__finish-line {
-            background: url('../../static/games/minefield/finish_all-middle-elements.png');
+        &-left {
+            background: url('../../static/games/minefield/finish_left.png') no-repeat;
             background-size: contain;
-            background-repeat: repeat-x;
-            height: 70px;
-            position: relative;
-            width: calc(100% - 155px);
-            margin-left: 71px;
-
-            &::before {
-                content: '';
-                background: url('../../static/games/minefield/finish_left.png');
-                background-size: contain;
-                background-repeat: no-repeat;
-                width: 70px;
-                height: 70px;
-                position: absolute;
-                left: -70px;
-            }
-
-            &::after {
-                content: '';
-                background: url('../../static/games/minefield/finish_all-middle-elements.png');
-                background-size: contain;
-                background-repeat: repeat-x;
-                width: 70px;
-                height: 70px;
-                position: absolute;
-                right: -70px;
-            }
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
         }
 
-        .minefield__cells-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            gap: 2px;
+        &-middle {
+            background: url('../../static/games/minefield/finish_all-middle-elements.png') repeat-x;
+            background-size: contain;
+            height: 60px;
+            flex-grow: 1;
         }
 
-        #minefield__table {
-            width: 435px;
+        &-right {
+            background: url('../../static/games/minefield/finish_right.png') no-repeat;
+            background-size: contain;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+    }
 
-            .cell {
-                background-image: url('../../static/games/minefield/button-lilla.png');
-                background-size: contain;
-                aspect-ratio: 1/1;
-                transition: 0.3s ease-in-out;
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 2px;
+        width: 400px;
 
-                &[left-cell],
-                &[top-cell],
-                &[right-cell] {
-                    cursor: pointer;
+        .cell {
+            background-image: url('../../static/games/minefield/button-lilla.png');
+            background-size: contain;
+            aspect-ratio: 1/1;
+            transition: 0.3s ease-in-out;
 
-                    &:hover {
-                        opacity: 0.8;
-                    }
-                }
+            &[left-cell],
+            &[top-cell],
+            &[right-cell] {
+                cursor: pointer;
 
-                &[current-cell],
-                &[visited-cell] {
-                    background-image: url('../../static/games/minefield/button-yellow.png');
-                }
-
-                &[left-cell] {
-                    background-image: url('../../static/games/minefield/button-green.png');
-                }
-
-                &[top-cell] {
-                    background-image: url('../../static/games/minefield/button-red.png');
-                }
-
-                &[right-cell] {
-                    background-image: url('../../static/games/minefield/button-blue.png');
+                &:hover {
+                    opacity: 0.8;
                 }
             }
+
+            &[current-cell],
+            &[visited-cell] {
+                background-image: url('../../static/games/minefield/button-yellow.png');
+            }
+
+            &[left-cell] {
+                background-image: url('../../static/games/minefield/button-green.png');
+            }
+
+            &[top-cell] {
+                background-image: url('../../static/games/minefield/button-red.png');
+            }
+
+            &[right-cell] {
+                background-image: url('../../static/games/minefield/button-blue.png');
+            }
+        }
+    }
+
+    &__content {
+        display: grid;
+        place-content: center;
+        margin-top: 1rem;
+    }
+
+    #quiz-content {
+        height: 100%;
+        display: grid;
+        place-content: center;
+
+        p {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+    }
+
+    .quiz__answers {
+        margin-top: 2rem;
+        text-align: center;
+
+        > div {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .bg-cover {
+            width: 60px;
+            height: 60px;
+        }
+
+        img {
+            width: 96px;
+            height: 96px;
+            display: inline-block;
+        }
+    }
+
+    @media screen and (min-width: 1280px) {
+
+        .finish {
+            &-line {
+                width: 500px;
+            }
+
+            &-left,
+            &-right {
+                width: 100px;
+                height: 100px;
+            }
+
+            &-middle {
+                height: 100px;
+            }
+        }
+        &__grid {
+            width: 500px;
         }
     }
 }
