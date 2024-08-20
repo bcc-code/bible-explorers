@@ -3588,12 +3588,16 @@ img.lazyloaded ~ div.img-loader {
     #quiz-content {
         height: 100%;
         display: grid;
-        place-content: center;
+        place-items: center;
 
         p {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 500;
         }
+    }
+
+    #quiz__question {
+        width: 100%;
     }
 
     .quiz__answers {
@@ -3609,6 +3613,7 @@ img.lazyloaded ~ div.img-loader {
         .bg-cover {
             width: 60px;
             height: 60px;
+            flex-shrink: 0;
         }
 
         img {
@@ -3634,8 +3639,15 @@ img.lazyloaded ~ div.img-loader {
                 height: 100px;
             }
         }
+
         &__grid {
             width: 500px;
+        }
+
+        #quiz-content {
+            p {
+                font-size: 1.5rem;
+            }
         }
     }
 }
