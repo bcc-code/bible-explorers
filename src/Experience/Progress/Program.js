@@ -21,7 +21,7 @@ import MessageWithSupportingScreens from '../Components/MessageWithSupportingScr
 import SingleChoice from '../Components/SingleChoice.js'
 import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
 import MineField from '../Games/MineField.js'
-import BibleVerseCode from '../Components/BibleVerseCode.js'
+import BibleVerseCode from '../Games/BibleVerseCode.js'
 
 let instance = null
 
