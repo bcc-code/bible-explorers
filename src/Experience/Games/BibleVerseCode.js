@@ -53,11 +53,14 @@ export default class BibleVerseCode {
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button button-arrow-skip`
 
+        console.log(  instance.bibleVerseCode.book)
+
+
         instance.bibleVerseCode.book.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-book').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-book-${index + 1}" maxlength="1" class="type1" />
-                    <label for="bible-book-${index + 1}">${number.icon}</label>
+                    <label for="bible-book-${index + 1}"><img src="${number.icon}" /></label>
                 </div>`)
             )
         })
@@ -65,7 +68,7 @@ export default class BibleVerseCode {
             unlockScreen.querySelector('.bible-chapter').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-chapter-${index + 1}" maxlength="1" class="type2" />
-                    <label for="bible-chapter-${index + 1}">${number.icon}</label>
+                    <label for="bible-chapter-${index + 1}"><img src="${number.icon}" /></label>
                 </div>`)
             )
         })
@@ -73,7 +76,7 @@ export default class BibleVerseCode {
             unlockScreen.querySelector('.bible-verse-from').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-verse-from-${index + 1}" maxlength="1" class="type3" />
-                    <label for="bible-verse-from-${index + 1}">${number.icon}</label>
+                    <label for="bible-verse-from-${index + 1}"><img src="${number.icon}" /></label>
                 </div>`)
             )
         })
@@ -81,7 +84,7 @@ export default class BibleVerseCode {
             unlockScreen.querySelector('.bible-verse-to').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-verse-to-${index + 1}" maxlength="1" class="type3" />
-                    <label for="bible-verse-to-${index + 1}">${number.icon}</label>
+                    <label for="bible-verse-to-${index + 1}"><img src="${number.icon}" /></label>
                 </div>`)
             )
         })
