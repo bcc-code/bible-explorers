@@ -3710,6 +3710,12 @@ img.lazyloaded ~ div.img-loader {
         -moz-appearance: textfield;
     }
 
+    img {
+        width: 60px;
+        max-height: 80px;
+        margin-inline: auto;
+    }
+
     .bible-book + .bible-delimiter {
         align-content: end;
         height: 100px;
