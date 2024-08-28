@@ -2377,6 +2377,15 @@ $themes: (
                 }
             }
         }
+
+        #piano-tiles_safe-area {
+            height: 100px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: red;
+        }
     }
 
     .move-down {

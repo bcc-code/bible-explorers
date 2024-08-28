@@ -225,8 +225,8 @@ export default class PianoTiles {
                         <div id="piano-tiles_labels"></div>
                         <div id="piano-tiles_flute"></div>
                         <div id="piano-tiles_played-notes"></div>
+                        <div id="piano-tiles_safe-area"></div>
                     </div>
-
                         <div id="piano-tiles_play-boxes">
                         <div class="play-box" id="play-box1"></div>
                         <div class="play-box" id="play-box2"></div>
@@ -252,6 +252,7 @@ export default class PianoTiles {
         this.labels = game.querySelector('#piano-tiles_labels')
         this.playedNotes = game.querySelector('#piano-tiles_played-notes')
         this.progressBar = game.querySelector('.piano-tiles_progress-bar')
+        this.safeArea = game.querySelector('#piano-tiles_safe-area')
 
         document.onkeydown = (e) => {
             const playedNote = instance.expectedNote(e.key)
@@ -267,7 +268,7 @@ export default class PianoTiles {
             const playableNoteIdx = instance.playableNotes.findIndex((pn) => pn.tone == playedNote)
             if (playableNoteIdx == -1) return
 
-            const toneToPlay = instance.playableNotes[playableNoteIdx].tone
+                       const toneToPlay = instance.playableNotes[playableNoteIdx].tone
 
             if (
                 (e.key === 'ArrowLeft' && toneToPlay == 0) ||
@@ -277,6 +278,18 @@ export default class PianoTiles {
                 const toneIndex = instance.playableNotes[playableNoteIdx].index
                 const clickableTone = document.querySelector('.note[data-index="' + toneIndex + '"]')
                 if (!clickableTone) return
+
+                const safeAreaRect = instance.safeArea.getBoundingClientRect();
+                const noteRect = clickableTone.getBoundingClientRect()
+    
+                if (noteRect.bottom >= safeAreaRect.top && noteRect.bottom <= safeAreaRect.bottom) {
+                    // Valid hit within the safe area!
+                    console.log('hit safe area');
+                    
+                  } else {
+                    // Invalid hit - outside the safe area
+                    console.log('outside safe area');
+                  }
 
                 clickableTone.classList.remove('clickable')
                 clickableTone.classList.add('clicked')
@@ -341,6 +354,8 @@ export default class PianoTiles {
                     noteIcon
                 )
             }
+
+           
         }
     }
 
