@@ -24,6 +24,7 @@ export default class MineField {
         instance.traveledPath = ['13']
         instance.correctPath = ['14', '24', '34', '33', '43', '42', '41', '51']
         instance.checkpointCell = '43'
+        instance.finalCellReached = false;
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
@@ -104,18 +105,19 @@ export default class MineField {
         for (let i = 5; i > 0; i--) {
             for (let j = 1; j <= 5; j++) {
                 const cellIJ = instance.currentCell().split('')
+                const currentCell = i.toString() + j.toString();
 
                 tableHTML += `
-                    <div class="cell flex justify-center items-center" data-cell="${i}${j}" 
-                        ${instance.currentCell() == i.toString() + j.toString() ? 'current-cell' : ''}
-                        ${instance.traveledPath.includes(i.toString() + j.toString()) ? 'visited-cell' : ''}
-                        ${i == cellIJ[0] && j + 1 == cellIJ[1] ? 'left-cell' : ''}
-                        ${i - 1 == cellIJ[0] && j == cellIJ[1] ? 'top-cell' : ''}
-                        ${i == cellIJ[0] && j - 1 == cellIJ[1] ? 'right-cell' : ''}
+                    <div class="cell flex justify-center items-center" data-cell="${currentCell}" 
+                        ${instance.currentCell() == currentCell ? 'current-cell' : ''}
+                        ${instance.traveledPath.includes(currentCell) ? 'visited-cell' : ''}
+                        ${!instance.finalCellReached && i == cellIJ[0] && j + 1 == cellIJ[1] ? 'left-cell' : ''}
+                        ${!instance.finalCellReached && i - 1 == cellIJ[0] && j == cellIJ[1] ? 'top-cell' : ''}
+                        ${!instance.finalCellReached && i == cellIJ[0] && j - 1 == cellIJ[1] ? 'right-cell' : ''}
                     >
                         ${
-                            instance.traveledPath.includes(i.toString() + j.toString()) &&
-                            instance.checkpointCell == i.toString() + j.toString()
+                            instance.traveledPath.includes(currentCell) &&
+                            instance.checkpointCell == currentCell
                                 ? '<img src="games/minefield/star.gif">'
                                 : ''
                         }
@@ -163,11 +165,24 @@ export default class MineField {
             instance.traveledPath.push(selectedCell)
 
             setTimeout(() => {
-                instance.moveToNextQuestion()
+                if (selectedCell === '51') {
+                    instance.finalCellReached = true; // Mark final cell as reached
+                    instance.setHTMLForMineField(); // Re-render the minefield
+                    instance.handleQuizCompletion(); // Trigger completion
+                } else {
+                    instance.moveToNextQuestion();
+                }
             }, 500)
         } else {
             instance.audio.playSound('wrong')
             event.target.innerHTML = '<img src="games/minefield/haman.gif">'
+
+            cellsWrapper.querySelectorAll('.cell').forEach((btn) => {
+                btn.disabled = true;
+                btn.style.pointerEvents = 'none';
+            });
+
+            instance.showRestartButton()
         }
     }
 
@@ -199,6 +214,34 @@ export default class MineField {
 
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button button-arrow'
+    }
+
+    showRestartButton() {
+        const quizContentContainer = document.querySelector('#quiz-content')
+        quizContentContainer.innerHTML = `
+            <div class="text-center mt-4">
+                <h2 class="text-2xl text-center mb-4">Try again!</h2>
+                <button class="button button-rectangle-wide" id="restart-quiz">Restart Quiz</button>
+            </div>
+        `
+
+        document.getElementById('restart-quiz').addEventListener('click', () => {
+            instance.restartQuiz()
+        })
+    }
+
+    restartQuiz() {
+        // Reset necessary variables
+        instance.currentQuestionIndex = 0
+        instance.traveledPath = ['13'] // Reset traveled path to start
+
+        const quizContentContainer = document.querySelector('#quiz-content')
+        quizContentContainer.innerHTML = '<div id="quiz__question"></div>'
+
+        instance.setHTMLForQuestion(instance.currentQuestionIndex)
+        instance.setHTMLForMineField(instance.currentQuestionIndex)
+        instance.useCorrectAssetsSrc(instance.currentQuestionIndex)
+        instance.attachEventListeners()
     }
 
     destroy() {
