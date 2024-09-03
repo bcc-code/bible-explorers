@@ -264,98 +264,84 @@ export default class PianoTiles {
                 playBox.classList.remove('clicked')
             }, 150)
 
-            // Get clickable note
-            const playableNoteIdx = instance.playableNotes.findIndex((pn) => pn.tone == playedNote)
-            if (playableNoteIdx == -1) return
+            const safeAreaRect = instance.safeArea.getBoundingClientRect()
 
-                       const toneToPlay = instance.playableNotes[playableNoteIdx].tone
-
-            if (
-                (e.key === 'ArrowLeft' && toneToPlay == 0) ||
-                (e.key === 'ArrowUp' && toneToPlay == 1) ||
-                (e.key === 'ArrowRight' && toneToPlay == 2)
-            ) {
-                const toneIndex = instance.playableNotes[playableNoteIdx].index
-                const clickableTone = document.querySelector('.note[data-index="' + toneIndex + '"]')
+            instance.playableNotes.forEach((note) => {
+                const clickableTone = document.querySelector('.note[data-index="' + note.index + '"]')
                 if (!clickableTone) return
 
-                const safeAreaRect = instance.safeArea.getBoundingClientRect();
+                if (note.played) return
+
                 const noteRect = clickableTone.getBoundingClientRect()
-    
-                if (noteRect.bottom >= safeAreaRect.top && noteRect.bottom <= safeAreaRect.bottom) {
-                    // Valid hit within the safe area!
-                    console.log('hit safe area');
-                    
-                  } else {
+                if (noteRect.bottom < safeAreaRect.top || noteRect.top > safeAreaRect.bottom) {
                     // Invalid hit - outside the safe area
-                    console.log('outside safe area');
-                  }
-
-                clickableTone.classList.remove('clickable')
-                clickableTone.classList.add('clicked')
-                clickableTone.onkeydown = null
-                instance.playableNotes.splice(playableNoteIdx, 1)
-
-                setTimeout(
-                    (clickableTone) => {
-                        clickableTone.classList.remove('clicked')
-                        clickableTone.classList.add('fade-out')
-                    },
-                    150,
-                    clickableTone
-                )
-
-                instance.increaseScore()
-                instance.updateProgressBar()
-
-                // Add awesome label
-                var awesomeLabel = document.createElement('div')
-                awesomeLabel.classList.add('awesome-label')
-                awesomeLabel.setAttribute('data-tone', toneToPlay)
-
-                if (instance.lastCorrectNoteIndex && toneIndex - 1 == instance.lastCorrectNoteIndex) {
-                    instance.streak++
-                    awesomeLabel.classList.add('combo')
-                    awesomeLabel.setAttribute('data-streak', instance.streak)
-                } else {
-                    instance.streak = 1
+                    return
                 }
 
-                const existingLabel = document.querySelector('.awesome-label')
-                if (existingLabel) existingLabel.remove()
+                if (playedNote == note.tone) {
+                    clickableTone.classList.add('clicked')
+                    clickableTone.onkeydown = null
+                    note.played = true
 
-                instance.labels.append(awesomeLabel)
+                    setTimeout(
+                        (clickableTone) => {
+                            clickableTone.classList.remove('clicked')
+                            clickableTone.classList.add('fade-out')
+                        },
+                        150,
+                        clickableTone
+                    )
 
-                // Update note index
-                instance.lastCorrectNoteIndex = toneIndex
+                    instance.increaseScore()
+                    instance.updateProgressBar()
 
-                setTimeout(
-                    (awesomeLabel) => {
-                        awesomeLabel.remove()
-                    },
-                    750,
-                    awesomeLabel
-                )
+                    // Add awesome label
+                    var awesomeLabel = document.createElement('div')
+                    awesomeLabel.classList.add('awesome-label')
+                    awesomeLabel.setAttribute('data-tone', note.tone)
 
-                // Add played note icon
-                var noteIcon = document.createElement('div')
-                const rndNote = Math.floor(Math.random() * 4) + 1
+                    if (instance.lastCorrectNoteIndex && note.index - 1 == instance.lastCorrectNoteIndex) {
+                        instance.streak++
+                        awesomeLabel.classList.add('combo')
+                        awesomeLabel.setAttribute('data-streak', instance.streak)
+                    } else {
+                        instance.streak = 1
+                    }
 
-                noteIcon.classList.add('note-icon')
-                noteIcon.setAttribute('data-tone', rndNote)
+                    const existingLabel = document.querySelector('.awesome-label')
+                    if (existingLabel) existingLabel.remove()
 
-                instance.playedNotes.append(noteIcon)
+                    instance.labels.append(awesomeLabel)
 
-                setTimeout(
-                    (noteIcon) => {
-                        noteIcon.classList.add('move-right', 'disappear')
-                    },
-                    100,
-                    noteIcon
-                )
-            }
+                    // Update note index
+                    instance.lastCorrectNoteIndex = note.index
 
-           
+                    setTimeout(
+                        (awesomeLabel) => {
+                            awesomeLabel.remove()
+                        },
+                        750,
+                        awesomeLabel
+                    )
+
+                    // Add played note icon
+                    var noteIcon = document.createElement('div')
+                    const rndNote = Math.floor(Math.random() * 4) + 1
+
+                    noteIcon.classList.add('note-icon')
+                    noteIcon.setAttribute('data-tone', rndNote)
+
+                    instance.playedNotes.append(noteIcon)
+
+                    setTimeout(
+                        (noteIcon) => {
+                            noteIcon.classList.add('move-right', 'disappear')
+                        },
+                        100,
+                        noteIcon
+                    )
+                }
+            })
         }
     }
 
@@ -392,6 +378,11 @@ export default class PianoTiles {
         note.setAttribute('data-length', instance.getCurrentLength())
         document.getElementById('tile-box' + (instance.getCurrentTone() + 1)).append(note)
 
+        instance.playableNotes.push({
+            tone: note.getAttribute('data-tone'),
+            index: note.getAttribute('data-index'),
+        })
+
         setTimeout(
             (note) => {
                 note.classList.add('move-down')
@@ -400,16 +391,12 @@ export default class PianoTiles {
             note
         )
 
-        // Make note clickable
+        // Fade out unplayed note
         setTimeout(
             (note) => {
-                instance.playableNotes.push({
-                    tone: note.getAttribute('data-tone'),
-                    index: note.getAttribute('data-index'),
-                })
-                note.classList.add('clickable')
+                note.classList.add('fade-out')
             },
-            instance.transitionTime * 0.45,
+            instance.transitionTime * 0.65,
             note
         )
 
@@ -422,18 +409,8 @@ export default class PianoTiles {
                 if (playableNoteIdx != -1) {
                     instance.playableNotes.splice(playableNoteIdx, 1)
                 }
-                note.classList.remove('clickable')
             },
-            instance.transitionTime * 0.6,
-            note
-        )
-
-        // Fade out unplayed note
-        setTimeout(
-            (note) => {
-                note.classList.add('fade-out')
-            },
-            instance.transitionTime * 0.65,
+            instance.transitionTime,
             note
         )
 
