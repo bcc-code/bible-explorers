@@ -166,9 +166,9 @@ export default class MineField {
 
             setTimeout(() => {
                 if (selectedCell === '51') {
-                    instance.finalCellReached = true; // Mark final cell as reached
-                    instance.setHTMLForMineField(); // Re-render the minefield
-                    instance.handleQuizCompletion(); // Trigger completion
+                    instance.finalCellReached = true; 
+                    instance.setHTMLForMineField(); 
+                    instance.handleQuizCompletion(); 
                 } else {
                     instance.moveToNextQuestion();
                 }
