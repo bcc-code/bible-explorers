@@ -2384,8 +2384,9 @@ $themes: (
             position: absolute;
             bottom: 0;
             left: 0;
-            background: red;
+            border: 2px red dashed;
             top: calc(65% - 45px);
+            z-index: 1;
         }
     }
 
