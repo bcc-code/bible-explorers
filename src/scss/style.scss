@@ -3555,38 +3555,51 @@ img.lazyloaded ~ div.img-loader {
         gap: 2px;
         width: 400px;
 
+        @keyframes pulse {
+            0% {
+                transform: scale(1); /* Normal size */
+            }
+            50% {
+                transform: scale(1.1); /* Slightly larger */
+            }
+            100% {
+                transform: scale(1); /* Back to normal size */
+            }
+        }
+
         .cell {
             background-image: url('../../static/games/minefield/button-lilla.png');
             background-size: contain;
             aspect-ratio: 1/1;
             transition: 0.3s ease-in-out;
-
-            &[left-cell],
-            &[top-cell],
-            &[right-cell] {
-                cursor: pointer;
-
-                &:hover {
-                    opacity: 0.8;
-                }
-            }
+            cursor: pointer;
 
             &[current-cell],
             &[visited-cell] {
                 background-image: url('../../static/games/minefield/button-yellow.png');
             }
 
-            &[left-cell] {
+            &.available-cell {
+                animation: pulse 1s infinite ease-in-out;
+            }
+
+            &.cell-green {
                 background-image: url('../../static/games/minefield/button-green.png');
             }
 
-            &[top-cell] {
+            &.cell-red {
                 background-image: url('../../static/games/minefield/button-red.png');
             }
 
-            &[right-cell] {
+            &.cell-blue {
                 background-image: url('../../static/games/minefield/button-blue.png');
             }
+
+            
+            &:hover {
+                background-image: url('../../static/games/minefield/button-yellow.png');
+            }
+
         }
     }
 
