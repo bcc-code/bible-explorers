@@ -24,7 +24,7 @@ export default class MineField {
         instance.traveledPath = ['13']
         instance.correctPath = ['14', '24', '34', '33', '43', '42', '41', '51']
         instance.checkpointCell = '43'
-        instance.finalCellReached = false;
+        instance.finalCellReached = false
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
@@ -105,7 +105,7 @@ export default class MineField {
         for (let i = 5; i > 0; i--) {
             for (let j = 1; j <= 5; j++) {
                 const cellIJ = instance.currentCell().split('')
-                const currentCell = i.toString() + j.toString();
+                const currentCell = i.toString() + j.toString()
 
                 tableHTML += `
                     <div class="cell flex justify-center items-center" data-cell="${currentCell}" 
@@ -152,18 +152,19 @@ export default class MineField {
     }
 
     handleAnswer = (event) => {
-        event.stopPropagation()
+        event.stopPropagation();
 
-        const selectedCell = event.target.getAttribute('data-cell')
-        const cellsWrapper = event.target.closest('.minefield__grid')
-
-        cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true))
-
+        const selectedCell = event.target.getAttribute('data-cell');
+        const cellsWrapper = event.target.closest('.minefield__grid');
+    
+        cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true));
+    
+        // Ensure the selected answer matches the correct path for the current question index
         if (instance.correctPath[instance.currentQuestionIndex] == selectedCell) {
-            instance.audio.playSound('correct')
-            instance.experience.celebrate({ particleCount: 100, spread: 160 })
-            instance.traveledPath.push(selectedCell)
-
+            instance.audio.playSound('correct');
+            instance.experience.celebrate({ particleCount: 100, spread: 160 });
+            instance.traveledPath.push(selectedCell);
+    
             setTimeout(() => {
                 if (selectedCell === '51') {
                     instance.finalCellReached = true; 
@@ -172,17 +173,17 @@ export default class MineField {
                 } else {
                     instance.moveToNextQuestion();
                 }
-            }, 500)
+            }, 500);
         } else {
-            instance.audio.playSound('wrong')
-            event.target.innerHTML = '<img src="games/minefield/haman.gif">'
-
+            instance.audio.playSound('wrong');
+            event.target.innerHTML = '<img src="games/minefield/haman.gif">';
+    
             cellsWrapper.querySelectorAll('.cell').forEach((btn) => {
                 btn.disabled = true;
                 btn.style.pointerEvents = 'none';
             });
-
-            instance.showRestartButton()
+    
+            instance.showRestartButton();
         }
     }
 
@@ -231,17 +232,27 @@ export default class MineField {
     }
 
     restartQuiz() {
-        // Reset necessary variables
-        instance.currentQuestionIndex = 0
-        instance.traveledPath = ['13'] // Reset traveled path to start
+        // Check if player has reached the checkpoint
+        const checkpointReached = instance.traveledPath.includes(instance.checkpointCell);
+
+        if (checkpointReached) {
+            // Preserve traveled path up to and including the checkpoint
+            const checkpointIndex = instance.traveledPath.indexOf(instance.checkpointCell);
+            instance.traveledPath = instance.traveledPath.slice(0, checkpointIndex + 1);
+        } else {
+            // Reset traveled path to start if checkpoint wasn't reached
+            instance.traveledPath = ['13'];
+        }
+
+        instance.currentQuestionIndex = instance.traveledPath.length - 1 // Adjust the question index based on where they resume
 
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = '<div id="quiz__question"></div>'
 
-        instance.setHTMLForQuestion(instance.currentQuestionIndex)
-        instance.setHTMLForMineField(instance.currentQuestionIndex)
-        instance.useCorrectAssetsSrc(instance.currentQuestionIndex)
-        instance.attachEventListeners()
+        instance.setHTMLForQuestion(instance.currentQuestionIndex);
+        instance.setHTMLForMineField();
+        instance.useCorrectAssetsSrc(instance.currentQuestionIndex);
+        instance.attachEventListeners();
     }
 
     destroy() {
