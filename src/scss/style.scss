@@ -3523,8 +3523,8 @@ img.lazyloaded ~ div.img-loader {
 
         width: 406px;
         height: 60px;
-        background: repeating-conic-gradient(var(--clr-light-orange) 0% 25%, transparent 0% 50%) 
-        50%/ #{$size $size};
+        background: repeating-conic-gradient(var(--clr-light-orange) 0% 25%, transparent 0% 50%) 50% / #{$size
+            $size};
         animation: moveChecker 2s linear infinite;
 
         @keyframes moveChecker {
@@ -3541,7 +3541,7 @@ img.lazyloaded ~ div.img-loader {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 2px;
-        width: 100%;
+        width: 406px;
         margin-top: 0.5rem;
 
         @keyframes pulse {
@@ -3557,7 +3557,6 @@ img.lazyloaded ~ div.img-loader {
         }
 
         .cell {
-            opacity: 0;
             background-image: url('../../static/games/minefield/button-lilla.png');
             background-size: contain;
             aspect-ratio: 1/1;
@@ -3637,6 +3636,10 @@ img.lazyloaded ~ div.img-loader {
 
     @media screen and (min-width: 1440px) {
         .finish-line {
+            width: 523px;
+        }
+        
+        &__grid {
             width: 523px;
         }
 
