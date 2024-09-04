@@ -3,6 +3,7 @@ import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
+import gsap from 'gsap'
 
 let instance = null
 
@@ -12,6 +13,7 @@ export default class MineField {
         instance.experience = new Experience()
         instance.debug = instance.experience.debug
         instance.offline = new Offline()
+        instance.isFirstRender = true;
     }
 
     show() {
@@ -151,6 +153,11 @@ export default class MineField {
 
         const cellsWrapper = document.querySelector('.minefield__grid')
         cellsWrapper.innerHTML = tableHTML
+
+        if (instance.isFirstRender) {
+            animateTiles();
+            instance.isFirstRender = false; 
+        }
     }
 
     useCorrectAssetsSrc(index) {
@@ -289,6 +296,7 @@ export default class MineField {
         document.querySelector('#minefield')?.remove()
 
         instance.experience.setAppView('chapter')
+        instance.isFirstRender = true; 
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -301,7 +309,24 @@ function isValidCell(cell) {
     return row >= 1 && row <= 5 && col >= 1 && col <= 5
 }
 
-// Helper function to get a random integer between min and max
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
+function animateTiles() {
+    const cells = document.querySelectorAll('.cell');
+
+    const tl = gsap.timeline();
+
+    tl.fromTo(
+        cells,
+        { opacity: 0, scale: 0 }, // starting state: hidden and scaled down
+        {
+            opacity: 1,
+            scale: 1, // final state: fully visible and normal size
+            duration: 0.1, // Shorter duration for each animation
+            stagger: {
+                grid: [5, 5], // 5x5 grid
+                from: "start", // start from top-left
+                amount: 0.8, // Shorter total stagger duration for a faster effect
+            },
+            ease: 'power2.out', // Smooth easing for the animation
+        }
+    );
 }
