@@ -102,18 +102,42 @@ export default class MineField {
     setHTMLForMineField() {
         let tableHTML = ''
 
+        const currentCell = instance.currentCell()
+
+        instance.cellColors = {}
+
+        // Get coordinates of the current cell
+        const row = parseInt(currentCell[0])
+        const col = parseInt(currentCell[1])
+
+        // Find adjacent cells (left, right, top, bottom)
+        const adjacentCells = [
+            `${row - 1}${col}`, // top
+            `${row + 1}${col}`, // bottom
+            `${row}${col - 1}`, // left
+            `${row}${col + 1}`, // right
+        ]
+
+        // Filter out visited cells from adjacentCells
+        const availableCells = adjacentCells.filter(
+            (cell) => isValidCell(cell) && !instance.traveledPath.includes(cell)
+        )
+
+        // Assign colors to the available cells
+        const colors = ['cell-red', 'cell-green', 'cell-blue']
+        availableCells.forEach((cell, index) => {
+            instance.cellColors[cell] = colors[index % colors.length] // Cycle through colors
+        })
+
         for (let i = 5; i > 0; i--) {
             for (let j = 1; j <= 5; j++) {
-                const cellIJ = instance.currentCell().split('')
                 const currentCell = i.toString() + j.toString()
 
                 tableHTML += `
-                    <div class="cell flex justify-center items-center" data-cell="${currentCell}" 
-                        ${instance.currentCell() == currentCell ? 'current-cell' : ''}
-                        ${instance.traveledPath.includes(currentCell) ? 'visited-cell' : ''}
-                        ${!instance.finalCellReached && i == cellIJ[0] && j + 1 == cellIJ[1] ? 'left-cell' : ''}
-                        ${!instance.finalCellReached && i - 1 == cellIJ[0] && j == cellIJ[1] ? 'top-cell' : ''}
-                        ${!instance.finalCellReached && i == cellIJ[0] && j - 1 == cellIJ[1] ? 'right-cell' : ''}
+                    <div class="cell flex justify-center items-center ${availableCells.includes(currentCell) ? 'available-cell ' + (instance.cellColors[currentCell] || '') : ''}" 
+                         data-cell="${currentCell}" 
+                         ${instance.currentCell() == currentCell ? 'current-cell' : ''}
+                         ${instance.traveledPath.includes(currentCell) ? 'visited-cell' : ''}
                     >
                         ${
                             instance.traveledPath.includes(currentCell) &&
@@ -152,46 +176,46 @@ export default class MineField {
     }
 
     handleAnswer = (event) => {
-        event.stopPropagation();
+        event.stopPropagation()
 
-        const selectedCell = event.target.getAttribute('data-cell');
-        const cellsWrapper = event.target.closest('.minefield__grid');
-    
-        cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true));
-    
+        const selectedCell = event.target.getAttribute('data-cell')
+        const cellsWrapper = event.target.closest('.minefield__grid')
+
+        cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true))
+
         // Ensure the selected answer matches the correct path for the current question index
         if (instance.correctPath[instance.currentQuestionIndex] == selectedCell) {
-            instance.audio.playSound('correct');
-            instance.experience.celebrate({ particleCount: 100, spread: 160 });
-            instance.traveledPath.push(selectedCell);
-    
+            instance.audio.playSound('correct')
+            instance.experience.celebrate({ particleCount: 100, spread: 160 })
+            instance.traveledPath.push(selectedCell)
+
             setTimeout(() => {
                 if (selectedCell === '51') {
-                    instance.finalCellReached = true; 
-                    instance.setHTMLForMineField(); 
-                    instance.handleQuizCompletion(); 
+                    instance.finalCellReached = true
+                    instance.setHTMLForMineField()
+                    instance.handleQuizCompletion()
                 } else {
-                    instance.moveToNextQuestion();
+                    instance.moveToNextQuestion()
                 }
-            }, 500);
+            }, 500)
         } else {
-            instance.audio.playSound('wrong');
-            event.target.innerHTML = '<img src="games/minefield/haman.gif">';
-    
+            instance.audio.playSound('wrong')
+            event.target.innerHTML = '<img src="games/minefield/haman.gif">'
+
             cellsWrapper.querySelectorAll('.cell').forEach((btn) => {
-                btn.disabled = true;
-                btn.style.pointerEvents = 'none';
-            });
-    
-            instance.showRestartButton();
+                btn.disabled = true
+                btn.style.pointerEvents = 'none'
+            })
+
+            instance.showRestartButton()
         }
     }
 
     attachEventListeners() {
-        document.querySelectorAll('.cell[left-cell], .cell[top-cell], .cell[right-cell]').forEach((cell) =>
+        // Attach event listeners to the available cells
+        document.querySelectorAll('.available-cell').forEach((cell) =>
             cell.addEventListener('click', (event) => {
                 instance.handleAnswer(event)
-                cell.removeEventListener('click', instance.handleAnswer)
             })
         )
     }
@@ -213,6 +237,12 @@ export default class MineField {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = '<h2 class="text-2xl text-center">Game completed!</h2>'
 
+        // Remove all colored cells (available-cell classes) at the end of the game
+        const allCells = document.querySelectorAll('.available-cell')
+        allCells.forEach((cell) => {
+            cell.classList.remove('available-cell', 'cell-blue', 'cell-red', 'cell-green')
+        })
+
         instance.experience.navigation.next.innerHTML = ''
         instance.experience.navigation.next.className = 'button button-arrow'
     }
@@ -233,15 +263,15 @@ export default class MineField {
 
     restartQuiz() {
         // Check if player has reached the checkpoint
-        const checkpointReached = instance.traveledPath.includes(instance.checkpointCell);
+        const checkpointReached = instance.traveledPath.includes(instance.checkpointCell)
 
         if (checkpointReached) {
             // Preserve traveled path up to and including the checkpoint
-            const checkpointIndex = instance.traveledPath.indexOf(instance.checkpointCell);
-            instance.traveledPath = instance.traveledPath.slice(0, checkpointIndex + 1);
+            const checkpointIndex = instance.traveledPath.indexOf(instance.checkpointCell)
+            instance.traveledPath = instance.traveledPath.slice(0, checkpointIndex + 1)
         } else {
             // Reset traveled path to start if checkpoint wasn't reached
-            instance.traveledPath = ['13'];
+            instance.traveledPath = ['13']
         }
 
         instance.currentQuestionIndex = instance.traveledPath.length - 1 // Adjust the question index based on where they resume
@@ -249,10 +279,10 @@ export default class MineField {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = '<div id="quiz__question"></div>'
 
-        instance.setHTMLForQuestion(instance.currentQuestionIndex);
-        instance.setHTMLForMineField();
-        instance.useCorrectAssetsSrc(instance.currentQuestionIndex);
-        instance.attachEventListeners();
+        instance.setHTMLForQuestion(instance.currentQuestionIndex)
+        instance.setHTMLForMineField()
+        instance.useCorrectAssetsSrc(instance.currentQuestionIndex)
+        instance.attachEventListeners()
     }
 
     destroy() {
@@ -262,4 +292,16 @@ export default class MineField {
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
+}
+
+// Helper function to check if a cell is valid (inside the grid)
+function isValidCell(cell) {
+    const row = parseInt(cell[0])
+    const col = parseInt(cell[1])
+    return row >= 1 && row <= 5 && col >= 1 && col <= 5
+}
+
+// Helper function to get a random integer between min and max
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
