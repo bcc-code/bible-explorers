@@ -275,8 +275,10 @@ export default class PianoTiles {
 
             const safeAreaRect = instance.safeArea.getBoundingClientRect()
 
+            const clickableTones = document.querySelectorAll('.note');
+
             instance.playableNotes.forEach((note) => {
-                const clickableTone = document.querySelector('.note[data-index="' + note.index + '"]')
+                const clickableTone = Array.from(clickableTones).find(tone => tone.getAttribute('data-index') == note.index)
                 if (!clickableTone) return
 
                 if (note.played) return
