@@ -5,6 +5,12 @@ import _s from '../Utils/Strings.js'
 
 let instance = null
 
+const SONG_START_DELAY_MS = 4750 // Time before the song starts (milliseconds)
+const BASE_NOTE_SPEED = 240 // Base speed of note movement
+const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
+const SPEED_MULTIPLIER_AGE_9_11 = 1 // Speed multiplier for age 9-11
+const SPEED_MULTIPLIER_AGE_12_PLUS = 1.25 // Speed multiplier for age 12+
+
 export default class PianoTiles {
     constructor() {
         instance = this
@@ -17,11 +23,14 @@ export default class PianoTiles {
         this.audio = this.world.audio
 
         this.ageCategory = this.world.selectedChapter.category
+
+        this.timeBeforeSongStart = SONG_START_DELAY_MS
+        this.speed = BASE_NOTE_SPEED
+        this.transitionTime = TRANSITION_DURATION_MS
+        this.speedMultiplier =
+            this.ageCategory === '9-11' ? SPEED_MULTIPLIER_AGE_9_11 : SPEED_MULTIPLIER_AGE_12_PLUS
+
         this.score = 0
-        this.speedMultiplier = this.ageCategory === '9-11' ? 1 : 1.25
-        this.timeBeforeSongStart = 4750
-        this.speed = 240
-        this.transitionTime = 2000
         this.notesIndex = 0
         this.playableNotes = []
 
