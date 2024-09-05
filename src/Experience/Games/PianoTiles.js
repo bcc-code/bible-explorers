@@ -2,6 +2,7 @@ import Experience from '../Experience.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
 import _s from '../Utils/Strings.js'
+import gsap from 'gsap'
 
 let instance = null
 
@@ -288,7 +289,7 @@ export default class PianoTiles {
                     clickableTone.onkeydown = null
                     note.played = true
 
-                    setTimeout(() => this.fadeOutNoteElement(clickableTone), 150)
+                    instance.fadeOutNoteElement(clickableTone)
                     instance.increaseScore()
                     instance.updateProgressBar()
 
@@ -313,12 +314,15 @@ export default class PianoTiles {
                     setTimeout(() => this.removeAwesomeLabel(awesomeLabel), 750)
 
                     var noteIcon = document.createElement('div')
-                    const rndNote = Math.floor(Math.random() * 4) + 1
                     noteIcon.classList.add('note-icon')
+                    const rndNote = Math.floor(Math.random() * 4) + 1 // Randomize tone
                     noteIcon.setAttribute('data-tone', rndNote)
+
+                    // Append the note to the played-notes container
                     instance.playedNotes.append(noteIcon)
 
-                    setTimeout(() => this.moveAndDisappearNoteIcon(noteIcon), 100)
+                    // Trigger the animation for the notes with GSAP
+                    this.animateNoteIcon(noteIcon)
                 }
             })
         }
@@ -477,20 +481,37 @@ export default class PianoTiles {
         playBox.classList.remove('clicked')
     }
 
-    // Function to handle note fade out
-    fadeOutNoteElement(clickableTone) {
-        clickableTone.classList.remove('clicked')
-        clickableTone.classList.add('fade-out')
-    }
-
     // Function to remove awesome label after a delay
     removeAwesomeLabel(awesomeLabel) {
         awesomeLabel.remove()
     }
 
-    // Function to handle the move-right and disappear animation
-    moveAndDisappearNoteIcon(noteIcon) {
-        noteIcon.classList.add('move-right', 'disappear')
+    fadeOutNoteElement(clickableTone) {
+        gsap.to(clickableTone, {
+            duration: 0.5,
+            scale: 1.4,
+            backgroundColor: 'yellow',
+            opacity: 0,
+            onComplete: () => {
+                clickableTone.remove()
+            },
+        })
+    }
+
+    animateNoteIcon(noteIcon, index) {
+        const randomY = Math.random() * 150 - 75 // Random vertical direction
+
+        gsap.to(noteIcon, {
+            duration: 1.5,
+            scale: 2,
+            x: 300,
+            y: randomY,
+            opacity: 0,
+            ease: 'power2.out',
+            onComplete: () => {
+                noteIcon.remove()
+            },
+        })
     }
 
     destroy() {

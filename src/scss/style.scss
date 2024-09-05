@@ -2293,38 +2293,28 @@ $themes: (
 
             .note-icon {
                 position: absolute;
-                right: -15px;
+                top: 0;
+                left: 100%;
                 background-repeat: no-repeat;
                 background-position: center;
+                background-size: contain;
+                width: 60px;
                 height: 65px;
-                top: 0;
 
                 &[data-tone='1'] {
-                    transition: all linear 2.5s;
-                    width: 20px;
                     background-image: url('../../static/games/piano-tiles/note_1.svg');
-                    top: -10px;
                 }
 
                 &[data-tone='2'] {
-                    transition: all linear 2.4s;
-                    width: 18px;
                     background-image: url('../../static/games/piano-tiles/note_2.svg');
-                    top: -15px;
                 }
 
                 &[data-tone='3'] {
-                    transition: all linear 2.2s;
-                    width: 13px;
                     background-image: url('../../static/games/piano-tiles/note_3.svg');
-                    top: -10px;
                 }
 
                 &[data-tone='4'] {
-                    transition: all linear 2.3s;
-                    width: 15px;
                     background-image: url('../../static/games/piano-tiles/note_4.svg');
-                    top: -30px;
                 }
             }
         }
