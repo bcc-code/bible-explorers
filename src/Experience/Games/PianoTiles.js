@@ -269,44 +269,29 @@ export default class PianoTiles {
             if (!playBox) return
 
             playBox.classList.add('clicked')
-            setTimeout(() => {
-                playBox.classList.remove('clicked')
-            }, 150)
+            setTimeout(() => this.removeClickedClass(playBox), 150)
 
             const safeAreaRect = instance.safeArea.getBoundingClientRect()
-
-            const clickableTones = document.querySelectorAll('.note');
+            const clickableTones = document.querySelectorAll('.note')
 
             instance.playableNotes.forEach((note) => {
-                const clickableTone = Array.from(clickableTones).find(tone => tone.getAttribute('data-index') == note.index)
-                if (!clickableTone) return
-
-                if (note.played) return
+                const clickableTone = Array.from(clickableTones).find(
+                    (tone) => tone.getAttribute('data-index') == note.index
+                )
+                if (!clickableTone || note.played) return
 
                 const noteRect = clickableTone.getBoundingClientRect()
-                if (noteRect.bottom < safeAreaRect.top || noteRect.top > safeAreaRect.bottom) {
-                    // Invalid hit - outside the safe area
-                    return
-                }
+                if (noteRect.bottom < safeAreaRect.top || noteRect.top > safeAreaRect.bottom) return
 
                 if (playedNote == note.tone) {
                     clickableTone.classList.add('clicked')
                     clickableTone.onkeydown = null
                     note.played = true
 
-                    setTimeout(
-                        (clickableTone) => {
-                            clickableTone.classList.remove('clicked')
-                            clickableTone.classList.add('fade-out')
-                        },
-                        150,
-                        clickableTone
-                    )
-
+                    setTimeout(() => this.fadeOutNoteElement(clickableTone), 150)
                     instance.increaseScore()
                     instance.updateProgressBar()
 
-                    // Add awesome label
                     var awesomeLabel = document.createElement('div')
                     awesomeLabel.classList.add('awesome-label')
                     awesomeLabel.setAttribute('data-tone', note.tone)
@@ -323,34 +308,17 @@ export default class PianoTiles {
                     if (existingLabel) existingLabel.remove()
 
                     instance.labels.append(awesomeLabel)
-
-                    // Update note index
                     instance.lastCorrectNoteIndex = note.index
 
-                    setTimeout(
-                        (awesomeLabel) => {
-                            awesomeLabel.remove()
-                        },
-                        750,
-                        awesomeLabel
-                    )
+                    setTimeout(() => this.removeAwesomeLabel(awesomeLabel), 750)
 
-                    // Add played note icon
                     var noteIcon = document.createElement('div')
                     const rndNote = Math.floor(Math.random() * 4) + 1
-
                     noteIcon.classList.add('note-icon')
                     noteIcon.setAttribute('data-tone', rndNote)
-
                     instance.playedNotes.append(noteIcon)
 
-                    setTimeout(
-                        (noteIcon) => {
-                            noteIcon.classList.add('move-right', 'disappear')
-                        },
-                        100,
-                        noteIcon
-                    )
+                    setTimeout(() => this.moveAndDisappearNoteIcon(noteIcon), 100)
                 }
             })
         }
@@ -502,6 +470,27 @@ export default class PianoTiles {
         } else if (key === 'ArrowRight') {
             return 2
         }
+    }
+
+    // Function to remove 'clicked' class after a delay
+    removeClickedClass(playBox) {
+        playBox.classList.remove('clicked')
+    }
+
+    // Function to handle note fade out
+    fadeOutNoteElement(clickableTone) {
+        clickableTone.classList.remove('clicked')
+        clickableTone.classList.add('fade-out')
+    }
+
+    // Function to remove awesome label after a delay
+    removeAwesomeLabel(awesomeLabel) {
+        awesomeLabel.remove()
+    }
+
+    // Function to handle the move-right and disappear animation
+    moveAndDisappearNoteIcon(noteIcon) {
+        noteIcon.classList.add('move-right', 'disappear')
     }
 
     destroy() {
