@@ -323,8 +323,11 @@ export default class PianoTiles {
                         instance.streak++
                         awesomeLabel.classList.add('combo')
                         awesomeLabel.setAttribute('data-streak', instance.streak)
+
+                        instance.animateAwesomeLabel(awesomeLabel)
                     } else {
-                        instance.streak = 1
+                        instance.streak = 0
+                        instance.animateAwesomeLabel(awesomeLabel)
                     }
 
                     const existingLabel = document.querySelector('.awesome-label')
@@ -333,7 +336,10 @@ export default class PianoTiles {
                     instance.labels.append(awesomeLabel)
                     instance.lastCorrectNoteIndex = note.index
 
-                    setTimeout(() => this.removeAwesomeLabel(awesomeLabel), 750)
+                    setTimeout(() => {
+                        awesomeLabel.remove()
+                    }, 750)
+                    console.log('Updated last correct note index:', instance.lastCorrectNoteIndex)
 
                     var noteIcon = document.createElement('div')
                     noteIcon.classList.add('note-icon')
@@ -500,14 +506,6 @@ export default class PianoTiles {
         }
     }
 
-    removeClickedClass(playBox) {
-        playBox.classList.remove('clicked')
-    }
-
-    removeAwesomeLabel(awesomeLabel) {
-        awesomeLabel.remove()
-    }
-
     fadeOutNoteElement(clickableTone) {
         gsap.to(clickableTone, {
             duration: 0.5,
@@ -543,7 +541,7 @@ export default class PianoTiles {
             duration: 0.15,
             fill: '#FFD700',
             scale: 1.2,
-            transformOrigin: "50% 50%",
+            transformOrigin: '50% 50%',
             repeat: 1,
             yoyo: true,
             ease: 'power1.inOut',
@@ -551,9 +549,25 @@ export default class PianoTiles {
     }
 
     animatePlayBox(playBox) {
-        gsap.timeline({ defaults: { duration: 0.3, ease: "power1.out" } })
-            .to(playBox, { scale: 1.1, boxShadow: '0px 0px 15px 10px rgba(251, 192, 82, 0.2)', yoyo: true, repeat: 1 })
-            .to(playBox, { scale: 1, boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0)' });
+        gsap.timeline({ defaults: { duration: 0.3, ease: 'power1.out' } })
+            .to(playBox, {
+                scale: 1.1,
+                boxShadow: '0px 0px 15px 10px rgba(251, 192, 82, 0.2)',
+                yoyo: true,
+                repeat: 1,
+            })
+            .to(playBox, { scale: 1, boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0)' })
+    }
+
+    animateAwesomeLabel(awesomeLabel) {
+        gsap.to(awesomeLabel, {
+            duration: 0.25,
+            scale: 1.2,
+            transformOrigin: '50% 50%',
+            repeat: 1,
+            yoyo: true,
+            ease: 'power1.inOut',
+        })
     }
 
     destroy() {
