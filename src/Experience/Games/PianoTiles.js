@@ -484,12 +484,11 @@ export default class PianoTiles {
         instance.resultBox.classList.add('visible')
 
         if (instance.score / instance.notes.length > 0.83) {
-            instance.text.innerText =
-                "Good job! You've scored " + instance.score + '/' + instance.notes.length + ' points'
+            instance.text.innerHTML =`<h2>Good job</h2><p class="text-xl"> You've scored ${instance.score} / ${instance.notes.length} points</p>`
             instance.restart.innerText = 'Another round'
+
         } else {
-            instance.text.innerText =
-                "Oops! You've only scored " + instance.score + '/' + instance.notes.length + ' points'
+            instance.text.innerHTML =`<h2>Oops!</h2><p class="text-xl"> You've only scored ${instance.score} / ${instance.notes.length} points</p>`
             instance.restart.innerText = 'Try again'
         }
     }
