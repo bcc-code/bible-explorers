@@ -290,8 +290,7 @@ export default class PianoTiles {
             let playBox = document.getElementById('play-box' + (playedNote + 1))
             if (!playBox) return
 
-            playBox.classList.add('clicked')
-            setTimeout(() => this.removeClickedClass(playBox), 150)
+            instance.animatePlayBox(playBox)
 
             const safeAreaRect = instance.safeArea.getBoundingClientRect()
             const clickableTones = document.querySelectorAll('.note')
@@ -496,15 +495,15 @@ export default class PianoTiles {
             return 1
         } else if (key === 'ArrowRight') {
             return 2
+        } else {
+            return
         }
     }
 
-    // Function to remove 'clicked' class after a delay
     removeClickedClass(playBox) {
         playBox.classList.remove('clicked')
     }
 
-    // Function to remove awesome label after a delay
     removeAwesomeLabel(awesomeLabel) {
         awesomeLabel.remove()
     }
@@ -549,6 +548,12 @@ export default class PianoTiles {
             yoyo: true,
             ease: 'power1.inOut',
         })
+    }
+
+    animatePlayBox(playBox) {
+        gsap.timeline({ defaults: { duration: 0.3, ease: "power1.out" } })
+            .to(playBox, { scale: 1.1, boxShadow: '0px 0px 15px 10px rgba(251, 192, 82, 0.2)', yoyo: true, repeat: 1 })
+            .to(playBox, { scale: 1, boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0)' });
     }
 
     destroy() {
