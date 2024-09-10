@@ -2209,7 +2209,7 @@ $themes: (
 
                     &[data-length='3']:before,
                     &[data-length='4']:before,
-                    &[data-length='6']:before {
+                    &[data-length='6.5']:before {
                         content: '';
                         width: 100px;
                         height: 214px;
@@ -2220,19 +2220,19 @@ $themes: (
 
                     &[data-tone='0'][data-length='3']:before,
                     &[data-tone='0'][data-length='4']:before,
-                    &[data-tone='0'][data-length='6']:before {
+                    &[data-tone='0'][data-length='6.5']:before {
                         background-image: url('../../static/games/piano-tiles/note_l_1.svg');
                     }
 
                     &[data-tone='1'][data-length='3']:before,
                     &[data-tone='1'][data-length='4']:before,
-                    &[data-tone='1'][data-length='6']:before {
+                    &[data-tone='1'][data-length='6.5']:before {
                         background-image: url('../../static/games/piano-tiles/note_l_2.svg');
                     }
 
                     &[data-tone='2'][data-length='3']:before,
                     &[data-tone='2'][data-length='4']:before,
-                    &[data-tone='2'][data-length='6']:before {
+                    &[data-tone='2'][data-length='6.5']:before {
                         background-image: url('../../static/games/piano-tiles/note_l_3.svg');
                     }
                 }
@@ -2426,7 +2426,6 @@ $themes: (
         text-align: center;
         align-items: center;
         flex-direction: column;
-        gap: 2rem;
         opacity: 0;
         pointer-events: none;
         transform: translate(-50%, -50%) scale(0.9);
@@ -2444,7 +2443,7 @@ $themes: (
         }
 
         .score_text {
-            margin: 10px 0;
+            margin: 70px 0 10px;
         }
 
         .buttons {

@@ -6,7 +6,7 @@ import gsap from 'gsap'
 
 let instance = null
 
-const SONG_START_DELAY_MS = 4700 // Time before the song starts (milliseconds)
+const SONG_START_DELAY_MS = 4750 // Time before the song starts (milliseconds)
 const BASE_NOTE_SPEED = 240 // Base speed of note movement
 const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
 const SPEED_MULTIPLIER_AGE_9_11 = 1 // Speed multiplier for age 9-11
@@ -116,7 +116,7 @@ export default class PianoTiles {
             },
             {
                 tone: 2,
-                length: 6,
+                length: 6.5,
             },
             {
                 tone: 0,
@@ -250,7 +250,7 @@ export default class PianoTiles {
                 </div>
                     
                 <div class="task-game_popup result-box">
-                    <div class="score_text text-2xl">You've scored 0 points</div>
+                    <div class="score_text text-2xl"></div>
                     <div class="buttons">
                         <button class="piano-tiles_restart button button-rectangle-wide"></button>
                     </div>
@@ -341,7 +341,6 @@ export default class PianoTiles {
 
     startRound() {
         instance.game.style.display = 'block'
-        instance.progressBar.style.display = 'block'
         instance.score = 0
         instance.notesIndex = 0
         instance.lastCorrectNoteIndex = -1
@@ -463,7 +462,6 @@ export default class PianoTiles {
 
     showScore() {
         instance.game.style.display = 'none'
-        instance.progressBar.style.display = 'none'
         instance.resultBox.classList.add('visible')
 
         if (instance.score / instance.notes.length > 0.83) {
