@@ -6,7 +6,7 @@ import gsap from 'gsap'
 
 let instance = null
 
-const SONG_START_DELAY_MS = 4750 // Time before the song starts (milliseconds)
+const SONG_START_DELAY_MS = 4700 // Time before the song starts (milliseconds)
 const BASE_NOTE_SPEED = 240 // Base speed of note movement
 const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
 const SPEED_MULTIPLIER_AGE_9_11 = 1 // Speed multiplier for age 9-11
@@ -111,28 +111,12 @@ export default class PianoTiles {
                 length: 1,
             },
             {
+                tone: 0,
+                length: 1,
+            },
+            {
                 tone: 2,
-                length: 1,
-            },
-            {
-                tone: 1,
-                length: 1,
-            },
-            {
-                tone: 1,
-                length: 1,
-            },
-            {
-                tone: 0,
-                length: 0.75,
-            },
-            {
-                tone: 0,
-                length: 0.75,
-            },
-            {
-                tone: 1,
-                length: 3,
+                length: 6,
             },
             {
                 tone: 0,
@@ -319,15 +303,15 @@ export default class PianoTiles {
                     awesomeLabel.classList.add('awesome-label')
                     awesomeLabel.setAttribute('data-tone', note.tone)
 
-                    if (instance.lastCorrectNoteIndex && note.index - 1 == instance.lastCorrectNoteIndex) {
-                        instance.streak++
-                        awesomeLabel.classList.add('combo')
-                        awesomeLabel.setAttribute('data-streak', instance.streak)
+                    if (note.index - 1 == instance.lastCorrectNoteIndex) {
+                        if (++instance.streak > 1) {
+                            awesomeLabel.classList.add('combo')
+                            awesomeLabel.setAttribute('data-streak', instance.streak)
+                        }
 
                         instance.animateAwesomeLabel(awesomeLabel)
                     } else {
                         instance.streak = 0
-                        instance.animateAwesomeLabel(awesomeLabel)
                     }
 
                     const existingLabel = document.querySelector('.awesome-label')
@@ -339,7 +323,6 @@ export default class PianoTiles {
                     setTimeout(() => {
                         awesomeLabel.remove()
                     }, 750)
-                    console.log('Updated last correct note index:', instance.lastCorrectNoteIndex)
 
                     var noteIcon = document.createElement('div')
                     noteIcon.classList.add('note-icon')
@@ -361,7 +344,7 @@ export default class PianoTiles {
         instance.progressBar.style.display = 'block'
         instance.score = 0
         instance.notesIndex = 0
-        instance.lastCorrectNoteIndex = null
+        instance.lastCorrectNoteIndex = -1
         instance.streak = 0
         instance.updateProgressBar()
 
@@ -484,11 +467,17 @@ export default class PianoTiles {
         instance.resultBox.classList.add('visible')
 
         if (instance.score / instance.notes.length > 0.83) {
-            instance.text.innerHTML =`<h2>Good job</h2><p class="text-xl"> You've scored ${instance.score} / ${instance.notes.length} points</p>`
+            instance.text.innerHTML = `<h2>Good job</h2><p class="text-xl"> You've scored ${instance.score} / ${instance.notes.length} points</p>`
             instance.restart.innerText = 'Another round'
 
+            instance.audio.playSound('correct')
+            instance.experience.celebrate({
+                particleCount: 100,
+                spread: 160,
+            })
         } else {
-            instance.text.innerHTML =`<h2>Oops!</h2><p class="text-xl"> You've only scored ${instance.score} / ${instance.notes.length} points</p>`
+            instance.audio.playSound('wrong')
+            instance.text.innerHTML = `<h2>Oops!</h2><p class="text-xl"> You've only scored ${instance.score} / ${instance.notes.length} points</p>`
             instance.restart.innerText = 'Try again'
         }
     }
