@@ -25,11 +25,17 @@ export default class BibleVerseCode {
     }
 
     bibleVerseCodeHTML() {
+        let prompts = ''
+        instance.program.getCurrentStepData().details.prompts.forEach((p) => {
+            prompts += `<p>${p.prompt}</p>`
+        })
+
         const title = instance.program.getCurrentStepData().details.title
         const unlockScreen = _gl.elementFromHtml(`
             <div class="bible-verse-code absolute inset-0 task-container" id="bible-verse-code">
                 <div class="relative task-container_box">
-                    <h5 class="task-container_heading">${title}</h1>
+                    <h5 class="task-container_heading">${title}</h5>
+                    <div class="bible-verse-code__prompts">${prompts}</div>
                     <div class="bible-verse-code__input">
                         <div class="bible-book"></div>
                         <div class="bible-delimiter">,</div>
@@ -52,9 +58,6 @@ export default class BibleVerseCode {
         instance.experience.interface.gameContainer.append(unlockScreen)
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button button-arrow-skip`
-
-        console.log(  instance.bibleVerseCode.book)
-
 
         instance.bibleVerseCode.book.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-book').append(
