@@ -1165,7 +1165,7 @@ $themes: (
         background-size: contain;
         aspect-ratio: 480/738;
         width: 380px;
-        padding: 2%;
+        padding: 3%;
     }
 
     &_box {
@@ -3597,6 +3597,7 @@ img.lazyloaded ~ div.img-loader {
             font-size: 1.25rem;
             font-weight: 500;
             text-align: left;
+            white-space: pre-wrap;
         }
     }
 
