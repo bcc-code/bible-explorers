@@ -49,8 +49,11 @@ export default class BibleVerseCode {
                         <button id="check-code" class="button button-task_action" type="submit"><span>Sjekke om koden er riktig</span></button>
                     </div>
                 </div>
-                <video id="glitch-character" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>
-                <div id="open-guide">Trenger dere hjelp? Klikk her!</div>
+                <div id="glitch-character">
+                    <video id="glitch-character-idle" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Loop_v002.webm" muted autoplay loop></video>
+                    <video id="glitch-character-popup" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Start_v002.webm" muted loop></video>
+                </div>
+                <div id="open-guide" class="cursor-pointer">Trenger dere hjelp? Klikk her!</div>
                 <div id="glitch-guide">Dere skjønner kanskje selv at dere mangler noe for å finne hele koden. Sjekk i versken som mentoren bærer med seg!</div>
             </div>
         `)
@@ -96,6 +99,11 @@ export default class BibleVerseCode {
     setEventListeners() {
         document.querySelector('#check-code').addEventListener('click', instance.checkCode)
         document.querySelector('#glitch-character').addEventListener('click', instance.showOpenGuide)
+        document.querySelector('#glitch-character').addEventListener('mouseover', () => {
+            const characterPopup = document.querySelector('#glitch-character-popup')
+            characterPopup.currentTime = 0
+            characterPopup.play()
+        })
         document.querySelector('#open-guide').addEventListener('click', instance.popGlitchGuide)
         instance.goToNextInputListener()
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
