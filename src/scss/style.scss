@@ -2473,32 +2473,29 @@ $themes: (
 
 #glitch-character {
     position: absolute;
-    width: 260px;
+    width: 195px;
     height: 260px;
     bottom: 0;
-    right: 5rem;
-    transition: 0.5s ease;
+    right: 6rem;
     cursor: pointer;
-    padding: 2rem;
 
     #glitch-character-idle,
     #glitch-character-popup {
+        opacity: 1;
         position: absolute;
         bottom: -130px;
+        transition: transform 0.5s ease;
     }
 
     #glitch-character-popup {
-        display: none;
+        right: 10px;
+        opacity: 0;
     }
 
     &:hover #glitch-character-idle,
-    &.active #glitch-character-idle {
-        display: none;
-    }
-
+    &.active #glitch-character-idle,
     &:hover #glitch-character-popup,
     &.active #glitch-character-popup {
-        display: block;
         transform: translateY(-130px);
     }
 }

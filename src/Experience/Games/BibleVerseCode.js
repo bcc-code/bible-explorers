@@ -54,8 +54,8 @@ export default class BibleVerseCode {
                     </div>
                 </div>
                 <div id="glitch-character">
-                    <video id="glitch-character-idle" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Loop_v002.webm" muted autoplay loop></video>
-                    <video id="glitch-character-popup" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Start_v002.webm" muted loop></video>
+                    <video id="glitch-character-idle" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Loop_v003.webm" muted autoplay loop></video>
+                    <video id="glitch-character-popup" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Start_v003.webm" muted></video>
                 </div>
                 <div id="open-guide" class="cursor-pointer">Trenger dere hjelp? Klikk her!</div>
                 <div id="glitch-guide">Dere skjønner kanskje selv at dere mangler noe for å finne hele koden. Sjekk i versken som mentoren bærer med seg!</div>
@@ -135,13 +135,42 @@ export default class BibleVerseCode {
 
     setEventListeners() {
         document.querySelector('#check-code').addEventListener('click', instance.checkCode)
-        document.querySelector('#glitch-character').addEventListener('click', instance.showOpenGuide)
-        document.querySelector('#glitch-character').addEventListener('mouseover', () => {
+
+        const glitchCharacter = document.querySelector('#glitch-character')
+        glitchCharacter.addEventListener('mouseover', () => {
+            if (glitchCharacter.classList.contains('active')) return
+            glitchCharacter.classList.add('active')
+
             const characterPopup = document.querySelector('#glitch-character-popup')
+            const characterIdle = document.querySelector('#glitch-character-idle')
+
+            characterIdle.style.opacity = 0
+            characterPopup.style.opacity = 1
             characterPopup.currentTime = 0
             characterPopup.play()
         })
+        document.querySelector('#glitch-character-popup').addEventListener('ended', () => {
+            const characterPopup = document.querySelector('#glitch-character-popup')
+            const characterIdle = document.querySelector('#glitch-character-idle')
+
+            var fadeEffect = setInterval(function () {
+                if (characterPopup.style.opacity > 0) {
+                    characterPopup.style.opacity = parseFloat(characterPopup.style.opacity) - 0.1
+                    characterIdle.style.opacity = parseFloat(characterIdle.style.opacity) + 0.1
+                } else {
+                    characterPopup.style.opacity = 0
+                    characterIdle.style.opacity = 1
+                    clearInterval(fadeEffect)
+                }
+            }, 10)
+        })
+        glitchCharacter.addEventListener('mouseleave', () => {
+            glitchCharacter.classList.remove('active')
+        })
+
+        document.querySelector('#glitch-character').addEventListener('click', instance.showOpenGuide)
         document.querySelector('#open-guide').addEventListener('click', instance.popGlitchGuide)
+
         instance.goToNextInputListener()
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -225,7 +254,6 @@ export default class BibleVerseCode {
     }
 
     showOpenGuide() {
-        document.querySelector('#glitch-character').classList.add('active')
         document.querySelector('#open-guide').style.display = 'block'
     }
 
