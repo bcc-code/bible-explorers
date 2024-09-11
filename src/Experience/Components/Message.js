@@ -43,9 +43,9 @@ export default class Message {
     setHtml(caption, character) {
         if (instance.data.character == 'glitch') {
             const glitch = _gl.elementFromHtml(
-                '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>'
+                '<video id="glitch-idle" src="textures/Glitch_WEB_Recap_v003.webm" muted autoplay loop></video>'
             )
-            document.querySelector('#closed-caption').append(glitch)
+            document.querySelector('#chapter-wrapper').append(glitch)
         }
 
         const message = _gl.elementFromHtml(

@@ -2465,12 +2465,10 @@ $themes: (
 
 #glitch-idle {
     position: absolute;
-    width: 150px;
-    bottom: 100%;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
     left: 0;
-    right: 0;
-    margin: 0 auto;
-    border-radius: 10px;
 }
 
 #glitch-character {
