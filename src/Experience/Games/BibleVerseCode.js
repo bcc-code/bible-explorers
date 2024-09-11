@@ -138,8 +138,14 @@ export default class BibleVerseCode {
 
         const glitchCharacter = document.querySelector('#glitch-character')
         glitchCharacter.addEventListener('mouseover', () => {
-            if (glitchCharacter.classList.contains('active')) return
-            glitchCharacter.classList.add('active')
+            if (
+                glitchCharacter.classList.contains('hovering') ||
+                glitchCharacter.classList.contains('active')
+            ) {
+                return
+            }
+
+            glitchCharacter.classList.add('hovering')
 
             const characterPopup = document.querySelector('#glitch-character-popup')
             const characterIdle = document.querySelector('#glitch-character-idle')
@@ -165,7 +171,7 @@ export default class BibleVerseCode {
             }, 10)
         })
         glitchCharacter.addEventListener('mouseleave', () => {
-            glitchCharacter.classList.remove('active')
+            glitchCharacter.classList.remove('hovering')
         })
 
         document.querySelector('#glitch-character').addEventListener('click', instance.showOpenGuide)
@@ -254,6 +260,7 @@ export default class BibleVerseCode {
     }
 
     showOpenGuide() {
+        document.querySelector('#glitch-character').classList.add('active')
         document.querySelector('#open-guide').style.display = 'block'
     }
 

@@ -2476,7 +2476,7 @@ $themes: (
     width: 195px;
     height: 260px;
     bottom: 0;
-    right: 6rem;
+    right: 11rem;
     cursor: pointer;
 
     #glitch-character-idle,
@@ -2494,8 +2494,10 @@ $themes: (
 
     &:hover #glitch-character-idle,
     &.active #glitch-character-idle,
+    &.hovering #glitch-character-idle,
     &:hover #glitch-character-popup,
-    &.active #glitch-character-popup {
+    &.active #glitch-character-popup,
+    &.hovering #glitch-character-popup {
         transform: translateY(-130px);
     }
 }
@@ -2510,7 +2512,7 @@ $themes: (
     padding: 0.5rem;
     border: 2px solid #fff;
     text-align: center;
-    width: 160px;
+    width: 230px;
 }
 
 .pause {
