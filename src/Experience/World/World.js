@@ -617,6 +617,22 @@ export default class World {
                         step.details.task_type == 'truefalse_quiz'
                 )
             )
+            instance.cacheMineFieldMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'minefield'
+                )
+            )
+            instance.cacheBibleVerseCodeMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'bible_verse_code'
+                )
+            )
         })
     }
 
@@ -764,6 +780,43 @@ export default class World {
             step.truefalse_quiz.questions.forEach((question) => {
                 instance.fetchAndCacheAsset(question.question_media)
                 instance.fetchAndCacheAsset(question.question_audio)
+            })
+        })
+    }
+
+    cacheMineFieldMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            if (!step.minefield.questions?.length) return
+
+            step.minefield.questions.forEach((question) => {
+                instance.fetchAndCacheAsset(question.question_image)
+
+                if (!question.answers.length) return
+                question.answers.forEach((answer) => {
+                    instance.fetchAndCacheAsset(answer.answer_image)
+                })
+            })
+        })
+    }
+
+    cacheBibleVerseCodeMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.bible_verse_code.book.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+
+            step.bible_verse_code.chapter.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+
+            step.bible_verse_code.verse_from.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+
+            step.bible_verse_code.verse_to.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
             })
         })
     }

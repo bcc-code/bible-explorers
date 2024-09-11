@@ -1,3 +1,4 @@
+import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
@@ -11,26 +12,29 @@ export default class BibleVerseCode {
         instance.experience = new Experience()
         instance.world = instance.experience.world
         instance.debug = instance.experience.debug
+        instance.offline = new Offline()
     }
 
     toggleBibleVerseCode() {
         instance.audio = instance.world.audio
         instance.program = instance.world.program
-        instance.bibleVerseCode = instance.program.getCurrentStepData().bible_verse_code
+        instance.stepData = instance.program.getCurrentStepData()
+        instance.data = instance.stepData.bible_verse_code
 
         instance.experience.setAppView('game')
 
         instance.bibleVerseCodeHTML()
+        instance.useCorrectAssetsSrc()
         instance.setEventListeners()
     }
 
     bibleVerseCodeHTML() {
         let prompts = ''
-        instance.program.getCurrentStepData().details.prompts.forEach((p) => {
+        instance.stepData.details.prompts.forEach((p) => {
             prompts += `<p>${p.prompt}</p>`
         })
 
-        const title = instance.program.getCurrentStepData().details.title
+        const title = instance.stepData.details.title
         const unlockScreen = _gl.elementFromHtml(`
             <div class="bible-verse-code absolute inset-0 task-container" id="bible-verse-code">
                 <div class="relative task-container_box">
@@ -62,7 +66,7 @@ export default class BibleVerseCode {
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = `button button-arrow-skip`
 
-        instance.bibleVerseCode.book.forEach(function (number, index) {
+        instance.data.book.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-book').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-book-${index + 1}" maxlength="1" class="type1" />
@@ -70,7 +74,7 @@ export default class BibleVerseCode {
                 </div>`)
             )
         })
-        instance.bibleVerseCode.chapter.forEach(function (number, index) {
+        instance.data.chapter.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-chapter').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-chapter-${index + 1}" maxlength="1" class="type2" />
@@ -78,7 +82,7 @@ export default class BibleVerseCode {
                 </div>`)
             )
         })
-        instance.bibleVerseCode.verse_from.forEach(function (number, index) {
+        instance.data.verse_from.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-verse-from').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-verse-from-${index + 1}" maxlength="1" class="type3" />
@@ -86,13 +90,46 @@ export default class BibleVerseCode {
                 </div>`)
             )
         })
-        instance.bibleVerseCode.verse_to.forEach(function (number, index) {
+        instance.data.verse_to.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-verse-to').append(
                 _gl.elementFromHtml(`<div class="flex text-center flex-col">
                     <input type="number" id="bible-verse-to-${index + 1}" maxlength="1" class="type3" />
                     <label for="bible-verse-to-${index + 1}"><img src="${number.icon}" /></label>
                 </div>`)
             )
+        })
+    }
+
+    useCorrectAssetsSrc() {
+        instance.data.book.forEach((option, index) => {
+            instance.offline.fetchChapterAsset(option, 'icon', (data) => {
+                document.querySelector('.bible-book label[for="bible-book-' + (index + 1) + '"] img').src =
+                    data.icon
+            })
+        })
+
+        instance.data.chapter.forEach((option, index) => {
+            instance.offline.fetchChapterAsset(option, 'icon', (data) => {
+                document.querySelector(
+                    '.bible-chapter label[for="bible-chapter-' + (index + 1) + '"] img'
+                ).src = data.icon
+            })
+        })
+
+        instance.data.verse_from.forEach((option, index) => {
+            instance.offline.fetchChapterAsset(option, 'icon', (data) => {
+                document.querySelector(
+                    '.bible-verse-from label[for="bible-verse-from-' + (index + 1) + '"] img'
+                ).src = data.icon
+            })
+        })
+
+        instance.data.verse_to.forEach((option, index) => {
+            instance.offline.fetchChapterAsset(option, 'icon', (data) => {
+                document.querySelector(
+                    '.bible-verse-to label[for="bible-verse-to-' + (index + 1) + '"] img'
+                ).src = data.icon
+            })
         })
     }
 
@@ -115,27 +152,19 @@ export default class BibleVerseCode {
         })
 
         document.querySelectorAll('.bible-book input').forEach((input, index) => {
-            input.classList.add(
-                input.value != instance.bibleVerseCode.book[index].number ? 'wrong' : 'correct'
-            )
+            input.classList.add(input.value != instance.data.book[index].number ? 'wrong' : 'correct')
         })
 
         document.querySelectorAll('.bible-chapter input').forEach((input, index) => {
-            input.classList.add(
-                input.value != instance.bibleVerseCode.chapter[index].number ? 'wrong' : 'correct'
-            )
+            input.classList.add(input.value != instance.data.chapter[index].number ? 'wrong' : 'correct')
         })
 
         document.querySelectorAll('.bible-verse-from input').forEach((input, index) => {
-            input.classList.add(
-                input.value != instance.bibleVerseCode.verse_from[index].number ? 'wrong' : 'correct'
-            )
+            input.classList.add(input.value != instance.data.verse_from[index].number ? 'wrong' : 'correct')
         })
 
         document.querySelectorAll('.bible-verse-to input').forEach((input, index) => {
-            input.classList.add(
-                input.value != instance.bibleVerseCode.verse_to[index].number ? 'wrong' : 'correct'
-            )
+            input.classList.add(input.value != instance.data.verse_to[index].number ? 'wrong' : 'correct')
         })
 
         if (document.querySelectorAll('input.wrong').length > 0) {

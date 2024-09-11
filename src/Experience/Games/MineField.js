@@ -13,7 +13,7 @@ export default class MineField {
         instance.experience = new Experience()
         instance.debug = instance.experience.debug
         instance.offline = new Offline()
-        instance.isFirstRender = true;
+        instance.isFirstRender = true
     }
 
     show() {
@@ -155,8 +155,8 @@ export default class MineField {
         cellsWrapper.innerHTML = tableHTML
 
         if (instance.isFirstRender) {
-            animateTiles();
-            instance.isFirstRender = false; 
+            animateTiles()
+            instance.isFirstRender = false
         }
     }
 
@@ -296,7 +296,7 @@ export default class MineField {
         document.querySelector('#minefield')?.remove()
 
         instance.experience.setAppView('chapter')
-        instance.isFirstRender = true; 
+        instance.isFirstRender = true
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
@@ -310,9 +310,9 @@ function isValidCell(cell) {
 }
 
 function animateTiles() {
-    const cells = document.querySelectorAll('.cell');
+    const cells = document.querySelectorAll('.cell')
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline()
 
     tl.fromTo(
         cells,
@@ -323,10 +323,10 @@ function animateTiles() {
             duration: 0.1, // Shorter duration for each animation
             stagger: {
                 grid: [5, 5], // 5x5 grid
-                from: "start", // start from top-left
+                from: 'start', // start from top-left
                 amount: 0.8, // Shorter total stagger duration for a faster effect
             },
             ease: 'power2.out', // Smooth easing for the animation
         }
-    );
+    )
 }
