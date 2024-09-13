@@ -180,7 +180,7 @@ export default class PianoTiles {
 
                 <div class="piano-tiles_progress-bar">
                     <div class="points-achieved">
-                        <progress max="${instance.notes.length * 0.75}" value="0"></progress>
+                        <progress max="${instance.notes.length * 0.8077}" value="0"></progress>
                         <ul>
                             <li data-checkpoint="1">
                                 <div class="progress-bullet"></div>
@@ -429,14 +429,14 @@ export default class PianoTiles {
     updateProgressBar() {
         instance.progressBar.querySelector('progress').value = instance.score
 
-        if (instance.score >= 25) {
+        if ((instance.score * 100) / instance.notes.length >= 80.77) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
             instance.getProgressBarCheckpoint(2).classList.add('filled')
             instance.getProgressBarCheckpoint(3).classList.add('filled')
-        } else if (instance.score >= 15) {
+        } else if ((instance.score * 100) / instance.notes.length >= 61.54) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
             instance.getProgressBarCheckpoint(2).classList.add('filled')
-        } else if (instance.score >= 5) {
+        } else if ((instance.score * 100) / instance.notes.length >= 38.46) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
         } else {
             instance.getProgressBarCheckpoint(1).classList.remove('filled')
@@ -464,7 +464,7 @@ export default class PianoTiles {
         instance.game.style.display = 'none'
         instance.resultBox.classList.add('visible')
 
-        if (instance.score / instance.notes.length > 0.83) {
+        if (instance.score / instance.notes.length >= 0.8077) {
             instance.text.innerHTML = `<h2>Good job</h2><p class="text-xl"> You've scored ${instance.score} / ${instance.notes.length} points</p>`
             instance.restart.innerText = 'Another round'
 
