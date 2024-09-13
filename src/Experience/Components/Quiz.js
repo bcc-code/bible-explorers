@@ -146,6 +146,7 @@ export default class Quiz {
 
         const answerLabels = instance.questionItem.querySelectorAll('label')
         const textarea = instance.questionItem.querySelector('textarea')
+        const isLastQuestion = instance.questionIdx === instance.totalQuestions - 1
 
         answerLabels.forEach((answer, idx) => {
             answer.addEventListener('click', (e) => {
@@ -194,7 +195,7 @@ export default class Quiz {
         if (textarea) {
             textarea.addEventListener('input', (e) => {
                 const inputLength = e.target.value.length
-                const isLastQuestion = instance.questionIdx === instance.totalQuestions - 1
+
                 if (inputLength > 0) {
                     if (isLastQuestion) {
                         instance.submitQuiz.style.display = 'flex'
@@ -232,6 +233,8 @@ export default class Quiz {
             instance.nextQuestion.removeEventListener('click', instance.checkMcQuestion)
             instance.nextQuestion.addEventListener('click', instance.moveToNextQuestion)
         }
+
+        if (!isLastQuestion) return
 
         instance.submitQuiz.addEventListener('click', async () => {
             const wasSuccessful = await instance.saveAnswers()
