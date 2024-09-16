@@ -428,14 +428,14 @@ export default class PianoTiles {
     updateProgressBar() {
         instance.progressBar.querySelector('progress').value = instance.score
 
-        if ((instance.score * 100) / instance.notes.length >= 80.77) {
+        if ((instance.score * 100) / instance.notes.length >= 80.76) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
             instance.getProgressBarCheckpoint(2).classList.add('filled')
             instance.getProgressBarCheckpoint(3).classList.add('filled')
-        } else if ((instance.score * 100) / instance.notes.length >= 61.54) {
+        } else if ((instance.score * 100) / instance.notes.length >= 61.53) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
             instance.getProgressBarCheckpoint(2).classList.add('filled')
-        } else if ((instance.score * 100) / instance.notes.length >= 38.46) {
+        } else if ((instance.score * 100) / instance.notes.length >= 38.45) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
         } else {
             instance.getProgressBarCheckpoint(1).classList.remove('filled')
@@ -463,7 +463,7 @@ export default class PianoTiles {
         instance.game.style.display = 'none'
         instance.resultBox.classList.add('visible')
 
-        if (instance.score / instance.notes.length >= 0.8077) {
+        if (instance.score / instance.notes.length >= 0.8076) {
             instance.text.innerHTML = `<h2>Good job</h2><p class="text-xl"> You've scored ${instance.score} / ${instance.notes.length} points</p>`
             instance.restart.innerText = 'Another round'
 
