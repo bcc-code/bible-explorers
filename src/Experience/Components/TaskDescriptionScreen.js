@@ -32,19 +32,13 @@ export default class TaskDescriptionScreen {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
-    useCorrectAssetsSrc() {
-        instance.offline.fetchChapterAsset(instance.data, 'td_image', (data) => {
-            document.querySelector('#task-image img').src = data.td_image
-        })
-    }
-
     setHtml() {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="task-container">
                 <div class="task-container_box">
                     <h5 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h5>
                     ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
-                    ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
+                    ${instance.data.td_image ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.td_image)}</div>` : ''}
                     ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button button-task_action">${instance.data.td_button}</button></div>` : ''}
                 </div>
             </div>`
@@ -57,6 +51,24 @@ export default class TaskDescriptionScreen {
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button button-arrow-skip'
+    }
+
+    useCorrectAssetsSrc() {
+        instance.offline.fetchChapterAsset(instance.data, 'td_image', (data) => {
+            const imageElement = document.querySelector('#task-image')
+            if (imageElement) {
+                // Check if the element exists
+                imageElement.src = data.td_image
+            }
+        })
+    }
+
+    getDomElement(url) {
+        const ext = url.split('.').pop().toLowerCase()
+
+        if (['mp4', 'mov', 'webm'].includes(ext))
+            return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        else return `<img src="${url}" id="task-image" />`
     }
 
     destroy() {
