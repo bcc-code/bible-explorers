@@ -9,8 +9,8 @@ let instance = null
 const SONG_START_DELAY_MS = 4750 // Time before the song starts (milliseconds)
 const BASE_NOTE_SPEED = 240 // Base speed of note movement
 const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
+const SPEED_MULTIPLIER_AGE_6_8 = 1.25 // Speed multiplier for age 12+
 const SPEED_MULTIPLIER_AGE_9_11 = 1 // Speed multiplier for age 9-11
-const SPEED_MULTIPLIER_AGE_12_PLUS = 1.25 // Speed multiplier for age 12+
 
 export default class PianoTiles {
     constructor() {
@@ -28,8 +28,7 @@ export default class PianoTiles {
         this.timeBeforeSongStart = SONG_START_DELAY_MS
         this.speed = BASE_NOTE_SPEED
         this.transitionTime = TRANSITION_DURATION_MS
-        this.speedMultiplier =
-            this.ageCategory === '9-11' ? SPEED_MULTIPLIER_AGE_9_11 : SPEED_MULTIPLIER_AGE_12_PLUS
+        this.speedMultiplier = 1 // this.ageCategory === '9-11' ? SPEED_MULTIPLIER_AGE_9_11 : SPEED_MULTIPLIER_AGE_6_8
 
         this.score = 0
         this.notesIndex = 0
