@@ -174,7 +174,7 @@ export default class PianoTiles {
         const game = _gl.elementFromHtml(`
             <section class="task-game piano-tiles" id="piano-tiles">
                 <div class="absolute inset-0 grid place-content-center bg-black/60" id="piano-tites__background">
-                    <video src="games/piano-tiles/flute_tiles_BG.mp4" class="h-screen object-cover" muted autoplay loop></video>
+                    <video src="games/piano-tiles/defaultBG_v02.mp4" class="h-screen object-cover" muted autoplay loop></video>
                 </div>
 
                 <div class="piano-tiles_progress-bar">
@@ -534,14 +534,24 @@ export default class PianoTiles {
     }
 
     animatePlayBox(playBox) {
-        gsap.timeline({ defaults: { duration: 0.3, ease: 'power1.out' } })
+        gsap.timeline({
+            defaults: {
+                duration: 0.3,
+                ease: 'power1.out',
+            },
+        })
             .to(playBox, {
                 scale: 1.1,
                 boxShadow: '0px 0px 15px 10px rgba(251, 192, 82, 0.2)',
                 yoyo: true,
                 repeat: 1,
+                className: 'play-box clicked',
             })
-            .to(playBox, { scale: 1, boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0)' })
+            .to(playBox, {
+                scale: 1,
+                boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0)',
+                className: 'play-box',
+            })
     }
 
     animateAwesomeLabel(awesomeLabel) {
