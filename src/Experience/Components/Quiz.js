@@ -48,21 +48,26 @@ export default class Quiz {
         instance.quizContainer = _gl.elementFromHtml(`
         <div class="absolute inset-0 task-container" id="quiz-game">
             <div class="task-container_box group/quiz flex flex-col">
-                <div class="progress-bar-container">
-                    <div class="progress-bar-background">
-                        <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
-                    </div>
-                    <ul id="progress-steps" class="progress-steps">${instance.questions
-                        .map(
-                            (_, index) => `
-                        <li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
-                            <span class="step-number">${index + 1}</span>
-                        </li>`
-                        )
-                        .join('')}</ul>
-                </div>
+                ${
+                    instance.questions.length > 1
+                        ? `<div class="progress-bar-container">
+                        <div class="progress-bar-background">
+                            <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
+                        </div>
+                        <ul id="progress-steps" class="progress-steps">${instance.questions
+                            .map(
+                                (_, index) => `
+                                <li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
+                                    <span class="step-number">${index + 1}</span>
+                                </li>`
+                            )
+                            .join('')}
+                            </ul>
+                    </div>`
+                        : ''
+                }
                 <div id="quiz-wrapper"></div>
-                <div class="task-container_actions">
+                <div class="task-container_actions ${instance.questions.length == 1 ? 'hidden' : ''}">
                     <button id="next-question" class="button button-task_action"></button>
                     <button id="submit-quiz" class="button button-task_action" type="submit"><span>${_s.task.submit}</span></button>
                 </div>

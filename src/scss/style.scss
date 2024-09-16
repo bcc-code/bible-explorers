@@ -1178,7 +1178,7 @@ $themes: (
         padding: 6% 3%;
         display: flex;
         flex-flow: column nowrap;
-        gap: 5%;
+        gap: 10%;
         align-items: center;
         justify-content: center;
     }
@@ -1198,8 +1198,8 @@ $themes: (
     &_image,
     &_tutorial {
         // width: clamp(20rem, 27vw, 100%);
-        max-width: 60%;
-        max-height: 65%;
+        max-width: 70%;
+        max-height: 75%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -3663,6 +3663,10 @@ img.lazyloaded ~ div.img-loader {
 }
 
 #bible-verse-code {
+    .bible-verse-code__prompts {
+        text-align: center;
+    }
+
     .bible-verse-code__input {
         display: flex;
         gap: 1rem;
