@@ -50,7 +50,7 @@ export default class BibleVerseCode {
                         <div class="bible-verse-to"></div>
                     </div>
                     <div class="task-container_actions">
-                        <button id="check-code" class="button button-task_action" type="submit"><span>Sjekke om koden er riktig</span></button>
+                        <button id="check-code" class="button button-task_action" type="submit"><span>Sjekk om koden er riktig</span></button>
                     </div>
                 </div>
                 <div id="glitch-character">
@@ -58,7 +58,7 @@ export default class BibleVerseCode {
                     <video id="glitch-character-popup" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Start_v003.webm" muted></video>
                 </div>
                 <div id="open-guide" class="cursor-pointer">Trenger dere hjelp? Klikk her!</div>
-                <div id="glitch-guide">Dere skjønner kanskje selv at dere mangler noe for å finne hele koden. Sjekk i versken som mentoren bærer med seg!</div>
+                <div id="glitch-guide">Dere skjønner kanskje selv at dere mangler noe for å finne hele koden. Sjekk i vesken som mentoren bærer med seg!</div>
             </div>
         `)
 
