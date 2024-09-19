@@ -133,7 +133,6 @@
     },
     "simonSays": {
       "failed": {
-        "title": "Oops!",
         "message": "Du har spilt av feil note i melodien!"
       }
     },
@@ -149,7 +148,6 @@
       "string": "fullført"
     },
     "timeElapsed": {
-      "title": "Oops!",
       "message": "Tiden er ute. Prøv å feste alle kablene før tiden er ute."
     },
     "startGame": "Start spillet",
@@ -166,7 +164,8 @@
     "skip": "Hopp over",
     "correctAnswers": "riktige svar",
     "playAudio": "Afspil lyd",
-    "winRound": "Bra jobba!"
+    "winRound": "Bra jobba!",
+    "oops": "Oops!"
   },
   "chapter": {
     "infoSingular": {

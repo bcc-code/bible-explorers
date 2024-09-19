@@ -29,7 +29,9 @@ export default class SimonSays {
 
         instance.config = {
             rounds:
-                instance.world.selectedChapter.category == '6-8' ? explorersOne.noOfRounds : explorersTwo.noOfRounds,
+                instance.world.selectedChapter.category == '6-8'
+                    ? explorersOne.noOfRounds
+                    : explorersTwo.noOfRounds,
             msBetweenNotes:
                 instance.world.selectedChapter.category == '6-8'
                     ? explorersOne.msBetweenNotes
@@ -81,7 +83,9 @@ export default class SimonSays {
 
             game.querySelector('.cables').append(cable)
 
-            i < 4 ? game.querySelector('.side.left').append(ticker) : game.querySelector('.side.right').append(ticker)
+            i < 4
+                ? game.querySelector('.side.left').append(ticker)
+                : game.querySelector('.side.right').append(ticker)
         }
 
         for (let j = 0; j < instance.data.color.length; j++) {
@@ -193,7 +197,7 @@ export default class SimonSays {
 
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <h1>${_s.miniGames.simonSays.failed.title}</h1>
+                <h1>${_s.miniGames.oops}</h1>
                 <p>${_s.miniGames.simonSays.failed.message}</p>
                 <div class="buttons"></div>
             </div>

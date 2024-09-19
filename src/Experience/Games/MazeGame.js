@@ -217,12 +217,16 @@ export default class MazeGame {
                     dummy.translate(c * wallSize, wallSize * 0.5, r * wallSize)
                     geometries.push(dummy)
 
-                    const shape = new CANNON.Box(new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5))
+                    const shape = new CANNON.Box(
+                        new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5)
+                    )
                     this.mazeBody.addShape(shape, new CANNON.Vec3(c * wallSize, wallSize * 0.5, r * wallSize))
                 }
 
                 if (cell == 2) {
-                    const shape = new CANNON.Box(new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5))
+                    const shape = new CANNON.Box(
+                        new CANNON.Vec3(wallSize * 0.5, wallSize * 0.5, wallSize * 0.5)
+                    )
                     // If entrance on left
                     if (c == 0) {
                         this.mazeBody.addShape(
@@ -567,7 +571,7 @@ export default class MazeGame {
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
             document.querySelector('.task-game_popup button').textContent = _s.miniGames.nextRound
         } else if (this.options.gameState == 'repeat') {
-            document.querySelector('.task-game_popup h1').textContent = _s.miniGames.timeElapsed.title
+            document.querySelector('.task-game_popup h1').textContent = _s.miniGames.oops
             document.querySelector('.task-game_popup button').textContent = _s.miniGames.playAgain
         } else if (this.options.gameState == 'end game') {
             this.options.currentLevel++

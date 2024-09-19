@@ -545,7 +545,7 @@ export default class CableConnector {
 
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <h1>${_s.miniGames.timeElapsed.title}</h1>
+                <h1>${_s.miniGames.oops}</h1>
                 <p>${_s.miniGames.timeElapsed.message}</p>
                 <div class="buttons"></div>
             </div>

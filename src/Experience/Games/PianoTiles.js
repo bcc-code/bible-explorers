@@ -6,7 +6,7 @@ import gsap from 'gsap'
 
 let instance = null
 
-const SONG_START_DELAY_MS = 4750 // Time before the song starts (milliseconds)
+const SONG_START_DELAY_MS = 4700 // Time before the song starts (milliseconds)
 const BASE_NOTE_SPEED = 240 // Base speed of note movement
 const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
 const SPEED_MULTIPLIER_AGE_6_8 = 1.25 // Speed multiplier for age 12+
@@ -37,12 +37,19 @@ export default class PianoTiles {
         this.notes = [
             {
                 tone: 1,
-                length: 3,
+                length: 4,
             },
             {
                 tone: 2,
-                length: 3,
-                break: 2,
+                length: 4,
+            },
+            {
+                tone: 1,
+                length: 4,
+            },
+            {
+                tone: 2,
+                length: 4.5,
             },
             {
                 tone: 1,
@@ -53,37 +60,13 @@ export default class PianoTiles {
                 length: 1.5,
             },
             {
-                tone: 2,
-                length: 4,
-                break: 1,
+                tone: 1,
+                length: 0.5,
+                break: 0.5,
             },
             {
                 tone: 0,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 1,
-            },
-            {
-                tone: 0,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 1,
-            },
-            {
-                tone: 2,
-                length: 0.5,
-            },
-            {
-                tone: 1,
-                length: 0.5,
-            },
-            {
-                tone: 0,
-                length: 4,
+                length: 3,
             },
             {
                 tone: 1,
@@ -163,7 +146,7 @@ export default class PianoTiles {
         instance.audio.fadeOutBgMusic()
 
         instance.restart.onclick = () => {
-            instance.resultBox.classList.remove('visible')
+            instance.game.parentElement.classList.remove('show-score')
             instance.sco.innerText = 0
             instance.audio.pianoTiles.stop()
             instance.startRound()
@@ -240,18 +223,18 @@ export default class PianoTiles {
                         </div>
                         <div id="piano-tiles_played-notes"></div>
                         <div id="piano-tiles_safe-area"></div>
-                    </div>
                         <div id="piano-tiles_play-boxes">
-                        <div class="play-box" id="play-box1"></div>
-                        <div class="play-box" id="play-box2"></div>
-                        <div class="play-box" id="play-box3"></div>
+                            <div class="play-box" id="play-box1"></div>
+                            <div class="play-box" id="play-box2"></div>
+                            <div class="play-box" id="play-box3"></div>
+                        </div>
                     </div>
                 </div>
                     
                 <div class="task-game_popup result-box">
                     <div class="score_text text-2xl"></div>
                     <div class="buttons">
-                        <button class="piano-tiles_restart button button-rectangle-wide"></button>
+                        <button class="piano-tiles_restart button button-rectangle-wide">${_s.miniGames.anotherRound}</button>
                     </div>
             </section>`)
 
@@ -269,6 +252,7 @@ export default class PianoTiles {
         this.safeArea = game.querySelector('#piano-tiles_safe-area')
 
         document.onkeydown = (e) => {
+            console.log(e.key)
             const playedNote = instance.expectedNote(e.key)
             let playBox = document.getElementById('play-box' + (playedNote + 1))
             if (!playBox) return
@@ -288,7 +272,6 @@ export default class PianoTiles {
                 if (noteRect.bottom < safeAreaRect.top || noteRect.top > safeAreaRect.bottom) return
 
                 if (playedNote == note.tone) {
-                    clickableTone.classList.add('clicked')
                     clickableTone.onkeydown = null
                     note.played = true
 
@@ -388,7 +371,7 @@ export default class PianoTiles {
             (note) => {
                 note.classList.add('fade-out')
             },
-            instance.transitionTime * 0.65,
+            instance.transitionTime * 0.75,
             note
         )
 
@@ -428,14 +411,14 @@ export default class PianoTiles {
     updateProgressBar() {
         instance.progressBar.querySelector('progress').value = instance.score
 
-        if ((instance.score * 100) / instance.notes.length >= 80.76) {
+        if ((instance.score * 100) / instance.notes.length >= 80) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
             instance.getProgressBarCheckpoint(2).classList.add('filled')
             instance.getProgressBarCheckpoint(3).classList.add('filled')
-        } else if ((instance.score * 100) / instance.notes.length >= 61.53) {
+        } else if ((instance.score * 100) / instance.notes.length >= 50) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
             instance.getProgressBarCheckpoint(2).classList.add('filled')
-        } else if ((instance.score * 100) / instance.notes.length >= 38.45) {
+        } else if ((instance.score * 100) / instance.notes.length >= 20) {
             instance.getProgressBarCheckpoint(1).classList.add('filled')
         } else {
             instance.getProgressBarCheckpoint(1).classList.remove('filled')
@@ -461,11 +444,10 @@ export default class PianoTiles {
 
     showScore() {
         instance.game.style.display = 'none'
-        instance.resultBox.classList.add('visible')
+        instance.game.parentElement.classList.add('show-score')
 
-        if (instance.score / instance.notes.length >= 0.8076) {
-            instance.text.innerHTML = `<h2>Good job</h2><p class="text-xl"> You've scored ${instance.score} / ${instance.notes.length} points</p>`
-            instance.restart.innerText = 'Another round'
+        if (instance.score / instance.notes.length >= 0.8) {
+            instance.text.innerHTML = `<h2>${_s.miniGames.winRound}</h2><p class="text-xl">${instance.score} / ${instance.notes.length}</p>`
 
             instance.audio.playSound('correct')
             instance.experience.celebrate({
@@ -474,8 +456,7 @@ export default class PianoTiles {
             })
         } else {
             instance.audio.playSound('wrong')
-            instance.text.innerHTML = `<h2>Oops!</h2><p class="text-xl"> You've only scored ${instance.score} / ${instance.notes.length} points</p>`
-            instance.restart.innerText = 'Try again'
+            instance.text.innerHTML = `<h2>${_s.miniGames.oops}</h2><p class="text-xl">${instance.score} / ${instance.notes.length}</p>`
         }
     }
 
@@ -545,12 +526,10 @@ export default class PianoTiles {
                 boxShadow: '0px 0px 15px 10px rgba(251, 192, 82, 0.2)',
                 yoyo: true,
                 repeat: 1,
-                className: 'play-box clicked',
             })
             .to(playBox, {
                 scale: 1,
                 boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0)',
-                className: 'play-box',
             })
     }
 
@@ -572,7 +551,7 @@ export default class PianoTiles {
         instance.audio.setOtherAudioIsPlaying(false)
         instance.audio.fadeInBgMusic()
 
-        document.querySelector('.piano-tiles')?.remove()
+        instance.game.parentElement?.remove()
         instance.experience.setAppView('chapter')
 
         document.removeEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
