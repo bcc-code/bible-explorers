@@ -23,10 +23,13 @@ export default class MineField {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.minefield
         instance.currentCell = () => instance.traveledPath[instance.traveledPath.length - 1]
-        instance.traveledPath = ['13']
-        instance.correctPath = ['14', '24', '34', '33', '43', '42', '41', '51']
-        instance.checkpointCell = '43'
-        instance.finalCellReached = false
+        instance.traveledPath = ['31']
+        instance.correctPath = ['41', '42', '43', '33', '34', '24', '14', '15']
+
+        instance.isCorrectCell = (selectedCell) =>
+            instance.correctPath[instance.currentQuestionIndex] == selectedCell
+        instance.isLastCorrectCell = (selectedCell) =>
+            selectedCell == instance.correctPath[instance.correctPath.length - 1]
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
@@ -114,10 +117,10 @@ export default class MineField {
 
         // Find adjacent cells (left, right, top, bottom)
         const adjacentCells = [
+            `${row}${col + 1}`, // right
+            `${row}${col - 1}`, // left
             `${row - 1}${col}`, // top
             `${row + 1}${col}`, // bottom
-            `${row}${col - 1}`, // left
-            `${row}${col + 1}`, // right
         ]
 
         // Filter out visited cells from adjacentCells
@@ -131,7 +134,7 @@ export default class MineField {
             instance.cellColors[cell] = colors[index % colors.length] // Cycle through colors
         })
 
-        for (let i = 5; i > 0; i--) {
+        for (let i = 1; i <= 5; i++) {
             for (let j = 1; j <= 5; j++) {
                 const currentCell = i.toString() + j.toString()
 
@@ -141,12 +144,6 @@ export default class MineField {
                          ${instance.currentCell() == currentCell ? 'current-cell' : ''}
                          ${instance.traveledPath.includes(currentCell) ? 'visited-cell' : ''}
                     >
-                        ${
-                            instance.traveledPath.includes(currentCell) &&
-                            instance.checkpointCell == currentCell
-                                ? '<img src="games/minefield/star.gif">'
-                                : ''
-                        }
                     </div>`
             }
         }
@@ -191,14 +188,28 @@ export default class MineField {
         cellsWrapper.querySelectorAll('.cell').forEach((btn) => (btn.disabled = true))
 
         // Ensure the selected answer matches the correct path for the current question index
-        if (instance.correctPath[instance.currentQuestionIndex] == selectedCell) {
+        if (instance.isCorrectCell(selectedCell)) {
             instance.audio.playSound('correct')
-            instance.experience.celebrate({ particleCount: 100, spread: 160 })
             instance.traveledPath.push(selectedCell)
 
+            if (instance.isLastCorrectCell(selectedCell)) {
+                instance.experience.celebrate({ particleCount: 100, spread: 160 })
+
+                // Repeat confetti every second
+                const repeatConfetti = setInterval(() => {
+                    instance.experience.celebrate({ particleCount: 100, spread: 160 })
+                }, 1000)
+
+                // Stop confetti after 5 seconds
+                setTimeout(() => {
+                    clearInterval(repeatConfetti)
+                }, 5000)
+            } else {
+                instance.experience.celebrate({ particleCount: 100, spread: 160 })
+            }
+
             setTimeout(() => {
-                if (selectedCell === '51') {
-                    instance.finalCellReached = true
+                if (instance.isLastCorrectCell(selectedCell)) {
                     instance.setHTMLForMineField()
                     instance.handleQuizCompletion()
                 } else {
@@ -242,7 +253,7 @@ export default class MineField {
 
     handleQuizCompletion() {
         const quizContentContainer = document.querySelector('#quiz-content')
-        quizContentContainer.innerHTML = '<h2 class="text-2xl text-center">Game completed!</h2>'
+        quizContentContainer.innerHTML = `<h2 class="text-6xl text-center">${_s.miniGames.winRound}!</h2>`
 
         // Remove all colored cells (available-cell classes) at the end of the game
         const allCells = document.querySelectorAll('.available-cell')
@@ -258,8 +269,7 @@ export default class MineField {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = `
             <div class="text-center mt-4">
-                <h2 class="text-2xl text-center mb-4">Try again!</h2>
-                <button class="button button-rectangle-wide" id="restart-quiz">Restart Quiz</button>
+                <button class="button button-rectangle-wide" id="restart-quiz">${_s.miniGames.tryAgain}</button>
             </div>
         `
 
@@ -269,18 +279,6 @@ export default class MineField {
     }
 
     restartQuiz() {
-        // Check if player has reached the checkpoint
-        const checkpointReached = instance.traveledPath.includes(instance.checkpointCell)
-
-        if (checkpointReached) {
-            // Preserve traveled path up to and including the checkpoint
-            const checkpointIndex = instance.traveledPath.indexOf(instance.checkpointCell)
-            instance.traveledPath = instance.traveledPath.slice(0, checkpointIndex + 1)
-        } else {
-            // Reset traveled path to start if checkpoint wasn't reached
-            instance.traveledPath = ['13']
-        }
-
         instance.currentQuestionIndex = instance.traveledPath.length - 1 // Adjust the question index based on where they resume
 
         const quizContentContainer = document.querySelector('#quiz-content')

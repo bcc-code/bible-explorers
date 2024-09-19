@@ -1010,7 +1010,7 @@ $themes: (
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 1%;
+    padding: 1% 0 1.5%;
 
     input {
         background-image: url('../../static/frames/LOGIN_bar_input.png');
@@ -1037,6 +1037,7 @@ $themes: (
     .name-item {
         font-size: var(--font-size-text);
         gap: 5%;
+        text-transform: capitalize;
     }
 }
 
