@@ -29,17 +29,11 @@ export default class BibleVerseCode {
     }
 
     bibleVerseCodeHTML() {
-        let prompts = ''
-        instance.stepData.details.prompts.forEach((p) => {
-            prompts += `<p>${p.prompt}</p>`
-        })
-
         const title = instance.stepData.details.title
         const unlockScreen = _gl.elementFromHtml(`
             <div class="bible-verse-code absolute inset-0 task-container" id="bible-verse-code">
                 <div class="relative task-container_box">
                     <h5 class="task-container_heading">${title}</h5>
-                    <div class="bible-verse-code__prompts">${prompts}</div>
                     <div class="bible-verse-code__input">
                         <div class="bible-book"></div>
                         <div class="bible-delimiter">,</div>
@@ -50,15 +44,9 @@ export default class BibleVerseCode {
                         <div class="bible-verse-to"></div>
                     </div>
                     <div class="task-container_actions">
-                        <button id="check-code" class="button button-task_action" type="submit"><span>Sjekk om koden er riktig</span></button>
+                        <button id="check-code" class="button button-task_action" type="submit"><span>${_s.miniGames.bibleVerseCode.checkCode}</span></button>
                     </div>
                 </div>
-                <div id="glitch-character">
-                    <video id="glitch-character-idle" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Loop_v003.webm" muted autoplay loop></video>
-                    <video id="glitch-character-popup" src="games/bible-verse-code/Glitch_WEB_Oppgave3_Start_v003.webm" muted></video>
-                </div>
-                <div id="open-guide" class="cursor-pointer">Trenger dere hjelp? Klikk her!</div>
-                <div id="glitch-guide">Dere skjønner kanskje selv at dere mangler noe for å finne hele koden. Sjekk i vesken som mentoren bærer med seg!</div>
             </div>
         `)
 
@@ -135,47 +123,6 @@ export default class BibleVerseCode {
 
     setEventListeners() {
         document.querySelector('#check-code').addEventListener('click', instance.checkCode)
-
-        const glitchCharacter = document.querySelector('#glitch-character')
-        glitchCharacter.addEventListener('mouseover', () => {
-            if (
-                glitchCharacter.classList.contains('hovering') ||
-                glitchCharacter.classList.contains('active')
-            ) {
-                return
-            }
-
-            glitchCharacter.classList.add('hovering')
-
-            const characterPopup = document.querySelector('#glitch-character-popup')
-            const characterIdle = document.querySelector('#glitch-character-idle')
-
-            characterIdle.style.opacity = 0
-            characterPopup.style.opacity = 1
-            characterPopup.currentTime = 0
-            characterPopup.play()
-        })
-        document.querySelector('#glitch-character-popup').addEventListener('ended', () => {
-            const characterPopup = document.querySelector('#glitch-character-popup')
-            const characterIdle = document.querySelector('#glitch-character-idle')
-
-            var fadeEffect = setInterval(function () {
-                if (characterPopup.style.opacity > 0) {
-                    characterPopup.style.opacity = parseFloat(characterPopup.style.opacity) - 0.1
-                    characterIdle.style.opacity = parseFloat(characterIdle.style.opacity) + 0.1
-                } else {
-                    characterPopup.style.opacity = 0
-                    characterIdle.style.opacity = 1
-                    clearInterval(fadeEffect)
-                }
-            }, 10)
-        })
-        glitchCharacter.addEventListener('mouseleave', () => {
-            glitchCharacter.classList.remove('hovering')
-        })
-
-        document.querySelector('#glitch-character').addEventListener('click', instance.showOpenGuide)
-        document.querySelector('#open-guide').addEventListener('click', instance.popGlitchGuide)
 
         instance.goToNextInputListener()
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
@@ -257,16 +204,6 @@ export default class BibleVerseCode {
         document.getElementById('bible-verse-to-2').addEventListener('input', (e) => {
             if (e.target.value.length == e.target.maxLength) document.getElementById('check-code').focus()
         })
-    }
-
-    showOpenGuide() {
-        document.querySelector('#glitch-character').classList.add('active')
-        document.querySelector('#open-guide').style.display = 'block'
-    }
-
-    popGlitchGuide() {
-        document.querySelector('#open-guide').style.display = 'none'
-        document.querySelector('#glitch-guide').style.display = 'block'
     }
 
     destroy() {

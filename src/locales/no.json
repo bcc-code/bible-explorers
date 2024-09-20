@@ -126,6 +126,9 @@
     "task": "Fullfør oppgaven"
   },
   "miniGames": {
+    "bibleVerseCode": {
+      "checkCode": "Sjekk om koden er riktig"
+    },
     "keyInteraction": {
         "start": "Klikk på en tast for å starte runden",
         "tryAgain": "Klikk på en tast for å starte runden igjen",

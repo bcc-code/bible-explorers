@@ -22,6 +22,7 @@ import SingleChoice from '../Components/SingleChoice.js'
 import TrueFalsQuiz from '../Components/TrueFalseQuiz.js'
 import MineField from '../Games/MineField.js'
 import BibleVerseCode from '../Games/BibleVerseCode.js'
+import GlitchHelp from '../Components/GlitchHelp.js'
 
 let instance = null
 
@@ -61,6 +62,7 @@ export default class Program {
         instance.quizTrueFalse = new TrueFalsQuiz()
         instance.mineField = new MineField()
         instance.bibleVerseCode = new BibleVerseCode()
+        instance.glitchHelp = new GlitchHelp()
 
         instance.gamesData = {
             pictureAndCode: {
@@ -207,6 +209,8 @@ export default class Program {
                     instance.mineField.show()
                 } else if (instance.taskType() === 'bible_verse_code') {
                     instance.bibleVerseCode.toggleBibleVerseCode()
+                } else if (instance.taskType() === 'glitch_help') {
+                    instance.glitchHelp.show()
                 }
 
                 // Games
