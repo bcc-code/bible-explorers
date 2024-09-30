@@ -64,7 +64,6 @@ export default class World {
             openDownloadModal: document.querySelector('#download-app'),
             home: document.querySelector('#home-button'),
             guide: document.querySelector('#guide-button'),
-            startChapter: document.querySelector('#start-chapter'),
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
             contact: document.querySelector('#contact-button'),
         }
@@ -97,7 +96,8 @@ export default class World {
 
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
-        this.buttons.startChapter.addEventListener('click', this.startChapter)
+
+        
     }
 
     placeholderChapterData() {
@@ -136,8 +136,7 @@ export default class World {
 
         // Set chapter content/cards
         instance.setChapters()
-
-        // instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
+                
     }
 
     setCategories() {
@@ -180,7 +179,9 @@ export default class World {
             instance.setChapterHtml(chapter)
         })
 
-        instance.buttons.startChapter.disabled = true
+        if (instance.buttons.startChapter) {
+            instance.buttons.startChapter.disabled = true
+        }
         instance.chapterEventListeners()
     }
 
@@ -257,6 +258,8 @@ export default class World {
                     <h5 class="chapter-description-heading">${chapter.title}</h5>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
                 </div>
+                <button class="button button-rectangle-wide" id="start-chapter"></button>
+
             </div>`)
 
         if (chapter.other_attachments.length) {
@@ -323,6 +326,11 @@ export default class World {
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
 
+
+        instance.buttons.startChapter = details.querySelector('#start-chapter');
+        instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
+        instance.buttons.startChapter.addEventListener('click', instance.startChapter)
+
         tippy('.chapter-guide', {
             theme: 'explorers',
             content: _s.chapter.activityDescLabel,
@@ -355,8 +363,10 @@ export default class World {
                     return
                 }
 
-                instance.buttons.startChapter.disabled = false
-                instance.buttons.startChapter.tippy?.destroy()
+                if (instance.buttons.startChapter) {
+                    instance.buttons.startChapter.disabled = false
+                    instance.buttons.startChapter.tippy?.destroy()
+                }
             })
         })
 
@@ -376,16 +386,18 @@ export default class World {
     }
 
     disableStartChapterButton() {
-        instance.buttons.startChapter.disabled = true
-        instance.buttons.startChapter.tippy?.destroy()
-        instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
-            theme: 'explorers',
-            content: _s.offline.downloadToContinue,
-            maxWidth: 230,
-            duration: [500, 200],
-            animation: 'shift-away',
-            placement: 'top',
-        })
+        if (instance.buttons.startChapter) {
+            instance.buttons.startChapter.disabled = true
+            instance.buttons.startChapter.tippy?.destroy()
+            instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
+                theme: 'explorers',
+                content: _s.offline.downloadToContinue,
+                maxWidth: 230,
+                duration: [500, 200],
+                animation: 'shift-away',
+                placement: 'top',
+            })
+        }
     }
 
     setStatesTooltips() {

@@ -716,6 +716,13 @@ body.not-logged-in {
             flex: 1;
             overflow-y: auto;
         }
+
+        #start-chapter {
+            position: absolute;
+            bottom: 7%;
+            right: 3%;
+         
+        }
     }
 
     &-guide {
