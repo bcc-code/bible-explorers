@@ -2230,7 +2230,7 @@ $themes: (
                 }
 
                 &.combo::before {
-                    content: "x " attr(data-streak);
+                    content: 'x ' attr(data-streak);
                     display: block;
                     font-weight: bold;
                     font-size: 36px;
@@ -3797,5 +3797,87 @@ img.lazyloaded ~ div.img-loader {
         .question {
             padding: 1rem;
         }
+    }
+}
+
+.nine-slice {
+    --corner-size: 42px;
+
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    width: 600px;
+    height: 400px;
+    display: none;
+    grid-template-columns: [left] auto [center] 1fr [right] auto;
+    grid-template-rows: [top] auto [center] 1fr [bottom] auto;
+    // border-width: 4px;
+    // border-image-slice: 1;
+    // border-image-source: linear-gradient(to right, #ff0000, #00ff00);
+
+    > div {
+        background-size: 100% 100%;
+    }
+    
+    .center {
+        overflow-y: auto;
+    }
+    .content {
+        height: 100%;
+    }
+
+    // Corners
+    .corner {
+        &.top-left {
+            background-image: url('../../static/GUI/button/Button_01.png');
+            grid-area: top left;
+            width: var(--corner-size);
+            height: var(--corner-size);
+        }
+        &.top-right {
+            background-image: url('../../static/GUI/button/Button_03.png');
+            grid-area: top right;
+            width: var(--corner-size);
+            height: var(--corner-size);
+        }
+        &.bottom-left {
+            background-image: url('../../static/GUI/button/Button_07.png');
+            grid-area: bottom left;
+            width: var(--corner-size);
+            height: var(--corner-size);
+        }
+        &.bottom-right {
+            background-image: url('../../static/GUI/button/Button_09.png');
+            grid-area: bottom right;
+            width: var(--corner-size);
+            height: var(--corner-size);
+        }
+    }
+
+    // Edges
+    .edge {
+        &.top {
+            background-image: url('../../static/GUI/button/Button_02.png');
+            grid-area: top center;
+        }
+        &.left {
+            background-image: url('../../static/GUI/button/Button_04.png');
+            grid-area: left center;
+        }
+        &.right {
+            background-image: url('../../static/GUI/button/Button_06.png');
+            grid-area: right center;
+        }
+        &.bottom {
+            background-image: url('../../static/GUI/button/Button_08.png');
+            grid-area: bottom center;
+        }
+    }
+
+    // Center   
+    .center {
+        background-image: url('../../static/GUI/button/Button_05.png');
+        grid-area: center;
+        padding: 4px;
     }
 }
