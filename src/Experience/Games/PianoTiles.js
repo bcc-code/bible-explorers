@@ -252,7 +252,6 @@ export default class PianoTiles {
         this.safeArea = game.querySelector('#piano-tiles_safe-area')
 
         document.onkeydown = (e) => {
-            console.log(e.key)
             const playedNote = instance.expectedNote(e.key)
             let playBox = document.getElementById('play-box' + (playedNote + 1))
             if (!playBox) return
@@ -316,6 +315,8 @@ export default class PianoTiles {
 
                     // Trigger the animation for the notes with GSAP
                     this.animateNoteIcon(noteIcon)
+                } else {
+                    instance.lightUpCircle(playedNote + 1, '#D53500')
                 }
             })
         }
@@ -446,7 +447,7 @@ export default class PianoTiles {
         instance.game.style.display = 'none'
         instance.game.parentElement.classList.add('show-score')
 
-        if (instance.score / instance.notes.length >= 0.8) {
+        if (instance.score / instance.notes.length >= 0.2) {
             instance.text.innerHTML = `<h2>${_s.miniGames.winRound}</h2><p class="text-xl">${instance.score} / ${instance.notes.length}</p>`
 
             instance.audio.playSound('correct')
@@ -500,12 +501,12 @@ export default class PianoTiles {
         })
     }
 
-    lightUpCircle(noteNumber) {
+    lightUpCircle(noteNumber, color = '#FFD700') {
         const circle = document.getElementById(`note-circle-${noteNumber}`)
 
         gsap.to(circle, {
             duration: 0.15,
-            fill: '#FFD700',
+            fill: color,
             scale: 1.2,
             transformOrigin: '50% 50%',
             repeat: 1,
@@ -517,7 +518,7 @@ export default class PianoTiles {
     animatePlayBox(playBox) {
         gsap.timeline({
             defaults: {
-                duration: 0.3,
+                duration: 0.15,
                 ease: 'power1.out',
             },
         })

@@ -95,7 +95,7 @@ export default class GlitchHelp {
         // Get age category
         instance.ageCategory = instance.world.selectedChapter.category
 
-        if (instance.ageCategory !== '6-8') {
+        if (instance.ageCategory === '6-8') {
             setTimeout(() => {
                 instance.showOpenGuide()
             }, 500)
