@@ -1795,10 +1795,11 @@ $themes: (
     }
 
     .congrats {
+        width: 320px;
         position: relative;
         text-align: center;
 
-        --width: 50%;
+        --width: 100%;
 
         &::after,
         &::before {
@@ -1823,6 +1824,17 @@ $themes: (
             right: calc(-1 * var(--width));
             transform: rotate(-10deg);
             animation: bounce-right 1s cubic-bezier(0.215, 0.61, 0.355, 1) 1s 1 forwards;
+        }
+
+        h1 {
+            font-size: 72px;
+        }
+
+        h6 {
+            font-size: 32px;
+        }
+        h4 {
+            font-size: 60px;
         }
     }
 
@@ -1875,19 +1887,16 @@ $themes: (
     div {
         font-size: calc(var(--font-size-text) * 1.5);
         position: absolute;
-        transform: scale(0);
-        animation: popUp 0.5s forwards;
+        animation: GFG 5s infinite linear;
     }
 
-    @keyframes popUp {
-        to {
-            transform: scale(1);
+    @keyframes GFG {
+        0% {
+            transform: rotate(0deg) translateX(32px) rotate(0deg);
         }
-    }
 
-    @for $i from 1 through 20 {
-        #chapter-credits div:nth-child(#{$i}) {
-            animation-delay: 0.5s * ($i - 1);
+        100% {
+            transform: rotate(-360deg) translateX(50px) rotate(360deg);
         }
     }
 }
