@@ -51,7 +51,7 @@
     --line-height-p: 1.5;
 
     /* Buttons */
-    --button-height: 32px;
+    --button-height: 50px;
     --font-size-button: 0.95rem;
     --line-height-button: 1.2;
     --icon-height: calc(var(--button-height) / 3);
@@ -1885,18 +1885,18 @@ $themes: (
     pointer-events: none;
 
     div {
-        font-size: calc(var(--font-size-text) * 1.5);
+        font-size: var(--font-size-h5);
         position: absolute;
-        animation: GFG 5s infinite linear;
+        animation: circularMotion 5s infinite linear;
     }
 
-    @keyframes GFG {
+    @keyframes circularMotion {
         0% {
             transform: rotate(0deg) translateX(32px) rotate(0deg);
         }
 
         100% {
-            transform: rotate(-360deg) translateX(50px) rotate(360deg);
+            transform: rotate(-360deg) translateX(32px) rotate(360deg);
         }
     }
 }
