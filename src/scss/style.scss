@@ -556,6 +556,180 @@ body.not-logged-in {
 
 /* #endregion */
 
+// #region GUI
+.button-grid,
+.input-grid {
+    --corner-size: 8px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
+    grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
+    grid-template-areas:
+        'top-left top-center top-right'
+        'left-center center right-center'
+        'bottom-left bottom-center bottom-right';
+
+    transition: 0.3s ease;
+
+    > div {
+        background-size: 100% 100%;
+    }
+
+    .corner {
+        width: var(--corner-size);
+        height: var(--corner-size);
+
+        &.top-left {
+            background-image: url('../../static/GUI/button/button-default_01.png');
+            grid-area: top-left;
+        }
+        &.top-right {
+            background-image: url('../../static/GUI/button/button-default_03.png');
+            grid-area: top-right;
+        }
+        &.bottom-left {
+            background-image: url('../../static/GUI/button/button-default_07.png');
+            grid-area: bottom-left;
+        }
+        &.bottom-right {
+            background-image: url('../../static/GUI/button/button-default_09.png');
+            grid-area: bottom-right;
+        }
+    }
+
+    .edge {
+        &.top,
+        &.bottom {
+            width: 100%;
+            height: var(--corner-size);
+        }
+
+        &.left,
+        &.right {
+            height: 100%;
+            width: var(--corner-size);
+        }
+
+        &.top {
+            background-image: url('../../static/GUI/button/button-default_02.png');
+            grid-area: top-center;
+        }
+        &.left {
+            background-image: url('../../static/GUI/button/button-default_04.png');
+            grid-area: left-center;
+        }
+        &.right {
+            background-image: url('../../static/GUI/button/button-default_06.png');
+            grid-area: right-center;
+        }
+        &.bottom {
+            background-image: url('../../static/GUI/button/button-default_08.png');
+            grid-area: bottom-center;
+        }
+    }
+
+    .content {
+        background-image: url('../../static/GUI/button/button-default_05.png');
+        grid-area: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+    }
+
+    &:hover {
+        .corner {
+            &.top-left {
+                background-image: url('../../static/GUI/button/button-hover_01.png');
+            }
+            &.top-right {
+                background-image: url('../../static/GUI/button/button-hover_03.png');
+            }
+            &.bottom-left {
+                background-image: url('../../static/GUI/button/button-hover_07.png');
+            }
+            &.bottom-right {
+                background-image: url('../../static/GUI/button/button-hover_09.png');
+            }
+        }
+
+        .edge {
+            &.top {
+                background-image: url('../../static/GUI/button/button-hover_02.png');
+            }
+            &.left {
+                background-image: url('../../static/GUI/button/button-hover_04.png');
+            }
+            &.right {
+                background-image: url('../../static/GUI/button/button-hover_06.png');
+            }
+            &.bottom {
+                background-image: url('../../static/GUI/button/button-hover_08.png');
+            }
+        }
+    }
+}
+
+.input-grid {
+    .content {
+        padding: 4px;
+    }
+
+    &:has(input:focus-visible) {
+        .corner {
+            &.top-left {
+                background-image: url('../../static/GUI/button/button-hover_01.png');
+            }
+            &.top-right {
+                background-image: url('../../static/GUI/button/button-hover_03.png');
+            }
+            &.bottom-left {
+                background-image: url('../../static/GUI/button/button-hover_07.png');
+            }
+            &.bottom-right {
+                background-image: url('../../static/GUI/button/button-hover_09.png');
+            }
+        }
+
+        .edge {
+            &.top {
+                background-image: url('../../static/GUI/button/button-hover_02.png');
+            }
+            &.left {
+                background-image: url('../../static/GUI/button/button-hover_04.png');
+            }
+            &.right {
+                background-image: url('../../static/GUI/button/button-hover_06.png');
+            }
+            &.bottom {
+                background-image: url('../../static/GUI/button/button-hover_08.png');
+            }
+        }
+    }
+}
+
+// #endregion GUI
+
+// #region Views
+
+#app-age_category {
+    ul li {
+        min-width: 172px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+// #endregion Views
+
 /* #region Masks */
 
 .mask-image {
@@ -1021,14 +1195,7 @@ $themes: (
     padding: 1% 0 1.5%;
 
     input {
-        background-image: url('../../static/frames/LOGIN_bar_input.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 647/133;
-        height: var(--button-height);
-        font-size: var(--font-size-button);
         background-color: transparent;
-        padding-inline: 1rem;
     }
 
     input:focus {
@@ -3712,30 +3879,30 @@ img.lazyloaded ~ div.img-loader {
 /* #endregion */
 
 /* Hover styles for non-mobile devices */
-@media (hover: hover) and (pointer: fine) {
-    .button-cube:hover {
-        background-image: url('../../static/interface/B_cube_action.png');
-    }
+// @media (hover: hover) and (pointer: fine) {
+//     .button-cube:hover {
+//         background-image: url('../../static/interface/B_cube_action.png');
+//     }
 
-    .button-circle:hover {
-        background-image: url('../../static/interface/B_circle_action.png');
-        transform: scale(1.1);
-        transform-origin: center;
-    }
+//     .button-circle:hover {
+//         background-image: url('../../static/interface/B_circle_action.png');
+//         transform: scale(1.1);
+//         transform-origin: center;
+//     }
 
-    .button-rectangle-wide:hover {
-        background-image: url('../../static/interface/B_cube_wide_2_action.png');
-    }
+//     .button-rectangle-wide:hover {
+//         background-image: url('../../static/interface/B_cube_wide_2_action.png');
+//     }
 
-    .button-arrow:hover {
-        background-image: url('../../static/interface/arrow_action.png');
-    }
+//     .button-arrow:hover {
+//         background-image: url('../../static/interface/arrow_action.png');
+//     }
 
-    .button-arrow-skip:hover {
-        background-image: url('../../static/interface/skip_action.png');
-        opacity: 1;
-    }
-}
+//     .button-arrow-skip:hover {
+//         background-image: url('../../static/interface/skip_action.png');
+//         opacity: 1;
+//     }
+// }
 
 @media (min-width: 1200px) {
     .task-container_box {

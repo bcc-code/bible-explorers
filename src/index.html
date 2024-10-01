@@ -36,66 +36,155 @@
                     <div class="app-logo z-10">
                         <img src="./textures/bible-kids-explorers.svg" alt="" />
                     </div>
-                    <div class="z-10 ml-auto flex items-center">
-                        <button id="download-app" class="button button-cube modal-open-download">
-                            <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                    <div class="z-10 ml-auto flex items-center gap-2">
+                        <button id="download-app" class="button-grid modal-open-download">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="home-button" class="button button-cube">
-                            <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
+                        <button id="home-button" class="button-grid">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="toggle-music" class="button button-cube group">
-                            <svg class="icon hidden group-[.is-playing]:block">
-                                <use href="#music-solid" fill="currentColor"></use>
-                            </svg>
-                            <svg class="icon group-[.is-playing]:hidden">
-                                <use href="#music-slash-solid" fill="currentColor"></use>
-                            </svg>
+                        <button id="toggle-music" class="button-grid group">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon hidden group-[.is-playing]:block">
+                                    <use href="#music-solid" fill="currentColor"></use>
+                                </svg>
+                                <svg class="icon group-[.is-playing]:hidden">
+                                    <use href="#music-slash-solid" fill="currentColor"></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="toggle-vq" class="button button-cube group">
-                            <svg class="icon hidden group-data-[quality='high']:block">
-                                <use href="#high-definition-solid" fill="currentColor"></use>
-                            </svg>
-                            <svg class="icon hidden group-data-[quality='medium']:block">
-                                <use href="#standard-definition-solid" fill="currentColor"></use>
-                            </svg>
+                        <button id="toggle-vq" class="button-grid group">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon hidden group-data-[quality='high']:block">
+                                    <use href="#high-definition-solid" fill="currentColor"></use>
+                                </svg>
+                                <svg class="icon hidden group-data-[quality='medium']:block">
+                                    <use href="#standard-definition-solid" fill="currentColor"></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="toggle-fullscreen" class="button button-cube group">
-                            <svg class="icon group-[.fullscreen-active]:hidden">
-                                <use
-                                    href="#up-right-and-down-left-from-center-solid"
-                                    fill="currentColor"
-                                ></use>
-                            </svg>
-                            <svg class="icon hidden group-[.fullscreen-active]:block">
-                                <use href="#down-left-and-up-right-to-center-solid" fill="currentColor"></use>
-                            </svg>
+                        <button id="toggle-fullscreen" class="button-grid group">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon group-[.fullscreen-active]:hidden">
+                                    <use
+                                        href="#up-right-and-down-left-from-center-solid"
+                                        fill="currentColor"
+                                    ></use>
+                                </svg>
+                                <svg class="icon hidden group-[.fullscreen-active]:block">
+                                    <use
+                                        href="#down-left-and-up-right-to-center-solid"
+                                        fill="currentColor"
+                                    ></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
                         <div class="relative" id="app-language">
-                            <button
-                                id="toggle-languages"
-                                class="button button-rectangle-wide"
-                                aria-pressed="false"
-                            >
-                                <svg class="icon"><use href="#globe-solid" fill="currentColor"></use></svg>
-                                <span></span>
+                            <button id="toggle-languages" class="button-grid" aria-pressed="false">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">
+                                    <svg class="icon">
+                                        <use href="#globe-solid" fill="currentColor"></use>
+                                    </svg>
+                                    <span></span>
+                                </div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
                             </button>
                             <div class="app-language_dropdown">
                                 <ul></ul>
                             </div>
                         </div>
-                        <button
-                            id="logout-button"
-                            class="button button-cube disabled:!hidden"
-                            disabled="true"
-                        >
-                            <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                        <button id="logout-button" class="button-grid disabled:!hidden" disabled="true">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="login-button" class="button button-cube disabled:!hidden" disabled="true">
-                            <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                        <button id="login-button" class="button-grid disabled:!hidden" disabled="true">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
                         <a href="mailto:hello@biblekids.io">
-                            <button id="contact-button" class="button button-cube">
-                                <svg class="icon"><use href="#envelope-solid" fill="currentColor"></use></svg>
+                            <button id="contact-button" class="button-grid">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">
+                                    <svg class="icon">
+                                        <use href="#envelope-solid" fill="currentColor"></use>
+                                    </svg>
+                                </div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
                             </button>
                         </a>
                     </div>
@@ -270,12 +359,34 @@
                             <p id="message" class="mt-4"></p>
                             <button
                                 id="restart-button"
-                                class="button button-rectangle-wide pointer-events-auto mt-4 hidden"
-                            ></button>
+                                class="button button-grid pointer-events-auto mt-4 hidden"
+                            >
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content"></div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
                         </div>
 
-                        <button id="close-button" class="button button-cube pointer-events-auto">
-                            <svg class="icon"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                        <button id="close-button" class="button button-grid pointer-events-auto">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon">
+                                    <use href="#xmark-large-solid" fill="currentColor"></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
                     </div>
                 </div>

@@ -157,6 +157,18 @@ export default class World {
     setCategoryHtml(category) {
         const categoryBtn = _gl.elementFromHtml(
             `<li><button class="category button button-rectangle-wide uppercase" data-slug="${category.slug}">${category.name}</button></li>`
+                <button class="category button-grid uppercase" data-slug="${category.slug}">  
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">${category.name}</div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </button>
+            </li>`
         )
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
@@ -192,11 +204,31 @@ export default class World {
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
-                        <button class="chapter__download button button-cube group-[.downloaded]:hidden">
-                            <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                        <button class="chapter__download button-grid group-[.downloaded]:hidden">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button class="chapter__remove button button-cube !hidden">
-                            <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
+                        <button class="chapter__remove button-grid !hidden">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
                     </div>
                     <span class="chapter__loading"></span>
@@ -255,7 +287,17 @@ export default class World {
                     <h5 class="chapter-description-heading">${chapter.title}</h5>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
                 </div>
-                <button class="button button-rectangle-wide" id="start-chapter"></button>
+                <button class="button-grid" id="start-chapter">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">${_s.journey.start}</div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </button>
 
             </div>`)
 
@@ -268,8 +310,18 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="button button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
+                        <a class="button-grid chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </a>`)
 
                     details.prepend(guide)
@@ -324,7 +376,6 @@ export default class World {
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
 
         instance.buttons.startChapter = details.querySelector('#start-chapter')
-        instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
         instance.buttons.startChapter.addEventListener('click', instance.startChapter)
 
         tippy('.chapter-guide', {
@@ -879,7 +930,7 @@ export default class World {
         })
 
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen()
+            // document.documentElement.requestFullscreen()
         }
     }
 

@@ -43,8 +43,30 @@ export default class WaitingScreen {
         )
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="absolute bottom-6 left-1/2 -translate-x-1/2">
-                <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
-                <button type="submit" class="button button-rectangle-wide">${_s.waitingScreen.submit}</button>
+                <div class="input input-grid mr-2">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">
+                        <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
+                    </div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </div>
+                <button type="submit" class="button-grid">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">${_s.waitingScreen.submit}</div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </button>
             </form>`
         )
 
