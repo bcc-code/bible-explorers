@@ -68,7 +68,7 @@ export default class Quiz {
                 }
                 <div id="quiz-wrapper"></div>
                 <div class="task-container_actions ${instance.questions.length == 1 ? 'hidden' : ''}">
-                    <button id="next-question" class="button button-task_action"></button>
+                    <button id="next-question" class="button button-task_action"><span>${_s.task.next}</span></button>
                     <button id="submit-quiz" class="button button-task_action" type="submit"><span>${_s.task.submit}</span></button>
                 </div>
             </div>
@@ -141,7 +141,7 @@ export default class Quiz {
             instance.getCurrentQuestion().answers &&
             instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length > 1
                 ? 'Check answer' // Multiple choice question
-                : '<svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>' // Single choice question
+                : `<span>${_s.task.next}</span>` // Single choice question
     }
 
     setEventListeners() {
