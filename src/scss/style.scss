@@ -457,7 +457,8 @@ body.not-logged-in {
     border-radius: 50%;
     background-image: url('../../static/interface/B_circle_active.png');
 
-    &.active {
+    &.active,
+    &.current-step {
         background-image: url('../../static/interface/B_circle_action.png');
     }
 
@@ -1436,7 +1437,6 @@ $themes: (
         }
     }
 }
-
 
 #download-modal {
     h3 {
@@ -3763,7 +3763,6 @@ img.lazyloaded ~ div.img-loader {
 }
 
 @media (min-width: 1920px) {
-
     #childrenNames {
         width: 768px;
 
