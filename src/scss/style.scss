@@ -1045,7 +1045,6 @@ $themes: (
     .name-item {
         font-size: var(--font-size-text);
         gap: 5%;
-        text-transform: capitalize;
     }
 }
 
@@ -3500,11 +3499,14 @@ img.lazyloaded ~ div.img-loader {
 }
 
 .minefield {
+    .game-title {
+        padding-top: 2rem;
+    }
+
     .finish-line {
         $size: 30px;
-
-        width: 406px;
-        height: 60px;
+        width: 60px;
+        height: 523px;
         background: repeating-conic-gradient(var(--clr-light-orange) 0% 25%, transparent 0% 50%) 50% / #{$size
             $size};
         animation: moveChecker 2s linear infinite;
@@ -3514,7 +3516,7 @@ img.lazyloaded ~ div.img-loader {
                 background-position: 0 0; /* Start position */
             }
             100% {
-                background-position: $size 0; /* Move it by the size of one block */
+                background-position: 0 $size; /* Move it by the size of one block */
             }
         }
     }
@@ -3524,7 +3526,6 @@ img.lazyloaded ~ div.img-loader {
         grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 2px;
         width: 406px;
-        margin-top: 0.5rem;
 
         @keyframes pulse {
             0% {
@@ -3573,9 +3574,10 @@ img.lazyloaded ~ div.img-loader {
     }
 
     &__content {
-        display: grid;
+        display: flex;
         place-content: center;
-        margin-top: 1rem;
+        margin-top: 3rem;
+        gap: 1rem;
     }
 
     #quiz-content {
@@ -3619,10 +3621,6 @@ img.lazyloaded ~ div.img-loader {
     }
 
     @media screen and (min-width: 1440px) {
-        .finish-line {
-            width: 523px;
-        }
-
         &__grid {
             width: 523px;
         }

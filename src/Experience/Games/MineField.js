@@ -49,12 +49,12 @@ export default class MineField {
                 <div class="task-container_left">
                     <h5 class="game-title">Minefield</h5>
                     <div class="minefield__content">
+                        <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
                         <div class="finish-line">
                             <div class="finish-left"></div>
                             <div class="finish-middle"></div>
                             <div class="finish-right"></div>
                         </div>
-                        <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
                     </div>
                 </div>
                 <div class="task-container_right">
@@ -89,7 +89,7 @@ export default class MineField {
             const bulletIcon = `url('games/minefield/${colors[index % colors.length]}')`
 
             answersHTML +=
-                question.type === 'text'
+                question.type === 'text' || question.type === 'text_with_image'
                     ? `<div class=""><div class="bg-cover" style="background-image: ${bulletIcon};"></div> <p> ${answer.answer_text}<p></div>`
                     : `<img src="${answer.answer_image}" alt="Answer Image" />`
         })

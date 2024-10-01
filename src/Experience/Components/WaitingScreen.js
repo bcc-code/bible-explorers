@@ -87,7 +87,8 @@ export default class WaitingScreen {
     }
 
     handleFormSubmission(form, container) {
-        const inputVal = form.querySelector('input').value.trim()
+        let inputVal = form.querySelector('input').value.trim()
+        inputVal = inputVal[0].toUpperCase() + inputVal.substr(1)
 
         // Check if input value is not empty and not already in the names array before appending
         if (inputVal && !instance.names.includes(inputVal)) {

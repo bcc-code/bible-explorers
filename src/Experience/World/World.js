@@ -96,8 +96,6 @@ export default class World {
 
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
-
-        
     }
 
     placeholderChapterData() {
@@ -136,7 +134,6 @@ export default class World {
 
         // Set chapter content/cards
         instance.setChapters()
-                
     }
 
     setCategories() {
@@ -326,8 +323,7 @@ export default class World {
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
 
-
-        instance.buttons.startChapter = details.querySelector('#start-chapter');
+        instance.buttons.startChapter = details.querySelector('#start-chapter')
         instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
         instance.buttons.startChapter.addEventListener('click', instance.startChapter)
 
