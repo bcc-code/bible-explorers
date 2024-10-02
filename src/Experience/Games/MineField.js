@@ -217,7 +217,7 @@ export default class MineField {
                 }
             }, 500)
         } else {
-            instance.audio.playSound('wrong')
+            instance.audio.playSound('minefield/haman')
             event.target.innerHTML = '<img src="games/minefield/haman.gif">'
 
             cellsWrapper.querySelectorAll('.cell').forEach((btn) => {
