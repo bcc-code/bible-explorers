@@ -1025,14 +1025,14 @@ body.not-logged-in {
 
         &-image {
             position: relative;
-            height: 180px;
+            height: 280px;
             margin: -32px -32px 0 -32px;
 
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                object-position: right;
+                object-position: 50% 10%;
                 clip-path: polygon(
                     0px 30px,
                     /* Top-left */ 30px 0px,
@@ -4071,9 +4071,6 @@ img.lazyloaded ~ div.img-loader {
         width: 1120px;
     }
 
-    // .chapter-mask {
-    //     padding: 2rem 3rem;
-    // }
 }
 
 @media (min-width: 1440px) {
