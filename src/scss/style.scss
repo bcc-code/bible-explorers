@@ -913,6 +913,12 @@ body.not-logged-in {
             background-image: url('../../static/GUI/lobby/chapter-active_05.png');
         }
     }
+
+    .chapter:hover:not(.selected) & {
+        > .edge.top {
+            background-image: url('../../static/GUI/lobby/chapter-hover_02.png');
+        }
+    }
 }
 
 // #endregion GUI
