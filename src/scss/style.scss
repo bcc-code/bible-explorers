@@ -4101,12 +4101,6 @@ img.lazyloaded ~ div.img-loader {
 @media (min-width: 1920px) {
     #childrenNames {
         width: 768px;
-
-        input,
-        button {
-            height: calc(var(--button-height) * 1.25);
-            font-size: calc(var(--font-size-button) * 1.25);
-        }
     }
 
     .chapters-container {
