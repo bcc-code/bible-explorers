@@ -220,7 +220,7 @@ a {
     line-height: var(--line-height-link);
 }
 
-a:not(.button) {
+a:not(.button):not(.button-grid) {
     color: var(--clr-primary);
 }
 
@@ -238,14 +238,18 @@ svg {
     /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
 }
 
-img,
-video {
+img {
     max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    display: block;
 }
+
+// video {
+//     max-width: 100%;
+//     max-height: 100%;
+//     width: auto;
+//     height: auto;
+//     object-fit: contain;
+// }
 
 @supports (scrollbar-width: auto) {
     .scroller {
@@ -557,8 +561,7 @@ body.not-logged-in {
 /* #endregion */
 
 // #region GUI
-.button-grid,
-.input-grid {
+.button-grid {
     --corner-size: 8px;
 
     display: grid;
@@ -714,6 +717,204 @@ body.not-logged-in {
     }
 }
 
+.chapter-description {
+    --corner-size: 40px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
+    grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
+    grid-template-areas:
+        'top-left top-center top-right'
+        'left-center center right-center'
+        'bottom-left bottom-center bottom-right';
+
+    > div {
+        background-size: 100% 100%;
+    }
+
+    > .corner {
+        width: var(--corner-size);
+        height: var(--corner-size);
+
+        &.top-left {
+            background-image: url('../../static/GUI/lobby/chapter-description_01.png');
+            grid-area: top-left;
+        }
+        &.top-right {
+            background-image: url('../../static/GUI/lobby/chapter-description_03.png');
+            grid-area: top-right;
+        }
+        &.bottom-left {
+            background-image: url('../../static/GUI/lobby/chapter-description_07.png');
+            grid-area: bottom-left;
+        }
+        &.bottom-right {
+            background-image: url('../../static/GUI/lobby/chapter-description_09.png');
+            grid-area: bottom-right;
+        }
+    }
+
+    > .edge {
+        &.top,
+        &.bottom {
+            width: 100%;
+            height: var(--corner-size);
+        }
+
+        &.left,
+        &.right {
+            height: 100%;
+            width: var(--corner-size);
+        }
+
+        &.top {
+            background-image: url('../../static/GUI/lobby/chapter-description_02.png');
+            grid-area: top-center;
+        }
+        &.left {
+            background-image: url('../../static/GUI/lobby/chapter-description_04.png');
+            grid-area: left-center;
+        }
+        &.right {
+            background-image: url('../../static/GUI/lobby/chapter-description_06.png');
+            grid-area: right-center;
+        }
+        &.bottom {
+            background-image: url('../../static/GUI/lobby/chapter-description_08.png');
+            grid-area: bottom-center;
+        }
+    }
+
+    > .content {
+        position: relative;
+        background-image: url('../../static/GUI/lobby/chapter-description_05.png');
+        grid-area: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.chapter-card {
+    --corner-size: 40px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+
+    grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
+    grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
+    grid-template-areas:
+        'top-left top-center top-right'
+        'left-center center right-center'
+        'bottom-left bottom-center bottom-right';
+
+    > div {
+        background-size: 100% 100%;
+    }
+
+    > .corner {
+        width: var(--corner-size);
+        height: var(--corner-size);
+
+        &.top-left {
+            background-image: url('../../static/GUI/lobby/chapter-default_01.png');
+            grid-area: top-left;
+        }
+        &.top-right {
+            background-image: url('../../static/GUI/lobby/chapter-default_03.png');
+            grid-area: top-right;
+        }
+        &.bottom-left {
+            background-image: url('../../static/GUI/lobby/chapter-default_07.png');
+            grid-area: bottom-left;
+        }
+        &.bottom-right {
+            background-image: url('../../static/GUI/lobby/chapter-default_09.png');
+            grid-area: bottom-right;
+        }
+    }
+
+    > .edge {
+        &.top,
+        &.bottom {
+            width: 100%;
+            height: var(--corner-size);
+        }
+
+        &.left,
+        &.right {
+            height: 100%;
+            width: var(--corner-size);
+        }
+
+        &.top {
+            background-image: url('../../static/GUI/lobby/chapter-default_02.png');
+            grid-area: top-center;
+        }
+        &.left {
+            background-image: url('../../static/GUI/lobby/chapter-default_04.png');
+            grid-area: left-center;
+        }
+        &.right {
+            background-image: url('../../static/GUI/lobby/chapter-default_06.png');
+            grid-area: right-center;
+        }
+        &.bottom {
+            background-image: url('../../static/GUI/lobby/chapter-default_08.png');
+            grid-area: bottom-center;
+        }
+    }
+
+    > .content {
+        position: relative;
+        background-image: url('../../static/GUI/lobby/chapter-default_05.png');
+        grid-area: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .chapter.selected &,
+    .chapter.downloading & {
+        .corner {
+            &.top-left {
+                background-image: url('../../static/GUI/lobby/chapter-active_01.png');
+            }
+            &.top-right {
+                background-image: url('../../static/GUI/lobby/chapter-active_03.png');
+            }
+            &.bottom-left {
+                background-image: url('../../static/GUI/lobby/chapter-active_07.png');
+            }
+            &.bottom-right {
+                background-image: url('../../static/GUI/lobby/chapter-active_09.png');
+            }
+        }
+
+        .edge {
+            &.top {
+                background-image: url('../../static/GUI/lobby/chapter-active_02.png');
+            }
+            &.left {
+                background-image: url('../../static/GUI/lobby/chapter-active_04.png');
+            }
+            &.right {
+                background-image: url('../../static/GUI/lobby/chapter-active_06.png');
+            }
+            &.bottom {
+                background-image: url('../../static/GUI/lobby/chapter-active_08.png');
+            }
+        }
+
+        > .content {
+            background-image: url('../../static/GUI/lobby/chapter-active_05.png');
+        }
+    }
+}
+
 // #endregion GUI
 
 // #region Views
@@ -765,63 +966,45 @@ body.not-logged-in {
 /* #region Chapter */
 
 .chapter {
-    &-box {
-        display: block;
-        position: relative;
-        background-image: url('../../static/frames/chapter_bar_active.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 337/73;
-
-        &:hover {
-            background-image: url('../../static/frames/chapter_bar_action.png');
-        }
-
-        .chapter.selected &,
-        .chapter.downloading & {
-            background-image: url('../../static/frames/chapter_bar_action.png');
-        }
-    }
-
-    &-mask {
-        aspect-ratio: 337/73;
-        width: 100%;
-        mask-image: url('../../static/frames/chapter_bar_mask.png');
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        padding: 1.25rem 2rem;
-    }
+    margin-bottom: 1.5rem;
 
     &-image {
         position: absolute;
-        right: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        mask-image: url('../../static/frames/chapter_bar_mask_T.png');
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        z-index: -1;
+        width: 56%;
+        right: -32px;
+        bottom: -32px;
+        top: -16px;
 
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: 0px 10px;
+            object-position: 50% 10%;
+            clip-path: polygon(
+                0 0,
+                calc(100% - 10px) -1px,
+                100% 8px,
+                100% calc(100% - 20px),
+                calc(100% - 18px) 100%,
+                0 100%
+            );
         }
 
         &::before {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(to left, rgba(42, 22, 41, 0) 0%, rgba(42, 22, 41, 1) 100%);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, hsla(279, 78%, 7%, 1), hsla(279, 78%, 7%, 0));
+            z-index: 1;
         }
     }
 
     &-heading {
+        position: relative;
+        z-index: 2;
         font-weight: bold;
     }
 
@@ -830,86 +1013,59 @@ body.not-logged-in {
     }
 
     &-description {
-        position: relative;
-        aspect-ratio: 2675/2256;
-        display: flex;
-        flex-flow: column nowrap;
-
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url('../../static/frames/chapter_main_active_v02.svg');
-            background-repeat: no-repeat;
-            background-size: contain;
-            pointer-events: none;
+        &-heading {
+            margin-top: 2rem;
         }
 
         &-image {
             position: relative;
-            height: 37.5%;
-            clip-path: url(#svgmask-image-description);
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 0.35rem;
-                background: linear-gradient(to right, var(--clr-light-orange), var(--clr-dark-orange));
-            }
+            height: 180px;
+            margin: -32px -32px 0 -32px;
 
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 object-position: right;
+                clip-path: polygon(
+                    0px 30px,
+                    /* Top-left */ 30px 0px,
+                    /* Top-left corner diagonal */ calc(100% - 30px) 0px,
+                    /* Top-right */ 100% 30px,
+                    /* Top-right corner diagonal */ 100% 100%,
+                    /* Bottom-right */ 0 100%,
+                    /* Bottom-left */
+                );
             }
-        }
-
-        &-heading {
-            position: relative;
-            font-weight: bold;
-            padding: 0.5rem 1.5rem;
-            margin-bottom: 1rem;
-            // background: linear-gradient(to right, var(--clr-light-orange), var(--clr-dark-orange));
 
             &::after {
                 content: '';
-                position: absolute;
-                top: 100%;
-                left: 0;
+                position: relative;
+                display: block;
+                height: 8px;
                 width: 100%;
-                height: 0.25rem;
-                background: linear-gradient(to right, var(--clr-light-orange), var(--clr-dark-orange));
+                background: linear-gradient(to right, var(--clr-dark-orange), var(--clr-light-orange));
             }
         }
 
         &-text {
-            padding: 0 1.5rem;
-            flex: 1;
+            margin: 1rem 0 2rem;
             overflow-y: auto;
+            opacity: 0.8;
         }
 
-        #start-chapter {
+        .chapter-guide {
             position: absolute;
-            bottom: 7%;
-            right: 3%;
+            top: 0;
+            right: 0;
         }
     }
 
-    &-guide {
-        position: absolute;
-        right: 0.75rem;
-        top: 0.75rem;
-    }
-
-    &-content {
-        display: flex;
-        flex-flow: column nowrap;
-        height: 55%;
-    }
+    // &-content {
+    //     display: flex;
+    //     flex-flow: column nowrap;
+    //     height: 55%;
+    // }
 
     // States
 
@@ -1083,7 +1239,7 @@ body.not-logged-in {
         padding-inline: 1rem;
         display: flex;
         justify-content: center;
-        gap: 1rem;
+        gap: 2rem;
     }
 
     &-list {
@@ -3909,9 +4065,9 @@ img.lazyloaded ~ div.img-loader {
         width: 1120px;
     }
 
-    .chapter-mask {
-        padding: 2rem 3rem;
-    }
+    // .chapter-mask {
+    //     padding: 2rem 3rem;
+    // }
 }
 
 @media (min-width: 1440px) {
@@ -3960,9 +4116,9 @@ img.lazyloaded ~ div.img-loader {
         padding: 3% 0%;
     }
 
-    .chapter-mask {
-        padding: 3rem;
-    }
+    // .chapter-mask {
+    //     padding: 3rem;
+    // }
 
     .dialogue,
     .open-question {

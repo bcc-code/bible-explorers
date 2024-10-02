@@ -156,7 +156,7 @@ export default class World {
 
     setCategoryHtml(category) {
         const categoryBtn = _gl.elementFromHtml(
-            `<li><button class="category button button-rectangle-wide uppercase" data-slug="${category.slug}">${category.name}</button></li>`
+            `<li>
                 <button class="category button-grid uppercase" data-slug="${category.slug}">  
                     <div class="corner top-left"></div>
                     <div class="edge top"></div>
@@ -198,9 +198,19 @@ export default class World {
         let chapterHtml = _gl.elementFromHtml(
             `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
                 <a href="javascript:void(0)" class="chapter-box">
-                    <div class="chapter-mask">
-                        <h6 class="chapter-heading">${chapter.title}</h6>
-                        <p class="chapter-date">${chapter.date}</p>
+                    <div class="chapter-card">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <h6 class="chapter-heading">${chapter.title}</h6>
+                            <p class="chapter-date">${chapter.date}</p>
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
@@ -283,22 +293,31 @@ export default class World {
 
         const details = _gl.elementFromHtml(`
             <div class="chapter-description">
-                <div class="chapter-content relative">
-                    <h5 class="chapter-description-heading">${chapter.title}</h5>
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h3 class="chapter-description-heading">${chapter.title}</h3>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
+                    <div class="chapter-actions">
+                        <button class="button-grid" id="start-chapter">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${_s.journey.start}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
+                    </div>
                 </div>
-                <button class="button-grid" id="start-chapter">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">${_s.journey.start}</div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
-                </button>
-
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`)
 
         if (chapter.other_attachments.length) {
@@ -324,7 +343,7 @@ export default class World {
                             <div class="corner bottom-right"></div>
                         </a>`)
 
-                    details.prepend(guide)
+                    details.querySelector('.chapter-actions').prepend(guide)
                 }
             })
         }
@@ -385,6 +404,7 @@ export default class World {
             animation: 'shift-away',
             placement: 'auto',
         })
+
     }
 
     removeDescriptionHtml() {
@@ -475,14 +495,14 @@ export default class World {
 
     setChapterBgImage(chapter) {
         const img = _gl.elementFromHtml(`<div class="chapter-image"><img src="${chapter.thumbnail}" /></div>`)
-        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-mask`).prepend(img)
+        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-card .content`).prepend(img)
     }
 
     setChapterDescriptionBgImage(chapter) {
         const img = _gl.elementFromHtml(
             `<div class="chapter-description-image"><img src="${chapter.thumbnail}"/></div>`
         )
-        document.querySelector('.chapter-description').prepend(img)
+        document.querySelector('.chapter-description > .content').prepend(img)
     }
 
     // Download
