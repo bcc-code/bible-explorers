@@ -6,11 +6,10 @@ import gsap from 'gsap'
 
 let instance = null
 
-const SONG_START_DELAY_MS = 4700 // Time before the song starts (milliseconds)
-const BASE_NOTE_SPEED = 240 // Base speed of note movement
-const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
-const SPEED_MULTIPLIER_AGE_6_8 = 1.25 // Speed multiplier for age 12+
-const SPEED_MULTIPLIER_AGE_9_11 = 1 // Speed multiplier for age 9-11
+const TIME_BEFORE_SONG_START = 4560 // Time before the song starts (milliseconds)
+const TRANSITION_DURATION = 2000 // Time for transitions between notes (milliseconds)
+const BPM = 122 // Beats per minute
+const BEATS_PER_BAR = 4 // Beats in a musical measure
 
 export default class PianoTiles {
     constructor() {
@@ -22,13 +21,10 @@ export default class PianoTiles {
 
     toggleGame() {
         this.audio = this.world.audio
-
         this.ageCategory = this.world.selectedChapter.category
 
-        this.timeBeforeSongStart = SONG_START_DELAY_MS
-        this.speed = BASE_NOTE_SPEED
-        this.transitionTime = TRANSITION_DURATION_MS
-        this.speedMultiplier = 1 // this.ageCategory === '9-11' ? SPEED_MULTIPLIER_AGE_9_11 : SPEED_MULTIPLIER_AGE_6_8
+        this.speed = BPM * BEATS_PER_BAR
+        this.delayForNotes = TRANSITION_DURATION * 0.65
 
         this.score = 0
         this.notesIndex = 0
@@ -49,7 +45,11 @@ export default class PianoTiles {
             },
             {
                 tone: 2,
-                length: 4.5,
+                length: 4,
+            },
+            {
+                tone: 1,
+                length: 2,
             },
             {
                 tone: 1,
@@ -57,12 +57,7 @@ export default class PianoTiles {
             },
             {
                 tone: 1,
-                length: 1.5,
-            },
-            {
-                tone: 1,
-                length: 0.5,
-                break: 0.5,
+                length: 1,
             },
             {
                 tone: 0,
@@ -90,19 +85,19 @@ export default class PianoTiles {
             },
             {
                 tone: 1,
-                length: 1,
+                length: 0.75,
             },
             {
                 tone: 0,
-                length: 1,
+                length: 0.75,
             },
             {
                 tone: 2,
-                length: 6.5,
+                length: 7,
             },
             {
                 tone: 0,
-                length: 1,
+                length: 0.5,
             },
             {
                 tone: 1,
@@ -128,8 +123,6 @@ export default class PianoTiles {
 
         this.getCurrentTone = () => this.notes[this.notesIndex]?.tone
         this.getCurrentLength = () => this.notes[this.notesIndex]?.length
-        this.getBreak = () => this.notes[this.notesIndex]?.break ?? 0
-        this.getSpeed = () => this.speed * 2 * this.speedMultiplier
 
         document.addEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
         document.addEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
@@ -336,14 +329,10 @@ export default class PianoTiles {
         instance.playedNotes.innerHTML = ''
 
         setTimeout(() => {
-            instance.audio.pianoTiles.playbackRate = 1 - (instance.speedMultiplier - 1) / 1.75
             instance.audio.pianoTiles.play()
         }, 1000)
 
-        instance.addNoteTimeout = setTimeout(
-            instance.addNote,
-            instance.timeBeforeSongStart * instance.speedMultiplier
-        )
+        instance.addNoteTimeout = setTimeout(instance.addNote, TIME_BEFORE_SONG_START - BPM * 2)
     }
 
     addNote() {
@@ -372,9 +361,14 @@ export default class PianoTiles {
             (note) => {
                 note.classList.add('fade-out')
             },
-            instance.transitionTime * 0.75,
+            TRANSITION_DURATION * 0.75,
             note
         )
+
+        // Test something
+        setTimeout(() => {
+            instance.audio.playSound('wrong')
+        }, instance.delayForNotes)
 
         // Remove clickable class from unplayed note
         setTimeout(
@@ -386,17 +380,17 @@ export default class PianoTiles {
                     instance.playableNotes.splice(playableNoteIdx, 1)
                 }
             },
-            instance.transitionTime,
+            TRANSITION_DURATION,
             note
         )
 
-        const noteLength = instance.getSpeed() * instance.getCurrentLength()
-        const breakAfterNote = instance.getSpeed() * instance.getBreak()
+        const noteLength = instance.speed * instance.getCurrentLength()
 
         instance.notesIndex++
 
+        // Add next note if possible
         if (instance.notesIndex < instance.notes.length) {
-            setTimeout(instance.addNote, noteLength + breakAfterNote)
+            setTimeout(instance.addNote, noteLength)
         }
     }
 
