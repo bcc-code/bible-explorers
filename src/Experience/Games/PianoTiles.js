@@ -24,7 +24,6 @@ export default class PianoTiles {
         this.ageCategory = this.world.selectedChapter.category
 
         this.speed = BPM * BEATS_PER_BAR
-        this.delayForNotes = TRANSITION_DURATION * 0.65
 
         this.score = 0
         this.notesIndex = 0
@@ -364,11 +363,6 @@ export default class PianoTiles {
             TRANSITION_DURATION * 0.75,
             note
         )
-
-        // Test something
-        setTimeout(() => {
-            instance.audio.playSound('wrong')
-        }, instance.delayForNotes)
 
         // Remove clickable class from unplayed note
         setTimeout(
