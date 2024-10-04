@@ -6,8 +6,8 @@ import gsap from 'gsap'
 
 let instance = null
 
-const TIME_BEFORE_SONG_START = 4560 // Time before the song starts (milliseconds)
-const TRANSITION_DURATION = 2000 // Time for transitions between notes (milliseconds)
+const MS_BEFORE_FIRST_NOTE = 4560 // Time before the song starts (milliseconds)
+const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
 const BPM = 122 // Beats per minute
 const BEATS_PER_BAR = 4 // Beats in a musical measure
 
@@ -267,35 +267,33 @@ export default class PianoTiles {
                     note.played = true
 
                     instance.lightUpCircle(playedNote + 1)
-
                     instance.fadeOutNoteElement(clickableTone)
                     instance.increaseScore()
                     instance.updateProgressBar()
 
+                    if (note.index - 1 == instance.lastCorrectNoteIndex) {
+                        // Streak continued
+                        instance.streak++
+                    } else {
+                        // Reset streak
+                        instance.streak = 1
+                    }
+
                     var awesomeLabel = document.createElement('div')
                     awesomeLabel.classList.add('awesome-label')
                     awesomeLabel.setAttribute('data-tone', note.tone)
-
-                    if (note.index - 1 == instance.lastCorrectNoteIndex) {
-                        if (++instance.streak > 1) {
-                            awesomeLabel.classList.add('combo')
-                            awesomeLabel.setAttribute('data-streak', instance.streak)
-                        }
-
-                        instance.animateAwesomeLabel(awesomeLabel)
-                    } else {
-                        instance.streak = 0
-                    }
+                    awesomeLabel.setAttribute('data-streak', instance.streak)
+                    instance.animateAwesomeLabel(awesomeLabel)
 
                     const existingLabel = document.querySelector('.awesome-label')
                     if (existingLabel) existingLabel.remove()
 
                     instance.labels.append(awesomeLabel)
-                    instance.lastCorrectNoteIndex = note.index
-
                     setTimeout(() => {
                         awesomeLabel.remove()
                     }, 750)
+
+                    instance.lastCorrectNoteIndex = note.index
 
                     var noteIcon = document.createElement('div')
                     noteIcon.classList.add('note-icon')
@@ -308,6 +306,7 @@ export default class PianoTiles {
                     // Trigger the animation for the notes with GSAP
                     this.animateNoteIcon(noteIcon)
                 } else {
+                    // Wrong note played
                     instance.lightUpCircle(playedNote + 1, '#D53500')
                 }
             })
@@ -331,7 +330,7 @@ export default class PianoTiles {
             instance.audio.pianoTiles.play()
         }, 1000)
 
-        instance.addNoteTimeout = setTimeout(instance.addNote, TIME_BEFORE_SONG_START - BPM * 2)
+        instance.addNoteTimeout = setTimeout(instance.addNote, MS_BEFORE_FIRST_NOTE - BPM * 2)
     }
 
     addNote() {
@@ -360,7 +359,7 @@ export default class PianoTiles {
             (note) => {
                 note.classList.add('fade-out')
             },
-            TRANSITION_DURATION * 0.75,
+            TRANSITION_DURATION_MS * 0.75,
             note
         )
 
@@ -374,7 +373,7 @@ export default class PianoTiles {
                     instance.playableNotes.splice(playableNoteIdx, 1)
                 }
             },
-            TRANSITION_DURATION,
+            TRANSITION_DURATION_MS,
             note
         )
 

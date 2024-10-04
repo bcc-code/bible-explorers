@@ -2563,7 +2563,7 @@ $themes: (
                     background-image: url('../../static/games/piano-tiles/amazing_E3.svg');
                 }
 
-                &.combo::before {
+                &::before {
                     content: 'x ' attr(data-streak);
                     display: block;
                     font-weight: bold;
@@ -2572,6 +2572,10 @@ $themes: (
                     top: 75px;
                     text-align: center;
                     padding-left: 50px;
+                }
+
+                &[data-streak="1"]::before {
+                    content: '';
                 }
             }
         }
