@@ -1580,8 +1580,12 @@ $themes: (
 }
 
 #childrenNames {
-    width: 672px;
+    width: 100%;
     height: 200px;
+
+    > .content {
+        padding-inline: 15%;
+    }
 
     .input-grid {
         width: 100%;
@@ -1623,15 +1627,22 @@ $themes: (
 }
 
 #closed-caption {
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
     width: 800px;
+    z-index: 10;
 
     .cc-container {
         width: 100%;
+        height: 100%;
     }
 
     .cc-text {
         display: block;
         padding: 1.5rem 0 0;
+        text-align: center;
     }
 
     .cc-character {
@@ -1649,6 +1660,24 @@ $themes: (
     p {
         font-size: var(--font-size-h6);
         line-height: var(--line-height-h6);
+    }
+}
+
+#chapter-navigation {
+
+    button {
+        position: absolute;
+        top: 50%;
+    }
+
+    #next-step {
+        left: 100%;
+        transform: translateY(-50%) translate(3rem);
+    }
+
+    #prev-step {
+        right: 100%;
+        transform: translateY(-50%) translateX(-3rem) scaleX(-1);
     }
 }
 

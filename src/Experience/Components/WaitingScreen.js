@@ -42,7 +42,7 @@ export default class WaitingScreen {
             `<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`
         )
         const form = _gl.elementFromHtml(
-            `<form id="childrenNames" class="childrenNames absolute bottom-6 left-1/2 -translate-x-1/2">
+            `<form id="childrenNames" class="childrenNames">
                 <div class="corner top-left"></div>
                 <div class="edge top"></div>
                 <div class="corner top-right"></div>
@@ -84,7 +84,8 @@ export default class WaitingScreen {
             '<ul class="bg-black/50 overflow-y-auto h-full p-[13%]" id="names-label"></ul>'
         )
 
-        wrapper.append(instance.videoBG, form)
+        wrapper.append(instance.videoBG)
+        document.querySelector('#closed-caption').append(form)
         instance.experience.interface.helperScreen.append(nameLabelContainer)
         document.querySelector('#chapter-wrapper').prepend(wrapper)
 
@@ -201,5 +202,6 @@ export default class WaitingScreen {
 
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
+        form.remove()
     }
 }
