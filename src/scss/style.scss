@@ -4256,7 +4256,7 @@ img.lazyloaded ~ div.img-loader {
 
     &__grid {
         display: grid;
-        grid-template-columns: repeat(5, minmax(100px, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 2px;
 
         @keyframes pulse {
@@ -4277,6 +4277,7 @@ img.lazyloaded ~ div.img-loader {
             aspect-ratio: 1/1;
             transition: 0.3s ease-in-out;
             cursor: pointer;
+            width: 100px;
 
             &[current-cell],
             &[visited-cell] {
