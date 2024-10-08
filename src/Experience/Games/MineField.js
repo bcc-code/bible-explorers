@@ -45,22 +45,42 @@ export default class MineField {
 
         if (!document.querySelector('#quiz-content')) {
             const staticHTML = `
-            <div class="absolute inset-0 task-container minefield biex-overlay" id="minefield">
-                <div class="task-container_left">
-                    <h5 class="game-title">Minefield</h5>
-                    <div class="minefield__content">
-                        <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
-                        <div class="finish-line">
-                            <div class="finish-left"></div>
-                            <div class="finish-middle"></div>
-                            <div class="finish-right"></div>
+            <div class="minefield" id="minefield">
+                <div class="task-container left">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">
+                        <h5 class="game-title">Minefield</h5>
+                        <div class="minefield__content">
+                            <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
+                            <div class="finish-line">
+                                <div class="finish-left"></div>
+                                <div class="finish-middle"></div>
+                                <div class="finish-right"></div>
+                            </div>
                         </div>
                     </div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
                 </div>
-                <div class="task-container_right">
-                    <div id="quiz-content">
-                        <div id="quiz__question"></div>
+                <div class="task-container right">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">
+                        <div id="quiz-content">
+                            <div id="quiz__question"></div>
+                        </div>
                     </div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
                 </div>
             </div>`
 

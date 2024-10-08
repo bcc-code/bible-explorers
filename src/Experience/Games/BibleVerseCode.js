@@ -31,22 +31,52 @@ export default class BibleVerseCode {
     bibleVerseCodeHTML() {
         const title = instance.stepData.details.title
         const unlockScreen = _gl.elementFromHtml(`
-            <div class="bible-verse-code absolute inset-0 task-container" id="bible-verse-code">
-                <div class="relative task-container_box">
-                    <h5 class="task-container_heading">${title}</h5>
-                    <div class="bible-verse-code__input">
-                        <div class="bible-book"></div>
-                        <div class="bible-delimiter">,</div>
-                        <div class="bible-chapter"></div>
-                        <div class="bible-delimiter">:</div>
-                        <div class="bible-verse-from"></div>
-                        <div class="bible-delimiter">-</div>
-                        <div class="bible-verse-to"></div>
-                    </div>
-                    <div class="task-container_actions">
-                        <button id="check-code" class="button button-task_action" type="submit"><span>${_s.miniGames.bibleVerseCode.checkCode}</span></button>
+            <div class="bible-verse-code task-container" id="bible-verse-code">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        <h5 class="task-heading">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${title}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </h5>
+                        <div class="bible-verse-code__input">
+                            <div class="bible-book"></div>
+                            <div class="bible-delimiter">,</div>
+                            <div class="bible-chapter"></div>
+                            <div class="bible-delimiter">:</div>
+                            <div class="bible-verse-from"></div>
+                            <div class="bible-delimiter">-</div>
+                            <div class="bible-verse-to"></div>
+                        </div>
+                        <div class="task-actions">
+                            <button id="check-code" class="button-grid" type="submit">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">${_s.miniGames.bibleVerseCode.checkCode}</div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
+                        </div>
                     </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         `)
 

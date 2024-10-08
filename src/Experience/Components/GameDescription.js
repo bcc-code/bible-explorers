@@ -58,15 +58,45 @@ export default class GameDescription {
 
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 task-container" id="task-container">
-                <div class="relative task-container_box">
-                    <h5 class="task-container_heading">${instance.data.title}</h1>
-                    ${instance.data.prompts ? `<p class="task-container_prompts">${instance.data.prompts[0].prompt}</p>` : ''}
-                    ${instance.data.tutorial ? `<div class="task-container_tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
-                    <div class="task-container_actions">
-                        <button class="button button-task_action">${_s.miniGames.startGame}</button>
+            `<div class="task-container" id="task-container">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        <h5 class="task-heading">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${instance.data.title}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </h5>
+                        ${instance.data.prompts ? `<p class="task-prompts">${instance.data.prompts[0].prompt}</p>` : ''}
+                        ${instance.data.tutorial ? `<div class="task-tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
+                        <div class="task-actions">
+                            <button class="button-grid">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">${_s.miniGames.startGame}</div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
+                        </div>
                     </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`
         )
 

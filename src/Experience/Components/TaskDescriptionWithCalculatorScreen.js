@@ -39,12 +39,45 @@ export default class TaskDescriptionWithCalculatorScreen {
     setHtml() {
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 task-container" id="task-container">
-                <div class="task-container_box">
-                    <h5 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h1>
-                    ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
-                    ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button button-task_action">${instance.data.td_button}</button></div>` : ''}
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        <h5 class="task-heading">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${instance.data.td_title !== '' ? instance.data.td_title : ''}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </h5>
+                        ${instance.data.td_description ? `<p class="task-prompts">${instance.data.td_description}</p>` : ''}
+                        ${instance.data.td_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
+                        ${instance.data.td_button !== '' ? `
+                            <div class="task-actions">
+                                <button class="button-grid">
+                                    <div class="corner top-left"></div>
+                                    <div class="edge top"></div>
+                                    <div class="corner top-right"></div>
+                                    <div class="edge left"></div>
+                                    <div class="content">${instance.data.td_button}</div>
+                                    <div class="edge right"></div>
+                                    <div class="corner bottom-left"></div>
+                                    <div class="edge bottom"></div>
+                                    <div class="corner bottom-right"></div>
+                                </button>
+                            </div>` : ''}
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`
         )
 

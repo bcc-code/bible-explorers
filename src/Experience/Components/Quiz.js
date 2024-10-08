@@ -37,7 +37,7 @@ export default class Quiz {
 
         this.nextQuestion = document.getElementById('next-question')
         this.submitQuiz = document.getElementById('submit-quiz')
-        this.taskActionsWrapper = document.querySelector('.task-container_actions')
+        this.taskActionsWrapper = document.querySelector('.task-actions')
 
         this.toggleQuestion()
 
@@ -46,32 +46,62 @@ export default class Quiz {
 
     quizHTML() {
         instance.quizContainer = _gl.elementFromHtml(`
-        <div class="absolute inset-0 task-container" id="quiz-game">
-            <div class="task-container_box group/quiz flex flex-col">
-                ${
-                    instance.questions.length > 1
-                        ? `<div class="progress-bar-container">
-                        <div class="progress-bar-background">
-                            <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
-                        </div>
-                        <ul id="progress-steps" class="progress-steps">${instance.questions
-                            .map(
-                                (_, index) => `
-                                <li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
-                                    <span class="step-number">${index + 1}</span>
-                                </li>`
-                            )
-                            .join('')}
-                            </ul>
-                    </div>`
-                        : ''
-                }
-                <div id="quiz-wrapper"></div>
-                <div class="task-container_actions ${instance.questions.length == 1 ? 'hidden' : ''}">
-                    <button id="next-question" class="button button-task_action"><span>${_s.task.next}</span></button>
-                    <button id="submit-quiz" class="button button-task_action" type="submit"><span>${_s.task.submit}</span></button>
+        <div class="task-container" id="quiz-game">
+            <div class="corner top-left"></div>
+            <div class="edge top"></div>
+            <div class="corner top-right"></div>
+            <div class="edge left"></div>
+            <div class="content">
+                <div class="task-content group/quiz">
+                    ${
+                        instance.questions.length > 1
+                            ? `<div class="progress-bar-container">
+                            <div class="progress-bar-background">
+                                <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
+                            </div>
+                            <ul id="progress-steps" class="progress-steps">${instance.questions
+                                .map(
+                                    (_, index) => `
+                                    <li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
+                                        <span class="step-number">${index + 1}</span>
+                                    </li>`
+                                )
+                                .join('')}
+                                </ul>
+                        </div>`
+                            : ''
+                    }
+                    <div id="quiz-wrapper"></div>
+                    <div class="task-actions ${instance.questions.length == 1 ? 'hidden' : ''}">
+                        <button id="next-question" class="button-grid" type="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${_s.task.next}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
+                        <button id="submit-quiz" class="button-grid" type="submit">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${_s.task.submit}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
+                    </div>
                 </div>
             </div>
+            <div class="edge right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="edge bottom"></div>
+            <div class="corner bottom-right"></div>
         </div>`)
 
         instance.experience.interface.gameContainer.append(instance.quizContainer)
@@ -84,7 +114,7 @@ export default class Quiz {
             `<div class="quiz-item data-index="${instance.questionIdx}"></div>`
         )
         const question = _gl.elementFromHtml(
-            `<h5 class="task-container_prompts text-center font-bold mb-[4%]">${instance.getCurrentQuestion().question}</h5>`
+            `<h5 class="task-prompts text-center font-bold mb-[4%]">${instance.getCurrentQuestion().question}</h5>`
         )
 
         container.append(question)
@@ -137,7 +167,7 @@ export default class Quiz {
     }
 
     addNextQuestionButtonLabel() {
-        instance.nextQuestion.innerHTML =
+        instance.nextQuestion.querySelector('.content').innerHTML =
             instance.getCurrentQuestion().answers &&
             instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length > 1
                 ? 'Check answer' // Multiple choice question

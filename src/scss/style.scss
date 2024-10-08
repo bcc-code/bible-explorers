@@ -238,11 +238,6 @@ svg {
     /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
 }
 
-img {
-    max-width: 100%;
-    display: block;
-}
-
 // video {
 //     max-width: 100%;
 //     max-height: 100%;
@@ -552,6 +547,7 @@ body.not-logged-in {
 // #region GUI
 .button-grid {
     --corner-size: 8px;
+    cursor: pointer;
 
     display: grid;
     align-items: center;
@@ -669,7 +665,6 @@ body.not-logged-in {
 }
 
 .input-grid {
-
     --corner-size: 8px;
 
     display: grid;
@@ -1155,6 +1150,242 @@ body.not-logged-in {
     }
 }
 
+.task-container {
+    --corner-size: 40px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
+    grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
+    grid-template-areas:
+        'top-left top-center top-right'
+        'left-center center right-center'
+        'bottom-left bottom-center bottom-right';
+
+    > div {
+        background-size: 100% 100%;
+    }
+
+    > .corner {
+        width: var(--corner-size);
+        height: var(--corner-size);
+
+        &.top-left {
+            background-image: url('../../static/GUI/container/task_01.png');
+            grid-area: top-left;
+        }
+        &.top-right {
+            background-image: url('../../static/GUI/container/task_03.png');
+            grid-area: top-right;
+        }
+        &.bottom-left {
+            background-image: url('../../static/GUI/container/task_07.png');
+            grid-area: bottom-left;
+        }
+        &.bottom-right {
+            background-image: url('../../static/GUI/container/task_09.png');
+            grid-area: bottom-right;
+        }
+    }
+
+    > .edge {
+        &.top,
+        &.bottom {
+            width: 100%;
+            height: var(--corner-size);
+        }
+
+        &.left,
+        &.right {
+            height: 100%;
+            width: var(--corner-size);
+        }
+
+        &.top {
+            background-image: url('../../static/GUI/container/task_02.png');
+            grid-area: top-center;
+        }
+        &.left {
+            background-image: url('../../static/GUI/container/task_04.png');
+            grid-area: left-center;
+        }
+        &.right {
+            background-image: url('../../static/GUI/container/task_06.png');
+            grid-area: right-center;
+        }
+        &.bottom {
+            background-image: url('../../static/GUI/container/task_08.png');
+            grid-area: bottom-center;
+        }
+    }
+
+    > .content {
+        position: relative;
+        background-image: url('../../static/GUI/container/task_05.png');
+        grid-area: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.task-heading {
+    --corner-size: 20px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
+    grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
+    grid-template-areas:
+        'top-left top-center top-right'
+        'left-center center right-center'
+        'bottom-left bottom-center bottom-right';
+
+    > div {
+        background-size: 100% 100%;
+    }
+
+    > .corner {
+        width: var(--corner-size);
+        height: var(--corner-size);
+
+        &.top-left {
+            background-image: url('../../static/GUI/container/heading_01.png');
+            grid-area: top-left;
+        }
+        &.top-right {
+            background-image: url('../../static/GUI/container/heading_03.png');
+            grid-area: top-right;
+        }
+        &.bottom-left {
+            background-image: url('../../static/GUI/container/heading_07.png');
+            grid-area: bottom-left;
+        }
+        &.bottom-right {
+            background-image: url('../../static/GUI/container/heading_09.png');
+            grid-area: bottom-right;
+        }
+    }
+
+    > .edge {
+        &.top,
+        &.bottom {
+            width: 100%;
+            height: var(--corner-size);
+        }
+
+        &.left,
+        &.right {
+            height: 100%;
+            width: var(--corner-size);
+        }
+
+        &.top {
+            background-image: url('../../static/GUI/container/heading_02.png');
+            grid-area: top-center;
+        }
+        &.left {
+            background-image: url('../../static/GUI/container/heading_04.png');
+            grid-area: left-center;
+        }
+        &.right {
+            background-image: url('../../static/GUI/container/heading_06.png');
+            grid-area: right-center;
+        }
+        &.bottom {
+            background-image: url('../../static/GUI/container/heading_08.png');
+            grid-area: bottom-center;
+        }
+    }
+
+    > .content {
+        position: relative;
+        background-image: url('../../static/GUI/container/heading_05.png');
+        grid-area: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+#tasks-description {
+    position: fixed;
+    inset: 0;
+    padding: 5% 10%;
+    pointer-events: none;
+}
+
+.task {
+    &-container {
+        height: 100%;
+        pointer-events: all;
+    }
+
+    &-content {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    &-heading {
+        position: absolute;
+        top: -76px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+
+        > .content {
+            padding-inline: 40px;
+        }
+    }
+
+    &-tutorial {
+        text-align: center;
+        flex: 1;
+
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        place-items: center;
+
+        img {
+            display: inline-block;
+        }
+
+        img,
+        video {
+            max-height: 80%;
+        }
+    }
+
+    &-prompts {
+        margin-top: 3rem;
+    }
+
+    &-actions {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+    }
+}
+
+#games-wrapper {
+    position: fixed;
+    inset: 0;
+    padding: 5% 10%;
+    pointer-events: none;
+}
+
+.games {
+   
+}
+
 // #endregion GUI
 
 // #region Views
@@ -1607,7 +1838,7 @@ $themes: (
     input:focus {
         outline: none;
     }
-    
+
     input::first-letter {
         text-transform: capitalize;
     }
@@ -1616,7 +1847,6 @@ $themes: (
     ::-webkit-input-placeholder {
         color: #fff;
     }
-
 }
 
 #names-label {
@@ -1633,6 +1863,10 @@ $themes: (
     transform: translateX(-50%);
     width: 800px;
     z-index: 10;
+
+    #iris-cc {
+        width: 100%;
+    }
 
     .cc-container {
         width: 100%;
@@ -1664,7 +1898,6 @@ $themes: (
 }
 
 #chapter-navigation {
-
     button {
         position: absolute;
         top: 50%;
@@ -1754,101 +1987,6 @@ $themes: (
     object-fit: cover;
     width: 100%;
     height: 100%;
-}
-
-.task-container {
-    background-image: url('../../static/textures/Task_BG.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &_left {
-        background-image: url('../../static/frames/Task_Shape_frame-left.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 1/1;
-        width: 620px;
-        padding: 2%;
-    }
-
-    &_right {
-        background-image: url('../../static/frames/language_frame.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 480/738;
-        width: 380px;
-        padding: 3%;
-    }
-
-    &_box {
-        position: relative;
-        width: 100%;
-        background-image: url('../../static/frames/Task_Shape_frame.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 3719/2029;
-        padding: 6% 3%;
-        display: flex;
-        flex-flow: column nowrap;
-        gap: 10%;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &_heading {
-        position: absolute;
-        top: 4%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    &_prompts {
-        text-align: center;
-        font-size: var(--font-size-h6);
-    }
-
-    &_image,
-    &_tutorial {
-        // width: clamp(20rem, 27vw, 100%);
-        max-width: 100%;
-        max-height: calc(100% - 30px);
-        position: relative;
-        top: -7px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-            max-height: 100%;
-        }
-    }
-
-    &_actions {
-        aspect-ratio: 3719/2029;
-        background-image: url('../../static/interface/Task_Shape_button_active_v03.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-
-        &:hover {
-            background-image: url('../../static/interface/Task_Shape_button_action_v03.png');
-        }
-    }
-
-    @media screen and (min-width: 1440px) {
-        &_left {
-            width: 787px;
-        }
-
-        &_right {
-            width: 480px;
-        }
-    }
 }
 
 .task-game {
@@ -2149,10 +2287,7 @@ $themes: (
 
     .progress-bar {
         &-container {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -2224,32 +2359,6 @@ $themes: (
         }
     }
 
-    .task-container_box {
-        background-image: url('../../static/frames/Quiz_window_v02.png');
-        aspect-ratio: 3719/1930;
-    }
-
-    .task-container_heading {
-        width: max(100%, 100px);
-        text-align: center;
-    }
-
-    .task-container_actions {
-        aspect-ratio: 3719/1930;
-        background-image: url('../../static/interface/Quiz_button_active_v02.png');
-
-        .button-task_action {
-            width: 22%;
-        }
-
-        &.disabled {
-            background-image: url('../../static/interface/Quiz_button_innactive_v02.png');
-        }
-
-        &:not(.disabled):hover {
-            background-image: url('../../static/interface/Quiz_button_action_v02.png');
-        }
-    }
 }
 
 .multiple-choice-answers {
@@ -2863,7 +2972,7 @@ $themes: (
                     padding-left: 50px;
                 }
 
-                &[data-streak="1"]::before {
+                &[data-streak='1']::before {
                     content: '';
                 }
             }
@@ -4110,6 +4219,19 @@ img.lazyloaded ~ div.img-loader {
 }
 
 .minefield {
+    display: flex;
+    height: 100%;
+    gap: 16px;
+
+    .left {
+        width: 65%;
+    }
+
+    .right {
+        width: 35%;
+        height: 80%;
+    }
+
     .game-title {
         padding-top: 2rem;
     }
@@ -4117,7 +4239,7 @@ img.lazyloaded ~ div.img-loader {
     .finish-line {
         $size: 30px;
         width: 60px;
-        height: 523px;
+        height: 100%;
         background: repeating-conic-gradient(var(--clr-light-orange) 0% 25%, transparent 0% 50%) 50% / #{$size
             $size};
         animation: moveChecker 2s linear infinite;
@@ -4135,8 +4257,8 @@ img.lazyloaded ~ div.img-loader {
     &__grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-auto-rows: max-content;
         gap: 2px;
-        width: 406px;
 
         @keyframes pulse {
             0% {
@@ -4156,6 +4278,7 @@ img.lazyloaded ~ div.img-loader {
             aspect-ratio: 1/1;
             transition: 0.3s ease-in-out;
             cursor: pointer;
+            width: clamp(80px, 20vw, 160px);
 
             &[current-cell],
             &[visited-cell] {
@@ -4187,8 +4310,9 @@ img.lazyloaded ~ div.img-loader {
     &__content {
         display: flex;
         place-content: center;
-        margin-top: 3rem;
+        place-items: center;
         gap: 1rem;
+        height: 80%;
     }
 
     #quiz-content {
@@ -4232,10 +4356,6 @@ img.lazyloaded ~ div.img-loader {
     }
 
     @media screen and (min-width: 1440px) {
-        &__grid {
-            width: 523px;
-        }
-
         #quiz-content {
             p {
                 font-size: 1.5rem;
@@ -4322,64 +4442,12 @@ img.lazyloaded ~ div.img-loader {
 
 /* #endregion */
 
-/* Hover styles for non-mobile devices */
-// @media (hover: hover) and (pointer: fine) {
-//     .button-cube:hover {
-//         background-image: url('../../static/interface/B_cube_action.png');
-//     }
-
-//     .button-circle:hover {
-//         background-image: url('../../static/interface/B_circle_action.png');
-//         transform: scale(1.1);
-//         transform-origin: center;
-//     }
-
-//     .button-rectangle-wide:hover {
-//         background-image: url('../../static/interface/B_cube_wide_2_action.png');
-//     }
-
-//     .button-arrow:hover {
-//         background-image: url('../../static/interface/arrow_action.png');
-//     }
-
-//     .button-arrow-skip:hover {
-//         background-image: url('../../static/interface/skip_action.png');
-//         opacity: 1;
-//     }
-// }
-
-@media (min-width: 1200px) {
-    .task-container_box {
-        width: 1120px;
-    }
-}
-
 @media (min-width: 1440px) {
-
-    .task-container_box {
-        width: 1320px;
-    }
-
     .chapters-container {
-        max-width: 1320px;
+        max-width: 1600px;
         top: 6rem;
         left: 0;
         right: 0;
         margin-inline: auto;
-    }
-}
-
-@media (min-width: 1920px) {
-
-    .task-container_box {
-        width: 1600px;
-        padding: 3% 0%;
-    }
-
-    .dialogue,
-    .open-question {
-        .question {
-            padding: 1rem;
-        }
     }
 }
