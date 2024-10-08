@@ -1313,7 +1313,7 @@ body.not-logged-in {
 #tasks-description {
     position: fixed;
     inset: 0;
-    padding: 5% 10%;
+    padding: 8% 10%;
     pointer-events: none;
 }
 
@@ -4239,7 +4239,7 @@ img.lazyloaded ~ div.img-loader {
     .finish-line {
         $size: 30px;
         width: 60px;
-        height: 100%;
+        height: 500px;
         background: repeating-conic-gradient(var(--clr-light-orange) 0% 25%, transparent 0% 50%) 50% / #{$size
             $size};
         animation: moveChecker 2s linear infinite;
@@ -4256,8 +4256,7 @@ img.lazyloaded ~ div.img-loader {
 
     &__grid {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        grid-auto-rows: max-content;
+        grid-template-columns: repeat(5, minmax(100px, 1fr));
         gap: 2px;
 
         @keyframes pulse {
@@ -4278,7 +4277,6 @@ img.lazyloaded ~ div.img-loader {
             aspect-ratio: 1/1;
             transition: 0.3s ease-in-out;
             cursor: pointer;
-            width: clamp(80px, 20vw, 160px);
 
             &[current-cell],
             &[visited-cell] {
@@ -4321,7 +4319,7 @@ img.lazyloaded ~ div.img-loader {
         place-items: center;
 
         p {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 500;
             text-align: left;
             white-space: pre-wrap;
@@ -4358,7 +4356,7 @@ img.lazyloaded ~ div.img-loader {
     @media screen and (min-width: 1440px) {
         #quiz-content {
             p {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
             }
         }
     }
