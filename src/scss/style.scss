@@ -1415,7 +1415,7 @@ body.not-logged-in {
 .task {
     &-container {
         width: 80vw;
-        margin: 120px auto auto;
+        margin: 10% auto auto;
         pointer-events: all;
     }
 
@@ -3147,6 +3147,7 @@ $themes: (
     height: 100vh;
     top: 0;
     left: 0;
+    pointer-events: none;
 }
 
 #glitch-character {
@@ -4305,7 +4306,7 @@ img.lazyloaded ~ div.img-loader {
         place-items: center;
 
         p {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 500;
             text-align: left;
             white-space: pre-wrap;
@@ -4315,9 +4316,9 @@ img.lazyloaded ~ div.img-loader {
     #quiz__question {
         width: 100%;
     }
-
+    
     .quiz__answers {
-        margin-top: 2rem;
+        margin-top: 1rem;
         text-align: center;
 
         > div {
