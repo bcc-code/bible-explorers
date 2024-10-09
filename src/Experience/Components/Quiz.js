@@ -233,7 +233,7 @@ export default class Quiz {
 
                 if (inputLength > 0) {
                     if (isLastQuestion) {
-                        instance.submitQuiz.style.display = 'flex'
+                        instance.submitQuiz.style.display = 'grid'
                         instance.submitQuiz.disabled = false
                         instance.nextQuestion.style.display = 'none'
                         instance.taskActionsWrapper.classList.remove('disabled')

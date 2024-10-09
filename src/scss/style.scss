@@ -1950,7 +1950,7 @@ body.not-logged-in {
 
         &-image {
             position: relative;
-            height: 240px;
+            height: 160px;
             margin: -32px -32px 0 -32px;
 
             img {
@@ -1990,13 +1990,11 @@ body.not-logged-in {
             top: 0;
             right: 0;
         }
-    }
 
-    // &-content {
-    //     display: flex;
-    //     flex-flow: column nowrap;
-    //     height: 55%;
-    // }
+        @media screen and (min-width: 1280px) {
+            
+        }
+    }
 
     // States
 
