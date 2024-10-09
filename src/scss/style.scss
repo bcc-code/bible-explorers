@@ -1075,7 +1075,7 @@ body.not-logged-in {
 }
 
 #childrenNames {
-    width: 100%;
+    width: 600px;
 
     > .content {
         padding-inline: 15%;
@@ -1190,27 +1190,25 @@ body.not-logged-in {
         background-image: url('../../static/GUI/container/dialogue_05.png');
         grid-area: center;
         width: 100%;
+        height: 100%;
     }
 }
 
 #closed-caption {
     position: fixed;
-    bottom: 2rem;
+    bottom: 1rem;
     left: 0;
     right: 0;
     margin: auto;
     display: flex;
     justify-content: center;
-    width: 600px;
-    height: 128px;
+    width: 800px;
+    height: 144px;
     z-index: 10;
-
-    #app[data-view='task-description'] & {
-        height: 64px;
-    }
 
     #iris-cc {
         width: 100%;
+        margin-top: 8px;
     }
 
     .cc-container {
@@ -1221,7 +1219,7 @@ body.not-logged-in {
     .cc-text {
         display: block;
         text-align: center;
-        max-height: 72px;
+        max-height: 56px;
     }
 
     .cc-character {
@@ -1234,13 +1232,24 @@ body.not-logged-in {
     }
 
     p {
-        font-size: var(--font-size-h6);
-        line-height: var(--line-height-h6);
+        font-size: 1.25rem;
+        line-height: 1.35;
     }
 
-    @media screen and (min-width: 1680px) {
-        bottom: 3rem;
+
+    @media screen and (min-width: 1440px) {
+        height: 160px;
+
+        p {
+            font-size: 1.35rem;
+        }
+
+        .cc-text {
+            max-height: 72px;
+        }
     }
+
+    
 }
 
 .task-container {
