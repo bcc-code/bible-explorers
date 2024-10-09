@@ -2289,11 +2289,12 @@ $themes: (
 
     .progress-bar {
         &-container {
-            position: relative;
+            position: absolute;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: clamp(20rem, 30vw, 100%);
+            top: -100px;
         }
 
         &-background,
@@ -2359,6 +2360,10 @@ $themes: (
         input[type='checkbox']:checked + label {
             background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
         }
+    }
+
+    .task-prompts {
+        margin-top: 0;
     }
 }
 
@@ -3169,11 +3174,11 @@ $themes: (
 }
 
 #glitch-character {
-    position: absolute;
+    position: fixed;
     width: 195px;
     height: 260px;
     bottom: 0;
-    right: 11rem;
+    right: 25%;
     cursor: pointer;
 
     #glitch-character-idle,
