@@ -50,7 +50,9 @@ export default class GlitchHelp {
                             <div class="corner bottom-right"></div>
                         </h5>
                         ${instance.data.description ? `<p class="task-prompts whitespace-pre-wrap">${instance.data.description}</p>` : ''}
-                        ${instance.data.confirmation_button !== '' ? `
+                        ${
+                            instance.data.confirmation_button !== ''
+                                ? `
                         <div class="task-actions">
                             <button class="button-grid">
                                 <div class="corner top-left"></div>
@@ -64,14 +66,10 @@ export default class GlitchHelp {
                                 <div class="corner bottom-right"></div>
                             </button>
                         </div>
-                        ` : ''}
+                        `
+                                : ''
+                        }
                     </div>
-                    <div id="glitch-character">
-                        <video id="glitch-character-idle" src="games/glitch-help/Glitch_WEB_Oppgave3_Loop_v003.webm" muted autoplay loop></video>
-                        <video id="glitch-character-popup" src="games/glitch-help/Glitch_WEB_Oppgave3_Start_v003.webm" muted></video>
-                    </div>
-                    <div id="open-guide" class="cursor-pointer">${instance.data.get_hint_button}</div>
-                    <div id="glitch-guide">${instance.data.hint}</div>
                 </div>
                 <div class="edge right"></div>
                 <div class="corner bottom-left"></div>
@@ -80,10 +78,22 @@ export default class GlitchHelp {
             </div>`
         )
 
+        const glitchCharacter = _gl.elementFromHtml(
+            `<div class="glitch-help">
+                <div id="glitch-character">
+                    <video id="glitch-character-idle" src="games/glitch-help/Glitch_WEB_Oppgave3_Loop_v003.webm" muted autoplay loop></video>
+                    <video id="glitch-character-popup" src="games/glitch-help/Glitch_WEB_Oppgave3_Start_v003.webm" muted></video>
+                </div>
+                <div id="open-guide" class="cursor-pointer">${instance.data.get_hint_button}</div>
+                <div id="glitch-guide">${instance.data.hint}</div>
+            </div>`
+        )
+
         const nextStep = container.querySelector('button')
         if (nextStep) nextStep.addEventListener('click', instance.program.nextStep)
 
         instance.experience.interface.tasksDescription.append(container)
+        instance.experience.interface.tasksDescription.append(glitchCharacter)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
         instance.experience.navigation.next.className = 'button button-arrow-skip'
@@ -160,6 +170,8 @@ export default class GlitchHelp {
 
     destroy() {
         document.querySelector('#task-container')?.remove()
+        document.querySelector('.glitch-help')?.remove()
+
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
