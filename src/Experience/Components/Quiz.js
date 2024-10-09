@@ -72,7 +72,7 @@ export default class Quiz {
                             : ''
                     }
                     <div id="quiz-wrapper"></div>
-                    <div class="task-actions ${instance.questions.length == 1 ? 'hidden' : ''}">
+                    <div class="task-actions ${instance.questions.length == 1 ? '!hidden' : ''}">
                         <button id="next-question" class="button-grid" type="button">
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>

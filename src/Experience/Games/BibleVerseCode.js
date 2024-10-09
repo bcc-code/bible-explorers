@@ -190,6 +190,8 @@ export default class BibleVerseCode {
             })
             instance.experience.navigation.next.innerText = ''
             instance.experience.navigation.next.className = `button button-arrow`
+
+            document.querySelector('#check-code').disabled = true
         }
     }
 
