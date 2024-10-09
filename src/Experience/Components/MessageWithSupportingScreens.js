@@ -45,12 +45,13 @@ export default class MessageWithSupportingScreens {
         const closedCaption = _gl.elementFromHtml(
             `<div class="cc-container">
                 <div class="corner top-left"></div>
-                <div class="edge top"></div>
+                <div class="edge top">
+                    <div class="cc-character">${character}</div>
+                </div>
                 <div class="corner top-right"></div>
                 <div class="edge left"></div>
                 <div class="content">
                     <div id="iris-cc">
-                        <div class="cc-character">${character}</div>
                         <div class="cc-text">${caption}</div>
                     </div>
                 </div>

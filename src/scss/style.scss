@@ -1068,6 +1068,44 @@ body.not-logged-in {
     }
 }
 
+#childrenNames {
+    width: 100%;
+
+    > .content {
+        padding-inline: 15%;
+    }
+
+    .input-grid {
+        width: 100%;
+        height: 48px;
+    }
+
+    .button-grid {
+        height: 48px;
+        flex-shrink: 0;
+    }
+
+    input {
+        width: 100%;
+        font-size: 1rem;
+        line-height: 1;
+        background-color: transparent;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    input::first-letter {
+        text-transform: capitalize;
+    }
+
+    ::placeholder,
+    ::-webkit-input-placeholder {
+        color: #fff;
+    }
+}
+
 .cc-container {
     --corner-size: 40px;
 
@@ -1146,7 +1184,58 @@ body.not-logged-in {
         background-image: url('../../static/GUI/container/dialogue_05.png');
         grid-area: center;
         width: 100%;
+    }
+}
+
+#closed-caption {
+    position: fixed;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    width: 600px;
+    height: 128px;
+    z-index: 10;
+
+    #app[data-view='task-description'] & {
+        height: 64px;
+    }
+
+    #iris-cc {
+        width: 100%;
+    }
+
+    .cc-container {
         height: 100%;
+        width: 100%;
+    }
+
+    .cc-text {
+        display: block;
+        text-align: center;
+        max-height: calc(var(--font-size-h6) * 3);
+        overflow-y: auto;
+        padding: 1px;
+    }
+
+    .cc-character {
+        text-align: center;
+        text-transform: uppercase;
+        color: var(--clr-primary);
+        font-size: var(--font-size-h6);
+        font-style: italic;
+        margin-top: 0.5rem;
+    }
+
+    p {
+        font-size: var(--font-size-h6);
+        line-height: var(--line-height-h6);
+    }
+
+    @media screen and (min-width: 1680px) {
+        bottom: 3rem;
     }
 }
 
@@ -1313,22 +1402,20 @@ body.not-logged-in {
 #tasks-description {
     position: fixed;
     inset: 0;
-    padding: 8% 10%;
     pointer-events: none;
 }
 
 .task {
     &-container {
-        height: 100%;
+        width: 80vw;
+        margin: 120px auto auto;
         pointer-events: all;
     }
 
     &-content {
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: center;
-        justify-content: center;
         height: 100%;
+        height: 50vh;
+        padding-bottom: 72px;
     }
 
     &-heading {
@@ -1345,11 +1432,7 @@ body.not-logged-in {
 
     &-tutorial {
         text-align: center;
-        flex: 1;
-
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        place-items: center;
+        height: 100%;
 
         img {
             display: inline-block;
@@ -1357,7 +1440,7 @@ body.not-logged-in {
 
         img,
         video {
-            max-height: 80%;
+            height: 100%;
         }
     }
 
@@ -1368,8 +1451,8 @@ body.not-logged-in {
     &-actions {
         position: absolute;
         bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: center;
     }
@@ -1378,16 +1461,13 @@ body.not-logged-in {
 #games-wrapper {
     position: fixed;
     inset: 0;
-    padding: 5% 10%;
     pointer-events: none;
 }
 
 .games {
-  &-wrapper {
-
-  } 
+    &-wrapper {
+    }
 }
-
 
 #screens-wrapper {
     height: 60vh;
@@ -1395,91 +1475,10 @@ body.not-logged-in {
     padding-top: 40px;
 }
 
-#childrenNames {
-    width: 100%;
-    height: 240px;
-
-    > .content {
-        padding-inline: 15%;
-    }
-
-    .input-grid {
-        width: 100%;
-        height: 48px;
-    }
-
-    .button-grid {
-        height: 48px;
-        flex-shrink: 0;
-    }
-
-    input {
-        width: 100%;
-        font-size: 1rem;
-        line-height: 1;
-        background-color: transparent;
-    }
-
-    input:focus {
-        outline: none;
-    }
-
-    input::first-letter {
-        text-transform: capitalize;
-    }
-
-    ::placeholder,
-    ::-webkit-input-placeholder {
-        color: #fff;
-    }
-}
-
 #names-label {
     .name-item {
         font-size: var(--font-size-text);
         gap: 5%;
-    }
-}
-
-#closed-caption {
-    position: fixed;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    z-index: 10;
-
-    #iris-cc {
-        width: 100%;
-    }
-
-    .cc-container {
-        width: 100%;
-        height: 100%;
-        min-height: 240px;
-    }
-
-    .cc-text {
-        display: block;
-        padding: 1.5rem 0 0;
-        text-align: center;
-    }
-
-    .cc-character {
-        text-transform: uppercase;
-        color: var(--clr-primary);
-        font-size: var(--font-size-h6);
-        font-style: italic;
-
-        position: absolute;
-        top: -32px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    p {
-        font-size: var(--font-size-h6);
-        line-height: var(--line-height-h6);
     }
 }
 
@@ -1508,7 +1507,6 @@ body.not-logged-in {
     height: 120px;
     animation: spin 2s linear infinite;
     position: fixed;
-    /* or absolute */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -2358,7 +2356,6 @@ $themes: (
             background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
         }
     }
-
 }
 
 .multiple-choice-answers {
@@ -4239,7 +4236,7 @@ img.lazyloaded ~ div.img-loader {
     .finish-line {
         $size: 30px;
         width: 60px;
-        height: 500px;
+        height: 386px;
         background: repeating-conic-gradient(var(--clr-light-orange) 0% 25%, transparent 0% 50%) 50% / #{$size
             $size};
         animation: moveChecker 2s linear infinite;
@@ -4277,7 +4274,7 @@ img.lazyloaded ~ div.img-loader {
             aspect-ratio: 1/1;
             transition: 0.3s ease-in-out;
             cursor: pointer;
-            width: 100px;
+            width: 72px;
 
             &[current-cell],
             &[visited-cell] {
