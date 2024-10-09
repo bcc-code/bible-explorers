@@ -69,6 +69,7 @@ export default class MessageWithSupportingScreens {
                 '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>'
             )
             document.querySelector('#closed-caption').append(glitch)
+            instance.audio.playSound('glitch-bzz')
         }
 
         if (instance.data.with_lever) {
@@ -136,6 +137,7 @@ export default class MessageWithSupportingScreens {
 
         instance.video?.defocus()
         document.querySelector('.cc-container')?.remove()
+        instance.audio.stopSound('glitch-bzz')
 
         instance.experience.interface.helperScreen.innerHTML = ''
 

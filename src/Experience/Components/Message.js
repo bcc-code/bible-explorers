@@ -46,6 +46,7 @@ export default class Message {
                 '<video id="glitch-idle" src="textures/Glitch_WEB_Recap_v003.webm" muted autoplay loop></video>'
             )
             document.querySelector('#chapter-wrapper').append(glitch)
+            instance.audio.playSound('glitch-bzz')
         }
 
         const message = _gl.elementFromHtml(
@@ -98,6 +99,7 @@ export default class Message {
         instance.video?.defocus()
         document.querySelector('#glitch-idle')?.remove()
         document.querySelector('.cc-container')?.remove()
+        instance.audio.stopSound('glitch-bzz')
         instance.experience.interface.helperScreen.innerHTML = ''
     }
 }

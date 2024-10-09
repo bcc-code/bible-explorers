@@ -146,6 +146,14 @@ export default class Audio {
         }
     }
 
+    stopSound(sound) {
+        if (!audio.experience.settings.soundOn) return
+        if (!audio[sound]) return
+        if (!audio[sound].isPlaying) return
+
+        audio[sound].stop()
+    }
+
     loadMelodyNotes(notes) {
         notes.forEach((note) => {
             if (!audio.notes[note]) {
