@@ -1428,7 +1428,7 @@ body.not-logged-in {
 
     &-content {
         height: 55vh;
-        padding-bottom: 56px;
+        padding-block: 56px;
 
         display: flex;
         align-items: center;
@@ -1461,10 +1461,6 @@ body.not-logged-in {
         }
     }
 
-    &-prompts {
-        // margin-top: 3rem;
-    }
-
     &-actions {
         position: absolute;
         bottom: -16px;
@@ -1481,6 +1477,10 @@ body.not-logged-in {
     .game-tutorial {
         max-height: 480px;
         margin-block: 2rem;
+    }
+
+    @media (min-width: ) {
+        
     }
 }
 
@@ -1989,10 +1989,6 @@ body.not-logged-in {
             position: absolute;
             top: 0;
             right: 0;
-        }
-
-        @media screen and (min-width: 1280px) {
-            
         }
     }
 
