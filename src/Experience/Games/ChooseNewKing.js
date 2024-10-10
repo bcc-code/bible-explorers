@@ -79,7 +79,6 @@ export default class ChooseNewKing {
         instance.experience.setAppView('task-description')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     useCorrectAssetsSrc() {
@@ -189,7 +188,6 @@ export default class ChooseNewKing {
 
             instance.toggleGodVoice()
 
-            instance.experience.navigation.next.className = 'button button-arrow'
         })
     }
 
@@ -239,6 +237,5 @@ export default class ChooseNewKing {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

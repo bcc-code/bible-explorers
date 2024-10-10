@@ -30,7 +30,6 @@ export default class Quiz {
         this.getCurrentQuestion = () => this.questions[this.questionIdx]
 
         this.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        this.experience.navigation.next.className = `button button-arrow-skip`
         this.experience.setAppView('game')
 
         this.quizHTML()
@@ -62,7 +61,7 @@ export default class Quiz {
                             <ul id="progress-steps" class="progress-steps">${instance.questions
                                 .map(
                                     (_, index) => `
-                                    <li class="progress-step button button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
+                                    <li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
                                         <span class="step-number">${index + 1}</span>
                                     </li>`
                                 )
@@ -114,7 +113,7 @@ export default class Quiz {
             `<div class="quiz-item data-index="${instance.questionIdx}"></div>`
         )
         const question = _gl.elementFromHtml(
-            `<h5 class="task-prompts text-center font-bold mb-[4%]">${instance.getCurrentQuestion().question}</h5>`
+            `<h3 class="task-prompts">${instance.getCurrentQuestion().question}</h3>`
         )
 
         container.append(question)
@@ -126,9 +125,18 @@ export default class Quiz {
                     const answer = _gl.elementFromHtml(`
                         <div>
                             <input type="checkbox" id="question-${instance.questionIdx}_answer-${aIdx}" name="question-${instance.questionIdx}" class="sr-only"/>
-                            <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label">
-                                <div class="font-bold button button-circle">${aIdx + 1}</div>
-                                <h6 class="">${a.answer}</h6>
+                            <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label input-grid">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">
+                                    <div class="font-bold button-circle">${aIdx + 1}</div>
+                                    <h4 class="">${a.answer}</h4>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
                             </label>
                         </div>
                     `)
@@ -141,9 +149,19 @@ export default class Quiz {
                     const answer = _gl.elementFromHtml(`
                         <div>
                             <input type="radio" id="question-${instance.questionIdx}_answer-${aIdx}" name="question-${instance.questionIdx}" class="sr-only"/>
-                            <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label">
-                                <div class="font-bold button button-circle">${aIdx + 1}</div>
-                                <h6 class="">${a.answer}</h6>
+                            <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label input-grid">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">
+                                    <div class="font-bold button-circle">${aIdx + 1}</div>
+                                    <h4 class="">${a.answer}</h4>
+                                </div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
                             </label>
                         </div>
                     `)
@@ -154,7 +172,19 @@ export default class Quiz {
         } else {
             this.openQuestions++
             const selfAnswer = _gl.elementFromHtml(
-                `<div class="textarea-box"><textarea class="scroller" placeholder="${instance.getCurrentQuestion().placeholder}" class=""></textarea></div>`
+                `<div class="textarea-box input-grid">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">
+                        <textarea class="scroller" placeholder="${instance.getCurrentQuestion().placeholder}" class=""></textarea>
+                    </div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </div>`
             )
             container.append(selfAnswer)
         }
@@ -192,7 +222,7 @@ export default class Quiz {
                         .answers.findIndex((item) => item.correct_wrong === true)
 
                     if (idx === correctAnswerIdx) {
-                        e.target.closest('div').classList.add('correct')
+                        e.target.closest('.question-label').classList.add('correct')
                         instance.audio.playSound('correct')
                         instance.correctAnswers++
                         instance.experience.celebrate({ particleCount: 100, spread: 160 })
@@ -202,7 +232,6 @@ export default class Quiz {
                             instance.taskActionsWrapper.classList.remove('disabled')
                         } else {
                             instance.experience.navigation.next.innerHTML = ''
-                            instance.experience.navigation.next.className = 'button button-arrow'
                         }
 
                         answerLabels.forEach((disableOption) => {
@@ -210,7 +239,7 @@ export default class Quiz {
                         })
                     } else {
                         instance.audio.playSound('wrong')
-                        e.target.closest('div').classList.add('wrong')
+                        e.target.closest('.question-label').classList.add('wrong')
 
                         setTimeout(() => {
                             e.target.closest('div').classList.remove('wrong')
@@ -244,7 +273,6 @@ export default class Quiz {
                 } else {
                     if (isLastQuestion) {
                         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-                        instance.experience.navigation.next.className = `button button-arrow-skip`
                         instance.submitQuiz.disabled = true
                         instance.nextQuestion.style.display = 'none'
                         instance.taskActionsWrapper.classList.add('disabled')
@@ -320,7 +348,6 @@ export default class Quiz {
                 instance.taskActionsWrapper.classList.remove('disabled')
             } else {
                 instance.experience.navigation.next.innerHTML = ''
-                instance.experience.navigation.next.className = 'button button-arrow'
             }
 
             instance.nextQuestion.innerHTML =
@@ -409,12 +436,8 @@ export default class Quiz {
 
     destroy() {
         document.querySelector('#quiz-game')?.remove()
-
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
-
         instance.experience.setAppView('chapter')
-
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

@@ -96,7 +96,6 @@ export default class GlitchHelp {
         instance.experience.interface.tasksDescription.append(glitchCharacter)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
     }
 
     setEventListeners() {
@@ -175,6 +174,5 @@ export default class GlitchHelp {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

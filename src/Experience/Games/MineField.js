@@ -33,7 +33,6 @@ export default class MineField {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
 
         instance.setHTML()
 
@@ -282,7 +281,6 @@ export default class MineField {
         })
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 
     showRestartButton() {

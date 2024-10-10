@@ -81,7 +81,6 @@ export default class MultipleChoiceWithPicture {
 
                         a.classList.add('correct')
                         instance.experience.navigation.next.innerHTML = ''
-                        instance.experience.navigation.next.className = 'button button-arrow'
 
                         htmlAnswers.forEach((answer) => (answer.style.pointerEvents = 'none'))
                     }
@@ -92,7 +91,6 @@ export default class MultipleChoiceWithPicture {
         instance.experience.interface.gameContainer.append(multipleChoiceWithPicture)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
         instance.experience.navigation.next.disabled = false
     }
 
@@ -112,6 +110,5 @@ export default class MultipleChoiceWithPicture {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

@@ -84,7 +84,6 @@ export default class TaskDescriptionScreen {
         instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
     }
 
     useCorrectAssetsSrc() {
@@ -110,6 +109,5 @@ export default class TaskDescriptionScreen {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

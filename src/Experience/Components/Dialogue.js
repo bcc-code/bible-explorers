@@ -46,7 +46,6 @@ export default class Dialogue {
         instance.experience.interface.helperScreen.append(dialogue)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
         instance.experience.navigation.next.disabled = false
     }
 
@@ -68,7 +67,6 @@ export default class Dialogue {
                 // Check if all were visited
                 if (document.querySelectorAll('.dialogue .question.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
-                    instance.experience.navigation.next.className = 'button button-arrow'
                     instance.experience.navigation.next.innerHTML = ''
                 }
 
@@ -115,6 +113,5 @@ export default class Dialogue {
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

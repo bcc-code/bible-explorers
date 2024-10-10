@@ -70,7 +70,6 @@ export default class SimonSays {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
 
         for (let i = 0; i < instance.config.rounds; i++) {
             const ticker = document.createElement('div')
@@ -229,8 +228,6 @@ export default class SimonSays {
             </div>
         `)
 
-        instance.experience.navigation.next.className = 'button button-arrow'
-
         document.querySelector('.simon-says .container').append(congratsHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')
 
@@ -274,6 +271,5 @@ export default class SimonSays {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

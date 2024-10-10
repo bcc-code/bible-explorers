@@ -31,12 +31,14 @@
         </svg>
 
         <div id="app" class="group/app fixed inset-0 overflow-hidden">
-            <header id="header" class="absolute left-0 top-0 hidden w-full ">
+            <header id="header" class="absolute left-0 top-0 hidden w-full">
                 <div class="flex w-full justify-between p-4">
                     <div class="app-logo z-10">
                         <img src="./textures/bible-kids-explorers.svg" alt="" />
                     </div>
-                    <div class="z-10 ml-auto flex items-center group-data-[view='task-description']/app:hidden">
+                    <div
+                        class="z-10 ml-auto flex items-center group-data-[view='task-description']/app:hidden"
+                    >
                         <button id="download-app" class="button-grid modal-open-download ml-2" role="button">
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
@@ -124,7 +126,12 @@
                             <div class="corner bottom-right"></div>
                         </button>
                         <div class="relative" id="app-language">
-                            <button id="toggle-languages" class="button-grid ml-2" aria-pressed="false" role="button">
+                            <button
+                                id="toggle-languages"
+                                class="button-grid ml-2"
+                                aria-pressed="false"
+                                role="button"
+                            >
                                 <div class="corner top-left"></div>
                                 <div class="edge top"></div>
                                 <div class="corner top-right"></div>
@@ -144,7 +151,12 @@
                                 <ul></ul>
                             </div>
                         </div>
-                        <button id="logout-button" class="button-grid disabled:!hidden ml-2" disabled="true" role="button">
+                        <button
+                            id="logout-button"
+                            class="button-grid ml-2 disabled:!hidden"
+                            disabled="true"
+                            role="button"
+                        >
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
                             <div class="corner top-right"></div>
@@ -158,7 +170,12 @@
                             <div class="edge bottom"></div>
                             <div class="corner bottom-right"></div>
                         </button>
-                        <button id="login-button" class="button-grid disabled:!hidden ml-2" disabled="true" role="button">
+                        <button
+                            id="login-button"
+                            class="button-grid ml-2 disabled:!hidden"
+                            disabled="true"
+                            role="button"
+                        >
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
                             <div class="corner top-right"></div>
@@ -220,11 +237,7 @@
                         </div>
                         <div id="chapters-description" class="chapters-description"></div>
                     </div>
-                    <div
-                        class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
-                    >
-                        <button class="button button-arrow scale-x-[-1]" id="back-to-age-category"></button>
-                    </div>
+                    <button class="button-arrow scale-x-[-1]" id="back-to-age-category" type="button" title="Go back to age categoty" role="button"></button>
                 </div>
                 <div
                     id="chapter-wrapper"
@@ -316,18 +329,8 @@
                     </div>
                     <div id="closed-caption">
                         <div id="chapter-navigation">
-                            <button
-                                class="button button-arrow"
-                                id="prev-step"
-                                type="button"
-                                title="Previous step"
-                            ></button>
-                            <button
-                                class="button button-arrow"
-                                id="next-step"
-                                type="button"
-                                title="Next step"
-                            ></button>
+                            <button class="button-arrow" id="prev-step" type="button" title="Previous step" role="button"></button>
+                            <button class="button-arrow" id="next-step" type="button" title="Next step" role="button"></button>
                         </div>
                     </div>
                     <div id="progress-bar" class="group/progress group-data-[view='game']/app:hidden">

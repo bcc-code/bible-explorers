@@ -23,7 +23,6 @@ export default class SingleChoice {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
 
         instance.setHTML()
         instance.useCorrectAssetsSrc()
@@ -76,7 +75,6 @@ export default class SingleChoice {
             // If the option is correct
             instance.audio.playSound('correct')
             instance.experience.celebrate({ particleCount: 100, spread: 160 })
-            instance.experience.navigation.next.className = 'button button-arrow'
 
             selectedOptionElement.classList.add('bg-white/10')
             instance.experience.navigation.next.innerHTML = ``
@@ -104,6 +102,5 @@ export default class SingleChoice {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

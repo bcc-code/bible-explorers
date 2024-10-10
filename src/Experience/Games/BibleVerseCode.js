@@ -82,7 +82,6 @@ export default class BibleVerseCode {
 
         instance.experience.interface.gameContainer.append(unlockScreen)
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
 
         instance.data.book.forEach(function (number, index) {
             unlockScreen.querySelector('.bible-book').append(

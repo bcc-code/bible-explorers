@@ -106,7 +106,6 @@ export default class GameDescription {
         instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
     }
 
     startGame() {
@@ -159,7 +158,6 @@ export default class GameDescription {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }

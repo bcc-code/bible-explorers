@@ -38,7 +38,7 @@
     "jwt-decode": "^4.0.0",
     "konva": "^8.4.3",
     "lil-gui": "^0.16.0",
-    "sass": "^1.62.0",
+    "sass": "^1.79.4",
     "three": "^0.151.3",
     "tippy.js": "^6.3.7",
     "troika-three-text": "^0.45.1",

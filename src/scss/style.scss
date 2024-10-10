@@ -1,6 +1,42 @@
+@use 'sass:math';
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+// #region Functions
+
+@function rem($pixel) {
+    @if math.is-unitless($pixel) {
+        @return math.div($pixel, 16) + rem;
+    } @else {
+        @error 'Don\'t use units when using the rem() function; only numbers.';
+    }
+}
+
+// #endregion Functions
+
+// Base sizes
+$h1-size: rem(28); // Default size for smaller screens (mobile)
+$h2-size: rem(24);
+$h3-size: rem(20);
+$h4-size: rem(18);
+$h5-size: rem(16);
+$h6-size: rem(14);
+$p-size: rem(16);
+$button-size: rem(40);
+$button-icon-size: rem(14);
+
+// Larger sizes for desktop
+$h1-size-desktop: rem(40);
+$h2-size-desktop: rem(34);
+$h3-size-desktop: rem(28);
+$h4-size-desktop: rem(22);
+$h5-size-desktop: rem(20);
+$h6-size-desktop: rem(18);
+$p-size-desktop: rem(18);
+$button-size-desktop: rem(48);
+$button-icon-size-desktop: rem(16);
 
 :root {
     color-scheme: light;
@@ -28,137 +64,41 @@
     --scrollbar-width: thin;
     --scrollbar-width-legacy: 10px;
 
-    /* Base font size */
-    --font-size-base: 14px;
-    --line-height-base: 1.45;
-
-    /* Headings */
-    --font-size-h1: 2rem;
-    --line-height-h1: 1.2;
-    --font-size-h2: 1.75rem;
-    --line-height-h2: 1.2;
-    --font-size-h3: 1.5rem;
-    --line-height-h3: 1.2;
-    --font-size-h4: 1.25rem;
-    --line-height-h4: 1.2;
-    --font-size-h5: 1.1rem;
-    --line-height-h5: 1.2;
-    --font-size-h6: 0.9rem;
-    --line-height-h6: 1.2;
-
-    /* Paragraphs */
-    --font-size-p: 0.9rem;
-    --line-height-p: 1.5;
-
     /* Buttons */
-    --button-height: 50px;
-    --font-size-button: 0.95rem;
-    --line-height-button: 1.2;
-    --icon-height: calc(var(--button-height) / 3);
+    --button-size: #{$button-size};
+    --button-icon-size: #{$button-icon-size};
 
-    /* Links */
-    --font-size-link: 0.95rem;
-    --line-height-link: 1.4;
+    // Setting default font sizes in :root for smaller screens
+    --font-size-h1: #{$h1-size};
+    --font-size-h2: #{$h2-size};
+    --font-size-h3: #{$h3-size};
+    --font-size-h4: #{$h4-size};
+    --font-size-h5: #{$h5-size};
+    --font-size-h6: #{$h6-size};
+    --font-size-p: #{$p-size};
 }
 
-/* #region Responsive adjustments */
-@media (min-width: 576px) {
+// Media queries for larger screens (e.g., desktop)
+@media (min-width: rem(1280)) {
     :root {
-        --font-size-base: 15px;
-        --line-height-base: 1.45;
-        --font-size-h1: 2.25rem;
-        --font-size-h2: 1.75rem;
-        --font-size-h3: 1.5rem;
-        --font-size-h4: 1.25rem;
-        --font-size-h5: 1.1rem;
-        --font-size-h6: 0.9rem;
-        --font-size-p: 0.95rem;
-        --font-size-button: 0.95rem;
-        --font-size-link: 0.95rem;
-        --button-height: 40px;
-        --icon-height: calc(var(--button-height) / 3);
+        --font-size-h1: #{$h1-size-desktop};
+        --font-size-h2: #{$h2-size-desktop};
+        --font-size-h3: #{$h3-size-desktop};
+        --font-size-h4: #{$h4-size-desktop};
+        --font-size-h5: #{$h5-size-desktop};
+        --font-size-h6: #{$h6-size-desktop};
+        --font-size-p: #{$p-size-desktop};
+
+        --button-size: #{$button-size-desktop};
+        --button-icon-size: #{$button-icon-size-desktop};
     }
 }
 
-@media (min-width: 768px) {
-    :root {
-        --font-size-base: 16px;
-        --line-height-base: 1.5;
-        --font-size-h1: 2.5rem;
-        --font-size-h2: 2rem;
-        --font-size-h3: 1.75rem;
-        --font-size-h4: 1.5rem;
-        --font-size-h5: 1.25rem;
-        --font-size-h6: 1rem;
-        --font-size-p: 1rem;
-        --font-size-button: 1rem;
-        --font-size-link: 1rem;
-        --button-height: 44px;
-        --icon-height: calc(var(--button-height) / 3);
-    }
-}
-
-@media (min-width: 992px) {
-    :root {
-        --font-size-base: 17px;
-        --line-height-base: 1.55;
-        --font-size-h1: 2.75rem;
-        --font-size-h2: 2.25rem;
-        --font-size-h3: 2rem;
-        --font-size-h4: 1.75rem;
-        --font-size-h5: 1.5rem;
-        --font-size-h6: 1.25rem;
-        --font-size-p: 1.05rem;
-        --font-size-button: 1.05rem;
-        --font-size-link: 1.05rem;
-        --button-height: 48px;
-        --icon-height: calc(var(--button-height) / 3);
-    }
-}
-
-@media (min-width: 1440px) {
-    :root {
-        --font-size-base: 18px;
-        --line-height-base: 1.6;
-        --font-size-h1: 3rem;
-        --font-size-h2: 2.5rem;
-        --font-size-h3: 2.25rem;
-        --font-size-h4: 2rem;
-        --font-size-h5: 1.75rem;
-        --font-size-h6: 1.5rem;
-        --font-size-p: 1.1rem;
-        --font-size-button: 1.1rem;
-        --font-size-link: 1.1rem;
-        --button-height: 60px;
-        --icon-height: calc(var(--button-height) / 3);
-    }
-}
-
-@media (min-width: 1920px) {
-    :root {
-        --font-size-base: 20px;
-        --line-height-base: 1.65;
-        --font-size-h1: 3.25rem;
-        --font-size-h2: 2.75rem;
-        --font-size-h3: 2.5rem;
-        --font-size-h4: 2.25rem;
-        --font-size-h5: 2rem;
-        --font-size-h6: 1.75rem;
-        --font-size-p: 1.2rem;
-        --font-size-button: 1.2rem;
-        --font-size-link: 1.2rem;
-        --button-height: 64px;
-        --icon-height: calc(var(--button-height) / 3);
-    }
-}
-
-/* #endregion */
-
-/* #region General */
+// #region General
 
 body {
     font-family: var(--ff-primary);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-p);
     line-height: var(--line-height-base);
     background-color: var(--bg-default);
     color: var(--clr-text);
@@ -166,85 +106,43 @@ body {
 
 h1 {
     font-size: var(--font-size-h1);
-    font-weight: bold;
-    line-height: var(--line-height-h1);
 }
 
 h2 {
     font-size: var(--font-size-h2);
-    line-height: var(--line-height-h2);
 }
 
 h3 {
     font-size: var(--font-size-h3);
-    line-height: var(--line-height-h3);
 }
 
 h4 {
     font-size: var(--font-size-h4);
-    line-height: var(--line-height-h4);
 }
 
 h5 {
     font-size: var(--font-size-h5);
-    line-height: var(--line-height-h5);
 }
 
 h6 {
     font-size: var(--font-size-h6);
-    line-height: var(--line-height-h6);
 }
 
+h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--clr-text);
-}
-
-p {
-    font-size: var(--font-size-p);
-    line-height: var(--line-height-p);
-    color: var(--clr-text);
-}
-
-button {
-    font-size: var(--font-size-button);
-    line-height: var(--line-height-button);
-    color: var(--clr-text);
-}
-
-a {
-    font-size: var(--font-size-link);
-    line-height: var(--line-height-link);
-}
-
-a:not(.button):not(.button-grid) {
-    color: var(--clr-primary);
+h3 {
+    line-height: 1.2;
+    font-weight: bold;
 }
 
 .bg-gradient {
     background: var(--gradient-dark);
 }
 
-svg {
-    width: var(--icon-height);
-    height: var(--icon-height);
-}
-
 .scroller:hover {
     --fix: ;
     /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
 }
-
-// video {
-//     max-width: 100%;
-//     max-height: 100%;
-//     width: auto;
-//     height: auto;
-//     object-fit: contain;
-// }
 
 @supports (scrollbar-width: auto) {
     .scroller {
@@ -271,8 +169,6 @@ svg {
 .biex-overlay {
     border-image: fill 1 linear-gradient(-45deg, hsla(254, 39%, 31%, 60%), hsla(250, 38%, 6%, 80%));
 }
-
-/* #endregion */
 
 .notification {
     &-frame {
@@ -304,7 +200,9 @@ svg {
     }
 }
 
-/* #region VideoAPI */
+// #endregion General
+
+// #region VideoAPI
 #video-container .video-js:not(.vjs-fullscreen) {
     .vjs-control-bar {
         transform: translateX(4%) translateY(-45%);
@@ -335,9 +233,9 @@ svg {
     }
 }
 
-/* #endregion */
+// #endregion VideoAPI
 
-/* #region App views */
+// #region App
 
 .app-logo {
     display: none;
@@ -401,153 +299,11 @@ body.not-logged-in {
     }
 }
 
-/* #endregion */
-
-/* #region Buttons */
-
-.button {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-    pointer-events: auto;
-    cursor: pointer;
-    height: var(--button-height);
-    transition: 0.3s ease-in-out;
-
-    &:focus {
-        outline: none;
-    }
-
-    &:disabled {
-        cursor: not-allowed;
-        filter: grayscale(1);
-        opacity: 0.4;
-
-        .icon {
-            opacity: 0.2;
-        }
-    }
-
-    span,
-    svg {
-        pointer-events: none;
-    }
-}
-
-.button-cube {
-    width: var(--button-height);
-    background-image: url('../../static/interface/B_cube_active.png');
-
-    &.active {
-        background-image: url('../../static/interface/B_cube_action.png');
-    }
-
-    &:disabled {
-        background-image: url('../../static/interface/B_cube_innactive.png');
-    }
-}
-
-.button-circle {
-    width: var(--button-height);
-    border-radius: 50%;
-    background-image: url('../../static/interface/B_circle_active.png');
-
-    &.active,
-    &.current-step {
-        background-image: url('../../static/interface/B_circle_action.png');
-    }
-
-    &:disabled {
-        background-image: url('../../static/interface/B_circle_innactive.png');
-    }
-
-    &[aria-label='checkpoint'],
-    &[currentcheckpoint] {
-        background-image: url('../../static/interface/B_circle_action.png');
-    }
-
-    &[currentcheckpoint] ~ button:not(:hover) {
-        background-image: url('../../static/interface/B_circle_active.png');
-    }
-}
-
-.button-rectangle-wide {
-    aspect-ratio: 721 / 258;
-    background-image: url('../../static/interface/B_cube_wide_2_active.png');
-
-    span {
-        display: block;
-    }
-
-    &.active {
-        background-image: url('../../static/interface/B_cube_wide_2_action.png');
-    }
-
-    &:disabled {
-        background-image: url('../../static/interface/B_cube_wide_2_innactive.png');
-    }
-}
-
-.button-arrow {
-    aspect-ratio: 293 / 201;
-    background-image: url('../../static/interface/arrow_active.png');
-
-    &.active {
-        background-image: url('../../static/interface/arrow_action.png');
-    }
-
-    &:disabled {
-        background-image: url('../../static/interface/arrow_innactive.png');
-    }
-}
-
-.button-arrow-skip {
-    aspect-ratio: 803 / 412;
-    padding-right: 1rem;
-    background-image: url('../../static/interface/skip_active.png');
-    opacity: 0.4;
-
-    span {
-        display: block;
-    }
-
-    &.skip-video {
-        position: absolute;
-        top: 1%;
-        right: 1%;
-    }
-
-    &.active {
-        background-image: url('../../static/interface/skip_action.png');
-        opacity: 1;
-    }
-
-    &:disabled {
-        background-image: url('../../static/interface/skip_innactive.png');
-    }
-}
-
-.button-task_action {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 2%;
-    width: 30%;
-    height: 12%;
-    padding-inline: 1rem;
-    font-size: calc(var(--font-size-button) * 1.25);
-}
-
-/* #endregion */
+// #endregion App
 
 // #region GUI
 .button-grid {
     --corner-size: 8px;
-    cursor: pointer;
 
     display: grid;
     align-items: center;
@@ -560,10 +316,14 @@ body.not-logged-in {
         'left-center center right-center'
         'bottom-left bottom-center bottom-right';
 
-    transition: 0.3s ease;
+    svg {
+        width: var(--button-icon-size);
+        height: var(--button-icon-size);
+    }
 
     > div {
         background-size: 100% 100%;
+        transition: background 0.3s ease;
     }
 
     .corner {
@@ -625,16 +385,11 @@ body.not-logged-in {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
         width: 100%;
         height: 100%;
-        padding: 8px;
-        font-size: 1rem;
+        padding: rem(8);
+        gap: rem(8);
         line-height: 1;
-
-        span {
-            font-size: inherit;
-        }
     }
 
     &:hover {
@@ -670,6 +425,79 @@ body.not-logged-in {
     }
 }
 
+.button-circle {
+    position: relative;
+    width: var(--button-size);
+    height: var(--button-size);
+    background-image: url('../../static/GUI/button/button-circle-active.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: grid;
+    place-content: center;
+    transition: background 0.3s ease;
+
+    flex-shrink: 0;
+
+    svg {
+        width: var(--button-icon-size);
+        height: var(--button-icon-size);
+    }
+
+    &.current-step {
+        background-image: url('../../static/GUI/button/button-circle-active.svg') !important;
+    }
+
+    &[currentcheckpoint],
+    &:hover {
+        background-image: url('../../static/GUI/button/button-circle-active.svg');
+    }
+
+    &.current-step ~ li,
+    &[currentcheckpoint] ~ button:not(:hover) {
+        background-image: url('../../static/GUI/button/button-circle.svg');
+    }
+}
+
+.button-arrow {
+    position: relative;
+    width: calc(var(--button-size) * 2);
+    height: var(--button-size);
+    background-image: url('../../static/GUI/button/button-arrow.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: grid;
+    place-content: center;
+    transition: background 0.3s ease;
+
+    svg {
+        width: var(--button-icon-size);
+        height: var(--button-icon-size);
+    }
+
+    span {
+        font-size: rem(14);
+        margin-top: -1px;
+        margin-left: - rem(12);
+    }
+
+    &:hover {
+        background-image: url('../../static/GUI/button/button-arrow-active.svg');
+    }
+
+    &.skip-video {
+        position: absolute;
+        top: 1%;
+        right: 1%;
+    }
+}
+
+#back-to-age-category {
+    position: fixed;
+    bottom: rem(40);
+    left: rem(40);
+    z-index: 20;
+}
+
 .input-grid {
     --corner-size: 8px;
 
@@ -684,10 +512,9 @@ body.not-logged-in {
         'left-center center right-center'
         'bottom-left bottom-center bottom-right';
 
-    transition: 0.3s ease;
-
     > div {
         background-size: 100% 100%;
+        transition: 0.3s ease;
     }
 
     .corner {
@@ -755,7 +582,19 @@ body.not-logged-in {
         padding-inline: 16px;
     }
 
-    &:has(input:focus-visible) {
+    textarea {
+        width: 100%;
+        height: rem(120);
+        background-color: transparent;
+        outline: none;
+        resize: none;
+        padding: rem(12) rem(24);
+    }
+
+    &.correct,
+    &:hover,
+    &:has(input:focus-visible),
+    &:has(textarea:focus-visible) {
         .corner {
             &.top-left {
                 background-image: url('../../static/GUI/button/button-hover_01.png');
@@ -1236,7 +1075,6 @@ body.not-logged-in {
         line-height: 1.35;
     }
 
-
     @media screen and (min-width: 1440px) {
         height: 160px;
 
@@ -1248,8 +1086,6 @@ body.not-logged-in {
             max-height: 72px;
         }
     }
-
-    
 }
 
 .task-container {
@@ -1479,8 +1315,7 @@ body.not-logged-in {
         margin-block: 2rem;
     }
 
-    @media (min-width: ) {
-        
+    @media (min-width: 768px) {
     }
 }
 
@@ -1712,24 +1547,6 @@ body.not-logged-in {
     }
 }
 
-.textarea-box {
-    background-image: url('../../static/frames/text_box.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    aspect-ratio: 2777/720;
-    padding: 2%;
-
-    textarea {
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
-        font-size: var(--font-size-text);
-        outline: none;
-        resize: none;
-        padding: 2%;
-    }
-}
-
 .modal {
     border: 0;
     box-shadow: none;
@@ -1840,12 +1657,6 @@ body.not-logged-in {
     }
 }
 
-#progress-bar {
-    svg {
-        width: calc(var(--button-height));
-    }
-}
-
 // #endregion GUI
 
 // #region Views
@@ -1862,8 +1673,7 @@ body.not-logged-in {
 
 // #endregion Views
 
-/* #region Masks */
-
+// #region Masks
 .mask-image {
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -1892,10 +1702,9 @@ body.not-logged-in {
     mask-size: contain;
 }
 
-/* #endregion */
+// #endregion Masks
 
-/* #region Chapter */
-
+// #region Chapter
 .chapter {
     margin-bottom: 1.5rem;
 
@@ -2216,9 +2025,9 @@ body.not-logged-in {
     }
 }
 
-/* #endregion */
+// #endregion Chapter
 
-/* #region Tooltip */
+// #region Tooltips
 
 $themes: (
     explorers: var(--clr-primary),
@@ -2254,13 +2063,14 @@ $themes: (
     }
 }
 
-/* #endregion */
+// #endregion Tooltips
 
-/* #region Tasks */
+// #region Tasks
 
 #quiz-game {
     #quiz-wrapper {
-        width: 80%;
+        width: 100%;
+        max-width: rem(1024);
     }
 
     .progress-bar {
@@ -2318,11 +2128,11 @@ $themes: (
 
     .quiz-item {
         .correct .question-label .button-circle {
-            background-image: url('../../static/interface/B_circle_action.png');
+            background-image: url('../../static/GUI/button/button-circle-active.svg');
         }
 
         .wrong .question-label .button-circle {
-            background-image: url('../../static/interface/B_circle_innactive.png');
+            filter: grayscale(1);
         }
 
         .correct .question-label {
@@ -2339,7 +2149,8 @@ $themes: (
     }
 
     .task-prompts {
-        margin-top: 0;
+       text-align: center;
+       margin-bottom: rem(24);
     }
 }
 
@@ -2349,50 +2160,27 @@ $themes: (
 
 .question-label {
     position: relative;
-    display: flex;
-    align-items: center;
-    background-image: url('../../static/frames/Quiz_answer_v02.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    aspect-ratio: 1495/144;
-    padding-inline: 12% 5%;
     cursor: pointer;
+    margin-bottom: rem(16);
 
     .button-circle {
-        position: absolute;
-        left: 5%;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        font-size: clamp(1.25rem, 1.15vw, 2rem);
+        background-image: url('../../static/GUI/button/button-circle.svg');
+        font-size: var(--font-size-h3);
+        margin-right: rem(8);
     }
 
-    p {
-        font-size: var(--font-size-text);
+    > .content {
+        justify-content: start;
+        padding: rem(8) rem(16);
     }
 
-    &:hover {
-        background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
+    &:hover .button-circle,
+    &.correct .button-circle {
+        background-image: url('../../static/GUI/button/button-circle-active.svg');
     }
 
-    &:hover .button-circle {
-        background-image: url('../../static/interface/B_circle_action.png');
-    }
-
-    .correct & {
-        background-image: url('../../static/frames/Quiz_answer_correct_v02.png');
-
-        .button-circle {
-            background-image: url('../../static/interface/B_circle_action.png');
-        }
-    }
-
-    .wrong & {
-        background-image: url('../../static/frames/Quiz_answer_wrong_1.png');
-
-        .button-circle {
-            background-image: url('../../static/interface/B_circle_innactive.png');
-        }
+    &.wrong {
+        filter: grayscale(1);
     }
 }
 
@@ -3155,7 +2943,7 @@ $themes: (
     width: 195px;
     height: 260px;
     bottom: 0;
-    right: 25%;
+    right: 100px;
     cursor: pointer;
 
     #glitch-character-idle,
@@ -4315,7 +4103,7 @@ img.lazyloaded ~ div.img-loader {
     #quiz__question {
         width: 100%;
     }
-    
+
     .quiz__answers {
         margin-top: 1rem;
         text-align: center;
@@ -4430,12 +4218,12 @@ img.lazyloaded ~ div.img-loader {
     }
 }
 
-/* #endregion */
+// #endregion Tasks
 
-@media (min-width: 1440px) {
+@media (min-width: rem(1280)) {
     .chapters-container {
-        max-width: 1600px;
-        top: 6rem;
+        max-width: rem(1440);
+        top: 10vh;
         left: 0;
         right: 0;
         margin-inline: auto;

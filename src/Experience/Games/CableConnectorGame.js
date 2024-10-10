@@ -41,7 +41,6 @@ export default class CableConnector {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
 
         const spriteW = 180
         const spriteH = 100
@@ -583,7 +582,6 @@ export default class CableConnector {
         `)
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.querySelector('.cable-connect .container').append(congratsHTML)
         document.querySelector('.cable-connect').classList.add('popup-visible')
@@ -609,7 +607,6 @@ export default class CableConnector {
         document.querySelector('.game')?.remove()
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 

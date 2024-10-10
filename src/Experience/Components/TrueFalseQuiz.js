@@ -23,7 +23,6 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
 
         instance.setHTML()
         instance.questionsAnsweredCorrectly = 0
@@ -111,7 +110,6 @@ export default class TrueFalsQuiz {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = ''
 
-        instance.experience.navigation.next.className = 'button button-arrow'
         instance.experience.navigation.next.innerText = ''
     }
 
@@ -203,7 +201,6 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('chapter')
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.questionsAnsweredCorrectly = 0
 

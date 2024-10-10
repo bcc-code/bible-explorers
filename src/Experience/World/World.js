@@ -298,7 +298,7 @@ export default class World {
                 <div class="corner top-right"></div>
                 <div class="edge left"></div>
                 <div class="content">
-                    <h3 class="chapter-description-heading">${chapter.title}</h3>
+                    <h2 class="chapter-description-heading">${chapter.title}</h2>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
                     <div class="chapter-actions">
                         <button class="button-grid" id="start-chapter">

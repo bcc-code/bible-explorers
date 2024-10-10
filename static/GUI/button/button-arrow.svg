@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Layer_2" xmlns="http://www.w3.org/2000/svg" width="190.83" height="93.66" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 190.83 93.66">
+  <defs>
+    <style>
+      .f {
+        fill: url(#d);
+        stroke: url(#e);
+        stroke-linejoin: bevel;
+        stroke-width: 8px;
+      }
+    </style>
+    <linearGradient id="d" x1="4" y1="46.83" x2="188" y2="46.83" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b0915"/>
+      <stop offset="1" stop-color="#220031"/>
+    </linearGradient>
+    <linearGradient id="e" x1="0" y1="46.83" x2="190.83" y2="46.83" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1197ac"/>
+      <stop offset="1" stop-color="#ad379b"/>
+    </linearGradient>
+  </defs>
+  <g id="c" data-name="arrow">
+    <polygon class="f" points="4 22.83 144 22.83 144 2.83 188 46.83 144 90.83 144 70.83 4 70.83 4 22.83"/>
+  </g>
+</svg>
