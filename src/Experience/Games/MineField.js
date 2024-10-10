@@ -272,7 +272,7 @@ export default class MineField {
 
     handleQuizCompletion() {
         const quizContentContainer = document.querySelector('#quiz-content')
-        quizContentContainer.innerHTML = `<h2 class="text-6xl text-center">${_s.miniGames.winRound}!</h2>`
+        quizContentContainer.innerHTML = `<h2 class="text-center">${_s.miniGames.winRound}!</h2>`
 
         // Remove all colored cells (available-cell classes) at the end of the game
         const allCells = document.querySelectorAll('.available-cell')
@@ -286,19 +286,17 @@ export default class MineField {
     showRestartButton() {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = `
-            <div class="text-center mt-4">
-                <button class="button-grid" id="restart-quiz">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">${_s.miniGames.tryAgain}</div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
-                </button>
-            </div>
+            <button class="button-grid" id="restart-quiz">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">${_s.miniGames.tryAgain}</div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </button>
         `
 
         document.getElementById('restart-quiz').addEventListener('click', () => {
