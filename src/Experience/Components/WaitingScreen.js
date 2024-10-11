@@ -23,6 +23,7 @@ export default class WaitingScreen {
         instance.video.load('texture-' + id)
 
         document.querySelector('.screens').classList.add('waiting-screen-visible')
+        document.querySelector('#closed-caption').classList.add('waiting-screen-visible')
 
         instance.videoBG = document.createElement('video')
         instance.videoBG.setAttribute('src', './textures/Waitingscreen_V003.mp4')
@@ -205,6 +206,7 @@ export default class WaitingScreen {
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
         document.querySelector('.screens').classList.remove('waiting-screen-visible')
+        document.querySelector('#closed-caption').classList.remove('waiting-screen-visible')
 
         form.remove()
     }

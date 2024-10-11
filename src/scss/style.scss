@@ -1248,16 +1248,15 @@ body.not-logged-in {
 
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
+        width: rem(720);
 
         .cc-text {
             max-height: rem(72);
         }
-    
     }
 
     @media (width >= rem(1440)) and (height >= rem(900)) {
         // 1440x900
-    
     }
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
@@ -1278,6 +1277,13 @@ body.not-logged-in {
     @media (width >= rem(3840)) and (height >= rem(2160)) {
         // 3840x2160 (4K)
       
+    }
+
+    &.waiting-screen-visible {
+        @media (width >= rem(1280)) and (height >= rem(720)) {
+            // 1280x720
+            width: rem(640);
+        }
     }
 }
 
@@ -1889,7 +1895,6 @@ body.not-logged-in {
         gap: 5%;
     }
 }
-
 
 .loader {
     border: 16px solid #f3f3f3;
