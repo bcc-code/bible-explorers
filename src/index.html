@@ -252,81 +252,46 @@
                     <div class="fixed inset-0 -z-10 bg-chapter-room bg-cover bg-center">
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
-                    <div class="mx-auto flex justify-center px-8 group-data-[view='game']/app:hidden">
-                        <div
-                            id="screens-wrapper"
-                            class="relative isolate grid gap-[0.25%]"
-                            style="grid-template-columns: 38% 30% 32%; grid-auto-rows: auto"
-                        >
-                            <div class="absolute bottom-[20%] right-full w-[20%]">
-                                <img src="./frames/Camera.png" alt="" />
-                            </div>
-                            <div class="relative col-span-1 row-span-1 grid">
-                                <div
-                                    id="top-left-screen"
-                                    class="relative mt-auto aspect-[4/3] w-full bg-top-left-screen bg-contain bg-bottom bg-no-repeat"
-                                >
-                                    <div class="absolute bottom-full left-[15%] -z-10 w-[50%]">
-                                        <img src="./frames/Handle_1.png" alt="" />
+                    <div class="screens w-full [view='game']/app:hidden">
+                        <div class="screens-wrapper">
+                            <div class="screens-grid">
+                                <div class="screens-camera"></div>
+                                <div class="screens-left">
+                                    <div class="screen-left">
+                                        <div class="screen-left_support"></div>
+                                        <div class="screen-bottom_support"></div>
+                                        <div class="screen-left_frame">
+                                            <div class="screen-left_content"></div>
+                                        </div>
                                     </div>
-                                    <div class="absolute bottom-[calc(100%_-40px)] left-[70%] -z-10 w-[50%]">
-                                        <img src="./frames/Handle_2.png" alt="" />
+                                    <div class="screen-center">
+                                        <div class="screen-center_support"></div>
+                                        <div class="screen-center_frame">
+                                            <div class="screen-center_content"></div>
+                                        </div>
                                     </div>
-                                    <div
-                                        id="top-left-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/Blueprint_BibleBox_00000.png')] bg-cover bg-no-repeat"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="relative col-span-1 row-span-1 grid">
-                                <div
-                                    id="top-mid-screen"
-                                    class="relative mt-auto aspect-[3/4] w-full bg-top-mid-screen bg-contain bg-center bg-no-repeat"
-                                >
-                                    <div class="absolute bottom-full left-1/2 -z-10 w-[60%] -translate-x-1/2">
-                                        <img src="./frames/Handle_3.png" alt="" />
-                                    </div>
-                                    <div
-                                        id="top-mid-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen3_00000.png')] bg-cover bg-no-repeat"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="relative col-span-1 row-span-2 grid">
-                                <div
-                                    id="helper-screen"
-                                    class="relative mb-[15%] mt-auto aspect-[9/16] w-full bg-helper-screen bg-contain bg-center bg-no-repeat"
-                                >
-                                    <div class="absolute bottom-full left-1/2 -z-10 w-[40%] -translate-x-1/2">
-                                        <img src="./frames/Handle_4.png" alt="" />
-                                    </div>
-                                    <div
-                                        id="helper-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen4_00001.png')] bg-cover bg-no-repeat"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="relative col-span-2 row-span-1 grid">
-                                <div
-                                    id="main-screen"
-                                    class="relative aspect-[16/9] w-full bg-main-screen bg-contain bg-center bg-no-repeat"
-                                >
-                                    <div
-                                        id="main-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/MT_IRIS_BG.png')] bg-cover bg-no-repeat"
-                                    >
-                                        <div class="*:h-full *:w-full" id="video-container">
-                                            <div id="iris-idle">
-                                                <div class="relative h-0 w-full pt-[56.25%]">
-                                                    <video
-                                                        src="./textures/iris_idle_v3.mp4"
-                                                        class="absolute left-0 top-0 h-full w-full"
-                                                        muted
-                                                        loop
-                                                        autoplay="true"
-                                                    ></video>
+                                    <div class="screen-bottom">
+                                        <div class="screen-bottom_frame">
+                                            <div class="screen-bottom_content">
+                                                <div id="video-container">
+                                                    <div id="iris-idle">
+                                                        <video
+                                                            src="./textures/iris_idle_v3.mp4"
+                                                            muted
+                                                            loop
+                                                            autoplay="true"
+                                                        ></video>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="screens-right">
+                                    <div class="screen-right">
+                                        <div class="screen-right_support"></div>
+                                        <div class="screen-right_frame">
+                                            <div class="screen-right_content"></div>
                                         </div>
                                     </div>
                                 </div>
