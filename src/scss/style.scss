@@ -2134,18 +2134,20 @@ body.not-logged-in {
     &__downloaded,
     &__outdated {
         display: none;
-        align-items: center;
 
         svg {
-            margin-right: 1%;
+            width: rem(16);
+            height: rem(16);
+            margin-right: rem(8);
+            margin-top: rem(6);
         }
     }
 
     &__offline {
         display: none;
         position: absolute;
-        right: 1.25rem;
-        bottom: 1.25rem;
+        right: rem(20);
+        bottom: rem(20);
         z-index: 1;
     }
 
