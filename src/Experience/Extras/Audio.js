@@ -129,6 +129,8 @@ export default class Audio {
     }
 
     playSound(sound) {
+        return // disable temporary
+
         if (!audio.experience.settings.soundOn) return
 
         if (!audio[sound]) {
@@ -155,6 +157,8 @@ export default class Audio {
     }
 
     loadMelodyNotes(notes) {
+        return // disable temporary
+
         notes.forEach((note) => {
             if (!audio.notes[note]) {
                 audio.audioLoader.load('sounds/notes/' + note + '.mp3', function (buffer) {
@@ -178,6 +182,8 @@ export default class Audio {
     }
 
     loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => {}) {
+        return // disable temporary
+
         if (!audio.alreadyFetched(soundtrack)) {
             audio.disableToggleBtn()
 
@@ -268,6 +274,8 @@ export default class Audio {
     }
 
     loadPianoTiles() {
+        return // disable temporary
+
         if (!audio.pianoTiles) {
             audio.audioLoader.load('games/piano-tiles/BIEX_Vignett_m_tverrflute.mp3', function (buffer) {
                 audio.pianoTiles = new THREE.Audio(audio.listener)
