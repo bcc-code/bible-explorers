@@ -157,7 +157,7 @@ export default class World {
     setCategoryHtml(category) {
         const categoryBtn = _gl.elementFromHtml(
             `<li>
-                <button class="category button-grid uppercase" data-slug="${category.slug}">  
+                <button class="category button-grid uppercase" data-slug="${category.slug}" role="button">  
                     <div class="corner top-left"></div>
                     <div class="edge top"></div>
                     <div class="corner top-right"></div>
@@ -204,7 +204,7 @@ export default class World {
                         <div class="corner top-right"></div>
                         <div class="edge left"></div>
                         <div class="content">
-                            <h6 class="chapter-heading">${chapter.title}</h6>
+                            <h3 class="chapter-heading">${chapter.title}</h3>
                             <p class="chapter-date">${chapter.date}</p>
                         </div>
                         <div class="edge right"></div>
@@ -214,7 +214,7 @@ export default class World {
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
-                        <button class="chapter__download button-grid group-[.downloaded]:hidden">
+                        <button class="chapter__download button-grid group-[.downloaded]:hidden" role="button">
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
                             <div class="corner top-right"></div>
@@ -227,7 +227,7 @@ export default class World {
                             <div class="edge bottom"></div>
                             <div class="corner bottom-right"></div>
                         </button>
-                        <button class="chapter__remove button-grid !hidden">
+                        <button class="chapter__remove button-grid !hidden" role="button">
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
                             <div class="corner top-right"></div>
@@ -301,7 +301,7 @@ export default class World {
                     <h2 class="chapter-description-heading">${chapter.title}</h2>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
                     <div class="chapter-actions">
-                        <button class="button-grid" id="start-chapter">
+                        <button class="button-grid" id="start-chapter" role="button">
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
                             <div class="corner top-right"></div>
@@ -979,7 +979,7 @@ export default class World {
                     <li>${_s.offline.downloadApp.infoText2}</li>
                 </ul>
                 <div class="modal-actions">
-                    <button class="modal-close">${_s.offline.downloadApp.close}</button>
+                    <button class="modal-close" role="button">${_s.offline.downloadApp.close}</button>
                 </div>
             </div>
         </dialog>`)
@@ -997,7 +997,7 @@ export default class World {
 
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button button-rectangle-wide" href="${apiData['windows']['exe']}">
+                        <a class="button button-rectangle-wide" href="${apiData['windows']['exe']}" role="button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
                             <span>Windows</span>
                         </a>`)
