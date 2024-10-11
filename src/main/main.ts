@@ -24,7 +24,7 @@ const openWindow = (url: string) => {
     minHeight: 600,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "preload.mjs"),
     },
     titleBarStyle: process.platform === "darwin" ? "hidden" : "default",
     icon: 'static/favicon.png',
