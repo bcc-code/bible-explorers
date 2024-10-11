@@ -1212,7 +1212,7 @@ body.not-logged-in {
     position: absolute;
     left: 0;
     right: 0;
-    top: 75%;
+    top: 78%;
     margin-inline: auto;
     width: rem(640);
     height: rem(144);
@@ -1266,6 +1266,7 @@ body.not-logged-in {
 
     @media (width >= rem(1920)) and (height >= rem(1080)) {
         // 1920x1080
+        top: 82%;
         
     }
 
