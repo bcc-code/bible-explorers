@@ -226,7 +226,7 @@ export default class PianoTiles {
                 <div class="task-game_popup result-box">
                     <div class="score_text text-2xl"></div>
                     <div class="buttons">
-                        <button class="piano-tiles_restart button-grid">
+                        <button class="piano-tiles_restart button-grid" role="button" type="button" title="Restart game button">
                             <div class="corner top-left"></div>
                             <div class="edge top"></div>
                             <div class="corner top-right"></div>
