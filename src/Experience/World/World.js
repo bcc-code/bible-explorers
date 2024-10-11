@@ -301,17 +301,19 @@ export default class World {
                     <h2 class="chapter-description-heading">${chapter.title}</h2>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
                     <div class="chapter-actions">
-                        <button class="button-grid" id="start-chapter" role="button">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${_s.journey.start}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
+                        <div class="float-left">
+                            <button class="button-grid" id="start-chapter" role="button">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">${_s.journey.start}</div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="edge right"></div>
@@ -455,7 +457,7 @@ export default class World {
         if (instance.buttons.startChapter) {
             instance.buttons.startChapter.disabled = true
             instance.buttons.startChapter.tippy?.destroy()
-            instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter, {
+            instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
                 theme: 'explorers',
                 content: _s.offline.downloadToContinue,
                 maxWidth: 230,
