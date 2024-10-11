@@ -72,3 +72,4 @@ dist-app/
 .vercel
 .DS_store
 package-lock.json
+.stylelintrc.json
