@@ -1,7 +1,3 @@
-// @ts-check
-/**
- * @type {import('electron-builder').Configuration}
- */
 const config = {
     appId: 'io.biblekids.explorers',
     productName: 'Bible-Explorers',
@@ -20,7 +16,7 @@ const config = {
     win: {
         target: 'nsis',
         signingHashAlgorithms: ['sha256'],
-        sign: './custom-sign.js',
+        sign: './custom-sign.cjs',
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },
