@@ -222,14 +222,6 @@ h3 {
     &:not(.vjs-fullscreen) .skip-video {
         display: none;
     }
-
-    .button-arrow {
-        opacity: 0.4;
-
-        &:hover {
-            opacity: 1;
-        }
-    }
 }
 
 // #endregion VideoAPI
@@ -516,6 +508,17 @@ body.not-logged-in {
 
     &:disabled {
         filter: grayscale(1);
+    }
+
+    &:has(span) {
+        filter: grayscale(1);
+        opacity: 0.4;
+        transition: background 0.3s ease, filter 0.3s ease;
+
+        &:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
     }
 
     @media (width >= rem(1280)) {
