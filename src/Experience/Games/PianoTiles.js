@@ -226,7 +226,17 @@ export default class PianoTiles {
                 <div class="task-game_popup result-box">
                     <div class="score_text text-2xl"></div>
                     <div class="buttons">
-                        <button class="piano-tiles_restart button button-rectangle-wide">${_s.miniGames.anotherRound}</button>
+                        <button class="piano-tiles_restart button-grid">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${_s.miniGames.anotherRound}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
                     </div>
             </section>`)
 
