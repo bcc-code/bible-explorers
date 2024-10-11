@@ -513,7 +513,9 @@ body.not-logged-in {
     &:has(span) {
         filter: grayscale(1);
         opacity: 0.4;
-        transition: background 0.3s ease, filter 0.3s ease;
+        transition:
+            background 0.3s ease,
+            filter 0.3s ease;
 
         &:hover {
             filter: grayscale(0);
@@ -1412,6 +1414,7 @@ body.not-logged-in {
         left: 0;
         right: 0;
         margin-inline: auto;
+        transition: width .3s ease;
 
         display: flex;
     }
@@ -1444,42 +1447,91 @@ body.not-logged-in {
         left: -30%;
     }
 
-    @media (width >= rem(1280)) and (height >= rem(720)) {  // 1280x720
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
         &-wrapper {
-            width: 40vw;
+            width: 44vw;
         }
     }
-    
-    @media (width >= rem(1440)) and (height >= rem(900)) {  // 1440x900
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
         &-wrapper {
-            width: 48vw;
+            width: 55vw;
         }
     }
-    
-    @media (width >= rem(1600)) and (height >= rem(900)) {  // 1600x900
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
         &-wrapper {
-            width: 40vw;
+            width: 50vw;
         }
     }
-    
-    @media (width >= rem(1920)) and (height >= rem(1080)) {  // 1920x1080
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
         &-wrapper {
-            width: 45vw;
+            width: 53vw;
         }
     }
-    
-    @media (width >= rem(2560)) and (height >= rem(1440)) {  // 2560x1440
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
         &-wrapper {
-            width: 45vw;
+            width: 53vw;
         }
     }
-    
-    @media (width >= rem(3840)) and (height >= rem(2160)) {  // 3840x2160 (4K)
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
         &-wrapper {
-            width: 45vw;
+            width: 53vw;
         }
     }
-  
+
+    &.waiting-screen-visible & {
+        @media (width >= rem(1280)) and (height >= rem(720)) {
+            // 1280x720
+            &-wrapper {
+                width: 40vw;
+            }
+        }
+
+        @media (width >= rem(1440)) and (height >= rem(900)) {
+            // 1440x900
+            &-wrapper {
+                width: 48vw;
+            }
+        }
+
+        @media (width >= rem(1600)) and (height >= rem(900)) {
+            // 1600x900
+            &-wrapper {
+                width: 40vw;
+            }
+        }
+
+        @media (width >= rem(1920)) and (height >= rem(1080)) {
+            // 1920x1080
+            &-wrapper {
+                width: 45vw;
+            }
+        }
+
+        @media (width >= rem(2560)) and (height >= rem(1440)) {
+            // 2560x1440
+            &-wrapper {
+                width: 45vw;
+            }
+        }
+
+        @media (width >= rem(3840)) and (height >= rem(2160)) {
+            // 3840x2160 (4K)
+            &-wrapper {
+                width: 45vw;
+            }
+        }
+    }
 }
 
 .screen {
@@ -1495,11 +1547,11 @@ body.not-logged-in {
             background-image: url('../../static/frames/Screen_4.png');
             background-repeat: no-repeat;
             background-size: contain;
-            
+
             width: 100%;
             aspect-ratio: 4/3;
             margin-top: auto;
-        }  
+        }
 
         &_support {
             position: absolute;
@@ -1526,7 +1578,6 @@ body.not-logged-in {
             width: 100%;
             height: 100%;
         }
-      
     }
 
     &-center {
@@ -1542,7 +1593,7 @@ body.not-logged-in {
 
             width: 100%;
             aspect-ratio: 3/4;
-        }  
+        }
 
         &_support {
             position: absolute;
@@ -1569,7 +1620,6 @@ body.not-logged-in {
             width: 100%;
             height: 100%;
         }
-       
     }
 
     &-right {
@@ -1579,7 +1629,7 @@ body.not-logged-in {
         padding: rem(4);
         display: flex;
         flex-flow: column nowrap;
-        
+
         &_frame {
             background-image: url('../../static/frames/Screen_2.png');
             background-repeat: no-repeat;
@@ -1589,7 +1639,7 @@ body.not-logged-in {
             aspect-ratio: 9/16;
             margin-top: auto;
             margin-bottom: rem(32);
-        }  
+        }
 
         &_support {
             position: absolute;
@@ -1616,7 +1666,6 @@ body.not-logged-in {
             width: 100%;
             height: 100%;
         }
-        
     }
 
     &-bottom {
@@ -1633,8 +1682,8 @@ body.not-logged-in {
             width: 100%;
             aspect-ratio: 16/9;
             margin-top: auto;
-        }  
-        
+        }
+
         &_support {
             position: absolute;
             aspect-ratio: 361/875;
@@ -1660,7 +1709,6 @@ body.not-logged-in {
             width: 100%;
             height: 100%;
         }
-
 
         #video-container {
             position: absolute;
