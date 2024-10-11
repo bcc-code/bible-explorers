@@ -53,8 +53,8 @@ export default class Experience {
         }
 
         this.interface = {
-            mainScreen: document.querySelector('#main-screen_content'),
-            helperScreen: document.querySelector('#helper-screen_content'),
+            mainScreen: document.querySelector('.screen-bottom_content'),
+            helperScreen: document.querySelector('.screen-right_content'),
             closedCaption: document.querySelector('#closed-caption'),
             gameContainer: document.querySelector('#games-wrapper'),
             tasksDescription: document.querySelector('#tasks-description'),

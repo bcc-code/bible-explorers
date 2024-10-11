@@ -222,14 +222,6 @@ h3 {
     &:not(.vjs-fullscreen) .skip-video {
         display: none;
     }
-
-    .button-arrow {
-        opacity: 0.4;
-
-        &:hover {
-            opacity: 1;
-        }
-    }
 }
 
 // #endregion VideoAPI
@@ -516,6 +508,19 @@ body.not-logged-in {
 
     &:disabled {
         filter: grayscale(1);
+    }
+
+    &:has(span) {
+        filter: grayscale(1);
+        opacity: 0.4;
+        transition:
+            background 0.3s ease,
+            filter 0.3s ease;
+
+        &:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
     }
 
     @media (width >= rem(1280)) {
@@ -1401,15 +1406,316 @@ body.not-logged-in {
     pointer-events: none;
 }
 
-.games {
+.screens {
     &-wrapper {
+        position: absolute;
+        top: rem(80);
+        width: 55vw;
+        left: 0;
+        right: 0;
+        margin-inline: auto;
+        transition: width .3s ease;
+
+        display: flex;
+    }
+
+    &-grid {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 65% 35%;
+    }
+
+    &-left {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &-right {
+        display: flex;
+    }
+
+    &-camera {
+        aspect-ratio: 224/849;
+        background-image: url('../../static/frames/Camera.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        position: absolute;
+        width: 20%;
+        bottom: 25%;
+        left: -30%;
+    }
+
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
+        &-wrapper {
+            width: 44vw;
+        }
+    }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+        &-wrapper {
+            width: 55vw;
+        }
+    }
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
+        &-wrapper {
+            width: 50vw;
+        }
+    }
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
+        &-wrapper {
+            width: 53vw;
+        }
+    }
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
+        &-wrapper {
+            width: 53vw;
+        }
+    }
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
+        &-wrapper {
+            width: 53vw;
+        }
+    }
+
+    &.waiting-screen-visible & {
+        @media (width >= rem(1280)) and (height >= rem(720)) {
+            // 1280x720
+            &-wrapper {
+                width: 40vw;
+            }
+        }
+
+        @media (width >= rem(1440)) and (height >= rem(900)) {
+            // 1440x900
+            &-wrapper {
+                width: 48vw;
+            }
+        }
+
+        @media (width >= rem(1600)) and (height >= rem(900)) {
+            // 1600x900
+            &-wrapper {
+                width: 40vw;
+            }
+        }
+
+        @media (width >= rem(1920)) and (height >= rem(1080)) {
+            // 1920x1080
+            &-wrapper {
+                width: 45vw;
+            }
+        }
+
+        @media (width >= rem(2560)) and (height >= rem(1440)) {
+            // 2560x1440
+            &-wrapper {
+                width: 45vw;
+            }
+        }
+
+        @media (width >= rem(3840)) and (height >= rem(2160)) {
+            // 3840x2160 (4K)
+            &-wrapper {
+                width: 45vw;
+            }
+        }
     }
 }
 
-#screens-wrapper {
-    height: 60vh;
-    aspect-ratio: 6/4;
-    padding-top: 40px;
+.screen {
+    &-left {
+        position: relative;
+        isolation: isolate;
+        width: 55%;
+        padding: rem(4);
+        display: flex;
+        flex-flow: column nowrap;
+
+        &_frame {
+            background-image: url('../../static/frames/Screen_4.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            width: 100%;
+            aspect-ratio: 4/3;
+            margin-top: auto;
+        }
+
+        &_support {
+            position: absolute;
+            aspect-ratio: 383/840;
+            background-image: url('../../static/frames/Handle_1.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: -1;
+
+            width: 50%;
+            left: 5%;
+            bottom: 62%;
+        }
+
+        &_content {
+            position: relative;
+            background-image: url('../../static/textures/Blueprint_BibleBox_00000.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            mask-image: url('../../static/frames/Screen_4_mask.png');
+            mask-repeat: no-repeat;
+            mask-size: contain;
+
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &-center {
+        position: relative;
+        isolation: isolate;
+        width: 45%;
+        padding: rem(4);
+
+        &_frame {
+            background-image: url('../../static/frames/Screen_3.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            width: 100%;
+            aspect-ratio: 3/4;
+        }
+
+        &_support {
+            position: absolute;
+            aspect-ratio: 380/761;
+            background-image: url('../../static/frames/Handle_3.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: -1;
+
+            width: 60%;
+            bottom: 98%;
+            right: 25%;
+        }
+
+        &_content {
+            position: relative;
+            background-image: url('../../static/textures/Default_Screen3_00000.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            mask-image: url('../../static/frames/Screen_3_mask.png');
+            mask-repeat: no-repeat;
+            mask-size: contain;
+
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &-right {
+        position: relative;
+        isolation: isolate;
+        width: 100%;
+        padding: rem(4);
+        display: flex;
+        flex-flow: column nowrap;
+
+        &_frame {
+            background-image: url('../../static/frames/Screen_2.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            width: 100%;
+            aspect-ratio: 9/16;
+            margin-top: auto;
+            margin-bottom: rem(32);
+        }
+
+        &_support {
+            position: absolute;
+            aspect-ratio: 273/998;
+            background-image: url('../../static/frames/Handle_4.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: -1;
+
+            width: 40%;
+            bottom: 83%;
+            right: 35%;
+        }
+
+        &_content {
+            position: relative;
+            background-image: url('../../static/textures/Default_Screen4_00001.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            mask-image: url('../../static/frames/Screen_2_mask.png');
+            mask-repeat: no-repeat;
+            mask-size: contain;
+
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &-bottom {
+        position: relative;
+        isolation: isolate;
+        width: 100%;
+        padding: rem(4);
+
+        &_frame {
+            background-image: url('../../static/frames/Screen_1.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            width: 100%;
+            aspect-ratio: 16/9;
+            margin-top: auto;
+        }
+
+        &_support {
+            position: absolute;
+            aspect-ratio: 361/875;
+            background-image: url('../../static/frames/Handle_2.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: -1;
+
+            width: 50%;
+            bottom: 60%;
+            right: -10%;
+        }
+
+        &_content {
+            position: relative;
+            background-image: url('../../static/textures/MT_IRIS_BG.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            mask-image: url('../../static/frames/Screen_1_mask.png');
+            mask-repeat: no-repeat;
+            mask-size: contain;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        #video-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+    }
 }
 
 #names-label {
@@ -1748,37 +2054,6 @@ body.not-logged-in {
 
 // #endregion Views
 
-// #region Masks
-.mask-image {
-    mask-repeat: no-repeat;
-    mask-size: contain;
-}
-
-#top-left-screen .mask-image {
-    mask-image: url('../../static/frames/Screen_4_mask.png');
-}
-
-#top-mid-screen .mask-image {
-    mask-image: url('../../static/frames/Screen_3_mask.png');
-}
-
-#helper-screen .mask-image {
-    mask-image: url('../../static/frames/Screen_2_mask.png');
-}
-
-#main-screen .mask-image {
-    mask-image: url('../../static/frames/Screen_1_mask.png');
-    overflow: hidden;
-}
-
-.task-container_box .overlay {
-    mask-image: url('../../static/frames/Quiz_window_alpha.png');
-    mask-repeat: no-repeat;
-    mask-size: contain;
-}
-
-// #endregion Masks
-
 // #region Chapter
 .chapter {
     margin-bottom: 1.5rem;
@@ -1910,18 +2185,20 @@ body.not-logged-in {
     &__downloaded,
     &__outdated {
         display: none;
-        align-items: center;
 
         svg {
-            margin-right: 1%;
+            width: rem(16);
+            height: rem(16);
+            margin-right: rem(8);
+            margin-top: rem(6);
         }
     }
 
     &__offline {
         display: none;
         position: absolute;
-        right: 1.25rem;
-        bottom: 1.25rem;
+        right: rem(20);
+        bottom: rem(20);
         z-index: 1;
     }
 
