@@ -78,7 +78,14 @@ $button-icon-size-desktop: rem(16);
 }
 
 // Media queries for larger screens (e.g., desktop)
-@media (width >= rem(1280)) {
+@media (width >= rem(1280)) and (height >= rem(720)) {
+    // 1280x720
+  
+}
+
+@media (width >= rem(1440)) and (height >= rem(900)) {
+    // 1440x900
+
     :root {
         --font-size-h1: #{$h1-size-desktop};
         --font-size-h2: #{$h2-size-desktop};
@@ -90,6 +97,27 @@ $button-icon-size-desktop: rem(16);
         --button-size: #{$button-size-desktop};
         --button-icon-size: #{$button-icon-size-desktop};
     }
+
+}
+
+@media (width >= rem(1600)) and (height >= rem(900)) {
+    // 1600x900
+ 
+}
+
+@media (width >= rem(1920)) and (height >= rem(1080)) {
+    // 1920x1080
+    
+}
+
+@media (width >= rem(2560)) and (height >= rem(1440)) {
+    // 2560x1440
+ 
+}
+
+@media (width >= rem(3840)) and (height >= rem(2160)) {
+    // 3840x2160 (4K)
+  
 }
 
 // #region General
@@ -384,7 +412,7 @@ body.not-logged-in {
         height: 100%;
         padding: rem(7);
         gap: rem(8);
-        line-height: 1;
+        line-height: rem(16);
     }
 
     &:disabled {
@@ -433,7 +461,6 @@ body.not-logged-in {
         --corner-size: 8px;
 
         .content {
-            padding: rem(8);
         }
     }
 }
@@ -895,6 +922,35 @@ body.not-logged-in {
             background-image: url('../../static/GUI/lobby/chapter-hover_02.png');
         }
     }
+
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
+      
+    }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+      
+    }
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
+    }
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
+      
+    }
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
+     
+    }
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
+       
+    }
 }
 
 .childrenNames {
@@ -984,7 +1040,8 @@ body.not-logged-in {
 }
 
 #childrenNames {
-    width: 600px;
+    width: 100%;
+    height: 100%;
 
     > .content {
         padding-inline: 15%;
@@ -992,11 +1049,11 @@ body.not-logged-in {
 
     .input-grid {
         width: 100%;
-        height: 48px;
+        height: rem(48);
     }
 
     .button-grid {
-        height: 48px;
+        height: rem(48);
         flex-shrink: 0;
     }
 
@@ -1018,6 +1075,36 @@ body.not-logged-in {
     ::placeholder,
     ::input-placeholder {
         color: #fff;
+    }
+
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
+    
+    }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+    
+    }
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
+     
+    }
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
+        
+    }
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
+     
+    }
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
+      
     }
 }
 
@@ -1106,37 +1193,37 @@ body.not-logged-in {
         height: 100%;
     }
 
-    @media (width >= rem(1280)) {
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
         --corner-size: 32px;
+    
     }
 }
 
 #closed-caption {
-    position: fixed;
-    bottom: rem(32);
+    position: absolute;
     left: 0;
     right: 0;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    width: 640px;
-    height: 144px;
+    top: 75%;
+    margin-inline: auto;
+    width: rem(640);
+    height: rem(144);
     z-index: 10;
 
     #iris-cc {
         width: 100%;
-        margin-top: 8px;
+        margin-top: rem(8);
     }
 
     .cc-container {
-        height: 100%;
         width: 100%;
+        height: 100%;
     }
 
     .cc-text {
         display: block;
         text-align: center;
-        max-height: 56px;
+        max-height: rem(56);
         font-size: var(--font-size-h4);
     }
 
@@ -1148,17 +1235,58 @@ body.not-logged-in {
         color: var(--clr-primary);
         font-size: var(--font-size-h6);
         font-style: italic;
-        margin-top: 0.5rem;
+        margin-top: rem(8);
     }
 
-    @media (width >= rem(1280)) {
-        height: 160px;
-        width: 800px;
-        bottom: rem(48);
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
 
         .cc-text {
-            max-height: 72px;
+            max-height: rem(72);
         }
+    
+    }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+    
+    }
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
+     
+    }
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
+        
+    }
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
+     
+    }
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
+      
+    }
+}
+
+#chapter-navigation {
+    button {
+        position: absolute;
+        top: 50%;
+    }
+
+    #next-step {
+        left: 100%;
+        transform: translateY(-50%) translate(3rem);
+    }
+
+    #prev-step {
+        right: 100%;
+        transform: translateY(-50%) translateX(-3rem) scaleX(-1);
     }
 }
 
@@ -1340,13 +1468,13 @@ body.not-logged-in {
 .task {
     &-container {
         width: 80vw;
-        margin: 10vh auto auto;
+        margin: 5% auto auto;
         pointer-events: all;
     }
 
     &-content {
         height: 55vh;
-        padding-block: 56px;
+        padding-block: rem(56);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1354,13 +1482,13 @@ body.not-logged-in {
 
     &-heading {
         position: absolute;
-        top: -76px;
+        top: - rem(70);
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
 
         > .content {
-            padding-inline: 40px;
+            padding-inline: rem(40);
         }
     }
 
@@ -1380,7 +1508,7 @@ body.not-logged-in {
 
     &-actions {
         position: absolute;
-        bottom: -16px;
+        bottom: - rem(16);
         left: 0;
         right: 0;
         display: flex;
@@ -1392,11 +1520,40 @@ body.not-logged-in {
     }
 
     .game-tutorial {
-        max-height: 480px;
-        margin-block: 2rem;
+        max-height: rem(480);
+        margin-block: rem(32);
     }
 
-    @media (width >= 768px) {
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
+       
+    }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+        &-heading {
+            top: - rem(76);
+        }
+    }
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
+     
+    }
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
+        
+    }
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
+     
+    }
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
+      
     }
 }
 
@@ -1414,7 +1571,7 @@ body.not-logged-in {
         left: 0;
         right: 0;
         margin-inline: auto;
-        transition: width .3s ease;
+        transition: width 0.3s ease;
 
         display: flex;
     }
@@ -1725,22 +1882,6 @@ body.not-logged-in {
     }
 }
 
-#chapter-navigation {
-    button {
-        position: absolute;
-        top: 50%;
-    }
-
-    #next-step {
-        left: 100%;
-        transform: translateY(-50%) translate(3rem);
-    }
-
-    #prev-step {
-        right: 100%;
-        transform: translateY(-50%) translateX(-3rem) scaleX(-1);
-    }
-}
 
 .loader {
     border: 16px solid #f3f3f3;
@@ -2061,9 +2202,9 @@ body.not-logged-in {
     &-image {
         position: absolute;
         width: 56%;
-        right: -32px;
-        bottom: -32px;
-        top: -16px;
+        right: - rem(32);
+        bottom: - rem(32);
+        top: - rem(16);
 
         img {
             width: 100%;
@@ -2302,30 +2443,71 @@ body.not-logged-in {
             display: none;
         }
     }
+
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
+    }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+    }
+
+    @media (width >= rem(1600)) and (height >= rem(900)) {
+        // 1600x900
+    }
+
+    @media (width >= rem(1920)) and (height >= rem(1080)) {
+        // 1920x1080
+    }
+
+    @media (width >= rem(2560)) and (height >= rem(1440)) {
+        // 2560x1440
+    }
+
+    @media (width >= rem(3840)) and (height >= rem(2160)) {
+        // 3840x2160 (4K)
+    }
 }
 
 .chapters {
     &-container {
         position: absolute;
-        top: 5rem;
-        bottom: 5rem;
+        top: rem(80);
+        bottom: rem(80);
         width: 100%;
-        padding-inline: 1rem;
+        padding-inline: rem(16);
         display: flex;
         justify-content: center;
-        gap: 2rem;
+        gap: rem(16);
     }
 
     &-list {
         width: 50%;
         height: 100%;
         overflow-y: auto;
+        padding-right: rem(8);
     }
 
     &-description {
         width: 50%;
         position: relative;
     }
+
+    @media (width >= rem(1440)) and (height >= rem(900)) {
+        // 1440x900
+
+        &-container {
+            max-width: rem(1280);
+            top: 5%;
+            left: 0;
+            right: 0;
+            margin-inline: auto;
+            gap: rem(32);
+        }
+       
+    }
+
+  
 }
 
 .coming-soon {
@@ -4558,13 +4740,3 @@ img.lazyloaded ~ div.img-loader {
 }
 
 // #endregion Tasks
-
-@media (width >= rem(1280)) {
-    .chapters-container {
-        max-width: rem(1440);
-        top: 10vh;
-        left: 0;
-        right: 0;
-        margin-inline: auto;
-    }
-}
