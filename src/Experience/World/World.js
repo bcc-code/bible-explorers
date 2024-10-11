@@ -197,7 +197,7 @@ export default class World {
     setChapterHtml(chapter) {
         let chapterHtml = _gl.elementFromHtml(
             `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
-                <a href="javascript:void(0)" class="chapter-box">
+                <a href="javascript:void(0)" class="chapter-box relative">
                     <div class="chapter-card">
                         <div class="corner top-left"></div>
                         <div class="edge top"></div>
@@ -404,7 +404,6 @@ export default class World {
             animation: 'shift-away',
             placement: 'auto',
         })
-
     }
 
     removeDescriptionHtml() {
@@ -456,7 +455,7 @@ export default class World {
         if (instance.buttons.startChapter) {
             instance.buttons.startChapter.disabled = true
             instance.buttons.startChapter.tippy?.destroy()
-            instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
+            instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter, {
                 theme: 'explorers',
                 content: _s.offline.downloadToContinue,
                 maxWidth: 230,
