@@ -16,7 +16,7 @@ const config = {
     win: {
         target: 'nsis',
         signingHashAlgorithms: ['sha256'],
-        sign: './custom-sign.cjs',
+        sign: './custom-sign.js',
         publisherName: 'BCC MEDIA STI',
         legalTrademarks: '(C) 2024 BCC MEDIA STI',
     },

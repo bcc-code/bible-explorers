@@ -3,7 +3,6 @@
   "version": "2.1.4",
   "description": "App for Bible Explorers",
   "main": ".vite/build/main.js",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/bcc-code/bible-explorers.git"
@@ -15,8 +14,8 @@
     "preview": "vite preview",
     "dev:electron": "electron-vite dev --watch",
     "build:electron": "electron-vite build",
-    "package": "electron-builder --config=electron_builder.cjs",
-    "publish": "electron-builder --config=electron_builder.cjs --publish always"
+    "package": "electron-builder --config=electron_builder.js",
+    "publish": "electron-builder --config=electron_builder.js --publish always"
   },
   "author": "BCC Media",
   "license": "(C) 2024 BCC Media",
