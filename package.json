@@ -34,6 +34,7 @@
     "electron-updater": "^6.1.8",
     "electron-vite": "^2.1.0",
     "gsap": "^3.11.5",
+    "howler": "^2.2.4",
     "is-electron": "^2.2.2",
     "jwt-decode": "^4.0.0",
     "konva": "^8.4.3",

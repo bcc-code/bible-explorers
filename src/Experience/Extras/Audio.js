@@ -1,5 +1,5 @@
-import * as THREE from 'three'
 import Experience from '../Experience.js'
+import { Howl, Howler } from 'howler'
 import _STATE from '../Utils/AudioStates.js'
 import _e from '../Utils/Events.js'
 import _s from '../Utils/Strings.js'
@@ -21,7 +21,7 @@ export default class Audio {
         audio.bgMusicAudios = {
             state: _STATE.UNDEFINED,
             otherAudioIsPlaying: false,
-            default: 'sounds/bg-music.mp3',
+            default: './sounds/bg-music.mp3',
             objs: {},
         }
 
@@ -44,11 +44,6 @@ export default class Audio {
     }
 
     initialize() {
-        if (!audio.listener) {
-            audio.listener = new THREE.AudioListener()
-            audio.audioLoader = new THREE.AudioLoader()
-        }
-
         audio.addEventListeners()
     }
 
@@ -58,7 +53,7 @@ export default class Audio {
         if (audio.bgMusicAudios.state == _STATE.UNDEFINED) {
             audio.loadAndPlay(soundtrack)
         } else if (audio.bgMusicAudios.state == _STATE.PLAYING) {
-            if (audio.alreadyFetched(soundtrack) && audio.bgMusicAudios.objs[soundtrack].isPlaying) return
+            if (audio.alreadyFetched(soundtrack) && audio.bgMusicAudios.objs[soundtrack].playing()) return
 
             audio.fadeOutBgMusic(() => {
                 audio.loadAndPlay(soundtrack)
@@ -80,9 +75,9 @@ export default class Audio {
         audio.bgMusic.play()
 
         const fadeInAudio = setInterval(() => {
-            audio.bgMusic.setVolume(audio.bgMusic.getVolume() + audio.bgMusicVolume() / audio.fadeSteps)
+            audio.bgMusic.volume(audio.bgMusic.volume() + audio.bgMusicVolume() / audio.fadeSteps)
 
-            if (audio.bgMusic.getVolume() > audio.bgMusicVolume()) {
+            if (audio.bgMusic.volume() > audio.bgMusicVolume()) {
                 clearInterval(fadeInAudio)
                 audio.enableToggleBtn()
             }
@@ -93,12 +88,12 @@ export default class Audio {
         if (!audio.bgMusic) return
 
         const fadeOutAudio = setInterval(() => {
-            audio.bgMusic.setVolume(audio.bgMusic.getVolume() - audio.bgMusicVolume() / audio.fadeSteps)
+            audio.bgMusic.volume(audio.bgMusic.volume() - audio.bgMusicVolume() / audio.fadeSteps)
 
-            if (audio.bgMusic.getVolume() < audio.bgMusicVolume() / audio.fadeSteps) {
+            if (audio.bgMusic.volume() < audio.bgMusicVolume() / audio.fadeSteps) {
                 clearInterval(fadeOutAudio)
                 audio.enableToggleBtn()
-                audio.bgMusic.setVolume(0)
+                audio.bgMusic.volume(0)
                 audio.bgMusic.pause()
                 callback()
             }
@@ -107,16 +102,17 @@ export default class Audio {
 
     togglePlayTaskDescription(url) {
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
-            audio.audioLoader.load(url, function (buffer) {
-                audio.taskDescriptionAudios[url] = new THREE.Audio(audio.listener)
-                audio.taskDescriptionAudios[url].onEnded = () => {
+            audio.taskDescriptionAudios[url] = new Howl({
+                src: [url],
+                onload: function () {
+                    audio.playTaskDescription(url)
+                },
+                onend: function () {
                     document.dispatchEvent(_e.EVENTS.AUDIO_TASK_DESCRIPTION_ENDED)
                     audio.stopTaskDescription(url)
-                }
-                audio.taskDescriptionAudios[url].setBuffer(buffer)
-                audio.playTaskDescription(url)
+                },
             })
-        } else if (audio.taskDescriptionAudios[url].isPlaying) {
+        } else if (audio.taskDescriptionAudios[url].playing()) {
             audio.stopTaskDescription(url)
         } else {
             audio.playTaskDescription(url)
@@ -129,18 +125,17 @@ export default class Audio {
     }
 
     playSound(sound) {
-        return // disable temporary
-
         if (!audio.experience.settings.soundOn) return
 
         if (!audio[sound]) {
-            audio.audioLoader.load('sounds/' + sound + '.mp3', function (buffer) {
-                audio[sound] = new THREE.Audio(audio.listener)
-                audio[sound].setBuffer(buffer)
-                audio[sound].setVolume(0.25)
-                audio[sound].play()
+            audio[sound] = new Howl({
+                src: ['sounds/' + sound + '.mp3'],
+                volume: 0.25,
+                onload: function () {
+                    audio.playSound(sound)
+                },
             })
-        } else if (audio[sound].isPlaying) {
+        } else if (audio[sound].playing()) {
             audio[sound].stop()
             audio[sound].play()
         } else {
@@ -151,20 +146,19 @@ export default class Audio {
     stopSound(sound) {
         if (!audio.experience.settings.soundOn) return
         if (!audio[sound]) return
-        if (!audio[sound].isPlaying) return
+        if (!audio[sound].playing()) return
 
         audio[sound].stop()
     }
 
     loadMelodyNotes(notes) {
-        return // disable temporary
-
         notes.forEach((note) => {
             if (!audio.notes[note]) {
-                audio.audioLoader.load('sounds/notes/' + note + '.mp3', function (buffer) {
-                    audio.notes[note] = new THREE.Audio(audio.listener)
-                    audio.notes[note].setBuffer(buffer)
-                    audio.notes[note].onEnded = () => document.dispatchEvent(_e.EVENTS.NOTE_PLAYED)
+                audio.notes[note] = new Howl({
+                    src: ['sounds/notes/' + note + '.mp3'],
+                    onend: function () {
+                        document.dispatchEvent(_e.EVENTS.NOTE_PLAYED)
+                    },
                 })
             }
         })
@@ -173,7 +167,7 @@ export default class Audio {
     playNote(note) {
         if (!audio.notes[note]) return
 
-        if (audio.notes[note].isPlaying) {
+        if (audio.notes[note].playing()) {
             audio.notes[note].stop()
             audio.notes[note].play()
         } else {
@@ -182,26 +176,26 @@ export default class Audio {
     }
 
     loadBgMusic(soundtrack = audio.bgMusicAudios.default, callback = () => {}) {
-        return // disable temporary
-
         if (!audio.alreadyFetched(soundtrack)) {
             audio.disableToggleBtn()
 
             audio.bgMusicAudios.state = _STATE.PLAYING
-            audio.bgMusicAudios.objs[soundtrack] = new THREE.Audio(audio.listener)
-            audio.bgMusicAudios.objs[soundtrack].setLoop(true)
-            audio.bgMusicAudios.objs[soundtrack].setVolume(0)
-            audio.bgMusicAudios.objs[soundtrack].pause()
+            audio.bgMusicAudios.objs[soundtrack] = new Howl({
+                src: [soundtrack],
+                volume: 0,
+                loop: true,
+                onload: function () {
+                    audio.enableToggleBtn()
 
-            audio.audioLoader.load(soundtrack, function (buffer) {
-                audio.bgMusicAudios.objs[soundtrack].setBuffer(buffer)
-                audio.enableToggleBtn()
+                    // Another bg music has started in the meantime (while loading this audio) so simply return
+                    if (audio.bgMusic && audio.bgMusic.playing()) return
 
-                // Another bg music has started in the meantime (while loading this audio) so simply return
-                if (audio.bgMusic && audio.bgMusic.isPlaying) return
-
-                audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
-                callback()
+                    audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
+                    callback()
+                },
+                onend: function () {
+                    document.dispatchEvent(_e.EVENTS.NOTE_PLAYED)
+                },
             })
         } else {
             audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
@@ -274,15 +268,15 @@ export default class Audio {
     }
 
     loadPianoTiles() {
-        return // disable temporary
-
         if (!audio.pianoTiles) {
-            audio.audioLoader.load('games/piano-tiles/BIEX_Vignett_m_tverrflute.mp3', function (buffer) {
-                audio.pianoTiles = new THREE.Audio(audio.listener)
-                audio.pianoTiles.setBuffer(buffer)
-
-                document.dispatchEvent(_e.EVENTS.SONG_LOADED)
-                audio.pianoTiles.onEnded = () => document.dispatchEvent(_e.EVENTS.SONG_ENDED)
+            audio.pianoTiles = new Howl({
+                src: ['games/piano-tiles/BIEX_Vignett_m_tverrflute.mp3'],
+                onload: function () {
+                    document.dispatchEvent(_e.EVENTS.SONG_LOADED)
+                },
+                onend: function () {
+                    document.dispatchEvent(_e.EVENTS.SONG_ENDED)
+                },
             })
         } else {
             document.dispatchEvent(_e.EVENTS.SONG_LOADED)
