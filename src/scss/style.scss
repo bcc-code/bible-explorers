@@ -88,7 +88,6 @@ $button-icon-size-desktop: rem(16);
 // Media queries for larger screens (e.g., desktop)
 @media (width >= rem(1280)) and (height >= rem(720)) {
     // 1280x720
-  
 }
 
 @media (width >= rem(1440)) and (height >= rem(900)) {
@@ -105,27 +104,22 @@ $button-icon-size-desktop: rem(16);
         --button-size: #{$button-size-desktop};
         --button-icon-size: #{$button-icon-size-desktop};
     }
-
 }
 
 @media (width >= rem(1600)) and (height >= rem(900)) {
     // 1600x900
- 
 }
 
 @media (width >= rem(1920)) and (height >= rem(1080)) {
     // 1920x1080
-    
 }
 
 @media (width >= rem(2560)) and (height >= rem(1440)) {
     // 2560x1440
- 
 }
 
 @media (width >= rem(3840)) and (height >= rem(2160)) {
     // 3840x2160 (4K)
-  
 }
 
 // #region General
@@ -933,12 +927,10 @@ body.not-logged-in {
 
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
-      
     }
 
     @media (width >= rem(1440)) and (height >= rem(900)) {
         // 1440x900
-      
     }
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
@@ -947,17 +939,14 @@ body.not-logged-in {
 
     @media (width >= rem(1920)) and (height >= rem(1080)) {
         // 1920x1080
-      
     }
 
     @media (width >= rem(2560)) and (height >= rem(1440)) {
         // 2560x1440
-     
     }
 
     @media (width >= rem(3840)) and (height >= rem(2160)) {
         // 3840x2160 (4K)
-       
     }
 }
 
@@ -1087,32 +1076,26 @@ body.not-logged-in {
 
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
-    
     }
 
     @media (width >= rem(1440)) and (height >= rem(900)) {
         // 1440x900
-    
     }
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
         // 1600x900
-     
     }
 
     @media (width >= rem(1920)) and (height >= rem(1080)) {
         // 1920x1080
-        
     }
 
     @media (width >= rem(2560)) and (height >= rem(1440)) {
         // 2560x1440
-     
     }
 
     @media (width >= rem(3840)) and (height >= rem(2160)) {
         // 3840x2160 (4K)
-      
     }
 }
 
@@ -1204,7 +1187,6 @@ body.not-logged-in {
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
         --corner-size: 32px;
-    
     }
 }
 
@@ -1261,23 +1243,19 @@ body.not-logged-in {
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
         // 1600x900
-     
     }
 
     @media (width >= rem(1920)) and (height >= rem(1080)) {
         // 1920x1080
         top: 82%;
-        
     }
 
     @media (width >= rem(2560)) and (height >= rem(1440)) {
         // 2560x1440
-     
     }
 
     @media (width >= rem(3840)) and (height >= rem(2160)) {
         // 3840x2160 (4K)
-      
     }
 
     &.waiting-screen-visible {
@@ -1305,7 +1283,8 @@ body.not-logged-in {
     }
 }
 
-.task-container {
+.task-container,
+.modal-container {
     --corner-size: 40px;
 
     display: grid;
@@ -1541,7 +1520,6 @@ body.not-logged-in {
 
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
-       
     }
 
     @media (width >= rem(1440)) and (height >= rem(900)) {
@@ -1553,22 +1531,18 @@ body.not-logged-in {
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
         // 1600x900
-     
     }
 
     @media (width >= rem(1920)) and (height >= rem(1080)) {
         // 1920x1080
-        
     }
 
     @media (width >= rem(2560)) and (height >= rem(1440)) {
         // 2560x1440
-     
     }
 
     @media (width >= rem(3840)) and (height >= rem(2160)) {
         // 3840x2160 (4K)
-      
     }
 }
 
@@ -2100,48 +2074,22 @@ body.not-logged-in {
 
     &-container {
         position: relative;
-        width: 65vw;
-        background-image: url('../../static/frames/Quiz_window_v02.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        padding: 6%;
     }
 
     &-heading {
-        font-size: var(--font-size-h5);
-        font-weight: bold;
-        margin-bottom: 2%;
+        font-size: var(--font-size-h3);
+        margin-bottom: rem(24);
         text-align: center;
     }
 
     &-actions {
-        position: absolute;
-        inset: 0;
-        background-size: 100% 100%;
-        background-image: url('../../static/interface/Quiz_button_active_v02.png');
-        background-repeat: no-repeat;
-        pointer-events: none;
+        display: flex;
+        justify-content: center;
+    }
 
-        button {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 1.5%;
-            height: 14%;
-            width: 22%;
-            padding-inline: 1%;
-            pointer-events: auto;
-            font-size: var(--font-size-text);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4%;
-        }
-
-        &:hover {
-            background-image: url('../../static/interface/Quiz_button_action_v02.png');
-        }
+    p svg {
+        width: var(--font-size-p);
+        height: var(--font-size-p);
     }
 }
 
@@ -2172,23 +2120,6 @@ body.not-logged-in {
         li {
             list-style: circle;
             font-size: var(--font-size-text);
-        }
-    }
-
-    .button-rectangle-wide {
-        flex-flow: column;
-        background-size: 100% 100%;
-        height: auto;
-        padding: 3% 0;
-        flex: 1;
-
-        span {
-            display: block;
-        }
-
-        svg {
-            width: calc(var(--font-size-h4) * 1);
-            height: calc(var(--font-size-h4) * 1);
         }
     }
 }
@@ -2519,10 +2450,7 @@ body.not-logged-in {
             margin-inline: auto;
             gap: rem(32);
         }
-       
     }
-
-  
 }
 
 .coming-soon {
