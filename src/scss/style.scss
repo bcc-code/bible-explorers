@@ -3023,10 +3023,11 @@ $themes: (
     flex-direction: column;
 
     .task-game_content {
-        width: 100%;
-        height: 880px;
-        max-width: 550px;
+        width: calc(35vw + 6px);
+        height: calc(75vh + 7px);
         top: 20px;
+        padding-inline: 5vw;
+        padding-block: 4vh;
     }
 
     .piano-tiles_progress-bar {
@@ -3148,7 +3149,8 @@ $themes: (
             background-repeat: no-repeat;
             background-size: contain;
             background-position: 50%;
-            padding-block: 45px;
+            padding-block: 3.5vh;
+            padding-inline: 5vw;
             top: -57px;
             left: 0;
             right: 0;
@@ -3163,29 +3165,26 @@ $themes: (
         }
 
         #piano-tiles__wrapper {
-            margin-inline: 50px;
-            padding-block: 25px;
             height: 100%;
             position: relative;
-            top: 11px;
 
             &::before,
             &::after {
                 content: '';
                 background: url('../../static/games/piano-tiles/main_line_v.svg');
                 background-repeat: no-repeat;
-                width: 5.5px;
-                height: calc(100% - 114px);
+                width: 0.35vw;
+                height: calc(100% - 1.5vh);
                 position: absolute;
-                top: 60px;
+                top: 2vh;
             }
 
             &::before {
-                left: calc(4px + 33%);
+                left: calc(-1px + 33%);
             }
 
             &::after {
-                right: calc(3px + 33%);
+                right: calc(-2px + 33%);
             }
         }
 
@@ -3201,7 +3200,6 @@ $themes: (
         #piano-tiles_game-container {
             z-index: 6;
             position: relative;
-            padding-inline: 6px;
 
             .tile-box {
                 overflow: hidden;
@@ -3216,10 +3214,10 @@ $themes: (
                 }
 
                 .note {
-                    width: 74px;
-                    height: 74px;
+                    width: 4.8vw;
+                    height: 4.8vw;
                     position: absolute;
-                    top: -74px;
+                    top: -4.8vw;
                     outline: none;
                     cursor: pointer;
                     border-radius: 50%;
@@ -3280,15 +3278,34 @@ $themes: (
             }
         }
 
-        #piano-tiles_flute {
-            background: url('../../static/games/piano-tiles/flute.svg');
-            background-repeat: no-repeat;
-            width: 1050px;
-            height: 66px;
-            left: -67.5%;
+        #piano-tiles_flute,
+        #piano-tiles_played-notes {
+            width: 67vw;
+            left: -80%;
+            height: 6.4vh;
             position: absolute;
             top: 65%;
+        }
+
+        #piano-tiles_flute {
+            background: url('../../static/games/piano-tiles/flute_clean.svg');
+            background-repeat: no-repeat;
             z-index: 1;
+            display: flex;
+            padding-left: calc(80% + 10%);
+
+            .flute-notes__wrapper {
+                display: flex;
+                gap: 11.7%;
+                width: 100%;
+            }
+
+            .flute-note {
+                background: url('../../static/games/piano-tiles/flute_button.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 7.5%;
+            }
 
             svg {
                 width: 100%;
@@ -3297,12 +3314,6 @@ $themes: (
         }
 
         #piano-tiles_played-notes {
-            width: 1050px;
-            height: 66px;
-            left: -67.5%;
-            position: absolute;
-            top: 65%;
-
             .note-icon {
                 position: absolute;
                 top: 0;
@@ -3338,8 +3349,7 @@ $themes: (
             grid-template-columns: 1fr 1fr 1fr;
             place-items: center center;
             position: absolute;
-            bottom: 57px;
-            padding-inline: 8px;
+            bottom: 0px;
 
             .play-box {
                 width: 80px;
@@ -3369,13 +3379,12 @@ $themes: (
         }
 
         #piano-tiles_safe-area {
-            height: 210px;
+            height: 18vh;
             position: absolute;
             bottom: 0;
             background-color: rgb(255 255 255 / 5%);
             top: 57%;
-            width: calc(100% - 15px);
-            margin-inline: 8px;
+            width: 100%;
         }
     }
 
@@ -3444,7 +3453,7 @@ $themes: (
 
     &.show-score {
         .piano-tiles_progress-bar {
-            top: -80px;
+            top: -70px;
         }
 
         .result-box {

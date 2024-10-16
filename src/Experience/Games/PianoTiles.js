@@ -192,26 +192,13 @@ export default class PianoTiles {
 
                         <div id="piano-tiles_labels"></div>
                         <div id="piano-tiles_flute">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1068 67.17">
-                                <defs>
-                                    <linearGradient id="a" x1="13.67" x2="1060.37" y1="34.09" y2="34.09" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0" stop-color="#331833"/>
-                                        <stop offset="1" stop-color="#331833"/>
-                                    </linearGradient>
-                                    <linearGradient id="b" x1="11.17" x2="1062.87" y1="34.09" y2="34.09" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0" stop-color="#f47b4d"/>
-                                        <stop offset="1" stop-color="#fbbb4b"/>
-                                    </linearGradient>
-                                    <linearGradient xlink:href="#b" id="l" x1="366.02" x2="418.63" y1="33.59" y2="33.59"/>
-                                    <linearGradient xlink:href="#b" id="q" x1="507.69" x2="560.31" y1="33.59" y2="33.59"/>
-                                    <linearGradient xlink:href="#b" id="s" x1="655.07" x2="707.69" y1="33.59" y2="33.59"/>
-                                </defs>
-                                <g stroke-miterlimit="10" stroke-width="5">
-                                    <circle id="note-circle-1" cx="392.33" cy="33.59" r="23.81" fill="url(#k)" stroke="url(#l)"/>
-                                    <circle id="note-circle-2" cx="534" cy="33.59" r="23.81" fill="url(#p)" stroke="url(#q)"/>
-                                    <circle id="note-circle-3" cx="681.38" cy="33.59" r="23.81" fill="url(#r)" stroke="url(#s)"/>
-                                </g>
-                            </svg>
+                            <div class="flute-notes__wrapper">
+                                <div id="note-circle-1" class="flute-note"></div>
+                                <div id="note-circle-2" class="flute-note"></div>
+                                <div id="note-circle-3" class="flute-note"></div>
+                                <div class="flute-note"></div>
+                                <div class="flute-note"></div>
+                            </div>
                         </div>
                         <div id="piano-tiles_played-notes"></div>
                         <div id="piano-tiles_safe-area"></div>
