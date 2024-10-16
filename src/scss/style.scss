@@ -1662,45 +1662,40 @@ body.not-logged-in {
     }
 
     &.waiting-screen-visible & {
-        @media (width >= rem(1280)) and (height >= rem(720)) {
+        &-wrapper {
             // 1280x720
-            &-wrapper {
+            @media (width >= rem(1280)) and (height >= rem(720)) {
                 width: 40vw;
             }
-        }
 
-        @media (width >= rem(1440)) and (height >= rem(900)) {
             // 1440x900
-            &-wrapper {
+            @media (width >= rem(1440)) and (height >= rem(900)) {
                 width: 48vw;
             }
-        }
 
-        @media (width >= rem(1600)) and (height >= rem(900)) {
             // 1600x900
-            &-wrapper {
+            @media (width >= rem(1600)) and (height >= rem(900)) {
                 width: 40vw;
             }
-        }
 
-        @media (width >= rem(1920)) and (height >= rem(1080)) {
             // 1920x1080
-            &-wrapper {
+            @media (width >= rem(1920)) and (height >= rem(1080)) {
                 width: 45vw;
             }
-        }
 
-        @media (width >= rem(2560)) and (height >= rem(1440)) {
             // 2560x1440
-            &-wrapper {
+            @media (width >= rem(2560)) and (height >= rem(1440)) {
                 width: 45vw;
             }
-        }
 
-        @media (width >= rem(3840)) and (height >= rem(2160)) {
             // 3840x2160 (4K)
-            &-wrapper {
+            @media (width >= rem(3840)) and (height >= rem(2160)) {
                 width: 45vw;
+            }
+
+            // Ultra-wide 
+            @media (min-aspect-ratio: 2.16) {
+                max-width: 90vh;
             }
         }
     }
