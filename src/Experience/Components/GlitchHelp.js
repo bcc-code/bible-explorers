@@ -29,7 +29,7 @@ export default class GlitchHelp {
 
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="task-container" id="task-container">
+            `<div class="task-container glitch-help-task" id="task-container">
                 <div class="corner top-left"></div>
                 <div class="edge top"></div>
                 <div class="corner top-right"></div>
@@ -49,7 +49,7 @@ export default class GlitchHelp {
                             <div class="edge bottom"></div>
                             <div class="corner bottom-right"></div>
                         </h5>
-                        ${instance.data.description ? `<p class="task-prompts whitespace-pre-wrap">${instance.data.description}</p>` : ''}
+                        ${instance.data.description ? `<p class="task-prompts text-center whitespace-pre-wrap">${instance.data.description}</p>` : ''}
                         ${
                             instance.data.confirmation_button !== ''
                                 ? `

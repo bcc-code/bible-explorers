@@ -3461,6 +3461,11 @@ $themes: (
     }
 }
 
+.glitch-help-task .task-prompts {
+    font-size: var(--font-size-h3);
+    line-height: 2rem;
+}
+
 .glitch-help {
     pointer-events: all;
 }
