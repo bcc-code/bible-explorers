@@ -93,18 +93,18 @@
     "round": "Ronde",
     "simonSays": {
       "failed": {
-        "message": "Je hebt de verkeerde noot van de melodie afgespeeld.",
-        "title": "Oeps!"
+        "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
       }
     },
     "skip": "Overslaan",
     "startGame": "Start spel",
     "timeElapsed": {
-      "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is.",
-      "title": "Oeps!"
+      "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
     },
     "tryAgain": "Probeer opnieuw!",
-    "winRound": "Goed gedaan!"
+    "winRound": "Goed gedaan!",
+    "oops": "Oeps!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
   "offline": {

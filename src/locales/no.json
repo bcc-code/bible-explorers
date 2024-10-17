@@ -168,7 +168,8 @@
     "correctAnswers": "riktige svar",
     "playAudio": "Afspil lyd",
     "winRound": "Bra jobba!",
-    "oops": "Oops!"
+    "oops": "Oops!",
+    "minefield": "Minefield"
   },
   "chapter": {
     "infoSingular": {
