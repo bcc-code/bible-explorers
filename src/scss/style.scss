@@ -3023,10 +3023,11 @@ $themes: (
     flex-direction: column;
 
     .task-game_content {
-        width: calc(35vw + 6px);
-        height: calc(75vh + 7px);
+        height: 80vh;
+        width: auto;
+        aspect-ratio: 3/5;
         top: 20px;
-        padding-inline: 5vw;
+        padding-inline: 4.25vh;
         padding-block: 4vh;
     }
 
@@ -3173,8 +3174,9 @@ $themes: (
                 content: '';
                 background: url('../../static/games/piano-tiles/main_line_v.svg');
                 background-repeat: no-repeat;
-                width: 0.35vw;
+                width: auto;
                 height: calc(100% - 1.5vh);
+                aspect-ratio: 1 / 150;
                 position: absolute;
                 top: 2vh;
             }
@@ -3214,13 +3216,14 @@ $themes: (
                 }
 
                 .note {
-                    width: 4.8vw;
-                    height: 4.8vw;
+                    width: 6.85vh;
+                    height: 6.85vh;
                     position: absolute;
-                    top: -4.8vw;
+                    top: -6.85vh;
                     outline: none;
                     cursor: pointer;
                     border-radius: 50%;
+                    background-repeat: no-repeat;
 
                     &[data-tone='0'] {
                         background-image: url('../../static/games/piano-tiles/note_1_1.svg');
@@ -3280,11 +3283,14 @@ $themes: (
 
         #piano-tiles_flute,
         #piano-tiles_played-notes {
-            width: 67vw;
-            left: -80%;
-            height: 6.4vh;
-            position: absolute;
+            height: 6.86vh;
+            width: auto;
+            aspect-ratio: 300 / 19;
+            position: fixed;
             top: 65%;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
         }
 
         #piano-tiles_flute {
@@ -3292,13 +3298,13 @@ $themes: (
             background-repeat: no-repeat;
             z-index: 1;
             display: flex;
-            padding-left: 80%;
 
             .flute-notes__wrapper {
                 display: flex;
                 width: 100%;
-                margin-block: 7px;
-                margin-right: 9.5%;
+                margin-block: 10px;
+                margin-left: 31.5%;
+                margin-right: 7%;
             }
 
             svg {
