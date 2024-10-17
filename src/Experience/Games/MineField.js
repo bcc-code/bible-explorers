@@ -51,7 +51,7 @@ export default class MineField {
                     <div class="corner top-right"></div>
                     <div class="edge left"></div>
                     <div class="content">
-                        <h5 class="game-title">Minefield</h5>
+                        <h5 class="game-title">${_s.miniGames.minefield}</h5>
                         <div class="minefield__content">
                             <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
                             <div class="finish-line">
