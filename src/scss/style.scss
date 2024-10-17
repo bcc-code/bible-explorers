@@ -3292,19 +3292,13 @@ $themes: (
             background-repeat: no-repeat;
             z-index: 1;
             display: flex;
-            padding-left: calc(80% + 10%);
+            padding-left: 80%;
 
             .flute-notes__wrapper {
                 display: flex;
-                gap: 11.7%;
                 width: 100%;
-            }
-
-            .flute-note {
-                background: url('../../static/games/piano-tiles/flute_button.svg');
-                background-repeat: no-repeat;
-                background-position: center;
-                width: 7.5%;
+                margin-block: 7px;
+                margin-right: 9.5%;
             }
 
             svg {
