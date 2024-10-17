@@ -93,18 +93,18 @@
     "round": "Runda",
     "simonSays": {
       "failed": {
-        "message": "Wybrałeś złą nutę",
-        "title": "Ups!"
+        "message": "Wybrałeś złą nutę"
       }
     },
     "skip": "Pomiń",
     "startGame": "Rozpocznij grę",
     "timeElapsed": {
-      "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas.",
-      "title": "Ups!"
+      "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
     },
     "tryAgain": "Spróbujcie jeszcze raz!",
-    "winRound": "Dobra robota!"
+    "winRound": "Dobra robota!",
+    "oops": "Ups!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Żaden rozdział nie jest dostępny w wybranym języku",
   "offline": {

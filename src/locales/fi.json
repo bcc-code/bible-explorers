@@ -93,18 +93,18 @@
     "round": "Kierros",
     "simonSays": {
       "failed": {
-        "message": "Olet soittanut väärän nuotin melodiasta!",
-        "title": "Hups!"
+        "message": "Olet soittanut väärän nuotin melodiasta!"
       }
     },
     "skip": "Ohita",
     "startGame": "Aloita peli",
     "timeElapsed": {
-      "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu.",
-      "title": "Hups!"
+      "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
     },
     "tryAgain": "Yritä uudestaan!",
-    "winRound": "Hyvää työtä!"
+    "winRound": "Hyvää työtä!",
+    "oops": "Hups!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Valitsemallasi kielellä ei ole tarjolla yhtään jaksoa",
   "offline": {

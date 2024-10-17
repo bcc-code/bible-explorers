@@ -93,18 +93,18 @@
     "round": "Tur",
     "simonSays": {
       "failed": {
-        "message": "Melodinin yanlış notasını çaldınız!",
-        "title": "Hata!"
+        "message": "Melodinin yanlış notasını çaldınız!"
       }
     },
     "skip": "Atla",
     "startGame": "Oyunu başlatın",
     "timeElapsed": {
-      "message": "Zaman doldu; Süre dolmadan tüm kabloları takmaya çalışın.",
-      "title": "Hata!"
+      "message": "Zaman doldu; Süre dolmadan tüm kabloları takmaya çalışın."
     },
     "tryAgain": "Tekrar dene.",
-    "winRound": "İyi işti!"
+    "winRound": "İyi işti!",
+    "oops": "Hata!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Seçilen dilde mevcut bölüm yok",
   "offline": {

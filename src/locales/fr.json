@@ -93,18 +93,18 @@
     "round": "Tour",
     "simonSays": {
       "failed": {
-        "message": "Tu as joué la mauvaise note de la mélodie !",
-        "title": "Oups!"
+        "message": "Tu as joué la mauvaise note de la mélodie !"
       }
     },
     "skip": "Sauter",
     "startGame": "Commencer le jeu",
     "timeElapsed": {
-      "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti.",
-      "title": "Oups!"
+      "message": "Le temps est écoulé ; essaie de relier tous les câbles avant la fin du temps imparti."
     },
     "tryAgain": "Try again",
-    "winRound": "Bravo !"
+    "winRound": "Bravo !",
+    "oops": "Oups!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Aucun chapitre disponible dans la langue sélectionnée",
   "offline": {

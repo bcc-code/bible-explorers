@@ -93,18 +93,18 @@
     "round": "Round",
     "simonSays": {
       "failed": {
-        "message": "Hai suonato la nota sbagliata della melodia!",
-        "title": "Ops!"
+        "message": "Hai suonato la nota sbagliata della melodia!"
       }
     },
     "skip": "Salta",
     "startGame": "Inizia il gioco",
     "timeElapsed": {
-      "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca.",
-      "title": "Ops!"
+      "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
     },
     "tryAgain": "Riprova!",
-    "winRound": "Ben fatto!"
+    "winRound": "Ben fatto!",
+    "oops": "Ops!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Nessun capitolo disponibile nella lingua selezionata",
   "offline": {

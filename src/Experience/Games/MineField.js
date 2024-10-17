@@ -51,7 +51,7 @@ export default class MineField {
                     <div class="corner top-right"></div>
                     <div class="edge left"></div>
                     <div class="content">
-                        <h5 class="game-title">Minefield</h5>
+                        <h5 class="game-title">${_s.miniGames.minefield}</h5>
                         <div class="minefield__content">
                             <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
                             <div class="finish-line">
@@ -193,9 +193,12 @@ export default class MineField {
             if (!answer.answer_image) return
 
             instance.offline.fetchChapterAsset(answer, 'answer_image', (data) => {
-                const answer_image = document.querySelector(
-                    '.quiz__answers img:nth-child(' + (index + 1) + ')'
-                )
+                const answerAssetSelector =
+                    question.type === 'image'
+                        ? '.quiz__answers img:nth-child(' + (index + 1) + ')'
+                        : '.quiz__answers div:nth-child(' + (index + 1) + ') img'
+
+                const answer_image = document.querySelector(answerAssetSelector)
                 if (answer_image) answer_image.src = data.answer_image
             })
         })
