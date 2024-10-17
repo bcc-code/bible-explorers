@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Another round",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "You have successfully completed the task!",
       "string": "completed",
@@ -85,7 +88,9 @@
       "tryAgain": "Press any key to try again"
     },
     "level": "Level",
+    "minefield": "Minefield",
     "nextRound": "Next round",
+    "oops": "Oops!",
     "playAgain": "Play again",
     "playAudio": "Play audio",
     "reset": "Start over",
