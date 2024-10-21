@@ -210,22 +210,10 @@ h3 {
         width: 380px;
     }
 
-    #restart-button {
-        height: auto;
-        width: 100%;
-        line-height: 1;
-        background-image: url('../../static/interface/B_cube_wide_action2.svg');
-        aspect-ratio: 377/80;
-
-        &:hover {
-            background-image: url('../../static/interface/B_cube_wide_active2.svg');
-        }
-    }
-
     #close-button {
         position: absolute;
-        left: calc(100% - var(--button-height) / 2 - 1rem);
-        top: calc(var(--button-height) / 2 * -1 + 1rem);
+        left: calc(100% - var(--button-size) / 2 - 1rem);
+        top: calc(var(--button-size) / 2 * -1 + 1rem);
     }
 }
 
