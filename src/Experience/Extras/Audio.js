@@ -106,6 +106,7 @@ export default class Audio {
         if (!audio.taskDescriptionAudios.hasOwnProperty(url)) {
             audio.taskDescriptionAudios[url] = new Howl({
                 src: [url],
+                format: 'mp3',
                 onload: function () {
                     audio.playTaskDescription(url)
                 },
@@ -130,6 +131,7 @@ export default class Audio {
         if (!audio[sound]) {
             audio[sound] = new Howl({
                 src: ['sounds/' + sound + '.mp3'],
+                format: 'mp3',
                 volume: 0.25,
                 onload: function () {
                     audio.playSound(sound)
@@ -156,6 +158,7 @@ export default class Audio {
             if (!audio.notes[note]) {
                 audio.notes[note] = new Howl({
                     src: ['sounds/notes/' + note + '.mp3'],
+                    format: 'mp3',
                     onend: function () {
                         document.dispatchEvent(_e.EVENTS.NOTE_PLAYED)
                     },
@@ -183,6 +186,7 @@ export default class Audio {
 
             audio.bgMusicAudios.objs[soundtrack] = new Howl({
                 src: [soundtrack],
+                format: 'mp3',
                 volume: 0,
                 loop: true,
                 onload: function () {
@@ -279,6 +283,7 @@ export default class Audio {
 
             audio.pianoTiles = new Howl({
                 src: ['games/piano-tiles/BIEX_Vignett_m_tverrflute.mp3'],
+                format: 'mp3',
                 onload: function () {
                     document.dispatchEvent(_e.EVENTS.SONG_LOADED)
                 },
