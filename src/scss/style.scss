@@ -1306,7 +1306,6 @@ body.not-logged-in {
     .cc-text {
         display: block;
         text-align: center;
-        max-height: rem(56);
         font-size: var(--font-size-h4);
     }
 
@@ -1324,20 +1323,13 @@ body.not-logged-in {
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
         width: rem(720);
-
-        .cc-text {
-            max-height: rem(72);
-        }
     }
 
     @media (width >= rem(1440)) and (height >= rem(900)) {
         // 1440x900
 
         width: rem(800);
-
-        .cc-text {
-            max-height: rem(86);
-        }
+   
     }
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
