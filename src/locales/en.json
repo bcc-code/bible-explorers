@@ -88,6 +88,7 @@
       "tryAgain": "Press any key to try again"
     },
     "level": "Level",
+    "minefield": "Minefield",
     "nextRound": "Next round",
     "playAgain": "Play again",
     "playAudio": "Play audio",

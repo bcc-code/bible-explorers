@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Runde wiederholen",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Du hast die Aufgabe geschafft!",
       "string": "abgeschlossen",
@@ -104,7 +107,9 @@
       "title": "Uuups!"
     },
     "tryAgain": "Versuche es noch einmal!",
-    "winRound": "Gut gemacht! "
+    "winRound": "Gut gemacht!",
+    "oops": "Oops!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Kein Kapitel in der gewählten Sprache verfügbar",
   "offline": {

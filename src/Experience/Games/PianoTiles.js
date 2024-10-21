@@ -6,7 +6,7 @@ import gsap from 'gsap'
 
 let instance = null
 
-const MS_BEFORE_FIRST_NOTE = 4560 // Time before the song starts (milliseconds)
+const MS_BEFORE_FIRST_NOTE = 3750 // Time before the song starts (milliseconds)
 const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
 const BPM = 122 // Beats per minute
 const BEATS_PER_BAR = 4 // Beats in a musical measure
@@ -28,6 +28,7 @@ export default class PianoTiles {
         this.score = 0
         this.notesIndex = 0
         this.playableNotes = []
+        this.toneSemaphore = ['green', 'green', 'green'] // 3 possible play tones
 
         this.notes = [
             {
@@ -92,7 +93,7 @@ export default class PianoTiles {
             },
             {
                 tone: 2,
-                length: 7,
+                length: 7.25,
             },
             {
                 tone: 0,
@@ -123,6 +124,8 @@ export default class PianoTiles {
         this.getCurrentTone = () => this.notes[this.notesIndex]?.tone
         this.getCurrentLength = () => this.notes[this.notesIndex]?.length
 
+        instance.gameHTML()
+
         document.addEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
         document.addEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
@@ -131,7 +134,6 @@ export default class PianoTiles {
     }
 
     songLoaded() {
-        instance.gameHTML()
         instance.startRound()
 
         instance.audio.setOtherAudioIsPlaying(true)
@@ -192,26 +194,13 @@ export default class PianoTiles {
 
                         <div id="piano-tiles_labels"></div>
                         <div id="piano-tiles_flute">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1068 67.17">
-                                <defs>
-                                    <linearGradient id="a" x1="13.67" x2="1060.37" y1="34.09" y2="34.09" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0" stop-color="#331833"/>
-                                        <stop offset="1" stop-color="#331833"/>
-                                    </linearGradient>
-                                    <linearGradient id="b" x1="11.17" x2="1062.87" y1="34.09" y2="34.09" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0" stop-color="#f47b4d"/>
-                                        <stop offset="1" stop-color="#fbbb4b"/>
-                                    </linearGradient>
-                                    <linearGradient xlink:href="#b" id="l" x1="366.02" x2="418.63" y1="33.59" y2="33.59"/>
-                                    <linearGradient xlink:href="#b" id="q" x1="507.69" x2="560.31" y1="33.59" y2="33.59"/>
-                                    <linearGradient xlink:href="#b" id="s" x1="655.07" x2="707.69" y1="33.59" y2="33.59"/>
-                                </defs>
-                                <g stroke-miterlimit="10" stroke-width="5">
-                                    <circle id="note-circle-1" cx="392.33" cy="33.59" r="23.81" fill="url(#k)" stroke="url(#l)"/>
-                                    <circle id="note-circle-2" cx="534" cy="33.59" r="23.81" fill="url(#p)" stroke="url(#q)"/>
-                                    <circle id="note-circle-3" cx="681.38" cy="33.59" r="23.81" fill="url(#r)" stroke="url(#s)"/>
-                                </g>
-                            </svg>
+                            <div class="flute-notes__wrapper">
+                                ${instance.getNoteCircle(1)}
+                                ${instance.getNoteCircle(2)}
+                                ${instance.getNoteCircle(3)}
+                                ${instance.getNoteCircle(4)}
+                                ${instance.getNoteCircle(5)}
+                            </div>
                         </div>
                         <div id="piano-tiles_played-notes"></div>
                         <div id="piano-tiles_safe-area"></div>
@@ -263,6 +252,11 @@ export default class PianoTiles {
             const safeAreaRect = instance.safeArea.getBoundingClientRect()
             const clickableTones = document.querySelectorAll('.note')
 
+            if (!instance.playableNotes.length) {
+                instance.lightUpCircle(playedNote + 1, '#D53500')
+                return
+            }
+
             instance.playableNotes.forEach((note) => {
                 const clickableTone = Array.from(clickableTones).find(
                     (tone) => tone.getAttribute('data-index') == note.index
@@ -270,9 +264,14 @@ export default class PianoTiles {
                 if (!clickableTone || note.played) return
 
                 const noteRect = clickableTone.getBoundingClientRect()
-                if (noteRect.bottom < safeAreaRect.top || noteRect.top > safeAreaRect.bottom) return
-
-                if (playedNote == note.tone) {
+                if (
+                    noteRect.bottom < safeAreaRect.top ||
+                    noteRect.top > safeAreaRect.bottom ||
+                    playedNote != note.tone
+                ) {
+                    // Wrong note played
+                    instance.lightUpCircle(playedNote + 1, '#D53500')
+                } else {
                     clickableTone.onkeydown = null
                     note.played = true
 
@@ -315,12 +314,44 @@ export default class PianoTiles {
 
                     // Trigger the animation for the notes with GSAP
                     this.animateNoteIcon(noteIcon)
-                } else {
-                    // Wrong note played
-                    instance.lightUpCircle(playedNote + 1, '#D53500')
                 }
             })
         }
+    }
+
+    getNoteCircle(index = 1) {
+        return `<svg id="note-circle-${index}" class="flute-note" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.62 52.62">
+            <defs>
+                <style>
+                    .cls-1 {
+                        fill: url(#linear-gradient-3);
+                        stroke: url(#linear-gradient-4);
+                    }
+                    .cls-1, .cls-2 {
+                        stroke-miterlimit: 10;
+                        stroke-width: 5px;
+                    }
+                    .cls-2 {
+                        fill: url(#linear-gradient);
+                        stroke: url(#linear-gradient-2);
+                    }
+                </style>
+                <linearGradient id="linear-gradient" x1="2.5" y1="26.31" x2="50.12" y2="26.31" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#331833"/>
+                    <stop offset="1" stop-color="#331833"/>
+                </linearGradient>
+                <linearGradient id="linear-gradient-2" x1="0" y1="26.31" x2="52.62" y2="26.31" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#f47b4d"/>
+                    <stop offset="1" stop-color="#fbbb4b"/>
+                </linearGradient>
+                <linearGradient id="linear-gradient-3" x1="11.94" y1="26.31" x2="40.68" y2="26.31" xlink:href="#linear-gradient"/>
+                <linearGradient id="linear-gradient-4" x1="9.44" y1="26.31" x2="43.18" y2="26.31" xlink:href="#linear-gradient-2"/>
+            </defs>
+            <g id="Layer_1-2" data-name="Layer_1">
+                <circle class="cls-2" cx="26.31" cy="26.31" r="23.81"/>
+                <circle class="cls-1" cx="26.31" cy="26.31" r="14.37"/>
+            </g>
+        </svg>`
     }
 
     startRound() {
@@ -336,14 +367,14 @@ export default class PianoTiles {
         document.getElementById('tile-box3').innerHTML = ''
         instance.playedNotes.innerHTML = ''
 
-        setTimeout(() => {
-            instance.audio.pianoTiles.play()
-        }, 1000)
+        instance.audio.pianoTiles.play()
 
         instance.addNoteTimeout = setTimeout(instance.addNote, MS_BEFORE_FIRST_NOTE - BPM * 2)
     }
 
     addNote() {
+        if (!instance.game) return
+
         var note = document.createElement('div')
         note.classList.add('note')
         note.setAttribute('data-tone', instance.getCurrentTone())
@@ -499,17 +530,37 @@ export default class PianoTiles {
     }
 
     lightUpCircle(noteNumber, color = '#FFD700') {
-        const circle = document.getElementById(`note-circle-${noteNumber}`)
+        if (instance.toneSemaphore[noteNumber] == 'red') return
 
-        gsap.to(circle, {
+        instance.toneSemaphore[noteNumber] = 'red'
+
+        const note = document.getElementById(`note-circle-${noteNumber}`)
+        const circles = document.getElementById(`note-circle-${noteNumber}`).querySelectorAll('circle')
+
+        gsap.to(note, {
             duration: 0.15,
-            fill: color,
             scale: 1.2,
             transformOrigin: '50% 50%',
             repeat: 1,
             yoyo: true,
             ease: 'power1.inOut',
+            onComplete() {
+                instance.toneSemaphore[noteNumber] = 'green'
+            },
         })
+
+        gsap.timeline({
+            defaults: {
+                stroke: color,
+                duration: 0.15,
+                repeat: 1,
+                yoyo: true,
+                ease: 'power1.out',
+                onComplete() {
+                    instance.toneSemaphore[noteNumber] = 'green'
+                },
+            },
+        }).to(circles, {})
     }
 
     animatePlayBox(playBox) {
@@ -555,5 +606,7 @@ export default class PianoTiles {
         document.removeEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
         document.removeEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.game = null
     }
 }

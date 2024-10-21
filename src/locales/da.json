@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "En runde mere",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "You have completed the task! You can continue your journey",
       "string": "afsluttet",
@@ -93,18 +96,18 @@
     "round": "Runde",
     "simonSays": {
       "failed": {
-        "message": "Du har spillet den forkerte tone i melodien",
-        "title": "Oops!"
+        "message": "Du har spillet den forkerte tone i melodien"
       }
     },
     "skip": "Skip",
     "startGame": "Start spillet",
     "timeElapsed": {
-      "message": "Time is up; try to attach all the wires before time is up.",
-      "title": "Oops!"
+      "message": "Time is up; try to attach all the wires before time is up."
     },
     "tryAgain": "Prøv igjen",
-    "winRound": "Godt gået!"
+    "winRound": "Godt gået!",
+    "oops": "Oops!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Intet tilgængeligt kapitel i det valgte sprog",
   "offline": {

@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Încă o rundă",
+    "bibleVerseCode": {
+      "checkCode": "Verifică dacă codul este corect"
+    },
     "completed": {
       "message": "Ai terminat sarcina cu succes!",
       "string": "finalizată",
@@ -93,18 +96,18 @@
     "round": "Runda",
     "simonSays": {
       "failed": {
-        "message": "Ai cântat o notă greșită în melodie!",
-        "title": "Ups!"
+        "message": "Ai cântat o notă greșită în melodie!"
       }
     },
     "skip": "Sări peste",
     "startGame": "Începe jocul",
     "timeElapsed": {
-      "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire.",
-      "title": "Ups!"
+      "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
     },
     "tryAgain": "Încearcă din nou",
-    "winRound": "Bună treabă!"
+    "winRound": "Bună treabă!",
+    "oops": "Ups!",
+    "minefield": "Traseu minat"
   },
   "notAvailable": "Nici un capitol disponibil în limba selectată",
   "offline": {

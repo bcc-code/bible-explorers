@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Новый раунд",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Вы выполнили задание!",
       "string": "завершен",
@@ -93,18 +96,18 @@
     "round": "Раунд",
     "simonSays": {
       "failed": {
-        "message": "Вы сыграли не ту ноту в мелодии!",
-        "title": "Ой!"
+        "message": "Вы сыграли не ту ноту в мелодии!"
       }
     },
     "skip": "Пропустить",
     "startGame": "Начать игру",
     "timeElapsed": {
-      "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет.",
-      "title": "Ой!"
+      "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
     },
     "tryAgain": "Попробуй еще раз",
-    "winRound": "Отличная работа!"
+    "winRound": "Отличная работа!",
+    "oops": "Ой!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Ни одна глава недоступна на выбранном языке",
   "offline": {

@@ -39,6 +39,18 @@ export default class ProgressBar {
         })
     }
 
+    freezeProgressBar() {
+        instance.el.checkpoints.forEach((checkpoint) => {
+            checkpoint.disabled = true
+        })
+    }
+
+    releaseProgressBar() {
+        instance.el.checkpoints.forEach((checkpoint) => {
+            checkpoint.disabled = false
+        })
+    }
+
     setEventListeners() {
         instance.el.checkpoints.forEach((checkpoint) => {
             checkpoint.addEventListener('click', instance.handleCheckpointClick)
@@ -50,6 +62,12 @@ export default class ProgressBar {
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.refresh)
         document.addEventListener(_e.ACTIONS.GO_HOME, instance.removeEventListeners)
+
+        document.addEventListener(_e.ACTIONS.CHAPTER_STARTED, instance.freezeProgressBar)
+        document.addEventListener(_e.ACTIONS.LOADING_SONG, instance.freezeProgressBar)
+
+        document.addEventListener(_e.ACTIONS.BG_MUSIC_LOADED, instance.releaseProgressBar)
+        document.addEventListener(_e.ACTIONS.SONG_LOADED, instance.releaseProgressBar)
     }
 
     removeEventListeners() {

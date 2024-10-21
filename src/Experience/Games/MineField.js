@@ -51,7 +51,7 @@ export default class MineField {
                     <div class="corner top-right"></div>
                     <div class="edge left"></div>
                     <div class="content">
-                        <h5 class="game-title">Minefield</h5>
+                        <h5 class="game-title">${_s.miniGames.minefield}</h5>
                         <div class="minefield__content">
                             <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
                             <div class="finish-line">
@@ -97,7 +97,7 @@ export default class MineField {
     setHTMLForQuestion(index) {
         const question = instance.data[index]
         const questionContent =
-            question.type === 'text'
+            question.type === 'text' || question.type === 'text_image'
                 ? `<p>${question.question_text}</p>`
                 : `<div id="task-image"><img src="${question.question_image}" alt="Question Image" /></div>`
 
@@ -107,10 +107,13 @@ export default class MineField {
         question.answers.forEach((answer, index) => {
             const bulletIcon = `url('games/minefield/${colors[index % colors.length]}')`
 
-            answersHTML +=
-                question.type === 'text' || question.type === 'text_with_image'
-                    ? `<div class=""><div class="bg-cover" style="background-image: ${bulletIcon};"></div> <p> ${answer.answer_text}<p></div>`
-                    : `<img src="${answer.answer_image}" alt="Answer Image" />`
+            if (question.type === 'text') {
+                answersHTML += `<div><div class="bg-cover" style="background-image: ${bulletIcon};"></div> <p>${answer.answer_text}<p></div>`
+            } else if (question.type === 'image') {
+                answersHTML += `<img src="${answer.answer_image}" alt="Answer Image" />`
+            } else if (question.type === 'text_image') {
+                answersHTML += `<div><div class="bg-cover" style="background-image: ${bulletIcon};"></div><img src="${answer.answer_image}" alt="Answer Image" /></div>`
+            }
         })
 
         const questionHTML = `
@@ -190,9 +193,12 @@ export default class MineField {
             if (!answer.answer_image) return
 
             instance.offline.fetchChapterAsset(answer, 'answer_image', (data) => {
-                const answer_image = document.querySelector(
-                    '.quiz__answers img:nth-child(' + (index + 1) + ')'
-                )
+                const answerAssetSelector =
+                    question.type === 'image'
+                        ? '.quiz__answers img:nth-child(' + (index + 1) + ')'
+                        : '.quiz__answers div:nth-child(' + (index + 1) + ') img'
+
+                const answer_image = document.querySelector(answerAssetSelector)
                 if (answer_image) answer_image.src = data.answer_image
             })
         })

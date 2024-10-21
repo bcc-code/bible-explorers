@@ -1642,45 +1642,40 @@ body.not-logged-in {
     }
 
     &.waiting-screen-visible & {
-        @media (width >= rem(1280)) and (height >= rem(720)) {
+        &-wrapper {
             // 1280x720
-            &-wrapper {
+            @media (width >= rem(1280)) and (height >= rem(720)) {
                 width: 40vw;
             }
-        }
 
-        @media (width >= rem(1440)) and (height >= rem(900)) {
             // 1440x900
-            &-wrapper {
+            @media (width >= rem(1440)) and (height >= rem(900)) {
                 width: 48vw;
             }
-        }
 
-        @media (width >= rem(1600)) and (height >= rem(900)) {
             // 1600x900
-            &-wrapper {
+            @media (width >= rem(1600)) and (height >= rem(900)) {
                 width: 40vw;
             }
-        }
 
-        @media (width >= rem(1920)) and (height >= rem(1080)) {
             // 1920x1080
-            &-wrapper {
+            @media (width >= rem(1920)) and (height >= rem(1080)) {
                 width: 45vw;
             }
-        }
 
-        @media (width >= rem(2560)) and (height >= rem(1440)) {
             // 2560x1440
-            &-wrapper {
+            @media (width >= rem(2560)) and (height >= rem(1440)) {
                 width: 45vw;
             }
-        }
 
-        @media (width >= rem(3840)) and (height >= rem(2160)) {
             // 3840x2160 (4K)
-            &-wrapper {
+            @media (width >= rem(3840)) and (height >= rem(2160)) {
                 width: 45vw;
+            }
+
+            // Ultra-wide 
+            @media (min-aspect-ratio: 2.16) {
+                max-width: 90vh;
             }
         }
     }
@@ -2962,10 +2957,12 @@ $themes: (
     flex-direction: column;
 
     .task-game_content {
-        width: 100%;
-        height: 880px;
-        max-width: 550px;
+        height: 80vh;
+        width: auto;
+        aspect-ratio: 3/5;
         top: 20px;
+        padding-inline: 4.25vh;
+        padding-block: 4vh;
     }
 
     .piano-tiles_progress-bar {
@@ -3087,7 +3084,8 @@ $themes: (
             background-repeat: no-repeat;
             background-size: contain;
             background-position: 50%;
-            padding-block: 45px;
+            padding-block: 3.5vh;
+            padding-inline: 5vw;
             top: -57px;
             left: 0;
             right: 0;
@@ -3102,29 +3100,27 @@ $themes: (
         }
 
         #piano-tiles__wrapper {
-            margin-inline: 50px;
-            padding-block: 25px;
             height: 100%;
             position: relative;
-            top: 11px;
 
             &::before,
             &::after {
                 content: '';
                 background: url('../../static/games/piano-tiles/main_line_v.svg');
                 background-repeat: no-repeat;
-                width: 5.5px;
-                height: calc(100% - 114px);
+                width: auto;
+                height: calc(100% - 1.5vh);
+                aspect-ratio: 1 / 150;
                 position: absolute;
-                top: 60px;
+                top: 2vh;
             }
 
             &::before {
-                left: calc(4px + 33%);
+                left: calc(-1px + 33%);
             }
 
             &::after {
-                right: calc(3px + 33%);
+                right: calc(-2px + 33%);
             }
         }
 
@@ -3140,7 +3136,6 @@ $themes: (
         #piano-tiles_game-container {
             z-index: 6;
             position: relative;
-            padding-inline: 6px;
 
             .tile-box {
                 overflow: hidden;
@@ -3155,13 +3150,14 @@ $themes: (
                 }
 
                 .note {
-                    width: 74px;
-                    height: 74px;
+                    width: 6.85vh;
+                    height: 6.85vh;
                     position: absolute;
-                    top: -74px;
+                    top: -6.85vh;
                     outline: none;
                     cursor: pointer;
                     border-radius: 50%;
+                    background-repeat: no-repeat;
 
                     &[data-tone='0'] {
                         background-image: url('../../static/games/piano-tiles/note_1_1.svg');
@@ -3219,15 +3215,31 @@ $themes: (
             }
         }
 
-        #piano-tiles_flute {
-            background: url('../../static/games/piano-tiles/flute.svg');
-            background-repeat: no-repeat;
-            width: 1050px;
-            height: 66px;
-            left: -67.5%;
-            position: absolute;
+        #piano-tiles_flute,
+        #piano-tiles_played-notes {
+            height: 6.86vh;
+            width: auto;
+            aspect-ratio: 300 / 19;
+            position: fixed;
             top: 65%;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+
+        #piano-tiles_flute {
+            background: url('../../static/games/piano-tiles/flute_clean.svg');
+            background-repeat: no-repeat;
             z-index: 1;
+            display: flex;
+
+            .flute-notes__wrapper {
+                display: flex;
+                width: 100%;
+                margin-block: 10px;
+                margin-left: 31.5%;
+                margin-right: 7%;
+            }
 
             svg {
                 width: 100%;
@@ -3236,12 +3248,6 @@ $themes: (
         }
 
         #piano-tiles_played-notes {
-            width: 1050px;
-            height: 66px;
-            left: -67.5%;
-            position: absolute;
-            top: 65%;
-
             .note-icon {
                 position: absolute;
                 top: 0;
@@ -3277,8 +3283,7 @@ $themes: (
             grid-template-columns: 1fr 1fr 1fr;
             place-items: center center;
             position: absolute;
-            bottom: 57px;
-            padding-inline: 8px;
+            bottom: 0px;
 
             .play-box {
                 width: 80px;
@@ -3308,13 +3313,12 @@ $themes: (
         }
 
         #piano-tiles_safe-area {
-            height: 210px;
+            height: 18vh;
             position: absolute;
             bottom: 0;
             background-color: rgb(255 255 255 / 5%);
             top: 57%;
-            width: calc(100% - 15px);
-            margin-inline: 8px;
+            width: 100%;
         }
     }
 
@@ -3383,7 +3387,7 @@ $themes: (
 
     &.show-score {
         .piano-tiles_progress-bar {
-            top: -80px;
+            top: -70px;
         }
 
         .result-box {
@@ -3393,6 +3397,11 @@ $themes: (
             transform: translate(-50%, -50%) scale(1);
         }
     }
+}
+
+.glitch-help-task .task-prompts {
+    font-size: var(--font-size-h3);
+    line-height: 2rem;
 }
 
 .glitch-help {
@@ -4470,7 +4479,7 @@ img.lazyloaded ~ div.img-loader {
 
     .right {
         width: 35%;
-        height: 50vh;
+        height: 61.5vh;
     }
 
     .finish-line {
@@ -4590,7 +4599,7 @@ img.lazyloaded ~ div.img-loader {
 
         img {
             width: 96px;
-            height: 96px;
+            height: auto;
             display: inline-block;
         }
     }
