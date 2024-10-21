@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Bir tur daha",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Görevi başarıyla tamamladınız!",
       "string": "tamamlanmış",

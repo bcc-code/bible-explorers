@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Uusi kierros",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Olet suorittanut tehtävän!",
       "string": "valmis",

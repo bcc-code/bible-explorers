@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Încă o rundă",
+    "bibleVerseCode": {
+      "checkCode": "Verifică dacă codul este corect"
+    },
     "completed": {
       "message": "Ai terminat sarcina cu succes!",
       "string": "finalizată",

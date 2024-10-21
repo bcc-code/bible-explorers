@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Новый раунд",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Вы выполнили задание!",
       "string": "завершен",

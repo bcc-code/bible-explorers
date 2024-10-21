@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Another round",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Teljesítetted a feladatot! Folytathatod az utazást",
       "string": "befejezve",

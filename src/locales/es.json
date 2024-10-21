@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Una ronda mas",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Has completado tu tarea!",
       "string": "completada",

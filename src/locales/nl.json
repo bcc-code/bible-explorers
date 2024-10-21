@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Nog een ronde",
+    "bibleVerseCode": {
+      "checkCode": "Check if the code is correct"
+    },
     "completed": {
       "message": "Je hebt de opdracht voltooid!",
       "string": "voltooid",
