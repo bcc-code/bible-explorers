@@ -1462,7 +1462,9 @@ body.not-logged-in {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background: var(--gradient-dark);
+    background-image: url('../../static/textures/control-room-2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .task {
