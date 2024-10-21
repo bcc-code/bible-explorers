@@ -200,20 +200,117 @@ h3 {
 }
 
 .notification {
-    &-frame {
-        position: relative;
-        background-image: url('../../static/interface/modal.svg');
-        background-repeat: no-repeat;
-        background-size: contain;
-        aspect-ratio: 447/400;
-        padding: 2rem;
-        width: 380px;
+    position: fixed;
+    bottom: rem(24);
+    left: rem(24);
+    width: 380px;
+
+    --corner-size: 8px;
+
+    grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
+    grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
+    grid-template-areas:
+        'top-left top-center top-right'
+        'left-center center right-center'
+        'bottom-left bottom-center bottom-right';
+
+    &:not(.hidden) {
+        display: grid;
+        place-items: center center;
+    }
+
+    > div {
+        background-size: 100% 100%;
+        transition: background 0.3s ease;
+    }
+
+    .corner {
+        width: var(--corner-size);
+        height: var(--corner-size);
+
+        &.top-left {
+            background-image: url('../../static/GUI/button/button-default_01.png');
+            grid-area: top-left;
+        }
+
+        &.top-right {
+            background-image: url('../../static/GUI/button/button-default_03.png');
+            grid-area: top-right;
+        }
+
+        &.bottom-left {
+            background-image: url('../../static/GUI/button/button-default_07.png');
+            grid-area: bottom-left;
+        }
+
+        &.bottom-right {
+            background-image: url('../../static/GUI/button/button-default_09.png');
+            grid-area: bottom-right;
+        }
+    }
+
+    .edge {
+        &.top,
+        &.bottom {
+            width: 100%;
+            height: var(--corner-size);
+        }
+
+        &.left,
+        &.right {
+            height: 100%;
+            width: var(--corner-size);
+        }
+
+        &.top {
+            background-image: url('../../static/GUI/button/button-default_02.png');
+            grid-area: top-center;
+        }
+
+        &.left {
+            background-image: url('../../static/GUI/button/button-default_04.png');
+            grid-area: left-center;
+        }
+
+        &.right {
+            background-image: url('../../static/GUI/button/button-default_06.png');
+            grid-area: right-center;
+        }
+
+        &.bottom {
+            background-image: url('../../static/GUI/button/button-default_08.png');
+            grid-area: bottom-center;
+        }
+    }
+
+    .content {
+        background-image: url('../../static/GUI/button/button-default_05.png');
+        grid-area: center;
+        width: 100%;
+        height: 100%;
+        padding: rem(24);
+    }
+
+    .icon {
+        width: calc(var(--button-icon-size) * 2);
+        height: calc(var(--button-icon-size) * 2);
+    }
+
+    &-header {
+        display: flex;
+        align-items: center;
+        gap: rem(8);
+        margin-bottom: 1rem;
+    }
+
+    #restart-button {
+        margin-top: rem(16);
     }
 
     #close-button {
         position: absolute;
-        left: calc(100% - var(--button-size) / 2 - 1rem);
-        top: calc(var(--button-size) / 2 * -1 + 1rem);
+        right: - rem(8);
+        top: - rem(8);
     }
 }
 
@@ -314,14 +411,17 @@ body.not-logged-in {
 .button-grid {
     --corner-size: 6px;
 
-    display: grid;
-    place-items: center center;
     grid-template-columns: [left] var(--corner-size) [center] 1fr [right] var(--corner-size);
     grid-template-rows: [top] var(--corner-size) [center] 1fr [bottom] var(--corner-size);
     grid-template-areas:
         'top-left top-center top-right'
         'left-center center right-center'
         'bottom-left bottom-center bottom-right';
+
+    &:not(.hidden) {
+        display: grid;
+        place-items: center center;
+    }
 
     svg {
         width: var(--button-icon-size);
@@ -1663,7 +1763,7 @@ body.not-logged-in {
                 width: 45vw;
             }
 
-            // Ultra-wide 
+            // Ultra-wide
             @media (min-aspect-ratio: 2.16) {
                 max-width: 90vh;
             }

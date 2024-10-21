@@ -336,50 +336,46 @@
                 id="app-version"
                 class="absolute bottom-1 right-1 hidden text-xs opacity-30 group-data-[view='age-category']/app:block"
             ></div>
-            <div
-                id="notification"
-                class="notification pointer-events-none fixed inset-0 z-50 hidden overflow-hidden"
-            >
-                <div class="flex h-full w-full p-4">
-                    <div class="notification-frame self-end">
-                        <div class="notification-content flex h-full flex-col justify-between">
-                            <svg class="icon h-8 w-8 text-bke-orange">
-                                <use href="#circle-exclamation-solid" fill="currentColor"></use>
-                            </svg>
-                            <p id="message" class="mt-4"></p>
-                            <button
-                                id="restart-button"
-                                class="button-grid pointer-events-auto mt-4 hidden"
-                            >
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content"></div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
-                        </div>
-
-                        <button id="close-button" class="button-grid pointer-events-auto">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg class="icon">
-                                    <use href="#xmark-large-solid" fill="currentColor"></use>
-                                </svg>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
+            <div id="notification" class="notification z-50 hidden">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="notification-header">
+                        <svg class="icon text-bke-orange"><use href="#circle-exclamation-solid" fill="currentColor"></use></svg>
+                        <h3 class="notification-title"></h3>
                     </div>
+                    <p class="notification-message"></p>
+                    <button id="restart-button" class="button-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content"></div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </button>
+                    <button id="close-button" class="button-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <svg><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </button>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         </div>
 

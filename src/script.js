@@ -33,12 +33,13 @@ _appInsights.trackPageView({ name: 'Home' })
 const experience = new Experience()
 
 
-const notification = document.getElementById('notification')
-const message = document.getElementById('message')
-const closeButton = document.getElementById('close-button')
+const notification = document.querySelector('.notification')
+const message = document.querySelector('.notification-message')
+const title = document.querySelector('.notification-title')
+const closeButton = document.querySelector('#close-button')
 const restartButton = document.querySelector('#restart-button')
 
-    // New app version notification
+// New app version notification
 function showNotification() {
     gsap.fromTo(
         notification,
@@ -55,6 +56,17 @@ function showNotification() {
         }
     )
 }
+
+closeButton.addEventListener('click', () => {
+    gsap.to(notification, {
+        duration: 1,
+        x: '-100%',
+        ease: 'power3.in',
+        onComplete: () => {
+            notification.classList.add('hidden')
+        },
+    })
+})
 
 if (isElectron()) {
     document.body.classList.add('electron')
@@ -74,22 +86,10 @@ if (isElectron()) {
         showNotification()
     })
 
-    closeButton.addEventListener('click', () => {
-        gsap.to(notification, {
-            duration: 1,
-            x: '-100%',
-            ease: 'power3.in',
-            onComplete: () => {
-                notification.classList.add('hidden')
-            },
-        })
-    })
-
     restartButton.addEventListener('click', () => {
         window.electronAPI.restartApp()
     })
 } else {
-
     // Register Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -180,10 +180,29 @@ window.onload = async () => {
     await configureClient()
     await handleRedirectCallback()
 }
+
 window.addEventListener(_e.ACTIONS.ROUTE_CHANGED, async ({ detail }) => {
     window.location.search = detail.replace('/?', '')
     await configureClient()
     await handleRedirectCallback()
 })
 
+// Detecting unsupported browsers
+function isSupportedBrowser() {
+    const userAgent = navigator.userAgent;
+    return /Chrome|Safari/.test(userAgent) && !/Edge|OPR|Firefox/.test(userAgent);
+}
 
+// Detecting mobile devices (optional, if you want to show it based on devices)
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Showing notification if unsupported browser or device is detected
+if (!isSupportedBrowser() || isMobileDevice()) {
+
+    title.innerHTML = _s.notifications.webSupport.title
+    message.innerHTML =  _s.notifications.webSupport.text
+    restartButton.classList.add('hidden')
+    showNotification()
+}
