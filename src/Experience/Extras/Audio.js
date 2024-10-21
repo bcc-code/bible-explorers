@@ -72,7 +72,9 @@ export default class Audio {
         if (audio.bgMusicAudios.otherAudioIsPlaying) return
         if (audio.bgMusicAudios.state != _STATE.PLAYING) return
 
-        audio.bgMusic.play()
+        if (!audio.bgMusic.playing()) {
+            audio.bgMusic.play()
+        }
 
         const fadeInAudio = setInterval(() => {
             audio.bgMusic.volume(audio.bgMusic.volume() + audio.bgMusicVolume() / audio.fadeSteps)
@@ -107,10 +109,6 @@ export default class Audio {
                 onload: function () {
                     audio.playTaskDescription(url)
                 },
-                onend: function () {
-                    document.dispatchEvent(_e.EVENTS.AUDIO_TASK_DESCRIPTION_ENDED)
-                    audio.stopTaskDescription(url)
-                },
             })
         } else if (audio.taskDescriptionAudios[url].playing()) {
             audio.stopTaskDescription(url)
@@ -121,7 +119,9 @@ export default class Audio {
 
     stopAllTaskDescriptions() {
         // Stop other task descriptions
-        for (let url in audio.taskDescriptionAudios) audio.stopTaskDescription(url)
+        for (let url in audio.taskDescriptionAudios) {
+            audio.stopTaskDescription(url)
+        }
     }
 
     playSound(sound) {
@@ -180,6 +180,7 @@ export default class Audio {
             audio.disableToggleBtn()
 
             audio.bgMusicAudios.state = _STATE.PLAYING
+
             audio.bgMusicAudios.objs[soundtrack] = new Howl({
                 src: [soundtrack],
                 volume: 0,
@@ -192,12 +193,17 @@ export default class Audio {
 
                     audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
                     callback()
-                },
-                onend: function () {
-                    document.dispatchEvent(_e.EVENTS.NOTE_PLAYED)
+
+                    document.dispatchEvent(_e.EVENTS.BG_MUSIC_LOADED)
                 },
             })
         } else {
+            document.dispatchEvent(_e.EVENTS.BG_MUSIC_LOADED)
+
+            if (audio.bgMusic == audio.bgMusicAudios.objs[soundtrack]) {
+                return
+            }
+
             audio.bgMusic = audio.bgMusicAudios.objs[soundtrack]
             callback()
         }
@@ -269,6 +275,8 @@ export default class Audio {
 
     loadPianoTiles() {
         if (!audio.pianoTiles) {
+            document.dispatchEvent(_e.EVENTS.LOADING_SONG)
+
             audio.pianoTiles = new Howl({
                 src: ['games/piano-tiles/BIEX_Vignett_m_tverrflute.mp3'],
                 onload: function () {

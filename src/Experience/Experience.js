@@ -94,6 +94,26 @@ export default class Experience {
             window.history.replaceState({}, document.title, '/' + requiredToLogin ? '?login' : '')
             _lang.updateLanguage(redirectToLanguage)
         }
+
+        this.addEventListeners()
+    }
+
+    addEventListeners() {
+        document.addEventListener(_e.ACTIONS.CHAPTER_STARTED, instance.freezeNavigation)
+        document.addEventListener(_e.ACTIONS.LOADING_SONG, instance.freezeNavigation)
+
+        document.addEventListener(_e.ACTIONS.BG_MUSIC_LOADED, instance.releaseNavigation)
+        document.addEventListener(_e.ACTIONS.SONG_LOADED, instance.releaseNavigation)
+    }
+
+    freezeNavigation() {
+        instance.navigation.prev.disabled = true
+        instance.navigation.next.disabled = true
+    }
+
+    releaseNavigation() {
+        instance.navigation.prev.disabled = false
+        instance.navigation.next.disabled = false
     }
 
     setAppView(attr) {

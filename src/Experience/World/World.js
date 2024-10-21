@@ -922,6 +922,7 @@ export default class World {
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
+        document.dispatchEvent(_e.EVENTS.CHAPTER_STARTED)
 
         const appVersion = document.getElementById('app-version').innerText
 
