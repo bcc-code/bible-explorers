@@ -6,7 +6,7 @@ import gsap from 'gsap'
 
 let instance = null
 
-const MS_BEFORE_FIRST_NOTE = 4560 // Time before the song starts (milliseconds)
+const MS_BEFORE_FIRST_NOTE = 3750 // Time before the song starts (milliseconds)
 const TRANSITION_DURATION_MS = 2000 // Time for transitions between notes (milliseconds)
 const BPM = 122 // Beats per minute
 const BEATS_PER_BAR = 4 // Beats in a musical measure
@@ -93,7 +93,7 @@ export default class PianoTiles {
             },
             {
                 tone: 2,
-                length: 7,
+                length: 7.25,
             },
             {
                 tone: 0,
@@ -124,6 +124,8 @@ export default class PianoTiles {
         this.getCurrentTone = () => this.notes[this.notesIndex]?.tone
         this.getCurrentLength = () => this.notes[this.notesIndex]?.length
 
+        instance.gameHTML()
+
         document.addEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
         document.addEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
@@ -132,7 +134,6 @@ export default class PianoTiles {
     }
 
     songLoaded() {
-        instance.gameHTML()
         instance.startRound()
 
         instance.audio.setOtherAudioIsPlaying(true)
@@ -366,14 +367,14 @@ export default class PianoTiles {
         document.getElementById('tile-box3').innerHTML = ''
         instance.playedNotes.innerHTML = ''
 
-        setTimeout(() => {
-            instance.audio.pianoTiles.play()
-        }, 1000)
+        instance.audio.pianoTiles.play()
 
         instance.addNoteTimeout = setTimeout(instance.addNote, MS_BEFORE_FIRST_NOTE - BPM * 2)
     }
 
     addNote() {
+        if (!instance.game) return
+
         var note = document.createElement('div')
         note.classList.add('note')
         note.setAttribute('data-tone', instance.getCurrentTone())
@@ -605,5 +606,7 @@ export default class PianoTiles {
         document.removeEventListener(_e.ACTIONS.SONG_LOADED, instance.songLoaded)
         document.removeEventListener(_e.ACTIONS.SONG_ENDED, instance.songEnded)
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
+
+        instance.game = null
     }
 }
