@@ -203,7 +203,7 @@ h3 {
     position: fixed;
     bottom: rem(24);
     left: rem(24);
-    width: 380px;
+    width: 320px;
 
     --corner-size: 8px;
 
@@ -311,6 +311,11 @@ h3 {
         position: absolute;
         right: - rem(8);
         top: - rem(8);
+    }
+
+    @media (width >= rem(1280)) and (height >= rem(720)) {
+        // 1280x720
+        width: 420px;
     }
 }
 

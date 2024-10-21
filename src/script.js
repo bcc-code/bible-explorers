@@ -200,7 +200,6 @@ function isMobileDevice() {
 
 // Showing notification if unsupported browser or device is detected
 if (!isSupportedBrowser() || isMobileDevice()) {
-
     title.innerHTML = _s.notifications.webSupport.title
     message.innerHTML =  _s.notifications.webSupport.text
     restartButton.classList.add('hidden')
