@@ -97,17 +97,18 @@
     "round": "Tur",
     "simonSays": {
       "failed": {
-        "message": "Melodinin yanlış notasını çaldınız!"
+        "message": "Melodinin yanlış notasını çaldınız!",
+        "title": "Hata!"
       }
     },
     "skip": "Atla",
     "startGame": "Oyunu başlatın",
     "timeElapsed": {
-      "message": "Zaman doldu; Süre dolmadan tüm kabloları takmaya çalışın."
+      "message": "Zaman doldu; Süre dolmadan tüm kabloları takmaya çalışın.",
+      "title": "Hata!"
     },
     "tryAgain": "Tekrar dene.",
-    "winRound": "İyi işti!",
-    "oops": "Hata!"
+    "winRound": "İyi işti!"
   },
   "notAvailable": "Seçilen dilde mevcut bölüm yok",
   "offline": {
@@ -183,11 +184,5 @@
   "waitingScreen": {
     "inputPlaceholder": "Adınızı buraya girin ",
     "submit": "İsminizi ekleyin"
-  },
-  "notifications": {
-    "webSupport": {
-      "title": "Oops!",
-      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
-    }
   }
 }

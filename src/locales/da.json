@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "En runde mere",
     "bibleVerseCode": {
-      "checkCode": "Kontroller, om koden er korrekt"
+      "checkCode": "Kontroller, om koden er korrekt "
     },
     "completed": {
       "message": "You have completed the task! You can continue your journey",
@@ -98,13 +98,15 @@
     "round": "Runde",
     "simonSays": {
       "failed": {
-        "message": "Du har spillet den forkerte tone i melodien"
+        "message": "Du har spillet den forkerte tone i melodien",
+        "title": "Oops!"
       }
     },
     "skip": "Skip",
     "startGame": "Start spillet",
     "timeElapsed": {
-      "message": "Time is up; try to attach all the wires before time is up."
+      "message": "Time is up; try to attach all the wires before time is up.",
+      "title": "Oops!"
     },
     "tryAgain": "Prøv igjen",
     "winRound": "Godt gået!"
@@ -183,11 +185,5 @@
   "waitingScreen": {
     "inputPlaceholder": "Skriv dit navn her",
     "submit": "Tilføj"
-  },
-  "notifications": {
-    "webSupport": {
-      "title": "Oops!",
-      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
-    }
   }
 }
