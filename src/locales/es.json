@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Una ronda mas",
+    "bibleVerseCode": {
+      "checkCode": "Comprueba si el código es correcto "
+    },
     "completed": {
       "message": "Has completado tu tarea!",
       "string": "completada",
@@ -85,6 +88,7 @@
       "tryAgain": "Press any key to try again"
     },
     "level": "Level",
+    "minefield": "Campo de minas",
     "nextRound": "Proxima ronda",
     "playAgain": "Juega de nuevo",
     "playAudio": "Reproducir audio",
@@ -178,7 +182,7 @@
     "video": "Reproducir video"
   },
   "waitingScreen": {
-    "inputPlaceholder": "Write your name",
-    "submit": "Add"
+    "inputPlaceholder": "Escribe tu nombre aquí",
+    "submit": "Agregar"
   }
 }

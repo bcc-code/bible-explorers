@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Încă o rundă",
+    "bibleVerseCode": {
+      "checkCode": "Verifică dacă codul este corect "
+    },
     "completed": {
       "message": "Ai terminat sarcina cu succes!",
       "string": "finalizată",
@@ -85,6 +88,7 @@
       "tryAgain": "Apasă pe o tastă pentru a începe runda din nou"
     },
     "level": "Nivel",
+    "minefield": "Câmp minat ",
     "nextRound": "Runda următoare",
     "playAgain": "O nouă rundă",
     "playAudio": "Pornește audio",

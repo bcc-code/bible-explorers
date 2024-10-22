@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Another round",
+    "bibleVerseCode": {
+      "checkCode": "Controllare se il codice è corretto "
+    },
     "completed": {
       "message": "Hai completato il compito!",
       "string": "completato",
@@ -85,6 +88,7 @@
       "tryAgain": "Fare clic su un tasto per ricominciare il turno"
     },
     "level": "Level",
+    "minefield": "Campo minato ",
     "nextRound": "Next round",
     "playAgain": "Gioca di nuovo",
     "playAudio": "Riprodurre l'audio",
@@ -166,7 +170,7 @@
   "task": {
     "codeUnlock": "Inserisci il numero corretto",
     "getTask": "Vai all'attività",
-    "next": "Next",
+    "next": "Prossimo",
     "openQuestion": "Write answer here",
     "questions": "Domanda",
     "submit": "Invia",

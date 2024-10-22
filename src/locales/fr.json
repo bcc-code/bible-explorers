@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Nouveau tour",
+    "bibleVerseCode": {
+      "checkCode": "Vérifier si le code est bon "
+    },
     "completed": {
       "message": "Tu as réussi la tâche !",
       "string": "terminé",
@@ -85,6 +88,7 @@
       "tryAgain": "Press any key to try again"
     },
     "level": "Niveau",
+    "minefield": "Champ de mines ",
     "nextRound": "Tour suivant",
     "playAgain": "Rejouer",
     "playAudio": "Supprimer la version hors ligne",
@@ -178,7 +182,7 @@
     "video": "Lire la vidéo"
   },
   "waitingScreen": {
-    "inputPlaceholder": "Write your name here",
-    "submit": "Add"
+    "inputPlaceholder": "Écrivez votre nom ici",
+    "submit": "Ajouter"
   }
 }

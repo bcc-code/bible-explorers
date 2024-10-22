@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Nog een ronde",
+    "bibleVerseCode": {
+      "checkCode": "Controleer of de code juist is "
+    },
     "completed": {
       "message": "Je hebt de opdracht voltooid!",
       "string": "voltooid",
@@ -85,6 +88,7 @@
       "tryAgain": "Klik op een toets om opnieuw te beginnen"
     },
     "level": "Level",
+    "minefield": "Mijnenveld ",
     "nextRound": "Volgende ronde",
     "playAgain": "Speel opnieuw",
     "playAudio": "Speel audio af",

@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Runde wiederholen",
+    "bibleVerseCode": {
+      "checkCode": "Prüfe, ob der Code korrekt ist"
+    },
     "completed": {
       "message": "Du hast die Aufgabe geschafft!",
       "string": "abgeschlossen",
@@ -85,6 +88,7 @@
       "tryAgain": "Klicke auf eine Taste, um die Runde neu zu starten"
     },
     "level": "Level",
+    "minefield": "Minenfeld",
     "nextRound": "Nächste Runde",
     "playAgain": "Nochmal spielen",
     "playAudio": "Audio abspielen",

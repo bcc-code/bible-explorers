@@ -65,6 +65,9 @@
   },
   "miniGames": {
     "anotherRound": "Uusi kierros",
+    "bibleVerseCode": {
+      "checkCode": "Tarkistakaa onko koodi oikein "
+    },
     "completed": {
       "message": "Olet suorittanut tehtävän!",
       "string": "valmis",
@@ -85,6 +88,7 @@
       "tryAgain": "Aloita kierros uudelleen napsauttamalla näppäintä"
     },
     "level": "Taso",
+    "minefield": "Miinakenttä ",
     "nextRound": "Seuraava kierros",
     "playAgain": "Pelaa uudelleen",
     "playAudio": "Toista äänet",
