@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 518.4 867.84">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+        filter: url(#outer-glow-1);
+        stroke: url(#linear-gradient-2);
+        stroke-miterlimit: 10;
+        stroke-width: 10px;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="40.11" y1="433.99" x2="478.38" y2="433.99" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5b4576"/>
+      <stop offset="1" stop-color="#47234c"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="259.25" y1="832.79" x2="259.25" y2="35.18" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1f97ad"/>
+      <stop offset="1" stop-color="#a93c96"/>
+    </linearGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="10"/>
+      <feFlood flood-color="#a1dcee" flood-opacity=".75"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <polygon class="cls-1" points="40.11 72.66 72.89 40.18 142.9 40.18 168.52 68.43 349.43 68.43 374.12 40.18 446.4 40.18 478.38 73.73 478.38 800.96 451.4 827.79 67.89 827.79 40.11 800.96 40.11 72.66"/>
+  </g>
+</svg>

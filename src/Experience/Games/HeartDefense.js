@@ -83,7 +83,6 @@ export default class HeartDefense {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     startGame() {
@@ -629,7 +628,6 @@ export default class HeartDefense {
             })
 
             nextLevelBTN.classList.remove('focused', 'pulsate')
-            instance.experience.navigation.next.className = 'button button-arrow'
             document.querySelector('.game-rounds')?.remove()
         }
 
@@ -697,7 +695,6 @@ export default class HeartDefense {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.layer?.destroy()
         instance.experience.gameIsOn = false

@@ -97,18 +97,18 @@
     "round": "Rodada",
     "simonSays": {
       "failed": {
-        "message": "Você tocou a nota incorreta da melodia!",
-        "title": "Oops!"
+        "message": "Você tocou a nota incorreta da melodia!"
       }
     },
     "skip": "Skip",
     "startGame": "Comece o jogo",
     "timeElapsed": {
-      "message": "Time is up; try to attach all the wires before time is up.",
-      "title": "Oops!"
+      "message": "Time is up; try to attach all the wires before time is up."
     },
     "tryAgain": "Tente novamente!",
-    "winRound": "Well done!"
+    "winRound": "Well done!",
+    "oops": "Oops!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Nenhum capítulo disponível no idioma selecionado",
   "offline": {
@@ -184,5 +184,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Escreva seu nome aqui",
     "submit": "Adicionar"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

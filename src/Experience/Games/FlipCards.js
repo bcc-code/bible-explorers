@@ -58,7 +58,6 @@ export default class FlipCards {
         instance.experience.setAppView('task-description')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
     }
 
     useCorrectAssetsSrcConfirmationScreen() {
@@ -142,7 +141,6 @@ export default class FlipCards {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
     }
 
     useCorrectAssetsSrcFlipCards() {
@@ -201,7 +199,6 @@ export default class FlipCards {
                         // All cards are flipped
                         const flippedCards = document.querySelectorAll('.flipped')
                         if (flippedCards.length == instance.flipCards.cards.length) {
-                            instance.experience.navigation.next.className = 'button button-arrow'
                             instance.experience.navigation.next.innerHTML = ''
                         }
                     } else {
@@ -233,7 +230,6 @@ export default class FlipCards {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.destroyConfirmationScreen()
         instance.destroyFlipCards()

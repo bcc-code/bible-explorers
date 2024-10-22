@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 89.76 89.76">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient);
+        filter: url(#outer-glow-1);
+        stroke: url(#linear-gradient);
+        stroke-miterlimit: 10;
+        stroke-width: 7px;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="44.96" cy="44.84" fx="44.96" fy="44.84" r="22.75" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3f1c3d"/>
+      <stop offset="1" stop-color="#351834"/>
+    </radialGradient>
+    <linearGradient id="linear-gradient" x1="26.4" y1="26.27" x2="63.53" y2="63.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#479eb7"/>
+      <stop offset="1" stop-color="#b04097"/>
+    </linearGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="5"/>
+      <feFlood flood-color="#a1dcee" flood-opacity=".75"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <circle class="cls-1" cx="44.96" cy="44.84" r="22.75"/>
+  </g>
+</svg>

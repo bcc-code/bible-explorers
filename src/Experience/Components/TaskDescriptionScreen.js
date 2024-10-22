@@ -32,21 +32,49 @@ export default class TaskDescriptionScreen {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
-    useCorrectAssetsSrc() {
-        instance.offline.fetchChapterAsset(instance.data, 'td_image', (data) => {
-            document.querySelector('#task-image img').src = data.td_image
-        })
-    }
-
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 task-container" id="task-container">
-                <div class="task-container_box">
-                    <h5 class="task-container_heading">${instance.data.td_title !== '' ? instance.data.td_title : ''}</h5>
-                    ${instance.data.td_description ? `<p class="task-container_prompts">${instance.data.td_description}</p>` : ''}
-                    ${instance.data.td_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                    ${instance.data.td_button !== '' ? `<div class="task-container_actions"><button class="button button-task_action">${instance.data.td_button}</button></div>` : ''}
+            `<div class="task-container" id="task-container">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        <h5 class="task-heading">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${instance.data.td_title !== '' ? instance.data.td_title : ''}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </h5>
+                        ${instance.data.td_description ? `<p class="task-prompts">${instance.data.td_description}</p>` : ''}
+                        ${instance.data.td_image ? `<div class="task-tutorial">${instance.getDomElement(instance.data.td_image)}</div>` : ''}
+                        ${instance.data.td_button !== '' ? 
+                            `<div class="task-actions">
+                                <button class="button-grid">
+                                    <div class="corner top-left"></div>
+                                    <div class="edge top"></div>
+                                    <div class="corner top-right"></div>
+                                    <div class="edge left"></div>
+                                    <div class="content">${instance.data.td_button}</div>
+                                    <div class="edge right"></div>
+                                    <div class="corner bottom-left"></div>
+                                    <div class="edge bottom"></div>
+                                    <div class="corner bottom-right"></div>
+                                </button>
+                            </div>
+                            ` : ''}
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`
         )
 
@@ -56,7 +84,24 @@ export default class TaskDescriptionScreen {
         instance.experience.interface.tasksDescription.append(container)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
+    }
+
+    useCorrectAssetsSrc() {
+        instance.offline.fetchChapterAsset(instance.data, 'td_image', (data) => {
+            const imageElement = document.querySelector('#task-image')
+            if (imageElement) {
+                // Check if the element exists
+                imageElement.src = data.td_image
+            }
+        })
+    }
+
+    getDomElement(url) {
+        const ext = url.split('.').pop().toLowerCase()
+
+        if (['mp4', 'mov', 'webm'].includes(ext))
+            return `<video src="${url}" width="100%" height="100%" frameBorder="0" autoplay loop></video>`
+        else return `<img src="${url}" id="task-image" />`
     }
 
     destroy() {
@@ -64,6 +109,5 @@ export default class TaskDescriptionScreen {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

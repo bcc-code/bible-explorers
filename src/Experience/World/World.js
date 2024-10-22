@@ -64,7 +64,6 @@ export default class World {
             openDownloadModal: document.querySelector('#download-app'),
             home: document.querySelector('#home-button'),
             guide: document.querySelector('#guide-button'),
-            startChapter: document.querySelector('#start-chapter'),
             backToAgeCateogry: document.querySelector('#back-to-age-category'),
             contact: document.querySelector('#contact-button'),
         }
@@ -97,7 +96,6 @@ export default class World {
 
         this.buttons.home.addEventListener('click', this.goHome)
         this.buttons.backToAgeCateogry.addEventListener('click', this.showIntro)
-        this.buttons.startChapter.addEventListener('click', this.startChapter)
     }
 
     placeholderChapterData() {
@@ -136,8 +134,6 @@ export default class World {
 
         // Set chapter content/cards
         instance.setChapters()
-
-        // instance.buttons.startChapter.innerHTML = `<span>${_s.journey.start}</span>`
     }
 
     setCategories() {
@@ -160,7 +156,19 @@ export default class World {
 
     setCategoryHtml(category) {
         const categoryBtn = _gl.elementFromHtml(
-            `<li><button class="category button button-rectangle-wide uppercase" data-slug="${category.slug}">${category.name}</button></li>`
+            `<li>
+                <button class="category button-grid uppercase" data-slug="${category.slug}" role="button">  
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">${category.name}</div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </button>
+            </li>`
         )
         this.ageCategory.querySelector('ul').appendChild(categoryBtn)
     }
@@ -180,25 +188,57 @@ export default class World {
             instance.setChapterHtml(chapter)
         })
 
-        instance.buttons.startChapter.disabled = true
+        if (instance.buttons.startChapter) {
+            instance.buttons.startChapter.disabled = true
+        }
         instance.chapterEventListeners()
     }
 
     setChapterHtml(chapter) {
         let chapterHtml = _gl.elementFromHtml(
             `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
-                <a href="javascript:void(0)" class="chapter-box">
-                    <div class="chapter-mask">
-                        <h6 class="chapter-heading">${chapter.title}</h6>
-                        <p class="chapter-date">${chapter.date}</p>
+                <a href="javascript:void(0)" class="chapter-box relative">
+                    <div class="chapter-card">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <h3 class="chapter-heading">${chapter.title}</h3>
+                            <p class="chapter-date">${chapter.date}</p>
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
-                        <button class="chapter__download button button-cube group-[.downloaded]:hidden">
-                            <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                        <button class="chapter__download button-grid group-[.downloaded]:hidden" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button class="chapter__remove button button-cube !hidden">
-                            <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
+                        <button class="chapter__remove button-grid !hidden" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
                     </div>
                     <span class="chapter__loading"></span>
@@ -253,10 +293,33 @@ export default class World {
 
         const details = _gl.elementFromHtml(`
             <div class="chapter-description">
-                <div class="chapter-content relative">
-                    <h5 class="chapter-description-heading">${chapter.title}</h5>
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h2 class="chapter-description-heading">${chapter.title}</h2>
                     <div class="chapter-description-text scroller"> ${chapter.content}</div>
+                    <div class="chapter-actions">
+                        <div class="float-left">
+                            <button class="button-grid" id="start-chapter" role="button">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">${_s.journey.start}</div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`)
 
         if (chapter.other_attachments.length) {
@@ -268,11 +331,21 @@ export default class World {
                     const pageSlug = linkParts[linkParts.length - 2]
 
                     const guide = _gl.elementFromHtml(`
-                        <a class="button button-cube chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
+                        <a class="button-grid chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </a>`)
 
-                    details.prepend(guide)
+                    details.querySelector('.chapter-actions').prepend(guide)
                 }
             })
         }
@@ -323,6 +396,9 @@ export default class World {
         instance.offline.fetchChapterAsset(chapter, 'thumbnail', instance.setChapterDescriptionBgImage)
         instance.experience.interface.chaptersList.classList.add('chapter-selected')
 
+        instance.buttons.startChapter = details.querySelector('#start-chapter')
+        instance.buttons.startChapter.addEventListener('click', instance.startChapter)
+
         tippy('.chapter-guide', {
             theme: 'explorers',
             content: _s.chapter.activityDescLabel,
@@ -355,8 +431,10 @@ export default class World {
                     return
                 }
 
-                instance.buttons.startChapter.disabled = false
-                instance.buttons.startChapter.tippy?.destroy()
+                if (instance.buttons.startChapter) {
+                    instance.buttons.startChapter.disabled = false
+                    instance.buttons.startChapter.tippy?.destroy()
+                }
             })
         })
 
@@ -376,16 +454,18 @@ export default class World {
     }
 
     disableStartChapterButton() {
-        instance.buttons.startChapter.disabled = true
-        instance.buttons.startChapter.tippy?.destroy()
-        instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
-            theme: 'explorers',
-            content: _s.offline.downloadToContinue,
-            maxWidth: 230,
-            duration: [500, 200],
-            animation: 'shift-away',
-            placement: 'top',
-        })
+        if (instance.buttons.startChapter) {
+            instance.buttons.startChapter.disabled = true
+            instance.buttons.startChapter.tippy?.destroy()
+            instance.buttons.startChapter.tippy = tippy(instance.buttons.startChapter.parentElement, {
+                theme: 'explorers',
+                content: _s.offline.downloadToContinue,
+                maxWidth: 230,
+                duration: [500, 200],
+                animation: 'shift-away',
+                placement: 'top',
+            })
+        }
     }
 
     setStatesTooltips() {
@@ -416,14 +496,14 @@ export default class World {
 
     setChapterBgImage(chapter) {
         const img = _gl.elementFromHtml(`<div class="chapter-image"><img src="${chapter.thumbnail}" /></div>`)
-        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-mask`).prepend(img)
+        document.querySelector(`.chapter[data-id="${chapter.id}"] .chapter-card .content`).prepend(img)
     }
 
     setChapterDescriptionBgImage(chapter) {
         const img = _gl.elementFromHtml(
             `<div class="chapter-description-image"><img src="${chapter.thumbnail}"/></div>`
         )
-        document.querySelector('.chapter-description').prepend(img)
+        document.querySelector('.chapter-description > .content').prepend(img)
     }
 
     // Download
@@ -617,6 +697,22 @@ export default class World {
                         step.details.task_type == 'truefalse_quiz'
                 )
             )
+            instance.cacheMineFieldMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'minefield'
+                )
+            )
+            instance.cacheBibleVerseCodeMedia(
+                checkpoint.steps.filter(
+                    (step) =>
+                        step.details &&
+                        step.details.step_type == 'task' &&
+                        step.details.task_type == 'bible_verse_code'
+                )
+            )
         })
     }
 
@@ -768,6 +864,43 @@ export default class World {
         })
     }
 
+    cacheMineFieldMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            if (!step.minefield.questions?.length) return
+
+            step.minefield.questions.forEach((question) => {
+                instance.fetchAndCacheAsset(question.question_image)
+
+                if (!question.answers.length) return
+                question.answers.forEach((answer) => {
+                    instance.fetchAndCacheAsset(answer.answer_image)
+                })
+            })
+        })
+    }
+
+    cacheBibleVerseCodeMedia(steps) {
+        if (steps.length == 0) return
+        steps.forEach((step) => {
+            step.bible_verse_code.book.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+
+            step.bible_verse_code.chapter.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+
+            step.bible_verse_code.verse_from.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+
+            step.bible_verse_code.verse_to.forEach((option) => {
+                instance.fetchAndCacheAsset(option.icon)
+            })
+        })
+    }
+
     fetchAndCacheAsset(url) {
         if (!url) return
         caches.open('chaptersAssets').then((cache) => {
@@ -789,6 +922,7 @@ export default class World {
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
+        document.dispatchEvent(_e.EVENTS.CHAPTER_STARTED)
 
         const appVersion = document.getElementById('app-version').innerText
 
@@ -838,17 +972,39 @@ export default class World {
         instance.downloadModal = _gl.elementFromHtml(`
         <dialog id="download-modal" class="modal">
             <div class="modal-container">
-                <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
-                <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
-                <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
-                <p>${_s.offline.downloadApp.infoLabel}</p>
-                <ul>
-                    <li>${_s.offline.downloadApp.infoText1}</li>
-                    <li>${_s.offline.downloadApp.infoText2}</li>
-                </ul>
-                <div class="modal-actions">
-                    <button class="modal-close">${_s.offline.downloadApp.close}</button>
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
+                    <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
+                    <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
+                    <p>${_s.offline.downloadApp.infoLabel}</p>
+                    <ul>
+                        <li>${_s.offline.downloadApp.infoText1}</li>
+                        <li>${_s.offline.downloadApp.infoText2}</li>
+                    </ul>
+                    <div class="modal-actions">
+                        <button class="modal-close button-grid" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                ${_s.offline.downloadApp.close}
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         </dialog>`)
 
@@ -865,23 +1021,53 @@ export default class World {
 
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button button-rectangle-wide" href="${apiData['windows']['exe']}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
-                            <span>Windows</span>
+                        <a class="button-grid" href="${apiData['windows']['exe']}" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
+                                <span>Windows</span>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </a>`)
                 )
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button button-rectangle-wide" href="${apiData['mac']['x64']}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
-                            <div>Intel-based Mac</div>
+                        <a class="button-grid" href="${apiData['mac']['x64']}">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
+                                <div>Intel-based Mac</div>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </a>`)
                 )
                 ul.appendChild(
                     _gl.elementFromHtml(`
-                        <a class="button button-rectangle-wide" href="${apiData['mac']['arm64']}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> 
-                            <span>Mac with Apple silicon</span>
+                        <a class="button-grid" href="${apiData['mac']['arm64']}">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> 
+                                <span>Mac with Apple silicon</span>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </a>`)
                 )
             })

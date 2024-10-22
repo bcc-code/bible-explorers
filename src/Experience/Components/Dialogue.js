@@ -46,7 +46,6 @@ export default class Dialogue {
         instance.experience.interface.helperScreen.append(dialogue)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
         instance.experience.navigation.next.disabled = false
     }
 
@@ -68,7 +67,6 @@ export default class Dialogue {
                 // Check if all were visited
                 if (document.querySelectorAll('.dialogue .question.visited').length == buttons.length) {
                     instance.experience.navigation.next.disabled = false
-                    instance.experience.navigation.next.className = 'button button-arrow'
                     instance.experience.navigation.next.innerHTML = ''
                 }
 
@@ -90,7 +88,21 @@ export default class Dialogue {
         document.getElementById('iris-cc')?.remove()
 
         const message = _gl.elementFromHtml(
-            `<div id="iris-cc"><span>Iris</span><div class="flex-1 scroller flex items-center justify-center max-h-[65%]"><div class="overflow-y-auto max-h-full max-w-full">${caption}</div></div></div>`
+            `<div class="cc-container">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div id="iris-cc">
+                        <div class="cc-text">${caption}</div>
+                    </div>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </div>`
         )
         instance.experience.interface.closedCaption.append(message)
     }
@@ -101,6 +113,5 @@ export default class Dialogue {
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

@@ -43,7 +43,23 @@ export default class MessageWithSupportingScreens {
 
     setHtml(caption, character) {
         const closedCaption = _gl.elementFromHtml(
-            `<div id="iris-cc"><span>${character} </span><div class="flex-1 scroller flex items-center justify-center max-h-[65%]"><div class="overflow-y-auto max-h-full max-w-full">${caption}</div></div></div>`
+            `<div class="cc-container">
+                <div class="corner top-left"></div>
+                <div class="edge top">
+                    <div class="cc-character">${character}</div>
+                </div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div id="iris-cc">
+                        <div class="cc-text">${caption}</div>
+                    </div>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </div>`
         )
 
         instance.experience.interface.closedCaption.append(closedCaption)
@@ -53,6 +69,7 @@ export default class MessageWithSupportingScreens {
                 '<video id="glitch-idle" src="textures/glitch_idle_v2.mp4" muted autoplay loop></video>'
             )
             document.querySelector('#closed-caption').append(glitch)
+            instance.audio.playSound('glitch-bzz')
         }
 
         if (instance.data.with_lever) {
@@ -119,7 +136,8 @@ export default class MessageWithSupportingScreens {
         }
 
         instance.video?.defocus()
-        document.querySelector('#iris-cc')?.remove()
+        document.querySelector('.cc-container')?.remove()
+        instance.audio.stopSound('glitch-bzz')
 
         instance.experience.interface.helperScreen.innerHTML = ''
 

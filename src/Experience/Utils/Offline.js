@@ -136,6 +136,11 @@ export default class Offline {
             selectedChapter.classList.add(latestVersion ? 'downloaded' : 'outdated')
             selectedChapter.classList.add('loaded')
         })
+
+        // Use-case with no video
+        if (offline.allDownloadableVideos[chapter.id].length == 0) {
+            document.querySelector('.chapter[data-id="' + chapter.id + '"]').classList.add('loaded')
+        }
     }
 
     async setChapterDownloadableVideos(chapter) {

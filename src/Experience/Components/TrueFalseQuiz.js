@@ -23,7 +23,6 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('task-description')
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = 'button button-arrow-skip'
 
         instance.setHTML()
         instance.questionsAnsweredCorrectly = 0
@@ -63,15 +62,15 @@ export default class TrueFalsQuiz {
                 : ''
 
         const questionHTML = `
-                <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
-                    ${audioButton}
-                    <audio id="quizAudio" class="hidden sr-only" preload="auto" crossOrigin="anonymous"></audio>
-                    ${questionContent}
-                    <div class="flex gap-12 items-center">
-                        <button class="answer-button" data-answer="false" id="answer-button-false"></button>
-                        <button class="answer-button" data-answer="true" id="answer-button-true"></button>
-                    </div>
-                </div>`
+            <div class="question flex flex-col justify-center items-center gap-8" data-index="${index}" data-correct="${question.question_statement}">
+                ${audioButton}
+                <audio id="quizAudio" class="hidden sr-only" preload="auto" crossOrigin="anonymous"></audio>
+                ${questionContent}
+                <div class="flex gap-12 items-center">
+                    <button class="answer-button" data-answer="false" id="answer-button-false"></button>
+                    <button class="answer-button" data-answer="true" id="answer-button-true"></button>
+                </div>
+            </div>`
 
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = questionHTML
@@ -111,7 +110,6 @@ export default class TrueFalsQuiz {
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = ''
 
-        instance.experience.navigation.next.className = 'button button-arrow'
         instance.experience.navigation.next.innerText = ''
     }
 
@@ -203,7 +201,6 @@ export default class TrueFalsQuiz {
 
         instance.experience.setAppView('chapter')
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         instance.questionsAnsweredCorrectly = 0
 

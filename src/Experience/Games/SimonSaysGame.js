@@ -29,7 +29,9 @@ export default class SimonSays {
 
         instance.config = {
             rounds:
-                instance.world.selectedChapter.category == '6-8' ? explorersOne.noOfRounds : explorersTwo.noOfRounds,
+                instance.world.selectedChapter.category == '6-8'
+                    ? explorersOne.noOfRounds
+                    : explorersTwo.noOfRounds,
             msBetweenNotes:
                 instance.world.selectedChapter.category == '6-8'
                     ? explorersOne.msBetweenNotes
@@ -68,7 +70,6 @@ export default class SimonSays {
         instance.experience.setAppView('game')
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
-        instance.experience.navigation.next.className = `button button-arrow-skip`
 
         for (let i = 0; i < instance.config.rounds; i++) {
             const ticker = document.createElement('div')
@@ -81,7 +82,9 @@ export default class SimonSays {
 
             game.querySelector('.cables').append(cable)
 
-            i < 4 ? game.querySelector('.side.left').append(ticker) : game.querySelector('.side.right').append(ticker)
+            i < 4
+                ? game.querySelector('.side.left').append(ticker)
+                : game.querySelector('.side.right').append(ticker)
         }
 
         for (let j = 0; j < instance.data.color.length; j++) {
@@ -193,7 +196,7 @@ export default class SimonSays {
 
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <h1>${_s.miniGames.simonSays.failed.title}</h1>
+                <h1>${_s.miniGames.oops}</h1>
                 <p>${_s.miniGames.simonSays.failed.message}</p>
                 <div class="buttons"></div>
             </div>
@@ -224,8 +227,6 @@ export default class SimonSays {
                 <div class="buttons"></div>
             </div>
         `)
-
-        instance.experience.navigation.next.className = 'button button-arrow'
 
         document.querySelector('.simon-says .container').append(congratsHTML)
         document.querySelector('.simon-says').classList.add('popup-visible')
@@ -270,6 +271,5 @@ export default class SimonSays {
         instance.experience.setAppView('chapter')
 
         instance.experience.navigation.next.innerHTML = ''
-        instance.experience.navigation.next.className = 'button button-arrow'
     }
 }

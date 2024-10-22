@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="font-sans text-white">
+<html class="font-sans text-white" lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
@@ -36,48 +36,116 @@
                     <div class="app-logo z-10">
                         <img src="./textures/bible-kids-explorers.svg" alt="" />
                     </div>
-                    <div class="z-10 ml-auto flex items-center">
-                        <button id="download-app" class="button button-cube modal-open-download">
-                            <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                    <div
+                        class="z-10 ml-auto flex items-center group-data-[view='task-description']/app:hidden"
+                    >
+                        <button id="download-app" class="button-grid modal-open-download ml-2" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="home-button" class="button button-cube">
-                            <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
+                        <button id="home-button" class="button-grid ml-2" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="toggle-music" class="button button-cube group">
-                            <svg class="icon hidden group-[.is-playing]:block">
-                                <use href="#music-solid" fill="currentColor"></use>
-                            </svg>
-                            <svg class="icon group-[.is-playing]:hidden">
-                                <use href="#music-slash-solid" fill="currentColor"></use>
-                            </svg>
+                        <button id="toggle-music" class="button-grid group ml-2" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon hidden group-[.is-playing]:block">
+                                    <use href="#music-solid" fill="currentColor"></use>
+                                </svg>
+                                <svg class="icon group-[.is-playing]:hidden">
+                                    <use href="#music-slash-solid" fill="currentColor"></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="toggle-vq" class="button button-cube group">
-                            <svg class="icon hidden group-data-[quality='high']:block">
-                                <use href="#high-definition-solid" fill="currentColor"></use>
-                            </svg>
-                            <svg class="icon hidden group-data-[quality='medium']:block">
-                                <use href="#standard-definition-solid" fill="currentColor"></use>
-                            </svg>
+                        <button id="toggle-vq" class="button-grid group ml-2" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon hidden group-data-[quality='high']:block">
+                                    <use href="#high-definition-solid" fill="currentColor"></use>
+                                </svg>
+                                <svg class="icon hidden group-data-[quality='medium']:block">
+                                    <use href="#standard-definition-solid" fill="currentColor"></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="toggle-fullscreen" class="button button-cube group">
-                            <svg class="icon group-[.fullscreen-active]:hidden">
-                                <use
-                                    href="#up-right-and-down-left-from-center-solid"
-                                    fill="currentColor"
-                                ></use>
-                            </svg>
-                            <svg class="icon hidden group-[.fullscreen-active]:block">
-                                <use href="#down-left-and-up-right-to-center-solid" fill="currentColor"></use>
-                            </svg>
+                        <button id="toggle-fullscreen" class="button-grid group ml-2" role="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon group-[.fullscreen-active]:hidden">
+                                    <use
+                                        href="#up-right-and-down-left-from-center-solid"
+                                        fill="currentColor"
+                                    ></use>
+                                </svg>
+                                <svg class="icon hidden group-[.fullscreen-active]:block">
+                                    <use
+                                        href="#down-left-and-up-right-to-center-solid"
+                                        fill="currentColor"
+                                    ></use>
+                                </svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
                         <div class="relative" id="app-language">
                             <button
                                 id="toggle-languages"
-                                class="button button-rectangle-wide"
+                                class="button-grid ml-2"
                                 aria-pressed="false"
+                                role="button"
                             >
-                                <svg class="icon"><use href="#globe-solid" fill="currentColor"></use></svg>
-                                <span></span>
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">
+                                    <svg class="icon">
+                                        <use href="#globe-solid" fill="currentColor"></use>
+                                    </svg>
+                                    <span></span>
+                                </div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
                             </button>
                             <div class="app-language_dropdown">
                                 <ul></ul>
@@ -85,17 +153,56 @@
                         </div>
                         <button
                             id="logout-button"
-                            class="button button-cube disabled:!hidden"
+                            class="button-grid ml-2 disabled:!hidden"
                             disabled="true"
+                            role="button"
                         >
-                            <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                                <span class="name-initials"></span>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <button id="login-button" class="button button-cube disabled:!hidden" disabled="true">
-                            <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                        <button
+                            id="login-button"
+                            class="button-grid ml-2 disabled:!hidden"
+                            disabled="true"
+                            role="button"
+                        >
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
                         </button>
-                        <a href="mailto:hello@biblekids.io">
-                            <button id="contact-button" class="button button-cube">
-                                <svg class="icon"><use href="#envelope-solid" fill="currentColor"></use></svg>
+                        <a href="mailto:hello@biblekids.io" class="ml-2">
+                            <button id="contact-button" class="button-grid" role="button">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">
+                                    <svg class="icon">
+                                        <use href="#envelope-solid" fill="currentColor"></use>
+                                    </svg>
+                                </div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
                             </button>
                         </a>
                     </div>
@@ -130,14 +237,13 @@
                         </div>
                         <div id="chapters-description" class="chapters-description"></div>
                     </div>
-                    <div
-                        class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
-                    >
-                        <button class="button button-arrow scale-x-[-1]" id="back-to-age-category"></button>
-                        <div class="wrapper-tooltip">
-                            <button class="button button-arrow" id="start-chapter"></button>
-                        </div>
-                    </div>
+                    <button
+                        class="button-arrow scale-x-[-1]"
+                        id="back-to-age-category"
+                        type="button"
+                        title="Go back to age category"
+                        role="button"
+                    ></button>
                 </div>
                 <div
                     id="chapter-wrapper"
@@ -146,108 +252,78 @@
                     <div class="fixed inset-0 -z-10 bg-chapter-room bg-cover bg-center">
                         <div class="h-full w-full backdrop-brightness-50"></div>
                     </div>
-                    <div class="mx-auto flex justify-center px-8 group-data-[view='game']/app:hidden">
-                        <div
-                            id="screens-wrapper"
-                            class="relative isolate grid gap-[0.25%]"
-                            style="grid-template-columns: 38% 30% 32%; grid-auto-rows: auto"
-                        >
-                            <div class="absolute bottom-[20%] right-full w-[20%]">
-                                <img src="./frames/Camera.png" alt="" />
-                            </div>
-                            <div class="relative col-span-1 row-span-1 grid">
-                                <div
-                                    id="top-left-screen"
-                                    class="relative mt-auto aspect-[4/3] w-full bg-top-left-screen bg-contain bg-bottom bg-no-repeat"
-                                >
-                                    <div class="absolute bottom-full left-[15%] -z-10 w-[50%]">
-                                        <img src="./frames/Handle_1.png" alt="" />
+                    <div class="screens w-full group-data-[view='game']/app:hidden">
+                        <div class="screens-wrapper">
+                            <div class="screens-grid">
+                                <div class="screens-camera"></div>
+                                <div class="screens-left">
+                                    <div class="screen-left">
+                                        <div class="screen-left_support"></div>
+                                        <div class="screen-bottom_support"></div>
+                                        <div class="screen-left_frame">
+                                            <div class="screen-left_content"></div>
+                                        </div>
                                     </div>
-                                    <div class="absolute bottom-[calc(100%_-40px)] left-[70%] -z-10 w-[50%]">
-                                        <img src="./frames/Handle_2.png" alt="" />
+                                    <div class="screen-center">
+                                        <div class="screen-center_support"></div>
+                                        <div class="screen-center_frame">
+                                            <div class="screen-center_content"></div>
+                                        </div>
                                     </div>
-                                    <div
-                                        id="top-left-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/Blueprint_BibleBox_00000.png')] bg-cover bg-no-repeat"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="relative col-span-1 row-span-1 grid">
-                                <div
-                                    id="top-mid-screen"
-                                    class="relative mt-auto aspect-[3/4] w-full bg-top-mid-screen bg-contain bg-center bg-no-repeat"
-                                >
-                                    <div class="absolute bottom-full left-1/2 -z-10 w-[60%] -translate-x-1/2">
-                                        <img src="./frames/Handle_3.png" alt="" />
-                                    </div>
-                                    <div
-                                        id="top-mid-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen3_00000.png')] bg-cover bg-no-repeat"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="relative col-span-1 row-span-2 grid">
-                                <div
-                                    id="helper-screen"
-                                    class="relative mb-[15%] mt-auto aspect-[9/16] w-full bg-helper-screen bg-contain bg-center bg-no-repeat"
-                                >
-                                    <div class="absolute bottom-full left-1/2 -z-10 w-[40%] -translate-x-1/2">
-                                        <img src="./frames/Handle_4.png" alt="" />
-                                    </div>
-                                    <div
-                                        id="helper-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/Default_Screen4_00001.png')] bg-cover bg-no-repeat"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="relative col-span-2 row-span-1 grid">
-                                <div
-                                    id="main-screen"
-                                    class="relative aspect-[16/9] w-full bg-main-screen bg-contain bg-center bg-no-repeat"
-                                >
-                                    <div
-                                        id="main-screen_content"
-                                        class="mask-image h-full w-full bg-[url('../../static/textures/MT_IRIS_BG.png')] bg-cover bg-no-repeat"
-                                    >
-                                        <div class="*:h-full *:w-full" id="video-container">
-                                            <div id="iris-idle">
-                                                <div class="relative h-0 w-full pt-[56.25%]">
-                                                    <video
-                                                        src="./textures/iris_idle_v3.mp4"
-                                                        class="absolute left-0 top-0 h-full w-full"
-                                                        muted
-                                                        loop
-                                                        autoplay="true"
-                                                    ></video>
+                                    <div class="screen-bottom">
+                                        <div class="screen-bottom_frame">
+                                            <div class="screen-bottom_content">
+                                                <div id="video-container">
+                                                    <div id="iris-idle">
+                                                        <video
+                                                            src="./textures/iris_idle_v3.mp4"
+                                                            muted
+                                                            loop
+                                                            autoplay="true"
+                                                        ></video>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="screens-right">
+                                    <div class="screen-right">
+                                        <div class="screen-right_support"></div>
+                                        <div class="screen-right_frame">
+                                            <div class="screen-right_content"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div
-                        id="closed-caption"
-                        class="fixed bottom-4 left-1/2 -translate-x-1/2 text-center group-data-[view='game']/app:hidden"
-                    ></div>
+                    <div id="closed-caption">
+                        <div id="chapter-navigation">
+                            <button
+                                class="button-arrow"
+                                id="prev-step"
+                                type="button"
+                                title="Previous step"
+                                role="button"
+                            ></button>
+                            <button
+                                class="button-arrow"
+                                id="next-step"
+                                type="button"
+                                title="Next step"
+                                role="button"
+                            ></button>
+                        </div>
+                    </div>
                     <div id="progress-bar" class="group/progress group-data-[view='game']/app:hidden">
                         <div class="absolute right-4 top-1/2 -translate-y-1/2"></div>
                     </div>
-                    <div
-                        id="chapter-navigation"
-                        class="pointer-events-none fixed bottom-4 left-4 right-4 z-30 flex justify-between gap-4"
-                    >
-                        <button class="button button-arrow scale-x-[-1]" id="prev-step"></button>
-                        <button class="button button-arrow" id="next-step"></button>
-                    </div>
-                    <div
-                        id="games-wrapper"
-                        class="fixed inset-0 hidden group-data-[view='game']/app:block"
-                    ></div>
+
+                    <div id="games-wrapper" class="hidden group-data-[view='game']/app:block"></div>
                     <div
                         id="tasks-description"
-                        class="fixed inset-0 hidden group-data-[view='task-description']/app:block"
+                        class="hidden group-data-[view='task-description']/app:block"
                     ></div>
                 </div>
             </main>
@@ -260,28 +336,46 @@
                 id="app-version"
                 class="absolute bottom-1 right-1 hidden text-xs opacity-30 group-data-[view='age-category']/app:block"
             ></div>
-            <div
-                id="notification"
-                class="notification pointer-events-none fixed inset-0 z-50 hidden overflow-hidden"
-            >
-                <div class="flex h-full w-full p-4">
-                    <div class="notification-frame self-end">
-                        <div class="notification-content flex h-full flex-col justify-between">
-                            <svg class="icon h-8 w-8 text-bke-orange">
-                                <use href="#circle-exclamation-solid" fill="currentColor"></use>
-                            </svg>
-                            <p id="message" class="mt-4"></p>
-                            <button
-                                id="restart-button"
-                                class="button button-rectangle-wide pointer-events-auto mt-4 hidden"
-                            ></button>
-                        </div>
-
-                        <button id="close-button" class="button button-cube pointer-events-auto">
-                            <svg class="icon"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
-                        </button>
+            <div id="notification" class="notification z-50 hidden">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="notification-header">
+                        <svg class="icon text-bke-orange"><use href="#circle-exclamation-solid" fill="currentColor"></use></svg>
+                        <h3 class="notification-title"></h3>
                     </div>
+                    <p class="notification-message"></p>
+                    <button id="restart-button" class="button-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content"></div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </button>
+                    <button id="close-button" class="button-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <svg><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </button>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         </div>
 

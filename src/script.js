@@ -32,35 +32,47 @@ _appInsights.trackPageView({ name: 'Home' })
 // Start 3D experience
 const experience = new Experience()
 
+
+const notification = document.querySelector('.notification')
+const message = document.querySelector('.notification-message')
+const title = document.querySelector('.notification-title')
+const closeButton = document.querySelector('#close-button')
+const restartButton = document.querySelector('#restart-button')
+
+// New app version notification
+function showNotification() {
+    gsap.fromTo(
+        notification,
+        {
+            x: '-100%',
+        },
+        {
+            duration: 1,
+            x: '0%',
+            ease: 'power3.out',
+            onStart: () => {
+                notification.classList.remove('hidden')
+            },
+        }
+    )
+}
+
+closeButton.addEventListener('click', () => {
+    gsap.to(notification, {
+        duration: 1,
+        x: '-100%',
+        ease: 'power3.in',
+        onComplete: () => {
+            notification.classList.add('hidden')
+        },
+    })
+})
+
 if (isElectron()) {
     document.body.classList.add('electron')
 
     window.electronAPI.appVersion()
     window.electronAPI.routeChanged()
-
-    // New app version notification
-
-    const notification = document.getElementById('notification')
-    const message = document.getElementById('message')
-    const closeButton = document.getElementById('close-button')
-    const restartButton = document.getElementById('restart-button')
-
-    function showNotification() {
-        gsap.fromTo(
-            notification,
-            {
-                x: '-100%',
-            },
-            {
-                duration: 1,
-                x: '0%',
-                ease: 'power3.out',
-                onStart: () => {
-                    notification.classList.remove('hidden')
-                },
-            }
-        )
-    }
 
     window.electronAPI.onUpdateAvailable(() => {
         message.innerHTML = _s.autoUpdate.updateAvailable
@@ -69,20 +81,9 @@ if (isElectron()) {
 
     window.electronAPI.onUpdateDownloaded(() => {
         message.innerHTML = _s.autoUpdate.updateDownloaded
-        restartButton.innerText = _s.autoUpdate.install
+        restartButton.querySelector('.content').innerText = _s.autoUpdate.install
         restartButton.classList.remove('hidden')
         showNotification()
-    })
-
-    closeButton.addEventListener('click', () => {
-        gsap.to(notification, {
-            duration: 1,
-            x: '-100%',
-            ease: 'power3.in',
-            onComplete: () => {
-                notification.classList.add('hidden')
-            },
-        })
     })
 
     restartButton.addEventListener('click', () => {
@@ -179,34 +180,28 @@ window.onload = async () => {
     await configureClient()
     await handleRedirectCallback()
 }
+
 window.addEventListener(_e.ACTIONS.ROUTE_CHANGED, async ({ detail }) => {
     window.location.search = detail.replace('/?', '')
     await configureClient()
     await handleRedirectCallback()
 })
 
-// Detect browser
-var browserName = (function (agent) {
-    switch (true) {
-        case agent.indexOf('edge') > -1:
-            return 'MS Edge'
-        case agent.indexOf('edg/') > -1:
-            return 'Edge ( chromium based)'
-        case agent.indexOf('opr') > -1 && !!window.opr:
-            return 'Opera'
-        case agent.indexOf('chrome') > -1 && !!window.chrome:
-            return 'Chrome'
-        case agent.indexOf('trident') > -1:
-            return 'MS IE'
-        case agent.indexOf('firefox') > -1:
-            return 'Mozilla Firefox'
-        case agent.indexOf('safari') > -1:
-            return 'Safari'
-        default:
-            return 'other'
-    }
-})(window.navigator.userAgent.toLowerCase())
+// Detecting unsupported browsers
+function isSupportedBrowser() {
+    const userAgent = navigator.userAgent;
+    return /Chrome|Safari/.test(userAgent) && !/Edge|OPR|Firefox/.test(userAgent);
+}
 
-if (browserName !== 'Chrome') {
-    new Notification(_s.browserNotification)
+// Detecting mobile devices (optional, if you want to show it based on devices)
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Showing notification if unsupported browser or device is detected
+if (!isSupportedBrowser() || isMobileDevice()) {
+    title.innerHTML = _s.notifications.webSupport.title
+    message.innerHTML =  _s.notifications.webSupport.text
+    restartButton.classList.add('hidden')
+    showNotification()
 }

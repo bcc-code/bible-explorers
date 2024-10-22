@@ -98,18 +98,17 @@
     "round": "Round",
     "simonSays": {
       "failed": {
-        "message": "You've played the wrong note of the melody!",
-        "title": "Oops!"
+        "message": "You've played the wrong note of the melody!"
       }
     },
     "skip": "Skip",
     "startGame": "Start game",
     "timeElapsed": {
-      "message": "Time is up; try to attach all the wires before time is up.",
-      "title": "Oops!"
+      "message": "Time is up; try to attach all the wires before time is up."
     },
     "tryAgain": "Try again",
-    "winRound": "Well done!"
+    "winRound": "Well done!",
+    "oops": "Oops!"
   },
   "notAvailable": "No chapter available in the selected language",
   "notifications": {
@@ -191,5 +190,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Write your name here",
     "submit": "Add"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

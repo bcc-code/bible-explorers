@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Uusi kierros",
     "bibleVerseCode": {
-      "checkCode": "Tarkistakaa onko koodi oikein "
+      "checkCode": "Tarkistakaa onko koodi oikein"
     },
     "completed": {
       "message": "Olet suorittanut tehtävän!",
@@ -97,18 +97,18 @@
     "round": "Kierros",
     "simonSays": {
       "failed": {
-        "message": "Olet soittanut väärän nuotin melodiasta!",
-        "title": "Hups!"
+        "message": "Olet soittanut väärän nuotin melodiasta!"
       }
     },
     "skip": "Ohita",
     "startGame": "Aloita peli",
     "timeElapsed": {
-      "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu.",
-      "title": "Hups!"
+      "message": "Aika loppui, yritä yhdistää kaikki johdot ennen kuin aika loppuu."
     },
     "tryAgain": "Yritä uudestaan!",
-    "winRound": "Hyvää työtä!"
+    "winRound": "Hyvää työtä!",
+    "oops": "Hups!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Valitsemallasi kielellä ei ole tarjolla yhtään jaksoa",
   "offline": {
@@ -184,5 +184,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Kirjoita nimesi tähän",
     "submit": "Lisää"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

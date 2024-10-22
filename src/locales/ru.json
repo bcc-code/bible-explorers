@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Новый раунд",
     "bibleVerseCode": {
-      "checkCode": "Проверьте правильность кода "
+      "checkCode": "Проверьте правильность кода"
     },
     "completed": {
       "message": "Вы выполнили задание!",
@@ -97,18 +97,18 @@
     "round": "Раунд",
     "simonSays": {
       "failed": {
-        "message": "Вы сыграли не ту ноту в мелодии!",
-        "title": "Ой!"
+        "message": "Вы сыграли не ту ноту в мелодии!"
       }
     },
     "skip": "Пропустить",
     "startGame": "Начать игру",
     "timeElapsed": {
-      "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет.",
-      "title": "Ой!"
+      "message": "Время вышло, постарайтесь соединить все провода до того, как время истечет."
     },
     "tryAgain": "Попробуй еще раз",
-    "winRound": "Отличная работа!"
+    "winRound": "Отличная работа!",
+    "oops": "Ой!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Ни одна глава недоступна на выбранном языке",
   "offline": {
@@ -184,5 +184,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Введите свое имя здесь",
     "submit": "Добавить в"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

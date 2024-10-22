@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Kolejna runda",
     "bibleVerseCode": {
-      "checkCode": "Sprawdź, czy kod jest poprawny "
+      "checkCode": "Sprawdź, czy kod jest poprawny"
     },
     "completed": {
       "message": "Wykonaliście zadanie!",
@@ -97,18 +97,18 @@
     "round": "Runda",
     "simonSays": {
       "failed": {
-        "message": "Wybrałeś złą nutę",
-        "title": "Ups!"
+        "message": "Wybrałeś złą nutę"
       }
     },
     "skip": "Pomiń",
     "startGame": "Rozpocznij grę",
     "timeElapsed": {
-      "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas.",
-      "title": "Ups!"
+      "message": "Zabrakło wam czasu. Spróbujcie połączyć kable zanim skończy wam się czas."
     },
     "tryAgain": "Spróbujcie jeszcze raz!",
-    "winRound": "Dobra robota!"
+    "winRound": "Dobra robota!",
+    "oops": "Ups!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Żaden rozdział nie jest dostępny w wybranym języku",
   "offline": {
@@ -184,5 +184,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Wpisz tutaj swoje imię",
     "submit": "Dodaj"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

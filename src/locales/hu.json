@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Újabb kör",
     "bibleVerseCode": {
-      "checkCode": "Ellenőrizze, hogy a kód helyes-e "
+      "checkCode": "Ellenőrizze, hogy a kód helyes-e"
     },
     "completed": {
       "message": "Teljesítetted a feladatot! Folytathatod az utazást",
@@ -97,18 +97,18 @@
     "round": "Kör",
     "simonSays": {
       "failed": {
-        "message": "You've played the wrong note of the melody!",
-        "title": "Hoppá!"
+        "message": "You've played the wrong note of the melody!"
       }
     },
     "skip": "Átugrás",
     "startGame": "Játék indítása",
     "timeElapsed": {
-      "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő.",
-      "title": "Hoppá!"
+      "message": "Lejárt az idő, próbálj minden vezetéket csatlakoztatni mielőtt lejár az idő."
     },
     "tryAgain": "Próbáld újra!",
-    "winRound": "Szép munka!"
+    "winRound": "Szép munka!",
+    "oops": "Hoppá!",
+    "minefield": "Minefield"
   },
   "notAvailable": "No chapter available in the selected language",
   "offline": {
@@ -184,5 +184,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Írd ide a neved",
     "submit": "Hozzáadás"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

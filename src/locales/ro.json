@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Încă o rundă",
     "bibleVerseCode": {
-      "checkCode": "Verifică dacă codul este corect "
+      "checkCode": "Verifică dacă codul este corect"
     },
     "completed": {
       "message": "Ai terminat sarcina cu succes!",
@@ -97,18 +97,18 @@
     "round": "Runda",
     "simonSays": {
       "failed": {
-        "message": "Ai cântat o notă greșită în melodie!",
-        "title": "Ups!"
+        "message": "Ai cântat o notă greșită în melodie!"
       }
     },
     "skip": "Sări peste",
     "startGame": "Începe jocul",
     "timeElapsed": {
-      "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire.",
-      "title": "Ups!"
+      "message": "Timpul a trecut. Încercați să conectați toate cablurile înainte ca timpul să expire."
     },
     "tryAgain": "Încearcă din nou",
-    "winRound": "Bună treabă!"
+    "winRound": "Bună treabă!",
+    "oops": "Ups!",
+    "minefield": "Traseu minat"
   },
   "notAvailable": "Nici un capitol disponibil în limba selectată",
   "offline": {
@@ -184,5 +184,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Introdu numele aici",
     "submit": "Adaugă"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

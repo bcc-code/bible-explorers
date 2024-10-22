@@ -108,7 +108,9 @@
       "title": "Uuups!"
     },
     "tryAgain": "Versuche es noch einmal!",
-    "winRound": "Gut gemacht! "
+    "winRound": "Gut gemacht!",
+    "oops": "Oops!",
+    "minefield": "Minefield"
   },
   "notAvailable": "Kein Kapitel in der gewählten Sprache verfügbar",
   "offline": {
@@ -184,5 +186,11 @@
   "waitingScreen": {
     "inputPlaceholder": "Gebe hier deinen Namen ein",
     "submit": "Hinzufügen"
+  },
+  "notifications": {
+    "webSupport": {
+      "title": "Oops!",
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
+    }
   }
 }

@@ -151,8 +151,9 @@ export default class Video {
         if (instance.hasSkipBtn()) return
 
         const skipVideo = document.createElement('div')
-        skipVideo.className = 'skip-video button button-arrow-skip'
+        skipVideo.className = 'skip-video button-arrow'
         skipVideo.innerHTML = `<span>${_s.miniGames.skip}</span>`
+        skipVideo.setAttribute('role', 'button')
         skipVideo.addEventListener('click', instance.finish)
         instance.videoJsEl().appendChild(skipVideo)
     }

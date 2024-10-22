@@ -22,6 +22,9 @@ export default class WaitingScreen {
         const id = instance.world.selectedChapter.lobby_video_loop
         instance.video.load('texture-' + id)
 
+        document.querySelector('.screens').classList.add('waiting-screen-visible')
+        document.querySelector('#closed-caption').classList.add('waiting-screen-visible')
+
         instance.videoBG = document.createElement('video')
         instance.videoBG.setAttribute('src', './textures/Waitingscreen_V003.mp4')
         instance.videoBG.setAttribute('playsinline', '')
@@ -42,9 +45,41 @@ export default class WaitingScreen {
             `<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`
         )
         const form = _gl.elementFromHtml(
-            `<form id="childrenNames" class="absolute bottom-6 left-1/2 -translate-x-1/2">
-                <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
-                <button type="submit" class="button button-rectangle-wide">${_s.waitingScreen.submit}</button>
+            `<form id="childrenNames" class="childrenNames">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="input input-grid mr-2">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </div>
+                    <button type="submit" class="button-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">${_s.waitingScreen.submit}</div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </button>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </form>`
         )
 
@@ -52,7 +87,8 @@ export default class WaitingScreen {
             '<ul class="bg-black/50 overflow-y-auto h-full p-[13%]" id="names-label"></ul>'
         )
 
-        wrapper.append(instance.videoBG, form)
+        wrapper.append(instance.videoBG)
+        document.querySelector('#closed-caption').append(form)
         instance.experience.interface.helperScreen.append(nameLabelContainer)
         document.querySelector('#chapter-wrapper').prepend(wrapper)
 
@@ -87,10 +123,15 @@ export default class WaitingScreen {
     }
 
     handleFormSubmission(form, container) {
-        const inputVal = form.querySelector('input').value.trim()
+        let inputVal = form.querySelector('input').value.trim()
 
-        // Check if input value is not empty and not already in the names array before appending
-        if (inputVal && !instance.names.includes(inputVal)) {
+        // Check if input value is not empty
+        if (!inputVal) return
+
+        inputVal = inputVal[0].toUpperCase() + inputVal.substr(1)
+
+        // Check if input value is not already in the names array before appending
+        if (!instance.names.includes(inputVal)) {
             instance.names.push(inputVal)
             container.append(instance.generateNameLabel(inputVal))
         }
@@ -164,5 +205,9 @@ export default class WaitingScreen {
 
         // Remove all elements appended to smallScreen
         document.querySelector('#waitingScreen').remove()
+        document.querySelector('.screens').classList.remove('waiting-screen-visible')
+        document.querySelector('#closed-caption').classList.remove('waiting-screen-visible')
+
+        form.remove()
     }
 }

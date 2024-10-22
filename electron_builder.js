@@ -1,7 +1,3 @@
-// @ts-check
-/**
- * @type {import('electron-builder').Configuration}
- */
 const config = {
     appId: 'io.biblekids.explorers',
     productName: 'Bible-Explorers',

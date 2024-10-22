@@ -1,5 +1,4 @@
-import { join } from 'path'
-const path = require('path')
+import { resolve } from 'path'
 
 export default {
     main: {
@@ -28,7 +27,7 @@ export default {
         build: {
             emptyOutDir: false,
             rollupOptions: {
-                input: path.resolve(__dirname, 'src/index.html'),
+                input: resolve(__dirname, 'src/index.html'),
             },
             outDir: '.vite/build',
             minify: true,

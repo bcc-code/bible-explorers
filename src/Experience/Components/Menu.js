@@ -167,7 +167,19 @@ export default class Menu {
 
         if (loginBtn) {
             loginBtn.disabled = instance.logInLogOut.login
+        }
+
+        if (logoutBtn) {
             logoutBtn.disabled = instance.logInLogOut.logout
+        }
+
+        if (instance.logInLogOut.logout === false) {
+            const nameInitials =
+                instance.experience.auth0.userData.given_name.substr(0, 1) +
+                instance.experience.auth0.userData.family_name.substr(0, 1)
+
+            // Set user's name initials
+            logoutBtn.querySelector('.name-initials').textContent = nameInitials
         }
     }
 
