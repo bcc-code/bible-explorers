@@ -28,17 +28,59 @@ export default class VideoWithQuestion {
         instance.audio.fadeOutBgMusic()
 
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 task-container" id="video-with-question">
-                <div class="task-container_box">
-                    ${instance.data.question ? `<h5 class="task-container_heading">${instance.data.question}</h1>` : ''}
-                    <div id="task-container_video" class="w-[30rem]"></div>
-                    <div class="textarea-box">
-                        <textarea class="scroller"></textarea>
-                    </div>
-                    <div class="task-container_actions">
-                        <button class="button button-task_action" type="submit">${_s.task.submit}</button>
-                    </div>
+            `<div class="task-container" id="video-with-question">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        ${instance.data.question ? 
+                            `<h5 class="task-heading">
+                                  <div class="corner top-left"></div>
+                                    <div class="edge top"></div>
+                                    <div class="corner top-right"></div>
+                                    <div class="edge left"></div>
+                                    <div class="content">${instance.data.question}</div>
+                                    <div class="edge right"></div>
+                                    <div class="corner bottom-left"></div>
+                                    <div class="edge bottom"></div>
+                                    <div class="corner bottom-right"></div>
+                            </h5>` : ''}
+
+                        <div id="task-tutorial" class="w-[30rem]"></div>
+                        <div class="textarea-box input-grid">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <textarea class="scroller" placeholder=""></textarea>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </div>
+                        <div class="task-actions">
+                            <button class="button-grid">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">${_s.task.submit}</div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
+                        </div>
+                     </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
             `
         )
@@ -50,7 +92,7 @@ export default class VideoWithQuestion {
             const videoId = `texture-${instance.data.video}`
 
             instance.video.load(videoId)
-            instance.moveDivToAnotherDiv(videoId, 'task-container_video')
+            instance.moveDivToAnotherDiv(videoId, 'task-tutorial')
         }
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
@@ -116,7 +158,7 @@ export default class VideoWithQuestion {
         instance.experience.navigation.next.addEventListener('click', instance.program.nextStep)
 
         instance.experience.navigation.next.innerHTML = ``
-        instance.experience.navigation.next.className = `button button-arrow`
+
         document.getElementById('video-with-question')?.remove()
         instance.experience.setAppView('chapter')
 

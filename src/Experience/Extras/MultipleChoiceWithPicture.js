@@ -33,12 +33,22 @@ export default class MultipleChoiceWithPicture {
         instance.data = instance.stepData.multiple_choice_with_picture
 
         const multipleChoiceWithPicture = _gl.elementFromHtml(`
-            <div id="multiple-choice" class="absolute inset-0 task-container">
-                <div class="task-container_box">
-                    ${instance.stepData.details.title ? `<p class="task-container_prompts font-bold">${instance.stepData.details.title}</p>` : ''}
-                    ${instance.data.image ? `<div id="task-image" class="task-container_tutorial !hidden"><img src="${instance.data.image}"/></div>` : ''}
-                    <ul class="multiple-choice-answers"></ul>
+            <div id="multiple-choice" class="task-container">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        ${instance.stepData.details.title ? `<p class="task-prompts">${instance.stepData.details.title}</p>` : ''}
+                        ${instance.data.image ? `<div id="task-image" class="task-tutorial !hidden"><img src="${instance.data.image}"/></div>` : ''}
+                        <ul class="multiple-choice-answers"></ul>
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         `)
 
@@ -46,9 +56,19 @@ export default class MultipleChoiceWithPicture {
             const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
                 <li class="multiple-choice-answer">
                     <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
-                    <label for="answer-${cIdx}" class="question-label">
-                        <div class="font-bold button button-circle">${cIdx + 1}</div>
-                        <p class="">${choice.answer}</p>
+                    <label for="answer-${cIdx}" class="question-label input-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <div class="font-bold button-circle">${cIdx + 1}</div>
+                            <h4 class="">${choice.answer}</h4>
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
                     </label>
                 </li>
             `)

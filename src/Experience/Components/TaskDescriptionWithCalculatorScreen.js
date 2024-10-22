@@ -38,7 +38,7 @@ export default class TaskDescriptionWithCalculatorScreen {
 
     setHtml() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 task-container" id="task-container">
+            `<div class="task-container" id="task-container">
                 <div class="corner top-left"></div>
                 <div class="edge top"></div>
                 <div class="corner top-right"></div>
@@ -86,7 +86,7 @@ export default class TaskDescriptionWithCalculatorScreen {
 
         instance.experience.interface.tasksDescription.append(container)
 
-        instance.calculator.show(container.querySelector('.task-container_box'))
+        instance.calculator.show(container.querySelector('.task-content'))
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
     }

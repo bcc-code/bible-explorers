@@ -41,13 +41,47 @@ export default class FlipCards {
 
     confirmationScreenHTML() {
         const container = _gl.elementFromHtml(
-            `<div class="absolute inset-0 task-container" id="task-content">
-                <div class="task-container_box">
-                <h5 class="task-container_heading">${instance.confirmationScreen.cs_title !== '' ? instance.confirmationScreen.cs_title : ''}</h1>
-                    ${instance.confirmationScreen.cs_description ? `<p class="task-container_prompts font-bold">${instance.confirmationScreen.cs_description}</p>` : ''}
-                    ${instance.confirmationScreen.cs_image ? `<div class="task-container_tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
-                    ${instance.confirmationScreen.cs_button !== '' ? `<div class="task-container_actions"><button class="button button-task_action">${instance.confirmationScreen.cs_button}</button></div>` : ''}
+            `<div class="task-container" id="task-content">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        ${instance.confirmationScreen.cs_title !== '' ?
+                            `<h5 class="task-heading">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content"> ${instance.confirmationScreen.cs_title} </div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </h5>` : ''}
+                        ${instance.confirmationScreen.cs_description ? `<p class="task-prompts">${instance.confirmationScreen.cs_description}</p>` : ''}
+                        ${instance.confirmationScreen.cs_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
+                        ${instance.confirmationScreen.cs_button !== '' ? `
+                        <div class="task-actions">
+                            <button class="button-grid">
+                                <div class="corner top-left"></div>
+                                <div class="edge top"></div>
+                                <div class="corner top-right"></div>
+                                <div class="edge left"></div>
+                                <div class="content">${instance.confirmationScreen.cs_button}</div>
+                                <div class="edge right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="edge bottom"></div>
+                                <div class="corner bottom-right"></div>
+                            </button>
+                        </div>` : ''}
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`
         )
 

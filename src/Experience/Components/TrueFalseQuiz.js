@@ -33,12 +33,32 @@ export default class TrueFalsQuiz {
     setHTML() {
         if (!document.querySelector('#quiz-content')) {
             const staticHTML = `
-            <div class="absolute inset-0 task-container" id="true-false-quiz">
-                <div class="task-container_box">
-                    ${instance.data.title ? `<h5 class="task-container_heading">${instance.data.title}</h1>` : ''}
-                    ${instance.data.description ? `<p class="task-container_prompts">${instance.data.description}</p>` : ''}
-                    <div id="quiz-content"></div>
+            <div class="task-container" id="true-false-quiz">
+                 <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        <h5 class="task-heading">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${instance.data.title}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </h5>
+                        ${instance.data.description ? `<p class="task-prompts">${instance.data.description}</p>` : ''}
+                        <div id="quiz-content"></div>
+                    </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>`
 
             instance.experience.interface.tasksDescription.innerHTML = staticHTML

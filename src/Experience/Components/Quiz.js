@@ -110,7 +110,7 @@ export default class Quiz {
         instance.quizContainer.querySelector('#quiz-wrapper').innerHTML = ''
 
         const container = _gl.elementFromHtml(
-            `<div class="quiz-item data-index="${instance.questionIdx}"></div>`
+            `<div class="quiz-item" data-index="${instance.questionIdx}"></div>`
         )
         const question = _gl.elementFromHtml(
             `<h3 class="task-prompts">${instance.getCurrentQuestion().question}</h3>`
@@ -133,6 +133,7 @@ export default class Quiz {
                                 <div class="content">
                                     <div class="font-bold button-circle">${aIdx + 1}</div>
                                     <h4 class="">${a.answer}</h4>
+                                </div>
                                 <div class="edge right"></div>
                                 <div class="corner bottom-left"></div>
                                 <div class="edge bottom"></div>
@@ -350,7 +351,7 @@ export default class Quiz {
                 instance.experience.navigation.next.innerHTML = ''
             }
 
-            instance.nextQuestion.innerHTML =
+            instance.nextQuestion.querySelector('.content').innerHTML =
                 '<svg class="icon"><use href="#arrow-right-long-solid" fill="currentColor"></use></svg>'
 
             instance.nextQuestion.removeEventListener('click', instance.checkMcQuestion)
