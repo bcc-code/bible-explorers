@@ -35,14 +35,34 @@ export default class CodeUnlock {
     unlockScreenHTML() {
         const title = instance.program.getCurrentStepData().details.title
         const unlockScreen = _gl.elementFromHtml(`
-            <div class="code-unlock absolute inset-0 task-container" id="code-unlock">
-                <div class="relative task-container_box">
-                    <h5 class="task-container_heading">${title}</h1>
-                    <div class="code-unlock-device">
-                        <div class="code-unlock-code"></div>
-                        <div class="code-unlock-keyboard"></div>
+            <div class="code-unlock task-container" id="code-unlock">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content">
+                        <h5 class="task-heading">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">${title}</div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </h5>
+                        <div class="code-unlock-device">
+                            <div class="code-unlock-code"></div>
+                            <div class="code-unlock-keyboard"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         `)
 
