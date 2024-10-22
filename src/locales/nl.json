@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Nog een ronde",
     "bibleVerseCode": {
-      "checkCode": "Check if the code is correct"
+      "checkCode": "Controleer of de code juist is"
     },
     "completed": {
       "message": "Je hebt de opdracht voltooid!",
@@ -88,6 +88,7 @@
       "tryAgain": "Klik op een toets om opnieuw te beginnen"
     },
     "level": "Level",
+    "minefield": "Mijnenveld ",
     "nextRound": "Volgende ronde",
     "playAgain": "Speel opnieuw",
     "playAudio": "Speel audio af",
@@ -106,8 +107,7 @@
     },
     "tryAgain": "Probeer opnieuw!",
     "winRound": "Goed gedaan!",
-    "oops": "Oeps!",
-    "minefield": "Minefield"
+    "oops": "Oeps!"
   },
   "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
   "offline": {

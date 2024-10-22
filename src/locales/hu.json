@@ -7,7 +7,7 @@
   },
   "browserNotification": "Recommended browser for this concept is Chrome",
   "chapter": {
-    "activityDescLabel": "Task description",
+    "activityDescLabel": "Útmutatás mentoroknak",
     "infoPlural": {
       "quiz": "quizzes",
       "task": "tasks",
@@ -64,9 +64,9 @@
     "redirectLink": "kattints ide a bejelentkezéshez."
   },
   "miniGames": {
-    "anotherRound": "Another round",
+    "anotherRound": "Újabb kör",
     "bibleVerseCode": {
-      "checkCode": "Check if the code is correct"
+      "checkCode": "Ellenőrizze, hogy a kód helyes-e"
     },
     "completed": {
       "message": "Teljesítetted a feladatot! Folytathatod az utazást",
@@ -88,6 +88,7 @@
       "tryAgain": "Nyomj meg egy billentyűt a forduló újraindításához."
     },
     "level": "Level",
+    "minefield": "Aknamező",
     "nextRound": "Next round",
     "playAgain": "Play again",
     "playAudio": "Hanglejátszás",
@@ -106,8 +107,7 @@
     },
     "tryAgain": "Próbáld újra!",
     "winRound": "Szép munka!",
-    "oops": "Hoppá!",
-    "minefield": "Minefield"
+    "oops": "Hoppá!"
   },
   "notAvailable": "No chapter available in the selected language",
   "offline": {
@@ -169,7 +169,7 @@
   "task": {
     "codeUnlock": "Add meg a helyes számot",
     "getTask": "Menj a feladathoz",
-    "next": "Next",
+    "next": "Következő",
     "openQuestion": "Write answer here",
     "questions": "Kérdés",
     "submit": "Küldés",

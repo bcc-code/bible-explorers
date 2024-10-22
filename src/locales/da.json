@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "En runde mere",
     "bibleVerseCode": {
-      "checkCode": "Check if the code is correct"
+      "checkCode": "Kontroller, om koden er korrekt"
     },
     "completed": {
       "message": "You have completed the task! You can continue your journey",
@@ -88,7 +88,9 @@
       "tryAgain": "Klik på en tast for at starte runden igen"
     },
     "level": "Level",
+    "minefield": "Minefelt",
     "nextRound": "Næste runde",
+    "oops": "Oops!",
     "playAgain": "Spil igen",
     "playAudio": "Play audio",
     "reset": "Start spillet forfra",
@@ -105,9 +107,7 @@
       "message": "Time is up; try to attach all the wires before time is up."
     },
     "tryAgain": "Prøv igjen",
-    "winRound": "Godt gået!",
-    "oops": "Oops!",
-    "minefield": "Minefield"
+    "winRound": "Godt gået!"
   },
   "notAvailable": "Intet tilgængeligt kapitel i det valgte sprog",
   "offline": {
@@ -169,7 +169,7 @@
   "task": {
     "codeUnlock": "Skriv det rigtige antal",
     "getTask": "Gå til opgaven",
-    "next": "Next",
+    "next": "Næste",
     "openQuestion": "Skriv svaret her",
     "questions": "Spørgsmål",
     "submit": "Send",

@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Uusi kierros",
     "bibleVerseCode": {
-      "checkCode": "Check if the code is correct"
+      "checkCode": "Tarkistakaa onko koodi oikein"
     },
     "completed": {
       "message": "Olet suorittanut tehtävän!",
@@ -88,6 +88,7 @@
       "tryAgain": "Aloita kierros uudelleen napsauttamalla näppäintä"
     },
     "level": "Taso",
+    "minefield": "Miinakenttä ",
     "nextRound": "Seuraava kierros",
     "playAgain": "Pelaa uudelleen",
     "playAudio": "Toista äänet",
@@ -106,8 +107,7 @@
     },
     "tryAgain": "Yritä uudestaan!",
     "winRound": "Hyvää työtä!",
-    "oops": "Hups!",
-    "minefield": "Minefield"
+    "oops": "Hups!"
   },
   "notAvailable": "Valitsemallasi kielellä ei ole tarjolla yhtään jaksoa",
   "offline": {

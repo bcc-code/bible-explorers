@@ -90,6 +90,7 @@
     "level": "Level",
     "minefield": "Minefield",
     "nextRound": "Next round",
+    "oops": "Oops!",
     "playAgain": "Play again",
     "playAudio": "Play audio",
     "reset": "Start over",
@@ -106,10 +107,15 @@
       "message": "Time is up; try to attach all the wires before time is up."
     },
     "tryAgain": "Try again",
-    "winRound": "Well done!",
-    "oops": "Oops!"
+    "winRound": "Well done!"
   },
   "notAvailable": "No chapter available in the selected language",
+  "notifications": {
+    "webSupport": {
+      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!",
+      "title": "Oops!"
+    }
+  },
   "offline": {
     "availableOffline": {
       "info": "The chapter is now available offline with the tasks and films. You can now play it in a location without internet.",
@@ -183,11 +189,5 @@
   "waitingScreen": {
     "inputPlaceholder": "Write your name here",
     "submit": "Add"
-  },
-  "notifications": {
-    "webSupport": {
-      "title": "Oops!",
-      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
-    }
   }
 }

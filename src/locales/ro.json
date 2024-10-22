@@ -88,6 +88,7 @@
       "tryAgain": "Apasă pe o tastă pentru a începe runda din nou"
     },
     "level": "Nivel",
+    "minefield": "Câmp minat",
     "nextRound": "Runda următoare",
     "playAgain": "O nouă rundă",
     "playAudio": "Pornește audio",
@@ -106,8 +107,7 @@
     },
     "tryAgain": "Încearcă din nou",
     "winRound": "Bună treabă!",
-    "oops": "Ups!",
-    "minefield": "Traseu minat"
+    "oops": "Ups!"
   },
   "notAvailable": "Nici un capitol disponibil în limba selectată",
   "offline": {

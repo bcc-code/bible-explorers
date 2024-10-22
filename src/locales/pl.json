@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Kolejna runda",
     "bibleVerseCode": {
-      "checkCode": "Check if the code is correct"
+      "checkCode": "Sprawdź, czy kod jest poprawny"
     },
     "completed": {
       "message": "Wykonaliście zadanie!",
@@ -88,6 +88,7 @@
       "tryAgain": "Kliknij przycisk, żeby rozpocząć rundę od nowa"
     },
     "level": "Poziom",
+    "minefield": "Pole minowe ",
     "nextRound": "Następna runda",
     "playAgain": "Odtwórz ponownie",
     "playAudio": "Odtwórz dźwięk",
@@ -106,8 +107,7 @@
     },
     "tryAgain": "Spróbujcie jeszcze raz!",
     "winRound": "Dobra robota!",
-    "oops": "Ups!",
-    "minefield": "Minefield"
+    "oops": "Ups!"
   },
   "notAvailable": "Żaden rozdział nie jest dostępny w wybranym języku",
   "offline": {

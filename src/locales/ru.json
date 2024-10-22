@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Новый раунд",
     "bibleVerseCode": {
-      "checkCode": "Check if the code is correct"
+      "checkCode": "Проверьте правильность кода"
     },
     "completed": {
       "message": "Вы выполнили задание!",
@@ -88,6 +88,7 @@
       "tryAgain": "Нажмите на клавишу, чтобы начать раунд заново"
     },
     "level": "Уровень",
+    "minefield": "Минное поле",
     "nextRound": "Следующий раунд",
     "playAgain": "Играть снова",
     "playAudio": "Воспроизвести аудио",
@@ -106,8 +107,7 @@
     },
     "tryAgain": "Попробуй еще раз",
     "winRound": "Отличная работа!",
-    "oops": "Ой!",
-    "minefield": "Minefield"
+    "oops": "Ой!"
   },
   "notAvailable": "Ни одна глава недоступна на выбранном языке",
   "offline": {
