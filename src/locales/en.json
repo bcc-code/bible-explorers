@@ -98,13 +98,15 @@
     "round": "Round",
     "simonSays": {
       "failed": {
-        "message": "You've played the wrong note of the melody!"
+        "message": "You've played the wrong note of the melody!",
+        "title": "Oops!"
       }
     },
     "skip": "Skip",
     "startGame": "Start game",
     "timeElapsed": {
-      "message": "Time is up; try to attach all the wires before time is up."
+      "message": "Time is up; try to attach all the wires before time is up.",
+      "title": "Oops!"
     },
     "tryAgain": "Try again",
     "winRound": "Well done!"

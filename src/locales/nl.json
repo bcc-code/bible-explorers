@@ -66,7 +66,7 @@
   "miniGames": {
     "anotherRound": "Nog een ronde",
     "bibleVerseCode": {
-      "checkCode": "Controleer of de code juist is"
+      "checkCode": "Controleer of de code juist is "
     },
     "completed": {
       "message": "Je hebt de opdracht voltooid!",
@@ -97,17 +97,18 @@
     "round": "Ronde",
     "simonSays": {
       "failed": {
-        "message": "Je hebt de verkeerde noot van de melodie afgespeeld."
+        "message": "Je hebt de verkeerde noot van de melodie afgespeeld.",
+        "title": "Oeps!"
       }
     },
     "skip": "Overslaan",
     "startGame": "Start spel",
     "timeElapsed": {
-      "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is."
+      "message": "De tijd is om, probeer de kabels te verbinden voor de tijd om is.",
+      "title": "Oeps!"
     },
     "tryAgain": "Probeer opnieuw!",
-    "winRound": "Goed gedaan!",
-    "oops": "Oeps!"
+    "winRound": "Goed gedaan!"
   },
   "notAvailable": "Geen hoofdstuk beschikbaar in de gekozen taal",
   "offline": {
@@ -183,11 +184,5 @@
   "waitingScreen": {
     "inputPlaceholder": "Schrijf hier je naam",
     "submit": "Bevestig"
-  },
-  "notifications": {
-    "webSupport": {
-      "title": "Oops!",
-      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
-    }
   }
 }

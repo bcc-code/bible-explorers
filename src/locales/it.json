@@ -64,9 +64,9 @@
     "redirectLink": "fare clic qui per accedere."
   },
   "miniGames": {
-    "anotherRound": "Another round",
+    "anotherRound": "Un altro giro",
     "bibleVerseCode": {
-      "checkCode": "Controllare se il codice è corretto"
+      "checkCode": "Controllare se il codice è corretto "
     },
     "completed": {
       "message": "Hai completato il compito!",
@@ -97,17 +97,18 @@
     "round": "Round",
     "simonSays": {
       "failed": {
-        "message": "Hai suonato la nota sbagliata della melodia!"
+        "message": "Hai suonato la nota sbagliata della melodia!",
+        "title": "Ops!"
       }
     },
     "skip": "Salta",
     "startGame": "Inizia il gioco",
     "timeElapsed": {
-      "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca."
+      "message": "Il tempo è scaduto; cerca di collegare tutti i fili prima che il tempo finisca.",
+      "title": "Ops!"
     },
     "tryAgain": "Riprova!",
-    "winRound": "Ben fatto!",
-    "oops": "Ops!"
+    "winRound": "Ben fatto!"
   },
   "notAvailable": "Nessun capitolo disponibile nella lingua selezionata",
   "offline": {
@@ -183,11 +184,5 @@
   "waitingScreen": {
     "inputPlaceholder": "Inserisci il tuo nome qui",
     "submit": "Aggiungere"
-  },
-  "notifications": {
-    "webSupport": {
-      "title": "Oops!",
-      "text": "It looks like you're accessing Explorers on a device that is not supported, which could affect some features and functionality.\n For the best experience, we recommend visiting this site on a PC using Chrome or Safari. Thank you for your understanding!"
-    }
   }
 }
