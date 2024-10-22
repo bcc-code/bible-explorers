@@ -107,9 +107,7 @@
       "message": "Time is up; try to attach all the wires before time is up."
     },
     "tryAgain": "Prøv igjen",
-    "winRound": "Godt gået!",
-    "oops": "Oops!",
-    "minefield": "Minefield"
+    "winRound": "Godt gået!"
   },
   "notAvailable": "Intet tilgængeligt kapitel i det valgte sprog",
   "offline": {
