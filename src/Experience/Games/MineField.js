@@ -137,31 +137,57 @@ export default class MineField {
         const row = parseInt(currentCell[0])
         const col = parseInt(currentCell[1])
 
-        // Find adjacent cells (left, right, top, bottom)
-        const adjacentCells = [
-            `${row}${col + 1}`, // right
-            `${row}${col - 1}`, // left
-            `${row - 1}${col}`, // top
-            `${row + 1}${col}`, // bottom
-        ]
+        // Find adjacent cells (right, top, bottom, left)
+        let adjacentCells = {
+            right: `${row}${col + 1}`, // forward (red)
+            top: `${row - 1}${col}`, // top (green)
+            bottom: `${row + 1}${col}`, // bottom (blue)
+            left: `${row}${col - 1}`, // fallback (green or blue)
+        }
 
-        // Filter out visited cells from adjacentCells
-        const availableCells = adjacentCells.filter(
-            (cell) => isValidCell(cell) && !instance.traveledPath.includes(cell)
-        )
-
-        // Assign colors to the available cells
-        const colors = ['cell-red', 'cell-green', 'cell-blue']
-        availableCells.forEach((cell, index) => {
-            instance.cellColors[cell] = colors[index % colors.length] // Cycle through colors
+        // Filter out invalid cells and prioritize forward movement (right, top, bottom)
+        let availableCells = []
+        Object.keys(adjacentCells).forEach((key) => {
+            const cell = adjacentCells[key]
+            if (isValidCell(cell) && !instance.traveledPath.includes(cell)) {
+                availableCells.push({ position: key, cell })
+            }
         })
+
+        // If there are fewer than 3 unvisited cells, include visited cells
+        if (availableCells.length < 3) {
+            Object.keys(adjacentCells).forEach((key) => {
+                const cell = adjacentCells[key]
+                if (isValidCell(cell) && !availableCells.find((item) => item.cell === cell)) {
+                    availableCells.push({ position: key, cell })
+                }
+            })
+        }
+
+        // Assign colors based on priority
+        availableCells.forEach((available) => {
+            if (available.position === 'right') {
+                instance.cellColors[available.cell] = 'cell-red'
+            } else if (available.position === 'top') {
+                instance.cellColors[available.cell] = 'cell-green'
+            } else if (available.position === 'bottom') {
+                instance.cellColors[available.cell] = 'cell-blue'
+            } else {
+                // If neither top nor bottom is available, choose between blue and green
+                const fallbackColor = instance.cellColors[adjacentCells.top] ? 'cell-blue' : 'cell-green'
+                instance.cellColors[available.cell] = fallbackColor
+            }
+        })
+
+        // Limit available cells to 3
+        availableCells = availableCells.slice(0, 3)
 
         for (let i = 1; i <= 5; i++) {
             for (let j = 1; j <= 5; j++) {
                 const currentCell = i.toString() + j.toString()
 
                 tableHTML += `
-                    <div class="cell flex justify-center items-center ${availableCells.includes(currentCell) ? 'available-cell ' + (instance.cellColors[currentCell] || '') : ''}" 
+                    <div class="cell flex justify-center items-center ${availableCells.find((item) => item.cell === currentCell) ? 'available-cell ' + (instance.cellColors[currentCell] || '') : ''}" 
                          data-cell="${currentCell}" 
                          ${instance.currentCell() == currentCell ? 'current-cell' : ''}
                          ${instance.traveledPath.includes(currentCell) ? 'visited-cell' : ''}
