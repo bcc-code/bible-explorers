@@ -32,8 +32,6 @@ _appInsights.trackPageView({ name: 'Home' })
 // Start 3D experience
 const experience = new Experience()
 
-
-const notification = document.querySelector('.notification')
 const message = document.querySelector('.notification-message')
 const title = document.querySelector('.notification-title')
 const closeButton = document.querySelector('#close-button')
@@ -41,32 +39,38 @@ const restartButton = document.querySelector('#restart-button')
 
 // New app version notification
 function showNotification() {
+    const notification = document.querySelector('.notification')
+    notification.showModal()
+
     gsap.fromTo(
-        notification,
-        {
-            x: '-100%',
-        },
-        {
-            duration: 1,
-            x: '0%',
-            ease: 'power3.out',
-            onStart: () => {
-                notification.classList.remove('hidden')
-            },
+        notification.querySelector('.notification-box'),
+        { y: '100px' },  
+        { 
+            duration: 1,  
+            y: '0',      
+            ease: 'power3.out' 
         }
     )
 }
 
-closeButton.addEventListener('click', () => {
-    gsap.to(notification, {
-        duration: 1,
-        x: '-100%',
-        ease: 'power3.in',
-        onComplete: () => {
-            notification.classList.add('hidden')
-        },
-    })
-})
+function closeNotification() {
+    const notification = document.querySelector('.notification');
+    
+    // Animate the notification-box back out
+    gsap.to(
+        notification.querySelector('.notification-box'),
+        {
+            duration: 0.5,
+            y: '100px',
+            ease: 'power3.in',
+            onComplete: () => {
+                notification.close(); 
+            }
+        }
+    );
+}
+
+closeButton.addEventListener('click', closeNotification)
 
 if (isElectron()) {
     document.body.classList.add('electron')
@@ -90,6 +94,7 @@ if (isElectron()) {
         window.electronAPI.restartApp()
     })
 } else {
+
     // Register Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -104,6 +109,26 @@ if (isElectron()) {
         })
     }
 }
+
+// Detecting unsupported browsers
+function isSupportedBrowser() {
+    const userAgent = navigator.userAgent;
+    return /Chrome|Safari/.test(userAgent) && !/Edge|OPR|Firefox/.test(userAgent);
+}
+
+// Detecting mobile devices (optional, if you want to show it based on devices)
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Showing notification if unsupported browser or device is detected
+if (!isSupportedBrowser() || isMobileDevice()) {
+    title.innerHTML = _s.notifications.webSupport.title
+    message.innerHTML =  _s.notifications.webSupport.text
+    restartButton.classList.add('hidden')
+    showNotification()
+}
+
 
 // Auth0
 const configureClient = async () => {
@@ -187,21 +212,3 @@ window.addEventListener(_e.ACTIONS.ROUTE_CHANGED, async ({ detail }) => {
     await handleRedirectCallback()
 })
 
-// Detecting unsupported browsers
-function isSupportedBrowser() {
-    const userAgent = navigator.userAgent;
-    return /Chrome|Safari/.test(userAgent) && !/Edge|OPR|Firefox/.test(userAgent);
-}
-
-// Detecting mobile devices (optional, if you want to show it based on devices)
-function isMobileDevice() {
-    return /Mobi|Android/i.test(navigator.userAgent);
-}
-
-// Showing notification if unsupported browser or device is detected
-if (!isSupportedBrowser() || isMobileDevice()) {
-    title.innerHTML = _s.notifications.webSupport.title
-    message.innerHTML =  _s.notifications.webSupport.text
-    restartButton.classList.add('hidden')
-    showNotification()
-}

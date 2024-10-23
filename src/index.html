@@ -45,7 +45,9 @@
                             <div class="corner top-right"></div>
                             <div class="edge left"></div>
                             <div class="content">
-                                <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
+                                <svg class="icon">
+                                    <use href="#download-solid" fill="currentColor"></use>
+                                </svg>
                             </div>
                             <div class="edge right"></div>
                             <div class="corner bottom-left"></div>
@@ -58,7 +60,9 @@
                             <div class="corner top-right"></div>
                             <div class="edge left"></div>
                             <div class="content">
-                                <svg class="icon"><use href="#house-solid" fill="currentColor"></use></svg>
+                                <svg class="icon">
+                                    <use href="#house-solid" fill="currentColor"></use>
+                                </svg>
                             </div>
                             <div class="edge right"></div>
                             <div class="corner bottom-left"></div>
@@ -162,7 +166,9 @@
                             <div class="corner top-right"></div>
                             <div class="edge left"></div>
                             <div class="content">
-                                <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                                <svg class="icon">
+                                    <use href="#user-solid" fill="currentColor"></use>
+                                </svg>
                                 <span class="name-initials"></span>
                             </div>
                             <div class="edge right"></div>
@@ -181,7 +187,9 @@
                             <div class="corner top-right"></div>
                             <div class="edge left"></div>
                             <div class="content">
-                                <svg class="icon"><use href="#user-solid" fill="currentColor"></use></svg>
+                                <svg class="icon">
+                                    <use href="#user-solid" fill="currentColor"></use>
+                                </svg>
                             </div>
                             <div class="edge right"></div>
                             <div class="corner bottom-left"></div>
@@ -242,7 +250,6 @@
                         id="back-to-age-category"
                         type="button"
                         title="Go back to age category"
-                        role="button"
                     ></button>
                 </div>
                 <div
@@ -305,14 +312,12 @@
                                 id="prev-step"
                                 type="button"
                                 title="Previous step"
-                                role="button"
                             ></button>
                             <button
                                 class="button-arrow"
                                 id="next-step"
                                 type="button"
                                 title="Next step"
-                                role="button"
                             ></button>
                         </div>
                     </div>
@@ -336,47 +341,56 @@
                 id="app-version"
                 class="absolute bottom-1 right-1 hidden text-xs opacity-30 group-data-[view='age-category']/app:block"
             ></div>
-            <div id="notification" class="notification z-50 hidden">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="notification-header">
-                        <svg class="icon text-bke-orange"><use href="#circle-exclamation-solid" fill="currentColor"></use></svg>
-                        <h3 class="notification-title"></h3>
-                    </div>
-                    <p class="notification-message"></p>
-                    <button id="restart-button" class="button-grid">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content"></div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
-                    </button>
-                    <button id="close-button" class="button-grid">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">
-                            <svg><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+            <dialog id="notification" class="notification">
+                <div class="notification-box">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">
+                        <div class="notification-header">
+                            <svg class="icon text-bke-orange">
+                                <use href="#circle-exclamation-solid" fill="currentColor"></use>
+                            </svg>
+                            <h3 class="notification-title"></h3>
                         </div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
-                    </button>
+                        <p class="notification-message"></p>
+                        <button id="restart-button" class="button-grid" title="Restart button" type="button">
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content"></div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
+                        <button
+                            id="close-button"
+                            class="button-grid"
+                            title="Close notification"
+                            type="button"
+                        >
+                            <div class="corner top-left"></div>
+                            <div class="edge top"></div>
+                            <div class="corner top-right"></div>
+                            <div class="edge left"></div>
+                            <div class="content">
+                                <svg><use href="#xmark-large-solid" fill="currentColor"></use></svg>
+                            </div>
+                            <div class="edge right"></div>
+                            <div class="corner bottom-left"></div>
+                            <div class="edge bottom"></div>
+                            <div class="corner bottom-right"></div>
+                        </button>
+                    </div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
                 </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </div>
+            </dialog>
         </div>
 
         <div
@@ -388,7 +402,10 @@
             </div>
             <div class="text-center text-2xl">
                 <p class="info"></p>
-                <p><span></span> <a class="text-bke-orange hover:underline" href="javascript:void(0)"></a></p>
+                <p>
+                    <span></span>
+                    <a class="text-bke-orange hover:underline" href="javascript:void(0)"></a>
+                </p>
             </div>
         </div>
 
