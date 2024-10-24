@@ -89,6 +89,9 @@ export default class Video {
 
         // Move Iris video first in the list in order to be visible
         instance.videoContainer.prepend(instance.videoContainer.querySelector('#iris-idle'))
+
+        const irisIdleVideo = document.querySelector('#iris-idle video')
+        irisIdleVideo.play()
     }
 
     //#region Actions
@@ -112,6 +115,12 @@ export default class Video {
         if (!instance.video()) return
 
         instance.pause()
+
+        // Check if iris-idle video is playing and pause it
+        const irisIdleVideo = document.querySelector('#iris-idle video')
+        if (irisIdleVideo && !irisIdleVideo.paused) {
+            irisIdleVideo.pause()
+        }
 
         if (instance.video().isFullscreen_) {
             instance.video().exitFullscreen()
