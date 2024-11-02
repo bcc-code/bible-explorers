@@ -284,6 +284,7 @@ export default class Audio {
             audio.pianoTiles = new Howl({
                 src: ['games/piano-tiles/BIEX_Vignett_m_tverrflute.mp3'],
                 format: 'mp3',
+                volume: 0.5,
                 onload: function () {
                     document.dispatchEvent(_e.EVENTS.SONG_LOADED)
                 },
