@@ -44,30 +44,27 @@ function showNotification() {
 
     gsap.fromTo(
         notification.querySelector('.notification-box'),
-        { y: '100px' },  
-        { 
-            duration: 1,  
-            y: '0',      
-            ease: 'power3.out' 
+        { y: '100px' },
+        {
+            duration: 1,
+            y: '0',
+            ease: 'power3.out',
         }
     )
 }
 
 function closeNotification() {
-    const notification = document.querySelector('.notification');
-    
+    const notification = document.querySelector('.notification')
+
     // Animate the notification-box back out
-    gsap.to(
-        notification.querySelector('.notification-box'),
-        {
-            duration: 0.5,
-            y: '100px',
-            ease: 'power3.in',
-            onComplete: () => {
-                notification.close(); 
-            }
-        }
-    );
+    gsap.to(notification.querySelector('.notification-box'), {
+        duration: 0.5,
+        y: '100px',
+        ease: 'power3.in',
+        onComplete: () => {
+            notification.close()
+        },
+    })
 }
 
 closeButton.addEventListener('click', closeNotification)
@@ -80,6 +77,7 @@ if (isElectron()) {
 
     window.electronAPI.onUpdateAvailable(() => {
         message.innerHTML = _s.autoUpdate.updateAvailable
+        restartButton.classList.add('hidden')
         showNotification()
     })
 
@@ -94,7 +92,6 @@ if (isElectron()) {
         window.electronAPI.restartApp()
     })
 } else {
-
     // Register Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -112,23 +109,22 @@ if (isElectron()) {
 
 // Detecting unsupported browsers
 function isSupportedBrowser() {
-    const userAgent = navigator.userAgent;
-    return /Chrome|Safari/.test(userAgent) && !/Edge|OPR|Firefox/.test(userAgent);
+    const userAgent = navigator.userAgent
+    return /Chrome|Safari/.test(userAgent) && !/Edge|OPR|Firefox/.test(userAgent)
 }
 
 // Detecting mobile devices (optional, if you want to show it based on devices)
 function isMobileDevice() {
-    return /Mobi|Android/i.test(navigator.userAgent);
+    return /Mobi|Android/i.test(navigator.userAgent)
 }
 
 // Showing notification if unsupported browser or device is detected
 if (!isSupportedBrowser() || isMobileDevice()) {
     title.innerHTML = _s.notifications.webSupport.title
-    message.innerHTML =  _s.notifications.webSupport.text
+    message.innerHTML = _s.notifications.webSupport.text
     restartButton.classList.add('hidden')
     showNotification()
 }
-
 
 // Auth0
 const configureClient = async () => {
@@ -211,4 +207,3 @@ window.addEventListener(_e.ACTIONS.ROUTE_CHANGED, async ({ detail }) => {
     await configureClient()
     await handleRedirectCallback()
 })
-

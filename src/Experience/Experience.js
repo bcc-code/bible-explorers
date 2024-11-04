@@ -91,7 +91,9 @@ export default class Experience {
         const redirectToLanguage = instance.getUrlParameter('language')
         if (redirectToLanguage) {
             const requiredToLogin = instance.getUrlParameter('login')
-            window.history.replaceState({}, document.title, '/' + requiredToLogin ? '?login' : '')
+            const redirectUrl =
+                window.location.href.split('?')[0] + (requiredToLogin === true ? '?login' : '')
+            window.history.replaceState({}, document.title, redirectUrl)
             _lang.updateLanguage(redirectToLanguage)
         }
 
