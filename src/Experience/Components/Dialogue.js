@@ -30,15 +30,7 @@ export default class Dialogue {
         const dialogue = _gl.elementFromHtml(`
             <section class="dialogue">
                 <div class="content">
-                    ${instance.data
-                        .map(
-                            (dialog) => `
-                        <div class="question">
-                            <p>${dialog.question}</p>
-                        </div>
-                    `
-                        )
-                        .join('')}
+                    ${instance.data.map((dialog) => `<div class="question"><p>${dialog.question}</p></div>`).join('')}
                 </div>
             </section>
         `)
@@ -58,7 +50,7 @@ export default class Dialogue {
                 buttons.forEach((button) => button.classList.remove('current'))
 
                 // Remove previous message
-                document.querySelector('.message-from-dialogue')?.remove()
+                document.querySelector('.cc-container')?.remove()
 
                 // Add visited class
                 button.classList.add('visited')

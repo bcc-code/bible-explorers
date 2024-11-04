@@ -16,10 +16,20 @@ export default class Timer {
         const time = timer.getMinutesAndSeconds(minutes * 60)
 
         timer.htmlEl = _gl.elementFromHtml(`
-            <div class="game-timer button button-rectangle-wide">
-                <span class="minutes">${time.minutes}</span>
-                <div>:</div>
-                <span class="seconds">${time.seconds}</span>
+            <div class="game-timer button-grid">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <span class="minutes">${time.minutes}</span>
+                    <div>:</div>
+                    <span class="seconds">${time.seconds}</span>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         `)
 

@@ -1,7 +1,5 @@
 @use 'sass:math';
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss/tailwind.css';
 
 // #region Functions
 
@@ -560,9 +558,6 @@ body.not-logged-in {
 
     @media (width >= rem(1280)) {
         --corner-size: 8px;
-
-        .content {
-        }
     }
 }
 
@@ -1475,7 +1470,8 @@ body.not-logged-in {
     }
 }
 
-.task-heading {
+.task-heading,
+.game-popup {
     --corner-size: 20px;
 
     display: grid;
@@ -2235,7 +2231,7 @@ body.not-logged-in {
     }
 }
 
-// #endregion GUI
+// #endregion
 
 // #region Views
 
@@ -3746,11 +3742,12 @@ $themes: (
     .container {
         position: absolute;
         inset: 0;
-        padding: var(--app-padding);
         display: flex;
-        flex-flow: column nowrap;
         align-items: center;
+        justify-content: center;
+        flex-flow: column nowrap;
         z-index: 20;
+        pointer-events: all;
     }
 
     .overlay {
@@ -3781,10 +3778,18 @@ $themes: (
         }
     }
 
+    &-rounds {
+        position: absolute;
+        top: 0;
+        z-index: 20;
+        margin-top: 2rem;
+    }
+
     &-popup {
         position: relative;
-        margin-bottom: 4rem;
         text-align: center;
+        z-index: 20;
+        pointer-events: all;
 
         h1 {
             margin-bottom: 1rem;
@@ -3792,6 +3797,15 @@ $themes: (
 
         p {
             margin-bottom: 1rem;
+        }
+
+        > .content {
+            padding: rem(32);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
         }
     }
 
@@ -3817,9 +3831,6 @@ $themes: (
     }
 
     &.popup-visible {
-        .container {
-            justify-content: flex-end;
-        }
 
         .game-rounds {
             display: none;
@@ -4860,6 +4871,3 @@ img.lazyloaded ~ div.img-loader {
 
 // #endregion Tasks
 
-.test {
-    // just empty
-}

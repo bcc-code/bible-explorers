@@ -952,7 +952,7 @@ export default class World {
         })
 
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen()
+            // document.documentElement.requestFullscreen()
         }
     }
 

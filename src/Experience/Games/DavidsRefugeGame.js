@@ -35,7 +35,17 @@ export default class DavidsRefuge {
             <section class="game davids-refuge">
                 <div class="container">
                     <div class="goats"></div>
-                    <button class="button button-rectangle-wide" aria-label="select goat" disabled><span>${_s.miniGames.davidsRefuge.chooseGoat}</span></button>
+                    <button class="button-grid" aria-label="select goat" disabled>
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content"><span>${_s.miniGames.davidsRefuge.chooseGoat}</span></div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
+                    </button>
                 </div>
                 <div class="overlay"></div>
             </section>
@@ -90,17 +100,21 @@ export default class DavidsRefuge {
                 <ul>
                     <li>${instance.data.hints[0].text}</li>
                 </ul>
-                <button class="button button-rectangle-wide">Get more hints</button>
+                <button class="button-grid">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">Get more hints</div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </button>
             </aside>
         `)
 
-        const hintsToggle = _gl.elementFromHtml(`
-            <button class="button button-circle" aria-label="toggle hints">
-                <svg class="icon">
-                    <use href="#question-mark"></use>
-                </svg>
-            </button>
-        `)
+        const hintsToggle = _gl.elementFromHtml(`<button class="button-circle" aria-label="toggle hints"><svg class="icon"><use href="#question-mark"></use></svg></button>`)
 
         document.querySelector('.davids-refuge .container').append(hintsToggle, hints)
 
@@ -125,7 +139,7 @@ export default class DavidsRefuge {
 
         let index = 1
 
-        const getHint = hints.querySelector('button')
+        const getHint = hints.querySelector('.button-grid .content')
         getHint.addEventListener('click', () => {
             if (index < instance.data.hints.length) {
                 const hint = _gl.elementFromHtml(`<li>${instance.data.hints[index].text}</li>`)
@@ -181,7 +195,7 @@ export default class DavidsRefuge {
                     } else {
                         tooltip[0].innerText = instance.data.wrong_character_message
 
-                        selectGoat.innerText = _s.miniGames.tryAgain
+                        selectGoat.querySelector('.content').innerText = _s.miniGames.tryAgain
                         selectGoat.addEventListener('click', () => {
                             instance.destroy()
                             instance.toggleGame()

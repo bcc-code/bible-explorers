@@ -69,10 +69,20 @@ export default class HeartDefense {
             <section class="game heart-defense">
                 <div class="container">
                     <div id="heart-defense" class="game-canvas"></div>
-                    <div class="game-rounds">
-                        <span>${_s.miniGames.round}:</span>
-                        <span class="level">${instance.stats.level}</span>
-                        <span> / ${instance.config.levels}</span>
+                    <div class="game-rounds button-grid">
+                        <div class="corner top-left"></div>
+                        <div class="edge top"></div>
+                        <div class="corner top-right"></div>
+                        <div class="edge left"></div>
+                        <div class="content">
+                            <span>${_s.miniGames.round}:</span>
+                            <span class="level">${instance.stats.level}</span>
+                            <span> / ${instance.config.levels}</span>
+                        </div>
+                        <div class="edge right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="edge bottom"></div>
+                        <div class="corner bottom-right"></div>
                     </div>
                 </div>
                 <div class="overlay"></div>
@@ -591,14 +601,35 @@ export default class HeartDefense {
     toggleLevelCompleted() {
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <h1>${_s.miniGames.completed.title}</h1>
-                <p>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</p>
-                <div class="buttons"></div>
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h1>${_s.miniGames.completed.title}</h1>
+                    <p>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</p>
+                    <div class="buttons"></div>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+             
             </div>
         `)
 
         const nextLevelBTN = _gl.elementFromHtml(`
-            <button class="btn default focused pulsate">${_s.miniGames.nextRound}</button>
+            <button class="button-grid">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">${_s.miniGames.nextRound}</div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </button>
         `)
 
         congratsHTML.querySelector('.buttons').append(nextLevelBTN)
@@ -641,13 +672,33 @@ export default class HeartDefense {
     toggleGameOver() {
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <h1>${_s.miniGames.gameOver}</h1>
-                <div class="buttons"></div>
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h1>${_s.miniGames.gameOver}</h1>
+                    <div class="buttons"></div>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         `)
 
         const resetBTN = _gl.elementFromHtml(`
-            <button class="btn default">${_s.miniGames.restartRound}</button>
+            <button class="button-grid">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">${_s.miniGames.restartRound}</div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </button>
         `)
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 
