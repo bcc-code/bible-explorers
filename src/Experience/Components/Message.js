@@ -59,7 +59,7 @@ export default class Message {
                 <div class="edge left"></div>
                 <div class="content">
                     <div id="iris-cc">
-                        <div class="cc-text">${caption}</div>
+                        <div class="cc-text scroller">${caption}</div>
                     </div>
                 </div>
                 <div class="edge right"></div>

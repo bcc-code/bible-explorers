@@ -1316,6 +1316,9 @@ body.not-logged-in {
         display: block;
         text-align: center;
         font-size: var(--font-size-h4);
+
+        max-height: rem(132);
+        overflow: auto;
     }
 
     .cc-character {
@@ -3778,6 +3781,7 @@ $themes: (
         }
     }
 
+    &-timer,
     &-rounds {
         position: absolute;
         top: 0;

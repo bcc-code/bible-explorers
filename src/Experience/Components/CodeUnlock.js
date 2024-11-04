@@ -42,17 +42,19 @@ export default class CodeUnlock {
                 <div class="edge left"></div>
                 <div class="content">
                     <div class="task-content">
+                        ${title ? `
                         <h5 class="task-heading">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${title}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
+                          <div class="corner top-left"></div>
+                          <div class="edge top"></div>
+                          <div class="corner top-right"></div>
+                          <div class="edge left"></div>
+                          <div class="content">${title}</div>
+                          <div class="edge right"></div>
+                          <div class="corner bottom-left"></div>
+                          <div class="edge bottom"></div>
+                          <div class="corner bottom-right"></div>
                         </h5>
+                        ` : ''}
                         <div class="code-unlock-device">
                             <div class="code-unlock-code"></div>
                             <div class="code-unlock-keyboard"></div>
