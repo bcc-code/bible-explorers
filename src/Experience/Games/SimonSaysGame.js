@@ -214,7 +214,7 @@ export default class SimonSays {
         `)
 
         const resetBTN = _gl.elementFromHtml(`
-            <button class="btn default">
+            <button class="button-grid">
                 <div class="corner top-left"></div>
                 <div class="edge top"></div>
                 <div class="corner top-right"></div>
