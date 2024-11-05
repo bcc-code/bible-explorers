@@ -1021,7 +1021,7 @@ body.not-logged-in {
         }
     }
 
-    .chapter:hover:not(.selected) & {
+    .chapter:hover:not(.selected, .downloading) & {
         > .edge.top {
             background-image: url('../../static/GUI/lobby/chapter-hover_02.png');
         }
@@ -2391,7 +2391,7 @@ body.not-logged-in {
     }
 
     &__offline {
-        display: none;
+        // display: none;
         position: absolute;
         right: rem(20);
         bottom: rem(20);
