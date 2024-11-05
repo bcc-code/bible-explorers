@@ -2391,7 +2391,7 @@ body.not-logged-in {
     }
 
     &__offline {
-        // display: none;
+        display: none;
         position: absolute;
         right: rem(20);
         bottom: rem(20);
