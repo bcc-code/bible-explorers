@@ -563,6 +563,8 @@ export default class World {
             instance.offline.fetchChapterAsset(instance.selectedChapter, 'background_music', (chapter) => {
                 instance.audio.changeBgMusic(chapter.background_music)
             })
+        } else {
+            document.dispatchEvent(_e.EVENTS.BG_MUSIC_LOADED)
         }
     }
 
@@ -917,12 +919,13 @@ export default class World {
             instance.resetChapter()
         }
 
+        document.dispatchEvent(_e.EVENTS.CHAPTER_STARTED)
+
         instance.experience.setAppView('chapter')
 
         instance.setUpChapter()
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
-        document.dispatchEvent(_e.EVENTS.CHAPTER_STARTED)
 
         const appVersion = document.getElementById('app-version').innerText
 
