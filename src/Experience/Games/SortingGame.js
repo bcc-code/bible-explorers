@@ -293,8 +293,18 @@ export default class SortingGame {
 
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <h1>${_s.miniGames.completed.title}</h1>
-                <p>${_s.miniGames.completed.message}</p>
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h1>${_s.miniGames.completed.title}</h1>
+                    <p>${_s.miniGames.completed.message}</p>
+                </div>
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
             </div>
         `)
 
