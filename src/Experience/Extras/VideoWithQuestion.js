@@ -97,7 +97,7 @@ export default class VideoWithQuestion {
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
 
-        const submitQuestion = container.querySelector('button')
+        const submitQuestion = container.querySelector('.button-grid')
         submitQuestion.addEventListener('click', () => {
             instance.saveAnswers()
             instance.destroy()
