@@ -1475,7 +1475,7 @@ body.not-logged-in {
 
 .task-heading,
 .game-popup {
-    --corner-size: 20px;
+    --corner-size: 16px;
 
     display: grid;
     place-items: center center;
@@ -1639,9 +1639,6 @@ body.not-logged-in {
 
     @media (width >= rem(1440)) and (height >= rem(900)) {
         // 1440x900
-        &-heading {
-            top: - rem(76);
-        }
     }
 
     @media (width >= rem(1600)) and (height >= rem(900)) {
