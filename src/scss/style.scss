@@ -1633,6 +1633,10 @@ body.not-logged-in {
         margin-block: rem(32);
     }
 
+    &-game_popup {
+        pointer-events: all;
+    }
+
     @media (width >= rem(1280)) and (height >= rem(720)) {
         // 1280x720
     }
