@@ -77,7 +77,17 @@ export default class MazeGame {
             <div class="task-game_rounds">${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}</div>
             <div class="task-game_popup">
                 <h1>${_s.miniGames.completed.title}</h1>
-                <button class="button button-rectangle-wide" id="new-level">${_s.miniGames.nextRound}</button>
+                <button class="button-grid" id="new-level">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">${_s.miniGames.nextRound}</div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
+                </button>
             </div>
         </section>`)
 
@@ -568,18 +578,15 @@ export default class MazeGame {
         if (this.options.gameState == 'congrats') {
             this.options.currentLevel++
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
-            document.querySelector('.task-game_popup button').textContent = _s.miniGames.nextRound
+            document.querySelector('.task-game_popup .button-grid .content').textContent = _s.miniGames.nextRound
         } else if (this.options.gameState == 'repeat') {
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.oops
-            document.querySelector('.task-game_popup button').textContent = _s.miniGames.playAgain
+            document.querySelector('.task-game_popup .button-grid .content').textContent = _s.miniGames.playAgain
         } else if (this.options.gameState == 'end game') {
             this.options.currentLevel++
 
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
-            document.querySelector('.task-game_popup button').textContent = _s.miniGames.nextRound
-
-            if (document.querySelector('#new-level'))
-                document.querySelector('#new-level').className = 'button button-rectangle-wide'
+            document.querySelector('.task-game_popup .button-grid .content').textContent = _s.miniGames.nextRound
 
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1
         }
