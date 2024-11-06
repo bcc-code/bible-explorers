@@ -156,9 +156,7 @@ export default class ChooseNewKing {
                         const nextInput = cards[index + 1]?.querySelector('.card-input input')
                         if (nextInput) {
                             nextInput.focus()
-                        } else {
-                            instance.experience.navigation.next.innerHTML = ''
-                        }
+                        } 
 
                         // All cards are flipped
                         const flippedCards = document.querySelectorAll('.flipped')
@@ -212,6 +210,7 @@ export default class ChooseNewKing {
                 } else {
                     chooseCard.disabled = true;
                     cards.forEach((card) => (card.style.pointerEvents = 'none'));
+                    instance.experience.navigation.next.innerHTML = ''
                 }
             }
 
