@@ -6,7 +6,6 @@ import Resources from './Utils/Resources.js'
 import sources from './Sources.js'
 import Menu from './Components/Menu.js'
 import World from './World.js'
-import FAQ from './Components/FAQ.js'
 import _gl from './Utils/Globals.js'
 import _lang from './Utils/Lang.js'
 import _e from './Utils/Events.js'
@@ -22,9 +21,6 @@ export default class Experience {
 
         // Global access
         window.experience = this
-
-        // Options
-        this.faq = new FAQ()
 
         // Setup
         this.settings = new Menu()
