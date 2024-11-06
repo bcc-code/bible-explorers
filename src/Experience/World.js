@@ -1,18 +1,17 @@
-import Offline from '../Utils/Offline.js'
-import Experience from '../Experience.js'
-import ControlRoom from './ControlRoom.js'
-import Audio from '../Extras/Audio.js'
-import Program from '../Progress/Program.js'
-import ProgressBar from '../Components/ProgressBar.js'
-import _s from '../Utils/Strings.js'
-import _lang from '../Utils/Lang.js'
-import _api from '../Utils/Api.js'
-import _e from '../Utils/Events.js'
-import _appInsights from '../Utils/AppInsights.js'
+import Offline from './Utils/Offline.js'
+import Experience from './Experience.js'
+import Audio from './Extras/Audio.js'
+import Program from './Progress/Program.js'
+import ProgressBar from './Components/ProgressBar.js'
+import _s from './Utils/Strings.js'
+import _lang from './Utils/Lang.js'
+import _api from './Utils/Api.js'
+import _e from './Utils/Events.js'
+import _appInsights from './Utils/AppInsights.js'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
-import _gl from '../Utils/Globals.js'
+import _gl from './Utils/Globals.js'
 import isElectron from 'is-electron'
 
 let instance = null
@@ -46,7 +45,6 @@ export default class World {
             this.setCategories()
 
             // Setup
-            this.controlRoom = new ControlRoom()
             this.audio = new Audio()
         })
 
@@ -1113,7 +1111,6 @@ export default class World {
             instance.program.video.defocus()
         }
 
-        instance.controlRoom.irisTextureTransition()
         instance.audio.stopAllTaskDescriptions()
         instance.audio.changeBgMusic()
 

@@ -15,8 +15,6 @@ export default class Video {
         instance.resources = instance.experience.resources
         instance.audio = instance.world.audio
         instance.scene = instance.experience.scene
-        instance.controlRoom = instance.world.controlRoom
-        instance.clickableObjects = instance.controlRoom.clickableObjects
 
         // Load all videos
         const chapterId = instance.world.selectedChapter.id
