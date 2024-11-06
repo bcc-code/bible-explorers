@@ -28,7 +28,7 @@ export default class QuestionAndCode {
         const answersWrapper = _gl.elementFromHtml(`
         <div class="game answers">
             <div class="container">
-                <button class="btn default" aria-label="skip-button" style="display: none">${_s.miniGames.skip}</button>
+                <h3 class="mb-4">${instance.question}</h3>
                 <form>
                     <label for="answer1">1</label>
                     <input type="text" id="answer1" />
