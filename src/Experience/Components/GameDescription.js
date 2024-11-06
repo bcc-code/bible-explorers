@@ -22,7 +22,6 @@ export default class GameDescription {
         instance = this
 
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
 
         // Setup
         instance.offline = new Offline()

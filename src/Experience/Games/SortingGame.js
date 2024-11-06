@@ -12,8 +12,6 @@ export default class SortingGame {
         this.world = this.experience.world
         this.offline = this.world.offline
         this.audio = this.world.audio
-        this.sizes = this.experience.sizes
-        this.debug = this.experience.debug
 
         instance = this
     }

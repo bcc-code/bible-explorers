@@ -13,8 +13,6 @@ export default class CableConnector {
         this.world = this.experience.world
         this.program = this.world.program
         this.audio = this.world.audio
-        this.sizes = this.experience.sizes
-        this.debug = this.experience.debug
 
         instance = this
     }

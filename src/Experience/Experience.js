@@ -1,10 +1,8 @@
 import * as THREE from 'three'
 import confetti from 'canvas-confetti'
-import { Debug, StatsModule } from './Utils/Debug.js'
 import Sizes from './Utils/Sizes.js'
 import Time from './Utils/Time.js'
 import Resources from './Utils/Resources.js'
-import MouseMove from './Utils/MouseMove.js'
 import sources from './Sources.js'
 import Menu from './Components/Menu.js'
 import World from './World.js'
@@ -30,12 +28,8 @@ export default class Experience {
 
         // Setup
         this.settings = new Menu()
-        this.debug = new Debug()
-        this.stats = new StatsModule()
         this.sizes = new Sizes()
         this.time = new Time()
-        this.scene = new THREE.Scene()
-        this.pointer = new MouseMove()
 
         document.addEventListener(_e.ACTIONS.USER_DATA_FETCHED, () => {
             this.resources = new Resources(sources)
@@ -122,8 +116,4 @@ export default class Experience {
         document.querySelector('#app').setAttribute('data-view', attr)
     }
 
-    update() {
-        this.world.update()
-        this.stats.update()
-    }
 }

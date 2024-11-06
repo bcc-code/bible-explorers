@@ -12,7 +12,6 @@ export default class HiddenItems {
         instance = this
 
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
     }
 
     togglePictureAndCode() {

@@ -11,7 +11,6 @@ export default class Dialogue {
         instance = this
         instance.offline = new Offline()
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
     }
 
     toggle() {

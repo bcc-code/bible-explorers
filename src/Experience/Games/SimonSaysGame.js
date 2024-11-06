@@ -17,7 +17,6 @@ export default class SimonSays {
         this.experience = new Experience()
         this.world = this.experience.world
         this.audio = this.world.audio
-        this.debug = this.experience.debug
 
         instance = this
 

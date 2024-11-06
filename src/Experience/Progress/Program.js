@@ -35,7 +35,6 @@ export default class Program {
         instance.offline = instance.world.offline
         instance.programData = instance.world.selectedChapter.program
         instance.audio = instance.world.audio
-        instance.debug = instance.experience.debug
 
         instance.archive = new Archive()
 

@@ -12,7 +12,6 @@ export default class HeartDefense {
 
         instance.experience = new Experience()
         instance.world = instance.experience.world
-        instance.debug = instance.experience.debug
 
         const spriteW = 180
         const spriteH = 100

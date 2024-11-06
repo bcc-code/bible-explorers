@@ -12,7 +12,6 @@ export default class TaskDescriptionWithCalculatorScreen {
         instance = this
 
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
         instance.offline = new Offline()
         instance.calculator = new Calculator()
     }

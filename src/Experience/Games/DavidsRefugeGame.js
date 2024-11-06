@@ -14,7 +14,6 @@ export default class DavidsRefuge {
         instance.experience = new Experience()
         instance.world = instance.experience.world
         instance.audio = instance.world.audio
-        instance.debug = instance.experience.debug
     }
 
     toggleGame() {

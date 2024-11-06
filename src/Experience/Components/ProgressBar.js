@@ -8,7 +8,6 @@ export default class ProgressBar {
         instance = this
 
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
         instance.program = instance.experience.world.program
         instance.checkpointWidth = 100 / instance.program.totalCheckpoints
         instance.htmlEl = document.querySelector('#progress-bar')

@@ -11,7 +11,6 @@ export default class MineField {
     constructor() {
         instance = this
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
         instance.offline = new Offline()
         instance.isFirstRender = true
     }

@@ -15,7 +15,6 @@ export default class QuestionAndCode {
 
     toggleQuestionAndCode() {
         instance.world = instance.experience.world
-        instance.debug = instance.experience.debug
         instance.program = instance.world.program
         instance.currentCheckpoint = instance.program.currentCheckpoint
         instance.selectedChapter = instance.world.selectedChapter

@@ -10,7 +10,6 @@ export default class TrueFalsQuiz {
     constructor() {
         instance = this
         instance.experience = new Experience()
-        instance.debug = instance.experience.debug
         instance.offline = new Offline()
     }
 

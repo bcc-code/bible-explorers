@@ -12,7 +12,6 @@ export default class VideoWithQuestion {
         instance = this
         instance.experience = new Experience()
         instance.resources = instance.experience.resources
-        instance.debug = instance.experience.debug
         instance.audio = instance.experience.world.audio
     }
 

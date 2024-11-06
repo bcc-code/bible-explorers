@@ -22,7 +22,6 @@ export default class MazeGame {
 
         this.experience = new Experience()
         this.world = this.experience.world
-        this.debug = this.experience.debug
         this.sizes = this.experience.sizes
         this.time = this.experience.time
         this.resources = this.experience.resources

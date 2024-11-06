@@ -11,7 +11,6 @@ export default class CodeUnlock {
         instance = this
         instance.experience = new Experience()
         instance.world = instance.experience.world
-        instance.debug = instance.experience.debug
     }
 
     toggleCodeUnlock() {

@@ -11,7 +11,6 @@ export default class BibleVerseCode {
         instance = this
         instance.experience = new Experience()
         instance.world = instance.experience.world
-        instance.debug = instance.experience.debug
         instance.offline = new Offline()
     }
 

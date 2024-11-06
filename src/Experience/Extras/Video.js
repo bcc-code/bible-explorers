@@ -11,10 +11,8 @@ export default class Video {
         instance.experience = new Experience()
         instance.world = instance.experience.world
         instance.offline = instance.world.offline
-        instance.debug = instance.experience.debug
         instance.resources = instance.experience.resources
         instance.audio = instance.world.audio
-        instance.scene = instance.experience.scene
 
         // Load all videos
         const chapterId = instance.world.selectedChapter.id

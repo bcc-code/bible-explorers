@@ -20,10 +20,7 @@ export default class World {
         instance = this
         this.offline = new Offline()
         this.experience = new Experience()
-        this.sizes = this.experience.sizes
-        this.scene = this.experience.scene
         this.resources = this.experience.resources
-        this.debug = this.experience.debug
         this.page = this.experience.page
         this.time = this.experience.time
 
