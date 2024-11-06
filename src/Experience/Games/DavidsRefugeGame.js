@@ -23,9 +23,6 @@ export default class DavidsRefuge {
 
         instance.gameHTML()
         instance.useCorrectAssetsSrc()
-
-        if (instance.data.hints.length > 0) instance.hintsHTML()
-
         instance.setEventListeners()
     }
 
@@ -87,65 +84,6 @@ export default class DavidsRefuge {
             instance.offline.fetchChapterAsset(character, 'image', (data) => {
                 document.querySelectorAll('article.goat img')[index].src = data.image
             })
-        })
-    }
-
-    hintsHTML() {
-        if (!instance.data.hints.length) return
-
-        const hints = _gl.elementFromHtml(`
-            <aside class="hints">
-                <h4>Hints</h4>
-                <ul>
-                    <li>${instance.data.hints[0].text}</li>
-                </ul>
-                <button class="button-grid">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">Get more hints</div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
-                </button>
-            </aside>
-        `)
-
-        const hintsToggle = _gl.elementFromHtml(`<button class="button-circle" aria-label="toggle hints"><svg class="icon"><use href="#question-mark"></use></svg></button>`)
-
-        document.querySelector('.davids-refuge .container').append(hintsToggle, hints)
-
-        const hintsList = hints.querySelector('ul')
-
-        gsap.set(hints, { scale: 0, autoAlpha: 0, transformOrigin: 'top left' })
-
-        const showHints = gsap.timeline({ paused: true }).to(hints, { scale: 1, autoAlpha: 1 })
-
-        hintsToggle.addEventListener('click', () => {
-            hints.style.opacity === '0' ? showHints.play() : showHints.reverse()
-        })
-
-        document.addEventListener('click', (event) => {
-            if (
-                !hints.contains(event.target) &&
-                !hintsToggle.contains(event.target) &&
-                !getHint.contains(event.target)
-            )
-                showHints.reverse()
-        })
-
-        let index = 1
-
-        const getHint = hints.querySelector('.button-grid .content')
-        getHint.addEventListener('click', () => {
-            if (index < instance.data.hints.length) {
-                const hint = _gl.elementFromHtml(`<li>${instance.data.hints[index].text}</li>`)
-                hintsList.appendChild(hint)
-            }
-
-            if (++index == instance.data.hints.length) getHint.remove()
         })
     }
 
