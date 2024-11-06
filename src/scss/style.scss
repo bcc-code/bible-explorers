@@ -3816,9 +3816,9 @@ $themes: (
     &-notification {
         background-color: #fff;
         position: absolute;
-        top: var(--app-padding);
-        left: var(--app-padding);
-        padding: var(--app-padding);
+        top: rem(16);
+        left: rem(16);
+        padding: rem(16);
         border-radius: 1rem;
         width: 36ch;
 
@@ -3830,7 +3830,7 @@ $themes: (
         }
 
         p {
-            color: var(--clr-text);
+            color: #333;
         }
     }
 
@@ -3853,14 +3853,14 @@ $themes: (
 
     .cards {
         display: flex;
-        width: clamp(600px, calc(100vw - var(--app-padding)), 1440px);
+        width: clamp(rem(600), calc(100vw - rem(24)), rem(1440));
     }
 
     .card {
         flex: 1;
         position: relative;
         pointer-events: all;
-        padding: calc(var(--app-padding) / 2);
+        padding: rem(12);
 
         audio {
             display: none;
@@ -3869,10 +3869,10 @@ $themes: (
         input {
             width: 100%;
             flex: 1;
-            margin-left: 0.5rem;
             border: none;
-            background-color: transparent;
+            background-color: rgba(#fff, 0.2);
             color: #fff;
+            padding: rem(4) rem(12);
 
             &::placeholder {
                 color: #fff;
@@ -3932,12 +3932,11 @@ $themes: (
         &-input {
             color: #fff;
             position: absolute;
-            bottom: calc(var(--app-padding) + 8px);
-            left: calc(var(--app-padding) + 8px);
-            right: calc(var(--app-padding) + 8px);
+            left: rem(-4);
+            right: rem(10);
+            top: 100%;
             display: flex;
             align-items: center;
-            padding: 0.5rem;
 
             &.wrong-code {
                 animation-name: wrong-code;
@@ -3994,20 +3993,23 @@ $themes: (
         }
 
         &.selected {
+            box-shadow: 0 0 0 rem(2) var(--clr-dark-orange);
+            border-radius: rem(8);
+
             .card-frame {
                 opacity: 1;
             }
         }
     }
 
-    button {
+    .button-grid {
         display: none;
-        margin-top: 2rem;
+        margin-top: rem(24);
     }
 
     &.all-flipped {
-        button {
-            display: inline-block;
+        .button-grid {
+            display: grid;
         }
     }
 
@@ -4039,12 +4041,18 @@ $themes: (
         background-size: contain;
     }
 
+    .card .icon {
+        margin: 0 rem(8);
+        display: none;
+    }
+
     .card-input {
         position: relative;
         width: 180px;
+        bottom: 0;
         left: 0;
         right: 0;
-        bottom: 0;
+        top: auto;
         margin-top: 1rem;
         margin-inline: auto;
     }

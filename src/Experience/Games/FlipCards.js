@@ -206,6 +206,10 @@ export default class FlipCards {
             const cFront = q('.card-front')
             const cInput = q('.card-input input')
 
+            if (index === 0) {
+                cInput[0].focus()
+            }
+
             gsap.set(cImage[0], {
                 transformStyle: 'preserve-3d',
                 transformPerspective: 1000,
@@ -230,11 +234,20 @@ export default class FlipCards {
                             spread: 160,
                         })
 
+                         // Move to next input if available
+                        const nextInput = cards[index + 1]?.querySelector('.card-input input')
+                        if (nextInput) {
+                            nextInput.focus()
+                        } else {
+                            instance.experience.navigation.next.innerHTML = ''
+                        }
+
                         // All cards are flipped
                         const flippedCards = document.querySelectorAll('.flipped')
                         if (flippedCards.length == instance.flipCards.cards.length) {
                             instance.experience.navigation.next.innerHTML = ''
                         }
+
                     } else {
                         e.target.parentNode.classList.add('wrong-code')
                         instance.audio.playSound('wrong')
@@ -242,6 +255,7 @@ export default class FlipCards {
                         setTimeout(() => {
                             e.target.parentNode.classList.remove('wrong-code')
                             e.target.value = ''
+                            e.target.focus()
                         }, 1000)
                     }
                 }
