@@ -1,8 +1,5 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
-import _s from '../Utils/Strings.js'
-import _gl from '../Utils/Globals.js'
-import _e from '../Utils/Events.js'
 import SortingGame from '../Games/SortingGame.js'
 import CableConnectorGame from '../Games/CableConnectorGame.js'
 import SimonSaysGame from '../Games/SimonSaysGame.js'
@@ -14,6 +11,10 @@ import MazeGame from '../Games/MazeGame.js'
 import DuckGame from '../Games/DuckGame.js'
 import CodeUnlock from './CodeUnlock.js'
 import PianoTiles from '../Games/PianoTiles.js'
+import Button from '../Components/Button.js'
+import _s from '../Utils/Strings.js'
+import _gl from '../Utils/Globals.js'
+import _e from '../Utils/Events.js'
 
 let instance = null
 
@@ -56,6 +57,7 @@ export default class GameDescription {
     }
 
     setHtml() {
+        const startGameBtn = new Button(_s.miniGames.startGame)
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
                 <div class="corner top-left"></div>
@@ -78,17 +80,7 @@ export default class GameDescription {
                         ${instance.data.prompts ? `<p class="task-prompts">${instance.data.prompts[0].prompt}</p>` : ''}
                         ${instance.data.tutorial ? `<div class="task-tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
                         <div class="task-actions">
-                            <button class="button-grid">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">${_s.miniGames.startGame}</div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
+                            ${startGameBtn.getHtml()}
                         </div>
                     </div>
                 </div>

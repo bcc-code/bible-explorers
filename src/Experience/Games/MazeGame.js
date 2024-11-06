@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -70,25 +71,17 @@ export default class MazeGame {
     }
 
     initHtml() {
+        const nextRoundBtn = new Button(_s.miniGames.nextRound, 'new-level')
         const game = _gl.elementFromHtml(`
-        <section class="task-game maze-game">
-            <div id="maze-canvas" class="task-game_canvas"></div>
-            <div class="task-game_rounds">${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}</div>
-            <div class="task-game_popup">
-                <h1>${_s.miniGames.completed.title}</h1>
-                <button class="button-grid" id="new-level">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">${_s.miniGames.nextRound}</div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
-                </button>
-            </div>
-        </section>`)
+            <section class="task-game maze-game">
+                <div id="maze-canvas" class="task-game_canvas"></div>
+                <div class="task-game_rounds">${_s.miniGames.level} ${this.options.currentLevel} / ${this.options.minLevels}</div>
+                <div class="task-game_popup">
+                    <h1>${_s.miniGames.completed.title}</h1>
+                    ${nextRoundBtn.getHtml()}
+                </div>
+            </section>
+        `)
 
         instance.experience.interface.gameContainer.append(game)
         document.querySelector('.task-game_popup').style.display = 'none'
@@ -577,15 +570,18 @@ export default class MazeGame {
         if (this.options.gameState == 'congrats') {
             this.options.currentLevel++
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
-            document.querySelector('.task-game_popup .button-grid .content').textContent = _s.miniGames.nextRound
+            document.querySelector('.task-game_popup .button-grid .content').textContent =
+                _s.miniGames.nextRound
         } else if (this.options.gameState == 'repeat') {
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.oops
-            document.querySelector('.task-game_popup .button-grid .content').textContent = _s.miniGames.playAgain
+            document.querySelector('.task-game_popup .button-grid .content').textContent =
+                _s.miniGames.playAgain
         } else if (this.options.gameState == 'end game') {
             this.options.currentLevel++
 
             document.querySelector('.task-game_popup h1').textContent = _s.miniGames.completed.title
-            document.querySelector('.task-game_popup .button-grid .content').textContent = _s.miniGames.nextRound
+            document.querySelector('.task-game_popup .button-grid .content').textContent =
+                _s.miniGames.nextRound
 
             if (this.options.currentLevel == mazeArr.length - 1) this.options.currentLevel = 1
         }

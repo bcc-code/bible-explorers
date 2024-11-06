@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -32,6 +33,7 @@ export default class TaskDescriptionScreen {
     }
 
     setHtml() {
+        const tdBtn = new Button(instance.data.td_button)
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
                 <div class="corner top-left"></div>
@@ -53,21 +55,13 @@ export default class TaskDescriptionScreen {
                         </h5>
                         ${instance.data.td_description ? `<p class="task-prompts">${instance.data.td_description}</p>` : ''}
                         ${instance.data.td_image ? `<div class="task-tutorial">${instance.getDomElement(instance.data.td_image)}</div>` : ''}
-                        ${instance.data.td_button !== '' ? 
-                            `<div class="task-actions">
-                                <button class="button-grid">
-                                    <div class="corner top-left"></div>
-                                    <div class="edge top"></div>
-                                    <div class="corner top-right"></div>
-                                    <div class="edge left"></div>
-                                    <div class="content">${instance.data.td_button}</div>
-                                    <div class="edge right"></div>
-                                    <div class="corner bottom-left"></div>
-                                    <div class="edge bottom"></div>
-                                    <div class="corner bottom-right"></div>
-                                </button>
-                            </div>
-                            ` : ''}
+                        ${
+                            instance.data.td_button !== ''
+                                ? `<div class="task-actions">
+                                    ${tdBtn.getHtml()}
+                                </div>`
+                                : ''
+                        }
                     </div>
                 </div>
                 <div class="edge right"></div>

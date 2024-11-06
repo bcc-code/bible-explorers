@@ -1,9 +1,10 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Calculator from '../Extras/Calculator.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
-import Calculator from '../Extras/Calculator.js'
 
 let instance = null
 
@@ -36,6 +37,8 @@ export default class TaskDescriptionWithCalculatorScreen {
     }
 
     setHtml() {
+        const tdBtn = new Button(instance.data.td_button)
+        console.log('tdBtn', tdBtn.getHtml())
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
                 <div class="corner top-left"></div>
@@ -57,20 +60,14 @@ export default class TaskDescriptionWithCalculatorScreen {
                         </h5>
                         ${instance.data.td_description ? `<p class="task-prompts">${instance.data.td_description}</p>` : ''}
                         ${instance.data.td_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                        ${instance.data.td_button !== '' ? `
+                        ${
+                            instance.data.td_button !== ''
+                                ? `
                             <div class="task-actions">
-                                <button class="button-grid">
-                                    <div class="corner top-left"></div>
-                                    <div class="edge top"></div>
-                                    <div class="corner top-right"></div>
-                                    <div class="edge left"></div>
-                                    <div class="content">${instance.data.td_button}</div>
-                                    <div class="edge right"></div>
-                                    <div class="corner bottom-left"></div>
-                                    <div class="edge bottom"></div>
-                                    <div class="corner bottom-right"></div>
-                                </button>
-                            </div>` : ''}
+                                ${tdBtn.getHtml()}
+                            </div>`
+                                : ''
+                        }
                     </div>
                 </div>
                 <div class="edge right"></div>

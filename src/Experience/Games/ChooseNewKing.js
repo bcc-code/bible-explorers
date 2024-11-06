@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -23,7 +24,6 @@ export default class ChooseNewKing {
 
         instance.gameHTML()
         instance.useCorrectAssetsSrc()
-
         instance.setEventListeners()
 
         instance.audio.setOtherAudioIsPlaying(true)
@@ -31,25 +31,18 @@ export default class ChooseNewKing {
     }
 
     gameHTML() {
+        const chooseKingBtn = new Button(_s.miniGames.flipCards.chooseKing, 'choose-king', false)
         const game = _gl.elementFromHtml(`
             <section class="game flip-card">
                 <div class="container">
                     <div class="cards"></div>
-                    <button class="button-grid" disabled aria-label="card select">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">${_s.miniGames.flipCards.chooseKing}</div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
-                    </button>
+                    ${chooseKingBtn.getHtml()}
                 </div>
                 <div class="overlay"></div>
             </section>
         `)
+
+        instance.chooseKingBtn = game.querySelector('#choose-king')
 
         if (instance.data.cards) {
             instance.data.cards.forEach((c) => {
@@ -111,8 +104,7 @@ export default class ChooseNewKing {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         const cards = gsap.utils.toArray('.flip-card .card')
-        let glitchVisible = false,
-            godVoiceVisible = false
+        let glitchVisible = false
 
         cards.forEach((card, index) => {
             const q = gsap.utils.selector(card)
@@ -155,7 +147,7 @@ export default class ChooseNewKing {
                         const nextInput = cards[index + 1]?.querySelector('.card-input input')
                         if (nextInput) {
                             nextInput.focus()
-                        } 
+                        }
 
                         // All cards are flipped
                         const flippedCards = document.querySelectorAll('.flipped')
@@ -184,11 +176,10 @@ export default class ChooseNewKing {
 
                 if (document.querySelector('.flip-card').classList.contains('all-flipped')) {
                     const selectedCard = document.querySelector('.selected')
-
                     if (selectedCard) selectedCard.classList.remove('selected')
 
                     card.classList.add('selected')
-                    document.querySelector('[aria-label="card select"]').disabled = false
+                    instance.chooseKingBtn.disabled = false
                 }
             })
 
@@ -198,22 +189,17 @@ export default class ChooseNewKing {
                 })
         })
 
-        const chooseCard = document.querySelector('[aria-label="card select"]')
-
-        chooseCard.addEventListener('click', (e) => {
-            const allCardsFlipped = document.querySelector('.flip-card').classList.contains('all-flipped');
+        instance.chooseKingBtn.addEventListener('click', (e) => {
+            const allCardsFlipped = document.querySelector('.flip-card').classList.contains('all-flipped')
             if (allCardsFlipped) {
-                if (!godVoiceVisible) {
-                    godVoiceVisible = true;
-                    instance.toggleGodVoice();
-                } else {
-                    chooseCard.disabled = true;
-                    cards.forEach((card) => (card.style.pointerEvents = 'none'));
-                    instance.experience.navigation.next.innerHTML = ''
-                }
+                instance.toggleGodVoice()
+
+                instance.chooseKingBtn.disabled = true
+                cards.forEach((card) => (card.style.pointerEvents = 'none'))
+                instance.experience.navigation.next.innerHTML = ''
             }
 
-            document.querySelector('.game-notification')?.remove();
+            document.querySelector('.game-notification')?.remove()
         })
     }
 

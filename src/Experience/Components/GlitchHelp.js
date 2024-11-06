@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -27,6 +28,7 @@ export default class GlitchHelp {
     }
 
     setHtml() {
+        const confirmationBtn = new Button(instance.data.confirmation_button)
         const container = _gl.elementFromHtml(
             `<div class="task-container glitch-help-task" id="task-container">
                 <div class="corner top-left"></div>
@@ -53,17 +55,7 @@ export default class GlitchHelp {
                             instance.data.confirmation_button !== ''
                                 ? `
                         <div class="task-actions">
-                            <button class="button-grid">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">${instance.data.confirmation_button}</div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
+                            ${confirmationBtn.getHtml()}
                         </div>
                         `
                                 : ''

@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -26,6 +27,7 @@ export default class VideoWithQuestion {
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
 
+        const submitBtn = new Button(_s.task.submit)
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="video-with-question">
                 <div class="corner top-left"></div>
@@ -34,8 +36,9 @@ export default class VideoWithQuestion {
                 <div class="edge left"></div>
                 <div class="content">
                     <div class="task-content">
-                        ${instance.data.question ? 
-                            `<h5 class="task-heading">
+                        ${
+                            instance.data.question
+                                ? `<h5 class="task-heading">
                                   <div class="corner top-left"></div>
                                     <div class="edge top"></div>
                                     <div class="corner top-right"></div>
@@ -45,7 +48,9 @@ export default class VideoWithQuestion {
                                     <div class="corner bottom-left"></div>
                                     <div class="edge bottom"></div>
                                     <div class="corner bottom-right"></div>
-                            </h5>` : ''}
+                                </h5>`
+                                : ''
+                        }
 
                         <div id="task-tutorial" class="w-[30rem]"></div>
                         <div class="textarea-box input-grid">
@@ -62,17 +67,7 @@ export default class VideoWithQuestion {
                             <div class="corner bottom-right"></div>
                         </div>
                         <div class="task-actions">
-                            <button class="button-grid">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">${_s.task.submit}</div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
+                            ${submitBtn.getHtml()}
                         </div>
                      </div>
                 </div>
@@ -119,7 +114,9 @@ export default class VideoWithQuestion {
 
     toggleQuestion() {
         instance.resources.videoPlayers[instance.data.video].pause()
-        document.querySelectorAll('#video-with-question .hidden').forEach((item) => item.classList.remove('hidden'))
+        document
+            .querySelectorAll('#video-with-question .hidden')
+            .forEach((item) => item.classList.remove('hidden'))
 
         instance.experience.navigation.next.addEventListener('click', instance.saveAnswers)
         instance.experience.navigation.next.removeEventListener('click', instance.toggleQuestion)

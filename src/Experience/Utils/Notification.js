@@ -1,4 +1,4 @@
-import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 
 let notification = []
 
@@ -10,7 +10,7 @@ export default class Notification {
         document.body.appendChild(this.htmlEl)
 
         this.el = {
-            close: this.htmlEl.querySelector('[aria-label="close alert"]'),
+            close: this.htmlEl.querySelector('#close-alert'),
         }
 
         this.el.close.addEventListener('click', this.destroy)
@@ -24,23 +24,15 @@ export default class Notification {
     }
 
     static generateHtml(text) {
+        const closeAlertBtn = new Button(
+            '<svg class="cion"><use href="#xmark-large-solid" fill="currentColor"></use></svg>',
+            'close-alert'
+        )
         return `
             <div class="fixed inset-0 -z-10 bg-bke-darkpurple/70"></div>
             <div class="p-8 bg-white flex items-center">
                 <p class="text-xl text-bke-darkpurple w-[320px]">${text}</p>
-                <button class="button-grid" aria-label="close alert">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">
-                        <svg class="cion"><use href="#xmark-large-solid" fill="currentColor"></use></svg>
-                    </div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
-                </button>
+                ${closeAlertBtn.getHtml()}
             </div>
         `
     }

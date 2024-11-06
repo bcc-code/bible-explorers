@@ -1,9 +1,10 @@
-import gsap from 'gsap'
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
+import gsap from 'gsap'
 
 let instance = null
 
@@ -27,25 +28,18 @@ export default class DavidsRefuge {
     }
 
     gameHTML() {
+        const chooseGoatBtn = new Button(_s.miniGames.davidsRefuge.chooseGoat, 'choose-goat', false)
         const game = _gl.elementFromHtml(`
             <section class="game davids-refuge">
                 <div class="container">
                     <div class="goats"></div>
-                    <button class="button-grid" aria-label="select goat" disabled>
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content"><span>${_s.miniGames.davidsRefuge.chooseGoat}</span></div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
-                    </button>
+                    ${chooseGoatBtn.getHtml()}
                 </div>
                 <div class="overlay"></div>
             </section>
         `)
+
+        instance.chooseGoatBtn = game.querySelector('#choose-goat')
 
         instance.experience.interface.gameContainer.append(game)
         instance.experience.setAppView('game')
@@ -91,14 +85,12 @@ export default class DavidsRefuge {
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         // Goat selection
-        const selectGoat = document.querySelector('[aria-label="select goat"]')
-
         gsap.utils.toArray('.goat').forEach((item, index) => {
             const q = gsap.utils.selector(item)
             const tooltip = q('.tooltip')
 
             item.addEventListener('click', () => {
-                selectGoat.disabled = false
+                instance.chooseGoatBtn.disabled = false
 
                 if (item.classList.contains('is-active')) return
                 document.querySelectorAll('.goat').forEach((goat) => {
@@ -110,7 +102,7 @@ export default class DavidsRefuge {
                 gsap.to(item, { scale: 1 })
             })
 
-            selectGoat.addEventListener('click', () => {
+            instance.chooseGoatBtn.addEventListener('click', () => {
                 if (item.classList.contains('is-active')) {
                     item.classList.add('is-selected')
                     gsap.to(item, { x: '-50%' })
@@ -126,14 +118,14 @@ export default class DavidsRefuge {
                             spread: 160,
                         })
 
-                        gsap.to(selectGoat, { autoAlpha: 0 })
+                        gsap.to(instance.chooseGoatBtn, { autoAlpha: 0 })
 
                         instance.experience.navigation.next.innerHTML = ''
                     } else {
                         tooltip[0].innerText = instance.data.wrong_character_message
 
-                        selectGoat.querySelector('.content').innerText = _s.miniGames.tryAgain
-                        selectGoat.addEventListener('click', () => {
+                        instance.chooseGoatBtn.querySelector('.content').innerText = _s.miniGames.tryAgain
+                        instance.chooseGoatBtn.addEventListener('click', () => {
                             instance.destroy()
                             instance.toggleGame()
                         })
@@ -161,6 +153,5 @@ export default class DavidsRefuge {
         document.removeEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
 
         instance.experience.setAppView('chapter')
-
     }
 }

@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
@@ -212,19 +213,8 @@ export default class SimonSays {
             </div>
         `)
 
-        const resetBTN = _gl.elementFromHtml(`
-            <button class="button-grid">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">${_s.miniGames.restartRound}</div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </button>
-        `)
+        const restartRoundBtn = new Button(_s.miniGames.restartRound)
+        const resetBTN = _gl.elementFromHtml(restartRoundBtn.getHtml())
 
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 

@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -315,20 +316,9 @@ export default class MineField {
     }
 
     showRestartButton() {
+        const tryAgainBtn = new Button(_s.miniGames.tryAgain, 'restart-quiz')
         const quizContentContainer = document.querySelector('#quiz-content')
-        quizContentContainer.innerHTML = `
-            <button class="button-grid" id="restart-quiz">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">${_s.miniGames.tryAgain}</div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </button>
-        `
+        quizContentContainer.innerHTML = tryAgainBtn.getHtml()
 
         document.getElementById('restart-quiz').addEventListener('click', () => {
             instance.restartQuiz()

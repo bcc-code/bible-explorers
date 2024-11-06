@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -39,6 +40,7 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
+        const csBtn = new Button(instance.confirmationScreen.cs_button)
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-content">
                 <div class="corner top-left"></div>
@@ -47,34 +49,30 @@ export default class FlipCards {
                 <div class="edge left"></div>
                 <div class="content">
                     <div class="task-content">
-                        ${instance.confirmationScreen.cs_title !== '' ?
-                            `<h5 class="task-heading">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content"> ${instance.confirmationScreen.cs_title} </div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </h5>` : ''}
+                        ${
+                            instance.confirmationScreen.cs_title !== ''
+                                ? `<h5 class="task-heading">
+                                    <div class="corner top-left"></div>
+                                    <div class="edge top"></div>
+                                    <div class="corner top-right"></div>
+                                    <div class="edge left"></div>
+                                    <div class="content"> ${instance.confirmationScreen.cs_title} </div>
+                                    <div class="edge right"></div>
+                                    <div class="corner bottom-left"></div>
+                                    <div class="edge bottom"></div>
+                                    <div class="corner bottom-right"></div>
+                                </h5>`
+                                : ''
+                        }
                         ${instance.confirmationScreen.cs_description ? `<p class="task-prompts">${instance.confirmationScreen.cs_description}</p>` : ''}
                         ${instance.confirmationScreen.cs_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
-                        ${instance.confirmationScreen.cs_button !== '' ? `
-                        <div class="task-actions">
-                            <button class="button-grid">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">${instance.confirmationScreen.cs_button}</div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
-                        </div>` : ''}
+                        ${
+                            instance.confirmationScreen.cs_button !== ''
+                                ? `<div class="task-actions">
+                                    ${csBtn.getHtml()}
+                                </div>`
+                                : ''
+                        }
                     </div>
                 </div>
                 <div class="edge right"></div>
@@ -216,7 +214,9 @@ export default class FlipCards {
 
             gsap.set(cFront, { rotationY: 180 })
 
-            const flipAnimation = gsap.timeline({ paused: true }).to(cImage[0], { duration: 1, rotationY: 180 })
+            const flipAnimation = gsap
+                .timeline({ paused: true })
+                .to(cImage[0], { duration: 1, rotationY: 180 })
 
             cInput[0].addEventListener('input', (e) => {
                 if (e.target.value.length > e.target.maxLength)
@@ -233,7 +233,7 @@ export default class FlipCards {
                             spread: 160,
                         })
 
-                         // Move to next input if available
+                        // Move to next input if available
                         const nextInput = cards[index + 1]?.querySelector('.card-input input')
                         if (nextInput) {
                             nextInput.focus()
@@ -246,7 +246,6 @@ export default class FlipCards {
                         if (flippedCards.length == instance.flipCards.cards.length) {
                             instance.experience.navigation.next.innerHTML = ''
                         }
-
                     } else {
                         e.target.parentNode.classList.add('wrong-code')
                         instance.audio.playSound('wrong')

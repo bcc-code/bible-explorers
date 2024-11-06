@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -29,6 +30,7 @@ export default class ConfirmationScreen {
     }
 
     setHtml() {
+        const csBtn = new Button(instance.data.cs_button)
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
                 <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">
@@ -38,17 +40,7 @@ export default class ConfirmationScreen {
                     ${
                         instance.data.cs_button !== ''
                             ? `<div class="flex justify-center mt-8">
-                                    <button class="button-grid">
-                                        <div class="corner top-left"></div>
-                                        <div class="edge top"></div>
-                                        <div class="corner top-right"></div>
-                                        <div class="edge left"></div>
-                                        <div class="content">${instance.data.cs_button}</div>
-                                        <div class="edge right"></div>
-                                        <div class="corner bottom-left"></div>
-                                        <div class="edge bottom"></div>
-                                        <div class="corner bottom-right"></div>
-                                    </button>
+                                    ${csBtn.getHtml()}
                                 </div>`
                             : ''
                     }

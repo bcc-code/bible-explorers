@@ -3,6 +3,7 @@ import Experience from './Experience.js'
 import Audio from './Extras/Audio.js'
 import Program from './Progress/Program.js'
 import ProgressBar from './Components/ProgressBar.js'
+import Button from './Components/Button.js'
 import _s from './Utils/Strings.js'
 import _lang from './Utils/Lang.js'
 import _api from './Utils/Api.js'
@@ -286,36 +287,28 @@ export default class World {
             else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++
         })
 
-        const details = _gl.elementFromHtml(`
-            <div class="chapter-description">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h2 class="chapter-description-heading">${chapter.title}</h2>
-                    <div class="chapter-description-text scroller"> ${chapter.content}</div>
-                    <div class="chapter-actions">
-                        <div class="float-left">
-                            <button class="button-grid" id="start-chapter" role="button">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">${_s.journey.start}</div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
-                        </div>
+        const startChapterBtn = new Button(_s.journey.start, 'start-chapter')
+        const details = _gl.elementFromHtml(
+            `<div class="chapter-description">
+            <div class="corner top-left"></div>
+            <div class="edge top"></div>
+            <div class="corner top-right"></div>
+            <div class="edge left"></div>
+            <div class="content">
+                <h2 class="chapter-description-heading">${chapter.title}</h2>
+                <div class="chapter-description-text scroller"> ${chapter.content}</div>
+                <div class="chapter-actions">
+                    <div class="float-left">
+                        ${startChapterBtn.getHtml()}
                     </div>
                 </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </div>`)
+            </div>
+            <div class="edge right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="edge bottom"></div>
+            <div class="corner bottom-right"></div>
+        </div>`
+        )
 
         if (chapter.other_attachments.length) {
             chapter.other_attachments.forEach((attachment) => {

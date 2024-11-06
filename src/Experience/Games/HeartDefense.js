@@ -1,5 +1,6 @@
 import Konva from 'konva'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -28,7 +29,20 @@ export default class HeartDefense {
             explosionHeight: spriteH,
             explosion: 'games/explosion.png',
             animations: {
-                explosion: [0, 0, spriteW, spriteH, spriteW * 2, 0, spriteW, spriteH, spriteW * 3, 0, spriteW, spriteH],
+                explosion: [
+                    0,
+                    0,
+                    spriteW,
+                    spriteH,
+                    spriteW * 2,
+                    0,
+                    spriteW,
+                    spriteH,
+                    spriteW * 3,
+                    0,
+                    spriteW,
+                    spriteH,
+                ],
             },
             highestSpeed: 3.2,
             lowestSpeed: 1.2,
@@ -289,7 +303,8 @@ export default class HeartDefense {
 
                 // Adjust distance if necessary
                 const diffFrames =
-                    getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) - estFramesToCenter
+                    getUpdatedFramesToCenterValue(estFramesToCenter, framesBetweenEachThought) -
+                    estFramesToCenter
 
                 // Updated values
                 x -= diffFrames * distancePerFrame.x
@@ -526,7 +541,8 @@ export default class HeartDefense {
         },
     ]
 
-    getNoOfThoughts = () => instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
+    getNoOfThoughts = () =>
+        instance.config.noOfThoughts * Math.min(instance.stats.level, instance.config.levels)
     getRndSpeed = () =>
         instance.getRndBetween(instance.config.lowestSpeed, instance.config.highestSpeed) *
         Math.min(instance.stats.level, instance.config.levels)
@@ -617,19 +633,8 @@ export default class HeartDefense {
             </div>
         `)
 
-        const nextLevelBTN = _gl.elementFromHtml(`
-            <button class="button-grid">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">${_s.miniGames.nextRound}</div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </button>
-        `)
+        const nextRoundBtn = new Button(_s.miniGames.nextRound)
+        const nextLevelBTN = _gl.elementFromHtml(nextRoundBtn.getHtml())
 
         congratsHTML.querySelector('.buttons').append(nextLevelBTN)
 
@@ -686,19 +691,8 @@ export default class HeartDefense {
             </div>
         `)
 
-        const resetBTN = _gl.elementFromHtml(`
-            <button class="button-grid">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">${_s.miniGames.restartRound}</div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </button>
-        `)
+        const restartRoundBtn = new Button(_s.miniGames.restartRound)
+        const resetBTN = _gl.elementFromHtml(restartRoundBtn.getHtml())
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 
         document.querySelector('.heart-defense .container').append(gameOverHTML)

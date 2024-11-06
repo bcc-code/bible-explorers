@@ -1,9 +1,10 @@
 import Experience from '../Experience.js'
-import Konva from 'konva'
 import Timer from '../Extras/Timer.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
+import Konva from 'konva'
 
 let instance = null
 
@@ -558,22 +559,8 @@ export default class CableConnector {
             </div>
         `)
 
-        const resetBTN = _gl.elementFromHtml(`
-            <button class="button-grid">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    ${_s.miniGames.playAgain}
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </button>
-        `)
-
+        const playAgainBtn = new Button(_s.miniGames.playAgain)
+        const resetBTN = _gl.elementFromHtml(playAgainBtn.getHtml())
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 
         document.querySelector('.cable-connect .container').append(gameOverHTML)
