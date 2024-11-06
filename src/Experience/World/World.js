@@ -919,11 +919,11 @@ export default class World {
             instance.resetChapter()
         }
 
-        document.dispatchEvent(_e.EVENTS.CHAPTER_STARTED)
-
         instance.experience.setAppView('chapter')
 
         instance.setUpChapter()
+        document.dispatchEvent(_e.EVENTS.CHAPTER_STARTED)
+
         instance.fetchBgMusic()
         instance.fetchArchiveImage()
 
