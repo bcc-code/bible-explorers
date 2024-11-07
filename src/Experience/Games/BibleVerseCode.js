@@ -1,6 +1,7 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Button from '../Components/Button.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -35,43 +36,31 @@ export default class BibleVerseCode {
             id: 'check-code',
             type: 'submit',
         })
+        const taskHeading = new Frame({
+            content: title,
+        })
+        const taskContent = new Frame({
+            content: `<div class="task-content">
+                    <h5 class="task-heading">
+                        ${taskHeading.getHtml()}
+                    </h5>
+                    <div class="bible-verse-code__input">
+                        <div class="bible-book"></div>
+                        <div class="bible-delimiter">,</div>
+                        <div class="bible-chapter"></div>
+                        <div class="bible-delimiter">:</div>
+                        <div class="bible-verse-from"></div>
+                        <div class="bible-delimiter">-</div>
+                        <div class="bible-verse-to"></div>
+                    </div>
+                    <div class="task-actions">
+                        ${checkCodeBtn.getHtml()}
+                    </div>
+                </div>`,
+        })
         const unlockScreen = _gl.elementFromHtml(`
             <div class="bible-verse-code task-container" id="bible-verse-code">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        <h5 class="task-heading">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${title}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </h5>
-                        <div class="bible-verse-code__input">
-                            <div class="bible-book"></div>
-                            <div class="bible-delimiter">,</div>
-                            <div class="bible-chapter"></div>
-                            <div class="bible-delimiter">:</div>
-                            <div class="bible-verse-from"></div>
-                            <div class="bible-delimiter">-</div>
-                            <div class="bible-verse-to"></div>
-                        </div>
-                        <div class="task-actions">
-                            ${checkCodeBtn.getHtml()}
-                        </div>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${taskContent.getHtml()}
             </div>
         `)
 

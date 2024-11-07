@@ -1,5 +1,6 @@
 import Experience from '../Experience'
-import Button from '../Components/Button.js'
+import Button from './Button.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals'
 import _e from '../Utils/Events.js'
@@ -49,32 +50,18 @@ export default class WaitingScreen {
             content: _s.waitingScreen.submit,
             type: 'submit',
         })
+        const inputContentFrame = new Frame({
+            content: `<input placeholder="${_s.waitingScreen.inputPlaceholder}" />`,
+        })
+        const childrenNamesFrame = new Frame({
+            content: `<div class="input input-grid mr-2">
+                    ${inputContentFrame.getHtml()}
+                </div>
+                ${waitingScreenSubmitBtn.getHtml()}`,
+        })
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="childrenNames">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="input input-grid mr-2">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">
-                            <input placeholder="${_s.waitingScreen.inputPlaceholder}" />
-                        </div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
-                    </div>
-                    ${waitingScreenSubmitBtn.getHtml()}
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${childrenNamesFrame.getHtml()}
             </form>`
         )
 

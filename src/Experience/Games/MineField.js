@@ -1,6 +1,7 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Button from '../Components/Button.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -43,43 +44,28 @@ export default class MineField {
         instance.currentQuestionIndex = 0
 
         if (!document.querySelector('#quiz-content')) {
-            const staticHTML = `
-            <div class="minefield" id="minefield">
-                <div class="task-container left">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">
-                        <h5 class="game-title">${_s.miniGames.minefield}</h5>
-                        <div class="minefield__content">
-                            <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
-                            <div class="finish-line">
-                                <div class="finish-left"></div>
-                                <div class="finish-middle"></div>
-                                <div class="finish-right"></div>
-                            </div>
+            const mineFieldLeftFrame = new Frame({
+                content: `<h5 class="game-title">${_s.miniGames.minefield}</h5>
+                    <div class="minefield__content">
+                        <div class="minefield__grid" data-index="${instance.currentQuestionIndex}"></div>
+                        <div class="finish-line">
+                            <div class="finish-left"></div>
+                            <div class="finish-middle"></div>
+                            <div class="finish-right"></div>
                         </div>
-                    </div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
+                    </div>`,
+            })
+            const mineFieldRightFrame = new Frame({
+                content: `<div id="quiz-content">
+                        <div id="quiz__question"></div>
+                    </div>`,
+            })
+            const staticHTML = `<div class="minefield" id="minefield">
+                <div class="task-container left">
+                    ${mineFieldLeftFrame.getHtml()}
                 </div>
                 <div class="task-container right">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">
-                        <div id="quiz-content">
-                            <div id="quiz__question"></div>
-                        </div>
-                    </div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
+                    ${mineFieldRightFrame.getHtml()}
                 </div>
             </div>`
 

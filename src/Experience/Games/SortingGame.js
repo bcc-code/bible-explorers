@@ -1,8 +1,9 @@
 import Experience from '../Experience.js'
-import Konva from 'konva'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
+import Konva from 'konva'
 
 let instance = null
 
@@ -245,7 +246,10 @@ export default class SortingGame {
             let selectedBox = category
             let feedback = null
 
-            if (!instance.intersected(icon, instance.leftBox) && !instance.intersected(icon, instance.rightBox)) {
+            if (
+                !instance.intersected(icon, instance.leftBox) &&
+                !instance.intersected(icon, instance.rightBox)
+            ) {
                 return
             }
 
@@ -291,20 +295,13 @@ export default class SortingGame {
     toggleGameComplete() {
         window.removeEventListener('resize', instance.resize)
 
+        const gameCompletedPopup = new Frame({
+            content: `<h1>${_s.miniGames.completed.title}</h1>
+                <p>${_s.miniGames.completed.message}</p>`,
+        })
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h1>${_s.miniGames.completed.title}</h1>
-                    <p>${_s.miniGames.completed.message}</p>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${gameCompletedPopup.getHtml()}
             </div>
         `)
 
@@ -561,7 +558,10 @@ export default class SortingGame {
         const boxSize = instance.data.icon.width + marginGutter.between
         const iconsPerRow = Math.max(Math.min(Math.floor((iconsWrapper - 20) / boxSize), 4), 2) // between [2-4]
         marginGutter.sides =
-            (iconsWrapper - iconsPerRow * instance.data.icon.width - (iconsPerRow - 1) * marginGutter.between) / 2
+            (iconsWrapper -
+                iconsPerRow * instance.data.icon.width -
+                (iconsPerRow - 1) * marginGutter.between) /
+            2
 
         const position = {
             x:

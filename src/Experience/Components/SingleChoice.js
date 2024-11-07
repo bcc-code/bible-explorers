@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -40,33 +41,21 @@ export default class SingleChoice {
             )
             .join('')
 
+        const taskHeading = new Frame({
+            content: instance.data.title,
+        })
+        const taskContainerFrame = new Frame({
+            content: `<div class="task-content">
+                    <h5 class="task-heading">
+                        ${taskHeading.getHtml()}   
+                    </h5>
+                    ${instance.data.description ? `<p class="task-prompts">${instance.data.description}</p>` : ''}
+                    ${optionsHtml ? `<ul class="flex gap-8 mt-8">${optionsHtml}</ul>` : ''}
+                </div>`,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="single-choice">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        <h5 class="task-heading">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${instance.data.title}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </h5>
-                         ${instance.data.description ? `<p class="task-prompts">${instance.data.description}</p>` : ''}
-                        ${optionsHtml ? `<ul class="flex gap-8 mt-8">${optionsHtml}</ul>` : ''}
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${taskContainerFrame.getHtml()}
             </div>`
         )
 
@@ -80,7 +69,8 @@ export default class SingleChoice {
     useCorrectAssetsSrc() {
         instance.data.options.forEach((option, index) => {
             instance.offline.fetchChapterAsset(option, 'option_media', (data) => {
-                document.querySelector('.single-choice-option[data-index="' + index + '"] img').src = data.option_media
+                document.querySelector('.single-choice-option[data-index="' + index + '"] img').src =
+                    data.option_media
             })
         })
     }

@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import Button from '../Components/Button.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -31,55 +32,29 @@ export default class VideoWithQuestion {
             content: _s.task.submit,
             type: 'submit',
         })
+        const taskHeading = new Frame({
+            content: instance.data.question,
+        })
+        const taskTextarea = new Frame({
+            content: `<textarea class="scroller" placeholder=""></textarea>`,
+        })
+        const taskContainerFrame = new Frame({
+            content: `<div class="task-content">
+                    ${instance.data.question ? `<h5 class="task-heading">${taskHeading.getHtml()}</h5>` : ''}
+                    <div id="task-tutorial" class="w-[30rem]"></div>
+                    <div class="textarea-box input-grid">
+                        ${taskTextarea.getHtml()}
+                    </div>
+                    <div class="task-actions">
+                        ${submitBtn.getHtml()}
+                    </div>
+                </div>`,
+        })
+
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="video-with-question">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        ${
-                            instance.data.question
-                                ? `<h5 class="task-heading">
-                                  <div class="corner top-left"></div>
-                                    <div class="edge top"></div>
-                                    <div class="corner top-right"></div>
-                                    <div class="edge left"></div>
-                                    <div class="content">${instance.data.question}</div>
-                                    <div class="edge right"></div>
-                                    <div class="corner bottom-left"></div>
-                                    <div class="edge bottom"></div>
-                                    <div class="corner bottom-right"></div>
-                                </h5>`
-                                : ''
-                        }
-
-                        <div id="task-tutorial" class="w-[30rem]"></div>
-                        <div class="textarea-box input-grid">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <textarea class="scroller" placeholder=""></textarea>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </div>
-                        <div class="task-actions">
-                            ${submitBtn.getHtml()}
-                        </div>
-                     </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </div>
-            `
+                ${taskContainerFrame.getHtml()}
+            </div>`
         )
 
         instance.experience.interface.tasksDescription.append(container)

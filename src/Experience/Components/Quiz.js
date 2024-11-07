@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import Button from './Button.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -56,43 +57,36 @@ export default class Quiz {
             type: 'submit',
             title: 'Submit quiz form',
         })
+        const quizGameFrame = new Frame({
+            content: `<div class="task-content group/quiz">
+                    ${
+                        instance.questions.length > 1
+                            ? `<div class="progress-bar-container">
+                                <div class="progress-bar-background">
+                                    <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
+                                </div>
+                                <ul id="progress-steps" class="progress-steps">${instance.questions
+                                    .map(
+                                        (_, index) => `
+                                        <li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
+                                            <span class="step-number">${index + 1}</span>
+                                        </li>`
+                                    )
+                                    .join('')}
+                                    </ul>
+                            </div>`
+                            : ''
+                    }
+                    <div id="quiz-wrapper"></div>
+                    <div class="task-actions ${instance.questions.length == 1 ? '!hidden' : ''}">
+                        ${nextQuestionBtn.getHtml()}
+                        ${submitQuizBtn.getHtml()}
+                    </div>
+                </div>`,
+        })
         instance.quizContainer = _gl.elementFromHtml(
             `<div class="task-container" id="quiz-game">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content group/quiz">
-                        ${
-                            instance.questions.length > 1
-                                ? `<div class="progress-bar-container">
-                                    <div class="progress-bar-background">
-                                        <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
-                                    </div>
-                                    <ul id="progress-steps" class="progress-steps">${instance.questions
-                                        .map(
-                                            (_, index) => `
-                                            <li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
-                                                <span class="step-number">${index + 1}</span>
-                                            </li>`
-                                        )
-                                        .join('')}
-                                        </ul>
-                                </div>`
-                                : ''
-                        }
-                        <div id="quiz-wrapper"></div>
-                        <div class="task-actions ${instance.questions.length == 1 ? '!hidden' : ''}">
-                            ${nextQuestionBtn.getHtml()}
-                            ${submitQuizBtn.getHtml()}
-                        </div>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${quizGameFrame.getHtml()}
             </div>`
         )
 
@@ -115,22 +109,15 @@ export default class Quiz {
             if (instance.getCurrentQuestion().answers.filter((a) => a.correct_wrong).length > 1) {
                 // Multiple Choice
                 instance.getCurrentQuestion().answers.forEach((a, aIdx) => {
+                    const questionLabelFrame = new Frame({
+                        content: `<div class="font-bold button-circle">${aIdx + 1}</div>
+                            <h4>${a.answer}</h4>`,
+                    })
                     const answer = _gl.elementFromHtml(`
                         <div>
                             <input type="checkbox" id="question-${instance.questionIdx}_answer-${aIdx}" name="question-${instance.questionIdx}" class="sr-only"/>
                             <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label input-grid">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">
-                                    <div class="font-bold button-circle">${aIdx + 1}</div>
-                                    <h4 class="">${a.answer}</h4>
-                                </div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
+                                ${questionLabelFrame.getHtml()}
                             </label>
                         </div>
                     `)
@@ -140,22 +127,15 @@ export default class Quiz {
             } else {
                 // Single Choice
                 instance.getCurrentQuestion().answers.forEach((a, aIdx) => {
+                    const questionLabelFrame = new Frame({
+                        content: `<div class="font-bold button-circle">${aIdx + 1}</div>
+                            <h4>${a.answer}</h4>`,
+                    })
                     const answer = _gl.elementFromHtml(`
                         <div>
                             <input type="radio" id="question-${instance.questionIdx}_answer-${aIdx}" name="question-${instance.questionIdx}" class="sr-only"/>
                             <label for="question-${instance.questionIdx}_answer-${aIdx}" class="question-label input-grid">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">
-                                    <div class="font-bold button-circle">${aIdx + 1}</div>
-                                    <h4 class="">${a.answer}</h4>
-                                </div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
+                                ${questionLabelFrame.getHtml()}
                             </label>
                         </div>
                     `)
@@ -165,19 +145,13 @@ export default class Quiz {
             }
         } else {
             this.openQuestions++
+
+            const openAnswerFrame = new Frame({
+                content: `<textarea class="scroller" placeholder="${instance.getCurrentQuestion().placeholder}" class=""></textarea>`,
+            })
             const selfAnswer = _gl.elementFromHtml(
                 `<div class="textarea-box input-grid">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">
-                        <textarea class="scroller" placeholder="${instance.getCurrentQuestion().placeholder}" class=""></textarea>
-                    </div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
+                    ${openAnswerFrame.getHtml()}
                 </div>`
             )
             container.append(selfAnswer)

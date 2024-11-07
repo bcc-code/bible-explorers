@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -31,48 +32,36 @@ export default class MultipleChoiceWithPicture {
         instance.stepData = instance.program.getCurrentStepData()
         instance.data = instance.stepData.multiple_choice_with_picture
 
+        const multipleChoice = new Frame({
+            content: `<div class="task-content">
+                    ${instance.stepData.details.title ? `<p class="task-prompts">${instance.stepData.details.title}</p>` : ''}
+                    ${instance.data.image ? `<div id="task-image" class="task-tutorial !hidden"><img src="${instance.data.image}"/></div>` : ''}
+                    <ul class="multiple-choice-answers"></ul>
+                </div>`,
+        })
         const multipleChoiceWithPicture = _gl.elementFromHtml(`
             <div id="multiple-choice" class="task-container">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        ${instance.stepData.details.title ? `<p class="task-prompts">${instance.stepData.details.title}</p>` : ''}
-                        ${instance.data.image ? `<div id="task-image" class="task-tutorial !hidden"><img src="${instance.data.image}"/></div>` : ''}
-                        <ul class="multiple-choice-answers"></ul>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${multipleChoice.getHtml()}
             </div>
         `)
 
         instance.data.choices.forEach((choice, cIdx) => {
+            const answerFrame = new Frame({
+                content: `<div class="font-bold button-circle">${cIdx + 1}</div>
+                    <h4 class="">${choice.answer}</h4>`,
+            })
             const multipleChoiceWithPictureAnswer = _gl.elementFromHtml(`
                 <li class="multiple-choice-answer">
                     <input type="radio" id="answer-${cIdx}" name="multiple-choice" class="sr-only"/>
                     <label for="answer-${cIdx}" class="question-label input-grid">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">
-                            <div class="font-bold button-circle">${cIdx + 1}</div>
-                            <h4 class="">${choice.answer}</h4>
-                        </div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
+                        ${answerFrame.getHtml()}
                     </label>
                 </li>
             `)
 
-            multipleChoiceWithPicture.querySelector('.multiple-choice-answers').append(multipleChoiceWithPictureAnswer)
+            multipleChoiceWithPicture
+                .querySelector('.multiple-choice-answers')
+                .append(multipleChoiceWithPictureAnswer)
         })
 
         multipleChoiceWithPicture.querySelectorAll('.multiple-choice-answers').forEach((a) => {

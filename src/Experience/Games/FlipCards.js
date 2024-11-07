@@ -1,6 +1,7 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Button from '../Components/Button.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -43,44 +44,30 @@ export default class FlipCards {
         const csBtn = new Button({
             content: instance.confirmationScreen.cs_button,
         })
+        const taskHeading = new Frame({
+            content: instance.confirmationScreen.cs_title,
+        })
+        const taskContainerFrame = new Frame({
+            content: `<div class="task-content">
+                    ${
+                        instance.confirmationScreen.cs_title !== ''
+                            ? `<h5 class="task-heading">${taskHeading.getHtml()}</h5>`
+                            : ''
+                    }
+                    ${instance.confirmationScreen.cs_description ? `<p class="task-prompts">${instance.confirmationScreen.cs_description}</p>` : ''}
+                    ${instance.confirmationScreen.cs_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
+                    ${
+                        instance.confirmationScreen.cs_button !== ''
+                            ? `<div class="task-actions">
+                                ${csBtn.getHtml()}
+                            </div>`
+                            : ''
+                    }
+                </div>`,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-content">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        ${
-                            instance.confirmationScreen.cs_title !== ''
-                                ? `<h5 class="task-heading">
-                                    <div class="corner top-left"></div>
-                                    <div class="edge top"></div>
-                                    <div class="corner top-right"></div>
-                                    <div class="edge left"></div>
-                                    <div class="content"> ${instance.confirmationScreen.cs_title} </div>
-                                    <div class="edge right"></div>
-                                    <div class="corner bottom-left"></div>
-                                    <div class="edge bottom"></div>
-                                    <div class="corner bottom-right"></div>
-                                </h5>`
-                                : ''
-                        }
-                        ${instance.confirmationScreen.cs_description ? `<p class="task-prompts">${instance.confirmationScreen.cs_description}</p>` : ''}
-                        ${instance.confirmationScreen.cs_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.confirmationScreen.cs_image}" /></div>` : ''}
-                        ${
-                            instance.confirmationScreen.cs_button !== ''
-                                ? `<div class="task-actions">
-                                    ${csBtn.getHtml()}
-                                </div>`
-                                : ''
-                        }
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${taskContainerFrame.getHtml()}
             </div>`
         )
 

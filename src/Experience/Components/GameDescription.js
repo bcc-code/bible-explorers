@@ -11,7 +11,8 @@ import MazeGame from '../Games/MazeGame.js'
 import DuckGame from '../Games/DuckGame.js'
 import CodeUnlock from './CodeUnlock.js'
 import PianoTiles from '../Games/PianoTiles.js'
-import Button from '../Components/Button.js'
+import Button from './Button.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -60,36 +61,22 @@ export default class GameDescription {
         const startGameBtn = new Button({
             content: _s.miniGames.startGame,
         })
+        const taskHeading = new Frame({
+            content: instance.data.title,
+        })
+        const taskContainerFrame = new Frame({
+            content: `<div class="task-content">
+                    <h5 class="task-heading">${taskHeading.getHtml()}</h5>
+                    ${instance.data.prompts ? `<p class="task-prompts">${instance.data.prompts[0].prompt}</p>` : ''}
+                    ${instance.data.tutorial ? `<div class="task-tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
+                    <div class="task-actions">
+                        ${startGameBtn.getHtml()}
+                    </div>
+                </div>`,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        <h5 class="task-heading">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${instance.data.title}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </h5>
-                        ${instance.data.prompts ? `<p class="task-prompts">${instance.data.prompts[0].prompt}</p>` : ''}
-                        ${instance.data.tutorial ? `<div class="task-tutorial">${instance.getDomElement(instance.data.tutorial)}</div>` : ''}
-                        <div class="task-actions">
-                            ${startGameBtn.getHtml()}
-                        </div>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${taskContainerFrame.getHtml()}
             </div>`
         )
 

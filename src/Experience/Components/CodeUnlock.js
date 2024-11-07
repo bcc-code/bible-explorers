@@ -1,10 +1,10 @@
 import Experience from '../Experience.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
 
 let instance = null
-const showSkipAfterNoOfTries = 3
 
 export default class CodeUnlock {
     constructor() {
@@ -33,37 +33,21 @@ export default class CodeUnlock {
 
     unlockScreenHTML() {
         const title = instance.program.getCurrentStepData().details.title
+        const titleFrame = new Frame({
+            content: title,
+        })
+        const codeUnlock = new Frame({
+            content: `<div class="task-content">
+                    ${title ? `<h5 class="task-heading">${titleFrame.getHtml()}</h5>` : ''}
+                    <div class="code-unlock-device">
+                        <div class="code-unlock-code"></div>
+                        <div class="code-unlock-keyboard"></div>
+                    </div>
+                </div>`,
+        })
         const unlockScreen = _gl.elementFromHtml(`
             <div class="code-unlock task-container" id="code-unlock">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        ${title ? `
-                        <h5 class="task-heading">
-                          <div class="corner top-left"></div>
-                          <div class="edge top"></div>
-                          <div class="corner top-right"></div>
-                          <div class="edge left"></div>
-                          <div class="content">${title}</div>
-                          <div class="edge right"></div>
-                          <div class="corner bottom-left"></div>
-                          <div class="edge bottom"></div>
-                          <div class="corner bottom-right"></div>
-                        </h5>
-                        ` : ''}
-                        <div class="code-unlock-device">
-                            <div class="code-unlock-code"></div>
-                            <div class="code-unlock-keyboard"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${codeUnlock.getHtml()}
             </div>
         `)
 

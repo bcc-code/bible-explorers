@@ -1,7 +1,8 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
 import Calculator from '../Extras/Calculator.js'
-import Button from '../Components/Button.js'
+import Button from './Button.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -40,41 +41,29 @@ export default class TaskDescriptionWithCalculatorScreen {
         const tdBtn = new Button({
             content: instance.data.td_button,
         })
+        const taskHeading = new Frame({
+            content: instance.data.td_title !== '' ? instance.data.td_title : '',
+        })
+        const taskContainerFrame = new Frame({
+            content: `<div class="task-content">
+                    <h5 class="task-heading">
+                        ${taskHeading.getHtml()}
+                    </h5>
+                    ${instance.data.td_description ? `<p class="task-prompts">${instance.data.td_description}</p>` : ''}
+                    ${instance.data.td_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
+                    ${
+                        instance.data.td_button !== ''
+                            ? `
+                        <div class="task-actions">
+                            ${tdBtn.getHtml()}
+                        </div>`
+                            : ''
+                    }
+                </div>`,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        <h5 class="task-heading">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${instance.data.td_title !== '' ? instance.data.td_title : ''}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </h5>
-                        ${instance.data.td_description ? `<p class="task-prompts">${instance.data.td_description}</p>` : ''}
-                        ${instance.data.td_image ? `<div class="task-tutorial" id="task-image"><img src="${instance.data.td_image}" /></div>` : ''}
-                        ${
-                            instance.data.td_button !== ''
-                                ? `
-                            <div class="task-actions">
-                                ${tdBtn.getHtml()}
-                            </div>`
-                                : ''
-                        }
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${taskContainerFrame.getHtml()}
             </div>`
         )
 

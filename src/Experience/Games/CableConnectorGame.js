@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Timer from '../Extras/Timer.js'
 import Button from '../Components/Button.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
@@ -541,21 +542,14 @@ export default class CableConnector {
     toggleTryAgain() {
         instance.timer?.destroy()
 
+        const gameContentFrame = new Frame({
+            content: `<h1>${_s.miniGames.oops}</h1>
+                <p>${_s.miniGames.timeElapsed.message}</p>
+                <div class="buttons"></div>`,
+        })
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h1>${_s.miniGames.oops}</h1>
-                    <p>${_s.miniGames.timeElapsed.message}</p>
-                    <div class="buttons"></div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${gameContentFrame.getHtml()}
             </div>
         `)
 
@@ -583,20 +577,13 @@ export default class CableConnector {
     }
 
     toggleGameComplete() {
+        const gamePopup = new Frame({
+            content: `<h1>${_s.miniGames.completed.title}</h1>
+                <p>${_s.miniGames.completed.message}</p>`,
+        })
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h1>${_s.miniGames.completed.title}</h1>
-                    <p>${_s.miniGames.completed.message}</p>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${gamePopup.getHtml()}
             </div>
         `)
 

@@ -1,6 +1,7 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
-import Button from '../Components/Button.js'
+import Button from './Button.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -31,43 +32,27 @@ export default class GlitchHelp {
         const confirmationBtn = new Button({
             content: instance.data.confirmation_button,
         })
+        const taskHeading = new Frame({
+            content: instance.data.title !== '' ? instance.data.title : '',
+        })
+        const taskContainerFrame = new Frame({
+            content: `<div class="task-content">
+                    <h5 class="task-heading">
+                        ${taskHeading.getHtml()}
+                    </h5>
+                    ${instance.data.description ? `<p class="task-prompts text-center whitespace-pre-wrap">${instance.data.description}</p>` : ''}
+                    ${
+                        instance.data.confirmation_button !== ''
+                            ? `<div class="task-actions">
+                                ${confirmationBtn.getHtml()}
+                            </div>`
+                            : ''
+                    }
+                </div>`,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container glitch-help-task" id="task-container">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div class="task-content">
-                        <h5 class="task-heading">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                ${instance.data.title !== '' ? instance.data.title : ''}
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </h5>
-                        ${instance.data.description ? `<p class="task-prompts text-center whitespace-pre-wrap">${instance.data.description}</p>` : ''}
-                        ${
-                            instance.data.confirmation_button !== ''
-                                ? `
-                        <div class="task-actions">
-                            ${confirmationBtn.getHtml()}
-                        </div>
-                        `
-                                : ''
-                        }
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${taskContainerFrame.getHtml()}
             </div>`
         )
 

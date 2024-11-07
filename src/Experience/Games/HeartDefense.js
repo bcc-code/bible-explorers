@@ -1,6 +1,7 @@
 import Konva from 'konva'
 import Experience from '../Experience.js'
 import Button from '../Components/Button.js'
+import Frame from '../Components/Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -78,24 +79,17 @@ export default class HeartDefense {
     }
 
     gameHTML() {
+        const gameRoundsFrame = new Frame({
+            content: `<span>${_s.miniGames.round}:</span>
+                <span class="level">${instance.stats.level}</span>
+                <span> / ${instance.config.levels}</span>`,
+        })
         const game = _gl.elementFromHtml(`
             <section class="game heart-defense">
                 <div class="container">
                     <div id="heart-defense" class="game-canvas"></div>
                     <div class="game-rounds button-grid">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">
-                            <span>${_s.miniGames.round}:</span>
-                            <span class="level">${instance.stats.level}</span>
-                            <span> / ${instance.config.levels}</span>
-                        </div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
+                        ${gameRoundsFrame.getHtml()}
                     </div>
                 </div>
                 <div class="overlay"></div>
@@ -614,22 +608,14 @@ export default class HeartDefense {
     }
 
     toggleLevelCompleted() {
+        const levelCompletedPopup = new Frame({
+            content: `<h1>${_s.miniGames.completed.title}</h1>
+                <p>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</p>
+                <div class="buttons"></div>`,
+        })
         const congratsHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h1>${_s.miniGames.completed.title}</h1>
-                    <p>${_s.miniGames.round} ${instance.stats.level} ${_s.miniGames.completed.string}!</p>
-                    <div class="buttons"></div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-             
+                ${levelCompletedPopup.getHtml()}
             </div>
         `)
 
@@ -676,20 +662,13 @@ export default class HeartDefense {
     }
 
     toggleGameOver() {
+        const gameOverPopup = new Frame({
+            content: `<h1>${_s.miniGames.gameOver}</h1>
+                <div class="buttons"></div>`,
+        })
         const gameOverHTML = _gl.elementFromHtml(`
             <div class="game-popup">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h1>${_s.miniGames.gameOver}</h1>
-                    <div class="buttons"></div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${gameOverPopup.getHtml()}
             </div>
         `)
 

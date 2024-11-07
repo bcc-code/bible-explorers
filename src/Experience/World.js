@@ -4,6 +4,7 @@ import Audio from './Extras/Audio.js'
 import Program from './Progress/Program.js'
 import ProgressBar from './Components/ProgressBar.js'
 import Button from './Components/Button.js'
+import Frame from './Components/Frame.js'
 import _s from './Utils/Strings.js'
 import _lang from './Utils/Lang.js'
 import _api from './Utils/Api.js'
@@ -184,6 +185,10 @@ export default class World {
     }
 
     setChapterHtml(chapter) {
+        const chapterCard = new Frame({
+            content: `<h3 class="chapter-heading">${chapter.title}</h3>
+                <p class="chapter-date">${chapter.date}</p>`,
+        })
         const downloadChapterBtn = new Button({
             content: '<svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>',
             class: 'chapter__download group-[.downloaded]:hidden',
@@ -196,18 +201,7 @@ export default class World {
             `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
                 <a href="javascript:void(0)" class="chapter-box relative">
                     <div class="chapter-card">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">
-                            <h3 class="chapter-heading">${chapter.title}</h3>
-                            <p class="chapter-date">${chapter.date}</p>
-                        </div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
+                        ${chapterCard.getHtml()}
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
@@ -268,25 +262,18 @@ export default class World {
             content: _s.journey.start,
             id: 'start-chapter',
         })
+        const chapterDescription = new Frame({
+            content: `<h2 class="chapter-description-heading">${chapter.title}</h2>
+                <div class="chapter-description-text scroller"> ${chapter.content}</div>
+                <div class="chapter-actions">
+                    <div class="float-left">
+                        ${startChapterBtn.getHtml()}
+                    </div>
+                </div>`,
+        })
         const details = _gl.elementFromHtml(
             `<div class="chapter-description">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h2 class="chapter-description-heading">${chapter.title}</h2>
-                    <div class="chapter-description-text scroller"> ${chapter.content}</div>
-                    <div class="chapter-actions">
-                        <div class="float-left">
-                            ${startChapterBtn.getHtml()}
-                        </div>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${chapterDescription.getHtml()}
             </div>`
         )
 
@@ -298,19 +285,12 @@ export default class World {
                     const linkParts = link.split('/')
                     const pageSlug = linkParts[linkParts.length - 2]
 
+                    const chapterGuideBtn = new Frame({
+                        content: '<svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>',
+                    })
                     const guide = _gl.elementFromHtml(`
                         <a class="button-grid chapter-guide" href="https://biblekids.io/${localStorage.getItem('lang')}/${pageSlug}/" target="_blank">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg class="icon"><use href="#book-solid" fill="currentColor"></use></svg>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
+                            ${chapterGuideBtn.getHtml()}
                         </a>`)
 
                     details.querySelector('.chapter-actions').prepend(guide)
@@ -944,30 +924,23 @@ export default class World {
             content: _s.offline.downloadApp.close,
             class: 'modal-close',
         })
+        const downloadModal = new Frame({
+            content: `<h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
+                <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
+                <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
+                <p>${_s.offline.downloadApp.infoLabel}</p>
+                <ul>
+                    <li>${_s.offline.downloadApp.infoText1}</li>
+                    <li>${_s.offline.downloadApp.infoText2}</li>
+                </ul>
+                <div class="modal-actions">
+                    ${closeModalBtn.getHtml()}
+                </div>`,
+        })
         instance.downloadModal = _gl.elementFromHtml(
             `<dialog id="download-modal" class="modal">
                 <div class="modal-container">
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">
-                        <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
-                        <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
-                        <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
-                        <p>${_s.offline.downloadApp.infoLabel}</p>
-                        <ul>
-                            <li>${_s.offline.downloadApp.infoText1}</li>
-                            <li>${_s.offline.downloadApp.infoText2}</li>
-                        </ul>
-                        <div class="modal-actions">
-                            ${closeModalBtn.getHtml()}
-                        </div>
-                    </div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
+                    ${downloadModal.getHtml()}
                 </div>
             </dialog>`
         )
@@ -982,56 +955,34 @@ export default class World {
         fetch(_api.getAppDownloadLinks()).then(function (response) {
             response.json().then(function (apiData) {
                 const ul = instance.downloadModal.querySelector('.device-type-available')
-
+                const windowsApp = new Frame({
+                    content: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
+                        <span>Windows</span>`,
+                })
                 ul.appendChild(
                     _gl.elementFromHtml(`
                         <a class="button-grid" href="${apiData['windows']['exe']}" role="button">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path fill="#ffffff" d="m0 12.402 35.687-4.86.016 34.423-35.67.203zm35.67 33.529.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
-                                <span>Windows</span>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
+                            ${windowsApp.getHtml()}
                         </a>`)
                 )
+                const intelMacApp = new Frame({
+                    content: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
+                        <div>Intel-based Mac</div>`,
+                })
                 ul.appendChild(
                     _gl.elementFromHtml(`
                         <a class="button-grid" href="${apiData['mac']['x64']}">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
-                                <div>Intel-based Mac</div>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
+                            ${intelMacApp.getHtml()}
                         </a>`)
                 )
+                const siliconMacApp = new Frame({
+                    content: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg>
+                        <span>Mac with Apple silicon</span>`,
+                })
                 ul.appendChild(
                     _gl.elementFromHtml(`
                         <a class="button-grid" href="${apiData['mac']['arm64']}">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.32 1000"><path fill="#ffffff" d="M824.666 779.304c-15.123 34.937-33.023 67.096-53.763 96.663-28.271 40.308-51.419 68.208-69.258 83.702-27.653 25.43-57.282 38.455-89.01 39.196-22.776 0-50.245-6.481-82.219-19.63-32.08-13.085-61.56-19.566-88.516-19.566-28.27 0-58.59 6.48-91.022 19.567-32.48 13.148-58.646 20-78.652 20.678-30.425 1.296-60.75-12.098-91.022-40.245-19.32-16.852-43.486-45.74-72.436-86.665-31.06-43.702-56.597-94.38-76.602-152.155C10.74 658.443 0 598.013 0 539.509c0-67.017 14.481-124.818 43.486-173.255 22.796-38.906 53.122-69.596 91.078-92.126 37.955-22.53 78.967-34.012 123.132-34.746 24.166 0 55.856 7.475 95.238 22.166 39.27 14.74 64.485 22.215 75.54 22.215 8.266 0 36.277-8.74 83.764-26.166 44.906-16.16 82.806-22.85 113.854-20.215 84.133 6.79 147.341 39.955 189.377 99.707-75.245 45.59-112.466 109.447-111.725 191.364.68 63.807 23.827 116.904 69.319 159.063 20.617 19.568 43.64 34.69 69.257 45.431-5.555 16.11-11.42 31.542-17.654 46.357zM631.71 20.006c0 50.011-18.27 96.707-54.69 139.928-43.949 51.38-97.108 81.071-154.754 76.386-.735-6-1.16-12.314-1.16-18.95 0-48.01 20.9-99.392 58.016-141.403 18.53-21.271 42.098-38.957 70.677-53.066C578.316 9.002 605.29 1.316 630.66 0c.74 6.686 1.05 13.372 1.05 20.005z"/></svg> 
-                                <span>Mac with Apple silicon</span>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
+                            ${siliconMacApp.getHtml()}
                         </a>`)
                 )
             })

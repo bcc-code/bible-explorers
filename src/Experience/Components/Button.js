@@ -1,3 +1,5 @@
+import Frame from './Frame.js'
+
 export default class Button {
     constructor(btn) {
         this.content = btn.content ? btn.content : ''
@@ -16,16 +18,11 @@ export default class Button {
     }
 
     getHtml() {
+        const frame = new Frame({
+            content: this.content,
+        })
         return `<button class="button-grid ${this.class}" id="${this.id}" type="${this.type}" title="${this.title}" ${this.enabled ? '' : 'disabled'} ${this.data} role="button">
-            <div class="corner top-left"></div>
-            <div class="edge top"></div>
-            <div class="corner top-right"></div>
-            <div class="edge left"></div>
-            <div class="content">${this.content}</div>
-            <div class="edge right"></div>
-            <div class="corner bottom-left"></div>
-            <div class="edge bottom"></div>
-            <div class="corner bottom-right"></div>
+            ${frame.getHtml()}
         </button>`
     }
 }

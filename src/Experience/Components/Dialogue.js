@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Frame from './Frame.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -78,21 +79,14 @@ export default class Dialogue {
     setMessageHtml(caption) {
         document.getElementById('iris-cc')?.remove()
 
+        const irisFrame = new Frame({
+            content: `<div id="iris-cc">
+                    <div class="cc-text scroller">${caption}</div>
+                </div>`,
+        })
         const message = _gl.elementFromHtml(
             `<div class="cc-container">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <div id="iris-cc">
-                        <div class="cc-text scroller">${caption}</div>
-                    </div>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${irisFrame.getHtml()}
             </div>`
         )
         instance.experience.interface.closedCaption.append(message)

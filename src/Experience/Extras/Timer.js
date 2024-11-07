@@ -1,3 +1,4 @@
+import Frame from '../Components/Frame.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
 
@@ -14,22 +15,14 @@ export default class Timer {
         if (document.querySelector('.timer')) return
 
         const time = timer.getMinutesAndSeconds(minutes * 60)
-
+        const timerFrame = new Frame({
+            content: `<span class="minutes">${time.minutes}</span>
+                <div>:</div>
+                <span class="seconds">${time.seconds}</span>`,
+        })
         timer.htmlEl = _gl.elementFromHtml(`
             <div class="game-timer button-grid">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <span class="minutes">${time.minutes}</span>
-                    <div>:</div>
-                    <span class="seconds">${time.seconds}</span>
-                </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
+                ${timerFrame.getHtml()}
             </div>
         `)
 
