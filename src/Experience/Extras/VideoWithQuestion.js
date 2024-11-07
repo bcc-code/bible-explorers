@@ -27,7 +27,10 @@ export default class VideoWithQuestion {
         instance.audio.setOtherAudioIsPlaying(true)
         instance.audio.fadeOutBgMusic()
 
-        const submitBtn = new Button(_s.task.submit)
+        const submitBtn = new Button({
+            content: _s.task.submit,
+            type: 'submit',
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="video-with-question">
                 <div class="corner top-left"></div>

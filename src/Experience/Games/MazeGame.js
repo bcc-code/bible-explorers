@@ -71,7 +71,10 @@ export default class MazeGame {
     }
 
     initHtml() {
-        const nextRoundBtn = new Button(_s.miniGames.nextRound, 'new-level')
+        const nextRoundBtn = new Button({
+            content: _s.miniGames.nextRound,
+            id: 'new-level',
+        })
         const game = _gl.elementFromHtml(`
             <section class="task-game maze-game">
                 <div id="maze-canvas" class="task-game_canvas"></div>

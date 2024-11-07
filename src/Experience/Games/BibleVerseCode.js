@@ -1,5 +1,6 @@
 import Offline from '../Utils/Offline.js'
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals.js'
 import _e from '../Utils/Events.js'
@@ -29,6 +30,11 @@ export default class BibleVerseCode {
 
     bibleVerseCodeHTML() {
         const title = instance.stepData.details.title
+        const checkCodeBtn = new Button({
+            content: _s.miniGames.bibleVerseCode.checkCode,
+            id: 'check-code',
+            type: 'submit',
+        })
         const unlockScreen = _gl.elementFromHtml(`
             <div class="bible-verse-code task-container" id="bible-verse-code">
                 <div class="corner top-left"></div>
@@ -58,17 +64,7 @@ export default class BibleVerseCode {
                             <div class="bible-verse-to"></div>
                         </div>
                         <div class="task-actions">
-                            <button id="check-code" class="button-grid" type="submit">
-                                <div class="corner top-left"></div>
-                                <div class="edge top"></div>
-                                <div class="corner top-right"></div>
-                                <div class="edge left"></div>
-                                <div class="content">${_s.miniGames.bibleVerseCode.checkCode}</div>
-                                <div class="edge right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="edge bottom"></div>
-                                <div class="corner bottom-right"></div>
-                            </button>
+                            ${checkCodeBtn.getHtml()}
                         </div>
                     </div>
                 </div>

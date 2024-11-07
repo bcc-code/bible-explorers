@@ -28,7 +28,11 @@ export default class DavidsRefuge {
     }
 
     gameHTML() {
-        const chooseGoatBtn = new Button(_s.miniGames.davidsRefuge.chooseGoat, 'choose-goat', false)
+        const chooseGoatBtn = new Button({
+            content: _s.miniGames.davidsRefuge.chooseGoat,
+            id: 'choose-goat',
+            enabled: false,
+        })
         const game = _gl.elementFromHtml(`
             <section class="game davids-refuge">
                 <div class="container">

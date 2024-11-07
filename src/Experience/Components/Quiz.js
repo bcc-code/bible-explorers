@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import Button from './Button.js'
 import _s from '../Utils/Strings.js'
 import _lang from '../Utils/Lang.js'
 import _api from '../Utils/Api.js'
@@ -44,64 +45,56 @@ export default class Quiz {
     }
 
     quizHTML() {
-        instance.quizContainer = _gl.elementFromHtml(`
-        <div class="task-container" id="quiz-game">
-            <div class="corner top-left"></div>
-            <div class="edge top"></div>
-            <div class="corner top-right"></div>
-            <div class="edge left"></div>
-            <div class="content">
-                <div class="task-content group/quiz">
-                    ${
-                        instance.questions.length > 1
-                            ? `<div class="progress-bar-container">
-                            <div class="progress-bar-background">
-                                <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
-                            </div>
-                            <ul id="progress-steps" class="progress-steps">${instance.questions
-                                .map(
-                                    (_, index) => `
-                                    <li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
-                                        <span class="step-number">${index + 1}</span>
-                                    </li>`
-                                )
-                                .join('')}
-                                </ul>
-                        </div>`
-                            : ''
-                    }
-                    <div id="quiz-wrapper"></div>
-                    <div class="task-actions ${instance.questions.length == 1 ? '!hidden' : ''}">
-                        <button id="next-question" class="button-grid" type="button" role="button" title="Next question">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${_s.task.next}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
-                        <button id="submit-quiz" class="button-grid" type="submit" role="button" title="Submit quiz form">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${_s.task.submit}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
+        const nextQuestionBtn = new Button({
+            content: _s.task.next,
+            id: 'next-question',
+            title: 'Next question',
+        })
+        const submitQuizBtn = new Button({
+            content: _s.task.submit,
+            id: 'submit-quiz',
+            type: 'submit',
+            title: 'Submit quiz form',
+        })
+        instance.quizContainer = _gl.elementFromHtml(
+            `<div class="task-container" id="quiz-game">
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <div class="task-content group/quiz">
+                        ${
+                            instance.questions.length > 1
+                                ? `<div class="progress-bar-container">
+                                    <div class="progress-bar-background">
+                                        <div class="progress-bar-foreground" id="progress-bar-quiz"></div>
+                                    </div>
+                                    <ul id="progress-steps" class="progress-steps">${instance.questions
+                                        .map(
+                                            (_, index) => `
+                                            <li class="progress-step button-circle ${index === 0 ? 'current-step' : ''}" id="progress-step-${index}">
+                                                <span class="step-number">${index + 1}</span>
+                                            </li>`
+                                        )
+                                        .join('')}
+                                        </ul>
+                                </div>`
+                                : ''
+                        }
+                        <div id="quiz-wrapper"></div>
+                        <div class="task-actions ${instance.questions.length == 1 ? '!hidden' : ''}">
+                            ${nextQuestionBtn.getHtml()}
+                            ${submitQuizBtn.getHtml()}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="edge right"></div>
-            <div class="corner bottom-left"></div>
-            <div class="edge bottom"></div>
-            <div class="corner bottom-right"></div>
-        </div>`)
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </div>`
+        )
 
         instance.experience.interface.gameContainer.append(instance.quizContainer)
     }

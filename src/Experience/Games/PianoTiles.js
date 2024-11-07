@@ -1,4 +1,5 @@
 import Experience from '../Experience.js'
+import Button from '../Components/Button.js'
 import _e from '../Utils/Events.js'
 import _gl from '../Utils/Globals.js'
 import _s from '../Utils/Strings.js'
@@ -148,6 +149,11 @@ export default class PianoTiles {
     }
 
     gameHTML() {
+        const restartBtn = new Button({
+            content: _s.miniGames.anotherRound,
+            id: 'restart-game',
+            title: 'Restart game button',
+        })
         const game = _gl.elementFromHtml(`
             <section class="task-game piano-tiles" id="piano-tiles">
                 <div class="absolute inset-0 grid place-content-center bg-black/60" id="piano-tites__background">
@@ -215,17 +221,7 @@ export default class PianoTiles {
                 <div class="task-game_popup result-box">
                     <div class="score_text text-2xl"></div>
                     <div class="buttons">
-                        <button class="piano-tiles_restart button-grid" role="button" type="button" title="Restart game button">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">${_s.miniGames.anotherRound}</div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
+                        ${restartBtn.getHtml()}
                     </div>
             </section>`)
 
@@ -235,7 +231,7 @@ export default class PianoTiles {
         this.game = game.querySelector('#piano-tiles_game')
         this.sco = game.querySelector('#piano-tiles_score')
         this.resultBox = game.querySelector('.result-box')
-        this.restart = this.resultBox.querySelector('.piano-tiles_restart')
+        this.restart = this.resultBox.querySelector('#restart-game')
         this.text = this.resultBox.querySelector('.score_text')
         this.labels = game.querySelector('#piano-tiles_labels')
         this.playedNotes = game.querySelector('#piano-tiles_played-notes')

@@ -40,7 +40,9 @@ export default class FlipCards {
     }
 
     confirmationScreenHTML() {
-        const csBtn = new Button(instance.confirmationScreen.cs_button)
+        const csBtn = new Button({
+            content: instance.confirmationScreen.cs_button,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-content">
                 <div class="corner top-left"></div>

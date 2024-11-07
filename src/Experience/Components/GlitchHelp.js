@@ -28,7 +28,9 @@ export default class GlitchHelp {
     }
 
     setHtml() {
-        const confirmationBtn = new Button(instance.data.confirmation_button)
+        const confirmationBtn = new Button({
+            content: instance.data.confirmation_button,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container glitch-help-task" id="task-container">
                 <div class="corner top-left"></div>

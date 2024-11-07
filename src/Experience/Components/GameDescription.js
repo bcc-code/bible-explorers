@@ -57,7 +57,9 @@ export default class GameDescription {
     }
 
     setHtml() {
-        const startGameBtn = new Button(_s.miniGames.startGame)
+        const startGameBtn = new Button({
+            content: _s.miniGames.startGame,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
                 <div class="corner top-left"></div>

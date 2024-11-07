@@ -24,10 +24,10 @@ export default class Notification {
     }
 
     static generateHtml(text) {
-        const closeAlertBtn = new Button(
-            '<svg class="cion"><use href="#xmark-large-solid" fill="currentColor"></use></svg>',
-            'close-alert'
-        )
+        const closeAlertBtn = new Button({
+            content: '<svg class="cion"><use href="#xmark-large-solid" fill="currentColor"></use></svg>',
+            id: 'close-alert',
+        })
         return `
             <div class="fixed inset-0 -z-10 bg-bke-darkpurple/70"></div>
             <div class="p-8 bg-white flex items-center">

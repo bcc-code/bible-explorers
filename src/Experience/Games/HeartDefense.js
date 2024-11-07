@@ -633,7 +633,9 @@ export default class HeartDefense {
             </div>
         `)
 
-        const nextRoundBtn = new Button(_s.miniGames.nextRound)
+        const nextRoundBtn = new Button({
+            content: _s.miniGames.nextRound,
+        })
         const nextLevelBTN = _gl.elementFromHtml(nextRoundBtn.getHtml())
 
         congratsHTML.querySelector('.buttons').append(nextLevelBTN)
@@ -691,7 +693,9 @@ export default class HeartDefense {
             </div>
         `)
 
-        const restartRoundBtn = new Button(_s.miniGames.restartRound)
+        const restartRoundBtn = new Button({
+            content: _s.miniGames.restartRound,
+        })
         const resetBTN = _gl.elementFromHtml(restartRoundBtn.getHtml())
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 

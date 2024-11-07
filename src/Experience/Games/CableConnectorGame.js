@@ -559,7 +559,9 @@ export default class CableConnector {
             </div>
         `)
 
-        const playAgainBtn = new Button(_s.miniGames.playAgain)
+        const playAgainBtn = new Button({
+            content: _s.miniGames.playAgain,
+        })
         const resetBTN = _gl.elementFromHtml(playAgainBtn.getHtml())
         gameOverHTML.querySelector('.buttons').append(resetBTN)
 

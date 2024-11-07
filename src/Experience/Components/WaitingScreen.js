@@ -1,4 +1,5 @@
 import Experience from '../Experience'
+import Button from '../Components/Button.js'
 import _s from '../Utils/Strings.js'
 import _gl from '../Utils/Globals'
 import _e from '../Utils/Events.js'
@@ -44,6 +45,10 @@ export default class WaitingScreen {
         const wrapper = _gl.elementFromHtml(
             `<div class="fixed inset-0 bg-black isolate" id="waitingScreen"></div>`
         )
+        const waitingScreenSubmitBtn = new Button({
+            content: _s.waitingScreen.submit,
+            type: 'submit',
+        })
         const form = _gl.elementFromHtml(
             `<form id="childrenNames" class="childrenNames">
                 <div class="corner top-left"></div>
@@ -64,17 +69,7 @@ export default class WaitingScreen {
                         <div class="edge bottom"></div>
                         <div class="corner bottom-right"></div>
                     </div>
-                    <button type="submit" class="button-grid">
-                        <div class="corner top-left"></div>
-                        <div class="edge top"></div>
-                        <div class="corner top-right"></div>
-                        <div class="edge left"></div>
-                        <div class="content">${_s.waitingScreen.submit}</div>
-                        <div class="edge right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="edge bottom"></div>
-                        <div class="corner bottom-right"></div>
-                    </button>
+                    ${waitingScreenSubmitBtn.getHtml()}
                 </div>
                 <div class="edge right"></div>
                 <div class="corner bottom-left"></div>

@@ -151,22 +151,15 @@ export default class World {
     }
 
     setCategoryHtml(category) {
-        const categoryBtn = _gl.elementFromHtml(
-            `<li>
-                <button class="category button-grid uppercase" data-slug="${category.slug}" role="button">  
-                    <div class="corner top-left"></div>
-                    <div class="edge top"></div>
-                    <div class="corner top-right"></div>
-                    <div class="edge left"></div>
-                    <div class="content">${category.name}</div>
-                    <div class="edge right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="edge bottom"></div>
-                    <div class="corner bottom-right"></div>
-                </button>
-            </li>`
-        )
-        this.ageCategory.querySelector('ul').appendChild(categoryBtn)
+        const categoryBtn = new Button({
+            content: category.name,
+            class: 'category uppercase',
+            data: {
+                slug: category.slug,
+            },
+        })
+        const categoryBtnEl = _gl.elementFromHtml(`<li>${categoryBtn.getHtml()}</li>`)
+        this.ageCategory.querySelector('ul').appendChild(categoryBtnEl)
     }
 
     selectCategoryListeners() {
@@ -191,6 +184,14 @@ export default class World {
     }
 
     setChapterHtml(chapter) {
+        const downloadChapterBtn = new Button({
+            content: '<svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>',
+            class: 'chapter__download group-[.downloaded]:hidden',
+        })
+        const removeChapterBtn = new Button({
+            content: '<svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>',
+            class: 'chapter__remove !hidden',
+        })
         let chapterHtml = _gl.elementFromHtml(
             `<li class="chapter group ${chapter.is_beta === true ? 'beta' : ''} ${chapter.status == 'future' ? ' locked' : ''}">
                 <a href="javascript:void(0)" class="chapter-box relative">
@@ -210,32 +211,8 @@ export default class World {
                     </div>
                     <div class="chapter__offline">
                         <span class="chapter__downloaded-quota hidden"></span>
-                        <button class="chapter__download button-grid group-[.downloaded]:hidden" role="button">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg class="icon"><use href="#download-solid" fill="currentColor"></use></svg>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
-                        <button class="chapter__remove button-grid !hidden" role="button">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                <svg class="icon"><use href="#folder-xmark-solid" fill="currentColor"></use></svg>
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
+                        ${downloadChapterBtn.getHtml()}
+                        ${removeChapterBtn.getHtml()}
                     </div>
                     <span class="chapter__loading"></span>
                 </a>
@@ -287,27 +264,30 @@ export default class World {
             else if (checkpoint.steps.some((step) => step.details.step_type == 'task')) numberOfTasks++
         })
 
-        const startChapterBtn = new Button(_s.journey.start, 'start-chapter')
+        const startChapterBtn = new Button({
+            content: _s.journey.start,
+            id: 'start-chapter',
+        })
         const details = _gl.elementFromHtml(
             `<div class="chapter-description">
-            <div class="corner top-left"></div>
-            <div class="edge top"></div>
-            <div class="corner top-right"></div>
-            <div class="edge left"></div>
-            <div class="content">
-                <h2 class="chapter-description-heading">${chapter.title}</h2>
-                <div class="chapter-description-text scroller"> ${chapter.content}</div>
-                <div class="chapter-actions">
-                    <div class="float-left">
-                        ${startChapterBtn.getHtml()}
+                <div class="corner top-left"></div>
+                <div class="edge top"></div>
+                <div class="corner top-right"></div>
+                <div class="edge left"></div>
+                <div class="content">
+                    <h2 class="chapter-description-heading">${chapter.title}</h2>
+                    <div class="chapter-description-text scroller"> ${chapter.content}</div>
+                    <div class="chapter-actions">
+                        <div class="float-left">
+                            ${startChapterBtn.getHtml()}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="edge right"></div>
-            <div class="corner bottom-left"></div>
-            <div class="edge bottom"></div>
-            <div class="corner bottom-right"></div>
-        </div>`
+                <div class="edge right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="edge bottom"></div>
+                <div class="corner bottom-right"></div>
+            </div>`
         )
 
         if (chapter.other_attachments.length) {
@@ -960,44 +940,37 @@ export default class World {
     }
 
     setDownloadModalHTML() {
-        instance.downloadModal = _gl.elementFromHtml(`
-        <dialog id="download-modal" class="modal">
-            <div class="modal-container">
-                <div class="corner top-left"></div>
-                <div class="edge top"></div>
-                <div class="corner top-right"></div>
-                <div class="edge left"></div>
-                <div class="content">
-                    <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
-                    <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
-                    <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
-                    <p>${_s.offline.downloadApp.infoLabel}</p>
-                    <ul>
-                        <li>${_s.offline.downloadApp.infoText1}</li>
-                        <li>${_s.offline.downloadApp.infoText2}</li>
-                    </ul>
-                    <div class="modal-actions">
-                        <button class="modal-close button-grid" role="button">
-                            <div class="corner top-left"></div>
-                            <div class="edge top"></div>
-                            <div class="corner top-right"></div>
-                            <div class="edge left"></div>
-                            <div class="content">
-                                ${_s.offline.downloadApp.close}
-                            </div>
-                            <div class="edge right"></div>
-                            <div class="corner bottom-left"></div>
-                            <div class="edge bottom"></div>
-                            <div class="corner bottom-right"></div>
-                        </button>
+        const closeModalBtn = new Button({
+            content: _s.offline.downloadApp.close,
+            class: 'modal-close',
+        })
+        instance.downloadModal = _gl.elementFromHtml(
+            `<dialog id="download-modal" class="modal">
+                <div class="modal-container">
+                    <div class="corner top-left"></div>
+                    <div class="edge top"></div>
+                    <div class="corner top-right"></div>
+                    <div class="edge left"></div>
+                    <div class="content">
+                        <h2 class="modal-heading">${_s.offline.downloadApp.title}</h2>
+                        <p class="text-center">${_s.offline.downloadApp.deviceTypeLabel}</p>
+                        <div class="device-type-available flex items-center justify-center gap-[1%] w-full mb-[5%]"></div>
+                        <p>${_s.offline.downloadApp.infoLabel}</p>
+                        <ul>
+                            <li>${_s.offline.downloadApp.infoText1}</li>
+                            <li>${_s.offline.downloadApp.infoText2}</li>
+                        </ul>
+                        <div class="modal-actions">
+                            ${closeModalBtn.getHtml()}
+                        </div>
                     </div>
+                    <div class="edge right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="edge bottom"></div>
+                    <div class="corner bottom-right"></div>
                 </div>
-                <div class="edge right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="edge bottom"></div>
-                <div class="corner bottom-right"></div>
-            </div>
-        </dialog>`)
+            </dialog>`
+        )
 
         document.querySelector('#app').append(instance.downloadModal)
 

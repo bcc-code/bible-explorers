@@ -30,7 +30,9 @@ export default class ConfirmationScreen {
     }
 
     setHtml() {
-        const csBtn = new Button(instance.data.cs_button)
+        const csBtn = new Button({
+            content: instance.data.cs_button,
+        })
         const container = _gl.elementFromHtml(
             `<div class="absolute inset-0 bg-bke-darkpurple grid place-content-center" id="task-container">
                 <div class="relative mx-auto max-w-[1980px] px-4 pb-4 pt-24 tv:gap-8 tv:px-8 tv:pt-32">

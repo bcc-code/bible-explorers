@@ -316,7 +316,10 @@ export default class MineField {
     }
 
     showRestartButton() {
-        const tryAgainBtn = new Button(_s.miniGames.tryAgain, 'restart-quiz')
+        const tryAgainBtn = new Button({
+            content: _s.miniGames.tryAgain,
+            id: 'restart-quiz',
+        })
         const quizContentContainer = document.querySelector('#quiz-content')
         quizContentContainer.innerHTML = tryAgainBtn.getHtml()
 

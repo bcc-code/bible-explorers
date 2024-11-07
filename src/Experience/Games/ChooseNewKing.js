@@ -31,7 +31,11 @@ export default class ChooseNewKing {
     }
 
     gameHTML() {
-        const chooseKingBtn = new Button(_s.miniGames.flipCards.chooseKing, 'choose-king', false)
+        const chooseKingBtn = new Button({
+            content: _s.miniGames.flipCards.chooseKing,
+            id: 'choose-king',
+            enabled: false,
+        })
         const game = _gl.elementFromHtml(`
             <section class="game flip-card">
                 <div class="container">

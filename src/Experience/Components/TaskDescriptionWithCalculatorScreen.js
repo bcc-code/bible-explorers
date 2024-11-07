@@ -37,8 +37,9 @@ export default class TaskDescriptionWithCalculatorScreen {
     }
 
     setHtml() {
-        const tdBtn = new Button(instance.data.td_button)
-        console.log('tdBtn', tdBtn.getHtml())
+        const tdBtn = new Button({
+            content: instance.data.td_button,
+        })
         const container = _gl.elementFromHtml(
             `<div class="task-container" id="task-container">
                 <div class="corner top-left"></div>

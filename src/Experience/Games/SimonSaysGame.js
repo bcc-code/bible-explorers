@@ -213,7 +213,9 @@ export default class SimonSays {
             </div>
         `)
 
-        const restartRoundBtn = new Button(_s.miniGames.restartRound)
+        const restartRoundBtn = new Button({
+            content: _s.miniGames.restartRound,
+        })
         const resetBTN = _gl.elementFromHtml(restartRoundBtn.getHtml())
 
         gameOverHTML.querySelector('.buttons').append(resetBTN)
