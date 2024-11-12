@@ -3558,6 +3558,12 @@ $themes: (
 
 .glitch-help {
     pointer-events: all;
+    position: absolute;
+    z-index: 99;
+    bottom: 15px;
+    right: 100px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 #glitch-idle {
@@ -3603,14 +3609,18 @@ $themes: (
 #open-guide,
 #glitch-guide {
     display: none;
-    position: absolute;
-    background: var(--bg-default);
-    right: 1rem;
-    bottom: 9rem;
     padding: 0.5rem;
-    border: 2px solid #fff;
     text-align: center;
-    width: 230px;
+    width: 330px;
+    margin: 0 195px 0 0;
+}
+
+#open-guide {
+    margin-bottom: 25px;
+
+    .content {
+        justify-content: center;
+    }
 }
 
 .pause {

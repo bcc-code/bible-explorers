@@ -46,6 +46,7 @@ export default class Experience {
             mainScreen: document.querySelector('.screen-bottom_content'),
             helperScreen: document.querySelector('.screen-right_content'),
             closedCaption: document.querySelector('#closed-caption'),
+            chapterWrapper: document.querySelector('#chapter-wrapper'),
             gameContainer: document.querySelector('#games-wrapper'),
             tasksDescription: document.querySelector('#tasks-description'),
             chaptersList: document.querySelector('#chapters-list'),
@@ -111,5 +112,4 @@ export default class Experience {
     setAppView(attr) {
         document.querySelector('#app').setAttribute('data-view', attr)
     }
-
 }

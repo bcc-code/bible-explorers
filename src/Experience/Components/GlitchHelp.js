@@ -56,14 +56,20 @@ export default class GlitchHelp {
             </div>`
         )
 
+        const openGuideBtn = new Frame({
+            content: instance.data.get_hint_button,
+        })
+        const glitchGuideFrame = new Frame({
+            content: instance.data.hint,
+        })
         const glitchCharacter = _gl.elementFromHtml(
             `<div class="glitch-help">
                 <div id="glitch-character">
                     <video id="glitch-character-idle" src="games/glitch-help/Glitch_WEB_Oppgave3_Loop_v003.webm" muted autoplay loop></video>
                     <video id="glitch-character-popup" src="games/glitch-help/Glitch_WEB_Oppgave3_Start_v003.webm" muted></video>
                 </div>
-                <div id="open-guide" class="cursor-pointer">${instance.data.get_hint_button}</div>
-                <div id="glitch-guide">${instance.data.hint}</div>
+                <div id="open-guide" class="cc-container cursor-pointer">${openGuideBtn.getHtml()}</div>
+                <div id="glitch-guide" class="cc-container">${glitchGuideFrame.getHtml()}</div>
             </div>`
         )
 
@@ -71,7 +77,7 @@ export default class GlitchHelp {
         if (nextStep) nextStep.addEventListener('click', instance.program.nextStep)
 
         instance.experience.interface.tasksDescription.append(container)
-        instance.experience.interface.tasksDescription.append(glitchCharacter)
+        instance.experience.interface.chapterWrapper.append(glitchCharacter)
 
         instance.experience.navigation.next.innerHTML = `<span>${_s.miniGames.skip}</span>`
     }
@@ -96,6 +102,7 @@ export default class GlitchHelp {
             characterPopup.currentTime = 0
             characterPopup.play()
         })
+
         document.querySelector('#glitch-character-popup').addEventListener('ended', () => {
             const characterPopup = document.querySelector('#glitch-character-popup')
             const characterIdle = document.querySelector('#glitch-character-idle')
@@ -111,6 +118,7 @@ export default class GlitchHelp {
                 }
             }, 10)
         })
+
         glitchCharacter.addEventListener('mouseleave', () => {
             glitchCharacter.classList.remove('hovering')
         })
@@ -124,25 +132,26 @@ export default class GlitchHelp {
             }, 500)
         } else {
             // Show guide after 60 seconds otherwise
-            setTimeout(() => {
+            instance.openGuideTimeout = setTimeout(() => {
                 instance.showOpenGuide()
             }, 60 * 1000)
         }
 
         document.querySelector('#glitch-character').addEventListener('click', instance.showOpenGuide)
-        document.querySelector('#open-guide').addEventListener('click', instance.popGlitchGuide)
+        document.querySelector('#open-guide')?.addEventListener('click', instance.popGlitchGuide)
 
         document.addEventListener(_e.ACTIONS.STEP_TOGGLED, instance.destroy)
     }
 
     showOpenGuide() {
-        document.querySelector('#glitch-character').classList.add('active')
-        document.querySelector('#open-guide').style.display = 'block'
+        clearTimeout(instance.openGuideTimeout)
+        document.querySelector('#glitch-character').classList.add('active', 'pointer-events-none')
+        document.querySelector('#open-guide').style.display = 'grid'
     }
 
     popGlitchGuide() {
         document.querySelector('#open-guide').style.display = 'none'
-        document.querySelector('#glitch-guide').style.display = 'block'
+        document.querySelector('#glitch-guide').style.display = 'grid'
     }
 
     destroy() {
